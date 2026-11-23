@@ -1,0 +1,5033 @@
+{
+  "schemaVersion": 1,
+  "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+  "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+  "version": "2026.48.1",
+  "harnessCommit": "7cba2a2175fb445bb9e2bd6095ef9706baf3cbeb",
+  "package": {
+    "applicationCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "applicationTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "desktopRun": 45143305147,
+    "artifactId": 14804672476,
+    "archiveSha256": "ecce5a188abbb5b17e52c4097d7add95ddeaaa8c24a9a4e6c492049d16902733",
+    "installer": {
+      "path": "Open Office Studio_2026.48.1_x64-setup.exe",
+      "bytes": 384512913,
+      "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce"
+    },
+    "executable": "open-office-studio.exe",
+    "identifier": "org.openaec.office-studio",
+    "payloadExecutable": {
+      "member": "open-office-studio.exe",
+      "bytes": 88199680,
+      "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+      "derivation": "7-Zip extract-only stdout from whole-ZIP/report-bound NSIS before install",
+      "pe": "x64"
+    },
+    "sourceJob": 137586342967,
+    "sourceAttempt": 1,
+    "canonicalPackageReportSha256": "a1d16b139c3193e377ec2147319fd632b6b9ba8698e69f6fc84127870ccd6d9e",
+    "title": "Open Office Studio",
+    "ancillaryNotExtracted": [],
+    "scope": "Canonical suite native STC QA; not standalone or release-signing acceptance"
+  },
+  "status": "passed-native-stc-scoped",
+  "steps": [
+    {
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "ownedPid": 6448,
+      "action": "Focus",
+      "status": "passed",
+      "windowHandle": 196940,
+      "title": "Open Office Studio",
+      "foregroundPid": 6448
+    },
+    {
+      "foregroundPid": 6448,
+      "windowHandle": 196940,
+      "status": "passed",
+      "title": "Open Office Studio",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "ownedPid": 6448,
+      "sessionId": 2
+    },
+    {
+      "dialogControls": [
+        {
+          "handle": 66190,
+          "accessKey": "",
+          "className": "DUIViewWndClassName",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "FolderBandModuleInner",
+          "name": "Command Module",
+          "type": "ControlType.ToolBar",
+          "id": "FolderBandModuleInner"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button3d",
+          "name": "&Help",
+          "type": "ControlType.Button",
+          "id": "HelpButton"
+        },
+        {
+          "handle": 0,
+          "accessKey": "Alt+P",
+          "className": "Button3d",
+          "name": "Preview pane",
+          "type": "ControlType.CheckBox",
+          "id": "PreviewButton"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "ViewControl",
+          "name": "Details",
+          "type": "ControlType.SplitButton",
+          "id": "ViewControl"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button3d",
+          "name": "View Slider",
+          "type": "ControlType.Button",
+          "id": "SplitMenuButton"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "AJOSplitButton",
+          "name": "Organize",
+          "type": "ControlType.Button",
+          "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "AJOSplitButton",
+          "name": "New folder",
+          "type": "ControlType.Button",
+          "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}"
+        },
+        {
+          "handle": 66216,
+          "accessKey": "",
+          "className": "ProperTreeHost",
+          "name": "Control Host",
+          "type": "ControlType.Pane",
+          "id": "ProperTreeHost"
+        },
+        {
+          "handle": 66220,
+          "accessKey": "",
+          "className": "SysTreeView32",
+          "name": "Navigation Pane",
+          "type": "ControlType.Pane",
+          "id": "100"
+        },
+        {
+          "handle": 66194,
+          "accessKey": "",
+          "className": "DUIListView",
+          "name": "Shell Folder View",
+          "type": "ControlType.Pane",
+          "id": "listview"
+        },
+        {
+          "handle": 66196,
+          "accessKey": "",
+          "className": "UIItemsView",
+          "name": "Items View",
+          "type": "ControlType.List",
+          "id": ""
+        },
+        {
+          "handle": 66204,
+          "accessKey": "",
+          "className": "LineHScrollBar",
+          "name": "Horizontal",
+          "type": "ControlType.Pane",
+          "id": "HorizontalScrollBar"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIViewHeader",
+          "name": "Header",
+          "type": "ControlType.Header",
+          "id": ""
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "name": "Name",
+          "type": "ControlType.SplitButton",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "type": "ControlType.Button",
+          "id": "DropDown"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "name": "Date modified",
+          "type": "ControlType.SplitButton",
+          "id": "System.DateModified"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "type": "ControlType.Button",
+          "id": "DropDown"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "name": "Type",
+          "type": "ControlType.SplitButton",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "type": "ControlType.Button",
+          "id": "DropDown"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "name": "Size",
+          "type": "ControlType.SplitButton",
+          "id": "System.Size"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "type": "ControlType.Button",
+          "id": "DropDown"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIItem",
+          "name": "Visual Studio 18",
+          "type": "ControlType.ListItem",
+          "id": "0"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIProperty",
+          "name": "Name",
+          "type": "ControlType.Edit",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "type": "ControlType.Edit",
+          "id": "System.DateModified"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIProperty",
+          "name": "Type",
+          "type": "ControlType.Edit",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "UIProperty",
+          "name": "Size",
+          "type": "ControlType.Edit",
+          "id": "System.Size"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "AppControlsModuleInner",
+          "name": "Application Controls",
+          "type": "ControlType.Tree",
+          "id": "AppControlsModuleInner"
+        },
+        {
+          "handle": 66090,
+          "accessKey": "",
+          "className": "Static",
+          "name": "File name:",
+          "type": "ControlType.Pane",
+          "id": "1090"
+        },
+        {
+          "handle": 66094,
+          "accessKey": "",
+          "className": "ComboBoxEx32",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": "1148"
+        },
+        {
+          "handle": 66096,
+          "accessKey": "",
+          "className": "ComboBox",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": "1148"
+        },
+        {
+          "handle": 66100,
+          "accessKey": "",
+          "className": "Edit",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": "1148"
+        },
+        {
+          "handle": 66106,
+          "accessKey": "",
+          "className": "ComboBox",
+          "name": "Office files",
+          "type": "ControlType.Pane",
+          "id": "1136"
+        },
+        {
+          "handle": 66110,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Open",
+          "type": "ControlType.Pane",
+          "id": "1"
+        },
+        {
+          "handle": 66112,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Cancel",
+          "type": "ControlType.Pane",
+          "id": "2"
+        },
+        {
+          "handle": 66116,
+          "accessKey": "",
+          "className": "ScrollBar",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66142,
+          "accessKey": "",
+          "className": "WorkerW",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66144,
+          "accessKey": "",
+          "className": "ReBarWindow32",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": "40965"
+        },
+        {
+          "handle": 66146,
+          "accessKey": "",
+          "className": "TravelBand",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66148,
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "name": "Navigation buttons",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66152,
+          "accessKey": "",
+          "className": "UpBand",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66154,
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "name": "Up band",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66158,
+          "accessKey": "",
+          "className": "Address Band Root",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": "41477"
+        },
+        {
+          "handle": 66160,
+          "accessKey": "",
+          "className": "msctls_progress32",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66166,
+          "accessKey": "",
+          "className": "Breadcrumb Parent",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66168,
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "name": "Address: Documents",
+          "type": "ControlType.Pane",
+          "id": "1001"
+        },
+        {
+          "handle": 66162,
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "name": "Address band",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66170,
+          "accessKey": "",
+          "className": "SeparatorBand",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66172,
+          "accessKey": "",
+          "className": "UniversalSearchBand",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66174,
+          "accessKey": "",
+          "className": "Search Box",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 66176,
+          "accessKey": "",
+          "className": "SearchEditBoxWrapperClass",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "SearchEditBox",
+          "name": "Search Box",
+          "type": "ControlType.Edit",
+          "id": "SearchEditBox"
+        },
+        {
+          "handle": 0,
+          "accessKey": "",
+          "className": "Button",
+          "name": "Search",
+          "type": "ControlType.Button",
+          "id": "SearchBoxSearchButton"
+        },
+        {
+          "handle": 66180,
+          "accessKey": "",
+          "className": "SeparatorBand",
+          "name": "",
+          "type": "ControlType.Pane",
+          "id": ""
+        }
+      ],
+      "status": "passed",
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "dialogFields": [],
+      "filenameBefore": "",
+      "title": "Open file",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "nativeFilenameLabel": "File name:",
+      "windowHandle": 131614,
+      "focusedFilenameCandidate": {
+        "className": "Edit",
+        "controlId": 1148,
+        "handle": 66100,
+        "pid": 6448,
+        "dialogPid": 6448
+      },
+      "filenameFocusKeys": "Alt+n in the owned native common Open dialog",
+      "filenameHandle": 66100,
+      "dialogTitle": "Open file",
+      "action": "OpenDialog",
+      "ownedTopWindows": [
+        {
+          "handle": 131614,
+          "title": "Open file",
+          "className": "#32770"
+        },
+        {
+          "handle": 196940,
+          "title": "Open Office Studio",
+          "className": "Tauri Window"
+        },
+        {
+          "handle": 131532,
+          "title": "org.openaec.office-studio-siw",
+          "className": "org.openaec.office-studio-sic"
+        },
+        {
+          "handle": 393682,
+          "title": "",
+          "className": "Tao Thread Event Target"
+        }
+      ],
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\carnet de notes.stc",
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "ownedPid": 6448,
+      "sessionId": 2,
+      "nativeOpenInvoked": true,
+      "pathReadbackMatches": true
+    },
+    {
+      "nativeFilePickerOpened": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\carnet de notes.stc",
+      "productionTab": "Untitled 1.xlsx",
+      "noBridgeInjection": true,
+      "template": true
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "ownedPid": 6448,
+      "status": "passed",
+      "windowHandle": 196940,
+      "foregroundPid": 6448,
+      "title": "Untitled 1.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-H3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "title": "Untitled 1.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "windowHandle": 196940,
+      "foregroundPid": 6448,
+      "ownedPid": 6448
+    },
+    {
+      "focus": "name-box-I3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nativeSourceHeaders": [
+        {
+          "address": "H3",
+          "text": "Moyenne brute"
+        },
+        {
+          "address": "I3",
+          "text": "Moyenne arrondie"
+        }
+      ],
+      "sheetCount": 6
+    },
+    {
+      "foregroundPid": 6448,
+      "action": "Focus",
+      "ownedPid": 6448,
+      "windowHandle": 196940,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "sessionId": 2,
+      "title": "Untitled 1.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "actualDefaultSaveProposal": "xlsx",
+      "phase": "template-preflight"
+    },
+    {
+      "pathReadbackMatches": true,
+      "action": "SaveDialog",
+      "filenameBefore": "stc-working.xlsx",
+      "title": "Untitled 1.xlsx • — Open Office Studio (Spreadsheet)",
+      "nativeSaveInvoked": true,
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "dialogFields": [],
+      "ownedTopWindows": [
+        {
+          "className": "#32770",
+          "handle": 327700,
+          "title": "Save as"
+        },
+        {
+          "className": "Tauri Window",
+          "handle": 196940,
+          "title": "Untitled 1.xlsx • — Open Office Studio (Spreadsheet)"
+        },
+        {
+          "className": "org.openaec.office-studio-sic",
+          "handle": 131532,
+          "title": "org.openaec.office-studio-siw"
+        },
+        {
+          "className": "Tao Thread Event Target",
+          "handle": 393682,
+          "title": ""
+        }
+      ],
+      "status": "passed",
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "sessionId": 2,
+      "ownedPid": 6448,
+      "dialogControls": [
+        {
+          "name": "",
+          "handle": 131742,
+          "className": "DUIViewWndClassName",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Command Module",
+          "handle": 0,
+          "className": "FolderBandModuleInner",
+          "id": "FolderBandModuleInner",
+          "type": "ControlType.ToolBar",
+          "accessKey": ""
+        },
+        {
+          "name": "&Help",
+          "handle": 0,
+          "className": "Button3d",
+          "id": "HelpButton",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Details",
+          "handle": 0,
+          "className": "ViewControl",
+          "id": "ViewControl",
+          "type": "ControlType.SplitButton",
+          "accessKey": ""
+        },
+        {
+          "name": "View Slider",
+          "handle": 0,
+          "className": "Button3d",
+          "id": "SplitMenuButton",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Organize",
+          "handle": 0,
+          "className": "AJOSplitButton",
+          "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "New folder",
+          "handle": 0,
+          "className": "AJOSplitButton",
+          "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Control Host",
+          "handle": 131678,
+          "className": "ProperTreeHost",
+          "id": "ProperTreeHost",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Navigation Pane",
+          "handle": 131716,
+          "className": "SysTreeView32",
+          "id": "100",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Shell Folder View",
+          "handle": 131726,
+          "className": "DUIListView",
+          "id": "listview",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Items View",
+          "handle": 131728,
+          "className": "UIItemsView",
+          "id": "",
+          "type": "ControlType.List",
+          "accessKey": ""
+        },
+        {
+          "name": "Horizontal",
+          "handle": 131760,
+          "className": "LineHScrollBar",
+          "id": "HorizontalScrollBar",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Header",
+          "handle": 0,
+          "className": "UIViewHeader",
+          "id": "",
+          "type": "ControlType.Header",
+          "accessKey": ""
+        },
+        {
+          "name": "Name",
+          "handle": 0,
+          "className": "UIColumnHeader",
+          "id": "System.ItemNameDisplay",
+          "type": "ControlType.SplitButton",
+          "accessKey": ""
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "className": "Button",
+          "id": "DropDown",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Date modified",
+          "handle": 0,
+          "className": "UIColumnHeader",
+          "id": "System.DateModified",
+          "type": "ControlType.SplitButton",
+          "accessKey": ""
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "className": "Button",
+          "id": "DropDown",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Type",
+          "handle": 0,
+          "className": "UIColumnHeader",
+          "id": "System.ItemTypeText",
+          "type": "ControlType.SplitButton",
+          "accessKey": ""
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "className": "Button",
+          "id": "DropDown",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "Size",
+          "handle": 0,
+          "className": "UIColumnHeader",
+          "id": "System.Size",
+          "type": "ControlType.SplitButton",
+          "accessKey": ""
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "className": "Button",
+          "id": "DropDown",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "No items match your search.",
+          "handle": 0,
+          "className": "Element",
+          "id": "EmptyTextFocusable",
+          "type": "ControlType.Text",
+          "accessKey": ""
+        },
+        {
+          "name": "File name:",
+          "handle": 0,
+          "className": "CIDLabel",
+          "id": "SaveDialogLabel",
+          "type": "ControlType.Text",
+          "accessKey": "Alt+n"
+        },
+        {
+          "name": "File name:",
+          "handle": 131674,
+          "className": "AppControlHost",
+          "id": "FileNameControlHost",
+          "type": "ControlType.Pane",
+          "accessKey": "Alt+n"
+        },
+        {
+          "name": "stc-working.xlsx",
+          "handle": 131676,
+          "className": "Edit",
+          "id": "1001",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Save as type:",
+          "handle": 0,
+          "className": "CIDLabel",
+          "id": "SaveDialogLabel",
+          "type": "ControlType.Text",
+          "accessKey": "Alt+t"
+        },
+        {
+          "name": "Save as type:",
+          "handle": 131698,
+          "className": "AppControlHost",
+          "id": "FileTypeControlHost",
+          "type": "ControlType.Pane",
+          "accessKey": "Alt+t"
+        },
+        {
+          "name": "Save Fields",
+          "handle": 0,
+          "className": "SaveDialogPreviewMetadataInner",
+          "id": "SaveDialogPreviewMetadataInner",
+          "type": "ControlType.Tree",
+          "accessKey": ""
+        },
+        {
+          "name": "Application Controls",
+          "handle": 0,
+          "className": "AppControlsModuleInner",
+          "id": "AppControlsModuleInner",
+          "type": "ControlType.Tree",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 197182,
+          "className": "ToolbarWindow32",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Save",
+          "handle": 131642,
+          "className": "Button",
+          "id": "1",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Cancel",
+          "handle": 131644,
+          "className": "Button",
+          "id": "2",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 197184,
+          "className": "ScrollBar",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 328230,
+          "className": "WorkerW",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 262846,
+          "className": "ReBarWindow32",
+          "id": "40965",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 262692,
+          "className": "TravelBand",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Navigation buttons",
+          "handle": 393758,
+          "className": "ToolbarWindow32",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 328266,
+          "className": "UpBand",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Up band",
+          "handle": 131640,
+          "className": "ToolbarWindow32",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131736,
+          "className": "Address Band Root",
+          "id": "41477",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131632,
+          "className": "msctls_progress32",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131636,
+          "className": "Breadcrumb Parent",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Address: D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof",
+          "handle": 131626,
+          "className": "ToolbarWindow32",
+          "id": "1001",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Address band",
+          "handle": 131634,
+          "className": "ToolbarWindow32",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131810,
+          "className": "SeparatorBand",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131652,
+          "className": "UniversalSearchBand",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 262710,
+          "className": "Search Box",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131734,
+          "className": "SearchEditBoxWrapperClass",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        },
+        {
+          "name": "Search Box",
+          "handle": 0,
+          "className": "SearchEditBox",
+          "id": "SearchEditBox",
+          "type": "ControlType.Edit",
+          "accessKey": ""
+        },
+        {
+          "name": "Search",
+          "handle": 0,
+          "className": "Button",
+          "id": "SearchBoxSearchButton",
+          "type": "ControlType.Button",
+          "accessKey": ""
+        },
+        {
+          "name": "",
+          "handle": 131740,
+          "className": "SeparatorBand",
+          "id": "",
+          "type": "ControlType.Pane",
+          "accessKey": ""
+        }
+      ],
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 196940,
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "filenameHandle": 131676,
+      "focusedFilenameCandidate": {
+        "className": "Edit",
+        "controlId": 1001,
+        "dialogPid": 6448,
+        "pid": 6448,
+        "handle": 131676
+      },
+      "dialogTitle": "Save as"
+    },
+    {
+      "phase": "template-preflight",
+      "nativeSaved": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "sha256": "e358726a5cd678262088e87353027fd77074386e437752f18943a4874f384367",
+      "edited": false,
+      "saveKey": "Control+s",
+      "independentOracle": "passed"
+    },
+    {
+      "actualNativeSaveSnapshot": "stc-original.xlsx",
+      "edited": false,
+      "sha256": "e358726a5cd678262088e87353027fd77074386e437752f18943a4874f384367"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "windowHandle": 196940,
+      "ownedPid": 6448,
+      "wmClosePosted": true,
+      "sessionId": 2,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Close"
+    },
+    {
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "action": "Focus",
+      "title": "Open Office Studio",
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "sessionId": 2,
+      "title": "Open Office Studio",
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "action": "Focus"
+    },
+    {
+      "dialogFields": [],
+      "ownedTopWindows": [
+        {
+          "title": "Open file",
+          "handle": 328130,
+          "className": "#32770"
+        },
+        {
+          "title": "Open Office Studio",
+          "handle": 262268,
+          "className": "Tauri Window"
+        },
+        {
+          "title": "org.openaec.office-studio-siw",
+          "handle": 458830,
+          "className": "org.openaec.office-studio-sic"
+        },
+        {
+          "title": "",
+          "handle": 262506,
+          "className": "Tao Thread Event Target"
+        }
+      ],
+      "focusedFilenameCandidate": {
+        "pid": 6808,
+        "handle": 328258,
+        "controlId": 1148,
+        "className": "Edit",
+        "dialogPid": 6808
+      },
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "nativeOpenInvoked": true,
+      "ownedPid": 6808,
+      "status": "passed",
+      "pathReadbackMatches": true,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "Open file",
+      "filenameHandle": 328258,
+      "dialogControls": [
+        {
+          "id": "",
+          "handle": 197266,
+          "type": "ControlType.Pane",
+          "className": "DUIViewWndClassName",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "FolderBandModuleInner",
+          "handle": 0,
+          "type": "ControlType.ToolBar",
+          "className": "FolderBandModuleInner",
+          "name": "Command Module",
+          "accessKey": ""
+        },
+        {
+          "id": "HelpButton",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button3d",
+          "name": "&Help",
+          "accessKey": ""
+        },
+        {
+          "id": "PreviewButton",
+          "handle": 0,
+          "type": "ControlType.CheckBox",
+          "className": "Button3d",
+          "name": "Preview pane",
+          "accessKey": "Alt+P"
+        },
+        {
+          "id": "ViewControl",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "className": "ViewControl",
+          "name": "Details",
+          "accessKey": ""
+        },
+        {
+          "id": "SplitMenuButton",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button3d",
+          "name": "View Slider",
+          "accessKey": ""
+        },
+        {
+          "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "AJOSplitButton",
+          "name": "Organize",
+          "accessKey": ""
+        },
+        {
+          "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "AJOSplitButton",
+          "name": "New folder",
+          "accessKey": ""
+        },
+        {
+          "id": "ProperTreeHost",
+          "handle": 328216,
+          "type": "ControlType.Pane",
+          "className": "ProperTreeHost",
+          "name": "Control Host",
+          "accessKey": ""
+        },
+        {
+          "id": "100",
+          "handle": 262762,
+          "type": "ControlType.Pane",
+          "className": "SysTreeView32",
+          "name": "Navigation Pane",
+          "accessKey": ""
+        },
+        {
+          "id": "listview",
+          "handle": 197346,
+          "type": "ControlType.Pane",
+          "className": "DUIListView",
+          "name": "Shell Folder View",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197272,
+          "type": "ControlType.List",
+          "className": "UIItemsView",
+          "name": "Items View",
+          "accessKey": ""
+        },
+        {
+          "id": "HorizontalScrollBar",
+          "handle": 197274,
+          "type": "ControlType.Pane",
+          "className": "LineHScrollBar",
+          "name": "Horizontal",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 0,
+          "type": "ControlType.Header",
+          "className": "UIViewHeader",
+          "name": "Header",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "className": "UIColumnHeader",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "DropDown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "className": "UIColumnHeader",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "DropDown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "className": "UIColumnHeader",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "DropDown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "className": "UIColumnHeader",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "DropDown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button",
+          "name": "Filter dropdown",
+          "accessKey": ""
+        },
+        {
+          "id": "0",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "carnet de notes.stc",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "1",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "editing.stderr",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "2",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "editing.stdout",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "3",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "stc-original",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "4",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "stc-working",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "5",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "template-preflight.stderr",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "6",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "className": "UIItem",
+          "name": "template-preflight.stdout",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemNameDisplay",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Name",
+          "accessKey": ""
+        },
+        {
+          "id": "System.DateModified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Date modified",
+          "accessKey": ""
+        },
+        {
+          "id": "System.ItemTypeText",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Type",
+          "accessKey": ""
+        },
+        {
+          "id": "System.Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "UIProperty",
+          "name": "Size",
+          "accessKey": ""
+        },
+        {
+          "id": "AppControlsModuleInner",
+          "handle": 0,
+          "type": "ControlType.Tree",
+          "className": "AppControlsModuleInner",
+          "name": "Application Controls",
+          "accessKey": ""
+        },
+        {
+          "id": "1090",
+          "handle": 393754,
+          "type": "ControlType.Pane",
+          "className": "Static",
+          "name": "File name:",
+          "accessKey": ""
+        },
+        {
+          "id": "1148",
+          "handle": 197344,
+          "type": "ControlType.Pane",
+          "className": "ComboBoxEx32",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "1148",
+          "handle": 328232,
+          "type": "ControlType.Pane",
+          "className": "ComboBox",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "1148",
+          "handle": 328258,
+          "type": "ControlType.Pane",
+          "className": "Edit",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "1136",
+          "handle": 197180,
+          "type": "ControlType.Pane",
+          "className": "ComboBox",
+          "name": "Office files",
+          "accessKey": ""
+        },
+        {
+          "id": "1",
+          "handle": 197178,
+          "type": "ControlType.Pane",
+          "className": "Button",
+          "name": "Open",
+          "accessKey": ""
+        },
+        {
+          "id": "2",
+          "handle": 197290,
+          "type": "ControlType.Pane",
+          "className": "Button",
+          "name": "Cancel",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 262720,
+          "type": "ControlType.Pane",
+          "className": "ScrollBar",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197248,
+          "type": "ControlType.Pane",
+          "className": "WorkerW",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "40965",
+          "handle": 197246,
+          "type": "ControlType.Pane",
+          "className": "ReBarWindow32",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197318,
+          "type": "ControlType.Pane",
+          "className": "TravelBand",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197234,
+          "type": "ControlType.Pane",
+          "className": "ToolbarWindow32",
+          "name": "Navigation buttons",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197316,
+          "type": "ControlType.Pane",
+          "className": "UpBand",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 262690,
+          "type": "ControlType.Pane",
+          "className": "ToolbarWindow32",
+          "name": "Up band",
+          "accessKey": ""
+        },
+        {
+          "id": "41477",
+          "handle": 197210,
+          "type": "ControlType.Pane",
+          "className": "Address Band Root",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197348,
+          "type": "ControlType.Pane",
+          "className": "msctls_progress32",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197214,
+          "type": "ControlType.Pane",
+          "className": "Breadcrumb Parent",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "1001",
+          "handle": 197216,
+          "type": "ControlType.Pane",
+          "className": "ToolbarWindow32",
+          "name": "Address: D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197212,
+          "type": "ControlType.Pane",
+          "className": "ToolbarWindow32",
+          "name": "Address band",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197252,
+          "type": "ControlType.Pane",
+          "className": "SeparatorBand",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 393766,
+          "type": "ControlType.Pane",
+          "className": "UniversalSearchBand",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 328382,
+          "type": "ControlType.Pane",
+          "className": "Search Box",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197276,
+          "type": "ControlType.Pane",
+          "className": "SearchEditBoxWrapperClass",
+          "name": "",
+          "accessKey": ""
+        },
+        {
+          "id": "SearchEditBox",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "className": "SearchEditBox",
+          "name": "Search Box",
+          "accessKey": ""
+        },
+        {
+          "id": "SearchBoxSearchButton",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "className": "Button",
+          "name": "Search",
+          "accessKey": ""
+        },
+        {
+          "id": "",
+          "handle": 197270,
+          "type": "ControlType.Pane",
+          "className": "SeparatorBand",
+          "name": "",
+          "accessKey": ""
+        }
+      ],
+      "filenameBefore": "",
+      "filenameFocusKeys": "Alt+n in the owned native common Open dialog",
+      "sessionId": 2,
+      "action": "OpenDialog",
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "nativeFilenameLabel": "File name:",
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "dialogTitle": "Open file",
+      "windowHandle": 328130
+    },
+    {
+      "nativeFilePickerOpened": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "productionTab": "stc-working.xlsx",
+      "noBridgeInjection": true,
+      "template": false
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-H3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "foregroundPid": 6808,
+      "sessionId": 2,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-I3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nativeSourceHeaders": [
+        {
+          "address": "H3",
+          "text": "Moyenne brute"
+        },
+        {
+          "address": "I3",
+          "text": "Moyenne arrondie"
+        }
+      ],
+      "sheetCount": 6
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "action": "Focus",
+      "status": "passed",
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-C4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "status": "passed",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "edit-C4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "status": "passed",
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-D4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "windowHandle": 262268,
+      "status": "passed",
+      "sessionId": 2,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808,
+      "action": "Focus"
+    },
+    {
+      "focus": "edit-D4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "status": "passed",
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-E4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "action": "Focus",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "edit-E4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "action": "Focus",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-F4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "status": "passed",
+      "foregroundPid": 6808,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "edit-F4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-G4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed"
+    },
+    {
+      "focus": "edit-G4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "action": "Focus",
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-C5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "sessionId": 2
+    },
+    {
+      "focus": "edit-C5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-D5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "status": "passed",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "edit-D5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "status": "passed",
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-E5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2
+    },
+    {
+      "focus": "edit-E5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-F5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268
+    },
+    {
+      "focus": "edit-F5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-G5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "status": "passed"
+    },
+    {
+      "focus": "edit-G5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "action": "Focus",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808,
+      "status": "passed",
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "status": "passed",
+      "windowHandle": 262268,
+      "sessionId": 2
+    },
+    {
+      "focus": "edit-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-C4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-D4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-E4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "action": "Focus",
+      "status": "passed",
+      "foregroundPid": 6808,
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-F4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "action": "Focus",
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-G4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-C5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-D5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-E5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-F5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "ownedPid": 6808,
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-G5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "action": "Focus",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "ownedPid": 6808,
+      "windowHandle": 262268,
+      "status": "passed",
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "weightedStage": "weighted-edited",
+      "actualInputs": [
+        {
+          "address": "C4",
+          "actual": "1"
+        },
+        {
+          "address": "D4",
+          "actual": "2"
+        },
+        {
+          "address": "E4",
+          "actual": "1"
+        },
+        {
+          "address": "F4",
+          "actual": "1"
+        },
+        {
+          "address": "G4",
+          "actual": "1"
+        },
+        {
+          "address": "C5",
+          "actual": "10"
+        },
+        {
+          "address": "D5",
+          "actual": "12"
+        },
+        {
+          "address": "E5",
+          "actual": "14"
+        },
+        {
+          "address": "F5",
+          "actual": "16"
+        },
+        {
+          "address": "G5",
+          "actual": "18"
+        }
+      ],
+      "hFormula": "=SUMPRODUCT($C$4:$G$4,C5:G5)/SUMIF(C5:G5,\">=0\",$C$4:$G$4)",
+      "hLabel": "H5, 13.67, selected",
+      "hDisplay": 13.67,
+      "iFormula": "=MROUND(H5,0.25)",
+      "iLabel": "I5, 13.75, selected",
+      "iDisplay": 13.75,
+      "expectedWeighted": 13.666666666666666,
+      "expectedRounded": 13.75
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "sessionId": 2,
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "sessionId": 2,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "windowHandle": 262268,
+      "action": "Focus",
+      "sessionId": 2,
+      "ownedPid": 6808,
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nameStage": "name-edited",
+      "actualNameInput": "QA_STC_23NOV",
+      "directCellLabel": "A5, QA_STC_23NOV, selected",
+      "linkedCellLabel": "A5, QA_STC_23NOV, selected"
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "status": "passed",
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2
+    },
+    {
+      "actualGridFocus": {
+        "tag": "SPAN",
+        "role": "gridcell",
+        "gridOwns": true
+      },
+      "physicalCanvasPoint": {
+        "x": 114.3828125,
+        "y": 257.265625
+      },
+      "platformKey": "Control+z"
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "status": "passed",
+      "action": "Focus",
+      "windowHandle": 262268,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808,
+      "status": "passed",
+      "sessionId": 2,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nameStage": "name-undo",
+      "actualNameInput": "Nom1",
+      "directCellLabel": "A5, Nom1, selected",
+      "linkedCellLabel": "A5, Nom1, selected"
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "action": "Focus",
+      "status": "passed",
+      "ownedPid": 6808,
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "sessionId": 2
+    },
+    {
+      "actualGridFocus": {
+        "tag": "SPAN",
+        "role": "gridcell",
+        "gridOwns": true
+      },
+      "physicalCanvasPoint": {
+        "x": 114.3828125,
+        "y": 257.265625
+      },
+      "platformKey": "Control+y"
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "status": "passed",
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "ownedPid": 6808,
+      "status": "passed",
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nameStage": "name-redo",
+      "actualNameInput": "QA_STC_23NOV",
+      "directCellLabel": "A5, QA_STC_23NOV, selected",
+      "linkedCellLabel": "A5, QA_STC_23NOV, selected"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "ownedPid": 6808,
+      "status": "passed",
+      "sessionId": 2,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-C4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "action": "Focus",
+      "status": "passed",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-D4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-E4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-F4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-G4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "windowHandle": 262268,
+      "foregroundPid": 6808,
+      "sessionId": 2,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-C5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "sessionId": 2,
+      "action": "Focus",
+      "windowHandle": 262268,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-D5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "ownedPid": 6808,
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-E5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "ownedPid": 6808,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "foregroundPid": 6808,
+      "status": "passed",
+      "sessionId": 2,
+      "windowHandle": 262268
+    },
+    {
+      "focus": "name-box-F5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "action": "Focus",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-G5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "foregroundPid": 6808,
+      "status": "passed",
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 6808
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "sessionId": 2,
+      "status": "passed",
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "windowHandle": 262268,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "action": "Focus",
+      "ownedPid": 6808,
+      "windowHandle": 262268,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 6808
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 6808,
+      "foregroundPid": 6808,
+      "sessionId": 2,
+      "windowHandle": 262268,
+      "title": "stc-working.xlsx • — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "weightedStage": "weighted-redo",
+      "actualInputs": [
+        {
+          "address": "C4",
+          "actual": "1"
+        },
+        {
+          "address": "D4",
+          "actual": "2"
+        },
+        {
+          "address": "E4",
+          "actual": "1"
+        },
+        {
+          "address": "F4",
+          "actual": "1"
+        },
+        {
+          "address": "G4",
+          "actual": "1"
+        },
+        {
+          "address": "C5",
+          "actual": "10"
+        },
+        {
+          "address": "D5",
+          "actual": "12"
+        },
+        {
+          "address": "E5",
+          "actual": "14"
+        },
+        {
+          "address": "F5",
+          "actual": "16"
+        },
+        {
+          "address": "G5",
+          "actual": "18"
+        }
+      ],
+      "hFormula": "=SUMPRODUCT($C$4:$G$4,C5:G5)/SUMIF(C5:G5,\">=0\",$C$4:$G$4)",
+      "hLabel": "H5, 13.67, selected",
+      "hDisplay": 13.67,
+      "iFormula": "=MROUND(H5,0.25)",
+      "iLabel": "I5, 13.75, selected",
+      "iDisplay": 13.75,
+      "expectedWeighted": 13.666666666666666,
+      "expectedRounded": 13.75
+    },
+    {
+      "actualNativeSaveSnapshot": "stc-edited.xlsx",
+      "edited": true,
+      "sha256": "d5e6bd6fe43ce28346e2c3ad783756dd4db96224128cec2d79dd6acf52356b23"
+    },
+    {
+      "ownedPid": 6808,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "action": "Close",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 262268,
+      "wmClosePosted": true
+    },
+    {
+      "status": "passed",
+      "windowHandle": 524754,
+      "title": "Open Office Studio",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "foregroundPid": 4952
+    },
+    {
+      "status": "passed",
+      "title": "Open Office Studio",
+      "sessionId": 2,
+      "action": "Focus",
+      "foregroundPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 4952,
+      "windowHandle": 524754
+    },
+    {
+      "ownedPid": 4952,
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "dialogTitle": "Open file",
+      "filenameFocusKeys": "Alt+n in the owned native common Open dialog",
+      "filenameBefore": "",
+      "dialogFields": [],
+      "focusedFilenameCandidate": {
+        "className": "Edit",
+        "pid": 4952,
+        "controlId": 1148,
+        "dialogPid": 4952,
+        "handle": 197130
+      },
+      "filenameHandle": 197130,
+      "nativeOpenInvoked": true,
+      "action": "OpenDialog",
+      "pathReadbackMatches": true,
+      "status": "passed",
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "windowHandle": 393304,
+      "nativeFilenameLabel": "File name:",
+      "ownedTopWindows": [
+        {
+          "className": "#32770",
+          "title": "Open file",
+          "handle": 393304
+        },
+        {
+          "className": "Tauri Window",
+          "title": "Open Office Studio",
+          "handle": 524754
+        },
+        {
+          "className": "org.openaec.office-studio-sic",
+          "title": "org.openaec.office-studio-siw",
+          "handle": 458770
+        },
+        {
+          "className": "Tao Thread Event Target",
+          "title": "",
+          "handle": 393690
+        }
+      ],
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "dialogControls": [
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "DUIViewWndClassName",
+          "handle": 459302,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.ToolBar",
+          "accessKey": "",
+          "className": "FolderBandModuleInner",
+          "handle": 0,
+          "name": "Command Module",
+          "id": "FolderBandModuleInner"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button3d",
+          "handle": 0,
+          "name": "&Help",
+          "id": "HelpButton"
+        },
+        {
+          "type": "ControlType.CheckBox",
+          "accessKey": "Alt+P",
+          "className": "Button3d",
+          "handle": 0,
+          "name": "Preview pane",
+          "id": "PreviewButton"
+        },
+        {
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "className": "ViewControl",
+          "handle": 0,
+          "name": "Details",
+          "id": "ViewControl"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button3d",
+          "handle": 0,
+          "name": "View Slider",
+          "id": "SplitMenuButton"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "AJOSplitButton",
+          "handle": 0,
+          "name": "Organize",
+          "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "AJOSplitButton",
+          "handle": 0,
+          "name": "New folder",
+          "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ProperTreeHost",
+          "handle": 328242,
+          "name": "Control Host",
+          "id": "ProperTreeHost"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "SysTreeView32",
+          "handle": 262750,
+          "name": "Navigation Pane",
+          "id": "100"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "DUIListView",
+          "handle": 262812,
+          "name": "Shell Folder View",
+          "id": "listview"
+        },
+        {
+          "type": "ControlType.List",
+          "accessKey": "",
+          "className": "UIItemsView",
+          "handle": 262724,
+          "name": "Items View",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "LineHScrollBar",
+          "handle": 262746,
+          "name": "Horizontal",
+          "id": "HorizontalScrollBar"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "LineVScrollBar",
+          "handle": 328354,
+          "name": "Vertical",
+          "id": "VerticalScrollBar"
+        },
+        {
+          "type": "ControlType.Header",
+          "accessKey": "",
+          "className": "UIViewHeader",
+          "handle": 0,
+          "name": "Header",
+          "id": ""
+        },
+        {
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 0,
+          "name": "Filter dropdown",
+          "id": "DropDown"
+        },
+        {
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 0,
+          "name": "Filter dropdown",
+          "id": "DropDown"
+        },
+        {
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 0,
+          "name": "Filter dropdown",
+          "id": "DropDown"
+        },
+        {
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "className": "UIColumnHeader",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 0,
+          "name": "Filter dropdown",
+          "id": "DropDown"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "carnet de notes.stc",
+          "id": "0"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "editing.stderr",
+          "id": "1"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "editing.stdout",
+          "id": "2"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "reopened.stderr",
+          "id": "3"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "reopened.stdout",
+          "id": "4"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "stc-edited",
+          "id": "5"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "stc-original",
+          "id": "6"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "stc-working",
+          "id": "7"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "className": "UIItem",
+          "handle": 0,
+          "name": "template-preflight.stderr",
+          "id": "8"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Name",
+          "id": "System.ItemNameDisplay"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Date modified",
+          "id": "System.DateModified"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Type",
+          "id": "System.ItemTypeText"
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "UIProperty",
+          "handle": 0,
+          "name": "Size",
+          "id": "System.Size"
+        },
+        {
+          "type": "ControlType.Tree",
+          "accessKey": "",
+          "className": "AppControlsModuleInner",
+          "handle": 0,
+          "name": "Application Controls",
+          "id": "AppControlsModuleInner"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Static",
+          "handle": 589900,
+          "name": "File name:",
+          "id": "1090"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ComboBoxEx32",
+          "handle": 458866,
+          "name": "",
+          "id": "1148"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ComboBox",
+          "handle": 459180,
+          "name": "",
+          "id": "1148"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Edit",
+          "handle": 197130,
+          "name": "",
+          "id": "1148"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ComboBox",
+          "handle": 262714,
+          "name": "Office files",
+          "id": "1136"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 262716,
+          "name": "Open",
+          "id": "1"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 262838,
+          "name": "Cancel",
+          "id": "2"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ScrollBar",
+          "handle": 327722,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "WorkerW",
+          "handle": 328244,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ReBarWindow32",
+          "handle": 262882,
+          "name": "",
+          "id": "40965"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "TravelBand",
+          "handle": 262808,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "handle": 393914,
+          "name": "Navigation buttons",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "UpBand",
+          "handle": 328316,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "handle": 262824,
+          "name": "Up band",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Address Band Root",
+          "handle": 328340,
+          "name": "",
+          "id": "41477"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "msctls_progress32",
+          "handle": 262820,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Breadcrumb Parent",
+          "handle": 328292,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "handle": 393750,
+          "name": "Address: D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof",
+          "id": "1001"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "ToolbarWindow32",
+          "handle": 459476,
+          "name": "Address band",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "SeparatorBand",
+          "handle": 328234,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "UniversalSearchBand",
+          "handle": 393752,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "Search Box",
+          "handle": 328296,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "SearchEditBoxWrapperClass",
+          "handle": 328298,
+          "name": "",
+          "id": ""
+        },
+        {
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "className": "SearchEditBox",
+          "handle": 0,
+          "name": "Search Box",
+          "id": "SearchEditBox"
+        },
+        {
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "className": "Button",
+          "handle": 0,
+          "name": "Search",
+          "id": "SearchBoxSearchButton"
+        },
+        {
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "className": "SeparatorBand",
+          "handle": 262806,
+          "name": "",
+          "id": ""
+        }
+      ],
+      "title": "Open file",
+      "sessionId": 2
+    },
+    {
+      "nativeFilePickerOpened": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-working.xlsx",
+      "productionTab": "stc-working.xlsx",
+      "noBridgeInjection": true,
+      "template": false
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "windowHandle": 524754,
+      "foregroundPid": 4952,
+      "ownedPid": 4952,
+      "sessionId": 2,
+      "status": "passed",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-H3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "sessionId": 2,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 524754,
+      "ownedPid": 4952,
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-I3",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nativeSourceHeaders": [
+        {
+          "address": "H3",
+          "text": "Moyenne brute"
+        },
+        {
+          "address": "I3",
+          "text": "Moyenne arrondie"
+        }
+      ],
+      "sheetCount": 6
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "windowHandle": 524754,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "ownedPid": 4952,
+      "foregroundPid": 4952,
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-C4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "sessionId": 2,
+      "action": "Focus",
+      "ownedPid": 4952,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed",
+      "foregroundPid": 4952,
+      "windowHandle": 524754
+    },
+    {
+      "focus": "name-box-D4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "windowHandle": 524754,
+      "status": "passed",
+      "ownedPid": 4952,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 4952
+    },
+    {
+      "focus": "name-box-E4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "foregroundPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "status": "passed",
+      "windowHandle": 524754,
+      "action": "Focus",
+      "ownedPid": 4952
+    },
+    {
+      "focus": "name-box-F4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 524754,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "foregroundPid": 4952,
+      "sessionId": 2,
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-G4",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 524754,
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "foregroundPid": 4952,
+      "action": "Focus",
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-C5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 4952,
+      "action": "Focus",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "windowHandle": 524754,
+      "status": "passed",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 4952
+    },
+    {
+      "focus": "name-box-D5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "windowHandle": 524754,
+      "sessionId": 2,
+      "foregroundPid": 4952,
+      "ownedPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed"
+    },
+    {
+      "focus": "name-box-E5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "sessionId": 2,
+      "windowHandle": 524754,
+      "foregroundPid": 4952,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "ownedPid": 4952,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "focus": "name-box-F5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "windowHandle": 524754,
+      "foregroundPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-G5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "action": "Focus",
+      "windowHandle": 524754,
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 4952
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "action": "Focus",
+      "status": "passed",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "foregroundPid": 4952,
+      "windowHandle": 524754
+    },
+    {
+      "focus": "name-box-H5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "sessionId": 2,
+      "foregroundPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 4952,
+      "action": "Focus",
+      "windowHandle": 524754,
+      "status": "passed",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)"
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "status": "passed",
+      "windowHandle": 524754,
+      "foregroundPid": 4952,
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 4952,
+      "action": "Focus"
+    },
+    {
+      "focus": "name-box-I5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "weightedStage": "weighted-reopened",
+      "actualInputs": [
+        {
+          "address": "C4",
+          "actual": "1"
+        },
+        {
+          "address": "D4",
+          "actual": "2"
+        },
+        {
+          "address": "E4",
+          "actual": "1"
+        },
+        {
+          "address": "F4",
+          "actual": "1"
+        },
+        {
+          "address": "G4",
+          "actual": "1"
+        },
+        {
+          "address": "C5",
+          "actual": "10"
+        },
+        {
+          "address": "D5",
+          "actual": "12"
+        },
+        {
+          "address": "E5",
+          "actual": "14"
+        },
+        {
+          "address": "F5",
+          "actual": "16"
+        },
+        {
+          "address": "G5",
+          "actual": "18"
+        }
+      ],
+      "hFormula": "=SUMPRODUCT($C$4:$G$4,C5:G5)/SUMIF(C5:G5,\">=0\",$C$4:$G$4)",
+      "hLabel": "H5, 13.67, selected",
+      "hDisplay": 13.67,
+      "iFormula": "=MROUND(H5,0.25)",
+      "iLabel": "I5, 13.75, selected",
+      "iDisplay": 13.75,
+      "expectedWeighted": 13.666666666666666,
+      "expectedRounded": 13.75
+    },
+    {
+      "actualSelectedSheet": "liste des élèves",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "sessionId": 2,
+      "windowHandle": 524754,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "action": "Focus",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "ownedPid": 4952,
+      "status": "passed",
+      "foregroundPid": 4952
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "ownedPid": 4952,
+      "action": "Focus",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "foregroundPid": 4952,
+      "windowHandle": 524754,
+      "sessionId": 2
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "actualSelectedSheet": "notes 1 trimestre",
+      "verifiedProductionAriaTab": true
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "windowHandle": 524754,
+      "foregroundPid": 4952,
+      "action": "Focus",
+      "sessionId": 2,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "ownedPid": 4952
+    },
+    {
+      "focus": "name-box-A5",
+      "osAndRenderer": true,
+      "platformKeys": "Windows Control"
+    },
+    {
+      "nameStage": "name-reopened",
+      "actualNameInput": "QA_STC_23NOV",
+      "directCellLabel": "A5, QA_STC_23NOV, selected",
+      "linkedCellLabel": "A5, QA_STC_23NOV, selected"
+    },
+    {
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "action": "Focus",
+      "foregroundPid": 4952,
+      "sessionId": 2,
+      "ownedPid": 4952,
+      "windowHandle": 524754,
+      "status": "passed",
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+    },
+    {
+      "actualDefaultSaveProposal": "xlsx",
+      "phase": "reopened"
+    },
+    {
+      "sessionId": 2,
+      "saveMethod": "actual-Enter-owned-native-Save-dialog",
+      "action": "SaveDialog",
+      "target": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-reopened.xlsx",
+      "status": "passed",
+      "dialogControls": [
+        {
+          "name": "",
+          "handle": 524838,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "DUIViewWndClassName"
+        },
+        {
+          "name": "Command Module",
+          "handle": 0,
+          "type": "ControlType.ToolBar",
+          "accessKey": "",
+          "id": "FolderBandModuleInner",
+          "className": "FolderBandModuleInner"
+        },
+        {
+          "name": "&Help",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "HelpButton",
+          "className": "Button3d"
+        },
+        {
+          "name": "Details",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "id": "ViewControl",
+          "className": "ViewControl"
+        },
+        {
+          "name": "View Slider",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "SplitMenuButton",
+          "className": "Button3d"
+        },
+        {
+          "name": "Organize",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}",
+          "className": "AJOSplitButton"
+        },
+        {
+          "name": "New folder",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}",
+          "className": "AJOSplitButton"
+        },
+        {
+          "name": "Control Host",
+          "handle": 328342,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "ProperTreeHost",
+          "className": "ProperTreeHost"
+        },
+        {
+          "name": "Navigation Pane",
+          "handle": 393832,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "100",
+          "className": "SysTreeView32"
+        },
+        {
+          "name": "Shell Folder View",
+          "handle": 459438,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "listview",
+          "className": "DUIListView"
+        },
+        {
+          "name": "Items View",
+          "handle": 655902,
+          "type": "ControlType.List",
+          "accessKey": "",
+          "id": "",
+          "className": "UIItemsView"
+        },
+        {
+          "name": "Horizontal",
+          "handle": 393938,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "HorizontalScrollBar",
+          "className": "LineHScrollBar"
+        },
+        {
+          "name": "Header",
+          "handle": 0,
+          "type": "ControlType.Header",
+          "accessKey": "",
+          "id": "",
+          "className": "UIViewHeader"
+        },
+        {
+          "name": "Name",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "id": "System.ItemNameDisplay",
+          "className": "UIColumnHeader"
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "DropDown",
+          "className": "Button"
+        },
+        {
+          "name": "Date modified",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "id": "System.DateModified",
+          "className": "UIColumnHeader"
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "DropDown",
+          "className": "Button"
+        },
+        {
+          "name": "Type",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "id": "System.ItemTypeText",
+          "className": "UIColumnHeader"
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "DropDown",
+          "className": "Button"
+        },
+        {
+          "name": "Size",
+          "handle": 0,
+          "type": "ControlType.SplitButton",
+          "accessKey": "",
+          "id": "System.Size",
+          "className": "UIColumnHeader"
+        },
+        {
+          "name": "Filter dropdown",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "DropDown",
+          "className": "Button"
+        },
+        {
+          "name": "stc-edited",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "id": "0",
+          "className": "UIItem"
+        },
+        {
+          "name": "Name",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemNameDisplay",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Date modified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.DateModified",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Type",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemTypeText",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.Size",
+          "className": "UIProperty"
+        },
+        {
+          "name": "stc-original",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "id": "1",
+          "className": "UIItem"
+        },
+        {
+          "name": "Name",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemNameDisplay",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Date modified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.DateModified",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Type",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemTypeText",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.Size",
+          "className": "UIProperty"
+        },
+        {
+          "name": "stc-working",
+          "handle": 0,
+          "type": "ControlType.ListItem",
+          "accessKey": "",
+          "id": "2",
+          "className": "UIItem"
+        },
+        {
+          "name": "Name",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemNameDisplay",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Date modified",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.DateModified",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Type",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.ItemTypeText",
+          "className": "UIProperty"
+        },
+        {
+          "name": "Size",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "System.Size",
+          "className": "UIProperty"
+        },
+        {
+          "name": "File name:",
+          "handle": 0,
+          "type": "ControlType.Text",
+          "accessKey": "Alt+n",
+          "id": "SaveDialogLabel",
+          "className": "CIDLabel"
+        },
+        {
+          "name": "File name:",
+          "handle": 393770,
+          "type": "ControlType.Pane",
+          "accessKey": "Alt+n",
+          "id": "FileNameControlHost",
+          "className": "AppControlHost"
+        },
+        {
+          "name": "stc-reopened.xlsx",
+          "handle": 393876,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "1001",
+          "className": "Edit"
+        },
+        {
+          "name": "Save as type:",
+          "handle": 0,
+          "type": "ControlType.Text",
+          "accessKey": "Alt+t",
+          "id": "SaveDialogLabel",
+          "className": "CIDLabel"
+        },
+        {
+          "name": "Save as type:",
+          "handle": 1180048,
+          "type": "ControlType.Pane",
+          "accessKey": "Alt+t",
+          "id": "FileTypeControlHost",
+          "className": "AppControlHost"
+        },
+        {
+          "name": "Save Fields",
+          "handle": 0,
+          "type": "ControlType.Tree",
+          "accessKey": "",
+          "id": "SaveDialogPreviewMetadataInner",
+          "className": "SaveDialogPreviewMetadataInner"
+        },
+        {
+          "name": "Application Controls",
+          "handle": 0,
+          "type": "ControlType.Tree",
+          "accessKey": "",
+          "id": "AppControlsModuleInner",
+          "className": "AppControlsModuleInner"
+        },
+        {
+          "name": "",
+          "handle": 459374,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "ToolbarWindow32"
+        },
+        {
+          "name": "Save",
+          "handle": 328362,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "1",
+          "className": "Button"
+        },
+        {
+          "name": "Cancel",
+          "handle": 459464,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "2",
+          "className": "Button"
+        },
+        {
+          "name": "",
+          "handle": 393786,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "ScrollBar"
+        },
+        {
+          "name": "",
+          "handle": 524862,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "WorkerW"
+        },
+        {
+          "name": "",
+          "handle": 590274,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "40965",
+          "className": "ReBarWindow32"
+        },
+        {
+          "name": "",
+          "handle": 1639054,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "TravelBand"
+        },
+        {
+          "name": "Navigation buttons",
+          "handle": 328332,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "ToolbarWindow32"
+        },
+        {
+          "name": "",
+          "handle": 393798,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "UpBand"
+        },
+        {
+          "name": "Up band",
+          "handle": 524716,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "ToolbarWindow32"
+        },
+        {
+          "name": "",
+          "handle": 459386,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "41477",
+          "className": "Address Band Root"
+        },
+        {
+          "name": "",
+          "handle": 262666,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "msctls_progress32"
+        },
+        {
+          "name": "",
+          "handle": 328278,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "Breadcrumb Parent"
+        },
+        {
+          "name": "Address: D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof",
+          "handle": 589844,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "1001",
+          "className": "ToolbarWindow32"
+        },
+        {
+          "name": "Address band",
+          "handle": 655436,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "ToolbarWindow32"
+        },
+        {
+          "name": "",
+          "handle": 590296,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "SeparatorBand"
+        },
+        {
+          "name": "",
+          "handle": 393912,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "UniversalSearchBand"
+        },
+        {
+          "name": "",
+          "handle": 328348,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "Search Box"
+        },
+        {
+          "name": "",
+          "handle": 328260,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "SearchEditBoxWrapperClass"
+        },
+        {
+          "name": "Search Box",
+          "handle": 0,
+          "type": "ControlType.Edit",
+          "accessKey": "",
+          "id": "SearchEditBox",
+          "className": "SearchEditBox"
+        },
+        {
+          "name": "Search",
+          "handle": 0,
+          "type": "ControlType.Button",
+          "accessKey": "",
+          "id": "SearchBoxSearchButton",
+          "className": "Button"
+        },
+        {
+          "name": "",
+          "handle": 393890,
+          "type": "ControlType.Pane",
+          "accessKey": "",
+          "id": "",
+          "className": "SeparatorBand"
+        }
+      ],
+      "ownedPid": 4952,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "windowHandle": 524754,
+      "dialogFields": [],
+      "ownedTopWindows": [
+        {
+          "className": "#32770",
+          "handle": 524888,
+          "title": "Save as"
+        },
+        {
+          "className": "Tauri Window",
+          "handle": 524754,
+          "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)"
+        },
+        {
+          "className": "org.openaec.office-studio-sic",
+          "handle": 458770,
+          "title": "org.openaec.office-studio-siw"
+        },
+        {
+          "className": "Tao Thread Event Target",
+          "handle": 393690,
+          "title": ""
+        }
+      ],
+      "nativeSaveInvoked": true,
+      "filenameBefore": "stc-reopened.xlsx",
+      "dialogTitle": "Save as",
+      "focusedFilenameCandidate": {
+        "controlId": 1001,
+        "className": "Edit",
+        "pid": 4952,
+        "handle": 393876,
+        "dialogPid": 4952
+      },
+      "filenameMethod": "physical-keys-owned-native-filename",
+      "title": "stc-working.xlsx — Open Office Studio (Spreadsheet)",
+      "pathReadbackMatches": true,
+      "filenameHandle": 393876
+    },
+    {
+      "phase": "reopened",
+      "nativeSaved": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-proof\\stc-reopened.xlsx",
+      "sha256": "ce9661679cf446620632485a76bc4fc9d03f2a8c1194323ecd216af4b34f41b0",
+      "edited": true,
+      "saveKey": "Control+Shift+s",
+      "independentOracle": "passed"
+    },
+    {
+      "windowHandle": 524754,
+      "wmClosePosted": true,
+      "action": "Close",
+      "title": "stc-reopened.xlsx — Open Office Studio (Spreadsheet)",
+      "ownedPid": 4952,
+      "sessionId": 2,
+      "executable": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+      "status": "passed"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "template-preflight",
+      "pid": 6448,
+      "status": "passed-template-new-save-preflight",
+      "pageErrors": [],
+      "pageUrl": "http://tauri.localhost/",
+      "nativeMetadata": {
+        "identifier": "org.openaec.office-studio",
+        "version": "2026.48.1",
+        "name": "Open Office Studio"
+      },
+      "process": {
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "windowHandle": 196940,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "parent": 876,
+        "pid": 6448
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\webview-profile",
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeExecutable": {
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "productVersion": "26.8.2.2",
+        "fileVersion": "26.8.2.2",
+        "signature": "Valid",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "productName": "LibreOffice",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "editing",
+      "pid": 6808,
+      "status": "passed-weighted-name-undo-redo",
+      "pageErrors": [],
+      "pageUrl": "http://tauri.localhost/",
+      "nativeMetadata": {
+        "identifier": "org.openaec.office-studio",
+        "version": "2026.48.1",
+        "name": "Open Office Studio"
+      },
+      "process": {
+        "windowHandle": 262268,
+        "parent": 876,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "pid": 6808
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\webview-profile",
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeExecutable": {
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "signature": "Valid",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "productVersion": "26.8.2.2",
+        "fileVersion": "26.8.2.2",
+        "productName": "LibreOffice",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "reopened",
+      "pid": 4952,
+      "status": "passed-six-sheets-reopened",
+      "pageErrors": [],
+      "pageUrl": "http://tauri.localhost/",
+      "nativeMetadata": {
+        "identifier": "org.openaec.office-studio",
+        "version": "2026.48.1",
+        "name": "Open Office Studio"
+      },
+      "process": {
+        "windowHandle": 524754,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe",
+        "parent": 876,
+        "pid": 4952
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\webview-profile",
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeExecutable": {
+        "fileVersion": "26.8.2.2",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "signature": "Valid",
+        "productVersion": "26.8.2.2",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\kantoorruntime\\program\\soffice.com",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "productName": "LibreOffice"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    }
+  ],
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "limitations": [
+    "Canonical P2 functional package is unsigned; signing/release acceptance remains separate"
+  ],
+  "scope": "Canonical Windows suite native STC template through real file picker and production IPC; no standalone/release approval",
+  "baseline": {
+    "apps": [],
+    "os": "Microsoft Windows NT 10.0.26100.0",
+    "interactive": true,
+    "session": 2,
+    "suitePaths": [],
+    "profiles": [],
+    "webview2": []
+  },
+  "installer": {
+    "productVersion": "2026.48.1",
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\stc-native-package\\Open Office Studio_2026.48.1_x64-setup.exe",
+    "productName": "Open Office Studio",
+    "sha256": "85d5155a0322ce296eb4f57485235cdb725f4f293c7642bc562971ff924357ce",
+    "fileVersion": "2026.48.1",
+    "signature": "NotSigned",
+    "signer": null
+  },
+  "executable": {
+    "productName": "Open Office Studio",
+    "signer": null,
+    "signature": "NotSigned",
+    "fileVersion": "2026.48.1",
+    "productVersion": "2026.48.1",
+    "sha256": "feab08d3bc09895745c75653b2f8c806e04efa7fc36101debff8b278da599a67",
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-VDiuZl\\installed\\open-office-studio.exe"
+  },
+  "payloadEqualsInstalled": true,
+  "templateAsNew": {
+    "actualTabName": "Untitled 1.xlsx",
+    "originalFilename": "carnet de notes.stc",
+    "newUntitledName": true,
+    "sourceSha256": "ff735a1a20c28e39e8349d46e5a531e6e6cde24f50f7aaa8d92e408e4a344d4c",
+    "firstCtrlSRequiredSaveAs": true
+  },
+  "shortPreflight": {
+    "status": "passed",
+    "focus": true,
+    "platformKeys": "Windows Control",
+    "actualNativeSave": true,
+    "normalFullQuit": true,
+    "newProcessPid": 6808,
+    "previousPid": 6448,
+    "templateAsNew": true
+  },
+  "sourceUnchanged": true
+}

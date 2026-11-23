@@ -1,0 +1,6040 @@
+{
+  "source": {
+    "repository": "https://github.com/apache/openoffice-org",
+    "commit": "1a66d6baadf2699680758c2d68e628125bf5aec7",
+    "path": "assets/fr/Documentation/modele/carnet de notes.stc",
+    "blob": "0ee1d25ec364e23fe840d5a4164d3b3ac11ba3a2",
+    "url": "https://raw.githubusercontent.com/apache/openoffice-org/1a66d6baadf2699680758c2d68e628125bf5aec7/assets/fr/Documentation/modele/carnet%20de%20notes.stc",
+    "publication": "https://www.openoffice.org/fr/Documentation/modele/index_model.htm",
+    "filename": "carnet de notes.stc",
+    "bytes": 22293,
+    "sha256": "ff735a1a20c28e39e8349d46e5a531e6e6cde24f50f7aaa8d92e408e4a344d4c",
+    "generator": "OpenOffice.org 1.1.0 (Win32)",
+    "license": "Public Documentation License 1.0; original notice is embedded in meta.xml",
+    "licenseUrl": "https://www.openoffice.org/licenses/PDL.html",
+    "attribution": "Carnet de notes, Francis Lecher, Copyright 2003",
+    "observedMime": "application/vnd.sun.xml.calc",
+    "mimeNote": "The original historical STC distribution uses the legacy Calc MIME, not calc.template. Preserve and disclose this; do not rewrite it or claim a modern renamed OTS/XLSX."
+  },
+  "parts": {
+    "mimetype": "ef53fb0fe0d000e3e39cc67ed58dcdf5bcc0813cda903712144a809e1501a5eb",
+    "content.xml": "a38fe583935b84aefb9707d8e7095ead0077d1f8d5b1703bde180b97233f740d",
+    "styles.xml": "3df144d0e36b14a5222efaf3589e6ce68e85ae3436fe723ca02e75d5a48871f3",
+    "meta.xml": "fe52b9adbe9cc2a07c3d7077aa45558092554427b6b1ef93440237975cbb23c0",
+    "settings.xml": "8b1cd98b95a6580aaab112182edd62d0785c2ff5d2aa4e116ef22f3dad189026",
+    "META-INF/manifest.xml": "68ce4a4e93ac5059ecfa16a67ea5abae361a8d1c2e005e673c8e3715c90ebaa3"
+  },
+  "sheets": [
+    {
+      "name": "utilisation",
+      "cells": {
+        "A1": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Utilisation du classeur. Ce classeur est sous licence PDL, à consulter dans les propriétés du document.\n\nContient 5 feuilles pour l'instant. Ce classeur est prévu pour une classe de 30 élèves.\n\nVous ne devez renseigner la liste des élèves que sur la feuille « liste des élèves ».  Les noms et prénoms sont recopiés automatiquement dans les autres.\nIl en est de même pour l'année scolaire et la classe.\n\nPour chaque trimestre, la feuille permet de calculer la moyenne des notes avec des coefficients différents (colonne moyenne brute).\nLa colonne suivante vous indique une moyenne arrondie : l'arrondi est à 0,25. Vous pouvez le changer dans la relation :\narrondi.au.multiple(h5;0,25). En modifiant la valeur soulignée en rouge\nla dernière colonne calcule le classement. Attention :\n- ce calcul ne sera effectué que si tous les élèves ont une note arrondie (il faut donc supprimer les ligne si vous avez moins de 30 élèves).\n- c'est un calcul matriciel. Si vous ajoutez des lignes en fin de tableau, vous devez valider la relation par :ctrl maj entrée.\n- Pour plus de facilité, si vous avez plus de 30 élèves, est d'insérer des lignes en milieu de tableau.\nPour l'instant si vous avez des élèves qui arrivent  en cours d'année, vous devez les insérer manuellement dans chaque feuille trimestre.\nDans le bas du tableau est repris la moyenne, la note la plus basse, la plus haute, le nombre d'absent (mettre abs en place de la note)\n le nombre de notes supérieures et inférieures à 10.\nLes notes strictement supérieures à 10 sont en bleu, strictement inférieure à 10 en rouge et la note  de 10 est en noir.\nLe format des nombres est toujours avec 2 chiffres avant et après la virgule.\nLa dernière feuille est un récapitulatif annuel et le calcul de la moyenne annuelle. Là de même le classement et les moyennes ne se feront \nqu'a partir du moment ou toutes les lignes seront renseignées.\nDernière remarque : j'utilise souvent des cellules nommées pour ,je pense faciliter la compréhension des relations.\nC'est une méthode que je préconise à mes étudiants, principalement lorsque le classeur doit être utilisé par d'autres personnes."
+        },
+        "A30": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Exemple"
+        },
+        "B30": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Vous pouvez modifier les notes et les coefficients pour observer sur 4 élèves le principe du carnet de notes."
+        },
+        "H32": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne brute"
+        },
+        "I32": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne arrondie"
+        },
+        "J32": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classement"
+        },
+        "B33": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Coefficient"
+        },
+        "C33": {
+          "formula": null,
+          "value": "2",
+          "kind": "float",
+          "text": "2"
+        },
+        "D33": {
+          "formula": null,
+          "value": "5",
+          "kind": "float",
+          "text": "5"
+        },
+        "A34": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Dalors"
+        },
+        "B34": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Omer"
+        },
+        "C34": {
+          "formula": null,
+          "value": "10",
+          "kind": "float",
+          "text": "10,00"
+        },
+        "D34": {
+          "formula": null,
+          "value": "15",
+          "kind": "float",
+          "text": "15,00"
+        },
+        "H34": {
+          "formula": "=SUMPRODUCT([.$C$33:.$G$33];[.C34:.G34])/SUMIF([.C34:.G34];\">=0\";[.$C$33:.$G$33])",
+          "value": "13.5714285714286",
+          "kind": "float",
+          "text": "13,57"
+        },
+        "I34": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H34];0.25)",
+          "value": "13.5",
+          "kind": "float",
+          "text": "13,50"
+        },
+        "J34": {
+          "formula": "=SUM(([.I$34:.I$37]>[.I34])*1)+1",
+          "value": "2",
+          "kind": "float",
+          "text": "2"
+        },
+        "A35": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Ferry"
+        },
+        "B35": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Luc"
+        },
+        "C35": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Abs"
+        },
+        "D35": {
+          "formula": null,
+          "value": "0",
+          "kind": "float",
+          "text": "00,00"
+        },
+        "H35": {
+          "formula": "=SUMPRODUCT([.$C$33:.$G$33];[.C35:.G35])/SUMIF([.C35:.G35];\">=0\";[.$C$33:.$G$33])",
+          "value": "0",
+          "kind": "float",
+          "text": "00,00"
+        },
+        "I35": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H35];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "00,00"
+        },
+        "J35": {
+          "formula": "=SUM(([.I$34:.I$37]>[.I35])*1)+1",
+          "value": "4",
+          "kind": "float",
+          "text": "4"
+        },
+        "L35": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "(pour un plaisir tout personnel)."
+        },
+        "A36": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Emarre"
+        },
+        "B36": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Jean"
+        },
+        "C36": {
+          "formula": null,
+          "value": "8",
+          "kind": "float",
+          "text": "08,00"
+        },
+        "D36": {
+          "formula": null,
+          "value": "12",
+          "kind": "float",
+          "text": "12,00"
+        },
+        "H36": {
+          "formula": "=SUMPRODUCT([.$C$33:.$G$33];[.C36:.G36])/SUMIF([.C36:.G36];\">=0\";[.$C$33:.$G$33])",
+          "value": "10.8571428571429",
+          "kind": "float",
+          "text": "10,86"
+        },
+        "I36": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H36];0.25)",
+          "value": "10.75",
+          "kind": "float",
+          "text": "10,75"
+        },
+        "J36": {
+          "formula": "=SUM(([.I$34:.I$37]>[.I36])*1)+1",
+          "value": "3",
+          "kind": "float",
+          "text": "3"
+        },
+        "A37": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Enfaillite"
+        },
+        "B37": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Mélusine"
+        },
+        "C37": {
+          "formula": null,
+          "value": "15",
+          "kind": "float",
+          "text": "15,00"
+        },
+        "D37": {
+          "formula": null,
+          "value": "18",
+          "kind": "float",
+          "text": "18,00"
+        },
+        "H37": {
+          "formula": "=SUMPRODUCT([.$C$33:.$G$33];[.C37:.G37])/SUMIF([.C37:.G37];\">=0\";[.$C$33:.$G$33])",
+          "value": "17.1428571428571",
+          "kind": "float",
+          "text": "17,14"
+        },
+        "I37": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H37];0.25)",
+          "value": "17.25",
+          "kind": "float",
+          "text": "17,25"
+        },
+        "J37": {
+          "formula": "=SUM(([.I$34:.I$37]>[.I37])*1)+1",
+          "value": "1",
+          "kind": "float",
+          "text": "1"
+        },
+        "A40": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne"
+        },
+        "C40": {
+          "formula": "=AVERAGE([.C34:.C37])",
+          "value": "11",
+          "kind": "float",
+          "text": "11,00"
+        },
+        "D40": {
+          "formula": "=AVERAGE([.D34:.D37])",
+          "value": "11.25",
+          "kind": "float",
+          "text": "11,25"
+        },
+        "E40": {
+          "formula": "=AVERAGE([.E34:.E37])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F40": {
+          "formula": "=AVERAGE([.F34:.F37])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G40": {
+          "formula": "=AVERAGE([.G34:.G37])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I40": {
+          "formula": "=AVERAGE([.I34:.I37])",
+          "value": "10.375",
+          "kind": "float",
+          "text": "10,38"
+        },
+        "A41": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus basse"
+        },
+        "C41": {
+          "formula": "=MIN([.C34:.C37])",
+          "value": "8",
+          "kind": "float",
+          "text": "08,00"
+        },
+        "D41": {
+          "formula": "=MIN([.D34:.D37])",
+          "value": "0",
+          "kind": "float",
+          "text": "00,00"
+        },
+        "E41": {
+          "formula": "=MIN([.E34:.E37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F41": {
+          "formula": "=MIN([.F34:.F37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G41": {
+          "formula": "=MIN([.G34:.G37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I41": {
+          "formula": "=MIN([.I34:.I37])",
+          "value": "0",
+          "kind": "float",
+          "text": "00,00"
+        },
+        "A42": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus élevée"
+        },
+        "C42": {
+          "formula": "=MAX([.C34:.C37])",
+          "value": "15",
+          "kind": "float",
+          "text": "15,00"
+        },
+        "D42": {
+          "formula": "=MAX([.D34:.D37])",
+          "value": "18",
+          "kind": "float",
+          "text": "18,00"
+        },
+        "E42": {
+          "formula": "=MAX([.E34:.E37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F42": {
+          "formula": "=MAX([.F34:.F37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G42": {
+          "formula": "=MAX([.G34:.G37])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I42": {
+          "formula": "=MAX([.I34:.I37])",
+          "value": "17.25",
+          "kind": "float",
+          "text": "17,25"
+        },
+        "A43": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note < 10"
+        },
+        "C43": {
+          "formula": "=COUNTIF([.C34:.C37];\"<10\")",
+          "value": "1",
+          "kind": "float",
+          "text": "1"
+        },
+        "D43": {
+          "formula": "=COUNTIF([.D34:.D37];\"<10\")",
+          "value": "1",
+          "kind": "float",
+          "text": "1"
+        },
+        "E43": {
+          "formula": "=COUNTIF([.E34:.E37];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F43": {
+          "formula": "=COUNTIF([.F34:.F37];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G43": {
+          "formula": "=COUNTIF([.G34:.G37];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I43": {
+          "formula": "=COUNTIF([.I34:.I37];\"<10\")",
+          "value": "1",
+          "kind": "float",
+          "text": "1"
+        },
+        "A44": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note >= 10"
+        },
+        "C44": {
+          "formula": "=COUNTIF([.C34:.C37];\">=10\")",
+          "value": "2",
+          "kind": "float",
+          "text": "2"
+        },
+        "D44": {
+          "formula": "=COUNTIF([.D34:.D37];\">=10\")",
+          "value": "3",
+          "kind": "float",
+          "text": "3"
+        },
+        "E44": {
+          "formula": "=COUNTIF([.E34:.E37];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F44": {
+          "formula": "=COUNTIF([.F34:.F37];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G44": {
+          "formula": "=COUNTIF([.G34:.G37];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I44": {
+          "formula": "=COUNTIF([.I34:.I37];\">=10\")",
+          "value": "3",
+          "kind": "float",
+          "text": "3"
+        },
+        "A45": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nombre d'absent"
+        },
+        "C45": {
+          "formula": "=COUNTIF([.C34:.C37];\"Abs\")",
+          "value": "1",
+          "kind": "float",
+          "text": "1"
+        },
+        "D45": {
+          "formula": "=COUNTIF([.D34:.D37];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E45": {
+          "formula": "=COUNTIF([.E34:.E37];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F45": {
+          "formula": "=COUNTIF([.F34:.F37];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G45": {
+          "formula": "=COUNTIF([.G34:.G37];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I45": {
+          "formula": "=COUNTIF([.I34:.I37];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "A49": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "LA suite :\nj'espère avoir le temps de :\ncréer une macro pour refaire le surlignage une ligne sur deux en cas d'inscription en cours d'année.\nCréer une macro pour le début d'année demandant :\nle nombre d'élèves et à partir de là, créer les feuilles automatiquement avec le bon nombre de lignes.\nA partir d'une zone de saisie, demander le nom et le prénom des élèves.\nEnsuite permettre l'insertion dans toutes les feuilles d'élèves arrivant en cours d'année.\n\nVos remarques sont les bien venus.\n"
+        }
+      }
+    },
+    {
+      "name": "liste des élèves",
+      "cells": {
+        "A1": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classe"
+        },
+        "A2": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Année scolaire 2003 – 2004"
+        },
+        "A5": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom1"
+        },
+        "B5": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom1"
+        },
+        "A6": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom2"
+        },
+        "B6": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom2"
+        },
+        "A7": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom3"
+        },
+        "B7": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom3"
+        },
+        "A8": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom4"
+        },
+        "B8": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom4"
+        },
+        "A9": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom5"
+        },
+        "B9": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom5"
+        },
+        "A10": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom6"
+        },
+        "B10": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom6"
+        },
+        "A11": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom7"
+        },
+        "B11": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom7"
+        },
+        "A12": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom8"
+        },
+        "B12": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom8"
+        },
+        "A13": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom9"
+        },
+        "B13": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom9"
+        },
+        "A14": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom10"
+        },
+        "B14": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom10"
+        },
+        "A15": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom11"
+        },
+        "B15": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom11"
+        },
+        "A16": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom12"
+        },
+        "B16": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom12"
+        },
+        "A17": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom13"
+        },
+        "B17": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom13"
+        },
+        "A18": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom14"
+        },
+        "B18": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom14"
+        },
+        "A19": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom15"
+        },
+        "B19": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom15"
+        },
+        "A20": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom16"
+        },
+        "B20": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom16"
+        },
+        "A21": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom17"
+        },
+        "B21": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom17"
+        },
+        "A22": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom18"
+        },
+        "B22": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom18"
+        },
+        "A23": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom19"
+        },
+        "B23": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom19"
+        },
+        "A24": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom20"
+        },
+        "B24": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom20"
+        },
+        "A25": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom21"
+        },
+        "B25": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom21"
+        },
+        "A26": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom22"
+        },
+        "B26": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom22"
+        },
+        "A27": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom23"
+        },
+        "B27": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom23"
+        },
+        "A28": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom24"
+        },
+        "B28": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom24"
+        },
+        "A29": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom25"
+        },
+        "B29": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom25"
+        },
+        "A30": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom26"
+        },
+        "B30": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom26"
+        },
+        "A31": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom27"
+        },
+        "B31": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom27"
+        },
+        "A32": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom28"
+        },
+        "B32": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom28"
+        },
+        "A33": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom29"
+        },
+        "B33": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom29"
+        },
+        "A34": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nom30"
+        },
+        "B34": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Prénom30"
+        }
+      }
+    },
+    {
+      "name": "notes 1 trimestre",
+      "cells": {
+        "A1": {
+          "formula": "=Classe",
+          "value": null,
+          "kind": null,
+          "text": "Classe"
+        },
+        "A2": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "1er trimestre"
+        },
+        "H2": {
+          "formula": "=annee_scolaire",
+          "value": null,
+          "kind": null,
+          "text": "Année scolaire 2003 – 2004"
+        },
+        "H3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne brute"
+        },
+        "I3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne arrondie"
+        },
+        "J3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classement"
+        },
+        "B4": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Coefficient"
+        },
+        "A5": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom1"
+        },
+        "B5": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom1"
+        },
+        "H5": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C5:.G5])/SUMIF([.C5:.G5];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I5": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H5];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J5": {
+          "formula": "=SUM((trim1_moyenne>[.I5])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A6": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom2"
+        },
+        "B6": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom2"
+        },
+        "H6": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C6:.G6])/SUMIF([.C6:.G6];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I6": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H6];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J6": {
+          "formula": "=SUM((trim1_moyenne>[.I6])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A7": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom3"
+        },
+        "B7": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom3"
+        },
+        "H7": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C7:.G7])/SUMIF([.C7:.G7];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I7": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H7];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J7": {
+          "formula": "=SUM((trim1_moyenne>[.I7])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A8": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom4"
+        },
+        "B8": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom4"
+        },
+        "H8": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C8:.G8])/SUMIF([.C8:.G8];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I8": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H8];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J8": {
+          "formula": "=SUM((trim1_moyenne>[.I8])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A9": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom5"
+        },
+        "B9": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom5"
+        },
+        "H9": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C9:.G9])/SUMIF([.C9:.G9];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I9": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H9];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J9": {
+          "formula": "=SUM((trim1_moyenne>[.I9])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A10": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom6"
+        },
+        "B10": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom6"
+        },
+        "H10": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C10:.G10])/SUMIF([.C10:.G10];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I10": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H10];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J10": {
+          "formula": "=SUM((trim1_moyenne>[.I10])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A11": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom7"
+        },
+        "B11": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom7"
+        },
+        "H11": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C11:.G11])/SUMIF([.C11:.G11];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I11": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H11];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J11": {
+          "formula": "=SUM((trim1_moyenne>[.I11])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A12": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom8"
+        },
+        "B12": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom8"
+        },
+        "H12": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C12:.G12])/SUMIF([.C12:.G12];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I12": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H12];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J12": {
+          "formula": "=SUM((trim1_moyenne>[.I12])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A13": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom9"
+        },
+        "B13": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom9"
+        },
+        "H13": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C13:.G13])/SUMIF([.C13:.G13];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I13": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H13];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J13": {
+          "formula": "=SUM((trim1_moyenne>[.I13])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A14": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom10"
+        },
+        "B14": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom10"
+        },
+        "H14": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C14:.G14])/SUMIF([.C14:.G14];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I14": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H14];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J14": {
+          "formula": "=SUM((trim1_moyenne>[.I14])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A15": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom11"
+        },
+        "B15": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom11"
+        },
+        "H15": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C15:.G15])/SUMIF([.C15:.G15];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I15": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H15];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J15": {
+          "formula": "=SUM((trim1_moyenne>[.I15])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A16": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom12"
+        },
+        "B16": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom12"
+        },
+        "H16": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C16:.G16])/SUMIF([.C16:.G16];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I16": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H16];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J16": {
+          "formula": "=SUM((trim1_moyenne>[.I16])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A17": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom13"
+        },
+        "B17": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom13"
+        },
+        "H17": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C17:.G17])/SUMIF([.C17:.G17];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I17": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H17];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J17": {
+          "formula": "=SUM((trim1_moyenne>[.I17])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A18": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom14"
+        },
+        "B18": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom14"
+        },
+        "H18": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C18:.G18])/SUMIF([.C18:.G18];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I18": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H18];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J18": {
+          "formula": "=SUM((trim1_moyenne>[.I18])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A19": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom15"
+        },
+        "B19": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom15"
+        },
+        "H19": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C19:.G19])/SUMIF([.C19:.G19];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I19": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H19];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J19": {
+          "formula": "=SUM((trim1_moyenne>[.I19])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A20": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom16"
+        },
+        "B20": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom16"
+        },
+        "H20": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C20:.G20])/SUMIF([.C20:.G20];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I20": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H20];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J20": {
+          "formula": "=SUM((trim1_moyenne>[.I20])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A21": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom17"
+        },
+        "B21": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom17"
+        },
+        "H21": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C21:.G21])/SUMIF([.C21:.G21];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I21": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H21];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J21": {
+          "formula": "=SUM((trim1_moyenne>[.I21])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A22": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom18"
+        },
+        "B22": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom18"
+        },
+        "H22": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C22:.G22])/SUMIF([.C22:.G22];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I22": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H22];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J22": {
+          "formula": "=SUM((trim1_moyenne>[.I22])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A23": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom19"
+        },
+        "B23": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom19"
+        },
+        "H23": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C23:.G23])/SUMIF([.C23:.G23];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I23": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H23];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J23": {
+          "formula": "=SUM((trim1_moyenne>[.I23])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A24": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom20"
+        },
+        "B24": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom20"
+        },
+        "H24": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C24:.G24])/SUMIF([.C24:.G24];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I24": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H24];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J24": {
+          "formula": "=SUM((trim1_moyenne>[.I24])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A25": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom21"
+        },
+        "B25": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom21"
+        },
+        "H25": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C25:.G25])/SUMIF([.C25:.G25];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I25": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H25];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J25": {
+          "formula": "=SUM((trim1_moyenne>[.I25])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A26": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom22"
+        },
+        "B26": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom22"
+        },
+        "H26": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C26:.G26])/SUMIF([.C26:.G26];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I26": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H26];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J26": {
+          "formula": "=SUM((trim1_moyenne>[.I26])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A27": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom23"
+        },
+        "B27": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom23"
+        },
+        "H27": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C27:.G27])/SUMIF([.C27:.G27];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I27": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H27];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J27": {
+          "formula": "=SUM((trim1_moyenne>[.I27])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A28": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom24"
+        },
+        "B28": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom24"
+        },
+        "H28": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C28:.G28])/SUMIF([.C28:.G28];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I28": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H28];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J28": {
+          "formula": "=SUM((trim1_moyenne>[.I28])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A29": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom25"
+        },
+        "B29": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom25"
+        },
+        "H29": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C29:.G29])/SUMIF([.C29:.G29];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I29": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H29];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J29": {
+          "formula": "=SUM((trim1_moyenne>[.I29])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A30": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom26"
+        },
+        "B30": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom26"
+        },
+        "H30": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C30:.G30])/SUMIF([.C30:.G30];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I30": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H30];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J30": {
+          "formula": "=SUM((trim1_moyenne>[.I30])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A31": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom27"
+        },
+        "B31": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom27"
+        },
+        "H31": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C31:.G31])/SUMIF([.C31:.G31];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I31": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H31];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J31": {
+          "formula": "=SUM((trim1_moyenne>[.I31])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A32": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom28"
+        },
+        "B32": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom28"
+        },
+        "H32": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C32:.G32])/SUMIF([.C32:.G32];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I32": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H32];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J32": {
+          "formula": "=SUM((trim1_moyenne>[.I32])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A33": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom29"
+        },
+        "B33": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom29"
+        },
+        "H33": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C33:.G33])/SUMIF([.C33:.G33];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I33": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H33];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J33": {
+          "formula": "=SUM((trim1_moyenne>[.I33])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A34": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom30"
+        },
+        "B34": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom30"
+        },
+        "H34": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C34:.G34])/SUMIF([.C34:.G34];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I34": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H34];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J34": {
+          "formula": "=SUM((trim1_moyenne>[.I34])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A36": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne"
+        },
+        "C36": {
+          "formula": "=AVERAGE([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D36": {
+          "formula": "=AVERAGE([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E36": {
+          "formula": "=AVERAGE([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F36": {
+          "formula": "=AVERAGE([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G36": {
+          "formula": "=AVERAGE([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I36": {
+          "formula": "=AVERAGE([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A37": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus basse"
+        },
+        "C37": {
+          "formula": "=MIN([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D37": {
+          "formula": "=MIN([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E37": {
+          "formula": "=MIN([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F37": {
+          "formula": "=MIN([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G37": {
+          "formula": "=MIN([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I37": {
+          "formula": "=MIN([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A38": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus élevée"
+        },
+        "C38": {
+          "formula": "=MAX([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D38": {
+          "formula": "=MAX([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E38": {
+          "formula": "=MAX([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F38": {
+          "formula": "=MAX([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G38": {
+          "formula": "=MAX([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I38": {
+          "formula": "=MAX([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A39": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note < 10"
+        },
+        "C39": {
+          "formula": "=COUNTIF([.C5:.C34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D39": {
+          "formula": "=COUNTIF([.D5:.D34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E39": {
+          "formula": "=COUNTIF([.E5:.E34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F39": {
+          "formula": "=COUNTIF([.F5:.F34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G39": {
+          "formula": "=COUNTIF([.G5:.G34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I39": {
+          "formula": "=COUNTIF([.I5:.I34];\"<10\")",
+          "value": "30",
+          "kind": "float",
+          "text": "30"
+        },
+        "A40": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note >= 10"
+        },
+        "C40": {
+          "formula": "=COUNTIF([.C5:.C34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D40": {
+          "formula": "=COUNTIF([.D5:.D34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E40": {
+          "formula": "=COUNTIF([.E5:.E34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F40": {
+          "formula": "=COUNTIF([.F5:.F34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G40": {
+          "formula": "=COUNTIF([.G5:.G34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I40": {
+          "formula": "=COUNTIF([.I5:.I34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "A41": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nombre d'absent"
+        },
+        "C41": {
+          "formula": "=COUNTIF([.C5:.C34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D41": {
+          "formula": "=COUNTIF([.D5:.D34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E41": {
+          "formula": "=COUNTIF([.E5:.E34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F41": {
+          "formula": "=COUNTIF([.F5:.F34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G41": {
+          "formula": "=COUNTIF([.G5:.G34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I41": {
+          "formula": "=COUNTIF([.I5:.I34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        }
+      }
+    },
+    {
+      "name": "Notes 2 trimestre",
+      "cells": {
+        "A1": {
+          "formula": "=Classe",
+          "value": null,
+          "kind": null,
+          "text": "Classe"
+        },
+        "A2": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "2nd trimestre"
+        },
+        "H2": {
+          "formula": "=annee_scolaire",
+          "value": null,
+          "kind": null,
+          "text": "Année scolaire 2003 – 2004"
+        },
+        "H3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne brute"
+        },
+        "I3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne arrondie"
+        },
+        "J3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classement"
+        },
+        "B4": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Coefficient"
+        },
+        "A5": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom1"
+        },
+        "B5": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom1"
+        },
+        "H5": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C5:.G5])/SUMIF([.C5:.G5];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I5": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H5];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J5": {
+          "formula": "=SUM((trim2_moyenne>[.I5])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A6": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom2"
+        },
+        "B6": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom2"
+        },
+        "H6": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C6:.G6])/SUMIF([.C6:.G6];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I6": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H6];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J6": {
+          "formula": "=SUM((trim2_moyenne>[.I6])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A7": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom3"
+        },
+        "B7": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom3"
+        },
+        "H7": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C7:.G7])/SUMIF([.C7:.G7];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I7": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H7];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J7": {
+          "formula": "=SUM((trim2_moyenne>[.I7])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A8": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom4"
+        },
+        "B8": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom4"
+        },
+        "H8": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C8:.G8])/SUMIF([.C8:.G8];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I8": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H8];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J8": {
+          "formula": "=SUM((trim2_moyenne>[.I8])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A9": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom5"
+        },
+        "B9": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom5"
+        },
+        "H9": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C9:.G9])/SUMIF([.C9:.G9];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I9": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H9];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J9": {
+          "formula": "=SUM((trim2_moyenne>[.I9])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A10": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom6"
+        },
+        "B10": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom6"
+        },
+        "H10": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C10:.G10])/SUMIF([.C10:.G10];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I10": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H10];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J10": {
+          "formula": "=SUM((trim2_moyenne>[.I10])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A11": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom7"
+        },
+        "B11": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom7"
+        },
+        "H11": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C11:.G11])/SUMIF([.C11:.G11];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I11": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H11];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J11": {
+          "formula": "=SUM((trim2_moyenne>[.I11])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A12": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom8"
+        },
+        "B12": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom8"
+        },
+        "H12": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C12:.G12])/SUMIF([.C12:.G12];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I12": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H12];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J12": {
+          "formula": "=SUM((trim2_moyenne>[.I12])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A13": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom9"
+        },
+        "B13": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom9"
+        },
+        "H13": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C13:.G13])/SUMIF([.C13:.G13];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I13": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H13];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J13": {
+          "formula": "=SUM((trim2_moyenne>[.I13])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A14": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom10"
+        },
+        "B14": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom10"
+        },
+        "H14": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C14:.G14])/SUMIF([.C14:.G14];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I14": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H14];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J14": {
+          "formula": "=SUM((trim2_moyenne>[.I14])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A15": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom11"
+        },
+        "B15": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom11"
+        },
+        "H15": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C15:.G15])/SUMIF([.C15:.G15];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I15": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H15];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J15": {
+          "formula": "=SUM((trim2_moyenne>[.I15])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A16": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom12"
+        },
+        "B16": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom12"
+        },
+        "H16": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C16:.G16])/SUMIF([.C16:.G16];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I16": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H16];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J16": {
+          "formula": "=SUM((trim2_moyenne>[.I16])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A17": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom13"
+        },
+        "B17": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom13"
+        },
+        "H17": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C17:.G17])/SUMIF([.C17:.G17];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I17": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H17];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J17": {
+          "formula": "=SUM((trim2_moyenne>[.I17])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A18": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom14"
+        },
+        "B18": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom14"
+        },
+        "H18": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C18:.G18])/SUMIF([.C18:.G18];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I18": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H18];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J18": {
+          "formula": "=SUM((trim2_moyenne>[.I18])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A19": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom15"
+        },
+        "B19": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom15"
+        },
+        "H19": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C19:.G19])/SUMIF([.C19:.G19];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I19": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H19];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J19": {
+          "formula": "=SUM((trim2_moyenne>[.I19])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A20": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom16"
+        },
+        "B20": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom16"
+        },
+        "H20": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C20:.G20])/SUMIF([.C20:.G20];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I20": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H20];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J20": {
+          "formula": "=SUM((trim2_moyenne>[.I20])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A21": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom17"
+        },
+        "B21": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom17"
+        },
+        "H21": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C21:.G21])/SUMIF([.C21:.G21];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I21": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H21];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J21": {
+          "formula": "=SUM((trim2_moyenne>[.I21])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A22": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom18"
+        },
+        "B22": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom18"
+        },
+        "H22": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C22:.G22])/SUMIF([.C22:.G22];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I22": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H22];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J22": {
+          "formula": "=SUM((trim2_moyenne>[.I22])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A23": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom19"
+        },
+        "B23": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom19"
+        },
+        "H23": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C23:.G23])/SUMIF([.C23:.G23];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I23": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H23];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J23": {
+          "formula": "=SUM((trim2_moyenne>[.I23])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A24": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom20"
+        },
+        "B24": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom20"
+        },
+        "H24": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C24:.G24])/SUMIF([.C24:.G24];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I24": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H24];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J24": {
+          "formula": "=SUM((trim2_moyenne>[.I24])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A25": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom21"
+        },
+        "B25": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom21"
+        },
+        "H25": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C25:.G25])/SUMIF([.C25:.G25];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I25": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H25];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J25": {
+          "formula": "=SUM((trim2_moyenne>[.I25])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A26": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom22"
+        },
+        "B26": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom22"
+        },
+        "H26": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C26:.G26])/SUMIF([.C26:.G26];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I26": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H26];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J26": {
+          "formula": "=SUM((trim2_moyenne>[.I26])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A27": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom23"
+        },
+        "B27": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom23"
+        },
+        "H27": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C27:.G27])/SUMIF([.C27:.G27];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I27": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H27];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J27": {
+          "formula": "=SUM((trim2_moyenne>[.I27])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A28": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom24"
+        },
+        "B28": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom24"
+        },
+        "H28": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C28:.G28])/SUMIF([.C28:.G28];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I28": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H28];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J28": {
+          "formula": "=SUM((trim2_moyenne>[.I28])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A29": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom25"
+        },
+        "B29": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom25"
+        },
+        "H29": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C29:.G29])/SUMIF([.C29:.G29];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I29": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H29];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J29": {
+          "formula": "=SUM((trim2_moyenne>[.I29])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A30": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom26"
+        },
+        "B30": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom26"
+        },
+        "H30": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C30:.G30])/SUMIF([.C30:.G30];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I30": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H30];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J30": {
+          "formula": "=SUM((trim2_moyenne>[.I30])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A31": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom27"
+        },
+        "B31": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom27"
+        },
+        "H31": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C31:.G31])/SUMIF([.C31:.G31];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I31": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H31];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J31": {
+          "formula": "=SUM((trim2_moyenne>[.I31])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A32": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom28"
+        },
+        "B32": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom28"
+        },
+        "H32": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C32:.G32])/SUMIF([.C32:.G32];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I32": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H32];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J32": {
+          "formula": "=SUM((trim2_moyenne>[.I32])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A33": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom29"
+        },
+        "B33": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom29"
+        },
+        "H33": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C33:.G33])/SUMIF([.C33:.G33];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I33": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H33];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J33": {
+          "formula": "=SUM((trim2_moyenne>[.I33])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A34": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom30"
+        },
+        "B34": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom30"
+        },
+        "H34": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C34:.G34])/SUMIF([.C34:.G34];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I34": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H34];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J34": {
+          "formula": "=SUM((trim2_moyenne>[.I34])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A36": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne"
+        },
+        "C36": {
+          "formula": "=AVERAGE([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D36": {
+          "formula": "=AVERAGE([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E36": {
+          "formula": "=AVERAGE([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F36": {
+          "formula": "=AVERAGE([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G36": {
+          "formula": "=AVERAGE([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I36": {
+          "formula": "=AVERAGE([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A37": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus basse"
+        },
+        "C37": {
+          "formula": "=MIN([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D37": {
+          "formula": "=MIN([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E37": {
+          "formula": "=MIN([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F37": {
+          "formula": "=MIN([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G37": {
+          "formula": "=MIN([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I37": {
+          "formula": "=MIN([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A38": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus élevée"
+        },
+        "C38": {
+          "formula": "=MAX([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D38": {
+          "formula": "=MAX([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E38": {
+          "formula": "=MAX([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F38": {
+          "formula": "=MAX([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G38": {
+          "formula": "=MAX([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I38": {
+          "formula": "=MAX([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A39": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note < 10"
+        },
+        "C39": {
+          "formula": "=COUNTIF([.C5:.C34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D39": {
+          "formula": "=COUNTIF([.D5:.D34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E39": {
+          "formula": "=COUNTIF([.E5:.E34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F39": {
+          "formula": "=COUNTIF([.F5:.F34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G39": {
+          "formula": "=COUNTIF([.G5:.G34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I39": {
+          "formula": "=COUNTIF([.I5:.I34];\"<10\")",
+          "value": "30",
+          "kind": "float",
+          "text": "30"
+        },
+        "A40": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note >= 10"
+        },
+        "C40": {
+          "formula": "=COUNTIF([.C5:.C34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D40": {
+          "formula": "=COUNTIF([.D5:.D34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E40": {
+          "formula": "=COUNTIF([.E5:.E34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F40": {
+          "formula": "=COUNTIF([.F5:.F34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G40": {
+          "formula": "=COUNTIF([.G5:.G34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I40": {
+          "formula": "=COUNTIF([.I5:.I34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "A41": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nombre d'absent"
+        },
+        "C41": {
+          "formula": "=COUNTIF([.C5:.C34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D41": {
+          "formula": "=COUNTIF([.D5:.D34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E41": {
+          "formula": "=COUNTIF([.E5:.E34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F41": {
+          "formula": "=COUNTIF([.F5:.F34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G41": {
+          "formula": "=COUNTIF([.G5:.G34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I41": {
+          "formula": "=COUNTIF([.I5:.I34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        }
+      }
+    },
+    {
+      "name": "notes 3 trimestre",
+      "cells": {
+        "A1": {
+          "formula": "=Classe",
+          "value": null,
+          "kind": null,
+          "text": "Classe"
+        },
+        "A2": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "3ème  trimestre"
+        },
+        "H2": {
+          "formula": "=annee_scolaire",
+          "value": null,
+          "kind": null,
+          "text": "Année scolaire 2003 – 2004"
+        },
+        "H3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne brute"
+        },
+        "I3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne arrondie"
+        },
+        "J3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classement"
+        },
+        "B4": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Coefficient"
+        },
+        "A5": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom1"
+        },
+        "B5": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom1"
+        },
+        "H5": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C5:.G5])/SUMIF([.C5:.G5];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I5": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H5];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J5": {
+          "formula": "=SUM((trim3_moyenne>[.I5])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A6": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom2"
+        },
+        "B6": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom2"
+        },
+        "H6": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C6:.G6])/SUMIF([.C6:.G6];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I6": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H6];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J6": {
+          "formula": "=SUM((trim3_moyenne>[.I6])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A7": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom3"
+        },
+        "B7": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom3"
+        },
+        "H7": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C7:.G7])/SUMIF([.C7:.G7];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I7": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H7];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J7": {
+          "formula": "=SUM((trim3_moyenne>[.I7])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A8": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom4"
+        },
+        "B8": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom4"
+        },
+        "H8": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C8:.G8])/SUMIF([.C8:.G8];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I8": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H8];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J8": {
+          "formula": "=SUM((trim3_moyenne>[.I8])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A9": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom5"
+        },
+        "B9": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom5"
+        },
+        "H9": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C9:.G9])/SUMIF([.C9:.G9];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I9": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H9];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J9": {
+          "formula": "=SUM((trim3_moyenne>[.I9])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A10": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom6"
+        },
+        "B10": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom6"
+        },
+        "H10": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C10:.G10])/SUMIF([.C10:.G10];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I10": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H10];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J10": {
+          "formula": "=SUM((trim3_moyenne>[.I10])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A11": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom7"
+        },
+        "B11": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom7"
+        },
+        "H11": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C11:.G11])/SUMIF([.C11:.G11];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I11": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H11];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J11": {
+          "formula": "=SUM((trim3_moyenne>[.I11])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A12": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom8"
+        },
+        "B12": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom8"
+        },
+        "H12": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C12:.G12])/SUMIF([.C12:.G12];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I12": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H12];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J12": {
+          "formula": "=SUM((trim3_moyenne>[.I12])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A13": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom9"
+        },
+        "B13": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom9"
+        },
+        "H13": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C13:.G13])/SUMIF([.C13:.G13];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I13": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H13];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J13": {
+          "formula": "=SUM((trim3_moyenne>[.I13])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A14": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom10"
+        },
+        "B14": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom10"
+        },
+        "H14": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C14:.G14])/SUMIF([.C14:.G14];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I14": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H14];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J14": {
+          "formula": "=SUM((trim3_moyenne>[.I14])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A15": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom11"
+        },
+        "B15": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom11"
+        },
+        "H15": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C15:.G15])/SUMIF([.C15:.G15];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I15": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H15];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J15": {
+          "formula": "=SUM((trim3_moyenne>[.I15])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A16": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom12"
+        },
+        "B16": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom12"
+        },
+        "H16": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C16:.G16])/SUMIF([.C16:.G16];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I16": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H16];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J16": {
+          "formula": "=SUM((trim3_moyenne>[.I16])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A17": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom13"
+        },
+        "B17": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom13"
+        },
+        "H17": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C17:.G17])/SUMIF([.C17:.G17];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I17": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H17];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J17": {
+          "formula": "=SUM((trim3_moyenne>[.I17])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A18": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom14"
+        },
+        "B18": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom14"
+        },
+        "H18": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C18:.G18])/SUMIF([.C18:.G18];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I18": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H18];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J18": {
+          "formula": "=SUM((trim3_moyenne>[.I18])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A19": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom15"
+        },
+        "B19": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom15"
+        },
+        "H19": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C19:.G19])/SUMIF([.C19:.G19];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I19": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H19];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J19": {
+          "formula": "=SUM((trim3_moyenne>[.I19])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A20": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom16"
+        },
+        "B20": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom16"
+        },
+        "H20": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C20:.G20])/SUMIF([.C20:.G20];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I20": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H20];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J20": {
+          "formula": "=SUM((trim3_moyenne>[.I20])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A21": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom17"
+        },
+        "B21": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom17"
+        },
+        "H21": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C21:.G21])/SUMIF([.C21:.G21];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I21": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H21];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J21": {
+          "formula": "=SUM((trim3_moyenne>[.I21])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A22": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom18"
+        },
+        "B22": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom18"
+        },
+        "H22": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C22:.G22])/SUMIF([.C22:.G22];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I22": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H22];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J22": {
+          "formula": "=SUM((trim3_moyenne>[.I22])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A23": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom19"
+        },
+        "B23": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom19"
+        },
+        "H23": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C23:.G23])/SUMIF([.C23:.G23];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I23": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H23];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J23": {
+          "formula": "=SUM((trim3_moyenne>[.I23])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A24": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom20"
+        },
+        "B24": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom20"
+        },
+        "H24": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C24:.G24])/SUMIF([.C24:.G24];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I24": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H24];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J24": {
+          "formula": "=SUM((trim3_moyenne>[.I24])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A25": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom21"
+        },
+        "B25": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom21"
+        },
+        "H25": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C25:.G25])/SUMIF([.C25:.G25];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I25": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H25];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J25": {
+          "formula": "=SUM((trim3_moyenne>[.I25])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A26": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom22"
+        },
+        "B26": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom22"
+        },
+        "H26": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C26:.G26])/SUMIF([.C26:.G26];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I26": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H26];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J26": {
+          "formula": "=SUM((trim3_moyenne>[.I26])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A27": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom23"
+        },
+        "B27": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom23"
+        },
+        "H27": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C27:.G27])/SUMIF([.C27:.G27];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I27": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H27];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J27": {
+          "formula": "=SUM((trim3_moyenne>[.I27])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A28": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom24"
+        },
+        "B28": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom24"
+        },
+        "H28": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C28:.G28])/SUMIF([.C28:.G28];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I28": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H28];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J28": {
+          "formula": "=SUM((trim3_moyenne>[.I28])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A29": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom25"
+        },
+        "B29": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom25"
+        },
+        "H29": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C29:.G29])/SUMIF([.C29:.G29];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I29": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H29];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J29": {
+          "formula": "=SUM((trim3_moyenne>[.I29])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A30": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom26"
+        },
+        "B30": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom26"
+        },
+        "H30": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C30:.G30])/SUMIF([.C30:.G30];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I30": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H30];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J30": {
+          "formula": "=SUM((trim3_moyenne>[.I30])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A31": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom27"
+        },
+        "B31": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom27"
+        },
+        "H31": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C31:.G31])/SUMIF([.C31:.G31];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I31": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H31];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J31": {
+          "formula": "=SUM((trim3_moyenne>[.I31])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A32": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom28"
+        },
+        "B32": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom28"
+        },
+        "H32": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C32:.G32])/SUMIF([.C32:.G32];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I32": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H32];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J32": {
+          "formula": "=SUM((trim3_moyenne>[.I32])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A33": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom29"
+        },
+        "B33": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom29"
+        },
+        "H33": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C33:.G33])/SUMIF([.C33:.G33];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I33": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H33];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J33": {
+          "formula": "=SUM((trim3_moyenne>[.I33])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A34": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom30"
+        },
+        "B34": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom30"
+        },
+        "H34": {
+          "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C34:.G34])/SUMIF([.C34:.G34];\">=0\";[.$C$4:.$G$4])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I34": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H34];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "J34": {
+          "formula": "=SUM((trim3_moyenne>[.I34])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A36": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne"
+        },
+        "C36": {
+          "formula": "=AVERAGE([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D36": {
+          "formula": "=AVERAGE([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E36": {
+          "formula": "=AVERAGE([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F36": {
+          "formula": "=AVERAGE([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G36": {
+          "formula": "=AVERAGE([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "I36": {
+          "formula": "=AVERAGE([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A37": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus basse"
+        },
+        "C37": {
+          "formula": "=MIN([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D37": {
+          "formula": "=MIN([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E37": {
+          "formula": "=MIN([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F37": {
+          "formula": "=MIN([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G37": {
+          "formula": "=MIN([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I37": {
+          "formula": "=MIN([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A38": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note la plus élevée"
+        },
+        "C38": {
+          "formula": "=MAX([.C5:.C34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "D38": {
+          "formula": "=MAX([.D5:.D34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "E38": {
+          "formula": "=MAX([.E5:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "F38": {
+          "formula": "=MAX([.F5:.F34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "G38": {
+          "formula": "=MAX([.G5:.G34])",
+          "value": "0",
+          "kind": "float",
+          "text": "Err :502"
+        },
+        "I38": {
+          "formula": "=MAX([.I5:.I34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "A39": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note < 10"
+        },
+        "C39": {
+          "formula": "=COUNTIF([.C5:.C34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D39": {
+          "formula": "=COUNTIF([.D5:.D34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E39": {
+          "formula": "=COUNTIF([.E5:.E34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F39": {
+          "formula": "=COUNTIF([.F5:.F34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G39": {
+          "formula": "=COUNTIF([.G5:.G34];\"<10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I39": {
+          "formula": "=COUNTIF([.I5:.I34];\"<10\")",
+          "value": "30",
+          "kind": "float",
+          "text": "30"
+        },
+        "A40": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Note >= 10"
+        },
+        "C40": {
+          "formula": "=COUNTIF([.C5:.C34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D40": {
+          "formula": "=COUNTIF([.D5:.D34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E40": {
+          "formula": "=COUNTIF([.E5:.E34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F40": {
+          "formula": "=COUNTIF([.F5:.F34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G40": {
+          "formula": "=COUNTIF([.G5:.G34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I40": {
+          "formula": "=COUNTIF([.I5:.I34];\">=10\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "A41": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Nombre d'absent"
+        },
+        "C41": {
+          "formula": "=COUNTIF([.C5:.C34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "D41": {
+          "formula": "=COUNTIF([.D5:.D34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "E41": {
+          "formula": "=COUNTIF([.E5:.E34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "F41": {
+          "formula": "=COUNTIF([.F5:.F34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "G41": {
+          "formula": "=COUNTIF([.G5:.G34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        },
+        "I41": {
+          "formula": "=COUNTIF([.I5:.I34];\"Abs\")",
+          "value": "0",
+          "kind": "float",
+          "text": "0"
+        }
+      }
+    },
+    {
+      "name": "recapitulatif annuel",
+      "cells": {
+        "A1": {
+          "formula": "=Classe",
+          "value": null,
+          "kind": null,
+          "text": "Classe"
+        },
+        "A2": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne annuelle"
+        },
+        "F2": {
+          "formula": "=annee_scolaire",
+          "value": null,
+          "kind": null,
+          "text": "Année scolaire 2003 – 2004"
+        },
+        "C3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "1èr trimestre"
+        },
+        "D3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "2nd trimestre"
+        },
+        "E3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "3ème trimestre"
+        },
+        "F3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne Annuelle brute"
+        },
+        "G3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Moyenne annuelle arrondie"
+        },
+        "H3": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Classement"
+        },
+        "C4": {
+          "formula": null,
+          "value": null,
+          "kind": null,
+          "text": "Pas de coefficient"
+        },
+        "A5": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom1"
+        },
+        "B5": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom1"
+        },
+        "C5": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D5": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E5": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F5": {
+          "formula": "=AVERAGE([.C5:.E5])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G5": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F5];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H5": {
+          "formula": "=SUM((annuelle_moyenne>[.G5])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A6": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom2"
+        },
+        "B6": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom2"
+        },
+        "C6": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D6": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E6": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F6": {
+          "formula": "=AVERAGE([.C6:.E6])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G6": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F6];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H6": {
+          "formula": "=SUM((annuelle_moyenne>[.G6])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A7": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom3"
+        },
+        "B7": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom3"
+        },
+        "C7": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D7": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E7": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F7": {
+          "formula": "=AVERAGE([.C7:.E7])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G7": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F7];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H7": {
+          "formula": "=SUM((annuelle_moyenne>[.G7])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A8": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom4"
+        },
+        "B8": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom4"
+        },
+        "C8": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D8": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E8": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F8": {
+          "formula": "=AVERAGE([.C8:.E8])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G8": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F8];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H8": {
+          "formula": "=SUM((annuelle_moyenne>[.G8])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A9": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom5"
+        },
+        "B9": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom5"
+        },
+        "C9": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D9": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E9": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F9": {
+          "formula": "=AVERAGE([.C9:.E9])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G9": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F9];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H9": {
+          "formula": "=SUM((annuelle_moyenne>[.G9])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A10": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom6"
+        },
+        "B10": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom6"
+        },
+        "C10": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D10": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E10": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F10": {
+          "formula": "=AVERAGE([.C10:.E10])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G10": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F10];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H10": {
+          "formula": "=SUM((annuelle_moyenne>[.G10])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A11": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom7"
+        },
+        "B11": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom7"
+        },
+        "C11": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D11": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E11": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F11": {
+          "formula": "=AVERAGE([.C11:.E11])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G11": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F11];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H11": {
+          "formula": "=SUM((annuelle_moyenne>[.G11])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A12": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom8"
+        },
+        "B12": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom8"
+        },
+        "C12": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D12": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E12": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F12": {
+          "formula": "=AVERAGE([.C12:.E12])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G12": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F12];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H12": {
+          "formula": "=SUM((annuelle_moyenne>[.G12])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A13": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom9"
+        },
+        "B13": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom9"
+        },
+        "C13": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D13": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E13": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F13": {
+          "formula": "=AVERAGE([.C13:.E13])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G13": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F13];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H13": {
+          "formula": "=SUM((annuelle_moyenne>[.G13])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A14": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom10"
+        },
+        "B14": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom10"
+        },
+        "C14": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D14": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E14": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F14": {
+          "formula": "=AVERAGE([.C14:.E14])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G14": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F14];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H14": {
+          "formula": "=SUM((annuelle_moyenne>[.G14])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A15": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom11"
+        },
+        "B15": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom11"
+        },
+        "C15": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D15": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E15": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F15": {
+          "formula": "=AVERAGE([.C15:.E15])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G15": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F15];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H15": {
+          "formula": "=SUM((annuelle_moyenne>[.G15])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A16": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom12"
+        },
+        "B16": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom12"
+        },
+        "C16": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D16": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E16": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F16": {
+          "formula": "=AVERAGE([.C16:.E16])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G16": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F16];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H16": {
+          "formula": "=SUM((annuelle_moyenne>[.G16])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A17": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom13"
+        },
+        "B17": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom13"
+        },
+        "C17": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D17": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E17": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F17": {
+          "formula": "=AVERAGE([.C17:.E17])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G17": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F17];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H17": {
+          "formula": "=SUM((annuelle_moyenne>[.G17])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A18": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom14"
+        },
+        "B18": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom14"
+        },
+        "C18": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D18": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E18": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F18": {
+          "formula": "=AVERAGE([.C18:.E18])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G18": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F18];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H18": {
+          "formula": "=SUM((annuelle_moyenne>[.G18])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A19": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom15"
+        },
+        "B19": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom15"
+        },
+        "C19": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D19": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E19": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F19": {
+          "formula": "=AVERAGE([.C19:.E19])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G19": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F19];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H19": {
+          "formula": "=SUM((annuelle_moyenne>[.G19])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A20": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom16"
+        },
+        "B20": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom16"
+        },
+        "C20": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D20": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E20": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F20": {
+          "formula": "=AVERAGE([.C20:.E20])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G20": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F20];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H20": {
+          "formula": "=SUM((annuelle_moyenne>[.G20])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A21": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom17"
+        },
+        "B21": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom17"
+        },
+        "C21": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D21": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E21": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F21": {
+          "formula": "=AVERAGE([.C21:.E21])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G21": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F21];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H21": {
+          "formula": "=SUM((annuelle_moyenne>[.G21])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A22": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom18"
+        },
+        "B22": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom18"
+        },
+        "C22": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D22": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E22": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F22": {
+          "formula": "=AVERAGE([.C22:.E22])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G22": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F22];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H22": {
+          "formula": "=SUM((annuelle_moyenne>[.G22])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A23": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom19"
+        },
+        "B23": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom19"
+        },
+        "C23": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D23": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E23": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F23": {
+          "formula": "=AVERAGE([.C23:.E23])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G23": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F23];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H23": {
+          "formula": "=SUM((annuelle_moyenne>[.G23])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A24": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom20"
+        },
+        "B24": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom20"
+        },
+        "C24": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D24": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E24": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F24": {
+          "formula": "=AVERAGE([.C24:.E24])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G24": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F24];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H24": {
+          "formula": "=SUM((annuelle_moyenne>[.G24])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A25": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom21"
+        },
+        "B25": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom21"
+        },
+        "C25": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D25": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E25": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F25": {
+          "formula": "=AVERAGE([.C25:.E25])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G25": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F25];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H25": {
+          "formula": "=SUM((annuelle_moyenne>[.G25])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A26": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom22"
+        },
+        "B26": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom22"
+        },
+        "C26": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D26": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E26": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F26": {
+          "formula": "=AVERAGE([.C26:.E26])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G26": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F26];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H26": {
+          "formula": "=SUM((annuelle_moyenne>[.G26])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A27": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom23"
+        },
+        "B27": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom23"
+        },
+        "C27": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D27": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E27": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F27": {
+          "formula": "=AVERAGE([.C27:.E27])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G27": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F27];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H27": {
+          "formula": "=SUM((annuelle_moyenne>[.G27])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A28": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom24"
+        },
+        "B28": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom24"
+        },
+        "C28": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D28": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E28": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F28": {
+          "formula": "=AVERAGE([.C28:.E28])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G28": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F28];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H28": {
+          "formula": "=SUM((annuelle_moyenne>[.G28])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A29": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom25"
+        },
+        "B29": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom25"
+        },
+        "C29": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D29": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E29": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F29": {
+          "formula": "=AVERAGE([.C29:.E29])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G29": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F29];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H29": {
+          "formula": "=SUM((annuelle_moyenne>[.G29])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A30": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom26"
+        },
+        "B30": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom26"
+        },
+        "C30": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D30": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E30": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F30": {
+          "formula": "=AVERAGE([.C30:.E30])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G30": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F30];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H30": {
+          "formula": "=SUM((annuelle_moyenne>[.G30])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A31": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom27"
+        },
+        "B31": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom27"
+        },
+        "C31": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D31": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E31": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F31": {
+          "formula": "=AVERAGE([.C31:.E31])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G31": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F31];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H31": {
+          "formula": "=SUM((annuelle_moyenne>[.G31])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A32": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom28"
+        },
+        "B32": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom28"
+        },
+        "C32": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D32": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E32": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F32": {
+          "formula": "=AVERAGE([.C32:.E32])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G32": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F32];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H32": {
+          "formula": "=SUM((annuelle_moyenne>[.G32])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A33": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom29"
+        },
+        "B33": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom29"
+        },
+        "C33": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D33": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E33": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F33": {
+          "formula": "=AVERAGE([.C33:.E33])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G33": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F33];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H33": {
+          "formula": "=SUM((annuelle_moyenne>[.G33])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        },
+        "A34": {
+          "formula": "=Nom",
+          "value": null,
+          "kind": null,
+          "text": "Nom30"
+        },
+        "B34": {
+          "formula": "=Prénom",
+          "value": null,
+          "kind": null,
+          "text": "Prénom30"
+        },
+        "C34": {
+          "formula": "=trim1_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "D34": {
+          "formula": "=trim2_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "E34": {
+          "formula": "=trim3_moyenne",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "F34": {
+          "formula": "=AVERAGE([.C34:.E34])",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "G34": {
+          "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.F34];0.25)",
+          "value": "0",
+          "kind": "float",
+          "text": "#VALEUR !"
+        },
+        "H34": {
+          "formula": "=SUM((annuelle_moyenne>[.G34])*1)+1",
+          "value": null,
+          "kind": "boolean",
+          "text": "#VALEUR !"
+        }
+      }
+    }
+  ],
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "expected": {
+    "edit": {
+      "sheet": "notes 1 trimestre",
+      "coefficients": {
+        "C4": 1,
+        "D4": 2,
+        "E4": 1,
+        "F4": 1,
+        "G4": 1
+      },
+      "grades": {
+        "C5": 10,
+        "D5": 12,
+        "E5": 14,
+        "F5": 16,
+        "G5": 18
+      },
+      "weightedCell": "H5",
+      "roundedCell": "I5",
+      "nameSheet": "liste des élèves",
+      "nameCell": "A5",
+      "nameValue": "QA_STC_23NOV"
+    },
+    "weighted": {
+      "formula": "=SUMPRODUCT([.$C$4:.$G$4];[.C5:.G5])/SUMIF([.C5:.G5];\">=0\";[.$C$4:.$G$4])",
+      "numerator": 41,
+      "denominator": 3,
+      "value": 13.666666666666666
+    },
+    "rounded": {
+      "formula": "=com.sun.star.sheet.addin.Analysis.getMround([.H5];0.25)",
+      "multiple": "0.25",
+      "value": 13.75
+    },
+    "note": "Derived only from original STC formula operands and planned edits; original cached error values are not calculation oracles."
+  }
+}
