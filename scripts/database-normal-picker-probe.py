@@ -54,7 +54,7 @@ def accessible_snapshot(pid):
     def visit(node,depth=0,ancestors=()):
         if depth>20 or len(result)>2000:return
         states=node.getState()
-        row=dict(name=node.name,role=node.getRoleName(),enabled=states.contains(pyatspi.STATE_ENABLED),showing=states.contains(pyatspi.STATE_SHOWING),ancestors=ancestors)
+        row=dict(name=node.name,role=node.getRoleName(),enabled=states.contains(pyatspi.STATE_ENABLED),showing=states.contains(pyatspi.STATE_SHOWING),focused=states.contains(pyatspi.STATE_FOCUSED),ancestors=ancestors)
         try:row['text']=node.queryText().getText(0,-1)[:4000]
         except (NotImplementedError,RuntimeError):pass
         try:row['rect']=list(node.queryComponent().getExtents(pyatspi.DESKTOP_COORDS))
@@ -127,8 +127,14 @@ for kind in ['appimage','deb']:
             click('StandaloneItems',prefix=True)
             case['snapshots']['rows-'+str(len(case['snapshots']))]=wait(lambda:text_present('SyntheticAlpha','SyntheticBeta'),'Original/reopened rows rendered')
         def sql(statement):
-            click('Access-SQL',role='text')
-            keys('ctrl+a');type_text(statement);keys('ctrl+Return')
+            # Actual WebKit AT-SPI exposes this visible textarea as 'embedded'.
+            # Its public Access-SQL label and observed focus/value remain strict.
+            click('Access-SQL',role='embedded')
+            wait(lambda:any(n['name']=='Access-SQL' and n['focused'] for n in accessible_snapshot(pid)),'Actual Access-SQL editor focus before typing')
+            keys('ctrl+a');type_text(statement)
+            wait(lambda:any(n['name']=='Access-SQL' and n.get('text')==statement for n in accessible_snapshot(pid)),'Actual typed SQL editor value')
+            case.setdefault('nativeSqlEntries',[]).append(statement)
+            keys('ctrl+Return')
         def cold_quit():
             keys('alt+F4')
             wait(lambda:not owned(home),'Full normal Database/AppImage/WebKit exit',15)
