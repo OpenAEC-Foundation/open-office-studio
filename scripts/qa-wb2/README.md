@@ -62,6 +62,21 @@ extraction; the coordinator's Git descriptor and artifact base descriptor have
 distinct correctly checked SHA256 values. Tokens are removed from converter
 child environment; each invocation uses an isolated profile and a timeout.
 
+The actual first strict run `45166562262` stops at the sheet-name comparison:
+the converter names the sheet `Sheet1`, while the native-default expectation
+from the independent reader was `A`. The source stores no explicit name.
+This remains a visible strict mismatch and is not asserted to be a confirmed
+product naming bug. No expected name was changed to make the test pass.
+
+The separate `qa-wb2-downstream-e0d7.yml` / `analysis/` workflow authenticates
+the complete **33 KB prior result ZIP** and its exact converted XLSX bytes,
+reparses the source independently, then executes steps 5 and 6 as downstream
+cell/formula evidence. It does not rerun the converter, substitute a mocked
+production callback, download Office again or replace the original failed run.
+Both the strict naming mismatch and successful downstream checks are recorded
+at every output stage. `strictSourceImportAcceptance` and
+`fullFormatAcceptance` remain false in this diagnostic.
+
 Run the workflow on its own QA branch. Static source-only verification is:
 
 ```sh

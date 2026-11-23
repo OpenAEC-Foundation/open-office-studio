@@ -1,0 +1,361 @@
+{
+  "scope": "WB2 only, genuine Quattro Pro 6.0 route under #30",
+  "status": "LIMITED: strict import stops on default-name mismatch; independently checked cells/formulas and actual engine continuation pass",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/wb2-qa-2026-11-23-e0d7",
+  "testedStrictHarness": "5b3ee3448e322d07b94cc0c670174d484fdff606",
+  "testedDownstreamHarness": "7c3d25d1acf083bdb4351f04749fa4b741791577",
+  "strictSourceImportAcceptance": false,
+  "downstreamCellFormulaAcceptance": true,
+  "fullFormatAcceptance": false,
+  "source": {
+    "repository": "https://github.com/openpreserve/format-corpus",
+    "commit": "366f068cec399d0cdfd61fa473de3ab6dc858098",
+    "firstPublicationCommit": "9ab17f1a842a20f28862b34bd841a538ab871d4c",
+    "path": "office/spreadsheet/wb2/testQuattro.wb2",
+    "filename": "testQuattro.wb2",
+    "blob": "9ed7aa4ad6891cd7fca809b7ee918933e4a1d460",
+    "bytes": 4804,
+    "sha256": "64273c74942b0b7456bc8f7da3828311d07f2acf08e9ab756e07dda549a9b569",
+    "url": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wb2/testQuattro.wb2",
+    "license": "CC0-1.0",
+    "licenseOwner": "Johan van der Knijff",
+    "provenanceUrl": "https://raw.githubusercontent.com/openpreserve/format-corpus/366f068cec399d0cdfd61fa473de3ab6dc858098/office/spreadsheet/wb2/readme.md",
+    "provenanceSha256": "7fcdacd9d63ec7066bbc55eda970384409ce8250848a0f2d2cfd7302439c464e",
+    "mirror": {
+      "repository": "apache/tika",
+      "commit": "de0cd09a3f373a3254fa2d614d3f330c4aa1cf82",
+      "url": "https://raw.githubusercontent.com/apache/tika/de0cd09a3f373a3254fa2d614d3f330c4aa1cf82/tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-miscoffice-module/src/test/resources/test-documents/testQuattro.wb2"
+    },
+    "variant": "Quattro Pro 6.0, native flat records, BOF version 0x1002; not WB1/WQ2, ZIP or CFB",
+    "coverageLimit": "Single genuine workbook: one default-named sheet, 33 populated cells, ten relative multiplication formulas. Chart/layout/style/trailer fidelity, macros, encryption and other WB variants are not accepted."
+  },
+  "sourceMetrics": {
+    "nativeBofVersion": "0x1002",
+    "nativeSheetIds": [
+      0
+    ],
+    "explicitSheetNameRecords": 0,
+    "inferredNativeDefaultNames": [
+      "A"
+    ],
+    "populatedCells": 33,
+    "textCells": 3,
+    "integerCells": 20,
+    "formulaCells": 10,
+    "nativeRecordCount": 195,
+    "originalFormulaCaches": [
+      10,
+      18,
+      24,
+      28,
+      30,
+      30,
+      28,
+      24,
+      18,
+      10
+    ],
+    "trailer": {
+      "offset": 4763,
+      "bytes": 41,
+      "hex": "00000000000034121700000051505724457874656e64656453746f7261676524362e30010000000000",
+      "sha256": "4f90d79d8816f1f53c848759c658f1f61d2d5135a7f435369b17f47f1fb3d922",
+      "fidelityAccepted": false
+    }
+  },
+  "sourceOracleMethod": "Native RPN 01 01 0b 03 and relative references (-2,0,0),(-1,0,0) give Arow*Brow; raw integer operands evaluated without converter or engine",
+  "specificationEvidence": [
+    {
+      "repository": "GNOME/gnumeric",
+      "commit": "e15f7f3bfb93361601d54664aaddddd0c643892d",
+      "path": "plugins/qpro/qpro-read.c",
+      "sha256": "4b09932acf96b23558119eb55a11efb9d351fa576e8643cd234e182ca5bed16d",
+      "use": "Independent implementation documents 0x1002 WB2 signature, native default sheet names, record layout and reference bits; no parser execution/results used as oracle."
+    },
+    {
+      "repository": "GNOME/gnumeric",
+      "commit": "e15f7f3bfb93361601d54664aaddddd0c643892d",
+      "path": "plugins/qpro/qpro.h",
+      "blob": "917da72faf62c8de8bccf4f7c85d33e3a81244fb",
+      "use": "Record and opcode numbers: sheet 202/203/204, cell reference 1, multiply 11, formula terminator 3."
+    }
+  ],
+  "issueCheck": {
+    "overview": 30,
+    "queries": [
+      "WB2 in:title,body",
+      "Quattro in:title,body"
+    ],
+    "states": [
+      "open",
+      "closed"
+    ],
+    "specificDuplicates": [],
+    "descriptionsRead": [
+      30,
+      35
+    ],
+    "newIssue": null,
+    "reason": "No confirmed independently grounded naming bug: source contains no explicit name, A expectation comes from independent native reader default. Strict mismatch is retained as an observation; no speculative issue or product fix/intake."
+  },
+  "strictNamingObservation": {
+    "phase": "Private converter output, before the application engine opens it",
+    "expectedInferredNativeDefault": "A",
+    "actualConvertedName": "Sheet1",
+    "sourceStoresExplicitName": false,
+    "classification": "Strict QA mismatch with unresolved native naming expectation, not an independently confirmed product bug",
+    "strictRunKeptFailed": true,
+    "expectedNameNotRewritten": true
+  },
+  "runtimeInput": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+    "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+    "producerRun": 45147346793,
+    "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+    "artifactId": 14805600515,
+    "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "zipBytes": 305620081,
+    "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "manifestEntries": 15082,
+    "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+    "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "parentRun": 45143305147,
+    "parentJob": 137586343061,
+    "parentZipArtifact": 14804062140,
+    "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+  },
+  "converter": {
+    "method": "Actual private Linux CLI adapter invoked by P2 production bereidOpenen; safe isolated profile, no fallback",
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "outputBytes": 5880,
+    "outputSha256": "97ce3bd8262661155166fcf50333eca50cc9e99f2ac49a255e3497ef2e3e1b98",
+    "sourceUnchanged": true,
+    "seconds": 2.3194574119999913
+  },
+  "engine": {
+    "wasmSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+    "actualExecution": "Linux CI, pinned P2 WASM; continuation from exact already authenticated converter bytes, no replacement/mock conversion",
+    "editedValues": {
+      "before": 10,
+      "afterEdit": {
+        "kind": "number",
+        "value": 70
+      },
+      "afterUndo": {
+        "kind": "number",
+        "value": 10
+      },
+      "afterRedo": {
+        "kind": "number",
+        "value": 70
+      },
+      "text": {
+        "kind": "text",
+        "value": "QA_WB2_23NOV"
+      }
+    },
+    "checks": [
+      "Actual P2 WASM opens exact prior converter bytes; all 33 values and ten original formulas match native oracle.",
+      "A2 edit 1→7 recalculates original C2 multiplication 10→70; Undo→10, Redo→70; text edit A1 committed.",
+      "Modern XLSX save/fresh engine reopen and all three independent XML checks pass for 33 cells/ten formulas; WB2 source unchanged."
+    ],
+    "outputs": [
+      {
+        "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/converted.xlsx",
+        "sha256": "97ce3bd8262661155166fcf50333eca50cc9e99f2ac49a255e3497ef2e3e1b98",
+        "sheetNames": [
+          "Sheet1"
+        ],
+        "sourceNativeDefaultName": "A",
+        "sourceHasExplicitNameRecord": false,
+        "strictDefaultNameMatch": false,
+        "strictFailure": {
+          "type": "AssertionError",
+          "expectedNames": [
+            "A"
+          ],
+          "actualNames": [
+            "Sheet1"
+          ]
+        },
+        "strictSourceImportAcceptance": false,
+        "fullFormatAcceptance": false,
+        "checkedPopulatedCells": 33,
+        "checkedOriginalFormulas": 10,
+        "downstreamCellFormulaPassed": true,
+        "edited": false,
+        "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+      },
+      {
+        "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/saved.xlsx",
+        "sha256": "5ef1222c781b385bc247e74695d5ce33e6662980f966fb3e184e0ea5f0b99ca7",
+        "sheetNames": [
+          "Sheet1"
+        ],
+        "sourceNativeDefaultName": "A",
+        "sourceHasExplicitNameRecord": false,
+        "strictDefaultNameMatch": false,
+        "strictFailure": {
+          "type": "AssertionError",
+          "expectedNames": [
+            "A"
+          ],
+          "actualNames": [
+            "Sheet1"
+          ]
+        },
+        "strictSourceImportAcceptance": false,
+        "fullFormatAcceptance": false,
+        "checkedPopulatedCells": 33,
+        "checkedOriginalFormulas": 10,
+        "downstreamCellFormulaPassed": true,
+        "edited": true,
+        "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+      },
+      {
+        "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/reopened.xlsx",
+        "sha256": "5ef1222c781b385bc247e74695d5ce33e6662980f966fb3e184e0ea5f0b99ca7",
+        "sheetNames": [
+          "Sheet1"
+        ],
+        "sourceNativeDefaultName": "A",
+        "sourceHasExplicitNameRecord": false,
+        "strictDefaultNameMatch": false,
+        "strictFailure": {
+          "type": "AssertionError",
+          "expectedNames": [
+            "A"
+          ],
+          "actualNames": [
+            "Sheet1"
+          ]
+        },
+        "strictSourceImportAcceptance": false,
+        "fullFormatAcceptance": false,
+        "checkedPopulatedCells": 33,
+        "checkedOriginalFormulas": 10,
+        "downstreamCellFormulaPassed": true,
+        "edited": true,
+        "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+      }
+    ]
+  },
+  "ci": [
+    {
+      "run": 45166562262,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45166562262",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 137664909040,
+          "name": "source",
+          "conclusion": "success"
+        },
+        {
+          "id": 137665004092,
+          "name": "browser_limit",
+          "conclusion": "success"
+        },
+        {
+          "id": 137665215392,
+          "name": "runtime",
+          "conclusion": "failure",
+          "reason": "Strict default sheet-name expectation A versus actual Sheet1; private conversion completed before failure"
+        }
+      ]
+    },
+    {
+      "run": 45167344661,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45167344661",
+      "conclusion": "success",
+      "job": 137667603603,
+      "meaning": "Downstream diagnostic success only; strict source import and full format acceptance remain false"
+    }
+  ],
+  "artifacts": {
+    "source": {
+      "id": 14815425109,
+      "name": "wb2-source-oracle",
+      "bytes": 14045,
+      "zipSha256": "fb9e2f7ce25953cb74e365f3eb2431cb595da0c16bc5d7a98a22773a9e483223",
+      "run": 45166562262,
+      "headSha": "5b3ee3448e322d07b94cc0c670174d484fdff606",
+      "completeZipDigestVerified": true
+    },
+    "browser": {
+      "id": 14814083643,
+      "name": "wb2-browser-limit",
+      "bytes": 1561,
+      "zipSha256": "28fd58bcb50df645e16a4d1142bb5bd59a1abb1aef0bda97579d077450a2700d",
+      "run": 45166562262,
+      "headSha": "5b3ee3448e322d07b94cc0c670174d484fdff606",
+      "completeZipDigestVerified": true
+    },
+    "strict": {
+      "id": 14815275765,
+      "name": "wb2-runtime-result",
+      "bytes": 33013,
+      "zipSha256": "030d6fd8aa221dd8598ebdf79a23178f5a6a9c7f68bf946fbeb6ceb09a9bb7d1",
+      "run": 45166562262,
+      "headSha": "5b3ee3448e322d07b94cc0c670174d484fdff606",
+      "completeZipDigestVerified": true
+    },
+    "downstream": {
+      "id": 14815670554,
+      "name": "wb2-downstream-result",
+      "bytes": 48175,
+      "zipSha256": "9c44a09ed38e95214097b5a7a409ebf4aa34c4330cf209d322ca025278adbc95",
+      "run": 45167344661,
+      "headSha": "7c3d25d1acf083bdb4351f04749fa4b741791577",
+      "completeZipDigestVerified": true
+    }
+  },
+  "retained": [
+    {
+      "path": "retained/wb2-strict-runtime-result.zip",
+      "bytes": 33013,
+      "sha256": "030d6fd8aa221dd8598ebdf79a23178f5a6a9c7f68bf946fbeb6ceb09a9bb7d1"
+    },
+    {
+      "path": "retained/wb2-downstream-result.zip",
+      "bytes": 48175,
+      "sha256": "9c44a09ed38e95214097b5a7a409ebf4aa34c4330cf209d322ca025278adbc95"
+    }
+  ],
+  "platforms": {
+    "linux": "Actual private headless conversion and production open helper in first run; actual engine continuation/edit/UndoRedo/XLSX-save/freshreopen in second run. No packaged native GUI/installer or actual Tauri IPC acceptance.",
+    "browser": "Production capability/open functions in Linux Node with empty window; concrete rejection/XLSX alternative passes. No real hosted browser UI or browser Office conversion acceptance.",
+    "windows": "Not executed for this scoped probe.",
+    "macos": "Not executed for this scoped probe."
+  },
+  "limits": [
+    "Single genuine workbook: one default-named sheet, 33 populated cells, ten relative multiplication formulas. Chart/layout/style/trailer fidelity, macros, encryption and other WB variants are not accepted.",
+    "Chart and other non-cell records inventoried, not semantically accepted",
+    "Default sheet identity tested; explicit/custom sheet-name import not demonstrated",
+    "Downstream execution starts from exact authenticated prior conversion bytes; original strict run remains failed.",
+    "No new converter execution, native UI, Tauri IPC, Windows/macOS or hosted browser UI test.",
+    "Default name mismatch remains unresolved; no custom sheet-name proof.",
+    "No WB2 export, visual/chart/style/trailer, macro or encryption acceptance.",
+    "No changes to product files, catalog claims, release intake, main/tag/publication; no GUI/capture/profile changes or extra suite/Mac builds."
+  ],
+  "previousProofsPreserved": {
+    "stc": "a7962244e86cc4f429ca82894566b49195214139",
+    "uos": "4f94d347b38b851780aa3304c269a8ee385eed94",
+    "uot": "232a10af3966774a49a3c5052bb4a32c6a4ecb14",
+    "uop": "e280e9521cfad3b2c61c26d19fbb5df8b5b74a42",
+    "sdd": "fe66bec9a7ec9b5242fcc8a72646bee00b79b573"
+  }
+}

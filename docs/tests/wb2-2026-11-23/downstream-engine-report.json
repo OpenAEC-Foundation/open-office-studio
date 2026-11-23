@@ -1,0 +1,133 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "7c3d25d1acf083bdb4351f04749fa4b741791577",
+  "continuation": {
+    "run": 45166562262,
+    "harnessCommit": "5b3ee3448e322d07b94cc0c670174d484fdff606",
+    "artifactId": 14815275765,
+    "artifactName": "wb2-runtime-result",
+    "zipBytes": 33013,
+    "zipSha256": "030d6fd8aa221dd8598ebdf79a23178f5a6a9c7f68bf946fbeb6ceb09a9bb7d1",
+    "convertedBytes": 5880,
+    "convertedSha256": "97ce3bd8262661155166fcf50333eca50cc9e99f2ac49a255e3497ef2e3e1b98",
+    "reason": "Continue actual engine checks from exact already verified private conversion bytes. Original strict name mismatch remains visible; no converter or full runtime download is repeated."
+  },
+  "checks": [
+    "Actual P2 WASM opens exact prior converter bytes; all 33 values and ten original formulas match native oracle.",
+    "A2 edit 1→7 recalculates original C2 multiplication 10→70; Undo→10, Redo→70; text edit A1 committed.",
+    "Modern XLSX save/fresh engine reopen and all three independent XML checks pass for 33 cells/ten formulas; WB2 source unchanged."
+  ],
+  "strictSourceImportAcceptance": false,
+  "fullFormatAcceptance": false,
+  "limits": [
+    "Single genuine workbook: one default-named sheet, 33 populated cells, ten relative multiplication formulas. Chart/layout/style/trailer fidelity, macros, encryption and other WB variants are not accepted.",
+    "Chart and other non-cell records inventoried, not semantically accepted",
+    "Default sheet identity tested; explicit/custom sheet-name import not demonstrated",
+    "Downstream execution starts from exact authenticated prior conversion bytes; original strict run remains failed.",
+    "No new converter execution, native UI, Tauri IPC, Windows/macOS or hosted browser UI test."
+  ],
+  "convertedOracle": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/converted.xlsx",
+    "sha256": "97ce3bd8262661155166fcf50333eca50cc9e99f2ac49a255e3497ef2e3e1b98",
+    "sheetNames": [
+      "Sheet1"
+    ],
+    "sourceNativeDefaultName": "A",
+    "sourceHasExplicitNameRecord": false,
+    "strictDefaultNameMatch": false,
+    "strictFailure": {
+      "type": "AssertionError",
+      "expectedNames": [
+        "A"
+      ],
+      "actualNames": [
+        "Sheet1"
+      ]
+    },
+    "strictSourceImportAcceptance": false,
+    "fullFormatAcceptance": false,
+    "checkedPopulatedCells": 33,
+    "checkedOriginalFormulas": 10,
+    "downstreamCellFormulaPassed": true,
+    "edited": false,
+    "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+  },
+  "engineWasmSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+  "editedValues": {
+    "before": 10,
+    "afterEdit": {
+      "kind": "number",
+      "value": 70
+    },
+    "afterUndo": {
+      "kind": "number",
+      "value": 10
+    },
+    "afterRedo": {
+      "kind": "number",
+      "value": 70
+    },
+    "text": {
+      "kind": "text",
+      "value": "QA_WB2_23NOV"
+    }
+  },
+  "savedOracle": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/saved.xlsx",
+    "sha256": "5ef1222c781b385bc247e74695d5ce33e6662980f966fb3e184e0ea5f0b99ca7",
+    "sheetNames": [
+      "Sheet1"
+    ],
+    "sourceNativeDefaultName": "A",
+    "sourceHasExplicitNameRecord": false,
+    "strictDefaultNameMatch": false,
+    "strictFailure": {
+      "type": "AssertionError",
+      "expectedNames": [
+        "A"
+      ],
+      "actualNames": [
+        "Sheet1"
+      ]
+    },
+    "strictSourceImportAcceptance": false,
+    "fullFormatAcceptance": false,
+    "checkedPopulatedCells": 33,
+    "checkedOriginalFormulas": 10,
+    "downstreamCellFormulaPassed": true,
+    "edited": true,
+    "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+  },
+  "reopenedOracle": {
+    "file": "/home/runner/work/open-office-studio/open-office-studio/.local/wb2-qa/reopened.xlsx",
+    "sha256": "5ef1222c781b385bc247e74695d5ce33e6662980f966fb3e184e0ea5f0b99ca7",
+    "sheetNames": [
+      "Sheet1"
+    ],
+    "sourceNativeDefaultName": "A",
+    "sourceHasExplicitNameRecord": false,
+    "strictDefaultNameMatch": false,
+    "strictFailure": {
+      "type": "AssertionError",
+      "expectedNames": [
+        "A"
+      ],
+      "actualNames": [
+        "Sheet1"
+      ]
+    },
+    "strictSourceImportAcceptance": false,
+    "fullFormatAcceptance": false,
+    "checkedPopulatedCells": 33,
+    "checkedOriginalFormulas": 10,
+    "downstreamCellFormulaPassed": true,
+    "edited": true,
+    "limit": "Native default A inferred from independent implementation, not a literal serialized source name; mismatch retained, no naming bug asserted without normative/original naming evidence"
+  },
+  "downstreamCellFormulaAcceptance": true,
+  "downstreamPassed": true
+}
