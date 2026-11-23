@@ -142,6 +142,9 @@ for kind in ['appimage','deb']:
         def cold_quit():
             keys('alt+F4')
             wait(lambda:not owned(home),'Full normal Database/AppImage/WebKit exit',15)
+            exitcode=process.wait(timeout=10)
+            case.setdefault('normalExitCodes',[]).append(exitcode)
+            assert exitcode==0,'Actual app/AppImage launcher did not exit normally'
         def launch():
             with (ROOT/f'normal-picker-{kind}.log').open('ab') as log:
                 proc=subprocess.Popen([application],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
