@@ -35,6 +35,24 @@ export async function auditDocx(bytes, root, name, sourceOracle, marker) {
   const instruction = [...paragraph.getElementsByTagNameNS(W, "instrText")].map(e => e.textContent.trim());
   assert.deepEqual(instruction, ["DOCVARIABLE Report"], "Keep the original field; no flattening");
   assert.equal([...paragraph.getElementsByTagNameNS(W, "t")].map(e => e.textContent).join(""), "Report Title" + marker);
+  // Inspect the actual field-result boundary as well as paragraph text: the
+  // edit belongs after fldChar/end, never inside or in place of the cache.
+  let fieldState = null, cached = "", outside = "", fieldEnds = 0;
+  for (const node of paragraph.getElementsByTagName("*")) {
+    if (node.namespaceURI !== W) continue;
+    if (node.localName === "fldChar") {
+      const type = node.getAttributeNS(W, "fldCharType");
+      if (type === "begin") { assert.equal(fieldState, null); fieldState = "instruction"; }
+      else if (type === "separate") { assert.equal(fieldState, "instruction"); fieldState = "result"; }
+      else if (type === "end") { assert.equal(fieldState, "result"); fieldState = null; fieldEnds++; }
+    } else if (node.localName === "t") {
+      if (fieldState === "result") cached += node.textContent;
+      else { assert.equal(fieldState, null); outside += node.textContent; }
+    }
+  }
+  assert.equal(fieldState, null); assert.equal(fieldEnds, 1);
+  assert.equal(cached, "Report Title", "Retain original cached field result exactly");
+  assert.equal(outside, marker, "Keep adjacent edit outside the atomic field");
   const styles = new DOMParser().parseFromString(strFromU8(zip["word/styles.xml"]), "application/xml");
   const titleStyle = [...styles.getElementsByTagNameNS(W, "style")].find(e => e.getAttributeNS(W, "styleId") === "Title");
   assert(titleStyle, "Retain the original Title style");
