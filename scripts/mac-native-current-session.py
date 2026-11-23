@@ -159,6 +159,24 @@ def main():
              "Owned document title did not become ready", 90)
         return pid
 
+    def capture_acceptance_failure():
+        if not args.acceptance or pid is None or owned() != [pid]:
+            return
+        try:
+            state = action("raw-snapshot")
+            raw = out / "failure-original-raw-ax.json"
+            raw.write_text(json.dumps(state, indent=2), encoding="utf-8")
+            observe = runpy.run_path(str(Path(__file__).with_name("writer361-macos-ribbon-observation.py")))
+            capture = observe["capture_original"](state, pid, out / "failure-original-window.png")
+            display = out / "failure-original-display.png"
+            subprocess.run(["screencapture", "-x", str(display)], check=True, capture_output=True, timeout=15)
+            report["failureOriginalEvidence"] = {"capture": capture,
+                "rawSha256": hashlib.sha256(raw.read_bytes()).hexdigest(),
+                "displaySha256": hashlib.sha256(display.read_bytes()).hexdigest(), "extraEditorInputSent": False}
+        except Exception as error:
+            # Preserve the original failure; a missing diagnostic capture cannot repair it.
+            report["failureOriginalCaptureError"] = str(error)
+
     try:
         helper_source = Path(__file__).with_name("writer-361-macos-ax.swift")
         helper_sha = hashlib.sha256(helper_source.read_bytes()).hexdigest()
@@ -282,9 +300,11 @@ def main():
                                   "Original OS window/display screenshots and file oracles retained; no canvas readback or model focus injection"])
     except PermissionError as error:
         report.update(status="blocked", reason=str(error))
+        capture_acceptance_failure()
         raise
     except Exception as error:
         report.update(status="failed", error=str(error))
+        capture_acceptance_failure()
         raise
     finally:
         if mounted:
