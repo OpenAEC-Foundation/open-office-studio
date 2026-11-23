@@ -36,17 +36,27 @@ def unchanged_payload(private):
     assert sha(manifest) == "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029"
     expected = json.loads(manifest.read_text())
     paths = [private / "payload"] + sorted((private / "payload").rglob("*"))
-    assert [p.relative_to(private).as_posix() for p in paths] == [e["path"] for e in expected]
-    for path, entry in zip(paths, expected):
-        assert f"{stat.S_IMODE(path.lstat().st_mode):04o}" == entry["mode"]
+    actual_names = {p.relative_to(private).as_posix() for p in paths}
+    expected_names = {e["path"] for e in expected}
+    changed = []
+    for entry in expected:
+        path = private / entry["path"]
+        if entry["path"] not in actual_names:
+            continue
+        actual = {"mode": f"{stat.S_IMODE(path.lstat().st_mode):04o}"}
         if entry["type"] == "file":
-            assert not path.is_symlink() and path.stat().st_size == entry["bytes"] and sha(path) == entry["sha256"]
+            actual.update(type="symlink" if path.is_symlink() else "file", bytes=path.stat().st_size, sha256=sha(path))
         elif entry["type"] == "symlink":
-            assert path.is_symlink() and os.readlink(path) == entry["linkTarget"]
-            assert path.resolve().relative_to(private).as_posix() == entry["resolvedPath"]
+            actual.update(type="symlink" if path.is_symlink() else "file", linkTarget=os.readlink(path) if path.is_symlink() else None,
+                          resolvedPath=path.resolve().relative_to(private).as_posix())
         else:
-            assert path.is_dir() and not path.is_symlink()
-    return {"entries": len(expected), "allFilesModesAndLinksUnchanged": True}
+            actual.update(type="directory" if path.is_dir() and not path.is_symlink() else "other")
+        difference = {k: {"expected": entry.get(k), "actual": v} for k, v in actual.items() if entry.get(k) != v}
+        if difference:
+            changed.append({"path": entry["path"], "differences": difference})
+    added, missing = sorted(actual_names - expected_names), sorted(expected_names - actual_names)
+    return {"entries": len(expected), "allFilesModesAndLinksUnchanged": not (added or missing or changed),
+            "addedPaths": added, "missingPaths": missing, "changedEntries": changed}
 
 
 def main():
@@ -199,6 +209,7 @@ def main():
         report["sourceUnchanged"] = source_path.read_bytes() == source
         report["runtimeAfterProbe"] = unchanged_payload(private)
         write(out / "uno-diagnosis.json", report)
+    assert report["runtimeAfterProbe"]["allFilesModesAndLinksUnchanged"], "Runtime changed; exact paths retained in diagnosis"
     if error:
         raise error
     print(json.dumps({k: report[k] for k in ("counterfactualProven", "scopedRectangleFillsPreserved", "sourceAcceptancePassed")}))
