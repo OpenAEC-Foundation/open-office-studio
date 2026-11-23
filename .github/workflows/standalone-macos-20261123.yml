@@ -1,0 +1,41 @@
+name: Standalone macOS independence QA
+on:
+  push:
+    branches: [codex/standalone-macos-20261123]
+    paths:
+      - .github/workflows/standalone-macos-20261123.yml
+      - .github/standalone-macos-20261123-request.json
+      - scripts/standalone-macos/**
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: standalone-macos-20261123
+  cancel-in-progress: false
+jobs:
+  capabilities:
+    if: contains(github.event.head_commit.message, '[standalone-macos]')
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify isolated contracts and independent fixture oracles
+        run: python scripts/standalone-macos/test_contracts.py
+      - name: Compile actual macOS native helper before touching applications
+        run: |
+          mkdir -p receipts
+          swiftc scripts/standalone-macos/ax.swift -o receipts/standalone-ax
+          receipts/standalone-ax capabilities > receipts/capabilities.json
+          sw_vers > receipts/host-version.txt
+          python -c 'import json; p=json.load(open("receipts/capabilities.json")); print(json.dumps(p,indent=2)); assert all(p.get(k) is True for k in ("trusted","screenCaptureAuthorized","eventPostingAuthorized")), "Native runner capabilities unavailable"'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-macos-capabilities-${{ github.sha }}
+          path: receipts/
+          if-no-files-found: warn
