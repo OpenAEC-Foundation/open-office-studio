@@ -6,7 +6,7 @@ on:
         type: choice
         description: Explicit diagnostic phase
         default: components
-        options: [components, uno]
+        options: [components, uno, uno-readonly]
 permissions:
   contents: read
   actions: read
@@ -21,16 +21,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check private read-only namespace capability before consuming another runtime
+        if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno-readonly'
+        run: python scripts/qa-presentation-375/namespace_probe.py --capability-only
       - name: Verify private P2 runtime, producer and official parent package
         run: python scripts/qa-presentation-375/runtime_input.py
       - name: Inventory already present UNO components, without Office execution
         run: python scripts/qa-presentation-375/preflight.py
       - name: Fetch immutable existing UOP evidence only
-        if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno'
+        if: github.event_name == 'workflow_dispatch' && (inputs.phase == 'uno' || inputs.phase == 'uno-readonly')
         run: git fetch --no-tags --depth=1 origin e280e9521cfad3b2c61c26d19fbb5df8b5b74a42
       - name: Diagnose own isolated UNO document copies and clean up own process group
         if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno'
         run: python scripts/qa-presentation-375/probe.py
+      - name: Run the single additional diagnostic inside an own read-only namespace
+        if: github.event_name == 'workflow_dispatch' && inputs.phase == 'uno-readonly'
+        run: python scripts/qa-presentation-375/namespace_probe.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
