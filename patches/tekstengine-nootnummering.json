@@ -5,7 +5,7 @@
   "versie": "0.5.1",
   "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
   "patch": "tekstengine-nootnummering.patch",
-  "patchSha256": "d22243bf9044d8c91ea55f06a3aff5c206ccb6b7fe53119bda1836ba2e7c400c",
+  "patchSha256": "4ab76ce09642d6e4a5c77a025f41ce1844f41b680ab35322068507d3d3e4bf9a",
   "rustc": "1.98.1",
   "wasmBindgen": "0.2.129",
   "stand": "Pinned-source CI native tests, WASM build and full JS/WASM contract checks pass. Production equation rendering tests in progress.",
@@ -41,7 +41,7 @@
     }
   },
   "veldHoofdletters374": {
-    "scope": "Measure allCaps field display text including tracking using the existing text shaper; preserve original field/cache and primary-font policy; ordinary non-caps path unchanged",
+    "scope": "Measure only allCaps field display text, including tracking and Canvas horizontal scaling once; preserve stored field/cache, atomic span1, primary-font policy, original bounds and ordinary non-caps path",
     "upstreamCommit": "4e982c3aea0065578604c3fe7727938533888f66",
     "testFilter": "field_caps",
     "buildStatus": "source ready; replacement WASM pending verified Linux build"

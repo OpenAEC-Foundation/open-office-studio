@@ -1204,7 +1204,7 @@ diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measur
      fn an_inline_image_wider_than_the_column_keeps_its_declared_box() {
          let store = FontStore::new();
          let measure = |max_width: f64| {
-@@ -867,3 +888,104 @@
+@@ -867,3 +888,115 @@
          );
      }
  }
@@ -1308,6 +1308,17 @@ diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measur
 +        let expected = measured(&input(vec![json!({"kind": "text", "text": "REPORT TITLE"})], 1000.0));
 +        assert!((actual.lines[0].width - expected.lines[0].width).abs() < 0.001);
 +    }
++
++    #[test]
++    fn field_caps_visual_scale_includes_tracking_once() {
++        let mut title = field("Report Title", true, None);
++        title["letterSpacing"] = json!(16.0 / 3.0);
++        title["horizontalScale"] = json!(150.0);
++        let measured = measured(&input(vec![title], 1000.0));
++        // Same actual paint contract: scale the full glyph + 11-gap width.
++        assert!((measured.lines[0].width - 364.47917 * 1.5).abs() < 0.001);
++        assert_eq!(measured.lines[0].tail_char, 1);
++    }
 +}
 diff --git a/crates/ooxml-text/src/measure/prepare.rs b/crates/ooxml-text/src/measure/prepare.rs
 --- a/crates/ooxml-text/src/measure/prepare.rs
@@ -1397,11 +1408,17 @@ diff --git a/crates/ooxml-text/src/measure/prepare.rs b/crates/ooxml-text/src/me
  fn prepare_field_run(
      store: &FontStore,
      input: &MeasureRequest<'_>,
-@@ -533,6 +558,31 @@
+@@ -533,6 +558,40 @@
          Some(t) if !t.is_empty() => t,
          _ => "1",
      };
 +    if run.all_caps {
++        if fallback.len() > MAX_RUN_TEXT_BYTES {
++            return Err(MeasureError::Unsupported(format!(
++                "text too long ({} bytes)",
++                fallback.len()
++            )));
++        }
 +        // Canvas paints uppercase plus tracking, while the cached field remains
 +        // one document unit. Shape only a transient display copy; do not rewrite
 +        // its stored fallback or expose its characters as editable text units.
@@ -1418,8 +1435,11 @@ diff --git a/crates/ooxml-text/src/measure/prepare.rs b/crates/ooxml-text/src/me
 +        display.font_size_cs = None;
 +        display.language = None;
 +        let text = prepare_text_run(store, input, &display, &[])?;
++        // The field's Canvas transform scales tracking as well as glyphs.
++        // Text shaping has already scaled glyph advances, but not tracking.
++        let tracking = text.letter_spacing * (run.horizontal_scale.unwrap_or(100.0) / 100.0);
 +        return Ok(PreparedField {
-+            width: super::line_filler::span_width(&text.chars, text.letter_spacing),
++            width: super::line_filler::span_width(&text.chars, tracking),
 +            font_size_pt: text.font_size_pt,
 +            metrics_font: text.metrics_font,
 +            baseline_shift_px: text.baseline_shift_px,
