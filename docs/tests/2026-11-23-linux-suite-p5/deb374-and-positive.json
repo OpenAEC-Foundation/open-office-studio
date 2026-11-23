@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "status": "DEB374 and DEB378 positive completed; original job failed in subsequent unstarted negative setup",
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05"
+  },
+  "version": "2026.48.1",
+  "run": 45193639082,
+  "job": 137758403838,
+  "attempt": 1,
+  "harness": "80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4",
+  "originalJobConclusion": "failure",
+  "artifact": {
+    "id": 14827731026,
+    "zipBytes": 14256701,
+    "sha256": "336d4c6e693f6e74595dc980276a89357e574e37b32b9314276e078640eb751e",
+    "privatePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-linux-suite-final-acceptance-2026-11-23\\.local\\final-native-proof\\45193639082\\deb\\14827731026.zip"
+  },
+  "package": {
+    "sha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "installedElfSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+  },
+  "field374": {
+    "status": "passed bounded actual native title paint and retained-field/save/newPID regression",
+    "nativeChecks": 19,
+    "sharedAuditCount": 8,
+    "marker": " -- STW30 EDIT 2026-11-23",
+    "oracleCommit": "3169b09020184e3a98a4d5364ad77b15f38ac063",
+    "auditInputs": [
+      {
+        "name": "windows_original",
+        "sha256": "4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310"
+      },
+      {
+        "name": "windows_saved",
+        "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71"
+      },
+      {
+        "name": "windows_reopened",
+        "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71"
+      },
+      {
+        "name": "windows_resaved",
+        "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71"
+      },
+      {
+        "name": "converted_original",
+        "sha256": "b29d6adc44aec4ee64d25555f0aa5560afb0ad24973f2b491789b6bb08e7c992"
+      },
+      {
+        "name": "converted_saved",
+        "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4"
+      },
+      {
+        "name": "converted_reopened",
+        "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4"
+      },
+      {
+        "name": "converted_resaved",
+        "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4"
+      }
+    ],
+    "sessions": [
+      {
+        "pid": 5281,
+        "document": "preflight.docx"
+      },
+      {
+        "pid": 5446,
+        "document": "preflight.docx"
+      },
+      {
+        "pid": 5571,
+        "document": "windows_control.docx"
+      },
+      {
+        "pid": 14141,
+        "document": "field374_windows.docx"
+      },
+      {
+        "pid": 14278,
+        "document": "converted_control.docx"
+      },
+      {
+        "pid": 23211,
+        "document": "field374_converted.docx"
+      }
+    ],
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    },
+    "originalImagesReviewedSerially": [
+      "windows-before-edit",
+      "windows-saved",
+      "windows-new-pid-reopen",
+      "converted-before-edit",
+      "converted-after-real-edit",
+      "converted-saved",
+      "converted-new-pid-reopen"
+    ],
+    "visual": "Real visible Report Title and exact short marker remain separate before/edit/save/normal full quit/new PID reopen for both retained Windows and converter controls. No observed title/run overlap. Native font-substitution notice (Thorndale to Liberation Sans and others) is explicit; no general typography/pagination certification.",
+    "cleanup": {
+      "attributedBackends": [
+        {
+          "pid": 5175,
+          "scope": "Exact attributed portal peer on the same private test bus",
+          "closed": true
+        }
+      ],
+      "registeredPortalPeers": [
+        {
+          "name": "org.freedesktop.impl.portal.desktop.gtk",
+          "uniqueName": ":1.10",
+          "pid": 5175,
+          "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+          "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+          "startTime": "59657",
+          "busId": "ba87d1d21b722945f7e2d70e6b044cec",
+          "closed": true,
+          "alreadyExited": true
+        },
+        {
+          "name": "org.freedesktop.portal.Desktop",
+          "uniqueName": ":1.2",
+          "pid": 5176,
+          "executable": "/usr/libexec/xdg-desktop-portal",
+          "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+          "startTime": "59658",
+          "busId": "ba87d1d21b722945f7e2d70e6b044cec",
+          "closed": true
+        }
+      ],
+      "children": [
+        {
+          "label": "SaveFile observer",
+          "pid": 14688,
+          "closed": true
+        },
+        {
+          "label": "SaveFile observer",
+          "pid": 5815,
+          "closed": true
+        },
+        {
+          "label": "owned portal broker",
+          "pid": 5176,
+          "closed": true
+        },
+        {
+          "label": "owned GTK portal",
+          "pid": 5175,
+          "closed": true
+        },
+        {
+          "label": "owned window manager",
+          "pid": 5174,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "remainingOwnedResources": [],
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    }
+  },
+  "confirmation378Positive": {
+    "status": "passed actual native Cancel/Overwrite/save/normal quit/newPID before later setup failure",
+    "checksThroughPositive": 16,
+    "positive": {
+      "status": "passed",
+      "savedSha256": "cd0b01f76412f34c91b9013fb2c2874b9b7b2bec164727ea2b9a522b36b65ffe",
+      "cells": [
+        "Qalpha",
+        "beta",
+        "",
+        "",
+        "",
+        "omega",
+        "delta",
+        "",
+        ""
+      ]
+    },
+    "cleanup": {
+      "registeredPortalPeers": [
+        {
+          "name": "org.freedesktop.impl.portal.desktop.gtk",
+          "uniqueName": ":1.7",
+          "pid": 23415,
+          "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+          "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+          "startTime": "98667",
+          "busId": "ac4d05078923193b42902c7d6b044e75",
+          "closed": true
+        },
+        {
+          "name": "org.freedesktop.portal.Desktop",
+          "uniqueName": ":1.1",
+          "pid": 23416,
+          "executable": "/usr/libexec/xdg-desktop-portal",
+          "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+          "startTime": "98668",
+          "busId": "ac4d05078923193b42902c7d6b044e75",
+          "closed": true
+        }
+      ],
+      "children": [
+        {
+          "label": "owned portal broker",
+          "pid": 23416,
+          "closed": true
+        },
+        {
+          "label": "owned GTK portal",
+          "pid": 23415,
+          "closed": true
+        },
+        {
+          "label": "owned window manager",
+          "pid": 23414,
+          "closed": true
+        }
+      ],
+      "driverExited": true,
+      "remainingOwnedResources": [],
+      "ownedApplicationClosed": true,
+      "remainingApplicationPids": []
+    },
+    "visual": "Original cancellation feedback and new-PID body images reviewed serially. Both native confirmation PNGs SHA e70d6b424bf3d5d2ec6c7fe61052b62edb61c64be66756e4be592fed844202cd equal already reviewed AppImage dialog bytes and are deduplicated."
+  },
+  "remaining": {
+    "scope": "DEB own-child PATH missing-helper only",
+    "run": 45196900595,
+    "harness": "332aa081b7579b39cb39f0499b9d0669b4a3d239",
+    "priorFailure": "Error: EACCES: permission denied, open '/proc/24023/environ'\n    at async open (node:internal/fs/promises:639:25)\n    at async Object.readFile (node:internal/fs/promises:1252:14)\n    at async collectOwnedNativeResources (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-owned-processes.mjs:16:21)\n    at async Object.setMissingHelper (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-native-session.mjs:1128:52)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs:91:22\n    at async runSuiteNativeScenario (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-native-session.mjs:1295:3)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs:10:1",
+    "note": "PID24023 was WebKitWebProcess and later exited0 in the original trace. Its state at EACCES was not captured: no historical zombie claim. New guard only classifies same-incarnation kernel Z/X or genuinely vanished PIDs as exited; live/unknown unreadable resources fail."
+  },
+  "limits": [
+    "Actual P5 Desktop/release package bytes only; no full seven-app, GPG, RPM, all-platform or complete ribbon-matrix verdict",
+    "Native field paint uses the explicitly recorded existing Xvfb/software graphics environment",
+    "Earlier black/blank body images and original failures remain unchanged",
+    "Independent content/style/cache/placeholder audit is owned by 9d3b; no second GUI is requested"
+  ],
+  "files": [
+    {
+      "path": "deb374/report.json",
+      "sha256": "9db7e77a3fe806d807c57f58c8d44e7ccdb22ffab28e8d49005fa5a5fac99298",
+      "bytes": 554163
+    },
+    {
+      "path": "deb378/positive-with-later-failure-report.json",
+      "sha256": "47e7320fab8d496727c47257e37190556086dc9fe6ed9f240c43cef2f2e966c6",
+      "bytes": 124655
+    },
+    {
+      "path": "deb374/windows-before-edit.png",
+      "sha256": "151483592799bd91d986751eab676feaf9503f5aa5b5df7090908c95bf2fe21a",
+      "bytes": 117447
+    },
+    {
+      "path": "deb374/windows-saved.png",
+      "sha256": "e15fe52627fc3172d37f7f6f972a758b0137ebf7bd894776f0d069dfc8d17ddc",
+      "bytes": 132026
+    },
+    {
+      "path": "deb374/windows-new-pid-reopen.png",
+      "sha256": "bcb9a00ed42bf807e1a632663c0b80b0fe1a3dd1142f8e1d1853b2a16ddc9912",
+      "bytes": 117847
+    },
+    {
+      "path": "deb374/converted-before-edit.png",
+      "sha256": "1232b8ada902fb553b327798526a792c42c715b5aa789f091e5e5efe6de3aae7",
+      "bytes": 107766
+    },
+    {
+      "path": "deb374/converted-after-real-edit.png",
+      "sha256": "a7b101c0d805ccf5fabca63e3bd7dceaf8354fcfe2fd479e5cc36c41e9cd5319",
+      "bytes": 117580
+    },
+    {
+      "path": "deb374/converted-saved.png",
+      "sha256": "5183a2ac51c1b40b8901a1c31d7c21da84136d4201d7a9c3f321c214f69d0021",
+      "bytes": 131783
+    },
+    {
+      "path": "deb374/converted-new-pid-reopen.png",
+      "sha256": "ede5507ad824449d0e956bfbe01c5b9e89f1f26272030a7ef723eccd8649adf5",
+      "bytes": 117424
+    },
+    {
+      "path": "deb374/windows_original.docx",
+      "sha256": "4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310",
+      "bytes": 14764
+    },
+    {
+      "path": "deb374/windows_saved.docx",
+      "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71",
+      "bytes": 14763
+    },
+    {
+      "path": "deb374/windows_reopened.docx",
+      "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71",
+      "bytes": 14763
+    },
+    {
+      "path": "deb374/windows_resaved.docx",
+      "sha256": "fc9859213ce202fd82c39ceb05354f2acc383e7a2efe6de07395d431be4adf71",
+      "bytes": 14763
+    },
+    {
+      "path": "deb374/converted_original.docx",
+      "sha256": "b29d6adc44aec4ee64d25555f0aa5560afb0ad24973f2b491789b6bb08e7c992",
+      "bytes": 15053
+    },
+    {
+      "path": "deb374/converted_saved.docx",
+      "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4",
+      "bytes": 14764
+    },
+    {
+      "path": "deb374/converted_reopened.docx",
+      "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4",
+      "bytes": 14764
+    },
+    {
+      "path": "deb374/converted_resaved.docx",
+      "sha256": "ea49010ae9e0009ea7c0ae47691d08be93a09d7cd4ddd9967dfa7003cd663dd4",
+      "bytes": 14764
+    },
+    {
+      "path": "deb378/after-native-cancel.png",
+      "sha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+      "bytes": 85918
+    },
+    {
+      "path": "deb378/positive-new-pid-reopen.png",
+      "sha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+      "bytes": 80879
+    },
+    {
+      "path": "deb378/confirmation-1.png",
+      "sha256": "e70d6b424bf3d5d2ec6c7fe61052b62edb61c64be66756e4be592fed844202cd",
+      "bytes": 9886
+    },
+    {
+      "path": "deb378/confirmed-overwrite.docx",
+      "sha256": "cd0b01f76412f34c91b9013fb2c2874b9b7b2bec164727ea2b9a522b36b65ffe",
+      "bytes": 36959
+    }
+  ]
+}

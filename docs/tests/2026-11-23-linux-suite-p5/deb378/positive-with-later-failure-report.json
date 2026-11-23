@@ -1,0 +1,3607 @@
+{
+  "issues": [
+    378
+  ],
+  "request": {
+    "schemaVersion": 1,
+    "go": true,
+    "nativePackages": [
+      "deb"
+    ],
+    "reusedCore": {
+      "run": 45189806911,
+      "job": 137745078121,
+      "harnessCommit": "e230df9ee4a019db01368d93689893fb2b03d245",
+      "artifact": {
+        "id": 14825596587,
+        "name": "linux-suite-final-deb-e230df9ee4a019db01368d93689893fb2b03d245",
+        "zipSha256": "e9cd1b780be2b164288a71a1d23e77190ffae1c24e37208c99e8b3746e44d0f9",
+        "zipBytes": 6918061
+      },
+      "reportSha256": "ad4c12c29af287b93f33a76015ffbb785a6cb92134da136193baed7bcf95ed41",
+      "ribbonReportSha256": "496e7684b265bc105a92e37c78271ec19060438fbe28464c8b1ab9391a9f04f5"
+    },
+    "scope": "Linux Suite core 368/369/vertical362, field374 and native-confirmation378",
+    "publicationAuthorized": false,
+    "candidate": {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+      "version": "2026.48.1",
+      "producerRun": 45177730188,
+      "linuxJob": 137703365848,
+      "attempt": 1
+    },
+    "inputDescriptors": {
+      "deb": {
+        "commit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+        "sha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+        "path": "qa/linux-suite-final/office-deb-input-descriptor.json",
+        "upstreamPath": "docs/tests/linux-release-input-p5/office-deb-input-descriptor.json"
+      },
+      "appimage": {
+        "commit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+        "sha256": "2ebd84ac4cdb00bb96a9d0617a09a34369cc17333f6941786d69c79e27b61b8a",
+        "path": "qa/linux-suite-final/office-appimage-input-descriptor.json",
+        "upstreamPath": "docs/tests/linux-release-input-p5/office-appimage-input-descriptor.json"
+      }
+    },
+    "supersededCandidates": [
+      {
+        "commit": "04fa6cd43b84e3f59fb9d5055bb2d00dde351a47",
+        "tree": "94fa38c20b51a73e4912964f37f0e1a659b0fb1b",
+        "version": "2026.48.1",
+        "producerRun": 45172070275,
+        "reason": "CI used dpkg --install without a dependency resolver. P5 includes the two CI-only apt resolver corrections. Exact P4 Desktop external-harness mechanism proof remains separate and does not authorize final Suite execution."
+      },
+      {
+        "commit": "98b340429436cf597a569549d043bd75b486e2ab",
+        "tree": "780c0789c8badedc6760a8402a6994154a3bf402",
+        "version": "2026.48.1",
+        "producerRun": 45170708933,
+        "reason": "Full Vitest collected the node:test package test and failed. Coordinator owns the import-only correction and next explicit freeze. No native execution authorized for this source."
+      }
+    ],
+    "field374": {
+      "contractCommit": "3169b09020184e3a98a4d5364ad77b15f38ac063",
+      "contractPath": "qa/field374/contract.mjs",
+      "auditPath": "qa/field374/audit-docx.mjs",
+      "windowsControlSha256": "4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310",
+      "convertedControlSha256": "b29d6adc44aec4ee64d25555f0aa5560afb0ad24973f2b491789b6bb08e7c992",
+      "marker": " -- STW30 EDIT 2026-11-23"
+    }
+  },
+  "packageType": "deb",
+  "scenarioName": "confirm378-both",
+  "origin": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "packageType": "deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-suite-final-input/canonical-office.deb",
+    "packageSha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "launchPath": "/usr/bin/open-office-studio",
+    "launchSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "expectedPayloadElf": {
+      "path": "usr/bin/open-office-studio",
+      "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "bytes": 99955264,
+      "mode": 493,
+      "elfClass": 2,
+      "machine": 62
+    },
+    "origin": {
+      "schemaVersion": 1,
+      "purpose": "P5 verified Suite byte transfer; native acceptance remains consumer-owned",
+      "executionApproved": true,
+      "provenanceScope": "Original Suite package bytes isolated from all six standalone app hosts",
+      "parent": {
+        "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "appVersion": "2026.48.1",
+        "run": 45177730188,
+        "job": 137703365848,
+        "attempt": 1,
+        "jobConclusion": "success",
+        "installerArchive": {
+          "id": 14824745492,
+          "name": "uitgave-Linux",
+          "sha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+          "bytes": 4444993178
+        },
+        "reportArchive": null,
+        "packageReportSha256": "488ac82490f09b8e66b19215b28c452362e0b9730ca8eca27e25bd4bee9e0c78",
+        "packageReportMember": ".local/pakketcontrole-Linux.json",
+        "packageMember": "dist-installers/office/deb/Open Office Studio_2026.48.1_amd64.deb"
+      },
+      "artifact": {
+        "run": 45188332685,
+        "id": 14823809980,
+        "name": "suite-input-office-deb-p5",
+        "zipSha256": "8a63334448a548c7d90923c659ce99082c7a5360d156ce791c3a2d3a62ba0eec",
+        "zipBytes": 383831912
+      },
+      "qaPin": {
+        "producerCommit": "86fe2d5c8bde47005fd40b3059d6fa92d98e7b4c"
+      },
+      "package": {
+        "kind": "deb",
+        "member": "canonical-office.deb",
+        "sha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+        "bytes": 383828462,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "zenity, libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "payloadElf": {
+          "path": "usr/bin/open-office-studio",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+          "bytes": 99955264,
+          "mode": 493,
+          "elfClass": 2,
+          "machine": 62
+        }
+      },
+      "signatureBinding": {
+        "status": "Original package hashes verified; no Linux signature certification; publication disabled",
+        "members": [],
+        "publicationAuthorized": false
+      },
+      "embeddedDescriptorNote": "Embedded pre-upload descriptor intentionally has no self-referential ZIP digest; this external descriptor binds the uploaded ZIP"
+    },
+    "descriptorGit": "3ea5564105d0b4612ad9d0fd05e9a36af261b679",
+    "descriptorSha256": "0c82ca92eaa74a5e631aaf2b8990b40bd24d04830049ed9f48b1cbd3f22e4a03",
+    "consumerSha256": "5f7c9f0cd54f6593cf939b1eb85a9e1444cde9f47b3da34527b02b28804edb6f",
+    "executionApproved": true,
+    "signatureStatus": "Descriptor binding retained; no cryptographic signature certification by this native consumer"
+  },
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05"
+  },
+  "harnessCommit": "80f85a5cb4ae536f1bf7248fbe4cfeeb2653d7d4",
+  "harnessSha256": "85a58dcad91f77b1103a26527ff7ab02c4b3455dc7f39ac58daf4e8ba6e5585c",
+  "platform": "Linux / actual deb / WebKitGTK / headed X11",
+  "status": "failed",
+  "startedAt": "2026-11-23T14:32:22.085Z",
+  "sessions": [
+    {
+      "phase": "preflight",
+      "pid": 23510,
+      "sessionId": "347d58ed-069a-4d72-938a-b51f47a45535",
+      "document": "preflight.docx",
+      "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "actualExecutable": "/usr/bin/open-office-studio",
+      "effectivePath": "PATH=/home/runner/setup-pnpm/node_modules/.bin:/opt/hostedtoolcache/node/22.23.5/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 23510,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:32:35.897Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native canvas pointer",
+            "at": "2026-11-23T14:32:36.382Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+Home",
+            "at": "2026-11-23T14:32:37.236Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+Home",
+            "at": "2026-11-23T14:32:37.357Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native character P",
+            "at": "2026-11-23T14:32:37.537Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native character P",
+            "at": "2026-11-23T14:32:37.861Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+z",
+            "at": "2026-11-23T14:32:38.479Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+z",
+            "at": "2026-11-23T14:32:38.591Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+y",
+            "at": "2026-11-23T14:32:39.868Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+y",
+            "at": "2026-11-23T14:32:40.053Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+s",
+            "at": "2026-11-23T14:32:40.981Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+s",
+            "at": "2026-11-23T14:32:41.110Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:32:43.937Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:32:44.175Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:32:44.501Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:32:44.725Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:32:45.049Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:32:45.274Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before normal clean Alt+F4",
+            "at": "2026-11-23T14:32:45.385Z",
+            "process": {
+              "pid": 23510,
+              "startTime": "98729",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:32:35.897Z",
+          "process": {
+            "pid": 23510,
+            "startTime": "98729",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      },
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      },
+      "transientApplications": [
+        {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "preflight",
+      "pid": 23661,
+      "sessionId": "fe59145e-3b4e-4390-b213-507372fd8244",
+      "document": "preflight.docx",
+      "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "actualExecutable": "/usr/bin/open-office-studio",
+      "effectivePath": "PATH=/home/runner/setup-pnpm/node_modules/.bin:/opt/hostedtoolcache/node/22.23.5/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 23661,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:32:58.677Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:32:58.872Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:32:59.496Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:32:59.823Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:00.055Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:00.380Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:00.596Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before normal clean Alt+F4",
+            "at": "2026-11-23T14:33:00.709Z",
+            "process": {
+              "pid": 23661,
+              "startTime": "101013",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 23661,
+          "startTime": "101013",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:32:58.677Z",
+          "process": {
+            "pid": 23661,
+            "startTime": "101013",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      },
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      },
+      "transientApplications": [
+        {
+          "pid": 23661,
+          "startTime": "101013",
+          "executable": "/usr/bin/open-office-studio",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "378-present-runtime",
+      "pid": 23777,
+      "sessionId": "e753b82c-b0ce-44f8-b696-e9134a8786c6",
+      "document": "confirm_present.docx",
+      "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "actualExecutable": "/usr/bin/open-office-studio",
+      "effectivePath": "PATH=/home/runner/setup-pnpm/node_modules/.bin:/opt/hostedtoolcache/node/22.23.5/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 23777,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:33:13.904Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native canvas pointer",
+            "at": "2026-11-23T14:33:14.397Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native ctrl+Home",
+            "at": "2026-11-23T14:33:15.481Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native ctrl+Home",
+            "at": "2026-11-23T14:33:15.594Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native character Q",
+            "at": "2026-11-23T14:33:15.720Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after native character Q",
+            "at": "2026-11-23T14:33:16.049Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native Open shortcut",
+            "at": "2026-11-23T14:33:16.682Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:33:13.904Z",
+          "process": {
+            "pid": 23777,
+            "startTime": "102549",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      },
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      },
+      "transientApplications": [
+        {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "378-present-runtime",
+      "pid": 24005,
+      "sessionId": "44e631dc-1248-4d94-86ad-45ba030c643f",
+      "document": "confirm_present.docx",
+      "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+      "actualExecutable": "/usr/bin/open-office-studio",
+      "effectivePath": "PATH=/home/runner/setup-pnpm/node_modules/.bin:/opt/hostedtoolcache/node/22.23.5/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+      "x11": {
+        "backend": "x11-xtest",
+        "pid": 24005,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:33:41.653Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:42.064Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:42.439Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:42.765Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:42.993Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:43.323Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:43.539Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before normal clean Alt+F4",
+            "at": "2026-11-23T14:33:43.652Z",
+            "process": {
+              "pid": 24005,
+              "startTime": "105290",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 24005,
+          "startTime": "105290",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:33:41.653Z",
+          "process": {
+            "pid": 24005,
+            "startTime": "105290",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      },
+      "environment": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "graphicsEnvironment": {
+        "GDK_BACKEND": "x11",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+      },
+      "transientApplications": [
+        {
+          "pid": 24005,
+          "startTime": "105290",
+          "executable": "/usr/bin/open-office-studio",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+          }
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "label": "real canvas click and Ctrl+Home document focus",
+      "phase": "preflight",
+      "point": {
+        "panelId": "office-tabpaneel-1",
+        "canvas": {
+          "x": 401,
+          "height": 1056,
+          "width": 816,
+          "y": 252
+        },
+        "point": {
+          "x": 546,
+          "y": 362
+        }
+      },
+      "observation": {
+        "hasFocus": true,
+        "visibilityState": "visible",
+        "hidden": false,
+        "activeElement": {
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "focusVisible": true,
+          "role": null,
+          "label": "Document input",
+          "id": "",
+          "tag": "TEXTAREA"
+        }
+      }
+    },
+    {
+      "label": "preflight exact fixture",
+      "phase": "preflight",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "preflight.docx",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "actual native typing",
+      "phase": "preflight",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Palpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "preflight.docx, unsaved changes",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "actual native CtrlZ",
+      "phase": "preflight",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "preflight.docx, unsaved changes",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "actual native CtrlY",
+      "phase": "preflight",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Palpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "preflight.docx, unsaved changes",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "saved DOCX independent XML oracle",
+      "phase": "preflight",
+      "file": "preflight.docx",
+      "before": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "sha256": "494a1b11c2a60da95a6a0918338d106c33486555102183fa76444ccd870ab62a",
+      "rows": [
+        [
+          "Palpha",
+          "beta",
+          ""
+        ],
+        [
+          "",
+          "",
+          "omega"
+        ],
+        [
+          "delta",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "preflight",
+      "pid": 23510,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    },
+    {
+      "label": "normal quit new PID exact saved fixture",
+      "phase": "preflight",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Palpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "preflight.docx",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "preflight",
+      "pid": 23661,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    },
+    {
+      "label": "real canvas click and Ctrl+Home document focus",
+      "phase": "378-present-runtime",
+      "point": {
+        "panelId": "office-tabpaneel-1",
+        "canvas": {
+          "x": 401,
+          "height": 1056,
+          "width": 816,
+          "y": 252
+        },
+        "point": {
+          "x": 546,
+          "y": 362
+        }
+      },
+      "observation": {
+        "hasFocus": true,
+        "visibilityState": "visible",
+        "hidden": false,
+        "activeElement": {
+          "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+          "focusVisible": true,
+          "role": null,
+          "label": "Document input",
+          "id": "",
+          "tag": "TEXTAREA"
+        }
+      }
+    },
+    {
+      "label": "Owned native working edit before external change",
+      "phase": "378-present-runtime",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Qalpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "confirm_present.docx, unsaved changes",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "Real native Cancel preserves unsaved working contents",
+      "phase": "378-present-runtime",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Qalpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "confirm_present.docx, unsaved changes",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "Actual user Cancel is not a missing-runtime error",
+      "targetSha256": "e8622b73654da503d1f273707557d631b0b5b5bcc90eb281d94c235c4fd048f2"
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "378-present-runtime",
+      "pid": 23777,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    },
+    {
+      "label": "Confirmed overwrite normal full quit/fresh PID retains XML data",
+      "phase": "378-present-runtime",
+      "tables": [
+        {
+          "columns": 3,
+          "rows": 3,
+          "cells": [
+            "Qalpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "document": "confirm_present.docx",
+      "focus": {
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+        "tag": "TEXTAREA"
+      }
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "378-present-runtime",
+      "pid": 24005,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    }
+  ],
+  "inputs": [
+    {
+      "phase": "preflight",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+Home"
+      ],
+      "at": "2026-11-23T14:32:37.236Z",
+      "post": {
+        "stage": "after native ctrl+Home",
+        "at": "2026-11-23T14:32:37.357Z",
+        "process": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      }
+    },
+    {
+      "character": "P",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "P"
+      ],
+      "at": "2026-11-23T14:32:37.546Z",
+      "phase": "preflight",
+      "post": {
+        "stage": "after native character P",
+        "at": "2026-11-23T14:32:37.861Z",
+        "process": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        },
+        "actualTarget": {
+          "panel": "office-tabpaneel-1",
+          "label": "Document input",
+          "tag": "TEXTAREA"
+        }
+      }
+    },
+    {
+      "phase": "preflight",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+z"
+      ],
+      "at": "2026-11-23T14:32:38.479Z",
+      "post": {
+        "stage": "after native ctrl+z",
+        "at": "2026-11-23T14:32:38.591Z",
+        "process": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      }
+    },
+    {
+      "phase": "preflight",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+y"
+      ],
+      "at": "2026-11-23T14:32:39.868Z",
+      "post": {
+        "stage": "after native ctrl+y",
+        "at": "2026-11-23T14:32:40.053Z",
+        "process": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      }
+    },
+    {
+      "phase": "preflight",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+s"
+      ],
+      "at": "2026-11-23T14:32:40.981Z",
+      "post": {
+        "stage": "after native ctrl+s",
+        "at": "2026-11-23T14:32:41.110Z",
+        "process": {
+          "pid": 23510,
+          "startTime": "98729",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      }
+    },
+    {
+      "phase": "378-present-runtime",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+Home"
+      ],
+      "at": "2026-11-23T14:33:15.481Z",
+      "post": {
+        "stage": "after native ctrl+Home",
+        "at": "2026-11-23T14:33:15.594Z",
+        "process": {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        }
+      }
+    },
+    {
+      "character": "Q",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "Q"
+      ],
+      "at": "2026-11-23T14:33:15.728Z",
+      "phase": "378-present-runtime",
+      "post": {
+        "stage": "after native character Q",
+        "at": "2026-11-23T14:33:16.049Z",
+        "process": {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000"
+        },
+        "windowFocus": "6291459",
+        "dom": {
+          "hasFocus": true,
+          "visibilityState": "visible",
+          "hidden": false,
+          "activeElement": {
+            "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+            "focusVisible": true,
+            "role": null,
+            "label": "Document input",
+            "id": "",
+            "tag": "TEXTAREA"
+          }
+        },
+        "actualTarget": {
+          "panel": "office-tabpaneel-1",
+          "label": "Document input",
+          "tag": "TEXTAREA"
+        }
+      }
+    },
+    {
+      "phase": "378-present-runtime",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+s"
+      ],
+      "transition": "Expected native modal; independently PID/window-bound before further input"
+    },
+    {
+      "phase": "378-present-runtime",
+      "command": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+s"
+      ],
+      "transition": "Expected native modal; independently PID/window-bound before further input"
+    }
+  ],
+  "captures": [
+    {
+      "phase": "preflight",
+      "file": "preflight-saved-sample-0.png",
+      "pid": 23510,
+      "xid": "6291459",
+      "startTime": "98729",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "fb828072c47ac18f85a39df3a3e143e8f69eea09565fc2b9f063aaa6a1e0cc6e",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "preflight",
+      "file": "preflight-saved-sample-1.png",
+      "pid": 23510,
+      "xid": "6291459",
+      "startTime": "98729",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "8f28b663e401f9752b83b33c9ea342d3e801acde64b857357d5362765f09a1bb",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "preflight",
+      "file": "preflight-saved-sample-2.png",
+      "pid": 23510,
+      "xid": "6291459",
+      "startTime": "98729",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "94c7480529d8e0e55f4c7afdf77fe0c9a121bb38c53e1b5804db4d12373c2875",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "preflight",
+      "file": "preflight-reopened-sample-0.png",
+      "pid": 23661,
+      "xid": "6291459",
+      "startTime": "101013",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "2d83ab74be3da78d5033fbedb9dc97157b56256a4aea57443006c29bbb467dab",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "preflight",
+      "file": "preflight-reopened-sample-1.png",
+      "pid": 23661,
+      "xid": "6291459",
+      "startTime": "101013",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "ae0637af2bec09418c5feac2e91faf5096f51bb9962c7210c70f1703b4fb0120",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "preflight",
+      "file": "preflight-reopened-sample-2.png",
+      "pid": 23661,
+      "xid": "6291459",
+      "startTime": "101013",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "c1ebd30335cfd84ccba5c4bdddb3650f6be1ccea10562ccd1edf64a5e39170cc",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-cancel-sample-0.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-cancel-sample-1.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "8f46fbdb74a07f9bbd7bf5dcf50de463b704acfa829d655daaf11b4028b9d0fe",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-cancel-sample-2.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-overwrite-sample-0.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "ffc97a1b2975a932c4e346ba82df0b0a0ace3ea24118e70f2f51aa758613b7f2",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-overwrite-sample-1.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "569c879a5d343f09b32fd3960600600ee1a40662c3069594fb958fc918ea8d63",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "after-native-overwrite-sample-2.png",
+      "pid": 23777,
+      "xid": "6291459",
+      "startTime": "102549",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "c59597c5a6bcbd9fc8672a421513a2b72fa3add07ffecf9761dffb5dc1d5d362",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "positive-new-pid-reopen-sample-0.png",
+      "pid": 24005,
+      "xid": "6291459",
+      "startTime": "105290",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "positive-new-pid-reopen-sample-1.png",
+      "pid": 24005,
+      "xid": "6291459",
+      "startTime": "105290",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "5b46d71ff078fba07d1841ed64bfb01a750ac32d7d5df3aa14b0d1605f2e4071",
+      "backend": "owned X11 window pixels"
+    },
+    {
+      "phase": "378-present-runtime",
+      "file": "positive-new-pid-reopen-sample-2.png",
+      "pid": 24005,
+      "xid": "6291459",
+      "startTime": "105290",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+      "backend": "owned X11 window pixels"
+    }
+  ],
+  "cleanup": {
+    "registeredPortalPeers": [
+      {
+        "name": "org.freedesktop.impl.portal.desktop.gtk",
+        "uniqueName": ":1.7",
+        "pid": 23415,
+        "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+        "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+        "startTime": "98667",
+        "busId": "ac4d05078923193b42902c7d6b044e75",
+        "closed": true
+      },
+      {
+        "name": "org.freedesktop.portal.Desktop",
+        "uniqueName": ":1.1",
+        "pid": 23416,
+        "executable": "/usr/libexec/xdg-desktop-portal",
+        "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+        "startTime": "98668",
+        "busId": "ac4d05078923193b42902c7d6b044e75",
+        "closed": true
+      }
+    ],
+    "children": [
+      {
+        "label": "owned portal broker",
+        "pid": 23416,
+        "closed": true
+      },
+      {
+        "label": "owned GTK portal",
+        "pid": 23415,
+        "closed": true
+      },
+      {
+        "label": "owned window manager",
+        "pid": 23414,
+        "closed": true
+      }
+    ],
+    "driverExited": true,
+    "remainingOwnedResources": [],
+    "ownedApplicationClosed": true,
+    "remainingApplicationPids": []
+  },
+  "limits": [
+    "Actual coordinator-pinned package; old proof is not relabelled.",
+    "Native X11/software graphics; no physical hardware or signed/public release claim.",
+    "Clean full quit uses real Alt+F4; DELETE is only failure/own-session cleanup.",
+    "Field/XML audit and screenshot stability are distinct from human visual acceptance."
+  ],
+  "harnessFiles": {
+    "linux-suite-native-session.mjs": "85a58dcad91f77b1103a26527ff7ab02c4b3455dc7f39ac58daf4e8ba6e5585c",
+    "../qa/linux-suite-final/request.json": "2a7a3d45ae37655f9158c1b7b8c9c9415008daf753af7c696f4e7251967f24dc",
+    "../qa/linux-suite-final/request.mjs": "a79403de55fe27def2810224583fa337df0b399a386ccc334e849d2625dacc93",
+    "linux-stw-dialog-input.mjs": "846a1bc0e3aba112498c7ce86e4dafba2c885261732b4cbae670cc551dc9ff05",
+    "linux-stw-portal.py": "9594b9bf350fc76bf9bc36a3a78d570f4c31fd65e50617fb66968832e9f5f165",
+    "linux-stw-gtk-anatomy.py": "b59d80b5f47538a503647b1ed86d5c915b6266842f7bed6107cc60da107035d4",
+    "linux-p2-ribbon-native.mjs": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72",
+    "linux-p2-native-ready.mjs": "bd44f20e9b1a2eadc9e08f32c91ca631102c78bea9c02e9a7b84c750484b85b5",
+    "linux-p2-native-capture.py": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341",
+    "linux-p2-native-input.mjs": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020"
+  },
+  "protocolOrigin": {
+    "helperAndHostCommit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+    "priorP2NativeProof": "6bb8d6fafa06718b0a0ea5aff9cbcf70856e16c1",
+    "priorP2ReceiptSha256": "a452f3e3ca42505161a2e8c5cec098a896b11e1e27076d8b2db3eb924795da18",
+    "pickerContractCommit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+    "pickerContractRun": 45152944453,
+    "pickerMappingCommit": "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
+    "oracleCommit": "082319659e0e2349c8ab8860a7d886c6733a936e",
+    "note": "Protocol reuse only; this scenario executes independently on the actual final package. Old STW/P2 results are not relabelled."
+  },
+  "runtime": {
+    "graphics": {
+      "GDK_BACKEND": "x11",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WEBKIT_DISABLE_DMABUF_RENDERER": "1"
+    },
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nopenbox\t3.6.1-10\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1\nxdg-desktop-portal\t1.14.4-1ubuntu2~22.04.2\nxdg-desktop-portal-gtk\t1.14.0-1build1\n"
+  },
+  "registeredPortalPeers": [
+    {
+      "name": "org.freedesktop.impl.portal.desktop.gtk",
+      "uniqueName": ":1.7",
+      "pid": 23415,
+      "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+      "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+      "startTime": "98667",
+      "busId": "ac4d05078923193b42902c7d6b044e75"
+    },
+    {
+      "name": "org.freedesktop.portal.Desktop",
+      "uniqueName": ":1.1",
+      "pid": 23416,
+      "executable": "/usr/libexec/xdg-desktop-portal",
+      "sha256": "26e41a5bd57b2531fef867f315e54eaefebe93f85bd94c6edd45e78a378484b2",
+      "startTime": "98668",
+      "busId": "ac4d05078923193b42902c7d6b044e75"
+    }
+  ],
+  "fixtures": {
+    "preflight": {
+      "path": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/preflight.docx",
+      "sha256": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "templateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+      "cells": [
+        "alpha",
+        "beta",
+        "",
+        "",
+        "",
+        "omega",
+        "delta",
+        "",
+        ""
+      ]
+    },
+    "confirm_present": {
+      "path": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/confirm_present.docx",
+      "sha256": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "templateSha256": "d9086d4aa437d814620135a6dffb06ff940a9dbf5c34a6589d537d9112c41f74",
+      "cells": [
+        "alpha",
+        "beta",
+        "",
+        "",
+        "",
+        "omega",
+        "delta",
+        "",
+        ""
+      ]
+    }
+  },
+  "sessionEnvironments": [
+    {
+      "phase": "preflight",
+      "document": "preflight.docx",
+      "parent": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "driver": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "children": [],
+      "xauthorityFileExists": true
+    },
+    {
+      "phase": "preflight",
+      "document": "preflight.docx",
+      "parent": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "driver": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "children": [],
+      "xauthorityFileExists": true
+    },
+    {
+      "phase": "378-present-runtime",
+      "document": "confirm_present.docx",
+      "parent": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "driver": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "children": [],
+      "xauthorityFileExists": true
+    },
+    {
+      "phase": "378-present-runtime",
+      "document": "confirm_present.docx",
+      "parent": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "driver": {
+        "DISPLAY": ":99",
+        "HOME": "/home/runner",
+        "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+        "GDK_BACKEND": "x11",
+        "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+        "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data"
+      },
+      "children": [],
+      "xauthorityFileExists": true
+    }
+  ],
+  "displayChecks": [
+    {
+      "phase": "preflight",
+      "beforeDocument": "preflight.docx",
+      "display": ":99",
+      "reachable": true,
+      "dimensions": "1800x1200 pixels (457x305 millimeters)"
+    },
+    {
+      "phase": "preflight",
+      "beforeDocument": "preflight.docx",
+      "display": ":99",
+      "reachable": true,
+      "dimensions": "1800x1200 pixels (457x305 millimeters)"
+    },
+    {
+      "phase": "378-present-runtime",
+      "beforeDocument": "confirm_present.docx",
+      "display": ":99",
+      "reachable": true,
+      "dimensions": "1800x1200 pixels (457x305 millimeters)"
+    },
+    {
+      "phase": "378-present-runtime",
+      "beforeDocument": "confirm_present.docx",
+      "display": ":99",
+      "reachable": true,
+      "dimensions": "1800x1200 pixels (457x305 millimeters)"
+    }
+  ],
+  "presentedCaptures": [
+    {
+      "name": "preflight-saved",
+      "samples": [
+        {
+          "file": "preflight-saved-sample-0.png",
+          "sha256": "fb828072c47ac18f85a39df3a3e143e8f69eea09565fc2b9f063aaa6a1e0cc6e",
+          "at": 1795444364175
+        },
+        {
+          "file": "preflight-saved-sample-1.png",
+          "sha256": "8f28b663e401f9752b83b33c9ea342d3e801acde64b857357d5362765f09a1bb",
+          "at": 1795444364726
+        },
+        {
+          "file": "preflight-saved-sample-2.png",
+          "sha256": "94c7480529d8e0e55f4c7afdf77fe0c9a121bb38c53e1b5804db4d12373c2875",
+          "at": 1795444365274
+        }
+      ],
+      "hashesIdentical": false,
+      "retainedFinalSha256": "94c7480529d8e0e55f4c7afdf77fe0c9a121bb38c53e1b5804db4d12373c2875",
+      "visualReviewPending": true
+    },
+    {
+      "name": "preflight-reopened",
+      "samples": [
+        {
+          "file": "preflight-reopened-sample-0.png",
+          "sha256": "2d83ab74be3da78d5033fbedb9dc97157b56256a4aea57443006c29bbb467dab",
+          "at": 1795444379496
+        },
+        {
+          "file": "preflight-reopened-sample-1.png",
+          "sha256": "ae0637af2bec09418c5feac2e91faf5096f51bb9962c7210c70f1703b4fb0120",
+          "at": 1795444380055
+        },
+        {
+          "file": "preflight-reopened-sample-2.png",
+          "sha256": "c1ebd30335cfd84ccba5c4bdddb3650f6be1ccea10562ccd1edf64a5e39170cc",
+          "at": 1795444380596
+        }
+      ],
+      "hashesIdentical": false,
+      "retainedFinalSha256": "c1ebd30335cfd84ccba5c4bdddb3650f6be1ccea10562ccd1edf64a5e39170cc",
+      "visualReviewPending": true
+    },
+    {
+      "name": "after-native-cancel",
+      "samples": [
+        {
+          "file": "after-native-cancel-sample-0.png",
+          "sha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+          "at": 1795444402304
+        },
+        {
+          "file": "after-native-cancel-sample-1.png",
+          "sha256": "8f46fbdb74a07f9bbd7bf5dcf50de463b704acfa829d655daaf11b4028b9d0fe",
+          "at": 1795444402852
+        },
+        {
+          "file": "after-native-cancel-sample-2.png",
+          "sha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+          "at": 1795444403392
+        }
+      ],
+      "hashesIdentical": false,
+      "retainedFinalSha256": "9c9ca83d30bf729b5f72bbd1e426b4dfbaa5255dadacff7518f2341c8193f238",
+      "visualReviewPending": true
+    },
+    {
+      "name": "after-native-overwrite",
+      "samples": [
+        {
+          "file": "after-native-overwrite-sample-0.png",
+          "sha256": "ffc97a1b2975a932c4e346ba82df0b0a0ace3ea24118e70f2f51aa758613b7f2",
+          "at": 1795444406933
+        },
+        {
+          "file": "after-native-overwrite-sample-1.png",
+          "sha256": "569c879a5d343f09b32fd3960600600ee1a40662c3069594fb958fc918ea8d63",
+          "at": 1795444407478
+        },
+        {
+          "file": "after-native-overwrite-sample-2.png",
+          "sha256": "c59597c5a6bcbd9fc8672a421513a2b72fa3add07ffecf9761dffb5dc1d5d362",
+          "at": 1795444408044
+        }
+      ],
+      "hashesIdentical": false,
+      "retainedFinalSha256": "c59597c5a6bcbd9fc8672a421513a2b72fa3add07ffecf9761dffb5dc1d5d362",
+      "visualReviewPending": true
+    },
+    {
+      "name": "positive-new-pid-reopen",
+      "samples": [
+        {
+          "file": "positive-new-pid-reopen-sample-0.png",
+          "sha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+          "at": 1795444422439
+        },
+        {
+          "file": "positive-new-pid-reopen-sample-1.png",
+          "sha256": "5b46d71ff078fba07d1841ed64bfb01a750ac32d7d5df3aa14b0d1605f2e4071",
+          "at": 1795444422993
+        },
+        {
+          "file": "positive-new-pid-reopen-sample-2.png",
+          "sha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+          "at": 1795444423539
+        }
+      ],
+      "hashesIdentical": false,
+      "retainedFinalSha256": "dde222a8b2e64d287fa5ab392af72b5e153fd91c13308d40acc9243b8e6f435f",
+      "visualReviewPending": true
+    }
+  ],
+  "preflight": {
+    "status": "passed",
+    "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "packageSha256": "5ab7701c049bef004a1d0c1f691e9f656ab19d39952303f3ec9a3e150062c010",
+    "executableSha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9",
+    "normalFullQuitAndNewPid": true
+  },
+  "conflicts": [
+    {
+      "name": "confirm_present",
+      "path": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/confirm_present.docx",
+      "fixtureSha256": "ab3f62436973538adbbb98801ff497d1872f4691579db4c52f0bbfd7ac201b17",
+      "preActionTargetSha256": "e8622b73654da503d1f273707557d631b0b5b5bcc90eb281d94c235c4fd048f2",
+      "nativeWorkingCells": [
+        "Qalpha",
+        "beta",
+        "",
+        "",
+        "",
+        "omega",
+        "delta",
+        "",
+        ""
+      ],
+      "externalChange": "Independent mutation of this owned test copy before the action/hash baseline; immutable original template is untouched."
+    }
+  ],
+  "confirmations": [
+    {
+      "officePid": 23777,
+      "pid": 23870,
+      "executable": "/usr/bin/zenity",
+      "executableSha256": "6fd084e86c386cd1d5036b490044dee514021e1bc25af7ec83041a7ac59d872d",
+      "input": {
+        "binding": {
+          "pid": 23870,
+          "executable": "/usr/bin/zenity",
+          "startTime": "104423",
+          "sha256": "6fd084e86c386cd1d5036b490044dee514021e1bc25af7ec83041a7ac59d872d",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data",
+            "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-WNGyzXoUML,guid=d38920d43ed5b39eacdfbcf26b044e75"
+          }
+        },
+        "xid": "16777224",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "dialog foreground postcondition",
+            "at": "2026-11-23T14:33:21.072Z"
+          },
+          {
+            "stage": "before native Escape cancellation",
+            "at": "2026-11-23T14:33:21.633Z"
+          }
+        ],
+        "keys": []
+      },
+      "anatomy": {
+        "pid": 23870,
+        "nodes": [
+          {
+            "name": "zenity",
+            "role": "application",
+            "focused": false,
+            "showing": false
+          },
+          {
+            "name": "File changed",
+            "role": "dialog",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 619,
+              "y": 540,
+              "width": 563,
+              "height": 141
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 567,
+              "width": 547,
+              "height": 106
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 632,
+              "y": 572,
+              "width": 537,
+              "height": 48
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 639,
+              "width": 547,
+              "height": 34
+            }
+          },
+          {
+            "name": "Question",
+            "role": "icon",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 632,
+              "y": 572,
+              "width": 48,
+              "height": 48
+            }
+          },
+          {
+            "name": "confirm_present.docx has been changed outside Open Office Studio since you opened it. Overwriting discards those changes.",
+            "role": "label",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 692,
+              "y": 572,
+              "width": 477,
+              "height": 48
+            },
+            "text": "confirm_present.docx has been changed outside Open Office Studio since you opened it. Overwriting discards those changes."
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 639,
+              "width": 547,
+              "height": 34
+            }
+          },
+          {
+            "name": "Save as…",
+            "role": "push button",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 848,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          },
+          {
+            "name": "Cancel",
+            "role": "push button",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 958,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          },
+          {
+            "name": "Overwrite",
+            "role": "push button",
+            "focused": true,
+            "showing": true,
+            "bounds": {
+              "x": 1068,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          }
+        ],
+        "truncated": false
+      },
+      "capture": {
+        "pid": 23870,
+        "xid": "16777224",
+        "startTime": "104423",
+        "width": 561,
+        "height": 120,
+        "sha256": "e70d6b424bf3d5d2ec6c7fe61052b62edb61c64be66756e4be592fed844202cd",
+        "backend": "owned X11 window pixels"
+      },
+      "mainWindowReturn": {
+        "backend": "x11-xtest",
+        "pid": 23777,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:33:21.965Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:22.079Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:22.304Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:22.627Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:22.852Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:23.175Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:23.392Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before native Open shortcut",
+            "at": "2026-11-23T14:33:23.460Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:33:21.965Z",
+          "process": {
+            "pid": 23777,
+            "startTime": "102549",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      }
+    },
+    {
+      "officePid": 23777,
+      "pid": 23931,
+      "executable": "/usr/bin/zenity",
+      "executableSha256": "6fd084e86c386cd1d5036b490044dee514021e1bc25af7ec83041a7ac59d872d",
+      "input": {
+        "binding": {
+          "pid": 23931,
+          "executable": "/usr/bin/zenity",
+          "startTime": "104887",
+          "sha256": "6fd084e86c386cd1d5036b490044dee514021e1bc25af7ec83041a7ac59d872d",
+          "environment": {
+            "DISPLAY": ":99",
+            "HOME": "/home/runner",
+            "XAUTHORITY": "/tmp/xvfb-run.vTWrpq/Xauthority",
+            "GDK_BACKEND": "x11",
+            "XDG_CONFIG_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/config",
+            "XDG_DATA_HOME": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/suite-final-deb-confirm378-both/profile/data",
+            "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-WNGyzXoUML,guid=d38920d43ed5b39eacdfbcf26b044e75"
+          }
+        },
+        "xid": "16777224",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "dialog foreground postcondition",
+            "at": "2026-11-23T14:33:25.635Z"
+          },
+          {
+            "stage": "before native pointer Overwrite",
+            "at": "2026-11-23T14:33:26.177Z"
+          }
+        ],
+        "keys": []
+      },
+      "anatomy": {
+        "pid": 23931,
+        "nodes": [
+          {
+            "name": "zenity",
+            "role": "application",
+            "focused": false,
+            "showing": false
+          },
+          {
+            "name": "File changed",
+            "role": "dialog",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 619,
+              "y": 540,
+              "width": 563,
+              "height": 141
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 567,
+              "width": 547,
+              "height": 106
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 632,
+              "y": 572,
+              "width": 537,
+              "height": 48
+            }
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 639,
+              "width": 547,
+              "height": 34
+            }
+          },
+          {
+            "name": "Question",
+            "role": "icon",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 632,
+              "y": 572,
+              "width": 48,
+              "height": 48
+            }
+          },
+          {
+            "name": "confirm_present.docx has been changed outside Open Office Studio since you opened it. Overwriting discards those changes.",
+            "role": "label",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 692,
+              "y": 572,
+              "width": 477,
+              "height": 48
+            },
+            "text": "confirm_present.docx has been changed outside Open Office Studio since you opened it. Overwriting discards those changes."
+          },
+          {
+            "name": "",
+            "role": "filler",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 627,
+              "y": 639,
+              "width": 547,
+              "height": 34
+            }
+          },
+          {
+            "name": "Save as…",
+            "role": "push button",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 848,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          },
+          {
+            "name": "Cancel",
+            "role": "push button",
+            "focused": false,
+            "showing": true,
+            "bounds": {
+              "x": 958,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          },
+          {
+            "name": "Overwrite",
+            "role": "push button",
+            "focused": true,
+            "showing": true,
+            "bounds": {
+              "x": 1068,
+              "y": 639,
+              "width": 106,
+              "height": 34
+            }
+          }
+        ],
+        "truncated": false
+      },
+      "capture": {
+        "pid": 23931,
+        "xid": "16777224",
+        "startTime": "104887",
+        "width": 561,
+        "height": 120,
+        "sha256": "e70d6b424bf3d5d2ec6c7fe61052b62edb61c64be66756e4be592fed844202cd",
+        "backend": "owned X11 window pixels"
+      },
+      "overwritePointer": {
+        "x": 1121,
+        "y": 656
+      },
+      "mainWindowReturn": {
+        "backend": "x11-xtest",
+        "pid": 23777,
+        "display": ":99",
+        "activationPerformed": false,
+        "checks": [
+          {
+            "stage": "foreground postcondition",
+            "at": "2026-11-23T14:33:26.595Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:26.712Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:26.933Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:27.257Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:27.478Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before own-window capture",
+            "at": "2026-11-23T14:33:27.812Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "after own-window capture",
+            "at": "2026-11-23T14:33:28.044Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          },
+          {
+            "stage": "before normal clean Alt+F4",
+            "at": "2026-11-23T14:33:28.163Z",
+            "process": {
+              "pid": 23777,
+              "startTime": "102549",
+              "executable": "/usr/bin/open-office-studio",
+              "identity": "2049:98079:99955264:1795439230000"
+            },
+            "windowFocus": "6291459",
+            "dom": {
+              "hasFocus": true,
+              "visibilityState": "visible",
+              "hidden": false,
+              "activeElement": {
+                "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+                "focusVisible": true,
+                "role": null,
+                "label": "Document input",
+                "id": "",
+                "tag": "TEXTAREA"
+              }
+            }
+          }
+        ],
+        "keys": [],
+        "binding": {
+          "pid": 23777,
+          "startTime": "102549",
+          "executable": "/usr/bin/open-office-studio",
+          "identity": "2049:98079:99955264:1795439230000",
+          "sha256": "ee4ed6255cd99a354fa9bccd8c0e990e6f30fd9f1e71f0448e464af3f5d53cb9"
+        },
+        "xid": "6291459",
+        "pre": {
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        },
+        "post": {
+          "stage": "foreground postcondition",
+          "at": "2026-11-23T14:33:26.595Z",
+          "process": {
+            "pid": 23777,
+            "startTime": "102549",
+            "executable": "/usr/bin/open-office-studio",
+            "identity": "2049:98079:99955264:1795439230000"
+          },
+          "windowFocus": "6291459",
+          "dom": {
+            "hasFocus": true,
+            "visibilityState": "visible",
+            "hidden": false,
+            "activeElement": {
+              "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused",
+              "focusVisible": true,
+              "role": null,
+              "label": "Document input",
+              "id": "",
+              "tag": "TEXTAREA"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "confirmationPositive": {
+    "status": "passed",
+    "savedSha256": "cd0b01f76412f34c91b9013fb2c2874b9b7b2bec164727ea2b9a522b36b65ffe",
+    "cells": [
+      "Qalpha",
+      "beta",
+      "",
+      "",
+      "",
+      "omega",
+      "delta",
+      "",
+      ""
+    ]
+  },
+  "failedPhase": "378-missing-runtime",
+  "error": "Error: EACCES: permission denied, open '/proc/24023/environ'\n    at async open (node:internal/fs/promises:639:25)\n    at async Object.readFile (node:internal/fs/promises:1252:14)\n    at async collectOwnedNativeResources (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-owned-processes.mjs:16:21)\n    at async Object.setMissingHelper (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-native-session.mjs:1128:52)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs:91:22\n    at async runSuiteNativeScenario (file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/linux-suite-native-session.mjs:1295:3)\n    at async file:///home/runner/work/open-office-studio/open-office-studio/.local/suite-harness/scripts/proef-linux-suite-final-confirm378.mjs:10:1",
+  "completedAt": "2026-11-23T14:33:44.205Z"
+}
