@@ -6,7 +6,9 @@ export async function officeCase(qa, kind, phase) {
   await page.locator(`.office-tab[data-soort="${ext}"]`).waitFor();
   if (kind === 'writer') {
     const input = page.locator('[data-testid="yrs-input"]:visible'); await input.waitFor();
-    await qa.focus(input, 'writer-input');
+    // The hidden textarea is the keyboard sink; ordinary users click its
+    // visible canvas. Never force-click through that canvas or inject focus.
+    await qa.focus(input, 'writer-input',page.locator('.canvas-page canvas:visible').first());
     if (phase === 'initial') { await page.keyboard.press('Control+Home'); await page.keyboard.type('STANDALONE23 WRITER EDIT '); }
   } else if (kind === 'spreadsheet') {
     await page.locator('.rekenblad-naamvak').waitFor();

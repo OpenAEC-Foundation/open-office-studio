@@ -41,8 +41,8 @@ async function action(name,extra=[]) {
  await ps('windows-actions.ps1',['-Action',name,'-OwnedPid',String(child.pid),'-ReportPath',target,...extra]);
  record(JSON.parse((await readFile(target,'utf8')).replace(/^\uFEFF/,'')));
 }
-async function focus(locator,label) {
- await action('Focus'); await locator.click(); await locator.focus();
+async function focus(locator,label,physicalTarget=locator) {
+ await action('Focus'); await physicalTarget.click();
  assert(await locator.evaluate(el=>el===document.activeElement || el.contains(document.activeElement)),`Actual ${label} input must own renderer focus`);
  record({focus:label,osAndRenderer:true,keys:'Windows Control'});
 }
