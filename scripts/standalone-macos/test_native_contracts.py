@@ -15,8 +15,8 @@ class CleanupSession:
     def __init__(self,identifier="save-panel",remaining=1,unknown_foreground=False):
         self.panel=identifier;self.remaining=remaining;self.unknown_foreground=unknown_foreground
         self.actions=[];self.report={};self.reads=0
-        self.process=type('Process',(),{'pid':42,'returncode':0,'wait':lambda p,timeout:None})()
-    def ax(self,action,spec=None):
+        self.process=type('Process',(),{'pid':42,'returncode':0,'wait':lambda p,timeout:None,'poll':lambda p:None})()
+    def ax(self,action,spec=None,check=True):
         if action=="snapshot":
             self.reads+=1
             focus={'AXRole':'AXTextField','AXIdentifier':'filename','AXFocused':True,
@@ -39,6 +39,30 @@ class CleanupSession:
 
 
 class IsolationTests(unittest.TestCase):
+    def test_cleanup_passively_waits_for_complete_focused_tree_before_cancel(self):
+        class Warming(CleanupSession):
+            def ax(self,action,spec=None,check=True):
+                if action=='snapshot' and self.reads==0:
+                    self.reads+=1
+                    return {'status':'observed','bounded':True,'rawNodes':[]}
+                if action=='cancel-file-panel':self.cancelRead=self.reads
+                return super().ax(action,spec,check)
+        own=Warming()
+        with patch('native.time.sleep'):Session.quit(own)
+        self.assertEqual(own.cancelRead,2)
+        self.assertEqual(own.actions,[('cancel-file-panel',None),('key','cmd-q')])
+
+    def test_cleanup_never_complete_tree_times_out_without_any_input(self):
+        class NeverReady(CleanupSession):
+            def ax(self,action,spec=None,check=True):
+                if action=='snapshot':
+                    self.reads+=1;return {'status':'observed','bounded':True,'rawNodes':[]}
+                return super().ax(action,spec,check)
+        own=NeverReady()
+        with patch('native.time.monotonic',side_effect=[0,0,46]),patch('native.time.sleep'),self.assertRaises(Unavailable):
+            Session.quit(own)
+        self.assertEqual(own.reads,2);self.assertEqual(own.actions,[])
+
     def test_unselected_retry_app_is_rejected_before_package_or_native_setup(self):
         with tempfile.TemporaryDirectory(prefix="standalone-selected-app-") as t:
             root=Path(t);q=request();q['executeApps']=['email']

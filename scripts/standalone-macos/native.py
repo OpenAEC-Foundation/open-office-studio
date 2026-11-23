@@ -13,6 +13,22 @@ from contracts import APPS, SUITE_ID, digest, validate_bundle, verify_under
 class Unavailable(RuntimeError):pass
 
 
+def complete_snapshot(session):
+    """Bounded read-only readiness shared by selectors and normal cleanup."""
+    deadline=time.monotonic()+45
+    while True:
+        value=session.ax("snapshot",check=False)
+        observed=value.get("status","observed")=="observed"
+        if observed and (value.get("childrenTruncated") is True or value.get("depthTruncated") is True):
+            raise Unavailable("Native child/depth tree limit reached; no selector or input attempted")
+        if observed and value.get("bounded") is not True:return value
+        warming=observed and value.get("bounded") is True
+        if (not warming and value.get("reason")!="Owned native windows unavailable") or time.monotonic()>=deadline:
+            raise Unavailable(value.get("reason","Native complete window snapshot unavailable"))
+        if session.process.poll() is not None:raise Unavailable("Own process exited while native dialog was opening")
+        time.sleep(0.2)  # Observe only. Never replay an input action.
+
+
 def command(argv, *, timeout=30):
     result=subprocess.run([str(x) for x in argv],capture_output=True,text=True,timeout=timeout)
     return {"argv":[str(x) for x in argv],"code":result.returncode,"stdout":result.stdout,"stderr":result.stderr}
@@ -287,7 +303,7 @@ class Session:
         # open/save panels before asking the app to quit normally; retain the
         # original case failure and never dismiss an unknown confirmation.
         for attempt in range(4):
-            snap=self.ax("snapshot")
+            snap=complete_snapshot(self)
             panels=[r["attributes"] for r in snap.get("rawNodes",[]) if r["attributes"].get("AXRole") in ("AXWindow","AXSheet")
                     and r["attributes"].get("AXIdentifier") in ("open-panel","save-panel")]
             if not panels:break

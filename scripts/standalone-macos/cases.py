@@ -4,7 +4,7 @@ import time
 import zipfile
 import xml.etree.ElementTree as ET
 from fixtures import SEEDS,MARKERS,CONTROL,WRITER_ANCHOR,WRITER_VISIBLE_EDIT,WRITER_PAYLOAD
-from native import Unavailable,active_file_panel
+from native import Unavailable,active_file_panel,complete_snapshot
 from oracles import verify
 from contracts import digest
 from mail_fixture_server import USER,PASSWORD
@@ -26,18 +26,7 @@ class Case:
     def __init__(self,session,fixture):self.s=session;self.fixture=Path(fixture)
 
     def snapshot(self):
-        deadline=time.monotonic()+45
-        while True:
-            value=self.s.ax("snapshot",check=False)
-            observed=value.get("status", "observed")=="observed"
-            if observed and (value.get("childrenTruncated") is True or value.get("depthTruncated") is True):
-                raise Unavailable("Native child/depth tree limit reached; no selector or input attempted")
-            if observed and value.get("bounded") is not True:return value
-            warming=observed and value.get("bounded") is True
-            if (not warming and value.get("reason")!="Owned native windows unavailable") or time.monotonic()>=deadline:
-                raise Unavailable(value.get("reason","Native window snapshot unavailable"))
-            if self.s.process.poll() is not None:raise Unavailable("Own process exited while native dialog was opening")
-            time.sleep(0.2)  # Native panels briefly replace AXWindows while opening.
+        return complete_snapshot(self.s)
 
     def select(self,roles,labels=(),*,contains=None,action="click",dialog=False,toolbar=None):
         deadline=time.monotonic()+45;previous=None;stable=0
