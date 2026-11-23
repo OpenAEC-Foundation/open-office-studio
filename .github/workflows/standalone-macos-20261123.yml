@@ -15,7 +15,9 @@ concurrency:
 jobs:
   capabilities:
     if: contains(github.event.head_commit.message, '[standalone-macos]')
-    runs-on: macos-latest
+    # Isolate compiler/privacy capability diagnosis from the queued macOS26 pool.
+    # Every final package case still repeats its own preflight on macos-latest.
+    runs-on: macos-15
     timeout-minutes: 10
     outputs:
       release-ready: ${{ steps.request.outputs.ready }}
