@@ -103,7 +103,17 @@ try {
      $fieldHandle=$gui.focus; [uint32]$fieldPid=0; $null=[StandaloneWindowsNative]::GetWindowThreadProcessId($fieldHandle,[ref]$fieldPid)
      $class=[Text.StringBuilder]::new(256); $null=[StandaloneWindowsNative]::GetClassName($fieldHandle,$class,256)
      $report.focusedFilenameCandidate=@{pid=$fieldPid;dialogPid=$dialogPid;className=$class.ToString();controlId=[StandaloneWindowsNative]::GetDlgCtrlID($fieldHandle);handle=$fieldHandle.ToInt64()}
-     if ($fieldPid -ne $OwnedPid -or $dialogPid -ne $OwnedPid -or $class.ToString() -cne 'Edit' -or [StandaloneWindowsNative]::GetDlgCtrlID($fieldHandle) -ne 1001) { throw 'BLOCKED: focused native filename identity not established' }
+     # The observed Open common dialog uses Edit1148 beside Static1090 "File
+     # name:"; the separately proven Save dialog uses Edit1001. Keep exact
+     # mode-specific identities, process ownership and ancestry mandatory.
+     $expectedFieldId=if($opening){1148}else{1001}
+     if ($fieldPid -ne $OwnedPid -or $dialogPid -ne $OwnedPid -or $class.ToString() -cne 'Edit' -or [StandaloneWindowsNative]::GetDlgCtrlID($fieldHandle) -ne $expectedFieldId) { throw 'BLOCKED: focused native filename identity not established' }
+     if($opening) {
+       $openLabels=@($fields | Where-Object { $_.Current.ProcessId -eq $OwnedPid -and $_.Current.AutomationId -eq '1090' -and $_.Current.Name -match '^(File name|Bestandsnaam):$' })
+       $openFields=@($fields | Where-Object { $_.Current.ProcessId -eq $OwnedPid -and $_.Current.AutomationId -eq '1148' -and $_.Current.NativeWindowHandle -eq $fieldHandle.ToInt64() })
+       if($openLabels.Count -ne 1 -or $openFields.Count -ne 1){throw 'BLOCKED: native Open filename label/field correlation missing'}
+       $report.nativeFilenameLabel=$openLabels[0].Current.Name
+     }
      $ancestor=$fieldHandle; $ownedDialog=$false
      for ($depth=0;$depth -lt 16 -and $ancestor -ne [IntPtr]::Zero;$depth++) {
        [uint32]$ancestorPid=0; $null=[StandaloneWindowsNative]::GetWindowThreadProcessId($ancestor,[ref]$ancestorPid)

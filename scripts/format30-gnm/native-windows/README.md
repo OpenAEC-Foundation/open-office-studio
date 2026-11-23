@@ -43,7 +43,10 @@ The PowerShell helpers derive from this chat's preserved standalone harness
 `744d76b1eb0fb1f06008ef4224e3e12a88e19450`. Changes are limited to the Office
 suite identity allowlist and adding the native Open dialog alongside the already
 proven native Save handling. Open fallback keyboard entry requires the owned
-dialog's real focused Edit HWND/control ID1001 and reads back the exact path.
+dialog's real focused Edit HWND/control ID1148, its observed File name label1090,
+and the exact owned-dialog ancestry before reading back the typed path. The
+Save fallback retains its independently proven Edit1001 identity. These distinct
+native controls were established by the retained failed preflight diagnostics.
 Temporary/profile removal keeps the proven resolved-path containment guards.
 Owned processes, WebView policy, installation and profiles are cleaned; other
 chats' processes or the user's computer are never touched.
