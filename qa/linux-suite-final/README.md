@@ -17,8 +17,10 @@ pass or producer retry is inferred by these preparation files.
 
 One shared parent download/prep is claimed by `standalone_linux`. It will supply
 unchanged separate Suite-DEB and Suite-AppImage transfers with
-parent/report/member/package/own-ELF/signature bindings. The six standalone
-app hosts do not receive Office. This owner will
+parent/report/member/package/own-ELF/signature bindings.
+Final P5 descriptors use `docs/tests/linux-release-input-p5/office-{deb,appimage}-input-descriptor.json`;
+historical P4 descriptors stay unchanged.
+The six standalone app hosts do not receive Office. This owner will
 not download another parent ZIP or build an app. Native execution requires the
 new exact coordinator source/tree/version, successful Linux producer job and
 attempt, input descriptor Gitpin/hash, transfer artifact metadata/hash, DEB and

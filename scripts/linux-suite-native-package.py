@@ -100,7 +100,7 @@ def main(kind):
     assert request["go"] is True, "No coordinator package start instruction"
     pin = request["inputDescriptors"][kind]
     assert pin["path"] == f"qa/linux-suite-final/office-{kind}-input-descriptor.json"
-    assert pin["upstreamPath"] == f"docs/tests/linux-release-input-p4/office-{kind}-input-descriptor.json"
+    assert pin["upstreamPath"] == f"docs/tests/linux-release-input-p5/office-{kind}-input-descriptor.json"
     descriptor_path = HERE / pin["path"]
     assert digest(descriptor_path) == pin["sha256"]
     subprocess.run(["git", "-C", str(HERE), "fetch", "--no-tags", "--depth=1", "origin", pin["commit"]], check=True)

@@ -15,7 +15,7 @@ export function validateSuiteRequest(request) {
     const d=descriptors[kind];assert(d,'Both Suite package forms must be pinned');
     assert.match(d.commit,/^[0-9a-f]{40}$/);assert.match(d.sha256,/^[0-9a-f]{64}$/);
     assert.equal(d.path,`qa/linux-suite-final/office-${kind}-input-descriptor.json`);
-    assert.equal(d.upstreamPath,`docs/tests/linux-release-input-p4/office-${kind}-input-descriptor.json`);
+    assert.equal(d.upstreamPath,`docs/tests/linux-release-input-p5/office-${kind}-input-descriptor.json`);
   }
   assert.equal(request.field374.contractCommit, '3169b09020184e3a98a4d5364ad77b15f38ac063');
   assert.equal(request.field374.windowsControlSha256, '4dcb51f93bd88f3d4bd3a9956f53cff23613235fe222632734b8090f9ea18310');
