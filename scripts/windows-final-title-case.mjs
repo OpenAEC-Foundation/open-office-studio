@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -33,6 +33,12 @@ export async function testFinalTitle({ out, exe, port, startApplication, closeAp
     await page.waitForFunction(() => document.activeElement?.matches(".paged-editor__yrs-input"));
   }
   async function showTitle(page, name) {
+    const notices = await page.locator(".office-melding").allTextContents();
+    if (notices.length) {
+      (evidence.dismissedNotices ||= []).push({ stage: name, text: notices });
+      const close = page.locator(".office-melding-sluiten");
+      while (await close.count()) await close.first().click();
+    }
     // Keep the title in view at the same 100% app zoom used for the original
     // observation. Ordinary scrolling changes no document content or layout.
     await page.mouse.move(850, 420);
@@ -47,13 +53,20 @@ export async function testFinalTitle({ out, exe, port, startApplication, closeAp
   await page.keyboard.press("Control+Home"); await page.keyboard.press("End");
   await page.keyboard.type(marker);
   await showTitle(page, "edited");
+  await focusEditor(page);
   await page.keyboard.press("Control+Shift+s");
   const save = page.getByRole("dialog", { name: /Save as|Opslaan als/i });
   await save.getByLabel(/File name|Bestandsnaam/i).fill("Title overlap roundtrip");
   await save.locator('input[type="radio"][value="docx"]').check();
   await save.getByRole("button", { name: /^(Save|Opslaan)$/ }).click();
   execFileSync("python", ["-B", "scripts/windows-stw-file-dialog.py", String(firstPid), docx, join(out, "title-save-dialog.json")], { stdio: "inherit", windowsHide: true, timeout: 60000 });
-  await waitFor(() => readFile(docx).then(b => b.length > 0).catch(() => false), "Real title DOCX SaveAs");
+  evidence.afterSaveDialog = await page.evaluate(() => ({ title: document.title, notices: [...document.querySelectorAll(".office-melding")].map(e => e.textContent) }));
+  try {
+    await waitFor(() => readFile(docx).then(b => b.length > 0).catch(() => false), "Real title DOCX SaveAs");
+  } catch (error) {
+    evidence.ownedDirectoryInventory = { output: await readdir(out), installation: await readdir(join(out, "installed")) };
+    throw error;
+  }
   await audit("saved"); await showTitle(page, "saved");
   const savedHash = sha(await readFile(docx));
   await closeApplication();

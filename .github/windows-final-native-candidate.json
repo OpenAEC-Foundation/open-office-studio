@@ -1,5 +1,5 @@
 {
-  "executeNative": true,
+  "executeNative": false,
   "requireSigned": true,
   "testTitleOverlap": true,
   "suitePrefixSealed": true,
@@ -23,5 +23,12 @@
   "suiteDescriptorArtifactBytes": 11785,
   "packageMember": "dist-installers/office/nsis/Open Office Studio_2026.48.1_x64-setup.exe",
   "packageSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
-  "expectedPackagedExecutableSha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b"
+  "expectedPackagedExecutableSha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+  "stopGate": {
+    "stoppedByUser": true,
+    "deadlineCET": "2026-11-23T16:00:00+01:00",
+    "automaticResume": false,
+    "requiresNewUserInstruction": true,
+    "reason": "Hard stop supersedes all prior conditional start/native GO permissions. Preserve WIP; no new execution."
+  }
 }

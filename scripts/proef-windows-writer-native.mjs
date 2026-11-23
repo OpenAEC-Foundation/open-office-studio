@@ -67,6 +67,34 @@ const expected = ["alpha", "beta", "", "", "", "omega", "delta", "", ""];
 const marker = "NATIVE_WINDOWS_372 ";
 const edited = [marker + "alpha", ...expected.slice(1)];
 const documentPath = join(out, "Writer native roundtrip.docx");
+async function reuseReviewedCore() {
+  const ref = identity.reusedCore;
+  assert(ref && identity.titleOnly && identity.testTitleOverlap && identity.requireSigned);
+  const metadata = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${ref.artifactId}`], { encoding: "utf8", windowsHide: true }));
+  assert.equal(metadata.expired, false); assert.equal(metadata.workflow_run.id, ref.runId); assert.equal(metadata.workflow_run.head_sha, ref.harnessCommit);
+  assert.equal(metadata.digest, `sha256:${ref.archiveSha256}`); assert.equal(metadata.size_in_bytes, ref.archiveBytes);
+  assert(ref.archiveBytes < 2 * 1024 * 1024, "Only small earlier native evidence may be reused");
+  const archive = execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${ref.artifactId}/zip`], { windowsHide: true, maxBuffer: 2 * 1024 * 1024 });
+  assert.equal(archive.length, ref.archiveBytes); assert.equal(sha(archive), ref.archiveSha256);
+  const raw = unzipSync(archive, { filter: e => e.name === ref.reportMember })[ref.reportMember]; assert(raw); assert.equal(sha(raw), ref.reportSha256);
+  const prior = JSON.parse(strFromU8(raw));
+  assert.equal(prior.harnessCommit, ref.harnessCommit);
+  for (const key of ["applicationCommit", "applicationTree", "version", "runId", "producerJobId", "producerRunAttempt", "artifactId", "archiveSha256", "packageMember", "packageSha256", "expectedPackagedExecutableSha256", "suiteDescriptorSha256"]) assert.equal(prior.identity[key], identity[key], `Earlier core ${key} differs`);
+  assert.equal(prior.status, "failed", "Preserve the original failed title-run status");
+  assert.match(prior.error, /Real title DOCX SaveAs/);
+  assert.equal(prior.executableSha256, identity.expectedPackagedExecutableSha256);
+  assert.equal(prior.signatureChecks.length, 4); for (const e of prior.signatureChecks) requireAuthenticode(e, identity.expectedSignerSubject);
+  assert.equal(prior.checks.length, 12);
+  for (const name of ["installed package opens exact 3x3 baseline", "native keyboard edit", "native ordinary Undo", "native ordinary Redo", "Find input owns Undo", "Find close preserves document Undo", "document Redo after pane close", "normal close exits first process", "full process reopen renders saved cells", "normal close exits reopened process"]) assert(prior.checks.some(c => c.name === name), name);
+  assert.deepEqual(prior.saved.cells, edited); assert.equal(prior.saved.sha256, ref.savedDocxSha256);
+  assert.deepEqual(prior.errors, []);
+  for (const p of prior.processes.slice(0, 2)) { assert.equal(p.exit.code, 0); assert(!p.forcedCleanup); assert.equal(p.appIdentifier, "org.openaec.office-studio"); }
+  assert.equal(prior.processes.length, 3);
+  assert(prior.cleanup.ownedAppsClosed && prior.cleanup.policyRestored && prior.cleanup.privateInstallRemoved);
+  await writeFile(join(out, "reused-core-origin-report.json"), raw);
+  report.reusedCore = { ...ref, originWholeRunStatus: "failed", acceptedSpecificChecks: 12, excluded: "Original failed Title SaveAs and its forced cleanup are not accepted", originalCorePids: prior.processes.slice(0, 2).map(p => p.pid) };
+  report.executionScope = "Title-only native continuation on the identical signed Suite; 12 independently reviewed earlier core checks reused";
+}
 function ps(script) {
   return execFileSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", script], { encoding: "utf8", windowsHide: true, timeout: 30_000 }).trim();
 }
@@ -261,6 +289,8 @@ try {
     signature("independently extracted payload", join(payload, "open-office-studio.exe"));
     report.checks.at(-1).name = "independent signed NSIS payload identity verified; no unsigned binary normalization";
   }
+  if (identity.titleOnly) await reuseReviewedCore();
+  if (!identity.titleOnly) {
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0, 3, 6].map(n => `<w:tr>${expected.slice(n, n + 3).map(cell).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
@@ -269,6 +299,7 @@ try {
   const fixtureState = await diskState();
   assert.deepEqual(fixtureState.cells, expected, "Synthetic fixture must match before any application launch");
   report.fixtureSha256 = fixtureState.sha256;
+  }
   await mkdir(env.APPDATA, { recursive: true }); await mkdir(env.LOCALAPPDATA, { recursive: true });
   installation = join(out, "installed");
   execFileSync(installer, ["/S", `/D=${installation}`], { env, windowsHide: true, timeout: 600_000, stdio: "inherit" });
@@ -288,6 +319,7 @@ try {
   env.WEBVIEW2_USER_DATA_FOLDER = join(out, "webview-profile");
   policy = join(out, "policy-state.json");
   execFileSync("pwsh", ["-NoProfile", "-File", "scripts/runtime-webview2-ci.ps1", "-Phase", "Enable", "-StateFile", policy, "-Port", String(port)], { env, windowsHide: true, stdio: "inherit" });
+  if (!identity.titleOnly) {
   const firstPid = await startApplication(exe, port);
   await check("installed package opens exact 3x3 baseline", expected);
   await page.locator(".canvas-page canvas").first().click({ position: { x: 150, y: 110 } });
@@ -313,6 +345,7 @@ try {
   await check("full process reopen renders saved cells", edited);
   assert.deepEqual(await diskState(), saved); await page.screenshot({ path: join(out, "reopened.png") });
   await closeApplication(); report.checks.push({ name: "normal close exits reopened process", pid: secondPid });
+  }
   if (identity.testTitleOverlap) await testFinalTitle({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   assert.deepEqual(report.errors, []); report.status = "passed";
 } catch (error) {
