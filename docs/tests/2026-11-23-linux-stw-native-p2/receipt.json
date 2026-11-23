@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 1,
+  "scope": "Issue 30, Linux native STW only; no repetition of 368/369",
+  "functionalStatus": "passed bounded native STW I/O/XML/placeholder/save/reopen",
+  "visualStatus": "No general visual PASS; known P2 issue 374 remains open",
+  "source": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2"
+  },
+  "version": "2026.48.1",
+  "origin": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1",
+    "artifactRun": 45143305147,
+    "artifactId": 14804062140,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "nativeInput": {
+      "run": 45146535263,
+      "id": 14804990580,
+      "name": "p2-runtime-prep-recovery",
+      "zipSha256": "dad8d71594470ed7216c9f5d48f65fc2531d9c2b8de1b80b213d823a1e34606f",
+      "zipBytes": 383818043
+    },
+    "descriptorSha256": "fc296348a7029ecd9740575664a18ab4bbc0a501f6bc7d90a8657e91a9809a92",
+    "descriptorGit": "7c5c4d9f0084467f37f9c68a4181d0f1c9f0c79e",
+    "packageMember": "canonical-office.deb",
+    "packagePath": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-input/canonical-office.deb",
+    "packageSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+    "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+    "executionApproved": true,
+    "scope": "Actual P2 installed DEB; separate from 420 and from later release packages"
+  },
+  "harness": {
+    "commit": "2c18bccbe6eca967515a17e67b91ef9ec43f3a27",
+    "files": {
+      "proef-linux-stw-native.mjs": "f8b9ebe7d7f6383e17b90b775d6049ae940c4d4d25b8c753c3de665c3345ae1a",
+      "linux-stw-dialog-input.mjs": "846a1bc0e3aba112498c7ce86e4dafba2c885261732b4cbae670cc551dc9ff05",
+      "linux-stw-portal.py": "9594b9bf350fc76bf9bc36a3a78d570f4c31fd65e50617fb66968832e9f5f165",
+      "linux-stw-gtk-anatomy.py": "b59d80b5f47538a503647b1ed86d5c915b6266842f7bed6107cc60da107035d4",
+      "linux-p2-ribbon-native.mjs": "bf4e548c63f87931680b108d80a5cdebc3c0b432d855325f74e845c35eeafe72",
+      "linux-p2-native-ready.mjs": "bd44f20e9b1a2eadc9e08f32c91ca631102c78bea9c02e9a7b84c750484b85b5",
+      "linux-p2-native-capture.py": "a90f94d6583ee5e3e8aed35b9260811ab1d3fc2803c9f5411476dec86a847341",
+      "linux-p2-native-package.py": "a9c68b7880b7cb0749689096fee81bce980ecf9fa697dfe7bb93554b95e92d45",
+      "linux-p2-native-input.mjs": "bd6246dc657263677e8be2be4b1ed4121135832aad2bd2c9f122b0d069740020"
+    },
+    "protocolOrigin": {
+      "helperAndHostCommit": "b15892cd491b5bfef6b765f6f9af43d62873a0d5",
+      "priorP2NativeProof": "6bb8d6fafa06718b0a0ea5aff9cbcf70856e16c1",
+      "priorP2ReceiptSha256": "a452f3e3ca42505161a2e8c5cec098a896b11e1e27076d8b2db3eb924795da18",
+      "pickerContractCommit": "9f321450ce9002dfd2bfbd8ed7baed63a212067e",
+      "pickerContractRun": 45152944453,
+      "pickerMappingCommit": "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
+      "oracleCommit": "082319659e0e2349c8ab8860a7d886c6733a936e",
+      "note": "Protocol reuse only; the native STW route must execute independently in this report."
+    },
+    "productDiffAgainstApp": "none"
+  },
+  "fixture": {
+    "repo": "LibreOffice/core",
+    "revision": "ded596096a767fa470eea8dfccd51c1af5c3dd54",
+    "revisionDate": "2003-01-27T17:31:46Z",
+    "path": "qadevOOo/testdocs/report.stw",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/ded596096a767fa470eea8dfccd51c1af5c3dd54/qadevOOo/testdocs/report.stw",
+    "bytes": 11186,
+    "gitBlob": "5b8efafa159bac197fdab0b48a6dfaf8a11a6478",
+    "sha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+    "originalExtension": "stw",
+    "generator": "StarOffice 6.0 (Win32)",
+    "officeNamespace": "http://openoffice.org/2000/office",
+    "officeVersion": "1.0",
+    "manifestMediaType": "application/vnd.sun.xml.writer",
+    "mimetypeEntryPresent": false,
+    "templateProvenanceUrl": "https://github.com/LibreOffice/core/blob/6fd2fcd6764974f6a8f1c0c7a3498aaa8e45c558/qadevOOo/tests/java/ifc/frame/_XDocumentTemplates.java",
+    "templateProvenance": "The upstream addTemplate test uses this original report.stw. The early ZIP's generic writer manifest and absent mimetype entry are recorded, not silently changed.",
+    "redistribution": "Download immutable upstream bytes during QA; this branch does not vendor the binary fixture",
+    "oracleCommit": "082319659e0e2349c8ab8860a7d886c6733a936e",
+    "oracleSha256": "172b3ab9bf92cdb804fc68958c894e8468a31671af83a0ddee936f68221fe0ec"
+  },
+  "platform": "Linux / actual installed DEB / WebKitGTK / headed X11",
+  "runtime": {
+    "driverPath": "/home/runner/.cargo/bin/tauri-driver",
+    "driverSha256": "a71b247ca519f3ed02a364cd8692d71d381ffe81279c94c6ed65ec300d217868",
+    "webkitPackages": "libwebkit2gtk-4.1-0:amd64\t2.50.4-0ubuntu0.22.04.1\nopenbox\t3.6.1-10\nwebkit2gtk-driver\t2.50.4-0ubuntu0.22.04.1\nxdg-desktop-portal\t1.14.4-1ubuntu2~22.04.2\nxdg-desktop-portal-gtk\t1.14.0-1build1\n"
+  },
+  "successfulRun": 45157371765,
+  "checks": 13,
+  "preflight": "passed actual focus/native Ctrl/edit/save/normal AltF4/fresh PID reopen",
+  "sessions": [
+    {
+      "phase": "preflight",
+      "pid": 4711,
+      "document": "preflight.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "preflight",
+      "pid": 4924,
+      "document": "preflight.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    },
+    {
+      "phase": "native-DOCX-reopen",
+      "pid": 7515,
+      "document": "native_stw_p2.docx",
+      "executableSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287"
+    }
+  ],
+  "normalQuitChecks": [
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "preflight",
+      "pid": 4711,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "native-DOCX-save-as",
+      "pid": 4924,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    },
+    {
+      "label": "normal native Alt+F4 full process exit",
+      "phase": "native-DOCX-reopen",
+      "pid": 7515,
+      "remainingPids": [],
+      "webdriverAfterActualExit": "released"
+    }
+  ],
+  "nativePickers": [
+    {
+      "member": "OpenFile",
+      "target": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/stw/report.stw",
+      "officePid": 4924,
+      "correlation": {
+        "ownedPid": 4924,
+        "requestHandle": "/org/freedesktop/portal/desktop/request/1_29/ashpd_qkxg9dnwWx",
+        "frontend": {
+          "sender": ":1.29",
+          "destination": "org.freedesktop.portal.Desktop",
+          "serial": 16,
+          "interface": "org.freedesktop.portal.FileChooser",
+          "member": "OpenFile",
+          "token": "ashpd_qkxg9dnwWx",
+          "currentName": null,
+          "handle": null
+        },
+        "backend": {
+          "sender": ":1.2",
+          "destination": ":1.9",
+          "serial": 109,
+          "interface": "org.freedesktop.impl.portal.FileChooser",
+          "member": "OpenFile",
+          "token": null,
+          "currentName": null,
+          "handle": "/org/freedesktop/portal/desktop/request/1_29/ashpd_qkxg9dnwWx"
+        },
+        "brokerUniqueName": ":1.2",
+        "backendUniqueName": ":1.9",
+        "backendPid": 4649
+      },
+      "backendExecutable": "/usr/libexec/xdg-desktop-portal-gtk",
+      "backendBinding": {
+        "pid": 4649,
+        "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+        "startTime": "72185",
+        "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+        "environment": {
+          "DISPLAY": ":99",
+          "HOME": "/home/runner",
+          "XAUTHORITY": "/tmp/xvfb-run.9wUL7r/Xauthority",
+          "GDK_BACKEND": null,
+          "XDG_CONFIG_HOME": "/home/runner/.config",
+          "XDG_DATA_HOME": null,
+          "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-JmsRDH2kDU,guid=f604c0abd1cb7ee7af5293526b0417b5"
+        }
+      },
+      "xid": "8388615",
+      "exactFocusedPath": [
+        "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/stw/report.stw"
+      ],
+      "monitorClosed": true
+    },
+    {
+      "member": "SaveFile",
+      "target": "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/stw/native_stw_p2.docx",
+      "officePid": 4924,
+      "correlation": {
+        "ownedPid": 4924,
+        "requestHandle": "/org/freedesktop/portal/desktop/request/1_29/ashpd_p80w5Vwmw2",
+        "frontend": {
+          "sender": ":1.29",
+          "destination": "org.freedesktop.portal.Desktop",
+          "serial": 30,
+          "interface": "org.freedesktop.portal.FileChooser",
+          "member": "SaveFile",
+          "token": "ashpd_p80w5Vwmw2",
+          "currentName": "native_stw_p2.docx",
+          "handle": null
+        },
+        "backend": {
+          "sender": ":1.2",
+          "destination": ":1.9",
+          "serial": 121,
+          "interface": "org.freedesktop.impl.portal.FileChooser",
+          "member": "SaveFile",
+          "token": null,
+          "currentName": "native_stw_p2.docx",
+          "handle": "/org/freedesktop/portal/desktop/request/1_29/ashpd_p80w5Vwmw2"
+        },
+        "brokerUniqueName": ":1.2",
+        "backendUniqueName": ":1.9",
+        "backendPid": 4649
+      },
+      "backendExecutable": "/usr/libexec/xdg-desktop-portal-gtk",
+      "backendBinding": {
+        "pid": 4649,
+        "executable": "/usr/libexec/xdg-desktop-portal-gtk",
+        "startTime": "72185",
+        "sha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+        "environment": {
+          "DISPLAY": ":99",
+          "HOME": "/home/runner",
+          "XAUTHORITY": "/tmp/xvfb-run.9wUL7r/Xauthority",
+          "GDK_BACKEND": null,
+          "XDG_CONFIG_HOME": "/home/runner/.config",
+          "XDG_DATA_HOME": null,
+          "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-JmsRDH2kDU,guid=f604c0abd1cb7ee7af5293526b0417b5"
+        }
+      },
+      "xid": "8390607",
+      "exactFocusedPath": [
+        "/home/runner/work/open-office-studio/open-office-studio/.local/linux-p2-native/stw/native_stw_p2.docx"
+      ],
+      "monitorClosed": true
+    }
+  ],
+  "saveAsSelection": {
+    "name": "native_stw_p2",
+    "format": "docx",
+    "text": "File name.docx"
+  },
+  "xmlAudits": [
+    {
+      "name": "native-saved",
+      "passed": true,
+      "fileSha256": "a2c08e050c096d9ff61d70ba0e95ed94e0699ac9c8467fda4dc0b1998d2ec297",
+      "sourceSha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+      "matched": [
+        {
+          "sourceIndex": 0,
+          "docxIndex": 0,
+          "text": "Report Title STW_NATIVE_P2",
+          "properties": {
+            "sizePt": 32,
+            "bold": false,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 1,
+          "docxIndex": 1,
+          "text": "Report Subheading",
+          "properties": {
+            "sizePt": 24,
+            "bold": false,
+            "alignment": "center",
+            "caps": false,
+            "smallCaps": true
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 2,
+          "docxIndex": 2,
+          "text": "Table of Contents",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 3,
+          "docxIndex": 3,
+          "text": "<This is the heading of the first section> 1",
+          "properties": {
+            "sizePt": 11,
+            "bold": true,
+            "alignment": "left",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 4,
+          "docxIndex": 4,
+          "text": "Illustration Index",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 5,
+          "docxIndex": 5,
+          "text": "Index of Tables",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 6,
+          "docxIndex": 6,
+          "text": "This is the heading of the first section",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "This is the heading of the first section",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 7,
+          "docxIndex": 7,
+          "text": "Start your text here",
+          "properties": {
+            "sizePt": 11,
+            "bold": false,
+            "alignment": "justify",
+            "caps": false,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "Start your text here",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        }
+      ],
+      "marker": " STW_NATIVE_P2",
+      "tableCount": 0,
+      "actualNonemptyParagraphs": 8,
+      "scope": [
+        "No non-empty table in source; no table-fidelity proof",
+        "No font substitution, page layout or complete TOC/index-field fidelity claim",
+        "Numeric TOC cache is diagnostic; stable source-derived index text is required"
+      ]
+    },
+    {
+      "name": "native-reopened",
+      "passed": true,
+      "fileSha256": "a2c08e050c096d9ff61d70ba0e95ed94e0699ac9c8467fda4dc0b1998d2ec297",
+      "sourceSha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+      "matched": [
+        {
+          "sourceIndex": 0,
+          "docxIndex": 0,
+          "text": "Report Title STW_NATIVE_P2",
+          "properties": {
+            "sizePt": 32,
+            "bold": false,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 1,
+          "docxIndex": 1,
+          "text": "Report Subheading",
+          "properties": {
+            "sizePt": 24,
+            "bold": false,
+            "alignment": "center",
+            "caps": false,
+            "smallCaps": true
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 2,
+          "docxIndex": 2,
+          "text": "Table of Contents",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 3,
+          "docxIndex": 3,
+          "text": "<This is the heading of the first section> 1",
+          "properties": {
+            "sizePt": 11,
+            "bold": true,
+            "alignment": "left",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 4,
+          "docxIndex": 4,
+          "text": "Illustration Index",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 5,
+          "docxIndex": 5,
+          "text": "Index of Tables",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 6,
+          "docxIndex": 6,
+          "text": "This is the heading of the first section",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "This is the heading of the first section",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 7,
+          "docxIndex": 7,
+          "text": "Start your text here",
+          "properties": {
+            "sizePt": 11,
+            "bold": false,
+            "alignment": "justify",
+            "caps": false,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "Start your text here",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        }
+      ],
+      "marker": " STW_NATIVE_P2",
+      "tableCount": 0,
+      "actualNonemptyParagraphs": 8,
+      "scope": [
+        "No non-empty table in source; no table-fidelity proof",
+        "No font substitution, page layout or complete TOC/index-field fidelity claim",
+        "Numeric TOC cache is diagnostic; stable source-derived index text is required"
+      ]
+    },
+    {
+      "name": "native-reopened-resaved",
+      "passed": true,
+      "fileSha256": "a2c08e050c096d9ff61d70ba0e95ed94e0699ac9c8467fda4dc0b1998d2ec297",
+      "sourceSha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2",
+      "matched": [
+        {
+          "sourceIndex": 0,
+          "docxIndex": 0,
+          "text": "Report Title STW_NATIVE_P2",
+          "properties": {
+            "sizePt": 32,
+            "bold": false,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 1,
+          "docxIndex": 1,
+          "text": "Report Subheading",
+          "properties": {
+            "sizePt": 24,
+            "bold": false,
+            "alignment": "center",
+            "caps": false,
+            "smallCaps": true
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 2,
+          "docxIndex": 2,
+          "text": "Table of Contents",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 3,
+          "docxIndex": 3,
+          "text": "<This is the heading of the first section> 1",
+          "properties": {
+            "sizePt": 11,
+            "bold": true,
+            "alignment": "left",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 4,
+          "docxIndex": 4,
+          "text": "Illustration Index",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 5,
+          "docxIndex": 5,
+          "text": "Index of Tables",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 6,
+          "docxIndex": 6,
+          "text": "This is the heading of the first section",
+          "properties": {
+            "sizePt": 14,
+            "bold": true,
+            "alignment": "center",
+            "caps": true,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "This is the heading of the first section",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        },
+        {
+          "sourceIndex": 7,
+          "docxIndex": 7,
+          "text": "Start your text here",
+          "properties": {
+            "sizePt": 11,
+            "bold": false,
+            "alignment": "justify",
+            "caps": false,
+            "smallCaps": false
+          },
+          "placeholders": [
+            {
+              "type": "text",
+              "prompt": "Start your text here",
+              "description": "Click placeholder and overwrite"
+            }
+          ],
+          "cachedTextExact": true
+        }
+      ],
+      "marker": " STW_NATIVE_P2",
+      "tableCount": 0,
+      "actualNonemptyParagraphs": 8,
+      "scope": [
+        "No non-empty table in source; no table-fidelity proof",
+        "No font substitution, page layout or complete TOC/index-field fidelity claim",
+        "Numeric TOC cache is diagnostic; stable source-derived index text is required"
+      ]
+    }
+  ],
+  "actualRustConversion": {
+    "entry": "Ordinary native Open file -> production STW opener -> native Rust converteer_document -> packaged converter; no IPC seam invocation",
+    "execve": [
+      "6119  execve(\"/usr/libexec/Open Office Studio/kantoorruntime/program/soffice\", [\"/usr/libexec/Open Office Studio/kantoorruntime/program/soffice\", \"-env:UserInstallation=file:///tmp/.tmpT6MRcy/profiel/\", \"--headless\", \"--nologo\", \"--nodefault\", \"--norestore\", \"--nolockcheck\", \"--convert-to\", \"docx:MS Word 2007 XML\", \"--outdir\", \"/tmp/.tmpT6MRcy/uit\", \"/tmp/.tmpT6MRcy/invoer.stw\"], 0x7efcc40048a0 /* 134 vars */) = 0"
+    ],
+    "runtimeFiles": {
+      "/usr/libexec/Open Office Studio/kantoorruntime/program/soffice": {
+        "sha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+        "bytes": 6621
+      },
+      "/usr/libexec/Open Office Studio/kantoorruntime/program/soffice.bin": {
+        "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+        "bytes": 15088
+      }
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "manifestSha256": "c37bfd9a8b7131c5edaa014599445110890b6c46e5e36085aa9232ff5bde90f9",
+    "traceSha256": "179bd64aa1e9e36dc0286918990022ead503cde036bdc503ba2382df3318be1e",
+    "overridesUsed": false
+  },
+  "attempts": [
+    {
+      "run": 45154622440,
+      "artifact": 14808910113,
+      "zip": "native-45154622440.zip",
+      "bytes": 245480,
+      "zipSha256": "e32548fff5abd2b1b17316f7e722052ab0380960177701863b7e8a3aaba29941",
+      "reportPath": "linux-p2-native/stw/report.json",
+      "reportSha256": "66d7907b71c267fda21acc700d431d1c43ff56a858b8aa99a3e0b509333e44a0",
+      "qa": "c8ee20d95fc63be3211eaf590c6d2793e87977b2",
+      "status": "failed",
+      "phase": "native-STW-open",
+      "error": "Error: Command failed: xdotool search --onlyvisible --pid 4572",
+      "checks": 9,
+      "cleanup": {
+        "children": [
+          {
+            "label": "OpenFile observer",
+            "pid": 4916,
+            "closed": true
+          },
+          {
+            "label": "owned portal broker",
+            "pid": 4573,
+            "closed": true
+          },
+          {
+            "label": "owned GTK portal",
+            "pid": 4572,
+            "closed": true
+          },
+          {
+            "label": "owned window manager",
+            "pid": 4571,
+            "closed": true
+          }
+        ],
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      },
+      "classification": "Driver queried the attributed GTK process before its window was mapped; corrected readonly same-process mapping wait and missing host accessibility provider. No STW conversion occurred.",
+      "cleanupLimit": "Original direct children/app/driver cleanup is recorded. The autoactivated backend was not separately tracked on these earlier attempts; do not infer the later explicit peer cleanup."
+    },
+    {
+      "run": 45155624620,
+      "artifact": 14807839138,
+      "zip": "native-45155624620.zip",
+      "bytes": 682742,
+      "zipSha256": "ef82bb9b8e19cabc2a1489ceed62887c8c6ef09391cbdc6948286e73e2a78c4d",
+      "reportPath": "linux-p2-native/stw/report.json",
+      "reportSha256": "3222e6ef8a9f1a8d7e9a38d0f6b3269a1ba5db3570ae43656d08e25318b02878",
+      "qa": "3f4ddecd383e6a9fcb6a5f78ff456c08d772797a",
+      "status": "failed",
+      "phase": "native-DOCX-save-as",
+      "error": "AssertionError [ERR_ASSERTION]: Only this probe's bounded synthetic text",
+      "checks": 10,
+      "cleanup": {
+        "children": [
+          {
+            "label": "OpenFile observer",
+            "pid": 5130,
+            "closed": true
+          },
+          {
+            "label": "owned portal broker",
+            "pid": 4752,
+            "closed": true
+          },
+          {
+            "label": "owned GTK portal",
+            "pid": 4751,
+            "closed": true
+          },
+          {
+            "label": "owned window manager",
+            "pid": 4750,
+            "closed": true
+          }
+        ],
+        "driverExited": true,
+        "ownedApplicationClosed": true,
+        "remainingApplicationPids": []
+      },
+      "classification": "Native OpenFile/conversion/edit succeeded. Caller SaveAs basename used a hyphen rejected by the existing bounded text guard; corrected basename to underscores without weakening guard. No native SaveFile occurred.",
+      "cleanupLimit": "Original direct children/app/driver cleanup is recorded. The autoactivated backend was not separately tracked on these earlier attempts; do not infer the later explicit peer cleanup."
+    },
+    {
+      "run": 45157371765,
+      "artifact": 14809896182,
+      "zip": "native-45157371765.zip",
+      "bytes": 1221873,
+      "zipSha256": "9f1a31198c7f7e46e846ca902a15620b80d657bf7eef48d173bcf2ed5e32a886",
+      "reportPath": "linux-p2-native/stw/report.json",
+      "reportSha256": "77e735c2f20decaa7c3e9e16854715387be0ad54f50d53768b8b28f43fa2aa62",
+      "qa": "2c18bccbe6eca967515a17e67b91ef9ec43f3a27",
+      "status": "passed bounded P2 Desktop DEB native STW open/edit/DOCX SaveAs/normal quit/new PID reopen"
+    }
+  ],
+  "rawFiles": {
+    "docx-save-as-selection.png": {
+      "bytes": 185950,
+      "sha256": "d20e835f3be46738110b922ea8def8ff6a0120c0d78063c88b58210cead040f3"
+    },
+    "native-execve.log": {
+      "bytes": 6816758,
+      "sha256": "b63785bb2f0921d1653b0fdcf5ecefecdd8207c4257adc3302e8fbf94af1cfff"
+    },
+    "native-reopened-bottom.png": {
+      "bytes": 110517,
+      "sha256": "fecb7c57ffeaa443f1a277b0d8a9f2f6deb6b0691327d449e7afcf58fbe759ec"
+    },
+    "native-reopened-oracle.json": {
+      "bytes": 3391,
+      "sha256": "6cb44394bae2c773f30fdfc44c1475fd6ca7d057d43534964b739fc6b1cdcb78"
+    },
+    "native-reopened-resaved-oracle.json": {
+      "bytes": 3391,
+      "sha256": "6cb44394bae2c773f30fdfc44c1475fd6ca7d057d43534964b739fc6b1cdcb78"
+    },
+    "native-reopened-top.png": {
+      "bytes": 114121,
+      "sha256": "84e1b2a435083f8cb035b4d928bf4fdcceea423b3d52ac49f5a399ee767426f5"
+    },
+    "native-saved-bottom.png": {
+      "bytes": 131057,
+      "sha256": "28e390ca4be3118f05b0b3766de9ddfbdae5c55b414648d076d7094516fb1847"
+    },
+    "native-saved-oracle.json": {
+      "bytes": 3391,
+      "sha256": "6cb44394bae2c773f30fdfc44c1475fd6ca7d057d43534964b739fc6b1cdcb78"
+    },
+    "native-saved-top.png": {
+      "bytes": 134585,
+      "sha256": "ab29ecc2ec0eaba59c40675a969ea8044d5bbfb46bb1ab7a3267897c64599532"
+    },
+    "native_stw_p2.docx": {
+      "bytes": 14758,
+      "sha256": "a2c08e050c096d9ff61d70ba0e95ed94e0699ac9c8467fda4dc0b1998d2ec297"
+    },
+    "openfile-gtk-anatomy.json": {
+      "bytes": 14026,
+      "sha256": "27b2dc96ce6e00a24ec1c237ed9c8ad50265ec0b8f6d7b2bb62a4715a21c1578"
+    },
+    "openfile-native-picker.png": {
+      "bytes": 25684,
+      "sha256": "864e256de3c7f922df9a8e23d73e38e859b41e78bcae1ee94016520e6424d2df"
+    },
+    "openfile-portal.json": {
+      "bytes": 1927,
+      "sha256": "fe40c60adb251a4e87dae196ba56fd633b677a197685e2dfed18ecff9799ec90"
+    },
+    "openfile-ready.json": {
+      "bytes": 114,
+      "sha256": "d87a5fe0d5ff6eab84207fdab868a1c4e7070646e92a9ae061ca9c088b771af6"
+    },
+    "preflight-reopened.png": {
+      "bytes": 80027,
+      "sha256": "37b3745e6d9ac7a22a09d4cf16a635033eac50e2c4e3100fbbf9985e17c923b4"
+    },
+    "preflight-saved.png": {
+      "bytes": 92394,
+      "sha256": "f42e9e8e593f2cd265c8b0f01f219ff91254a42a191b103c7d950f5aae01c5e5"
+    },
+    "preflight.docx": {
+      "bytes": 36958,
+      "sha256": "463559d03608ed26cb0724e173a1b2078232506a49f65375c2dbd68934f87890"
+    },
+    "report.json": {
+      "bytes": 314053,
+      "sha256": "77e735c2f20decaa7c3e9e16854715387be0ad54f50d53768b8b28f43fa2aa62"
+    },
+    "report.stw": {
+      "bytes": 11186,
+      "sha256": "5a5b633ee371836a48c7496fc35ae261f35025d7edb3ec74439c5f58b369f1e2"
+    },
+    "savefile-gtk-anatomy.json": {
+      "bytes": 27929,
+      "sha256": "269bdc6cfeed75242146e89ec807520b8087c9a5456702770f2a5199d46f7825"
+    },
+    "savefile-native-picker.png": {
+      "bytes": 45813,
+      "sha256": "52503b8df7142735da0925e71ca4fea7adc36bbf15009dbcd9c33332ba965935"
+    },
+    "savefile-portal.json": {
+      "bytes": 1991,
+      "sha256": "89978780b97905cd754b29098f4ffbd8aa0f22caa96b2d0d64b9920569c4ffd3"
+    },
+    "savefile-ready.json": {
+      "bytes": 114,
+      "sha256": "0849675bc643ab3d7c02a6fb66cd55977dec9158e13c8658e92d18affd986897"
+    },
+    "source-oracle.json": {
+      "bytes": 4668,
+      "sha256": "c9d10469bedf07e2a6645d7631419ffefd2595024859a39b299a83e3fc2a1882"
+    },
+    "stw-edited-top.png": {
+      "bytes": 121948,
+      "sha256": "a604ebaf218ea2e5983e95f984c257a1bde5691978262a0711d135e8b1905aae"
+    },
+    "stw-opened-top.png": {
+      "bytes": 97178,
+      "sha256": "ee4bbb272e3c106ed8c519d78a6f6f43f9039125ae5c03a6cc187464a11fc557"
+    }
+  },
+  "visualReview": {
+    "method": "Original PNGs viewed serially; hashes validated against exact artifact bytes",
+    "originalPngCount": 11,
+    "observed": "Initial title/subheading, native marker, DOCX selection and native Open/Save paths visible. Long marker wraps to a second line; no overlap visible in these particular frames.",
+    "limitations": [
+      "Known issue 374 is independently reproduced outside this exact long-marker capture route. These images do not retest the shorter same-line marker or disprove that defect. General title rendering is not accepted.",
+      "Images named native-saved-bottom.png and native-reopened-bottom.png after Ctrl+End still show the first page. Cause unproven; no lower-page physical visibility, pagination or placeholder-position claim from those images.",
+      "XML establishes eight ordered body blocks, selected effective styling and two text placeholders; structural proof does not establish every page visually."
+    ]
+  },
+  "tests": {
+    "protocolPython": 13,
+    "dialogNode": 5,
+    "failures": 0,
+    "syntax": "Node check and Python compile in native workflow; exact original oracle bytes asserted before app operation",
+    "oracle": "Three actual saved/reopened/resaved XML audits all pass on the same final DOCX bytes. No claim that a separate optional converted-fixture oracle unit suite ran in this job."
+  },
+  "cleanup": {
+    "attributedBackends": [
+      {
+        "pid": 4649,
+        "scope": "Exact attributed portal peer on the same private test bus",
+        "closed": true
+      }
+    ],
+    "children": [
+      {
+        "label": "SaveFile observer",
+        "pid": 6379,
+        "closed": true
+      },
+      {
+        "label": "OpenFile observer",
+        "pid": 5026,
+        "closed": true
+      },
+      {
+        "label": "owned portal broker",
+        "pid": 4626,
+        "closed": true
+      },
+      {
+        "label": "owned GTK portal",
+        "pid": 4625,
+        "closed": true
+      },
+      {
+        "label": "owned window manager",
+        "pid": 4624,
+        "closed": true
+      }
+    ],
+    "driverExited": true,
+    "ownedApplicationClosed": true,
+    "remainingApplicationPids": [],
+    "localGuiOrCaptureStarted": false,
+    "hostBoundary": "Own private Xvfb/dbus session ends with completed CI job; no user-PC app or recording operated"
+  },
+  "limits": [
+    "Virtual X11/software graphics, not physical hardware or AppImage operation.",
+    "Normal clean quit uses real Alt+F4 under an owned window manager; WebDriver DELETE is cleanup only.",
+    "Existing368/369 proof is retained unchanged; no Find/Replace or ribbon matrix is repeated here.",
+    "Only one genuine STW fixture: no headers/footers, full TOC evaluation, pagination, font substitution, nonempty tables or universal STW variants claim.",
+    "Current canonical P2 Desktop DEB/native route, not final seven-app/signed/standalone acceptance.",
+    "Known #374 general title rendering remains open outside P2; not a release acceptance verdict.",
+    "Final seven-app/release DEB, signed packages, standalone apps, P3, macOS and Windows native acceptance are not claimed.",
+    "The two original failed attempts remain archived and are not relabelled as passes."
+  ],
+  "traceBinding": {
+    "snapshotSha256": "179bd64aa1e9e36dc0286918990022ead503cde036bdc503ba2382df3318be1e",
+    "snapshotBytes": 6816346,
+    "finalTraceSha256": "b63785bb2f0921d1653b0fdcf5ecefecdd8207c4257adc3302e8fbf94af1cfff",
+    "finalTraceBytes": 6816758,
+    "appendedCleanupBytes": 412,
+    "note": "Raw report hashes the conversion trace before finally. The archived trace has a byte-identical prefix and 412 additional driver cleanup signal/exit bytes. Original report and log are preserved unchanged."
+  }
+}
