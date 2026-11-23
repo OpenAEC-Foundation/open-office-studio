@@ -1,0 +1,45 @@
+name: SDW31 corrected XML oracle and real Word engine replay
+on:
+  push:
+    branches: [codex/sdw31-qa-2026-11-23-e0d7]
+    paths:
+      - scripts/qa-sdw31/engine.mjs
+      - scripts/qa-sdw31/oracle.py
+      - scripts/qa-sdw31/replay_input.py
+      - .github/workflows/qa-sdw31-replay-e0d7.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  engine_replay:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_SDW31_RUNTIME_BINDING: .local/sdw31-qa/runtime-binding.json
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: python -B scripts/qa-sdw31/replay_input.py
+      - name: Re-derive original native oracle; preserve strict source acceptance
+        run: python -B scripts/qa-sdw31/oracle.py source
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Corrected XML checker and actual P2 Word edit Undo Redo save fresh reopen
+        run: node scripts/qa-sdw31/engine.mjs --replay
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sdw31-engine-replay-result
+          path: .local/sdw31-qa/
+          include-hidden-files: true
+          if-no-files-found: error

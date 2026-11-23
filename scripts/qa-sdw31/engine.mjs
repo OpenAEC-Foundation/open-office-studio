@@ -48,6 +48,15 @@ try {
       runtimeBeschikbaar:async()=>true,
       converteer:async(bytes,from,to,kind)=>{
         assert.equal(sha(bytes),cfg.source.sha256);assert.deepEqual([from,to,kind],["sdw","docx","docx"]);conversions++;
+        if(process.argv.includes("--replay")) {
+          const prior=JSON.parse(fs.readFileSync(path.join(out,"converter-report.json"),"utf8"));
+          const replay=JSON.parse(fs.readFileSync(path.join(out,"replay-input-report.json"),"utf8"));
+          assert.equal(prior.sourceSha256,cfg.source.sha256);
+          assert.equal(prior.binding.application.commit,cfg.application.commit);
+          const converted=fs.readFileSync(path.join(out,"converted.docx"));assert.equal(sha(converted),prior.outputSha256);
+          report.conversionPhase={method:"Reused exact actual verified converter result, no new Office execution",...replay};
+          return converted;
+        }
         const r=JSON.parse(execFileSync("python3",["scripts/qa-sdw31/convert.py","--binding",process.env.OOS_SDW31_RUNTIME_BINDING,"--source",sourcePath,"--out",out],{encoding:"utf8",timeout:60_000}));
         return fs.readFileSync(r.output);
       }
@@ -58,9 +67,18 @@ try {
     assert.equal(opened.exportFormaat ?? opened.soort,"docx");
     assert.ok(!opened.rapport?.regels.some(r=>r.id==="empty-conversion"));
     fs.writeFileSync(path.join(out,"open-result.json"),JSON.stringify({...opened,bytes:{length:opened.bytes.length,sha256:sha(opened.bytes)}},null,2));
-    const independent=(file,edited=false)=>execFileSync("python3",["scripts/qa-sdw31/oracle.py","docx","--out",out,"--docx",path.join(out,file),...(edited?["--edited"]:[])],{stdio:"inherit"});
-    independent("converted.docx");
-    report.checks.push("Real private converter/production open policy preserve all original paragraph text/empty paragraphs, zero tables and eleven explicit native list levels.");
+    const sourceReports=[];
+    const independent=(file,edited=false)=>{
+      execFileSync("python3",["scripts/qa-sdw31/oracle.py","docx","--out",out,"--docx",path.join(out,file),"--observe",...(edited?["--edited"]:[])],{stdio:"inherit"});
+      const r=JSON.parse(fs.readFileSync(path.join(out,file.replace(/\.docx$/,"-xml-report.json")),"utf8"));sourceReports.push(r);return r;
+    };
+    const initialXml=independent("converted.docx");
+    report.strictInitialSourceAcceptance=initialXml.boundedSourceAcceptance;
+    report.initialSourceMismatches=initialXml.mismatches;
+    const baseline=initialXml.paragraphTexts;
+    const editedBaseline=[...baseline];editedBaseline[cfg.edit.paragraph]=cfg.edit.text+editedBaseline[cfg.edit.paragraph];
+    report.downstreamBaselineRole="Actual converted XML paragraph vector, including any observed extra carrier; independent original-source acceptance remains separate and strict";
+    report.checks.push("Real private converter/production open policy and strict original-source XML result recorded; downstream engine checks do not accept conversion discrepancies.");
     production=await openProductieTekstkern(path.join(out,"vite-cache"));
     assert.equal(production.route,"productiekern");
     const pins=JSON.parse(fs.readFileSync("patches/tekstengine-nootnummering.json","utf8"));
@@ -70,26 +88,28 @@ try {
     const s=await production.sdk.createYrsSession();sessions.push(s);s.openDocx(opened.bytes,true);
     const texts=h=>h.paragraphs("body").map(p=>p.text.replace(/\r\n?/g,"\n"));
     fs.writeFileSync(path.join(out,"engine-import.json"),JSON.stringify({stories:s.storyIds(),paragraphs:s.paragraphs("body")},null,2));
-    assert.deepEqual(texts(s),oracle.expected.texts,"Initial Word engine text differs from independent source oracle");
+    assert.deepEqual(texts(s),baseline,"Initial Word engine text differs from independent source oracle");
     s.beginUndoCapture();s.setUndoCaptureMode("manual");s.addUndoBoundary();
     const edit=oracle.expected.edit, para=s.paragraphs("body")[edit.paragraph];
     s.insertText({story:"body",paraId:para.paraId,offset:edit.offset},edit.text);s.addUndoBoundary();
-    assert.deepEqual(texts(s),oracle.expected.editedTexts,"Edit was not committed");
-    assert.equal(s.undo(),true);assert.deepEqual(texts(s),oracle.expected.texts);
-    assert.equal(s.redo(),true);assert.deepEqual(texts(s),oracle.expected.editedTexts);
+    assert.deepEqual(texts(s),editedBaseline,"Edit was not committed");
+    assert.equal(s.undo(),true);assert.deepEqual(texts(s),baseline);
+    assert.equal(s.redo(),true);assert.deepEqual(texts(s),editedBaseline);
     report.editedParagraphs=texts(s);
     report.checks.push("Actual production-patched Word engine opens source-derived text, inserts a test prefix and restores exact text through Undo/Redo.");
     const saved=(await production.sdk.saveYrsDocx(s)).bytes;
     fs.writeFileSync(path.join(out,"saved.docx"),saved);
-    independent("saved.docx",true);
+    const savedXml=independent("saved.docx",true);assert.deepEqual(savedXml.paragraphTexts,editedBaseline,"Saved XML differs from downstream edit baseline");
     const again=await production.sdk.createYrsSession();sessions.push(again);
     again.openDocx(fs.readFileSync(path.join(out,"saved.docx")),true);
-    assert.deepEqual(texts(again),oracle.expected.editedTexts);
+    assert.deepEqual(texts(again),editedBaseline);
     const resaved=(await production.sdk.saveYrsDocx(again)).bytes;
     fs.writeFileSync(path.join(out,"reopened-saved.docx"),resaved);
-    independent("reopened-saved.docx",true);
+    const reopenedXml=independent("reopened-saved.docx",true);assert.deepEqual(reopenedXml.paragraphTexts,editedBaseline,"Fresh-reopened XML differs from downstream edit baseline");
     assert.equal(sha(fs.readFileSync(sourcePath)),cfg.source.sha256);
-    report.checks.push("Modern DOCX save, fresh engine reopen, second save and independent XML verification preserve exact edited paragraph sequence/empty paragraphs and eleven explicit native list levels; original SDW bytes unchanged.");
+    report.checks.push("Modern DOCX save/fresh reopen/second save preserve the actual downstream edited paragraph vector; source XML/list discrepancies stay in separate strict reports. Original SDW unchanged.");
+    report.downstreamEnginePassed=true;report.strictSourceAcceptance=sourceReports.every(r=>r.boundedSourceAcceptance);
+    assert.equal(report.strictSourceAcceptance,true,"Independent native source paragraph/list oracle still differs; downstream engine success is not source acceptance");
   }
   report.passed=true;
 } catch(error) {

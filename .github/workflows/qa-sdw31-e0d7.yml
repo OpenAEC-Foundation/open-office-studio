@@ -1,12 +1,5 @@
 name: SDW31 independent source oracle
 on:
-  push:
-    branches: [codex/sdw31-qa-2026-11-23-e0d7]
-    paths:
-      - scripts/qa-sdw31/*.py
-      - scripts/qa-sdw31/*.mjs
-      - scripts/qa-sdw31/*.json
-      - .github/workflows/qa-sdw31-e0d7.yml
   workflow_dispatch:
 permissions:
   contents: read

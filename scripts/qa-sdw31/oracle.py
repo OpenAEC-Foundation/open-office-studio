@@ -155,7 +155,7 @@ def source(out):
                       "explicitListLevels": oracle["expected"]["explicitListLevels"], "fullFormatAcceptance": False}))
 
 
-def docx(path, out, edited):
+def docx(path, out, edited, observe=False):
     oracle = json.loads((out / "source-oracle.json").read_text(encoding="utf-8"))
     assert source_bytes(out / "source.sdw")
     with zipfile.ZipFile(path) as z:
@@ -181,7 +181,9 @@ def docx(path, out, edited):
         return None
     body = doc.find(W + "body")
     paragraphs = list(body.iter(W + "p"))
-    texts = ["".join(e.text or "" if e.tag == W + "t" else "\t" if e.tag == W + "tab" else "\n" if e.tag in (W + "br", W + "cr") else "" for e in p.iter()) for p in paragraphs]
+    # A pPr/tabs/tab is a tab-stop definition, not a visible r/tab character.
+    texts = ["".join(e.text or "" if e.tag == W + "t" else "\t" if e.tag == W + "tab" else "\n" if e.tag in (W + "br", W + "cr") else "" for r in p.iter(W + "r") for e in r.iter()) for p in paragraphs]
+    carriers = [i for i, p in enumerate(paragraphs) if len(p) == 1 and p[0].tag == W + "pPr" and len(p[0]) == 1 and p[0][0].tag == W + "sectPr"]
     levels = {}
     for i, p in enumerate(paragraphs):
         num = prop(p, "numPr")
@@ -200,12 +202,14 @@ def docx(path, out, edited):
         if levels.get(index) != level:
             mismatches.append({"kind": "explicit-list-level", "paragraph": int(index), "expected": level, "actual": levels.get(index)})
     report = {"file": str(path), "sha256": sha(path.read_bytes()), "edited": edited,
-              "paragraphTexts": texts, "effectiveListLevels": levels, "sectionPropertiesObserved": len(list(body.iter(W + "sectPr"))),
+              "paragraphTexts": texts, "pureSectionPropertyCarrierIndices": carriers,
+              "effectiveListLevels": levels, "sectionPropertiesObserved": len(list(body.iter(W + "sectPr"))),
               "sourceSectionNameEquivalenceAccepted": False, "mismatches": mismatches, "boundedSourceAcceptance": not mismatches,
               "fullFormatAcceptance": False, "limits": oracle["limits"], "numberingPartPresent": numbering is not None}
     write_json(out / (path.stem + "-xml-report.json"), report)
-    assert not mismatches, json.dumps(mismatches, ensure_ascii=True)
-    print(json.dumps({"file": str(path), "paragraphs": len(texts), "boundedSourceAcceptance": True, "fullFormatAcceptance": False}))
+    if not observe:
+        assert not mismatches, json.dumps(mismatches, ensure_ascii=True)
+    print(json.dumps({"file": str(path), "paragraphs": len(texts), "boundedSourceAcceptance": not mismatches, "fullFormatAcceptance": False}))
 
 
 if __name__ == "__main__":
@@ -214,5 +218,6 @@ if __name__ == "__main__":
     parser.add_argument("--out", type=Path, default=OUT)
     parser.add_argument("--docx", type=Path)
     parser.add_argument("--edited", action="store_true")
+    parser.add_argument("--observe", action="store_true", help="Record strict mismatches so the separate downstream engine phase can still run; never changes acceptance")
     args = parser.parse_args()
-    source(args.out) if args.mode == "source" else docx(args.docx, args.out, args.edited)
+    source(args.out) if args.mode == "source" else docx(args.docx, args.out, args.edited, args.observe)
