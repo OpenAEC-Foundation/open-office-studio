@@ -1204,7 +1204,7 @@ diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measur
      fn an_inline_image_wider_than_the_column_keeps_its_declared_box() {
          let store = FontStore::new();
          let measure = |max_width: f64| {
-@@ -867,3 +888,96 @@
+@@ -867,3 +888,104 @@
          );
      }
  }
@@ -1246,10 +1246,17 @@ diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measur
 +        let mut title = field("Report Title", true, None);
 +        title["letterSpacing"] = json!(16.0 / 3.0);
 +        let original = input(vec![title], 1000.0);
-+        let painted = input(vec![json!({"kind": "text", "text": "REPORT TITLE", "letterSpacing": 16.0 / 3.0})], 1000.0);
 +        let normal = input(vec![field("Report Title", false, None)], 1000.0);
 +        let cap = measured(&original);
-+        assert!((cap.lines[0].width - measured(&painted).lines[0].width).abs() < 0.001);
++        // An atomic field paints the full string, including tracking around
++        // its internal space: 12 displayed characters make 11 internal gaps.
++        // The normal line filler has a different word-boundary spacing policy.
++        // Same-font P2 text shaping: 305.8125px + 11 * (16/3)px = 364.47917px.
++        assert!((cap.lines[0].width - 364.47917).abs() < 0.001, "field width {}", cap.lines[0].width);
++        // Actual Canvas151/font76d04c18 observation: painted ink ends363.66663px
++        // from x; its370.99994px advance includes an outer trailing gap.
++        assert!(cap.lines[0].width >= 363.66663 && cap.lines[0].width <= 371.0);
++        assert!((measured(&normal).lines[0].width - 218.16669).abs() < 0.001);
 +        assert!(cap.lines[0].width > measured(&normal).lines[0].width + 1.0);
 +        // Field geometry remains one document unit despite a multi-character cache.
 +        assert_eq!((cap.lines[0].head_char, cap.lines[0].tail_char), (0, 1));
@@ -1259,17 +1266,18 @@ diff --git a/crates/ooxml-text/src/measure/mod.rs b/crates/ooxml-text/src/measur
 +
 +    #[test]
 +    fn field_caps_unicode_language_and_non_caps_controls() {
-+        for (source, display, language) in [
-+            ("straße", "STRASSE", None),
++        for (source, display, language, p2_non_caps) in [
++            ("straße", "STRASSE", None, 120.91667),
 +            // Canvas field paint uses Unicode default uppercase, not locale casing.
-+            ("iki", "IKI", Some("tr-TR")),
++            ("iki", "IKI", Some("tr-TR"), 40.291668),
 +        ] {
 +            let capped = input(vec![field(source, true, language)], 1000.0);
 +            let ordinary = input(vec![field(source, false, language)], 1000.0);
-+            let ordinary_before = measured(&ordinary).lines[0].width;
 +            let painted = input(vec![json!({"kind": "text", "text": display})], 1000.0);
 +            assert!((measured(&capped).lines[0].width - measured(&painted).lines[0].width).abs() < 0.001);
-+            assert_eq!(ordinary_before, measured(&ordinary).lines[0].width);
++            // Actual unchanged P2-WASM918f1677/font76d04c18 baseline, not two
++            // calls to the same new implementation as the only control.
++            assert!((measured(&ordinary).lines[0].width - p2_non_caps).abs() < 0.001);
 +            assert_eq!(capped.block.runs[0].fallback.as_deref(), Some(source));
 +        }
 +    }
