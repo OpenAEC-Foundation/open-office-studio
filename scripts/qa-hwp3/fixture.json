@@ -1,0 +1,130 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "hwpfilter/qa/cppunit/data/pass/hangul97-3.0.hwp",
+    "filename": "hangul97-3.0.hwp",
+    "bytes": 11537,
+    "blob": "68ff2f51269f3ab619f6465073518cd84694300c",
+    "sha256": "2c98104a01860c809c9192109f74b2231374f5ab266014e976a120572909f9f7",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/hwpfilter/qa/cppunit/data/pass/hangul97-3.0.hwp",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native HWP Document File V3.00, subrevision1, compressed and unencrypted; published fixture named Hangul97. Not HWP5/CFB/HWPX, no unique producer-build authentication.",
+    "coverageLimit": "Exact two source paragraphs in order, ASCII and modern Johab Hangul syllables as exact NFC Unicode codepoints, native CR13 paragraph end semantics. Full Deflate CRC/size and font/style/line/character record bounds inventoried. Font/style/shape visual properties, summary text, opaque tails, Hanja/archaic/incomplete Jamo/other controls, encrypted variants, other HWP versions, native GUI and full-format fidelity remain outside acceptance."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_HWP3_24NOV 한글 "
+  },
+  "enginePrefixParagraphs": 2,
+  "parserReferences": {
+    "repository": "LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "role": "Primary implementation consulted for corroborating native boundaries and HNC modern-Hangul bit fields; own bounded reader primarily follows Hancom specification. No converter output as source expectation.",
+    "files": [
+      {
+        "path": "hwpfilter/source/hcode.cxx",
+        "bytes": 59212,
+        "sha256": "8826df212ce11e2f872872ad94330c8818b74b16b7c092016eafb53004c98d38"
+      },
+      {
+        "path": "hwpfilter/source/hfont.cxx",
+        "bytes": 2580,
+        "sha256": "4ec806b3eb5c4d957f6f7b0a83b8320452559c704e2c195623771371a89df038"
+      },
+      {
+        "path": "hwpfilter/source/hinfo.cxx",
+        "bytes": 8266,
+        "sha256": "9d44fcdbad68347f3af3cdc8c72e4aa199c9aedc161c8e7c0a85f56adf1c9165"
+      },
+      {
+        "path": "hwpfilter/source/hiodev.cxx",
+        "bytes": 6676,
+        "sha256": "2347001aeec035df313b96c8944ff195339959254c2fd406963a693956d3e3af"
+      },
+      {
+        "path": "hwpfilter/source/hpara.cxx",
+        "bytes": 8523,
+        "sha256": "24ae775690a3d121324cc86ca0138d837fbb4bac32b1586a458eb5d074ce7ff3"
+      },
+      {
+        "path": "hwpfilter/source/hstyle.cxx",
+        "bytes": 3374,
+        "sha256": "71cda7cd62694faf6ce17573c01039687456b03b83ec288b6d094a23555543b6"
+      },
+      {
+        "path": "hwpfilter/source/hwpfile.cxx",
+        "bytes": 17764,
+        "sha256": "f4ba7d1fa5c9c9f0e1644c154babe5eabb338b631b8c2939de88756d1e5c1722"
+      },
+      {
+        "path": "hwpfilter/source/hwpread.cxx",
+        "bytes": 23987,
+        "sha256": "1ff9819b52e7bab0c7d39b49de8fa2c055b3818ecce92e1117bc08679c603a11"
+      }
+    ]
+  },
+  "specification": {
+    "url": "https://cdn.hancom.com/link/docs/%ED%95%9C%EA%B8%80%EB%AC%B8%EC%84%9C%ED%8C%8C%EC%9D%BC%ED%98%95%EC%8B%9D3.0_HWPML_revision1.2.pdf",
+    "title": "Hancom HWP Document File Formats 3.0 / HWPML revision1.2, 2014-11-05",
+    "bytes": 905504,
+    "sha256": "1b5ce665fe0b75967d85f965a4b32737487935974b8e29120537e71cacefca87",
+    "printedPages": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      13,
+      14,
+      15,
+      16
+    ],
+    "localVisualChecks": "Data types/document info/paragraph info tables rendered and inspected; reference PDF not redistributed."
+  },
+  "charsetReference": {
+    "url": "https://www.unicode.org/notes/tn60/tn60-2.txt",
+    "description": "Unicode Technical Note60 version2, Ken Lunde/Jaemin Chung legacy modern Hangul/Johab mappings; technical note, not a vendor format specification.",
+    "bytes": 464316,
+    "sha256": "463bf47532273b09ed5e9218f4b9dd570ffbba7fef7f9529b5968af98cf8408d",
+    "rows": 11172,
+    "terms": "https://www.unicode.org/copyright.html",
+    "redistribution": "Reference table downloaded privately for verification; only digest, counts and observed facts retained, not the complete table."
+  }
+}
