@@ -1,0 +1,74 @@
+{
+  "kind": "LITERAL USER SCOPE CONSENT HELD UNTIL EXPLICIT RESUMPTION; NO LIVE EXECUTION AUTHORITY",
+  "recordedAtUTC": "2026-11-24T14:06:49.832418+00:00",
+  "userQuote": "Akkoord met uitvoeringscode 27cc1c2a en onderzoeksbron c5138fb4. Laat de verzoeken gesloten tot mijn hervattingsopdracht volgende week. Daarna mag de integratiechat één build en bij geslaagde controles één native proef uitvoeren. Niets naar main.",
+  "approvedProposal": {
+    "file": "execution-approval-proposal.json",
+    "sha256": "81aff8562b8a87a84e59ca09da3a47c3d2791d8826dae3ee9c0021e2c11a6d85"
+  },
+  "producer": {
+    "branch": "codex/mac-save-trace-producer-20261124",
+    "commit": "27cc1c2ab7a340f1dee8366767bc2378fd31fdcd",
+    "tree": "b27591390b9a4c4b3c77b45451827445f01214f6",
+    "workflow": ".github/workflows/release.yml",
+    "workflowSha256": "01babb503c300c91427d28b5624a73f7b6462291dabe17caffb395f0afff7244",
+    "filesManifest": "qa/mac-save-trace-execution/2026-11-24/files.json",
+    "filesManifestSha256": "24df4955a34c4b7397e486b7e771ed5dbb1a97eaea177a94e3527b80e360014e",
+    "dispatchOnly": true,
+    "defaultStage": "disabled",
+    "repositoryPermissions": [
+      "contents:read",
+      "actions:read"
+    ]
+  },
+  "researchSource": {
+    "branch": "codex/qa-mac-save-derived-p5-20261124",
+    "commit": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+    "tree": "35a4a7f7af2ac3c460fac106c48f2845c3dc4c2b",
+    "baseCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "baseTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "baseVersion": "2026.48.1",
+    "patchCommit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+    "patchSha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+    "overlaySha256": "023b8fd7a4be67385159dc5941c52ecd2bf2060dbaf4b6f3b224f9af50fc5ba7",
+    "identifier": "org.openaec.office-studio.qa-save-trace",
+    "declaredQaVersion": "2026.48.101",
+    "onlyReviewedObserverAndIdentity": true
+  },
+  "scopeApproved": true,
+  "resumptionReceived": false,
+  "resumptionRequired": "New explicit user resumption instruction next week, received directly or faithfully relayed; elapsed time or autonomous agent/status messages are not resumption",
+  "soleExecutionAuthorityAfterResumption": "Integration chat 01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+  "allowedAfterResumption": {
+    "buildCount": 1,
+    "buildMaxMinutes": 90,
+    "nativeCount": 1,
+    "nativeMaxMinutesIncludingCleanupAndUpload": 20,
+    "nativeOnlyAfterAllActualBuildPackageAndNativeEntryGatesPass": true,
+    "unchangedExactReviewedPinsRequired": true
+  },
+  "authorityNow": {
+    "allRequestsClosed": true,
+    "runtimeApprovalEnabled": false,
+    "dispatchAllowed": false,
+    "automaticResume": false,
+    "buildStarted": false,
+    "nativeStarted": false,
+    "liveNonce": null,
+    "liveExpiryUTC": null,
+    "actualPackage": null
+  },
+  "alwaysForbiddenByThisConsent": [
+    "main changes or merges",
+    "integration merge",
+    "tag/publication/release assets/body changes",
+    "automatic retry or extra host",
+    "unreviewed source/workflow changes",
+    "attach/debugger/security or signing downgrade"
+  ],
+  "afterResumption": "Reuse this existing scope consent without asking again for unchanged pins/scope. Integration records this literal consent plus the new resumption instruction, checks capacity, creates fresh stage-specific nonce/expiry and actual bindings. A build failure or failed gate stops the sequence; no automatic retry.",
+  "originalEvidencePreserved": true,
+  "originalSaveCause": "OPEN",
+  "previousProposalAndHandoffAuthorityFields": "Historical preparation snapshots remain unchanged; this receipt records later conditional consent while maintaining all current requests closed",
+  "noBuildProbeOrMainChangeByThisTurn": true
+}
