@@ -1,0 +1,216 @@
+{
+  "status": "PASS bounded native LWP96 after actual visual review and independent binary/XML oracle",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45363332684,
+  "harness": "51db076fd13fb90407fca073b227fd6280c8a869",
+  "artifact": {
+    "id": 14905133715,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkwNTEzMzcxNQ==",
+    "name": "standalone-windows-p5-writer-lwp96-proof",
+    "size_in_bytes": 842612,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14905133715",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14905133715/zip",
+    "expired": false,
+    "digest": "sha256:3d9598bafabd3acce4e23a5a417c8a0cf3a1b2ce0490cf5a1cb01b6de9dec6f8",
+    "created_at": "2026-11-24T09:17:35Z",
+    "updated_at": "2026-11-24T09:17:35Z",
+    "expires_at": "2027-02-22T09:14:41Z",
+    "workflow_run": {
+      "id": 45363332684,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/lwp96-windows-native-2026-11-24",
+      "head_sha": "51db076fd13fb90407fca073b227fd6280c8a869"
+    }
+  },
+  "nativeStatus": "passed-scoped-native-function",
+  "error": null,
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "pid": 2128,
+      "started": "2026-11-24T09:16:28.996Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.48.1",
+        "name": "Open Writer Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "parent": 10064,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe",
+        "pid": 2128,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe",
+        "windowHandle": 589850
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "signature": "Valid",
+        "productName": "LibreOffice",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+        "bytes": 523096,
+        "productVersion": "26.8.2.2",
+        "fileVersion": "26.8.2.2",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "reopened",
+      "pid": 8876,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\initial.docx",
+      "started": "2026-11-24T09:17:18.833Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "expectedInputTabVisible": "initial.docx",
+      "exactInputTabActivated": true,
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.48.1",
+        "name": "Open Writer Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "pid": 8876,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe",
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\initial.docx",
+        "windowHandle": 131606,
+        "parent": 10064
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\open-writer-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "productVersion": "26.8.2.2",
+        "signature": "Valid",
+        "fileVersion": "26.8.2.2",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "bytes": 523096,
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-zrAl5N\\installed\\kantoorruntime\\program\\soffice.com",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "productName": "LibreOffice"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    }
+  ],
+  "originalInput": {
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\lwp-source\\source.lwp",
+    "sha256": "812888b2b621c2fe397881052d4bf8d755037adee9427320d9ea704dbcc66f91",
+    "bytes": "23172",
+    "mtimeNs": "1795511788486969600",
+    "inode": "281474976716005",
+    "device": "4109753214",
+    "unchanged": true
+  },
+  "independentCases": [
+    {
+      "kind": "writer",
+      "bytes": 10109,
+      "sha256": "50835d927ba1061b2ae462108abc140d1531389eef54b746d0e4ff3cc6db1f57",
+      "checkedSourceCases": 18,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 10109,
+      "sha256": "882db750894f191499b5b7b62476d69afec0c86f4e02683ffa61b97d7795ae28",
+      "checkedSourceCases": 18,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 10074,
+      "sha256": "743c6e09cceebea1cb20094eda16a3398298ae78aa7f836f245e6f824706223b",
+      "checkedSourceCases": 18,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 10109,
+      "sha256": "161da401d3fc6e3ff714cf977ead762b4c67a3854d9eb111917866aad2ab5707",
+      "checkedSourceCases": 18,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 10074,
+      "sha256": "f7a030fdb9e32b8b4b64b9e54c899769156e4538395ea3c29ce979e57cfa2656",
+      "checkedSourceCases": 18,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    }
+  ],
+  "images": [
+    {
+      "name": "initial-completed.png",
+      "sha256": "de3643b8e0ee0029785c6ced311c4cf3e9fe7f11683615174e6e0c1a20d8402a"
+    },
+    {
+      "name": "reopened-completed.png",
+      "sha256": "65f73efbaea95b1cfe6d0528620abd917985c46583ab2c19ef8c456a101c7f5a"
+    },
+    {
+      "name": "lwp-initial-source.png",
+      "sha256": "ef18044c320e0d2f3c7fdfc8886863e57b179c517d9f176f8b00c3bc74f6fa99"
+    },
+    {
+      "name": "lwp-reopened-source.png",
+      "sha256": "f7a9e98008ec7cdec0cb4480e1b6d177d94ce1c9a3e4ea627b458b8cc9d6d1db"
+    }
+  ],
+  "limitations": "Only first16 ASCII main paragraphs incl2empty/trailingspace and explicit paragraph11 local center; remainder4947B suffix/tables/frames/lists/character/fonts/inheritance/pagination excluded; not full-format acceptance"
+}
