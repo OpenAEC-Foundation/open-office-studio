@@ -1,0 +1,137 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-sxi-1",
+    "ext": "sxi",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "sd/qa/unit/data/sxi/ooo41061-1.sxi",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sd/qa/unit/data/sxi/ooo41061-1.sxi",
+    "gitSha": "4c2482a586509a1615cd996e0847cb1c9d07d76a",
+    "sha256": "38450da6649c31b5f319ecee7f9f804691312f6431c5435e82581bd101b31399",
+    "bytes": 42492,
+    "variant": "StarOffice Impress ooo41061-1",
+    "expected": "open",
+    "expectedOn": [
+      {
+        "platform": "linux",
+        "converter": "LibreOffice 7.3.7.2 30(Build:2)",
+        "expected": "reject",
+        "reason": "LibreOffice 7.3.7.2 weigert de PPTX-export van dit bronbestand met SfxBaseModel::impl_store 0xc10."
+      }
+    ],
+    "expectEmptyWarning": false
+  },
+  "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+  "notices": [
+    {
+      "path": "COPYING",
+      "bytes": 35147,
+      "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+    },
+    {
+      "path": "COPYING.LGPL",
+      "bytes": 7639,
+      "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+    },
+    {
+      "path": "COPYING.MPL",
+      "bytes": 16725,
+      "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7167,
+      "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+      "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+    }
+  ],
+  "p2Bindings": {
+    "docs/tests/formatendekking/bronnen.json": {
+      "blob": "7b4dbe00c195168dffa138630f6cfc13e56c9364",
+      "bytes": 22270,
+      "sha256": "cf59a7134d2d910ddd59fa201411a4f6b75ab4410134feaf48d66c90eb93b3c5"
+    },
+    "docs/tests/formatendekking/resultaat-windows.json": {
+      "blob": "5d7e11bf168244e1d1e2dc400f6acea40a43ea1a",
+      "bytes": 12898,
+      "sha256": "ed3e887dfb50c177d11695a1d0f4b03f0fb330382abe1acbd56690c160de56b8"
+    },
+    "docs/tests/formatendekking/README.md": {
+      "blob": "c3c504de5fd24ce1f8ace51cf3a032ec3a6a3905",
+      "bytes": 6389,
+      "sha256": "f5947b677cba3736c21d6403313b13c64e3b531d08f509da4ca0b7fe8791ccbd"
+    },
+    "src/import/openen.ts": {
+      "blob": "9b76305605ea317e3545ff4f3baf0b992e82b803",
+      "bytes": 15945,
+      "sha256": "d8dc81003f3b4633b5f12608b40517c0763061979f9520666e177242e1c12c05"
+    },
+    "src/import/tekstimport.ts": {
+      "blob": "4264ac83589fb48e7454cb521715467407784e8b",
+      "bytes": 4648,
+      "sha256": "d4377c8944ba5fad532a35a1e4bf74364e1ce72635873c5a5d2698c76c3905cc"
+    },
+    "src/formaten.json": {
+      "blob": "3e9bec38f3c6600a170f93d41e0bb3c62312fc27",
+      "bytes": 12279,
+      "sha256": "3b81dbed325254d8118052c337f65d08d08d2b98ed5aefc3919bb2891f776297"
+    },
+    "src/formaten.ts": {
+      "blob": "6feb0574af46ae7617f50db85ecc0fad15c21dd1",
+      "bytes": 6366,
+      "sha256": "b115a7414688c8c0c0700f76f6eb90c607a641246e78966d28baf99defa95d98"
+    },
+    "src-tauri/src/conversieprofiel.xcu": {
+      "blob": "e04dcf34d16d140a3664a7fbb1365da3cff740c4",
+      "bytes": 2867,
+      "sha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40"
+    }
+  },
+  "historicalCache": {
+    "role": "Local historical snapshot with no official artifact/producing-run attestation; not a current P2 runtime test.",
+    "files": {
+      "cached-converted.pptx": {
+        "originalRelativePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-sxi-qa-e0d7\\..\\oos-formats-43\\.local\\formatendekking\\b7e00f77-3b78-4e86-aa1f-dc7bc860afc9\\lo-sxi-1\\omgezet.pptx",
+        "bytes": 85070,
+        "sha256": "be418ce739fd663401cbb635d327e20e2b67779a50fdeff4cb8e52528954978b"
+      },
+      "cached-conversion.json": {
+        "originalRelativePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-sxi-qa-e0d7\\..\\oos-formats-43\\.local\\formatendekking\\b7e00f77-3b78-4e86-aa1f-dc7bc860afc9\\lo-sxi-1\\conversie.json",
+        "bytes": 275,
+        "sha256": "87b893f2fba6310483ec10d0591239ff93af09b7d242e19cf37fbb693f9cbac4"
+      },
+      "cached-report.json": {
+        "originalRelativePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-sxi-qa-e0d7\\..\\oos-formats-43\\.local\\formatendekking\\b7e00f77-3b78-4e86-aa1f-dc7bc860afc9\\resultaat.json",
+        "bytes": 8796,
+        "sha256": "3a6a3cca4f84e5dde3a45d27733c2cb583ba9b140427a4b58a92727ee8a5245c"
+      }
+    }
+  },
+  "scopeLimit": "Source only plus historical snapshot observations:26 slides and source-defined title order, two selected text shapes, one exact main-slide image relationship. Geometry/styles/notes/masters/fonts/rendering/animation/media decoding/embedded objects not accepted.",
+  "runtimeGuard": "No new CI/runtime consumption during publisher correction without targeted capacity coordination; SXW remains separately OPEN.",
+  "proposedEdit": {
+    "slide": 0,
+    "role": "title",
+    "prefix": "QA_SXI_24NOV "
+  },
+  "measurementReference": {
+    "source": "Pinned native style:master-page→PM1 fo:page-width28cm/height21cm; exact Decimal conversion360000EMU/cm",
+    "references": [
+      "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.presentation.slidesize?view=openxml-3.0.1",
+      "https://learn.microsoft.com/en-us/windows/win32/vml/basic-vml-types"
+    ],
+    "scope": "SlideSize cx/cy in EMU; primary Microsoft unit documentation gives914400EMU/inch (divide by2.54 for cm). No normative claim about acceptable converter rounding tolerance or visual impact."
+  }
+}

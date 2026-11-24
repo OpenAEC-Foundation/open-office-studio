@@ -1,0 +1,2276 @@
+{
+  "scope": "#30 / lo-sxi-1 only",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-sxi-1",
+    "ext": "sxi",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "sd/qa/unit/data/sxi/ooo41061-1.sxi",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sd/qa/unit/data/sxi/ooo41061-1.sxi",
+    "gitSha": "4c2482a586509a1615cd996e0847cb1c9d07d76a",
+    "sha256": "38450da6649c31b5f319ecee7f9f804691312f6431c5435e82581bd101b31399",
+    "bytes": 42492,
+    "variant": "StarOffice Impress ooo41061-1",
+    "expected": "open",
+    "expectedOn": [
+      {
+        "platform": "linux",
+        "converter": "LibreOffice 7.3.7.2 30(Build:2)",
+        "expected": "reject",
+        "reason": "LibreOffice 7.3.7.2 weigert de PPTX-export van dit bronbestand met SfxBaseModel::impl_store 0xc10."
+      }
+    ],
+    "expectEmptyWarning": false
+  },
+  "sourceOracle": {
+    "format": "legacy OpenOffice.org XML Impress1.0",
+    "members": [
+      {
+        "name": "mimetype",
+        "bytes": 31,
+        "crc32": "58dbe0f3",
+        "sha256": "48d4d452d3bf9a5485ccdff59928a161aec467524a34dbfb591a810c7cc66ccd"
+      },
+      {
+        "name": "Pictures/10000200000001320000008D8F5CDAEC.png",
+        "bytes": 5142,
+        "crc32": "1cde2985",
+        "sha256": "8fb0b9d96c534904adde628154cada786eedfc1c0e1be7f0a122608cf77873aa"
+      },
+      {
+        "name": "Pictures/1000020000000261000000AF3C0821CB.gif",
+        "bytes": 3274,
+        "crc32": "8eb31eba",
+        "sha256": "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe"
+      },
+      {
+        "name": "Pictures/100002000000000A0000000ADDA84F49.gif",
+        "bytes": 103,
+        "crc32": "d0f5f678",
+        "sha256": "d1cc421fd0dddfe0051700b1b2e542ea0c9f4f90cb1233498bb8c8587c686816"
+      },
+      {
+        "name": "Pictures/100000000000005E0000005EB758AAC8.png",
+        "bytes": 8149,
+        "crc32": "e321cd00",
+        "sha256": "89955363b9ad84bcd9bacafb3786aed14aeab9b24db009c46143851498f3469d"
+      },
+      {
+        "name": "Pictures/10000000000000400000004077CDC8F9.png",
+        "bytes": 259,
+        "crc32": "dfaf8c3c",
+        "sha256": "7ff6be86b3c7c75a06b2c8a46e731aaf4021ff9084d14b83d82003f52061bf52"
+      },
+      {
+        "name": "content.xml",
+        "bytes": 213894,
+        "crc32": "06a90609",
+        "sha256": "3707d231f8879a8b075655263ba81e91ef8aacac094e33e96fb86c2cbaec6846"
+      },
+      {
+        "name": "styles.xml",
+        "bytes": 78765,
+        "crc32": "2bdcd56d",
+        "sha256": "8f21270839bfba9d19a61aef926108e38f7ccd47305fa226574ca8828dec493a"
+      },
+      {
+        "name": "meta.xml",
+        "bytes": 1540,
+        "crc32": "70b999e4",
+        "sha256": "c6e82e23d5faafd2ae3adce7b136c32b5c8971490bbd22b827f6249b7d0af5f9"
+      },
+      {
+        "name": "settings.xml",
+        "bytes": 11648,
+        "crc32": "e5a4efdd",
+        "sha256": "8a4dc5227e47980797be08757261cbf3d57f1b7889b275f93ce0e252a185dc06"
+      },
+      {
+        "name": "META-INF/manifest.xml",
+        "bytes": 1368,
+        "crc32": "7bbbbec4",
+        "sha256": "5c5ba761776cdc75567002a9076cf088159eada81f0dbbf47f660c27b122b98e"
+      }
+    ],
+    "slides": [
+      {
+        "index": 0,
+        "name": "Title",
+        "nativeId": "1",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "898b280fdbb5873384ce323ac1f4c29cae9e91f6a73fe632dbef4397d349ebd6",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr1",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "5cb4140bba5888eec32ec3ead275287eb6a8e40ac45ba801a621466d62ced5bd"
+          },
+          {
+            "index": 1,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "subtitle",
+            "drawStyle": null,
+            "presentationStyle": "pr2",
+            "rawGeometry": {
+              "x": "1.744cm",
+              "y": "2.641cm",
+              "width": "24.138cm",
+              "height": "15.718cm"
+            },
+            "logicalXmlSerializationSha256": "9aa07566a1ed65cb33e1e80df5560bf3dbaf15a0bd8cdca5e533ce569bb3a3ce"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "8ec978f7646c3351fd94bf5e6932fb540d3e2bb48b3405b83845385232d8f323"
+      },
+      {
+        "index": 1,
+        "name": "Agenda",
+        "nativeId": "2",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "592ce778b27ffbf392b7ab069d7b36e65dac134db76efa519e45fed752085e4e",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr4",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "f1a744af685e1378abfd79d01ed6e7ade39c594633808d4eaedcb4c47454d740"
+          },
+          {
+            "index": 1,
+            "kind": "text-box",
+            "name": null,
+            "id": "1",
+            "presentationClass": "outline",
+            "drawStyle": null,
+            "presentationStyle": "pr5",
+            "rawGeometry": {
+              "x": "1.842cm",
+              "y": "2.587cm",
+              "width": "24.138cm",
+              "height": "16.107cm"
+            },
+            "logicalXmlSerializationSha256": "c74ae2faf4ef2e9a40d82bab75d0a5164acc141511d1070fcef4ccb11de2a1e6"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "2961991e955a62259cc1edc5dd1679d0ad137a5be0db27bd827318260d54dfe3"
+      },
+      {
+        "index": 2,
+        "name": "Intro 1",
+        "nativeId": "3",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "beab8798668dac72579f1d2fe5eb4479a60cf2c2d52dd2856e1d668d84ecfd6c",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "b014cc465e7da9e25a01ef6a0f8a16fae9946fd38f39240d5779e649979662f5"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "2",
+            "presentationClass": null,
+            "drawStyle": "gr2",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "13.921cm"
+            },
+            "logicalXmlSerializationSha256": "825570e6cd1bfa369c115a54017a5b0048311b05f52b2059ddbe0a838ccba6fe"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "0a2bcf1f28480751d2b064cf5c842c527919e11db21c5218be9cdd5372694e0a"
+      },
+      {
+        "index": 3,
+        "name": "Intro 2",
+        "nativeId": "4",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "c0f171987e176b1d3c2b132bc3c232b258af2cd239269dc67aee2b8ddea40320",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "12a94e3d3b133450a16bc1b0af43c34a1594798726b8e000f7ab431db0313b62"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "3",
+            "presentationClass": null,
+            "drawStyle": "gr3",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.955cm",
+              "height": "13.921cm"
+            },
+            "logicalXmlSerializationSha256": "de84d2da1f0cb805f0c097e1388c3f7387619648ebc25724db4c796a4c0f656d"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "a624dd4279c84ffdf1e38591643ad874d017f765de433c1df70384dcea6a5a32"
+      },
+      {
+        "index": 4,
+        "name": "Lib 1",
+        "nativeId": "5",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "99cda0f1cbccf4b6424f457c10b1be8c93e3e9786752b4255d0366ea56ea7383",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "0729a00a28fa86b0d75b19387678a11edc3346c59b66b6a99f2c17bebdd154a4"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "4",
+            "presentationClass": null,
+            "drawStyle": "gr4",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.357cm",
+              "width": "24.27cm",
+              "height": "1.763cm"
+            },
+            "logicalXmlSerializationSha256": "d7ec5ac12f6e0c5c938d41d45f946543ae7ff1267472042bc10df690af5e7295"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box C",
+            "id": "5",
+            "presentationClass": null,
+            "drawStyle": "gr5",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.518cm",
+              "y": "3.898cm",
+              "width": "24.393cm",
+              "height": "5.984cm"
+            },
+            "logicalXmlSerializationSha256": "c49ce9328c5d717be9cd4249e4d1829a26fe0f245d9fa2ad899ae5613c2c4245"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box C",
+            "id": "6",
+            "presentationClass": null,
+            "drawStyle": "gr6",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.518cm",
+              "y": "9.299cm",
+              "width": "24.393cm",
+              "height": "8.82cm"
+            },
+            "logicalXmlSerializationSha256": "4d2111481f67fe31a0e19d0fe9ebd5d3172a24e0b62cb7c1cd5648137e8428b3"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "a9f8f4374d72df90b4678ad9085591d012bf5ad73bcc2708d3b5621ad1ae0229"
+      },
+      {
+        "index": 5,
+        "name": "Copy 1",
+        "nativeId": "6",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "c574b466ef340bce1f2723624991d57c76c8228c2cf3e99babaa58ed60f3182f",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "b6519879d9e94bbb37e759739e1d605722f8b879c6089d051e578f425458143c"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "7",
+            "presentationClass": null,
+            "drawStyle": "gr7",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "3.757cm"
+            },
+            "logicalXmlSerializationSha256": "780ed0642baaf17d03b7e086d7ab67cf0bda9615336838997b88432f38ee491a"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "8",
+            "presentationClass": null,
+            "drawStyle": "gr8",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "8.176cm",
+              "width": "24.134cm",
+              "height": "4.484cm"
+            },
+            "logicalXmlSerializationSha256": "d94b57e7b9694992e1f8bfcaaa12b859cfb3bd75211ad8b838871ffcebe46335"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "9",
+            "presentationClass": null,
+            "drawStyle": "gr9",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "13.731cm",
+              "width": "24.134cm",
+              "height": "3.787cm"
+            },
+            "logicalXmlSerializationSha256": "ccc558af76ee6c8cd88d20fa62996dc87e1b14e6dc4ce6757888b8ca7b0df3ca"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "6bf8cc5c5e4321e75d96c46d49025ab5364684e467ac0475466d607cb51278c4"
+      },
+      {
+        "index": 6,
+        "name": "cp Array 1",
+        "nativeId": "7",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "da84ae009d01bee98241ed93b005cf35f0a630f131d5c4e705c2901d48437708",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "42491e248bf65f68d446366e2e2b2671e27faf674dddd00b0845ae6e58ee3f3f"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "10",
+            "presentationClass": null,
+            "drawStyle": "gr10",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.476cm",
+              "width": "24.27cm",
+              "height": "5.901cm"
+            },
+            "logicalXmlSerializationSha256": "73b934cd30aee87877aa8ec37e706dbce11796602df97ad40b39fa90169ba017"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "11",
+            "presentationClass": null,
+            "drawStyle": "gr11",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "9.076cm",
+              "width": "25.184cm",
+              "height": "9.747cm"
+            },
+            "logicalXmlSerializationSha256": "d39b19f06d385ec9128fbd2f09a10060f38b067f64067973a92de8da3c779f80"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "eb05d8e356dee92341e5ef0267515d9eba6dc74b344fbde9a57a3d8628e6b134"
+      },
+      {
+        "index": 7,
+        "name": "cp Array 2",
+        "nativeId": "8",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "4a746aaefad4342269f44ad6d85a4bca269f6a697cf86000f0f608d62ab7b0c3",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "04ff5ffacee991d8c538d8ac3382fb8c4bf577bace8521c3d65d3632382c3732"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "12",
+            "presentationClass": null,
+            "drawStyle": "gr12",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.576cm",
+              "width": "24.27cm",
+              "height": "4.696cm"
+            },
+            "logicalXmlSerializationSha256": "925d7c8b2b5e5c9c3ca2d194d26b665e0d54ed7cd58c0eb5f485a025c1331115"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "13",
+            "presentationClass": null,
+            "drawStyle": "gr13",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "7.376cm",
+              "width": "25.184cm",
+              "height": "5.519cm"
+            },
+            "logicalXmlSerializationSha256": "3fb65d8af9a4b00aacaa073857e5c6858c5ab60bf8f03440848c9c0d0ffa77d0"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box C",
+            "id": "14",
+            "presentationClass": null,
+            "drawStyle": "gr14",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.518cm",
+              "y": "12.86cm",
+              "width": "24.393cm",
+              "height": "5.059cm"
+            },
+            "logicalXmlSerializationSha256": "dfde9ca598134c7bc151845f65bcdf86d0b3ca4d47576fba29e6ce1a23a3b42e"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "01a32379f693a74f581354d0c100e09a539e10bff59ddebdb84f1a2357d39588"
+      },
+      {
+        "index": 8,
+        "name": "cp Struct 1",
+        "nativeId": "9",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "84db3ecea40d60f9cd4065dad863890b2fd15af4b8a42e5bfe97d2ca066e0f8e",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "582432d8434a7f250e0411159a7a76c3c2e69cbcb5f29ef5e9e6df6d6607e358"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "15",
+            "presentationClass": null,
+            "drawStyle": "gr15",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "2.519cm"
+            },
+            "logicalXmlSerializationSha256": "7afa16b3b73228fb6bbbd6f6411b65aee791649cfa6a50d35cd2a3b11bf64fd8"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "16",
+            "presentationClass": null,
+            "drawStyle": "gr16",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "5.415cm",
+              "width": "24.134cm",
+              "height": "8.19cm"
+            },
+            "logicalXmlSerializationSha256": "0798bbd2ed44d9f9e82223ecba132cdedec890975861923b114bfa9aeb91b66a"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "17",
+            "presentationClass": null,
+            "drawStyle": "gr17",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "15.715cm",
+              "width": "24.134cm",
+              "height": "2.77cm"
+            },
+            "logicalXmlSerializationSha256": "83fe66743f3b2ac4011c4c5b753a945ac431502e5c24b7ee430e9f446f2d99b6"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "ca09a563111d8206046ba860abf468648d014478d21c5964507cc2734cb88abb"
+      },
+      {
+        "index": 9,
+        "name": "cp Struct 2",
+        "nativeId": "10",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "dae9303b8380df79ae08c9becefab2b14263c315519bde2a821c707db097b1ba",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "26e57d83fc2f6436cdefde0d68983f1b7385de194446a2fe02b71f06abd6cc7f"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "18",
+            "presentationClass": null,
+            "drawStyle": "gr18",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.955cm",
+              "height": "4.93cm"
+            },
+            "logicalXmlSerializationSha256": "a874c5fb5df2aa5f927233b32e03c5bd9859424a08026a43b4c28813e7d2dbe8"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "19",
+            "presentationClass": null,
+            "drawStyle": "gr19",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "8.177cm",
+              "width": "24.955cm",
+              "height": "10.68cm"
+            },
+            "logicalXmlSerializationSha256": "4c289b5ed9b8c953e16bb0c7056edae17925bbd34700f9487f43c0f58d99b96d"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "71c278dcc893b2b986077bfa71d712ae888b6ec96b10ce3bc256b301912616ae"
+      },
+      {
+        "index": 10,
+        "name": "CP Serv 1",
+        "nativeId": "11",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "713508e6afa15bdd67766b8e4039849dcd5f61e630db5c0b60a856a270e3543c",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "bf31439e22e49aa67eaaf4b4738275034d8750e2e8c240642900ad35f86fe0ae"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "20",
+            "presentationClass": null,
+            "drawStyle": "gr20",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.641cm",
+              "y": "3.177cm",
+              "width": "24.27cm",
+              "height": "3.389cm"
+            },
+            "logicalXmlSerializationSha256": "c3680b48bd733ba7804de00596c1013c2e9c0bca54948523b5c02a91a4dff60b"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "21",
+            "presentationClass": null,
+            "drawStyle": "gr21",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "6.377cm",
+              "width": "24.27cm",
+              "height": "3.947cm"
+            },
+            "logicalXmlSerializationSha256": "586d2f6d23fe081fa5ee29e7af8e9b8b1139ca83501b923566c580c6e0f392b0"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "22",
+            "presentationClass": null,
+            "drawStyle": "gr22",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "10.693cm",
+              "width": "24.27cm",
+              "height": "4.483cm"
+            },
+            "logicalXmlSerializationSha256": "0e673df4dad51dd40e15d13548d4d6a2d644bc9431b079d7944ab5601def4866"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "23",
+            "presentationClass": null,
+            "drawStyle": "gr23",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.643cm",
+              "y": "15.893cm",
+              "width": "24.27cm",
+              "height": "2.356cm"
+            },
+            "logicalXmlSerializationSha256": "630021077b58b60c8467fd6deb4eae43e80f119214f27e5015b69b82bdc4f792"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "3d2fda8a2a163706390e57b557f3d68ac38847469659986773260458e1be59bb"
+      },
+      {
+        "index": 11,
+        "name": "cp Arg 1",
+        "nativeId": "12",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "b3047a68c3c0e36a49e98e57afc0a395145368c6becb6293f6ad906e76312fde",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "3c69942a28a633932ab52273abf1b3817f9015f76dd168b739f7e4c9f207fe2e"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "24",
+            "presentationClass": null,
+            "drawStyle": "gr24",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.641cm",
+              "y": "3.177cm",
+              "width": "24.27cm",
+              "height": "2.149cm"
+            },
+            "logicalXmlSerializationSha256": "0f82a055620fc0d90ce0e3b5352d94be9f98c13dad3cd0b20479289545be46ec"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "25",
+            "presentationClass": null,
+            "drawStyle": "gr25",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "5.777cm",
+              "width": "24.27cm",
+              "height": "2.149cm"
+            },
+            "logicalXmlSerializationSha256": "d33fd90d7cbbfd7418e3b7767773d7369522115c36cc6581c7dbf3c32e7c0200"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "26",
+            "presentationClass": null,
+            "drawStyle": "gr26",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "8.777cm",
+              "width": "24.27cm",
+              "height": "4.62cm"
+            },
+            "logicalXmlSerializationSha256": "0d4bc08d514b21a31f6e53df6ee02879ef5017a3072a00e31c64d03bbb48e668"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "27",
+            "presentationClass": null,
+            "drawStyle": "gr27",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "13.877cm",
+              "width": "24.27cm",
+              "height": "3.037cm"
+            },
+            "logicalXmlSerializationSha256": "e515281c534e928a2a8ce2530cdca0a7f559d6fbec66a018d5cc02942e7aea21"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "870c8116f37e9df6c842bfa23ffde6a810484f388165e2ac4af2b0acf15d19d3"
+      },
+      {
+        "index": 12,
+        "name": "cp Arg 2",
+        "nativeId": "13",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "f1ec2bbf42fcfc33f2bbf9b00599e32bee78e8cfeb2bbbef468088106e025ebe",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "45dfcd21046ccb566ecce52ac510a4aa67b15514548c780fe7537a8c8e9893d6"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "28",
+            "presentationClass": null,
+            "drawStyle": "gr28",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.576cm",
+              "width": "24.27cm",
+              "height": "5.901cm"
+            },
+            "logicalXmlSerializationSha256": "3eaa0b2db7673112bfd65677a8a9168db491380515d74d8ef438472f068446c4"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "29",
+            "presentationClass": null,
+            "drawStyle": "gr29",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.641cm",
+              "y": "8.676cm",
+              "width": "24.27cm",
+              "height": "5.492cm"
+            },
+            "logicalXmlSerializationSha256": "282e28ab1d56fdc37555942500e413fdbcffde2740905a9287bc0c76e4bf8d26"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "30",
+            "presentationClass": null,
+            "drawStyle": "gr30",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "14.401cm",
+              "width": "24.27cm",
+              "height": "1.902cm"
+            },
+            "logicalXmlSerializationSha256": "6969dbdacfb4c97c7de3f97600af83ade89e73c60f188c3e868d53e737dbedf4"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "31",
+            "presentationClass": null,
+            "drawStyle": "gr31",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.643cm",
+              "y": "16.277cm",
+              "width": "24.27cm",
+              "height": "1.74cm"
+            },
+            "logicalXmlSerializationSha256": "8ef241b568363638bd582a9e8ff64cc5c905e0d914da647aff70897c36b9632a"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "450a5d8ffcb39953f416abd1e9c50206082bbef776818844f183d5d15bc0e08e"
+      },
+      {
+        "index": 13,
+        "name": "cp Arg 3",
+        "nativeId": "14",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "898e8805f8fc325585aa73efc2d197a5a70b76d48994be93281ca32eda28cf4d",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "fa245fa7df0381ca70873fc14b8eaabe8cc2f62832ad023bc052892b496ad3ab"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "32",
+            "presentationClass": null,
+            "drawStyle": "gr32",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "6.202cm"
+            },
+            "logicalXmlSerializationSha256": "65f8ba9931957ab11c0699e5fb191d1d681918f9b32816c0bb7227815d537873"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "33",
+            "presentationClass": null,
+            "drawStyle": "gr33",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "9.676cm",
+              "width": "24.134cm",
+              "height": "1.846cm"
+            },
+            "logicalXmlSerializationSha256": "13eb56f032068625b0961353b51eeb74e4186e92efccfabb4a47d0edf327810c"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "34",
+            "presentationClass": null,
+            "drawStyle": "gr34",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "11.876cm",
+              "width": "24.134cm",
+              "height": "2.091cm"
+            },
+            "logicalXmlSerializationSha256": "a9f41ed6a39faf0372df61d6c248a5859904c0cb2d451ac89ce3036c9952485f"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "35",
+            "presentationClass": null,
+            "drawStyle": "gr35",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.681cm",
+              "y": "13.93cm",
+              "width": "24.134cm",
+              "height": "4.188cm"
+            },
+            "logicalXmlSerializationSha256": "859861dacea0f39e61f9655ccddf0691fd8648c739566dc363b7bb6b54ddd9c5"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "17dbeb0163d57747961c7a3d51ed7146e39e729e63aeee387a52d49670abee84"
+      },
+      {
+        "index": 14,
+        "name": "cp Arg 4",
+        "nativeId": "15",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "c0db8a1413a85eeb4bcfaa9fff0d1b387d41fd6c0a1a727705ffba62930f34de",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "49ddb6d17d704ff5b3c81accbe8d78dbc949b7055d64be9e9a2a2e707791774e"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "36",
+            "presentationClass": null,
+            "drawStyle": "gr36",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.376cm",
+              "width": "24.27cm",
+              "height": "9.016cm"
+            },
+            "logicalXmlSerializationSha256": "6e967f31911c398d5cb533f53c9c4c0e21937fb66c92ff687404f7dc9f683fdb"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "37",
+            "presentationClass": null,
+            "drawStyle": "gr37",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "11.791cm",
+              "width": "24.134cm",
+              "height": "3.316cm"
+            },
+            "logicalXmlSerializationSha256": "36177ab1b32b0987ebc23c3f527b29b72e2bffd61a18cf6f7b613fe8ea3bd083"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "38",
+            "presentationClass": null,
+            "drawStyle": "gr38",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "15.476cm",
+              "width": "24.134cm",
+              "height": "3.014cm"
+            },
+            "logicalXmlSerializationSha256": "e413af1294e08d6284f3f585fd527dd8ab779a0552859d317d25c8b80980d1b5"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "1e74ac6c8a8e90112b927481e89f39300923fa1eaf38d60d87d4950f7e41868e"
+      },
+      {
+        "index": 15,
+        "name": "Link 1",
+        "nativeId": "16",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "bb067717d258573c9a97ac9d29b777ae4bcd8ea213858ded03d7b9de8b195197",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "c539ae9dd57052be624d5de7f2b3d1e0b4dbd8aa8c7a40b617aabf75699b3be4"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "39",
+            "presentationClass": null,
+            "drawStyle": "gr39",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "2.887cm"
+            },
+            "logicalXmlSerializationSha256": "12cab3da09f28e64433a08f80f6db3bfa5611a16c558447c614d21468465de57"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "40",
+            "presentationClass": null,
+            "drawStyle": "gr40",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.641cm",
+              "y": "5.776cm",
+              "width": "24.27cm",
+              "height": "1.961cm"
+            },
+            "logicalXmlSerializationSha256": "f81ad5b20fe9c5980fea010fb357fa1ec86dc693dba7bbcb5e39488d6ae12917"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "41",
+            "presentationClass": null,
+            "drawStyle": "gr41",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.642cm",
+              "y": "7.776cm",
+              "width": "24.27cm",
+              "height": "3.847cm"
+            },
+            "logicalXmlSerializationSha256": "d31a0af9f81425d6a0b05f7169d0588d55b9e0e6ebed284537079ce1c9365946"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "42",
+            "presentationClass": null,
+            "drawStyle": "gr42",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.643cm",
+              "y": "12.158cm",
+              "width": "24.27cm",
+              "height": "6.756cm"
+            },
+            "logicalXmlSerializationSha256": "b9b0b6991a7e69d25df4a2191250c19f20e9f8ef185f9930ceef2ff78995ad8e"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "b4d4e6c7e055cff50fea85b929e37174c96ad476572a618897e39e0af185b362"
+      },
+      {
+        "index": 16,
+        "name": "Link 2",
+        "nativeId": "17",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "9bda47e1e9860e6d7268bbdc24a60f938c17f4dcc329f0655e56c0a0e34242f4",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "a45d365c89affeb25511db460b4c784108411480bc69c511c2dfe258ed40dfb1"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "43",
+            "presentationClass": null,
+            "drawStyle": "gr43",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "4.976cm",
+              "width": "24.27cm",
+              "height": "6.973cm"
+            },
+            "logicalXmlSerializationSha256": "334e288370baf259adb44812a8eb93825569caa1c8441ba343a5b192bb76f0ff"
+          },
+          {
+            "index": 2,
+            "kind": "image",
+            "name": null,
+            "id": null,
+            "presentationClass": null,
+            "drawStyle": "gr44",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "3.831cm",
+              "y": "12.707cm",
+              "width": "19.677cm",
+              "height": "6.106cm"
+            },
+            "logicalXmlSerializationSha256": "2d859cd167bb91a6c0e512bc3a09728f5f90c283de8405833ec25ea269b69658"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box C",
+            "id": "44",
+            "presentationClass": null,
+            "drawStyle": "gr45",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.518cm",
+              "y": "2.449cm",
+              "width": "24.393cm",
+              "height": "2.441cm"
+            },
+            "logicalXmlSerializationSha256": "51a84d8c5db18198bbdce5a9f428c0005da1f03ba5c0bb6805787e4f52a19a4b"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "fbab25cfacb407bfa43587000f72dc542ed782592d3444299e086315259f7063"
+      },
+      {
+        "index": 17,
+        "name": "Link 3",
+        "nativeId": "18",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "f2e83bc8db229923af8629d451213c53326846deb466f200eb09f624ec812a99",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "43064fad7098fb6a1942b6f37ceda3193e55bb75844b4683cb4529a1a4523a86"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "45",
+            "presentationClass": null,
+            "drawStyle": "gr46",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "8.848cm"
+            },
+            "logicalXmlSerializationSha256": "2d59efd5f04b21737577891d77aa5bc4eb8b21310c5064695998be97a514a7c3"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "46",
+            "presentationClass": null,
+            "drawStyle": "gr47",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.644cm",
+              "y": "11.976cm",
+              "width": "24.27cm",
+              "height": "2.594cm"
+            },
+            "logicalXmlSerializationSha256": "4ad92d16d8821d1d0f4048256f566f483ae648f4597d4ce712b0f8f429aea37f"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "47",
+            "presentationClass": null,
+            "drawStyle": "gr48",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.645cm",
+              "y": "14.602cm",
+              "width": "24.27cm",
+              "height": "1.81cm"
+            },
+            "logicalXmlSerializationSha256": "473c57c6eb8ee500da1a3f12f6d6ad8c6306df055e6e2e5cb12dcaccc337fc8a"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "48",
+            "presentationClass": null,
+            "drawStyle": "gr49",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.646cm",
+              "y": "16.403cm",
+              "width": "24.27cm",
+              "height": "1.81cm"
+            },
+            "logicalXmlSerializationSha256": "67d49e3fa94736027074c6d9d0c93bf9a711475a726e4e5c17144c945abefa13"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "0cdcfa6551295128fa3576a58056812a6f743d5e403466545f2123f292cd67ab"
+      },
+      {
+        "index": 18,
+        "name": "Link 4",
+        "nativeId": "19",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "2bcbc84fc01e55ab79f18c3a4d40d3089f4460a2631187b39b90c61eb2d8b7fe",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "4e1622d089a72064e3344bd12299b3d0adea8c39042465f68e032a9f1b45b1a9"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "49",
+            "presentationClass": null,
+            "drawStyle": "gr50",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.171cm",
+              "width": "24.27cm",
+              "height": "16.249cm"
+            },
+            "logicalXmlSerializationSha256": "98dea0f6518611b2de11e78fef70ad8a9cfa04055270846b765a6dd99f002a58"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "087243288c45e31603b82c2c851d0f968fa558f24a57feab64a31cd250d29f13"
+      },
+      {
+        "index": 19,
+        "name": "Link 5",
+        "nativeId": "20",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "dac1a73387f725ebe00b2c38bdd86e0bf86860f119743aa79ef0917fa672b6e1",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "de91a969eeb799ab11273f46fec04bc07be1980b696cf18b11ef0e8b819426b0"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "50",
+            "presentationClass": null,
+            "drawStyle": "gr51",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "2.171cm",
+              "width": "24.27cm",
+              "height": "4.227cm"
+            },
+            "logicalXmlSerializationSha256": "ca5e424c418c73b854da9dc1a94e4ea2375302f463d1269d2b764ffba0a1c211"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "51",
+            "presentationClass": null,
+            "drawStyle": "gr52",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "6.665cm",
+              "width": "24.134cm",
+              "height": "2.245cm"
+            },
+            "logicalXmlSerializationSha256": "3b9d8c49306fa135117d8b12e934ca388c2ba6fc7243c6662ad971ab6f71b9bf"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "52",
+            "presentationClass": null,
+            "drawStyle": "gr53",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "9.066cm",
+              "width": "25.517cm",
+              "height": "2.219cm"
+            },
+            "logicalXmlSerializationSha256": "ec0fd25fa4614bf8759556c12758b1fb9158b5b977803b2aa615ff47e7934aa9"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "53",
+            "presentationClass": null,
+            "drawStyle": "gr54",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "11.566cm",
+              "width": "25.517cm",
+              "height": "7.09cm"
+            },
+            "logicalXmlSerializationSha256": "a16af9ac3608d670bf5c754845ce27e74448982674bae54cc6cfc1b6558fc3b2"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "d70aa6bddf05124152c649317fc95b6b6e0f86e7d46ea569199f3e69a3fd83d1"
+      },
+      {
+        "index": 20,
+        "name": "Select 1",
+        "nativeId": "21",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "39c7fdcb64fcec4b1b07c1dc79e8ad364534e2e9fc2a4a0e154f289a779425f2",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "e7192456663e2dbaac3f4e3c75e3c4cb920fdeb78e3fd06fec7c97ad9170d01b"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "54",
+            "presentationClass": null,
+            "drawStyle": "gr55",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "14.978cm"
+            },
+            "logicalXmlSerializationSha256": "fd9025708db6f9faff06ef3d4ffbb948ed46976a45a49be8f99f35d662da2d96"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "3837810649d5b01ef449981f688736ed9229dd57b0d2563b0a35b75431492a5f"
+      },
+      {
+        "index": 21,
+        "name": "Select 2",
+        "nativeId": "22",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "4df20099c3e084e897bcc2de3bea5afe517b9c5aee1f2c3f3b947e7e8a3faa4c",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "feb0a77cc9076772b69a7d0ce4803420ee3c16b1cb0d39c828cd03017429309c"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "55",
+            "presentationClass": null,
+            "drawStyle": "gr56",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "4.026cm"
+            },
+            "logicalXmlSerializationSha256": "4ebd5be24601660a73a7603de1c62dd5326797ca82b820fd77b650cb759d395d"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "56",
+            "presentationClass": null,
+            "drawStyle": "gr57",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "7.072cm",
+              "width": "24.134cm",
+              "height": "1.738cm"
+            },
+            "logicalXmlSerializationSha256": "efa244105e69a9f5530d1d07acaaec41acc00c5900d7c3c4950d586eab576f88"
+          },
+          {
+            "index": 3,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "57",
+            "presentationClass": null,
+            "drawStyle": "gr58",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.679cm",
+              "y": "8.873cm",
+              "width": "24.134cm",
+              "height": "1.779cm"
+            },
+            "logicalXmlSerializationSha256": "921e444af55a2e40ac600f9ff6e28b27958628928e4d69a7fa9d13dea2769c8b"
+          },
+          {
+            "index": 4,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "58",
+            "presentationClass": null,
+            "drawStyle": "gr59",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.68cm",
+              "y": "11.273cm",
+              "width": "24.134cm",
+              "height": "6.546cm"
+            },
+            "logicalXmlSerializationSha256": "71fb9455bca83614c795d4649ae3bf2ba02f174d533d9dfe7480a21eae09cbda"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "73b032e3d1851b42d5afa7f1704621aa713029d0d5caeafd3fc1b34ae9d8826e"
+      },
+      {
+        "index": 22,
+        "name": "Select 3",
+        "nativeId": "23",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "23c61140bd3346d43fdcb8b31d61f00fdcea1342b84a0803dafe890c6260084c",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "c60122606b0b3f1419a3a76101b20674e96d1ba094618489c50c41144a445158"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box C",
+            "id": "59",
+            "presentationClass": null,
+            "drawStyle": "gr60",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.518cm",
+              "y": "8.923cm",
+              "width": "24.393cm",
+              "height": "6.263cm"
+            },
+            "logicalXmlSerializationSha256": "30a5a115c11a584fffde4139dfc8dbf5da9cb2b57e8872d0d961997ffe0fd57a"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "60",
+            "presentationClass": null,
+            "drawStyle": "gr61",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "2.872cm",
+              "width": "24.134cm",
+              "height": "6.306cm"
+            },
+            "logicalXmlSerializationSha256": "a6a0906319f058d6dda0c2e9bcb39307f82a713f2e3a307bb9b8350f13bf5456"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "04965ceab4623a7e7a3efdae24c0afa2d3de9a08887eab9851eecf6f7ca32093"
+      },
+      {
+        "index": 23,
+        "name": "Text 1",
+        "nativeId": "24",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "8a773d0aeb709eabd2b603b916d30d88f8563ec07834bcbde3bbfd43688ea756",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "ea99e13a9a7a04853a21bfbdb698414a865bb9453229e358016a0771000823c0"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "61",
+            "presentationClass": null,
+            "drawStyle": "gr62",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "3.23cm"
+            },
+            "logicalXmlSerializationSha256": "f22a2d34029106dbdfa18a691172a93f85e37e62c394334568ddb892fa8b78d6"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "62",
+            "presentationClass": null,
+            "drawStyle": "gr63",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "7.776cm",
+              "width": "24.134cm",
+              "height": "5.857cm"
+            },
+            "logicalXmlSerializationSha256": "831dd0dff6e784466f55dd9be26b5494c23ae7bb96f742446e66d4fcd6a59c57"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "caf56bd11feb5010a0205c99233abce2e54bdf851c09ce42f05e6e92d9c82294"
+      },
+      {
+        "index": 24,
+        "name": "Text 2",
+        "nativeId": "25",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "5040c4e01a54388b83fe4ddde267ed128bc83af91a8aea540fa5595760b7b177",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "75bdb03bc40a3ce078366217e75aad4aada19013e9f716581105ff5131c9370e"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "63",
+            "presentationClass": null,
+            "drawStyle": "gr64",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "7.208cm"
+            },
+            "logicalXmlSerializationSha256": "9a8ddd84a31081ddbdc21fed2eb2ba3ac1503e60a09b44ae8be5f0f28cfd415f"
+          },
+          {
+            "index": 2,
+            "kind": "rect",
+            "name": "Box B",
+            "id": "64",
+            "presentationClass": null,
+            "drawStyle": "gr65",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.678cm",
+              "y": "11.086cm",
+              "width": "24.134cm",
+              "height": "7.302cm"
+            },
+            "logicalXmlSerializationSha256": "094014fe3cd880f2820fce267592d1587d546d3a39617f5f134b5ad173e39ea6"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "6f9e4245b366d40add267f601cb0e52badaa865c63db72796876ce0a5c22df31"
+      },
+      {
+        "index": 25,
+        "name": "Discount",
+        "nativeId": "26",
+        "master": "OOoCon-presentation-0.0.4",
+        "titleParagraphSha256": "a4436ff430a0adb8a8cd0108a1dfaf9a23444b92eddf885969617f32b325afe4",
+        "objects": [
+          {
+            "index": 0,
+            "kind": "text-box",
+            "name": null,
+            "id": null,
+            "presentationClass": "title",
+            "drawStyle": null,
+            "presentationStyle": "pr6",
+            "rawGeometry": {
+              "x": "0cm",
+              "y": "0cm",
+              "width": "27.999cm",
+              "height": "2.04cm"
+            },
+            "logicalXmlSerializationSha256": "ac628fe7df9dd0dac79276949e4ffe194bc7050333c256640112674194812b1b"
+          },
+          {
+            "index": 1,
+            "kind": "rect",
+            "name": "Box A",
+            "id": "65",
+            "presentationClass": null,
+            "drawStyle": "gr66",
+            "presentationStyle": null,
+            "rawGeometry": {
+              "x": "1.64cm",
+              "y": "3.176cm",
+              "width": "24.27cm",
+              "height": "8.246cm"
+            },
+            "logicalXmlSerializationSha256": "4cb05c99be940932bd69f22e23966c3ce72ebfa5a06ea3d070b25913bc32c4a2"
+          }
+        ],
+        "notesPresent": true,
+        "notesLogicalXmlSha256": "5e7159bdf682b158e7d18ddd7d6eb827dde446670293fd56f48538767066f947"
+      }
+    ],
+    "presentationSettingsInventory": {
+      "{http://openoffice.org/2000/presentation}force-manual": "true"
+    },
+    "mainDrawingObjectCounts": {
+      "text-box": 28,
+      "rect": 64,
+      "image": 1
+    },
+    "mainDrawingObjectCount": 93,
+    "packageMedia": [
+      {
+        "path": "Pictures/10000200000001320000008D8F5CDAEC.png",
+        "kind": "png",
+        "pixelWidth": 306,
+        "pixelHeight": 141,
+        "bytes": 5142,
+        "sha256": "8fb0b9d96c534904adde628154cada786eedfc1c0e1be7f0a122608cf77873aa"
+      },
+      {
+        "path": "Pictures/1000020000000261000000AF3C0821CB.gif",
+        "kind": "gif",
+        "pixelWidth": 609,
+        "pixelHeight": 175,
+        "bytes": 3274,
+        "sha256": "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe"
+      },
+      {
+        "path": "Pictures/100002000000000A0000000ADDA84F49.gif",
+        "kind": "gif",
+        "pixelWidth": 10,
+        "pixelHeight": 10,
+        "bytes": 103,
+        "sha256": "d1cc421fd0dddfe0051700b1b2e542ea0c9f4f90cb1233498bb8c8587c686816"
+      },
+      {
+        "path": "Pictures/100000000000005E0000005EB758AAC8.png",
+        "kind": "png",
+        "pixelWidth": 94,
+        "pixelHeight": 94,
+        "bytes": 8149,
+        "sha256": "89955363b9ad84bcd9bacafb3786aed14aeab9b24db009c46143851498f3469d"
+      },
+      {
+        "path": "Pictures/10000000000000400000004077CDC8F9.png",
+        "kind": "png",
+        "pixelWidth": 64,
+        "pixelHeight": 64,
+        "bytes": 259,
+        "sha256": "7ff6be86b3c7c75a06b2c8a46e731aaf4021ff9084d14b83d82003f52061bf52"
+      }
+    ],
+    "expected": {
+      "slideCount": 26,
+      "orderedTitleParagraphSha256": [
+        "898b280fdbb5873384ce323ac1f4c29cae9e91f6a73fe632dbef4397d349ebd6",
+        "592ce778b27ffbf392b7ab069d7b36e65dac134db76efa519e45fed752085e4e",
+        "beab8798668dac72579f1d2fe5eb4479a60cf2c2d52dd2856e1d668d84ecfd6c",
+        "c0f171987e176b1d3c2b132bc3c232b258af2cd239269dc67aee2b8ddea40320",
+        "99cda0f1cbccf4b6424f457c10b1be8c93e3e9786752b4255d0366ea56ea7383",
+        "c574b466ef340bce1f2723624991d57c76c8228c2cf3e99babaa58ed60f3182f",
+        "da84ae009d01bee98241ed93b005cf35f0a630f131d5c4e705c2901d48437708",
+        "4a746aaefad4342269f44ad6d85a4bca269f6a697cf86000f0f608d62ab7b0c3",
+        "84db3ecea40d60f9cd4065dad863890b2fd15af4b8a42e5bfe97d2ca066e0f8e",
+        "dae9303b8380df79ae08c9becefab2b14263c315519bde2a821c707db097b1ba",
+        "713508e6afa15bdd67766b8e4039849dcd5f61e630db5c0b60a856a270e3543c",
+        "b3047a68c3c0e36a49e98e57afc0a395145368c6becb6293f6ad906e76312fde",
+        "f1ec2bbf42fcfc33f2bbf9b00599e32bee78e8cfeb2bbbef468088106e025ebe",
+        "898e8805f8fc325585aa73efc2d197a5a70b76d48994be93281ca32eda28cf4d",
+        "c0db8a1413a85eeb4bcfaa9fff0d1b387d41fd6c0a1a727705ffba62930f34de",
+        "bb067717d258573c9a97ac9d29b777ae4bcd8ea213858ded03d7b9de8b195197",
+        "9bda47e1e9860e6d7268bbdc24a60f938c17f4dcc329f0655e56c0a0e34242f4",
+        "f2e83bc8db229923af8629d451213c53326846deb466f200eb09f624ec812a99",
+        "2bcbc84fc01e55ab79f18c3a4d40d3089f4460a2631187b39b90c61eb2d8b7fe",
+        "dac1a73387f725ebe00b2c38bdd86e0bf86860f119743aa79ef0917fa672b6e1",
+        "39c7fdcb64fcec4b1b07c1dc79e8ad364534e2e9fc2a4a0e154f289a779425f2",
+        "4df20099c3e084e897bcc2de3bea5afe517b9c5aee1f2c3f3b947e7e8a3faa4c",
+        "23c61140bd3346d43fdcb8b31d61f00fdcea1342b84a0803dafe890c6260084c",
+        "8a773d0aeb709eabd2b603b916d30d88f8563ec07834bcbde3bbfd43688ea756",
+        "5040c4e01a54388b83fe4ddde267ed128bc83af91a8aea540fa5595760b7b177",
+        "a4436ff430a0adb8a8cd0108a1dfaf9a23444b92eddf885969617f32b325afe4"
+      ],
+      "selectedTextShapes": [
+        {
+          "slide": 0,
+          "shapeOrdinal": 1,
+          "paragraphs": [
+            "Miscellaneous Topics In",
+            "Macro Programming"
+          ],
+          "role": "subtitle"
+        },
+        {
+          "slide": 1,
+          "shapeOrdinal": 1,
+          "paragraphs": [
+            "Speaker Introductions",
+            "Library Management",
+            "Copy by reference versus copy by value",
+            "Advanced data structures",
+            "Common error with Select Case",
+            "Using the correct text object",
+            "Q & A",
+            "Examples tested with a 2.0 development build"
+          ],
+          "role": "outline"
+        }
+      ],
+      "pageSize": {
+        "sourceMaster": "OOoCon-presentation-0.0.4",
+        "pageMaster": "PM1",
+        "width": "28cm",
+        "height": "21cm",
+        "cx": 10080000,
+        "cy": 7560000
+      },
+      "mainImages": [
+        {
+          "slide": 16,
+          "object": 2,
+          "href": "#Pictures/1000020000000261000000AF3C0821CB.gif",
+          "packagePath": "Pictures/1000020000000261000000AF3C0821CB.gif",
+          "sha256": "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe",
+          "bytes": 3274
+        }
+      ]
+    },
+    "fullFormatAccepted": false,
+    "limits": "Source inventory is not rendering acceptance. Notes/masters/style/font/layout/animation and other media/embedded-object semantics are unaccepted."
+  },
+  "historicalWindowsReuse": {
+    "technicalResult": {
+      "id": "lo-sxi-1",
+      "ext": "sxi",
+      "variant": "StarOffice Impress ooo41061-1",
+      "passed": true,
+      "conversionMs": 11309,
+      "slides": 26,
+      "savedBytes": 83870,
+      "savedSha256": "22d1a4e00baf6ff13c98b1939327420afd0f482d355bfbb45b79b7583085fcc9",
+      "outcome": "opened-saved-reopened"
+    },
+    "date": "2026-11-10T08:48:03.136Z",
+    "converter": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "historicalProfileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+    "p2ProfileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "profileEquivalence": false,
+    "cacheRowCorrelation": true,
+    "reportConversionMs": 11309,
+    "cacheConversionMs": 11310,
+    "cacheOfficialProducingRunBindingAuthenticated": false
+  },
+  "historicalLinuxCatalogRecord": {
+    "expectedOn": [
+      {
+        "platform": "linux",
+        "converter": "LibreOffice 7.3.7.2 30(Build:2)",
+        "expected": "reject",
+        "reason": "LibreOffice 7.3.7.2 weigert de PPTX-export van dit bronbestand met SfxBaseModel::impl_store 0xc10."
+      }
+    ],
+    "newlyReproduced": false,
+    "appliesToP2PrivateRuntime": false
+  },
+  "historicalCacheObservation": {
+    "method": "Independent OOXML scan of local historical converted PPTX snapshot only",
+    "cases": [
+      {
+        "case": "ordinary PPTX main type",
+        "actual": "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        "expected": "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        "passed": true
+      },
+      {
+        "case": "source slide count in presentation relationship order",
+        "actual": 26,
+        "expected": 26,
+        "passed": true
+      },
+      {
+        "case": "ordered first-title paragraph vectors, SHA256 rather than whole text reproduction",
+        "actual": [
+          "898b280fdbb5873384ce323ac1f4c29cae9e91f6a73fe632dbef4397d349ebd6",
+          "592ce778b27ffbf392b7ab069d7b36e65dac134db76efa519e45fed752085e4e",
+          "beab8798668dac72579f1d2fe5eb4479a60cf2c2d52dd2856e1d668d84ecfd6c",
+          "c0f171987e176b1d3c2b132bc3c232b258af2cd239269dc67aee2b8ddea40320",
+          "99cda0f1cbccf4b6424f457c10b1be8c93e3e9786752b4255d0366ea56ea7383",
+          "c574b466ef340bce1f2723624991d57c76c8228c2cf3e99babaa58ed60f3182f",
+          "da84ae009d01bee98241ed93b005cf35f0a630f131d5c4e705c2901d48437708",
+          "4a746aaefad4342269f44ad6d85a4bca269f6a697cf86000f0f608d62ab7b0c3",
+          "84db3ecea40d60f9cd4065dad863890b2fd15af4b8a42e5bfe97d2ca066e0f8e",
+          "dae9303b8380df79ae08c9becefab2b14263c315519bde2a821c707db097b1ba",
+          "713508e6afa15bdd67766b8e4039849dcd5f61e630db5c0b60a856a270e3543c",
+          "b3047a68c3c0e36a49e98e57afc0a395145368c6becb6293f6ad906e76312fde",
+          "f1ec2bbf42fcfc33f2bbf9b00599e32bee78e8cfeb2bbbef468088106e025ebe",
+          "898e8805f8fc325585aa73efc2d197a5a70b76d48994be93281ca32eda28cf4d",
+          "c0db8a1413a85eeb4bcfaa9fff0d1b387d41fd6c0a1a727705ffba62930f34de",
+          "bb067717d258573c9a97ac9d29b777ae4bcd8ea213858ded03d7b9de8b195197",
+          "9bda47e1e9860e6d7268bbdc24a60f938c17f4dcc329f0655e56c0a0e34242f4",
+          "f2e83bc8db229923af8629d451213c53326846deb466f200eb09f624ec812a99",
+          "2bcbc84fc01e55ab79f18c3a4d40d3089f4460a2631187b39b90c61eb2d8b7fe",
+          "dac1a73387f725ebe00b2c38bdd86e0bf86860f119743aa79ef0917fa672b6e1",
+          "39c7fdcb64fcec4b1b07c1dc79e8ad364534e2e9fc2a4a0e154f289a779425f2",
+          "4df20099c3e084e897bcc2de3bea5afe517b9c5aee1f2c3f3b947e7e8a3faa4c",
+          "23c61140bd3346d43fdcb8b31d61f00fdcea1342b84a0803dafe890c6260084c",
+          "8a773d0aeb709eabd2b603b916d30d88f8563ec07834bcbde3bbfd43688ea756",
+          "5040c4e01a54388b83fe4ddde267ed128bc83af91a8aea540fa5595760b7b177",
+          "a4436ff430a0adb8a8cd0108a1dfaf9a23444b92eddf885969617f32b325afe4"
+        ],
+        "expected": [
+          "898b280fdbb5873384ce323ac1f4c29cae9e91f6a73fe632dbef4397d349ebd6",
+          "592ce778b27ffbf392b7ab069d7b36e65dac134db76efa519e45fed752085e4e",
+          "beab8798668dac72579f1d2fe5eb4479a60cf2c2d52dd2856e1d668d84ecfd6c",
+          "c0f171987e176b1d3c2b132bc3c232b258af2cd239269dc67aee2b8ddea40320",
+          "99cda0f1cbccf4b6424f457c10b1be8c93e3e9786752b4255d0366ea56ea7383",
+          "c574b466ef340bce1f2723624991d57c76c8228c2cf3e99babaa58ed60f3182f",
+          "da84ae009d01bee98241ed93b005cf35f0a630f131d5c4e705c2901d48437708",
+          "4a746aaefad4342269f44ad6d85a4bca269f6a697cf86000f0f608d62ab7b0c3",
+          "84db3ecea40d60f9cd4065dad863890b2fd15af4b8a42e5bfe97d2ca066e0f8e",
+          "dae9303b8380df79ae08c9becefab2b14263c315519bde2a821c707db097b1ba",
+          "713508e6afa15bdd67766b8e4039849dcd5f61e630db5c0b60a856a270e3543c",
+          "b3047a68c3c0e36a49e98e57afc0a395145368c6becb6293f6ad906e76312fde",
+          "f1ec2bbf42fcfc33f2bbf9b00599e32bee78e8cfeb2bbbef468088106e025ebe",
+          "898e8805f8fc325585aa73efc2d197a5a70b76d48994be93281ca32eda28cf4d",
+          "c0db8a1413a85eeb4bcfaa9fff0d1b387d41fd6c0a1a727705ffba62930f34de",
+          "bb067717d258573c9a97ac9d29b777ae4bcd8ea213858ded03d7b9de8b195197",
+          "9bda47e1e9860e6d7268bbdc24a60f938c17f4dcc329f0655e56c0a0e34242f4",
+          "f2e83bc8db229923af8629d451213c53326846deb466f200eb09f624ec812a99",
+          "2bcbc84fc01e55ab79f18c3a4d40d3089f4460a2631187b39b90c61eb2d8b7fe",
+          "dac1a73387f725ebe00b2c38bdd86e0bf86860f119743aa79ef0917fa672b6e1",
+          "39c7fdcb64fcec4b1b07c1dc79e8ad364534e2e9fc2a4a0e154f289a779425f2",
+          "4df20099c3e084e897bcc2de3bea5afe517b9c5aee1f2c3f3b947e7e8a3faa4c",
+          "23c61140bd3346d43fdcb8b31d61f00fdcea1342b84a0803dafe890c6260084c",
+          "8a773d0aeb709eabd2b603b916d30d88f8563ec07834bcbde3bbfd43688ea756",
+          "5040c4e01a54388b83fe4ddde267ed128bc83af91a8aea540fa5595760b7b177",
+          "a4436ff430a0adb8a8cd0108a1dfaf9a23444b92eddf885969617f32b325afe4"
+        ],
+        "passed": true
+      },
+      {
+        "case": "selected source text shape slide0 ordinal1",
+        "actual": [
+          "Miscellaneous Topics In",
+          "Macro Programming"
+        ],
+        "expected": [
+          "Miscellaneous Topics In",
+          "Macro Programming"
+        ],
+        "passed": true
+      },
+      {
+        "case": "selected source text shape slide1 ordinal1",
+        "actual": [
+          "Speaker Introductions",
+          "Library Management",
+          "Copy by reference versus copy by value",
+          "Advanced data structures",
+          "Common error with Select Case",
+          "Using the correct text object",
+          "Q & A",
+          "Examples tested with a 2.0 development build"
+        ],
+        "expected": [
+          "Speaker Introductions",
+          "Library Management",
+          "Copy by reference versus copy by value",
+          "Advanced data structures",
+          "Common error with Select Case",
+          "Using the correct text object",
+          "Q & A",
+          "Examples tested with a 2.0 development build"
+        ],
+        "passed": true
+      },
+      {
+        "case": "source actual presentation master size, not handout/notes size",
+        "actual": {
+          "cx": 10080625,
+          "cy": 7559675
+        },
+        "expected": {
+          "cx": 10080000,
+          "cy": 7560000
+        },
+        "passed": false
+      },
+      {
+        "case": "one original main-slide GIF relationship at source slide16",
+        "actual": [
+          "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe"
+        ],
+        "expected": [
+          "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe"
+        ],
+        "passed": true
+      }
+    ],
+    "allBoundedHistoricalCasesMatch": false,
+    "slidePartsInRelationshipOrder": [
+      "ppt/slides/slide1.xml",
+      "ppt/slides/slide2.xml",
+      "ppt/slides/slide3.xml",
+      "ppt/slides/slide4.xml",
+      "ppt/slides/slide5.xml",
+      "ppt/slides/slide6.xml",
+      "ppt/slides/slide7.xml",
+      "ppt/slides/slide8.xml",
+      "ppt/slides/slide9.xml",
+      "ppt/slides/slide10.xml",
+      "ppt/slides/slide11.xml",
+      "ppt/slides/slide12.xml",
+      "ppt/slides/slide13.xml",
+      "ppt/slides/slide14.xml",
+      "ppt/slides/slide15.xml",
+      "ppt/slides/slide16.xml",
+      "ppt/slides/slide17.xml",
+      "ppt/slides/slide18.xml",
+      "ppt/slides/slide19.xml",
+      "ppt/slides/slide20.xml",
+      "ppt/slides/slide21.xml",
+      "ppt/slides/slide22.xml",
+      "ppt/slides/slide23.xml",
+      "ppt/slides/slide24.xml",
+      "ppt/slides/slide25.xml",
+      "ppt/slides/slide26.xml"
+    ],
+    "mainObjectCountObservation": 93,
+    "pictureRelationshipObservations": [
+      {
+        "slide": 16,
+        "target": "ppt/media/image6.gif",
+        "sha256": "fde1866bf3569bfdd850c1344e97357fe83c2374521c89f94f283f2db8a7babe"
+      }
+    ],
+    "newP2RuntimeAccepted": false,
+    "fullFormatAccepted": false
+  },
+  "oracleControls": [
+    {
+      "case": "dropped-slide",
+      "oracleRejected": true,
+      "newlyFailedCases": [
+        "ordered first-title paragraph vectors, SHA256 rather than whole text reproduction",
+        "source slide count in presentation relationship order"
+      ],
+      "preexistingHistoricalMismatches": [
+        "source actual presentation master size, not handout/notes size"
+      ]
+    },
+    {
+      "case": "swapped-first-slides",
+      "oracleRejected": true,
+      "newlyFailedCases": [
+        "ordered first-title paragraph vectors, SHA256 rather than whole text reproduction",
+        "selected source text shape slide0 ordinal1",
+        "selected source text shape slide1 ordinal1"
+      ],
+      "preexistingHistoricalMismatches": [
+        "source actual presentation master size, not handout/notes size"
+      ]
+    },
+    {
+      "case": "changed-title-case",
+      "oracleRejected": true,
+      "newlyFailedCases": [
+        "ordered first-title paragraph vectors, SHA256 rather than whole text reproduction"
+      ],
+      "preexistingHistoricalMismatches": [
+        "source actual presentation master size, not handout/notes size"
+      ]
+    },
+    {
+      "case": "removed-main-image",
+      "oracleRejected": true,
+      "newlyFailedCases": [
+        "one original main-slide GIF relationship at source slide16"
+      ],
+      "preexistingHistoricalMismatches": [
+        "source actual presentation master size, not handout/notes size"
+      ]
+    }
+  ],
+  "p2StaticPolicyReview": {
+    "level": "Read-only pinned P2 code, no production functions invoked",
+    "module": "pptx",
+    "route": "Legacy SXI fallback viaRuntime to PPTX; requires desktop converter/Tauri bridge",
+    "recommendedSave": "ordinary PPTX; no SXI output override"
+  },
+  "historicalBoundedCacheAccepted": false,
+  "status": "STATIC_SOURCE_PASS_HISTORICAL_SIZE_MISMATCH_CURRENT_RUNTIME_OPEN",
+  "runtimeGuard": "No new CI/runtime consumption during publisher correction without targeted capacity coordination; SXW remains separately OPEN.",
+  "newCiRuns": [],
+  "newRuntimeConsumption": false,
+  "newEngineOrUiExecution": false,
+  "fullFormatAccepted": false,
+  "remaining": [
+    "Targeted capacity coordination before any new runtime/CI; SXW separately OPEN",
+    "Actual pinned P2 private converter/production helper/PPTX engine edit/UndoRedo/save/separate-process reopen and independent OOXML",
+    "No full layout/rendering/fonts/notes/master/animation/image-decoding/embedded-object or native/browser/platform acceptance"
+  ]
+}
