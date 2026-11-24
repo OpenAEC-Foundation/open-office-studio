@@ -1,0 +1,274 @@
+{
+  "status": "SOURCE_GAP_NO_POSITIVE_PRIMARY_TEXT_WITNESS",
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-wps-2",
+    "ext": "wps",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/writer/libwps/pass/Works_2.00A_DOS.wps",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwps/pass/Works_2.00A_DOS.wps",
+    "gitSha": "4bccbbd18ce685055e475105b750e78c47e25f0e",
+    "sha256": "65866a3e9c9716c05555277e8860e8a63be3126c3d8ed3e191f3b1252af2e611",
+    "bytes": 660,
+    "variant": "Microsoft Works 2.00A DOS (lege tekstproef)",
+    "expected": "open",
+    "expectedOn": [],
+    "expectEmptyWarning": true
+  },
+  "nativeOracle": {
+    "headerHex": "01fe0100",
+    "versionByte": 1,
+    "creatorWord": 1,
+    "nativeVersionQualification": "Header maps to Works DOS2 in the referenced implementation; exact 2.00A producer build is not attested",
+    "container": "flat native bytes, not the Works6 CHNKWKS/CFB route",
+    "oemWord": 6996,
+    "oemCodeBits": 437,
+    "oemBoundary": "Header bits only; no positive charset conversion witness",
+    "textLimits": [
+      -1,
+      -1,
+      256,
+      258
+    ],
+    "declaredFileBytes": 660,
+    "primaryText": {
+      "begin": 256,
+      "endExclusive": 258,
+      "bytes": 2,
+      "hex": "0d0a",
+      "codeUnits": [
+        13,
+        10
+      ],
+      "printableAscii": "",
+      "crCount": 1,
+      "lfCount": 1,
+      "nonCRLFBytes": []
+    },
+    "directory": [
+      {
+        "name": "BTEC",
+        "descriptorOffset": 46,
+        "offset": 640,
+        "bytes": 10,
+        "rawHex": "00010000020100000300"
+      },
+      {
+        "name": "BTEP",
+        "descriptorOffset": 52,
+        "offset": 650,
+        "bytes": 10,
+        "rawHex": "00010000020100000400"
+      },
+      {
+        "name": "SHdr",
+        "descriptorOffset": 58,
+        "offset": 0,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "SFtr",
+        "descriptorOffset": 64,
+        "offset": 0,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "DLINK",
+        "descriptorOffset": 70,
+        "offset": 0,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "FTNp",
+        "descriptorOffset": 76,
+        "offset": 660,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "FTNd",
+        "descriptorOffset": 82,
+        "offset": 660,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "BKMK",
+        "descriptorOffset": 88,
+        "offset": 660,
+        "bytes": 0,
+        "rawHex": ""
+      },
+      {
+        "name": "FONT",
+        "descriptorOffset": 94,
+        "offset": 0,
+        "bytes": 0,
+        "rawHex": ""
+      }
+    ],
+    "outsidePrimaryText": {
+      "begin": 258,
+      "endExclusive": 640,
+      "sha256": "04068aac0e7ffbd78b62902ba627ac0b400066c9f10d78978b8480683d1af963",
+      "printableRuns": [
+        {
+          "offset": 258,
+          "bytes": 15,
+          "ascii": "mbered footnote"
+        },
+        {
+          "offset": 277,
+          "bytes": 24,
+          "ascii": "Here's a letter footnote"
+        },
+        {
+          "offset": 305,
+          "bytes": 23,
+          "ascii": "Here's a bookmark name."
+        },
+        {
+          "offset": 330,
+          "bytes": 54,
+          "ascii": "The default page formt is top margin 1\", bottom 1\", le"
+        }
+      ],
+      "interpretation": "Unclassified outside primary interval; not accepted as body or proved editing history"
+    },
+    "independentNonemptyPrimaryTextWitness": false,
+    "logicalParagraphCount": null,
+    "wholeDocumentEmptyProved": false,
+    "fullFormatAcceptance": false
+  },
+  "readerControls": [
+    {
+      "control": "wrong-native-header",
+      "passed": true
+    },
+    {
+      "control": "primary-end-outside-file",
+      "passed": true
+    },
+    {
+      "control": "truncated-file",
+      "passed": true
+    },
+    {
+      "control": "directory-entry-outside-file",
+      "passed": true
+    },
+    {
+      "control": "outside-printable-byte-does-not-enter-primary-story",
+      "passed": true
+    },
+    {
+      "control": "in-range-printable-byte-is-detected",
+      "passed": true
+    }
+  ],
+  "primaryLayoutReferences": [
+    {
+      "repository": "deepin-community/libwps",
+      "commit": "a5ad3a399e52ff174e188edfca170a7689232d0b",
+      "path": "src/lib/WPS4.cpp",
+      "bytes": 28587,
+      "gitBlob": "985b6e3ec94c282dabc3e3f47512537917592868",
+      "sha256": "44feef6bc60696848d3963a167054d754d56548ec517a23a495c0a57800477b3",
+      "url": "https://github.com/deepin-community/libwps/blob/a5ad3a399e52ff174e188edfca170a7689232d0b/src/lib/WPS4.cpp"
+    },
+    {
+      "repository": "deepin-community/libwps",
+      "commit": "a5ad3a399e52ff174e188edfca170a7689232d0b",
+      "path": "src/lib/WPS4Text.cpp",
+      "bytes": 67394,
+      "gitBlob": "d4c640cc32b62d85fab46eac822472af3cd4e292",
+      "sha256": "e0f8c2805709f6898a8d8afaa1b631a9df1a78522e08a52b5cf255c8b8f8dcf3",
+      "url": "https://github.com/deepin-community/libwps/blob/a5ad3a399e52ff174e188edfca170a7689232d0b/src/lib/WPS4Text.cpp"
+    }
+  ],
+  "historicalLedger": {
+    "reportDate": "2026-11-10T08:48:03.136Z",
+    "converter": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+    "result": {
+      "id": "lo-wps-2",
+      "ext": "wps",
+      "variant": "Microsoft Works 2.00A DOS (lege tekstproef)",
+      "passed": true,
+      "conversionMs": 23506,
+      "emptyConversionWarning": true,
+      "savedBytes": 5296,
+      "savedSha256": "27120ec04304347f750d350c64b3eb24b644da247c9832ef0cca48b0313886cc",
+      "outcome": "opened-saved-reopened"
+    },
+    "timeoutReceipt": {
+      "ms": 47005,
+      "timedOut": true,
+      "log": ""
+    },
+    "matchingDurationConversionReceipt": {
+      "ms": 23506,
+      "timedOut": false,
+      "log": "convert C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-ZzSde1\\bron.wps as a Writer document -> C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-ZzSde1\\uit\\bron.docx using filter : MS Word 2007 XML\n"
+    },
+    "laterConversionReceipt": {
+      "ms": 14125,
+      "timedOut": false,
+      "log": "convert C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-eAlsJV\\bron.wps as a Writer document -> C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-eAlsJV\\uit\\bron.docx using filter : MS Word 2007 XML\n"
+    },
+    "convertedSnapshots": [
+      {
+        "file": "converted-23506ms.docx",
+        "bytes": 5407,
+        "sha256": "6068a22086b79b3c7798d6b134a3dcadcdfb78f42498d9ba36332d48432b76cb",
+        "documentXmlSha256": "0eba12e3e488c58af046a309b06c456f900d093ec4172b8dd928daa8e205a0c6",
+        "observedBodyParagraphs": 1,
+        "observedBodyTables": 0,
+        "wordStoryText": {
+          "word/document.xml": ""
+        },
+        "boundary": "Conversion-stage observation only; not a saved-result or P2/runtime/native acceptance claim"
+      },
+      {
+        "file": "converted-14125ms.docx",
+        "bytes": 5407,
+        "sha256": "29485b6d4e42ce530e75f3263ac6137a9ca140f965420e8dcc764d48e46c873f",
+        "documentXmlSha256": "0eba12e3e488c58af046a309b06c456f900d093ec4172b8dd928daa8e205a0c6",
+        "observedBodyParagraphs": 1,
+        "observedBodyTables": 0,
+        "wordStoryText": {
+          "word/document.xml": ""
+        },
+        "boundary": "Conversion-stage observation only; not a saved-result or P2/runtime/native acceptance claim"
+      }
+    ],
+    "savedResultRawBytesVerified": false,
+    "savedResultBoundary": "No matching saved bytes in the inspected existing lo-wps-2 cache directories. The 5407-byte conversion-stage files are not the reported 5296-byte saved DOCX.",
+    "currentP2RuntimeEquivalence": false
+  },
+  "p2Policy": {
+    "target": "docx",
+    "wpsOutput": false,
+    "modernDefault": "docx",
+    "browser": "External converter requires desktop. Source inspection only, no new browser test."
+  },
+  "boundaries": [
+    "Implementation-guided native header/zone reader is not a normative independent Microsoft producer specification.",
+    "Exact 2.00A producer patch not proved from the catalogue name.",
+    "Primary text is CR/LF only; outside printable bytes are not accepted as body or proved historical deleted content.",
+    "No positive body/footnote/bookmark/font/layout/charset witness; whole-document emptiness and exact logical paragraph count not certified.",
+    "Works6/lo-wps-1 evidence is not borrowed for this native DOS route.",
+    "Historical technical open/save/reopen and empty warning are retained without relabelling as P2 package/native/fresh-process acceptance."
+  ],
+  "runtimeDecision": "Do not repeat empty import; no new CI/runtime/build/artifact allocation requested or used.",
+  "originalUnchanged": true
+}
