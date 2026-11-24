@@ -1,0 +1,183 @@
+{
+  "issue": 377,
+  "date": "2026-11-24",
+  "kind": "Administrative mapping of existing evidence, no new tests",
+  "disposition": "Coordinator accepts layered validation with explicit AC4 boundary; issue remains OPEN pending final mapping review and targeted closure instruction",
+  "application": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "sourceVerification": {
+    "commit": "cbacb7d1396aeeca9a0da72c5739def75c036a73",
+    "proofCommit": "35d55b9ef7e89682265937c063bf7e158f0ff7ba",
+    "receipt": {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-xlsb-save-policy-qa-d410\\qa\\xlsb377-policy\\result.json",
+      "bytes": 2411,
+      "sha256": "cbbe7b816ecb095b0768f53a8e23c60881824eae1ebaab2dc4338f824a860817"
+    },
+    "existingResults": "46 targeted tests across4files and TSC PASS, Windows local and Linux45163780721/job137655442468",
+    "exactP5Blobs": [
+      {
+        "path": "src/werkbestand.ts",
+        "byteIdenticalFixToP5": true,
+        "sha256": "292882613921d4a34a6877528973199f98a172b2157aee31882c1bf2b66cb4eb"
+      },
+      {
+        "path": "src/werkbestand.test.ts",
+        "byteIdenticalFixToP5": true,
+        "sha256": "eb9db0ab3a1fcdef23bbe4f7097a6b28eae46cb4ed0e9b39363ba21444bea1e7"
+      },
+      {
+        "path": "src/useTabSneltoetsen.test.ts",
+        "byteIdenticalFixToP5": true,
+        "sha256": "d8b1777618e04fa4924098b16fc80de0f73eea03b7bfbbe24c56783ddce31186"
+      },
+      {
+        "path": "src/import/rekenbladformaten.test.ts",
+        "byteIdenticalFixToP5": true,
+        "sha256": "c74517be0a5a89a55eab0ab392e684e43b8fe2c2a08a317cff4e426bcd0f6468"
+      },
+      {
+        "path": "src/opslag.test.ts",
+        "byteIdenticalFixToP5": true,
+        "sha256": "9896ecbd8364d452dc822c1d129e3cb5ddb38dcf58ee26836a87767d1a055205"
+      }
+    ],
+    "newTestsRun": false
+  },
+  "acceptanceCriteria": [
+    {
+      "id": 1,
+      "status": "COVERED",
+      "criterion": "Import-only XLSB Ctrl+S/Save selects Save As and default XLSX, no XLSB update confirmation",
+      "layers": {
+        "source": "Import-only XLSB guard returns opslaanAls before source writeback confirmation",
+        "nativeP5": "Linux45190827271/job137748390686; Windows45353530654/job138305718627; Mac45357794642/job138320456545: actual platform shortcut and ordinary Save/default XLSX/real Cancel"
+      },
+      "proof": "33f7bb1b5895eed7f1816c35a95ba79b00da5442:qa/xlsb377-native/cross-platform-result-2026-11-24.json"
+    },
+    {
+      "id": 2,
+      "status": "COVERED BY SOURCE REGRESSION",
+      "criterion": "Prior output choice or confirmed legacy flag cannot enable unavailable XLSB writeback",
+      "layers": {
+        "source": "werkbestand.test.ts confirmed false/true x output-choice false/true all expect opslaanAls, retaining original frozen source workfile;46tests PASS, relevant bytes identical to P5"
+      },
+      "limit": "No claim of native manipulation of internal flags"
+    },
+    {
+      "id": 3,
+      "status": "COVERED",
+      "criterion": "Cancel preserves original XLSB and unsaved copy",
+      "layers": {
+        "nativeP5": "All three short cases cancel both shortcut and ordinary Save; original source fingerprints unchanged through normal quit; working copy remains unsaved/dirty"
+      },
+      "limit": "Mac fingerprints SHA256/bytes/mtimeNs; no inode/device claim"
+    },
+    {
+      "id": 4,
+      "status": "COVERED BY EXPLICITLY LAYERED VALIDATION, accepted by integration coordinator",
+      "criterion": "Save As uses selected new XLSX target; subsequent Ctrl+S uses normal XLSX writeback; original XLSB unchanged",
+      "layers": {
+        "source": "46-test suite includes chosen new-XLSX workfile route=terugschrijven/ext=xlsx/bevestigen=false; production policy and four testfiles byte-identical fix to P5",
+        "nativeP5Xlsb": "Actual original Mac full case writes selected imported-original.xlsx (30formulas/cache3), normalquit/reopen, then edits A15=40+2 and writes selected DIFFERENT edited-native.xlsx (6476B, cache42). Original XLSB unchanged. Final independent readback validates exact output twice in fresh processes with visible42.",
+        "nativeP5OrdinaryXlsx": "Separate P5 Windows core45195780472/job137767767878 and Linux core45194487509 validate ordinary existing-XLSX Ctrl+S/writeback/fullquit/newPID with independent XML. This is complementary core proof, not an XLSB-specific same-target chain.",
+        "historicalOnly": "P2 Linux45157164075 and Windows45154252404 full XLSB chains include Save As then Ctrl+S; historical P2, never relabelled P5"
+      },
+      "explicitBoundary": "P5 Mac XLSB chain calls office_save_as twice. It does NOT prove subsequent Cmd+S to the same already-selected XLSX target. No exact native XLSB-chain claim is borrowed from separate core/historical evidence.",
+      "coordinatorDecision": "Six AC require source/test and native evidence recorded separately; no extra single-chain/all-OS native requirement. Coordinator accepts this combined evidence with boundary, no new probe requested."
+    },
+    {
+      "id": 5,
+      "status": "COVERED BY SOURCE REGRESSION AND BOUNDED FIX DIFF",
+      "criterion": "Supported XLS warning retained; other formats/output catalogue unchanged by fix",
+      "layers": {
+        "source": "werkbestand.test.ts expects supported XLS writeback with bevestigen=true and selected XLSX with bevestigen=false;46tests PASS",
+        "delta": "Exact fix changes only src/werkbestand.ts and src/werkbestand.test.ts:35add/1remove. No catalogue/deps/Cargo/editor/version changes"
+      },
+      "limit": "Bounded377 delta assessment, no certification of all format variants"
+    },
+    {
+      "id": 6,
+      "status": "COVERED",
+      "criterion": "Record source/tests separately from fixed-package native acceptance; no XLSB export required",
+      "layers": {
+        "source": "Source-check proof35d55b9ef7e89682265937c063bf7e158f0ff7ba retained separately from actual fixed P5 native receipts",
+        "native": "Three short native receipts preserve platform/package/run/job/hash boundaries; original Mac failed100% OCR42 receipt stays failed, successful readback-only completion and independent audit separate",
+        "browser": "Retained original native workfile-token trigger is desktop-specific; shared source contracts only, no fresh browser UI claim",
+        "catalogue": "No optional XLSB export implementation or output catalogue change"
+      }
+    }
+  ],
+  "macOriginalFullRoute": {
+    "qaCommit": "4c2d7637e61a39d851cccb39d296d13d520a9388",
+    "source": "scripts/standalone-macos/sheet_formats.py",
+    "sourceSha256": "4e0064ddeea8217a0eb02c8db09b7818f5e3f4d8762b8d8321327ee95e2a92b6",
+    "saveHelperLines": [
+      124,
+      125
+    ],
+    "targetSaveLines": [
+      [
+        195,
+        196
+      ],
+      [
+        211,
+        212
+      ]
+    ],
+    "bothExplicitSaveAs": true,
+    "originalZip": {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-macos-20261123-6f92\\.local\\native-45357794642-2026-11-24\\spreadsheet-xlsb\\artifact.zip",
+      "bytes": 6053555,
+      "sha256": "fa28025fb854905a58643eb6f12b1a084e6569c418e6501d5fc964dd39981acd"
+    },
+    "outputs": [
+      {
+        "member": "spreadsheet-documents/xlsb/imported-original.xlsx",
+        "bytes": 6479,
+        "sha256": "d00213b474cee6440b9e9de4e7a29963411ee14dba4cbbfa9b78b8efb357fa75"
+      },
+      {
+        "member": "spreadsheet-documents/xlsb/edited-native.xlsx",
+        "bytes": 6476,
+        "sha256": "0eb60817b210e6e9261764b32f97971d69e9d9ee911f3a012072c91632defdee"
+      },
+      {
+        "member": "spreadsheet-documents/xlsb/shared_formula.xlsb",
+        "bytes": 7651,
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3"
+      }
+    ],
+    "oldFailureUnmodified": {
+      "type": "Unavailable",
+      "message": "Visible Writer body target unavailable; no input or paint primer sent: Unique readable original body word unavailable: 42"
+    },
+    "rawNativeAcceptedUnmodified": false
+  },
+  "mac42IndependentFinalAudit": {
+    "verdict": "PASS",
+    "audit": {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-native-independent\\spreadsheet-xlsb-readback\\audit.json",
+      "bytes": 10431,
+      "sha256": "6052605c47e21967184b691f42ed8535621ae5208064489ee5bf496415f7e5c1"
+    },
+    "index": {
+      "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-native-independent\\spreadsheet-xlsb-readback\\index.md",
+      "bytes": 5170,
+      "sha256": "2efa3187044d58edaa6160aee37e078b6a46910147a10b43d97861a30bd8ef4c"
+    },
+    "run": 45361373078,
+    "job": 138332599919,
+    "facts": "129members, exact6476B output/30formulas, two genuine200% images/42 OCRconfidence1, PIDs2471->6783/normalCmdQ/cleanup",
+    "noDuplicateAuditPerformed": true
+  },
+  "remaining": "Final coordinator review/disposition of this mapping only; no new probe authorized or started",
+  "exclusions": [
+    "Separate old Mac Suite one-off unexplained Save observation is not a377 acceptance criterion",
+    "No new native/GUI/capture/download/CI/build/test; no product edit/issueclose/main/tag/publication",
+    "Central release documentation remains integration-owned"
+  ]
+}
