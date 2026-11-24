@@ -67,6 +67,19 @@ def check_identity(info, program_bytes):
         raise ValueError("Suite identity/version/executable differs from frozen signed P5")
 
 
+def assigned_host_start(job, created):
+    # GitHub can fill job.started_at while it is queued and unassigned. Only a
+    # completed actual setup step demonstrates that this host started executing.
+    steps = [s for s in job.get("steps", []) if s.get("name") == "Set up job"
+             and s.get("status") == "completed" and s.get("conclusion") == "success"]
+    if job.get("status") != "in_progress" or not job.get("runner_id") or not job.get("runner_name") or len(steps) != 1:
+        raise PermissionError("Actual assigned running host/setup step not proven")
+    started = moment(steps[0]["started_at"])
+    if not timedelta(0) <= started-moment(created) <= timedelta(minutes=30):
+        raise PermissionError("Queue interval exceeds frozen30minute limit")
+    return started
+
+
 def save(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -124,9 +137,7 @@ def guard(request, out):
             or current["run_attempt"] != 1 or len(jobs) != 1
             or jobs[0]["name"] != "metadata-only" or jobs[0]["run_attempt"] != 1):
         raise PermissionError("Exact one-job workflow source/run/attempt binding differs")
-    started = moment(jobs[0]["started_at"])
-    if not timedelta(0) <= started-moment(current["created_at"]) <= timedelta(minutes=30):
-        raise PermissionError("Queue interval exceeds frozen30minute limit")
+    started = assigned_host_start(jobs[0], current["created_at"])
     deadline = started + timedelta(minutes=15)
     if now > deadline-timedelta(minutes=10):
         raise PermissionError("Insufficient time for acquisition, probe and cleanup")

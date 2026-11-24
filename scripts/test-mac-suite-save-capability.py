@@ -18,6 +18,8 @@ REQUEST = Path(__file__).parent.parent/".github/mac-suite-save-capability-reques
 class CapabilityGuards(unittest.TestCase):
     def setUp(self):
         self.value = json.loads(REQUEST.read_bytes())
+        # This is an isolated positive guard fixture, never execution authority.
+        self.value.update(executionApproved=True, metadataCapabilityApproved=True)
         self.now = datetime(2026, 11, 24, 12, tzinfo=timezone.utc)
         self.value.update(issuedAtUTC=self.now.isoformat(), expiresAtUTC=(self.now+timedelta(minutes=30)).isoformat())
 
@@ -66,6 +68,20 @@ class CapabilityGuards(unittest.TestCase):
 
 
 class MetadataEvidence(unittest.TestCase):
+    def test_queued_job_timestamp_is_not_a_started_host(self):
+        value={"status":"queued","runner_id":None,"runner_name":None,"steps":[],"started_at":"2026-11-24T11:54:32Z"}
+        with self.assertRaises(PermissionError):M["assigned_host_start"](value,"2026-11-24T11:54:32Z")
+
+    def test_actual_setup_not_queued_timestamp_sets_deadline(self):
+        value={"status":"in_progress","runner_id":1,"runner_name":"ownCI","started_at":"2026-11-24T11:54:32Z",
+               "steps":[{"name":"Set up job","status":"completed","conclusion":"success","started_at":"2026-11-24T12:02:00Z"}]}
+        self.assertEqual(M["assigned_host_start"](value,"2026-11-24T11:54:32Z"),datetime(2026,11,24,12,2,tzinfo=timezone.utc))
+
+    def test_actual_setup_after_maximum_queue_is_rejected(self):
+        value={"status":"in_progress","runner_id":1,"runner_name":"ownCI",
+               "steps":[{"name":"Set up job","status":"completed","conclusion":"success","started_at":"2026-11-24T12:25:00Z"}]}
+        with self.assertRaises(PermissionError):M["assigned_host_start"](value,"2026-11-24T11:54:32Z")
+
     def test_full_entitlements_dictionary(self):
         value={"com.apple.security.get-task-allow":False,"array":["exact",7]}
         self.assertEqual(M["entitlement_plist"](plistlib.dumps(value))["value"],value)
