@@ -1,0 +1,245 @@
+{
+  "status": "PASS bounded Windows native WPD6 body/activeHeaderA/pageboundary/edit/UndoRedo/save/reopen after actual image review",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45377603030,
+  "harness": "850630a9e405b0771e130c3d283f49a6e72b1d9e",
+  "artifact": {
+    "id": 14912691509,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkxMjY5MTUwOQ==",
+    "name": "standalone-windows-p5-writer-wpd6-proof",
+    "size_in_bytes": 426851,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14912691509",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14912691509/zip",
+    "expired": false,
+    "digest": "sha256:1fb72dc078579e35eff3e22f7b78093fa44cc37981334e31389fded45d327c05",
+    "created_at": "2026-11-24T10:48:40Z",
+    "updated_at": "2026-11-24T10:48:40Z",
+    "expires_at": "2027-02-22T10:44:18Z",
+    "workflow_run": {
+      "id": 45377603030,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/wpd6-windows-native-2026-11-24",
+      "head_sha": "850630a9e405b0771e130c3d283f49a6e72b1d9e"
+    }
+  },
+  "nativeStatus": "passed-scoped-native-function",
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "actualOriginalPickerTarget": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\wpd6-source\\source.wpd",
+  "independentNativeHeader": {
+    "documentOffset": 2826,
+    "indexOffset": 512,
+    "major": 2,
+    "minor": 1,
+    "encryption": 0,
+    "declaredBytes": 3587
+  },
+  "originalQualifiedBodyAndHeaders": {
+    "texts": [
+      "Foo",
+      "foo"
+    ],
+    "editedTexts": [
+      "QA_WPD6_24NOV Foo",
+      "foo"
+    ],
+    "edit": {
+      "paragraph": 0,
+      "offset": 0,
+      "text": "QA_WPD6_24NOV "
+    },
+    "headerTexts": [
+      "Header Type A",
+      "Header Type A but changed"
+    ],
+    "hardReturnBeforeHardPage": true
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "pid": 3416,
+      "started": "2026-11-24T10:47:06.641Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.48.1",
+        "name": "Open Writer Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "pid": 3416,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe",
+        "parent": 2556,
+        "windowHandle": 262286,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe"
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "productName": "LibreOffice",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL",
+        "productVersion": "26.8.2.2",
+        "signature": "Valid",
+        "fileVersion": "26.8.2.2",
+        "bytes": 523096,
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "reopened",
+      "pid": 1824,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\initial.docx",
+      "started": "2026-11-24T10:48:13.430Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "expectedInputTabVisible": "initial.docx",
+      "exactInputTabActivated": true,
+      "nativeMetadata": {
+        "identifier": "org.openaec.writer-studio",
+        "version": "2026.48.1",
+        "name": "Open Writer Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\initial.docx",
+        "windowHandle": 262490,
+        "pid": 1824,
+        "parent": 2556,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe"
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\open-writer-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "bytes": 523096,
+        "productName": "LibreOffice",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-Lix3Le\\installed\\kantoorruntime\\program\\soffice.com",
+        "fileVersion": "26.8.2.2",
+        "signature": "Valid",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "productVersion": "26.8.2.2",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    }
+  ],
+  "originalInput": {
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\wpd6-source\\source.wpd",
+    "sha256": "d5fde49f38d0dd73c65c0d19cb132defcc037dc09c8c405a2dfbaba457d65150",
+    "bytes": "3587",
+    "mtimeNs": "1795517226039707000",
+    "inode": "281474976716014",
+    "device": "2319191288",
+    "unchanged": true
+  },
+  "independentCases": [
+    {
+      "kind": "writer",
+      "bytes": 7693,
+      "sha256": "15e10b7a9ee5f066000c8572c2ca67ca9a48e80c2a7ed1fbb8aeca4da0c6c1d7",
+      "checkedSourceCases": 6,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 7692,
+      "sha256": "57b9d8a297c3a7ce2732e25f8406228ad112c77703463f336773f300f1c4e58f",
+      "checkedSourceCases": 6,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 7672,
+      "sha256": "91d2cfc469f62d236f40529ad4f5c400efdb1c13eecf119c817dd128158963e8",
+      "checkedSourceCases": 6,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 7693,
+      "sha256": "0a0e01dffab2ceb068aa6dfd2c9ffa57a92885cf24911cd660447f76108748a9",
+      "checkedSourceCases": 6,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    },
+    {
+      "kind": "writer",
+      "bytes": 7671,
+      "sha256": "8c99db8abaa3c697045a4036014d54e71739e9e623ff580a002c93a44a587a3e",
+      "checkedSourceCases": 6,
+      "fullFormatAcceptance": false,
+      "status": "passed"
+    }
+  ],
+  "images": [
+    {
+      "name": "wpd6-initial-source.png",
+      "sha256": "7d170cd854497448fbc000186896145ea53773d941f7e902ad3f41b67e655ddd"
+    },
+    {
+      "name": "initial-completed.png",
+      "sha256": "baec9bc9f4a1876ff8f1a9c71a7c62bd53f0178fcfd04d0dee4b71e04deb57ec"
+    },
+    {
+      "name": "wpd6-reopened-source.png",
+      "sha256": "3f4c9948a64cf7baf2cbcae7a0a9b8108bf5a673af7128511cb7ffa63c16b817"
+    },
+    {
+      "name": "reopened-completed.png",
+      "sha256": "1d1ed94c22b4b57bdbf971c8ac94c44d36c9a1f1250c45d3c65e18e137bbd67a"
+    }
+  ],
+  "visualReview": "Four actual images viewed individually: initial Header Type A and Foo visible; prefix QA_WPD6_24NOV visible after save and fresh-process reopen. Second header/body association and logical boundary independently checked from saved XML; no second-page visual/font/layout claim. Visible UI page counter2 is observed only, not accepted rendered pagination.",
+  "limitations": "Only lo-wpd-1 original6-family source and six qualified cases; no exact producing release, otherWPversions, fonts/styles/margins/geometry/visualpagination/opaque packets/macros/encryption/fullformat; inactive first-page header withouttitlePg remains excluded. Otherplatforms/browser unchanged; no product/P5intake change."
+}

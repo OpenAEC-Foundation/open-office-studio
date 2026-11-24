@@ -8,4 +8,17 @@ Native case: actual common Open dialog selects unchanged original source.wpd; ap
 
 Metadata and native execution both use Windows hosted runners: zero Linux slots while publisher is critical. No local GUI/capture, browser or app started. This scoped native case does not reapprove other OS/browser, fonts/styles/geometry, rendered page count, inactive header content, opaque packets, producing release or full format. No product/catalog/intake/main/tag/publication changes.
 
-Result: pending actual native execution and independent byte/image review. Own ready flags will be frozen after completion. No next scope automatically.
+## Result
+
+**PASS: bounded native Windows input/edit/UndoRedo/DOCXsave/normalquit/newPID/reopen and six source-derived cases across five DOCX checkpoints (30 checks).** Not full-format acceptance.
+
+- [Run45377603030](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45377603030), attempt1, native job138388166489 and metadata job138387921045 SUCCESS; harness850630a9e405b0771e130c3d283f49a6e72b1d9e. Both actual job labels windows-latest: zero Linux slots.
+- Whole official proof ZIP and binding ZIP verified against official current metadata then retained unchanged with run/jobs/artifacts, independent-audit and separate manual review in evidence/45377603030. inventory.json binds raw Git bytes. Original P2 failure and its corrected normative oracle remain untouched.
+- All five saved DOCX files independently retain Foo/foo case, two hard-return paragraphs, successive active headers, odd/even default coverage, corresponding body/header association and explicit logical page boundary. Imported/undo files have original body; edited/initial/reopened have exact prefix. The inactive first-page header without titlePg remains inactive and is not treated as loss.
+- Four actual images viewed: first active Header Type A and original Foo, then prefix visible after saved initial and new-process reopen/resave. The second header/body association and hard-page boundary are XML checks, not second-page visual approval. UI counter2 is observed only, no rendered pagination claim.
+- Original nativepicker target is the unchanged3587B source.wpd. SHA, size, mtime and nonzero Windows file identity unchanged. Signed installedPE equals independently extracted canonical NSIS payload. Actual own app ID/version/profile and bundled safe runtime checked in both native processes. Two normal full exits, differentPIDs and strict cleanup passed.
+- Owned app/WebView processes exited, install uninstalled, native/temporary profiles disposed and test WebView policy restored. No local GUI/capture/browser/session was opened, so no local capture cleanup is pending. Small ignored local raw/static-preflight caches remain available in this worktree.
+- Own ready/officialMetadataGo flags are frozen false; no repeat dispatch or next scope. No product issue established or app/product/catalog/build/intake/main/tag/publication changed.
+
+
+Proof artifact 14912691509, 426851B, sha256:1fb72dc078579e35eff3e22f7b78093fa44cc37981334e31389fded45d327c05, expires 2027-02-22T10:44:18Z. Native PIDs 3416 → 1824; unchanged source inode 281474976716014.
