@@ -18,6 +18,7 @@ import { testFinalTitle } from "./windows-final-title-case.mjs";
 import { testNativeFindReplace } from "./windows-find-replace-case-20261124.mjs";
 import { testNativeRegex } from "./windows-regex-case-20261124.mjs";
 import { testSearchExtras } from "./windows-search-extras-case-20261124.mjs";
+import { testNativeBookmarks } from "./windows-bookmarks-case-20261124.mjs";
 
 assert.equal(process.platform, "win32");
 assert.equal(process.env.GITHUB_ACTIONS, "true");
@@ -27,7 +28,8 @@ assert(manifestFile && outputDirectory, "Pass frozen candidate JSON and fresh ou
 const identity = JSON.parse(await readFile(manifestFile, "utf8"));
 const regexOnly = identity.focusedCase === "regex-20261124";
 const extrasOnly = identity.focusedCase === "search-extras-20261124";
-const findReplaceOnly = identity.focusedCase === "find-replace-20261124" || regexOnly || extrasOnly;
+const bookmarksOnly = identity.focusedCase === "bookmarks-20261124";
+const findReplaceOnly = identity.focusedCase === "find-replace-20261124" || regexOnly || extrasOnly || bookmarksOnly;
 if (findReplaceOnly) assert(identity.requireSigned && !identity.titleOnly && !identity.testTitleOverlap);
 assert.equal(identity.executeNative, true);
 if (process.argv.includes("--require-signed")) assert.equal(identity.requireSigned, true, "Final native route requires an explicitly signed candidate");
@@ -101,7 +103,7 @@ async function reuseReviewedCore() {
   await writeFile(join(out, "reused-core-origin-report.json"), raw);
   report.reusedCore = { ...ref, originWholeRunStatus: "failed", acceptedSpecificChecks: 12, excluded: "Original failed Title SaveAs and its forced cleanup are not accepted", originalCorePids: prior.processes.slice(0, 2).map(p => p.pid) };
   report.executionScope = findReplaceOnly
-    ? `${extrasOnly ? "Wildcard/format/special-character" : regexOnly ? "Regex" : "Ordinary Find/Replace"}-only native continuation on identical public P5 Suite; earlier core checks reused, no new title test`
+    ? `${bookmarksOnly ? "Bookmark/Go To" : extrasOnly ? "Wildcard/format/special-character" : regexOnly ? "Regex" : "Ordinary Find/Replace"}-only native continuation on identical public P5 Suite; earlier core checks reused, no new title test`
     : "Title-only native continuation on the identical signed Suite; 12 independently reviewed earlier core checks reused";
 }
 function ps(script) {
@@ -366,9 +368,10 @@ try {
   await closeApplication(); report.checks.push({ name: "normal close exits reopened process", pid: secondPid });
   }
   if (identity.testTitleOverlap) await testFinalTitle({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
-  if (findReplaceOnly && !regexOnly && !extrasOnly) await testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
+  if (findReplaceOnly && !regexOnly && !extrasOnly && !bookmarksOnly) await testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   if (regexOnly) await testNativeRegex({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   if (extrasOnly) await testSearchExtras({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report },identity.extrasFamilies);
+  if (bookmarksOnly) await testNativeBookmarks({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   assert.deepEqual(report.errors, []); report.status = "passed";
 } catch (error) {
   report.status = "failed"; report.error = String(error.stack || error); process.exitCode = 1;

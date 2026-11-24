@@ -40,7 +40,7 @@ def stamp(value):
 
 def descriptor(plan):
     assert plan["requireSigned"] is True
-    if plan.get("focusedCase") in ("find-replace-20261124", "regex-20261124", "search-extras-20261124"):
+    if plan.get("focusedCase") in ("find-replace-20261124", "regex-20261124", "search-extras-20261124", "bookmarks-20261124"):
         assert plan["testTitleOverlap"] is False and plan["titleOnly"] is False
     else:
         assert plan.get("focusedCase") is None and plan["testTitleOverlap"] is True

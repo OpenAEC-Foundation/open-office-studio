@@ -1,0 +1,62 @@
+{
+  "mode": "bookmarks-20261124",
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Only existing bookmark Go To navigation and offset/history/DOCX preservation on public P5; no unoffered bookmark creation/deletion API, links/TOC/crossreferences/page numbering",
+  "fixturePath": "docs/tests/windows-writer-bookmarks-20261124/source.docx",
+  "fixtureSha256": "b738970e9a07f801dfac273640a01e6d01840f8a69f65dfdf5a64baec226272d",
+  "fixtureBytes": 36839,
+  "baseline": [
+    "CELL target tail",
+    "bold",
+    "control",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "CELL target tail",
+    "bold",
+    "control",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "CELL target tail",
+    "bold",
+    "control",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "bodyInitial": "BODY target tail",
+  "bodyFinal": "SHIFT_BODY FINAL_target tail",
+  "reopenQuery": "target",
+  "reopenCount": 2,
+  "userBookmarks": [
+    "BodyTarget",
+    "CellTarget"
+  ],
+  "initialOffsets": {
+    "BodyTarget": 5,
+    "CellTarget": 5
+  },
+  "bodyPrefixShift": 6,
+  "semantics": "Exact P5 UI Ctrl+G offers Bookmark and existing named target list. Source supports fresh-session current offsets and filters internal names starting underscore. Double-click explicitly visits and closes dialog. No bookmark create/delete UI is advertised in P5 repository components; those actions are not inferred from broad closed overview52.",
+  "coverage": "Nov9 proof is source/Yrs/production-browser; explicitly no nativeWindowsbuild. P5 prior native groups cover core/search/title but not named bookmark navigation. Existing source/platform results reused; new native only for missing controls.",
+  "sourceSha256": {
+    "src/tekst/zoeken/ganaar.ts": "8eb84ddb228c74bda2169fcac521127231c83e02a45fc473e9df4a295b8eb5ee",
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/tekst/zoeken/bladwijzers-engine.test.ts": "3749709010c03af5f7820d07ccf97b5f3970e1b9af6ed5126f4a03db6f41e67f"
+  }
+}

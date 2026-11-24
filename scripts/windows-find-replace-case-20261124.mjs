@@ -7,13 +7,14 @@ import { DOMParser } from "@xmldom/xmldom";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 
 export async function testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage, waitFor, report,
-  planPath = "docs/tests/windows-writer-find-replace-20261124/plan.json", runCases }) {
+  planPath = "docs/tests/windows-writer-find-replace-20261124/plan.json", runCases, inspectInitial, afterReopen }) {
   const plan = JSON.parse(await readFile(planPath, "utf8"));
   const mode = {
     "regex-20261124": ["regexCase", "Regex native.docx", "regex"],
     "wildcard-20261124": ["wildcardCase", "Wildcard native.docx", "wildcard"],
     "format-20261124": ["formatCase", "Format native.docx", "format"],
     "special-20261124": ["specialCase", "Special native.docx", "special"],
+    "bookmarks-20261124": ["bookmarkCase", "Bookmark native.docx", "bookmarks"],
   }[plan.mode];
   const customMode = Boolean(mode);
   assert.equal(Boolean(runCases), customMode, "Delegated case body requires an explicitly supported QA mode");
@@ -31,7 +32,9 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   };
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0,3,6].map(n => `<w:tr>${baseline.slice(n,n+3).map((t,i)=>cell(t,n+i)).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
   parts["word/document.xml"] = strToU8(strFromU8(parts["word/document.xml"]).replace(/(<w:body>)[\s\S]*?(<w:sectPr)/, `$1${table}$2`));
-  await writeFile(path, zipSync(parts), { flag: "wx" });
+  const fixture=plan.fixturePath?await readFile(plan.fixturePath):zipSync(parts);
+  if(plan.fixturePath){assert.equal(fixture.length,plan.fixtureBytes);assert.equal(sha(fixture),plan.fixtureSha256);}
+  await writeFile(path,fixture,{flag:"wx"});
   const evidence = report[customMode ? mode[0] : "findReplaceCase"] = { plan, steps: [], fixtureSha256: sha(await readFile(path)), screenshots: [] };
   let page;
   async function disk(snapshot) {
@@ -73,6 +76,7 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   }
   const original=await disk(); assert.deepEqual(original.cells,baseline); assert(original.secondCellBold);
   const pid0=await startApplication(exe,port,path,true);page=getPage();await visible(baseline);await focus();
+  if(inspectInitial){assert.equal(plan.mode,"bookmarks-20261124");await inspectInitial({page,evidence,plan});}
   await page.keyboard.press("Control+Home"); await page.keyboard.type("QA ");
   const prefixed=["QA "+baseline[0],...baseline.slice(1)];await visible(prefixed);
   const preflightSaved=await save(prefixed);await closeApplication();
@@ -137,12 +141,14 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   }
   const pid2=await startApplication(exe,port,path,true);assert.notEqual(pid1,pid2);page=getPage();await visible(finalExpected);
   assert.deepEqual(await disk(),saved);await shot(`${prefix}-reopened`);
+  if(afterReopen){assert.equal(plan.mode,"bookmarks-20261124");await afterReopen({page,evidence,plan});}
   await page.keyboard.press('Control+h');
   const reopenedPane=page.getByRole('search',{name:'Find and Replace',exact:true});
   await textInput(reopenedPane.getByRole('searchbox',{name:'Find what',exact:true}),customMode?plan.reopenQuery:'hond');
   await waitFor(async()=>await reopenedPane.locator('.tw-zoek-resultaten li').count()===(customMode?plan.reopenCount:6),'Reopened actual document finds every persisted replacement');
   evidence.steps.push({name:"Real CtrlS, normal exit, newPID reopen retains exact replacements and bold control; reopened native Find confirms persisted text",passed:true,pid1,pid2});
   await page.locator('.tw-zoek-sluit').click();await closeApplication();
+  evidence.finalClosedSnapshot=await disk();assert.deepEqual(evidence.finalClosedSnapshot.cells,finalExpected);
   evidence.processIds=[pid0,pid1,pid2];evidence.docx=path;evidence.visualStatus='requires screenshot review';
   evidence.acceptanceStatus=evidence.failures?.length?"failed":"passed";
   report.checks.push({name:customMode?`Focused native ${mode[2]} ${evidence.acceptanceStatus}`:'Focused native ordinary Find/Replace acceptance',steps:evidence.steps.length,failures:evidence.failures?.length??0});
