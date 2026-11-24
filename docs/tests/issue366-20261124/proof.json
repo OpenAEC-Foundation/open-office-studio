@@ -1,0 +1,201 @@
+{
+  "issue": 366,
+  "date": "2026-11-24",
+  "status": "NOT_REPRODUCED_IN_BOUNDED_SYNTHETIC_CASE",
+  "issueResolution": "OPEN: original fixture/formatting and independently verified expected layout remain unavailable",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "harnessCommit": "2b6edf15090b16095a4ba75c8d671ae4f00cee5d",
+  "harnessSha256": "94ffc3a6adc7c1cde2d84ce932b9a1a2852d279a770df83d96c5ee943c40cc95",
+  "executionReportedHead": "563c193a47766647f1eee8b040d43d827eebe4dd",
+  "sourceBinding": "Execution head predates the QA-only font-middleware commit; executed helper hash matches the retained QA commit; all product files equal immutable P5.",
+  "environment": {
+    "node": "v24.22.3",
+    "platform": "win32",
+    "architecture": "x64",
+    "playwright": "1.62.1",
+    "browser": "installed Playwright Chromium, headless, isolated contexts; not native Windows",
+    "route": "/",
+    "server": "Vite development server with read-only API/status observation bridge",
+    "fonts": "70 original installed bundled font assets, source hashes in raw report; no extra fonts downloaded",
+    "spelling": "dictionary assets unavailable; status explicitly reports spelling not available"
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "actualLayoutPages": 3,
+      "displayedTotal": 3,
+      "displayedCurrent": 1,
+      "editorCurrent": 1,
+      "paragraphs": 20,
+      "firstMatchingObservationMs": 960,
+      "pasteToFirstMatchingObservationMs": null,
+      "lastStatusText": "LocalOpen Tekst StudioPage 1 of 31,080 words, 7,080 charactersEnglish (United States) · spelling not availableTrack Changes: off100%ReadyCtrl+S"
+    },
+    {
+      "phase": "double-1",
+      "actualLayoutPages": 6,
+      "displayedTotal": 6,
+      "displayedCurrent": 5,
+      "editorCurrent": 5,
+      "paragraphs": 39,
+      "firstMatchingObservationMs": 5981,
+      "pasteCommandBoundaryMs": 5542,
+      "pasteToFirstMatchingObservationMs": 439,
+      "lastStatusText": "LocalOpen Tekst StudioPage 5 of 62,160 words, 14,160 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "double-2",
+      "actualLayoutPages": 11,
+      "displayedTotal": 11,
+      "displayedCurrent": 11,
+      "editorCurrent": 11,
+      "paragraphs": 77,
+      "firstMatchingObservationMs": 11663,
+      "pasteCommandBoundaryMs": 11162,
+      "pasteToFirstMatchingObservationMs": 501,
+      "lastStatusText": "LocalOpen Tekst StudioPage 11 of 114,320 words, 28,320 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "double-3",
+      "actualLayoutPages": 21,
+      "displayedTotal": 21,
+      "displayedCurrent": 21,
+      "editorCurrent": 21,
+      "paragraphs": 153,
+      "firstMatchingObservationMs": 17421,
+      "pasteCommandBoundaryMs": 16881,
+      "pasteToFirstMatchingObservationMs": 540,
+      "lastStatusText": "LocalOpen Tekst StudioPage 21 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "undo",
+      "actualLayoutPages": 11,
+      "displayedTotal": 11,
+      "displayedCurrent": 11,
+      "editorCurrent": 11,
+      "paragraphs": 77,
+      "firstMatchingObservationMs": 22462,
+      "pasteToFirstMatchingObservationMs": null,
+      "lastStatusText": "LocalOpen Tekst StudioPage 11 of 114,320 words, 28,320 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "redo",
+      "actualLayoutPages": 21,
+      "displayedTotal": 21,
+      "displayedCurrent": 1,
+      "editorCurrent": 1,
+      "paragraphs": 153,
+      "firstMatchingObservationMs": 28087,
+      "pasteToFirstMatchingObservationMs": null,
+      "lastStatusText": "LocalOpen Tekst StudioPage 1 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "fresh-context-reopen",
+      "actualLayoutPages": 21,
+      "displayedTotal": 21,
+      "displayedCurrent": 1,
+      "editorCurrent": 1,
+      "paragraphs": 153,
+      "firstMatchingObservationMs": 39641,
+      "pasteToFirstMatchingObservationMs": null,
+      "lastStatusText": "LocalOpen Tekst StudioPage 1 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%ReadyCtrl+S"
+    }
+  ],
+  "saved": {
+    "sha256": "dba59494723f6f7425d2d3eff5dbe70ec8d7b29f03120bdd17ce9e8a549a9c33",
+    "paragraphs": 153,
+    "exact": true
+  },
+  "checks": {
+    "clipboard": "actual Ctrl+A/C/End/V, exact clipboard source oracle for every doubling",
+    "content": "exact paragraph arrays after every operation, independent downloaded DOCX XML and fresh browser-context reopen",
+    "pageOracle": "live editor layout.pages.length compared with published status and original visible status-bar screenshots; no inferred 15-page oracle",
+    "navigation": "actual keyboard Home/End and current-page display equality; no claim to repair or fully cover caret/navigation",
+    "undoRedo": "actual Ctrl+Z/Ctrl+Y, exact prior/restored paragraph arrays and layout totals",
+    "cleanup": true,
+    "productChanges": false
+  },
+  "limitations": [
+    "No reproduction of the original I3 report or cause determination.",
+    "No production build, hosted /office/ route, Linux/macOS browser or native operating-system acceptance.",
+    "Five-second observation windows per operation; measured prompt updates, no two-minute idle test.",
+    "Observed response times include keyboard and 250ms sampling overhead, not exact layout-completion latency.",
+    "Initial allowlist failure and incomplete-CJK-font runs are preserved separately; final evidence uses both bundled-font packages."
+  ],
+  "retained": [
+    {
+      "name": "initial.png",
+      "bytes": 246276,
+      "sha256": "c73b5f7efffb86afc5ecf1e5c66e676fcb8473afcab7069f9f6be6703b9ec05c"
+    },
+    {
+      "name": "double-1.png",
+      "bytes": 196939,
+      "sha256": "3a217bc1412d88e3e24d4d4139bac5c167e5b5d6a27730b899f1e66fe23ea69c"
+    },
+    {
+      "name": "double-2.png",
+      "bytes": 198047,
+      "sha256": "e350327fc20171652b3c73aadb46b2afc76f3ae88c882c640845a39ca50a024c"
+    },
+    {
+      "name": "double-3.png",
+      "bytes": 200204,
+      "sha256": "ebef0a4c9e9b6ebdb5ca710d6c93b9aa49d74e0bafc67835060759566c573482"
+    },
+    {
+      "name": "undo.png",
+      "bytes": 90218,
+      "sha256": "8de8dba214abafbf5c8697462eadc6efeef8d41e5da47d3fa348009b9f808e9a"
+    },
+    {
+      "name": "redo.png",
+      "bytes": 268967,
+      "sha256": "88c9436e87514382b65493df6940440702f48d0eec15d1792ce5a5a11a810473"
+    },
+    {
+      "name": "fresh-context-reopen.png",
+      "bytes": 245795,
+      "sha256": "6189d5b1aa824551cdd0b75614aa62fe40bbb169efd287e28659713f7d1dccef"
+    },
+    {
+      "name": "source.docx",
+      "bytes": 37049,
+      "sha256": "35150d501d9775a2484207cef0de22ab579f0345504780695c442355779f1ab7"
+    },
+    {
+      "name": "saved.docx",
+      "bytes": 38645,
+      "sha256": "dba59494723f6f7425d2d3eff5dbe70ec8d7b29f03120bdd17ce9e8a549a9c33"
+    },
+    {
+      "name": "baseline-1.json.gz",
+      "bytes": 507,
+      "sha256": "401733f9ba41de710e1f414a65be8aa4305d9192d7bada7bdd215990d3bec617",
+      "uncompressedSha256": "30809d66312f797c8077a36b38cfb4748bb053c13e703f1213a53c594ccf530c",
+      "uncompressedBytes": 731
+    },
+    {
+      "name": "baseline-2.json.gz",
+      "bytes": 40816,
+      "sha256": "a8a79a8a0131d5ec05365167bdb493b24b3b1efef8a70c1ba089243d48b1aa7d",
+      "uncompressedSha256": "bde6588e0cb31f4793b70cadea39f131787f10a83443507d22829c3fef173c39",
+      "uncompressedBytes": 2293783
+    },
+    {
+      "name": "repeated-1.json.gz",
+      "bytes": 60303,
+      "sha256": "442d392a5727cbb0c5686e4f0a0c93b0026a59acbf55dbe244debdd94bbd7604",
+      "uncompressedSha256": "a580d33698f50f89bc2703e5fe8eb8c1413ab80c74ce9bc30f173953f79c67de",
+      "uncompressedBytes": 4191894
+    },
+    {
+      "name": "repeated-fonts-complete.json.gz",
+      "bytes": 64233,
+      "sha256": "5bc145c4c41ea7a016e95b69903f2254359bd76ac95a4de6c92d7bd5fdd762a7",
+      "uncompressedSha256": "afc077c7c19fdf8097d5f5781896c3592ee5423631210cfb0125f100ec27b2c5",
+      "uncompressedBytes": 4194409
+    }
+  ]
+}
