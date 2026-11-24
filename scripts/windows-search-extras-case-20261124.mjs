@@ -1,5 +1,7 @@
 /** Three explicitly requested families, independent fixtures, one signed Suite host. */
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { testNativeFindReplace } from "./windows-find-replace-case-20261124.mjs";
 
 export async function testSearchExtras(context,families) {
@@ -11,6 +13,7 @@ export async function testSearchExtras(context,families) {
     context.report.extrasStarted.push(family);
     await testNativeFindReplace({...context,planPath:`docs/tests/windows-writer-search-extras-20261124/${family}-plan.json`,runCases:cases[family]});
   }
+  assert.equal(context.report.specialCase?.failures?.length??0,0,"Special-character product checks failed; successful independent checks are retained, not a whole-run pass");
 }
 async function search(c,text,count) {
   await c.textInput(c.query,text);await c.page.waitForTimeout(400);
@@ -89,6 +92,7 @@ async function formatCase(c) {
   c.evidence.steps.push({name:'Heading1-filtered single replacement changes only intended heading and supports Undo/Redo',passed:true});
 }
 async function specialCase(c) {
+  if(c.plan.collectIndependentFailures) return collectSpecialCases(c);
   for(const test of c.plan.patterns) {
     const status=await search(c,test.query,test.count);
     c.evidence.steps.push({name:'Documented caret-code search finds independent control character/text',passed:true,query:test.query,status});
@@ -102,4 +106,50 @@ async function specialCase(c) {
     await undo(c,test.before);await c.page.keyboard.press('Control+y');await c.visible(test.after);
     c.evidence.steps.push({name:'Special-character replacement and one-step Undo/Redo preserve declared control structure',passed:true,query:test.query,replacement:test.replacement});
   }
+}
+
+async function collectSpecialCases(c) {
+  const priorRaw=await readFile('docs/tests/windows-writer-search-extras-20261124/initial-evidence/report.json');
+  assert.equal(createHash('sha256').update(priorRaw).digest('hex'),'c7ea327863fdb5038e0306d3483bf75c7f3453b3b5cae7020004cdd69751b378');
+  const prior=JSON.parse(priorRaw);assert.equal(prior.identity.applicationCommit,c.plan.sourceCommit);assert.equal(prior.status,'failed');
+  const reused=prior.specialCase.steps.slice(1,9);assert.equal(reused.length,8);assert(reused.every(s=>s.passed));
+  c.evidence.reusedQueryAndInsertControls={run:45399525727,artifact:14922138923,rawReportSha256:'c7ea327863fdb5038e0306d3483bf75c7f3453b3b5cae7020004cdd69751b378',checks:reused};
+  c.evidence.failures=[];let current=c.baseline.slice();
+  async function saveSnapshot(expected) {
+    if(await c.page.locator('.tw-zoek-sluit').count())await c.page.locator('.tw-zoek-sluit').click();
+    await c.page.waitForFunction(()=>document.activeElement?.matches('.paged-editor__yrs-input'));
+    await c.page.keyboard.press('Control+s');await c.page.waitForFunction(()=>!/[•●]/.test(document.title));
+    await c.page.waitForTimeout(500);
+    const state=expected?await c.waitFor(async()=>{const s=await c.disk();return JSON.stringify(s.cells)===JSON.stringify(expected)?s:null;},'Actual saved control-character structure must equal independently expected state'):await c.disk();
+    assert(state.secondCellBold);return state;
+  }
+  for(const test of c.plan.operations) {
+    if(!(await c.pane.count()))await c.page.keyboard.press('Control+h');
+    await search(c,test.query,test.count);await c.page.waitForTimeout(400);
+    await c.textInput(c.replacement,test.replacement);
+    const before=current.slice(),after=current.slice();
+    const changed=test.after.map((s,i)=>s!==test.before[i]?i:null).filter(i=>i!==null);assert.equal(changed.length,1);
+    after[changed[0]]=test.after[changed[0]];
+    const observed={query:test.query,replacement:test.replacement,before,expectedAfter:after};
+    await c.pane.getByRole('button',{name:'Replace All',exact:true}).click();
+    const terminal=await c.waitFor(async()=>{
+      const focus=await c.page.evaluate(()=>({editor:document.activeElement?.matches('.paged-editor__yrs-input'),active:document.activeElement?.outerHTML.slice(0,700)}));
+      const errorSpan=await c.pane.locator('.tw-zoek-telling span').allTextContents();
+      const status=await c.pane.locator('.tw-zoek-telling').textContent();
+      return focus.editor||errorSpan.length||/matches? replaced;/.test(status)?{...focus,errorSpan,status}:null;
+    },'Replacement must produce an actual UI success or error terminal state');
+    observed.ui=terminal;observed.saved=await saveSnapshot(terminal.editor&&!terminal.errorSpan.length?after:undefined);
+    const changedAsExpected=JSON.stringify(observed.saved.cells)===JSON.stringify(after);
+    if(!terminal.editor||terminal.errorSpan.length||!changedAsExpected) {
+      assert([JSON.stringify(before),JSON.stringify(after)].includes(JSON.stringify(observed.saved.cells)),'Unexpected partial mutation: abort independent continuation and preserve evidence');
+      observed.passed=false;observed.classification='Unclassified actual UI/semantic replacement failure; review exact error and DOCX before product triage';
+      c.evidence.failures.push(observed);c.evidence.steps.push({name:'Special replacement failed its original acceptance criteria',...observed});current=observed.saved.cells.slice();
+      continue;
+    }
+    await c.page.keyboard.press('Control+z');observed.undo=await saveSnapshot(before);assert.deepEqual(observed.undo.cells,before);
+    await c.page.keyboard.press('Control+y');observed.redo=await saveSnapshot(after);assert.deepEqual(observed.redo.cells,after);
+    current=after;c.evidence.steps.push({name:'Special control replacement, exact saved XML, Undo and Redo all verified',passed:true,...observed});
+  }
+  if(!(await c.pane.count()))await c.page.keyboard.press('Control+h');
+  return {expectedFinal:current};
 }

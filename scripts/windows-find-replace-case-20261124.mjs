@@ -18,6 +18,7 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   const customMode = Boolean(mode);
   assert.equal(Boolean(runCases), customMode, "Delegated case body requires an explicitly supported QA mode");
   const baseline = plan.baseline, bulk = plan.bulk, single = plan.single;
+  let finalExpected = bulk;
   const sha = b => createHash("sha256").update(b).digest("hex");
   const path = join(out, customMode ? mode[1] : "Find Replace native.docx");
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
@@ -91,7 +92,11 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   async function textInput(field,text){await field.click();await page.keyboard.press("Control+a");if(text)await page.keyboard.type(text);else await page.keyboard.press("Backspace");assert.equal(await field.inputValue(),text);}
   async function results(n){await waitFor(async()=>await pane.locator('.tw-zoek-resultaten li').count()===n,`Native search must report ${n} results`);return await pane.locator('.tw-zoek-telling').textContent();}
   if (runCases) {
-    await runCases({page,pane,query,replacement,whole,matchCase,textInput,results,visible,baseline,bulk,single,plan,evidence,disk,baselineSaved,waitFor});
+    const result=await runCases({page,pane,query,replacement,whole,matchCase,textInput,results,visible,baseline,bulk,single,plan,evidence,disk,baselineSaved,waitFor});
+    if(result?.expectedFinal) {
+      assert(plan.mode==="special-20261124"&&plan.collectIndependentFailures===true);
+      finalExpected=result.expectedFinal;evidence.partialExpectedFinal=finalExpected;
+    }
   } else {
   await textInput(query,"kat");let status=await results(plan.counts.literal);
   evidence.steps.push({name:"Literal case-insensitive search includes substrings across cells",passed:true,status});
@@ -119,8 +124,8 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   }
   await page.locator('.tw-zoek-sluit').click();await page.waitForFunction(()=>document.activeElement?.matches('.paged-editor__yrs-input'));
   const prefix=customMode?mode[2]:'find-replace';
-  const saved=await save(bulk);evidence.saved=saved;await shot(`${prefix}-saved`);await closeApplication();
-  const pid2=await startApplication(exe,port,path,true);assert.notEqual(pid1,pid2);page=getPage();await visible(bulk);
+  const saved=await save(finalExpected);evidence.saved=saved;await shot(`${prefix}-saved`);await closeApplication();
+  const pid2=await startApplication(exe,port,path,true);assert.notEqual(pid1,pid2);page=getPage();await visible(finalExpected);
   assert.deepEqual(await disk(),saved);await shot(`${prefix}-reopened`);
   await page.keyboard.press('Control+h');
   const reopenedPane=page.getByRole('search',{name:'Find and Replace',exact:true});
@@ -129,5 +134,6 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   evidence.steps.push({name:"Real CtrlS, normal exit, newPID reopen retains exact replacements and bold control; reopened native Find confirms persisted text",passed:true,pid1,pid2});
   await page.locator('.tw-zoek-sluit').click();await closeApplication();
   evidence.processIds=[pid0,pid1,pid2];evidence.docx=path;evidence.visualStatus='requires screenshot review';
-  report.checks.push({name:customMode?`Focused native ${mode[2]} acceptance`:'Focused native ordinary Find/Replace acceptance',steps:evidence.steps.length});
+  evidence.acceptanceStatus=evidence.failures?.length?"failed":"passed";
+  report.checks.push({name:customMode?`Focused native ${mode[2]} ${evidence.acceptanceStatus}`:'Focused native ordinary Find/Replace acceptance',steps:evidence.steps.length,failures:evidence.failures?.length??0});
 }
