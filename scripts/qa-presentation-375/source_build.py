@@ -175,7 +175,10 @@ def main():
     run('configure',['perl',str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
     configured_workdir = re.findall(r'^export WORKDIR=(.*)$', (source/'config_host.mk').read_text(), re.M)
     assert configured_workdir == [str(source/'workdir')], 'UI resource target must match the actual configured workdir'
+    configured_fetch = re.findall(r'^export DO_FETCH_TARBALLS=(.*)$', (source/'config_host.mk').read_text(), re.M)
+    assert configured_fetch == ['TRUE'], 'The source wrapper must use normal pinned external-archive fetching'
     REPORT['testInitializationBinding']['configuredWorkdir'] = configured_workdir[0]
+    REPORT['testInitializationBinding']['configuredFetchTarballs'] = configured_fetch[0]
     cli_targets, REPORT['cliTargetSelection'] = select_cli_targets(source, source/'config_host.mk')
     receipt()
     run('target-selection-regressions',[BUILD_PYTHON,str(OWN/'test_source_targets.py'),'--source',str(source)])
@@ -186,7 +189,7 @@ def main():
         if p.is_file():shutil.copyfile(p,OUT/p.name)
     run('linker-version',['ld','--version'])
     compiler_start=time.monotonic()
-    run('impress-test-ui-resource',['make','-j3','-f','Makefile.gbuild',REPORT['testInitializationBinding']['resourceTarget']],cwd=source,timeout=210*60)
+    run('impress-test-ui-resource',['make','-j3',REPORT['testInitializationBinding']['topLevelResourceGoal']],cwd=source,timeout=210*60)
     REPORT['impressResourceAfterUIBuild'] = resource_receipt(source)
     receipt()
     remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0

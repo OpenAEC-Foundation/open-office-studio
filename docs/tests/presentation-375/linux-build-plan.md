@@ -2,7 +2,9 @@
 
 **Status on 2026-11-24: the fourth witness stopped on an own resource-build
 invocation error before the baseline test. Earlier failures remain unchanged;
-initialization, patched importer/Cppunit and runtime acceptance are unproven.** This is a private QA witness for the reviewed importer patch,
+initialization, patched importer/Cppunit and runtime acceptance are unproven.
+The new user-requested source-wrapper correction is reviewable, without another
+allocated build yet.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -415,3 +417,21 @@ retry or extra VM was started. A future separately allocated change could use
 the source-defined top-level `UIConfig_modules/simpress` wrapper; that is a
 recorded strategy only, not an implemented repair or a new allocation. P5,
 runtime pins, main, versions and release intake remain unchanged.
+
+## Source preparation correction requested after the fourth result
+
+The new explicit user request asks integration to coordinate a correction and
+one further bounded witness. The own harness now selects the pinned top-level
+`make -j3 UIConfig_modules/simpress` wrapper instead of calling Makefile.gbuild
+directly. Exact Makefile.in and gbuild Helper hashes are added to source gates,
+and actual `DO_FETCH_TARBALLS=TRUE` is required before execution. The existing
+WORKDIR, test patch, UI resource hash and all production assertions remain.
+
+Five local source/resource controls pass, including rejection of a changed
+bootstrap/fetch wrapper; AST and whitespace checks pass. No make/Office execution,
+archive fallback, new dependency/configuration, source/importer pin change or
+new build occurred. Historical FAIL receipts stay unchanged. See
+[`source-bootstrap-correction.json`](source-bootstrap-correction.json).
+
+The correction is reviewable only until integration gives a separate allocation.
+No old start epoch or unused time is reused and no automatic dispatch follows.

@@ -10,6 +10,8 @@ RESOURCE_SOURCE = 'sd/uiconfig/simpress/ui/tabviewbar.ui'
 RESOURCE_INSTALLED = 'instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui'
 RESOURCE_SHA256 = '90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec'
 PRIMARY = {
+    'Makefile.in': '435d9651550e33c7a0698fd09b4895b061dfc60503811e5e1279d7029ceb22f0',
+    'solenv/gbuild/Helper.mk': '968bb797d966c4c75b77132e25ba1e42d762943b7c2e4a43593b0bddcc4e17f9',
     RECIPE: '3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40',
     RESOURCE_SOURCE: RESOURCE_SHA256,
     'sd/UIConfig_simpress.mk': '8442b06b6293e22491c0c9f59133b94282da6f0afae1eb4db3346f9167be1ae7',
@@ -39,6 +41,8 @@ def verified_inputs(source):
         'recipeAfterSHA256': RECIPE_AFTER,
         'primarySHA256': dict(PRIMARY),
         'resourceTarget': str(source / 'workdir/UIConfig/modules/simpress.done'),
+        'topLevelResourceGoal': 'UIConfig_modules/simpress',
+        'preparationMethod': 'Pinned top-level Makefile.in UIConfig_modules/% wrapper requires bootstrap fetch',
         'resourceInstalled': RESOURCE_INSTALLED,
         'resourceSHA256': RESOURCE_SHA256,
         'initializationPatchChangesProductionImporter': False,

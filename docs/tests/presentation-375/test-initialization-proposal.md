@@ -98,3 +98,14 @@ resource bytes. No LibreOffice or make is executed. The existing proposal
 context check and AST/whitespace checks also pass. See
 `test-initialization-harness-checks.json`; this is not initialization/runtime
 acceptance and does not establish the crash hypothesis.
+
+## Source-wrapper correction after the fourth real failure
+
+The fourth witness proved that the early direct Makefile.gbuild call omitted
+top-level bootstrap/fetch. On the new explicit user request the harness now uses
+the source-defined `UIConfig_modules/simpress` wrapper; pinned Makefile.in/Helper
+hashes and actual fetch-enabled configuration are checked first. Existing UI
+and importer inputs, resource receipts and total/compiler budgets are unchanged.
+Five local controls pass; no new make/Office/build execution or allocation is
+implied. This corrects only the own source-preparation route and does not prove
+that initialization or the original stale-theme failure has been resolved.

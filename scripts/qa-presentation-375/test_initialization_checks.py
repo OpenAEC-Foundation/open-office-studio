@@ -21,7 +21,14 @@ class InitializationChecks(unittest.TestCase):
     def test_exact_primary_inputs_and_target_mapping(self):
         result = verified_inputs(self.root)
         self.assertEqual(str(self.root.resolve() / 'workdir/UIConfig/modules/simpress.done'), result['resourceTarget'])
+        self.assertEqual('UIConfig_modules/simpress', result['topLevelResourceGoal'])
         self.assertFalse(result['initializationPatchChangesProductionImporter'])
+
+    def test_changed_bootstrap_fetch_wrapper_stops(self):
+        wrapper = self.root / 'Makefile.in'
+        wrapper.write_text(wrapper.read_text().replace('bootstrap fetch', 'bootstrap'))
+        with self.assertRaises(AssertionError):
+            verified_inputs(self.root)
 
     def test_changed_recipe_stops_before_patch(self):
         (self.root / RECIPE).write_text('unexpected recipe\n')
