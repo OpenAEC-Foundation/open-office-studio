@@ -11,6 +11,7 @@ from prepare import check_harness
 from fixtures import create
 from native import Session,Unavailable,command
 from cases import Case
+from followup import load_baseline
 from mail_fixture_server import Fixture
 
 
@@ -76,11 +77,17 @@ def supplementary_cases(session):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("app",choices=APPS)
     parser.add_argument("package",type=Path);parser.add_argument("output",type=Path)
+    parser.add_argument('--spreadsheet-format',choices=('gnm','gnumeric','xlsb'))
     args=parser.parse_args()
     if sys.platform!="darwin":raise SystemExit("Actual fresh macOS host required; no browser substitute")
     if subprocess.check_output(["/usr/bin/uname","-m"],text=True).strip()!="arm64":
         raise SystemExit("Own aarch64 DMG requires an actual arm64 native host")
     request,proof,dmg=verify_transfer(args.package.resolve(),args.app)
+    route=request.get('spreadsheetFollowup')
+    if bool(route)!=bool(args.spreadsheet_format) or (args.spreadsheet_format and
+            (args.app!='spreadsheet' or args.spreadsheet_format not in route['formats'])):
+        raise SystemExit('Native format host must match the exact validated request matrix')
+    baseline=load_baseline(request,proof,args.package.resolve()) if route else None
     root=Path(__file__).resolve().parents[2];helper=args.output.parent/("standalone-ax-"+args.app)
     subprocess.run(["/usr/bin/swiftc",root/"scripts/standalone-macos/ax.swift","-o",helper],check=True)
     capabilities=json.loads(subprocess.check_output([helper,"capabilities"],text=True))
@@ -99,25 +106,32 @@ def main():
                           limitations=["Original native screenshots require visual review.",
                                        "Sampled process/files and runtime inventory do not establish complete converter/resource independence."])
     extras=("stw",) if args.app=="writer" else ("gnm","gnumeric","xlsb") if args.app=="spreadsheet" else ()
+    if route:extras=(args.spreadsheet_format,)
     session.report["additionalCases"]={key:{"status":"not-run: ordinary native core preflight pending","nativeAccepted":False} for key in extras}
     mail=None;supplement_failure=None
     try:
         session.install(dmg)
         session.prepare_display()
-        fixtures=create(session.documents/"synthetic-inputs",root/"public/templates")
-        fixture=Path(fixtures["files"][args.app]["path"])
-        session.start(fixture if args.app in ("writer","spreadsheet","presentation") else None)
-        case=Case(session,fixture)
-        if args.app in ("writer","spreadsheet","presentation"):case.office()
-        elif args.app=="notition":case.notition()
-        elif args.app=="database":case.database()
+        if route:
+            from sheet_formats import run_native
+            session.report['reusedOrdinaryFunctionalCoreBaseline']=baseline
+            run_native(session,args.spreadsheet_format,baseline=baseline)
+            session.report.update(status='supplemental-functional-evidence-collected-review-pending',
+                                  supplementalFunctionalCaseCompleted=True)
         else:
-            mail=Fixture(session.root/"synthetic-mail",fixture).__enter__()
-            case.email(mail)
-        session.quit();session.report["functionalCaseCompleted"]=True
-        session.report["status"]="functional-evidence-collected-review-pending"
-        session.write("core-receipt.json",session.report)
-        supplement_failure=supplementary_cases(session)
+            fixtures=create(session.documents/"synthetic-inputs",root/"public/templates")
+            fixture=Path(fixtures["files"][args.app]["path"])
+            session.start(fixture if args.app in ("writer","spreadsheet","presentation") else None)
+            case=Case(session,fixture)
+            if args.app in ("writer","spreadsheet","presentation"):case.office()
+            elif args.app=="notition":case.notition()
+            elif args.app=="database":case.database()
+            else:
+                mail=Fixture(session.root/"synthetic-mail",fixture).__enter__();case.email(mail)
+            session.quit();session.report["functionalCaseCompleted"]=True
+            session.report["status"]="functional-evidence-collected-review-pending"
+            session.write("core-receipt.json",session.report)
+            supplement_failure=supplementary_cases(session)
     except Exception as error:
         failure=error;session.report.update(status="unavailable-or-incomplete",failure={"type":type(error).__name__,"message":str(error)})
         if session.process and session.process.poll() is None:

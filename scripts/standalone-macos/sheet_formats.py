@@ -134,14 +134,50 @@ def save_xlsx(case,path,oracle,kind,edited):
             time.sleep(.3)
 
 
-def run_native(session,kind):
+def readable_grid_zoom(case):
+    """Use ordinary visible Zoom controls; never change OCR confidence or body bounds."""
+    observed=[]
+    for attempt in range(12):
+        snapshot=case.snapshot();values=[]
+        for row in snapshot.get('rawNodes',[]):
+            a=row['attributes'];label=a.get('AXTitle','')
+            match=re.fullmatch(r'Zoom (\d+)%, back to 100%',label)
+            if a.get('AXRole')=='AXButton' and match and a.get('frame'):values.append(int(match.group(1)))
+        if len(values)!=1 or not 25<=values[0]<=200:raise Unavailable('One real bounded native Zoom percentage required')
+        observed.append(values[0])
+        if values[0]==200:
+            case.s.write('native-grid-readability-zoom.json',{'observedPercentages':observed,
+                'method':'Actual visible Zoom in buttons; original screenshot/OCR >=0.8 and body/PID checks unchanged'})
+            return
+        if attempt==11 or (len(observed)>1 and observed[-1]<=observed[-2]):
+            raise Unavailable('Native Zoom in did not progress to the readable 200% view')
+        case.button('Zoom in',toolbar='Zoom')
+    raise Unavailable('Native readable zoom not established')
+
+
+def selected_workbook(snapshot,filename):
+    matches=[r['attributes'] for r in snapshot.get('rawNodes',[]) if
+        r['attributes'].get('AXRole') in ('AXRadioButton','AXTab')
+        and r['attributes'].get('AXRoleDescription')=='tab' and r['attributes'].get('AXSelected') is True
+        and r['attributes'].get('AXTitle')==filename+' Close '+filename
+        and str(r['attributes'].get('AXHelp','')).split('\n')[0]==filename and r['attributes'].get('frame')]
+    if len(matches)!=1:raise Unavailable('One exact native selected workbook tab required for addon preflight')
+    return matches[0]
+
+
+def run_native(session,kind,baseline=None):
     from cases import Case
     if kind not in ("gnm","gnumeric","xlsb"):raise Unavailable("No other supplemental formats are authorized")
-    if session.app!="spreadsheet" or not all(session.report.get(k) is True for k in REQUIRED_CORE):
+    reused=(baseline is not None and baseline.get('functionalCorePreviouslyVerified') is True
+            and baseline.get('source')==session.report.get('source'))
+    if reused and not all(session.report.get(k) is True for k in ('identityVerified','installedSignatureGatesVerified','suiteAbsent')):
+        raise Unavailable('Current addon host package identity/signature/Suite absence not established')
+    if session.app!="spreadsheet" or not (reused or all(session.report.get(k) is True for k in REQUIRED_CORE)):
         raise Unavailable("Ordinary standalone Spreadsheet core preflight must pass first")
     if session.process and session.process.poll() is None:raise Unavailable("Previous case must fully quit before next spreadsheet format")
     receipt={"status":"running","nativeAccepted":False,"scope":"One pinned original source via ."+kind,
              "applicationSource":session.report["source"],"coreSpreadsheetPassedBeforeThisCase":True}
+    if reused:receipt['reusedOrdinaryFunctionalCoreBaseline']=baseline
     session.report.setdefault("additionalCases",{})[kind]=receipt
     fixture,oracle,binding=prepare(session.documents/kind,kind);receipt["input"]=binding
     session.write(kind+"/source-oracle.json",oracle)
@@ -158,6 +194,16 @@ def run_native(session,kind):
     if kind=="xlsb":xlsb_save_policy377(case,fixture,receipt)
     output=session.documents/kind/"imported-original.xlsx"
     receipt["beforeEditOracle"]=save_xlsx(case,output,oracle,kind,False)
+    if reused:
+        # The current fresh host must demonstrate focus/save/normal quit/new-PID
+        # reopen before the edit matrix. Prior core flags are never copied into
+        # this host's report, and #377 remains before any explicit Save As.
+        initial_pid=session.quit();session.start(output)
+        if session.process.pid==initial_pid:raise Unavailable('Fresh addon-host preflight reused previous PID')
+        case.select(['AXTextField','AXComboBox'],['Name box']);case.focus('Name box')
+        receipt['ownNativeHostPreflight']={'nativeFocusVerified':True,'nativeSaveAndIndependentOracleVerified':True,
+            'fullNormalQuitVerified':True,'previousPid':initial_pid,'newReopenPid':session.process.pid,
+            'actualSelectedWorkbook':selected_workbook(case.snapshot(),output.name)}
     if kind!="xlsb":case.select(["AXRadioButton","AXTab","AXButton"],["Sheet2"])
     cell="A15" if kind=="xlsb" else "A1";text="=40+2" if kind=="xlsb" else gnm_oracle.MARKER
     case.select(["AXTextField","AXComboBox"],["Name box"]);case.replace(cell);session.ax("key","return")
@@ -168,6 +214,9 @@ def run_native(session,kind):
     if session.process.pid==old:raise Unavailable("Supplementary XLSX cold reopen reused old PID")
     if kind!="xlsb":case.select(["AXRadioButton","AXTab","AXButton"],["Sheet2"])
     case.select(["AXTextField","AXComboBox"],["Name box"]);case.replace(cell);session.ax("key","return")
+    if reused and kind!='xlsb':
+        readable_grid_zoom(case)
+        case.select(['AXTextField','AXComboBox'],['Name box']);case.replace(cell);session.ax('key','return')
     case.writer_visible("42" if kind=="xlsb" else "EDIT",kind+"-reopened-visible-cell")
     if kind=="xlsb":receipt["reopenedOracle"]=xlsb_oracle.inspect_xlsx(output,True)
     else:receipt["reopenedOracle"]={"sheets":gnm_oracle.check(output.read_bytes(),oracle,marker=True),"sha256":digest(output)}

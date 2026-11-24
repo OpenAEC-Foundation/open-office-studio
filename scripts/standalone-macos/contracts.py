@@ -119,6 +119,8 @@ def validate_request(value, now=None):
     if not hex_value(parent.get("sha256"), 64) or parent.get("name") != "uitgave-macOS":
         raise ValueError("Immutable parent name and archive digest required")
     approved_dual_producer(value)
+    from followup import validate_followup
+    validate_followup(value)
     if source["commit"]==APPROVED_MAC_PRODUCER["commit"]:raise ValueError("Producer head must never be labelled as application source")
     packages = value.get("packages", {})
     if set(packages) != set(APPS):

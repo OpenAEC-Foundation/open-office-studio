@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "scope": "macos-standalone-six",
-  "executionApproved": true,
+  "executionApproved": false,
   "source": {
     "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
     "tree": "e30879fd772871e690847c061ef66e6b81808a05",
     "version": "2026.48.1"
   },
-  "expiresAt": "2026-11-24T12:21:14Z",
+  "expiresAt": "2026-11-24T12:36:22Z",
   "parentArtifact": {
     "id": 14836145077,
     "run": 45195055147,
@@ -52,21 +52,23 @@
   "harnessFiles": {
     "scripts/standalone-macos/ax.swift": "3b35f623c4c0efd72e27c7dccd8d29e281624707f75e0c49372cc4039b48c859",
     "scripts/standalone-macos/cases.py": "1e8f7ed56a47daa78418a77a051350cf5a9b1e8f70e1cf79fbc966bf15a87ac6",
-    "scripts/standalone-macos/contracts.py": "a63d8e1983221fee9939379d1b88d35c8dc3bca3622008806262f0743b851e9b",
+    "scripts/standalone-macos/contracts.py": "8a8ed54474ebc26f10650906debdf2bdc4fab2a79cb0ec790e3ae2292d160f08",
     "scripts/standalone-macos/fixtures.py": "2914c7f5718fe2cd5634cfbb9f1258eba58d769566ec00e557066836d1489b5a",
+    "scripts/standalone-macos/followup.py": "3201207652d1c764cb1ee9caa374693dd8a4c0982bae2edc5a997c50c06a7515",
     "scripts/standalone-macos/gnm_oracle.py": "7f47fe4fbd5fdc66a1c8179300d257dcef0e1ebae514d7271159c3469dfbb599",
     "scripts/standalone-macos/mail_fixture_server.py": "9a86761229af2589780e61afa7fa92e16be314554addd638d8ca69e8a3366c6e",
     "scripts/standalone-macos/native.py": "85d698ad4477a2257d14138ede9155061ee50184adf49633b2e2c6eb122b7f77",
     "scripts/standalone-macos/ocr.swift": "c18c1ed874873ffb1bad620eb798172578aa8a2cb064b0be33f730c7e322685d",
     "scripts/standalone-macos/oracles.py": "e08aa03b00a4e1670344296eaa45a6ac59da7198a038d89d2a1ab04a67b2ddbc",
-    "scripts/standalone-macos/prepare.py": "b20c5dbe4bb5e9fa9d7514a8cd3a9ca2885fef4f0a6c5b0b80fffa694a3ba1e6",
-    "scripts/standalone-macos/run.py": "d5fd4f879649bb0b9bcc1d60b713d07adcd45ae4fc7a4b6d7bd166aff8c1cd56",
-    "scripts/standalone-macos/sheet_formats.py": "6e04fa59f8407360b7621e9ec4a7a31934421dfdf75073e375f00aa8d88fc37c",
+    "scripts/standalone-macos/prepare.py": "63c7ecebbd1b8fb7c6ae3bf9f8ed993e5b78203be396d048ba825c2dfe828f24",
+    "scripts/standalone-macos/run.py": "03a1004638645dab513104478df0dc149081ec46e5559b7b436952522316b27c",
+    "scripts/standalone-macos/sheet_formats.py": "4e0064ddeea8217a0eb02c8db09b7818f5e3f4d8762b8d8321327ee95e2a92b6",
     "scripts/standalone-macos/stw.py": "a34696241ca1752248c5f90a0759959e8ae69fdb745cdf3d1f5da070d695e6f7",
     "scripts/standalone-macos/stw_oracle.py": "172b3ab9bf92cdb804fc68958c894e8468a31671af83a0ddee936f68221fe0ec",
     "scripts/standalone-macos/suite_support_descriptor.py": "9570b2a46e86ecf6acd990323436969af6237c0d9a1fc76319fed835972bb240",
     "scripts/standalone-macos/test_contracts.py": "bd22258570906386710a73a795614e42605177d5b9c2fd18eb9d897859523f13",
     "scripts/standalone-macos/test_dual_producer.py": "fe2ebbd88c60ee418bef866f9d6b236a79e08e8afe04f0effaa11a78d14cd0a8",
+    "scripts/standalone-macos/test_followup.py": "0bc31fd44c5e4a6353a00fc4086fd0d46a9faa858522425fa41e82802ab8f16c",
     "scripts/standalone-macos/test_format_gates.py": "7c8f7526cbea7f031b082ae2a0114dc7d47602f5f5517c0726fb31ac1d91e80f",
     "scripts/standalone-macos/test_mail_fixture.py": "b3a8f8c26606518cebda517640888b772cf521adb08a70c2bcb34b6bf67293b9",
     "scripts/standalone-macos/test_native_contracts.py": "a85f0a5d19f4fc1667693d2d443718ee5236c163f4844420a55403b7182a1b40",
@@ -109,7 +111,24 @@
     "witnessMember": ".local/macos-only-producer-source.json"
   },
   "executeApps": [
-    "email"
+    "spreadsheet"
   ],
-  "reuseTransfersFromRun": 45351696628
+  "reuseTransfersFromRun": 45351696628,
+  "spreadsheetFollowup": {
+    "formats": [
+      "gnm",
+      "gnumeric",
+      "xlsb"
+    ],
+    "coreBaseline": {
+      "run": 45351696628,
+      "qaCommit": "03477b0199daeb50ae7b20d552b111630c3271ce",
+      "artifact": 14902855598,
+      "name": "standalone-native-spreadsheet-03477b0199daeb50ae7b20d552b111630c3271ce",
+      "archiveSHA256": "faee1109a0741c686e81c8c111cfcd23f69bb13f40dcc31fcb342137934939b4",
+      "archiveBytes": 15464799,
+      "member": "spreadsheet/core-receipt.json",
+      "sha256": "1c9be0c276c4a3a8a1de15eb4afad4c1842f8ba68dc9c6b8d89e7cd125dd4591"
+    }
+  }
 }

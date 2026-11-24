@@ -10,6 +10,7 @@ import subprocess
 import zipfile
 from contracts import (APPS, digest, validate_producer, validate_request, verify_under,verify_package,
                        verify_supporting_suite_package,approved_dual_producer,source_witness_record)
+from followup import matrix,prepare_baseline
 
 REPO = "OpenAEC-Foundation/open-office-studio"
 
@@ -110,7 +111,7 @@ def extract(request, archive, output):
                              preparationScope=request["preparationScope"])
             (target.parent/"provenance.json").write_text(json.dumps(proof, indent=2)+"\n", encoding="utf-8")
             (target.parent/"request.json").write_text(json.dumps(request, indent=2)+"\n", encoding="utf-8")
-    return {"app": request.get("executeApps",list(APPS))}
+    return matrix(request)
 
 
 def rebind_transfer(request,folder,app,origin_run):
@@ -119,7 +120,7 @@ def rebind_transfer(request,folder,app,origin_run):
     original=json.loads((folder/"request.json").read_text())
     proof=json.loads((folder/"provenance.json").read_text())
     changes={k for k in original.keys() | request.keys() if original.get(k)!=request.get(k)}
-    if original.get("executionApproved") is not True or changes-{"harnessFiles","expiresAt","reuseTransfersFromRun","executeApps"}:
+    if original.get("executionApproved") is not True or changes-{"harnessFiles","expiresAt","reuseTransfersFromRun","executeApps","spreadsheetFollowup"}:
         raise ValueError("A QA retry must not change source, version, package, approval or parent identity")
     def verify(q,p):
         if app=="office":return verify_supporting_suite_package(q,p,folder)
@@ -157,7 +158,8 @@ def reuse_transfers(request,output):
         subprocess.run(["gh","run","download",str(origin),"--repo",REPO,"--name",name,
                         "--dir",str(output/folder)],check=True)
         rebind_transfer(request,output/folder,app,origin)
-    return {"app":request.get("executeApps",list(APPS))}
+    prepare_baseline(request,output,api)
+    return matrix(request)
 
 
 def main():

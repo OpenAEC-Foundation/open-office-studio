@@ -179,13 +179,18 @@ jobs:
       - name: Verify own transferred DMG, native preflight and standalone core case
         env:
           OWN_APP: ${{ matrix.app }}
+          SPREADSHEET_FORMAT: ${{ matrix.format }}
         run: |
           mkdir -p receipts
-          python scripts/standalone-macos/run.py "$OWN_APP" own-package "receipts/$OWN_APP"
+          if [ -n "$SPREADSHEET_FORMAT" ]; then
+            python scripts/standalone-macos/run.py "$OWN_APP" own-package "receipts/$OWN_APP" --spreadsheet-format "$SPREADSHEET_FORMAT"
+          else
+            python scripts/standalone-macos/run.py "$OWN_APP" own-package "receipts/$OWN_APP"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: standalone-native-${{ matrix.app }}-${{ github.sha }}
+          name: standalone-native-${{ matrix.app }}${{ matrix.format && format('-{0}', matrix.format) || '' }}-${{ github.sha }}
           path: |
             receipts/**/*.json
             receipts/**/*.png
@@ -203,4 +208,6 @@ jobs:
             receipts/**/*.gnm
             receipts/**/*.gnumeric
             receipts/**/*.xlsb
+            !receipts/**/installed/**
+            !receipts/**/mount/**
           if-no-files-found: warn
