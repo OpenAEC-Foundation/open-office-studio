@@ -1,0 +1,219 @@
+{
+  "scope": "WPD6 / lo-wpd-1 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "runtimeExecutedByThisOfflineAudit": false,
+  "originalCI": {
+    "run": 45354297317,
+    "job": 138308165799,
+    "attempt": 1,
+    "harnessCommit": "79114519528e7b413eb2dfe5be3785df4df72611",
+    "conclusion": "failure",
+    "reason": "Test-oracle defect: inactive first-page header counted despite absent titlePg. Original reports retained unchanged."
+  },
+  "artifact": {
+    "id": 14902045836,
+    "bytes": 78901,
+    "sha256": "f50b853efad4397c86ee2968578c61b88d51cc09b3acf23506d64d6580c8e79d",
+    "expiresAt": "2027-02-22T08:13:51Z"
+  },
+  "originalFiles": {
+    "converted.docx": {
+      "sha256": "2f9fb3e0bff7b2b5694594a847c943ebf6cbc9987b37d44417c28db56c6e94d4",
+      "originalStrictAcceptance": false,
+      "originalMismatches": [
+        {
+          "case": "successive Header A exact text",
+          "actual": [
+            "Header Type A",
+            "Header Type A but changed",
+            ""
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    "saved.docx": {
+      "sha256": "f242f260e05d10b89f55ac4c84bcd69add623281d44dd78d9b0c6f04ec173477",
+      "originalStrictAcceptance": false,
+      "originalMismatches": [
+        {
+          "case": "successive Header A exact text",
+          "actual": [
+            "Header Type A",
+            "Header Type A but changed",
+            ""
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    "reopened-saved.docx": {
+      "sha256": "c2f7c47f95fc4ac093ff5194bd109d78ed062ec2e81431e628b7033448f1192e",
+      "originalStrictAcceptance": false,
+      "originalMismatches": [
+        {
+          "case": "successive Header A exact text",
+          "actual": [
+            "Header Type A",
+            "Header Type A but changed",
+            ""
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    "fresh-process-saved.docx": {
+      "sha256": "bd873156f308e4810be1eaf8c749f4107649f374550c66a5ccc94566c05f4af3",
+      "originalStrictAcceptance": false,
+      "originalMismatches": [
+        {
+          "case": "successive Header A exact text",
+          "actual": [
+            "Header Type A",
+            "Header Type A but changed",
+            ""
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        }
+      ]
+    }
+  },
+  "correctedStrictSourceAcceptance": true,
+  "casesPerStage": 6,
+  "stages": 4,
+  "controls": [
+    {
+      "variant": "inactive-first-header-text",
+      "expectedAcceptance": true,
+      "actualAcceptance": true,
+      "mismatches": []
+    },
+    {
+      "variant": "active-first-header",
+      "expectedAcceptance": false,
+      "actualAcceptance": false,
+      "mismatches": [
+        {
+          "case": "successive active Header A exact text",
+          "actual": [
+            "Header Type A",
+            "Header Type A but changed",
+            ""
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        },
+        {
+          "case": "default headers cover both odd and even pages",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "swapped-default-headers",
+      "expectedAcceptance": false,
+      "actualAcceptance": false,
+      "mismatches": [
+        {
+          "case": "successive active Header A exact text",
+          "actual": [
+            "Header Type A but changed",
+            "Header Type A"
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        },
+        {
+          "case": "body segments retain corresponding Header A definitions",
+          "actual": [
+            "Header Type A but changed",
+            "Header Type A"
+          ],
+          "expected": [
+            "Header Type A",
+            "Header Type A but changed"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "wrong-case-body",
+      "expectedAcceptance": false,
+      "actualAcceptance": false,
+      "mismatches": [
+        {
+          "case": "case-sensitive nonempty body paragraphs",
+          "actual": [
+            "FOO",
+            "foo"
+          ],
+          "expected": [
+            "Foo",
+            "foo"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "removed-page-boundary",
+      "expectedAcceptance": false,
+      "actualAcceptance": false,
+      "mismatches": [
+        {
+          "case": "explicit page boundary between body text segments",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "fullFormatAcceptance": false,
+  "normativeCorrectionSources": [
+    "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.wordprocessing.titlepage",
+    "https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.wordprocessing.evenandoddheaders"
+  ],
+  "limits": "Two case-sensitive body text segments Foo/foo, native hard return and hard page boundary, two successive Header A prefix references and their exact text. Prefix packets and all document gates bounded. No fonts/styles, margins/paper/geometry, visual pagination, renderer, opaque packet contents, macros/encryption variants, other WordPerfect versions or full-format acceptance.",
+  "cleanup": {
+    "localOfficeOrWordExecution": false,
+    "localGuiOrCaptureUsed": false,
+    "newProcessCleanup": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}

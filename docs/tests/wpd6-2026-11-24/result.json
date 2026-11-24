@@ -1,0 +1,33 @@
+{
+  "scope": "WPD6 / lo-wpd-1 only under #30",
+  "branch": "codex/wpd6-qa-2026-11-24-e0d7",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "boundedSourceAcceptance": true,
+  "fullFormatAcceptance": false,
+  "originalCIConclusion": "failure",
+  "originalFailureIsOracleDefect": true,
+  "runtimeRepeated": false,
+  "cases": 24,
+  "negativeAndInactiveControls": 5,
+  "newProcessReopenPassed": true,
+  "noProductChangeOrNewIssue": true,
+  "artifact": {
+    "id": 14902045836,
+    "bytes": 78901,
+    "sha256": "f50b853efad4397c86ee2968578c61b88d51cc09b3acf23506d64d6580c8e79d",
+    "expiresAt": "2027-02-22T08:13:51Z"
+  },
+  "run": {
+    "run": 45354297317,
+    "job": 138308165799,
+    "attempt": 1,
+    "harnessCommit": "79114519528e7b413eb2dfe5be3785df4df72611",
+    "conclusion": "failure",
+    "reason": "Test-oracle defect: inactive first-page header counted despite absent titlePg. Original reports retained unchanged."
+  },
+  "limits": "Two case-sensitive body text segments Foo/foo, native hard return and hard page boundary, two successive Header A prefix references and their exact text. Prefix packets and all document gates bounded. No fonts/styles, margins/paper/geometry, visual pagination, renderer, opaque packet contents, macros/encryption variants, other WordPerfect versions or full-format acceptance."
+}

@@ -64,14 +64,29 @@ def docx(p,out,edited,observe):
   # Distinct p elements establish the explicit native hard return; exact empty section carriers are inventoried, not accepted as page layout.
   nonempty=[i for i,t in enumerate(alltexts) if t];check('hard return separates body text paragraphs',len(nonempty)==2 and nonempty[1]>nonempty[0],True)
   rels={x.get('Id'):x.get('Target') for x in E.fromstring(z.read('word/_rels/document.xml.rels'))}
-  headertexts=[];headers=[]
-  for sec in root.iter(W+'sectPr'):
+  headertexts=[];headers=[];sectionHeaders=[]
+  settings=E.fromstring(z.read('word/settings.xml'))
+  def enabled(x):return x is not None and x.get(W+'val','true') not in ('false','0','off')
+  evenOdd=enabled(settings.find(W+'evenAndOddHeaders'))
+  for si,sec in enumerate(root.iter(W+'sectPr')):
+   title=enabled(sec.find(W+'titlePg'));activeTexts={}
    for ref in sec.findall(W+'headerReference'):
     target=rels[ref.get(R+'id')];part=str(PurePosixPath('word')/target) if not target.startswith('/') else target[1:]
     hr=E.fromstring(z.read(part));ts=[visible(x) for x in hr.iter(W+'p')];text='\n'.join(x for x in ts if x)
-    headers.append({'type':ref.get(W+'type'),'part':part,'text':text})
-    if not headertexts or headertexts[-1]!=text:headertexts.append(text)
-  check('successive Header A exact text',headertexts,oracle['expected']['headerTexts'])
+    typ=ref.get(W+'type');active=typ=='default' or (typ=='first' and title) or (typ=='even' and evenOdd)
+    headers.append({'section':si,'type':typ,'part':part,'text':text,'active':active,'titlePg':title,'evenAndOddHeaders':evenOdd})
+    if active:
+     activeTexts[typ]=text
+     if not headertexts or headertexts[-1]!=text:headertexts.append(text)
+   sectionHeaders.append(activeTexts)
+  check('successive active Header A exact text',headertexts,oracle['expected']['headerTexts'])
+  check('default headers cover both odd and even pages',not evenOdd and all(not enabled(s.find(W+'titlePg')) for s in root.iter(W+'sectPr')),True)
+  # Each sectPr closes its own section. Map the two source body segments to that section's default header.
+  section=0;bodyHeaderTexts=[]
+  for i,pnode in enumerate(paras):
+   if alltexts[i]:bodyHeaderTexts.append(sectionHeaders[section].get('default'))
+   if pnode.find('./'+W+'pPr/'+W+'sectPr') is not None:section+=1
+  check('body segments retain corresponding Header A definitions',bodyHeaderTexts,oracle['expected']['headerTexts'])
   boundaries=[]
   for i,pnode in enumerate(paras):
    pagebr=any(x.get(W+'type')=='page' for x in pnode.iter(W+'br'))

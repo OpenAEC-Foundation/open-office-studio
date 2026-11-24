@@ -1,0 +1,130 @@
+{
+  "file": "active-first-header.docx",
+  "sha256": "8325e3ede201e0c36bfeea41f75d04ebd21cba4a77a291abaab468d3e61a70b1",
+  "paragraphTexts": [
+    "Foo",
+    "foo"
+  ],
+  "allParagraphTexts": [
+    "Foo",
+    "foo"
+  ],
+  "headers": [
+    {
+      "section": 0,
+      "type": "default",
+      "part": "word/header1.xml",
+      "text": "Header Type A",
+      "active": true,
+      "titlePg": false,
+      "evenAndOddHeaders": false
+    },
+    {
+      "section": 1,
+      "type": "default",
+      "part": "word/header2.xml",
+      "text": "Header Type A but changed",
+      "active": true,
+      "titlePg": true,
+      "evenAndOddHeaders": false
+    },
+    {
+      "section": 1,
+      "type": "first",
+      "part": "word/header3.xml",
+      "text": "",
+      "active": true,
+      "titlePg": true,
+      "evenAndOddHeaders": false
+    }
+  ],
+  "pageBoundaries": [
+    {
+      "paragraph": 0,
+      "pageBreak": true,
+      "pageBreakBefore": false,
+      "sectionNextPage": true
+    }
+  ],
+  "checkedCases": [
+    {
+      "case": "case-sensitive nonempty body paragraphs",
+      "actual": [
+        "Foo",
+        "foo"
+      ],
+      "expected": [
+        "Foo",
+        "foo"
+      ],
+      "passed": true
+    },
+    {
+      "case": "hard return separates body text paragraphs",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "case": "successive active Header A exact text",
+      "actual": [
+        "Header Type A",
+        "Header Type A but changed",
+        ""
+      ],
+      "expected": [
+        "Header Type A",
+        "Header Type A but changed"
+      ],
+      "passed": false
+    },
+    {
+      "case": "default headers cover both odd and even pages",
+      "actual": false,
+      "expected": true,
+      "passed": false
+    },
+    {
+      "case": "body segments retain corresponding Header A definitions",
+      "actual": [
+        "Header Type A",
+        "Header Type A but changed"
+      ],
+      "expected": [
+        "Header Type A",
+        "Header Type A but changed"
+      ],
+      "passed": true
+    },
+    {
+      "case": "explicit page boundary between body text segments",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    }
+  ],
+  "mismatches": [
+    {
+      "case": "successive active Header A exact text",
+      "actual": [
+        "Header Type A",
+        "Header Type A but changed",
+        ""
+      ],
+      "expected": [
+        "Header Type A",
+        "Header Type A but changed"
+      ],
+      "passed": false
+    },
+    {
+      "case": "default headers cover both odd and even pages",
+      "actual": false,
+      "expected": true,
+      "passed": false
+    }
+  ],
+  "boundedSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "limits": "Two case-sensitive body text segments Foo/foo, native hard return and hard page boundary, two successive Header A prefix references and their exact text. Prefix packets and all document gates bounded. No fonts/styles, margins/paper/geometry, visual pagination, renderer, opaque packet contents, macros/encryption variants, other WordPerfect versions or full-format acceptance."
+}
