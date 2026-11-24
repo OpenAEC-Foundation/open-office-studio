@@ -19,12 +19,17 @@ class CapabilityGuards(unittest.TestCase):
     def setUp(self):
         self.value = json.loads(REQUEST.read_bytes())
         # This is an isolated positive guard fixture, never execution authority.
-        self.value.update(executionApproved=True, metadataCapabilityApproved=True)
+        self.value.update(executionApproved=True, metadataCapabilityApproved=True, executionNonce="1"*32)
         self.now = datetime(2026, 11, 24, 12, tzinfo=timezone.utc)
         self.value.update(issuedAtUTC=self.now.isoformat(), expiresAtUTC=(self.now+timedelta(minutes=30)).isoformat())
 
     def test_valid_exact_metadata_request(self):
         M["validate_request"](self.value, self.now)
+
+    def test_missing_or_malformed_nonce_rejected(self):
+        for nonce in (None,"","x"*32,"1"*31):
+            v=copy.deepcopy(self.value);v["executionNonce"]=nonce
+            with self.assertRaises(PermissionError):M["validate_request"](v,self.now)
 
     def test_every_ambiguous_action_is_denied(self):
         for key in ("nativeBodyAcceptanceApproved", "saveTransportDifferentialApproved", "appLaunchApproved",

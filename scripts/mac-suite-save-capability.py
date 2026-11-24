@@ -30,6 +30,9 @@ def moment(value):
 
 
 def validate_request(value, now):
+    nonce = value.get("executionNonce")
+    if not isinstance(nonce, str) or len(nonce) != 32 or any(c not in "0123456789abcdef" for c in nonce):
+        raise PermissionError("One frozen request nonce required")
     if (value.get("executionApproved") is not True or value.get("metadataCapabilityApproved") is not True
             or value.get("metadataOnly") is not True or value.get("maximumHosts") != 1
             or value.get("maximumWorkflowMinutes") != 15 or value.get("allowedBranch") != BRANCH
@@ -146,7 +149,7 @@ def guard(request, out):
     profile = Path.home()/"Library/Application Support/org.openaec.office-studio"
     if profile.exists():
         raise PermissionError("Unexpected existing Suite profile; do not touch it")
-    report = {"status": "guard-passed", "requestSha256": sha(request.read_bytes()), "qaCommit": actual,
+    report = {"status": "guard-passed", "requestSha256": sha(request.read_bytes()), "requestNonce":value["executionNonce"], "qaCommit": actual,
               "run": current, "job": jobs[0], "workflowDeadlineUTC": deadline.isoformat(),
               "noExistingSuiteProfile": True, "noExistingOfficeApplications": True,
               "scope": "Metadata only; no app/input/capture/attach/instrumentation/security mutation"}

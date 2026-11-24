@@ -23,7 +23,7 @@
   "transferDescriptorMember": "provenance.json",
   "transferDmgMember": "Open Office Studio_2026.48.1_aarch64.dmg",
   "platform": "macOS",
-  "executionApproved": false,
+  "executionApproved": true,
   "suiteChildTransferApproved": true,
   "preparationOnly": false,
   "derivePackageIdentityFromVerifiedArchive": true,
@@ -60,13 +60,13 @@
   "archiveBytes": 1972148013,
   "executableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87",
   "saveTransportDifferentialApproved": false,
-  "metadataCapabilityApproved": false,
+  "metadataCapabilityApproved": true,
   "metadataOnly": true,
   "maximumHosts": 1,
   "maximumWorkflowMinutes": 15,
   "allowedBranch": "codex/mac-suite-save-capability-20261124",
-  "issuedAtUTC": "2026-11-24T11:52:30.718541+00:00",
-  "expiresAtUTC": "2026-11-24T13:22:30.718541+00:00",
+  "issuedAtUTC": "2026-11-24T12:09:26.451289+00:00",
+  "expiresAtUTC": "2026-11-24T13:09:26.451289+00:00",
   "appLaunchApproved": false,
   "inputApproved": false,
   "captureApproved": false,
@@ -90,13 +90,14 @@
     }
   ],
   "probeSourceSha256": {
-    "scripts/mac-suite-save-capability.py": "182e7732b085142213dd9ebe717e0adebbb31b7c5692d6a7ab3e1d11518e2f7b",
+    "scripts/mac-suite-save-capability.py": "e42dac0d8352d94c2e3fccd4f962d572e920cd56058f90b0f8ad47baf5c5a260",
     "scripts/mac-suite-save-privacy.swift": "529dd2f4554b8641cebf5adb586a4c36a786dc27747e407967be2bcccb84e12d",
     "scripts/mac-native-suite-transfer-fetch.py": "9f426aa06ee8e76015491659ad3e81cf8cc437c137e1d63cb83e643702bc1a1f",
     "scripts/mac-native-current-fetch.py": "a5e94dfffe6f112176331d94fbf8dc43206162be218763a1992c22c0632deec8",
     "scripts/mac-native-producer-source.py": "f3d2e4b5ed363a314c1aa336abb9f65b8dae36c1bda4c6faf4e619ba156ad7f9",
     ".github/workflows/mac-suite-save-capability.yml": "795e7c1a8e84e02b29f37a486194b4badf8c0f5d80a0a410c66bd53e46c80ea8"
   },
-  "executionStatus": "DEFERRED: first queued/unassigned run45388478948 cancelled before any host/steps; three critical integration Mac jobs take priority. Fresh root allocation and newly frozen request required; never retry old run.",
-  "closedAtUTC": "2026-11-24T11:57:01.345776+00:00"
+  "executionStatus": "One fresh metadata-only host approved after critical queue cleared; never retry canceled45388478948",
+  "executionNonce": "bdf6836c2b6b48508b93366a6d58c3f5",
+  "allocationReference": "Integration confirmed queued-runs empty; critical desktop138424973645 assigned/running, browserMacsuccess, databaseMacrunning; fresh pre-push queuecheck required."
 }
