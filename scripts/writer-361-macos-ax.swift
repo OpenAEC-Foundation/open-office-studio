@@ -15,6 +15,7 @@ var report: [String: Any] = ["pid": pid, "action": action, "trusted": AXIsProces
 var errors: [String: Int] = [:]
 report["applicationActive"] = NSRunningApplication(processIdentifier: pid)?.isActive ?? false
 report["frontmostPid"] = NSWorkspace.shared.frontmostApplication?.processIdentifier ?? -1
+report["eventPostingAuthorized"] = CGPreflightPostEventAccess()
 func attr(_ element: AXUIElement, _ key: String) -> CFTypeRef? {
     if Date() >= deadline { return nil }
     var value: CFTypeRef?
@@ -318,13 +319,38 @@ if !AXIsProcessTrusted() {
                 report["documentTabHelp"] = text(matches[0], kAXHelpAttribute)
             }
         } else { report["status"] = "blocked"; report["reason"] = "Expected one visible native labeled control with geometry" }
+    } else if action == "save-key-differential" {
+        let f = attr(app, kAXFocusedUIElementAttribute)
+        let e = f.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
+        let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false
+        let postingAllowed = CGPreflightPostEventAccess()
+        report["eventPostingAuthorized"] = postingAllowed
+        if ["legacy-pid", "released-pid", "released-hid"].contains(target), doc, postingAllowed,
+           NSRunningApplication(processIdentifier: pid)?.isActive == true,
+           NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+            report["windowReceiptPhase"] = "before input; never interpret this as a post-action state"
+            report["eventSendStartedAt"] = Date().timeIntervalSince1970
+            for down in [true, false] {
+                let event = CGEvent(keyboardEventSource: nil, virtualKey: 1, keyDown: down)
+                event?.flags = (down || target == "legacy-pid") ? .maskCommand : []
+                if target == "released-hid" { event?.post(tap: .cghidEventTap) }
+                else { event?.postToPid(pid) }
+            }
+            report["eventSendFinishedAt"] = Date().timeIntervalSince1970
+            report["status"] = "input-sent"; report["chord"] = "cmd-s"
+            report["saveTransportCondition"] = target
+            report["keyUpCommandFlag"] = target == "legacy-pid"
+            report["keyboardTransport"] = target == "released-hid" ? "CG HID; actual frontmost owned PID guarded" : "CG postToPid; actual frontmost owned PID guarded"
+            report["deliveryAcknowledged"] = false
+        } else { report["status"] = "blocked"; report["reason"] = "Save differential needs its bounded condition, posting permission, exact owned frontmost document input" }
     } else if action == "chord" {
         let mappings: [String: (CGKeyCode, CGEventFlags)] = [
             "cmd-z": (6, .maskCommand), "cmd-shift-z": (6, [.maskCommand, .maskShift]),
             "cmd-y": (16, .maskCommand), "cmd-s": (1, .maskCommand), "cmd-q": (12, .maskCommand),
             "cmd-f": (3, .maskCommand), "cmd-up": (126, .maskCommand), "cmd-right": (124, .maskCommand),
+            "cmd-home": (115, .maskCommand), "end": (119, []),
             "tab": (48, []), "shift-tab": (48, .maskShift), "escape": (53, [])]
-        if ["cmd-up", "cmd-right"].contains(target), let (code, flags) = mappings[target] {
+        if ["cmd-up", "cmd-right", "cmd-home", "end"].contains(target), let (code, flags) = mappings[target] {
             let f = attr(app, kAXFocusedUIElementAttribute)
             let e = f.flatMap { CFGetTypeID($0) == AXUIElementGetTypeID() ? ($0 as! AXUIElement) : nil }
             let doc = e.map { text($0, kAXRoleAttribute) == "AXTextArea" && text($0, kAXDescriptionAttribute) == "Document input" } ?? false

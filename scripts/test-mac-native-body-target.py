@@ -18,6 +18,14 @@ class VisibleTargetTests(unittest.TestCase):
     def test_valid_visible_target(self):
         self.assertAlmostEqual(target(self.ocr, self.snapshot, 123, "a"*64)["point"]["x"], 225.28)
 
+    def test_exact_title_phrase_distinguishes_two_identical_report_words(self):
+        ocr=copy.deepcopy(self.ocr)
+        box=ocr["observations"][0]
+        ocr["observations"]=[dict(box,text="REPORT TITLE"),dict(box,text="REPORT SUBHEADING")]
+        ocr["wordObservations"]=[dict(box,text="REPORT"),dict(box,text="REPORT")]
+        with self.assertRaises(PermissionError):target(ocr,self.snapshot,123,"a"*64,"REPORT")
+        self.assertEqual(target(ocr,self.snapshot,123,"a"*64,"REPORT TITLE")["text"],"REPORT TITLE")
+
     def test_retina_capture_keeps_global_point(self):
         retina = dict(self.ocr, width=2048, height=1354)
         result = target(retina, self.snapshot, 123, "a"*64)

@@ -67,10 +67,20 @@ def run_field374(action, launch_document, quit_app, current_pid, viewport, ident
         proof["checks"].append({"name":label+" original native pixels","capture":image,"displaySha256":sha(display),
                                  "visualApprovalRequired":True})
 
+    def dismiss_own_notice(label):
+        raw=action("raw-snapshot")
+        matches=[n for n in raw.get("rawNodes",[]) if n.get("attributes",{}).get("AXRole",{}).get("value")=="AXButton"
+                 and n.get("attributes",{}).get("AXDescription",{}).get("value")=="Dismiss message"]
+        if len(matches)>1:raise PermissionError("Expected at most one actual native notification dismiss button")
+        if matches:
+            proof["checks"].append({"name":label+" ordinary notification dismissal after untouched original capture",
+                                     "native":action("ax-press-label","Dismiss message")})
+
     a=out/"field374-Windows-unmodified.docx";a.write_bytes((shared/"windows-resaved.docx").read_bytes())
     first=launch_document(a);time.sleep(5)
     capture("Windows-before-any-input-or-Maximize",first)
     proof["windowsViewport"]=viewport(action,out/"Windows-viewport",identity,first)
+    dismiss_own_notice("Windows")
     capture("Windows-on-screen-unchanged",first)
     audit(a,"Windows-unchanged",MARKER)
     if sha(a)!=PINS["windows-resaved.docx"]:raise AssertionError("Unmodified Windows input changed")
@@ -80,15 +90,16 @@ def run_field374(action, launch_document, quit_app, current_pid, viewport, ident
     second=launch_document(b);time.sleep(5)
     capture("converted-before-any-input-or-Maximize",second)
     proof["convertedViewport"]=viewport(action,out/"converted-viewport",identity,second)
+    dismiss_own_notice("converted")
     audit(b,"converted-unmodified","")
-    target, receipt=P["visible_target"](action,out/"converted-visible-title",second,ocr,"REPORT")
+    target, receipt=P["visible_target"](action,out/"converted-visible-title",second,ocr,"REPORT TITLE")
     proof["visibleTitleTarget"]=receipt
     P["click_target"](action,target)
     if action("snapshot").get("focusAfter",{}).get("description")!="Document input":
         raise PermissionError("Actual visible title click must focus Document input")
     # Same platform-native navigation as the shared browser regression. Exact
     # field-cache/boundary audit, not event-sent status, judges its result.
-    action("chord","cmd-up");action("chord","cmd-right")
+    action("chord","cmd-home");action("chord","end")
     action("type-field374-marker",MARKER)
     capture("after-real-native-marker",second)
     before=sha(b);action("chord","cmd-s")
@@ -107,6 +118,7 @@ def run_field374(action, launch_document, quit_app, current_pid, viewport, ident
     time.sleep(5)
     capture("newPID-reopen-before-any-input-or-Maximize",reopened)
     proof["reopenedViewport"]=viewport(action,out/"reopened-viewport",identity,reopened)
+    dismiss_own_notice("reopened")
     capture("newPID-reopen-on-screen",reopened);audit(b,"newPID-reopened",MARKER)
     if sha(b)!=saved or current_pid()!=reopened:raise AssertionError("Reopen changed saved bytes/PID")
     quit_app()

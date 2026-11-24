@@ -1,4 +1,4 @@
-name: Mac current candidate initial body baseline
+name: P5 Suite bounded save transport three-condition diagnostic
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
@@ -7,7 +7,7 @@ permissions:
   contents: read
   actions: read
 jobs:
-  baseline:
+  product-acceptance:
     runs-on: macos-latest
     timeout-minutes: 15
     env:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 420af640c10ab9ada6c66c844c0098caea87c493
+          ref: b696ab86bd1c128729a079b68c0082e6df3d36a5
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -24,18 +24,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify the successful Mac job and full canonical artifact before package derivation
-        run: python .local/mac-body-harness/scripts/mac-native-current-fetch.py .local/mac-body-harness/.github/mac-native-current-request.json .local/mac-body-current-input
-      - name: Capture untouched original and saved356 control; no body input
-        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-body-current-input/identity.json .local/mac-body-current-baseline
+      - name: Verify producer/app witness, Suite support descriptor and complete own child ZIP
+        id: suite_fetch
+        run: python .local/mac-body-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-body-harness/.github/mac-native-current-request.json .local/mac-save-transport-input
+      - name: Three conditions on fresh copies; one Q and one CmdS each; maximum six copies
+        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-save-transport-input/identity.json .local/mac-save-transport-native --acceptance --save-transport
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mac-current-body-baseline-${{ github.sha }}
+          name: mac-save-transport-${{ github.sha }}
           path: |
-            .local/mac-body-current-baseline/
-            .local/mac-body-current-input/identity.json
-            .local/mac-body-current-input/request.json
-            .local/mac-body-current-input/artifact-origin.json
+            .local/mac-save-transport-native/
+            .local/mac-save-transport-input/*.json
+            .local/mac-save-transport-input/*.log
           include-hidden-files: true
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.suite_fetch.outcome == 'failure'
+        with:
+          name: mac-suite-failed-acquisition-${{ github.sha }}
+          path: .local/mac-save-transport-input/*.zip
+          include-hidden-files: true
+          if-no-files-found: warn

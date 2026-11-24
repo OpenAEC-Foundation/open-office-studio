@@ -59,8 +59,12 @@ def main():
     parser.add_argument("--remaining361", action="store_true")
     parser.add_argument("--tab-save-oracle", action="store_true")
     parser.add_argument("--field374", action="store_true")
+    parser.add_argument("--save-transport", action="store_true")
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text(encoding="utf-8"))
+    if args.save_transport and (not args.acceptance or args.field374 or args.remaining361 or args.tab_save_oracle
+            or identity.get("saveTransportDifferentialApproved") is not True):
+        raise PermissionError("Save transport requires its own exclusive bounded diagnostic scope")
     if args.remaining361 and (not args.acceptance or identity.get("remaining361Approved") is not True):
         raise PermissionError("Remaining361 requires its own explicit QA scope")
     if args.tab_save_oracle and (not args.acceptance or args.remaining361 or identity.get("tabSaveOracleApproved") is not True):
@@ -295,6 +299,27 @@ def main():
         for path, expected in [(original,"f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1"),(control,"c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d")]:
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise RuntimeError("Untouched baseline fixture bytes differ")
+        if args.save_transport:
+            module=runpy.run_path(str(Path(__file__).with_name("mac-native-save-transport.py")))
+            module["validate_scope"](identity)
+            report.update(host=subprocess.check_output(["sw_vers"],text=True),diagnosticOnly=True,
+                          experiment="Maximum two sets of legacy PID, released PID, released HID; one Q/one save per copy",
+                          limits=["Save transport observation only; no new product/core/374 acceptance",
+                                  "Actual saved XML/UI/cleanup judge each copy; input-sent never proves receiver delivery"])
+            def finish_transport_copy():
+                current=pid
+                try:
+                    quit_app()
+                    return {"normalCmdQ":True,"ownedAppClosed":not owned()}
+                except Exception as error:
+                    if owned()!=[current]:raise RuntimeError("Differential cleanup lost its sole pinned owned PID") from error
+                    os.kill(current,signal.SIGTERM)
+                    wait(lambda:not owned(),"Failed differential copy did not close its own process",10)
+                    return {"normalCmdQ":False,"forcedOwnTermination":True,"ownedAppClosed":True,"error":str(error)}
+            module["run_observation"](action,launch_document,finish_transport_copy,viewport["maximize_once"],
+                                      readiness_snapshot,identity,ocr_binary,out/"native-save-transport",report)
+            report.update(status="save-transport-diagnostic-observed",nativePass=False,diagnosticOnly=True)
+            return
         if args.field374:
             prior=runpy.run_path(str(Path(__file__).with_name("mac-native-361-remaining.py")))
             report["currentSignedCorePrerequisite"]=prior["verify_previous"](identity)
