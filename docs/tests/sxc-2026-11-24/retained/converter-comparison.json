@@ -1,0 +1,196 @@
+{
+  "status": "verified-supplementary-control-not-native-pass",
+  "run": 45166523239,
+  "harness": "92f86fc5abcf9c4f2a588480d0707bc4ab4809c4",
+  "outputSha256": "7b3410fa3b5cb0897bf6a4caf61390e65199aa5e9f5c1f95f3025c49932c1196",
+  "cellsPassed": true,
+  "strictPreservationPassed": false,
+  "differences": [
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "rect",
+        "sizeEmu": [
+          888840,
+          631440
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "chord",
+        "sizeEmu": [
+          955080,
+          736560
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "vector-size-within-0.001cm",
+      "expected": {
+        "preset": "ellipse",
+        "sizeEmu": [
+          690480,
+          622080
+        ]
+      },
+      "observed": [
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            892080,
+            631080
+          ]
+        },
+        {
+          "preset": "ellipse",
+          "sizeEmu": [
+            693720,
+            621720
+          ]
+        },
+        {
+          "preset": "chord",
+          "sizeEmu": [
+            958320,
+            736560
+          ]
+        },
+        {
+          "preset": "rect",
+          "sizeEmu": [
+            1030320,
+            803160
+          ]
+        },
+        {
+          "preset": "line",
+          "sizeEmu": [
+            775080,
+            841680
+          ]
+        }
+      ]
+    },
+    {
+      "category": "form-control-kind-counts",
+      "expected": {
+        "button": 1,
+        "radio": 1,
+        "checkbox": 1,
+        "edit": 1
+      },
+      "observed": {
+        "button": 1,
+        "checkbox": 1
+      }
+    },
+    {
+      "category": "form-control-label",
+      "expected": "Option Button1",
+      "observed": [
+        "Button10, 22, 23, 15, 1, -32, 25, 11CenterCenter",
+        "Check Box11, 49, 24, 1, 2, -8, 25, 10Center"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "nativeFile": "sxc-original.xlsx",
+      "selectedObjectStructureEqualsControl": true,
+      "rawObjectPartsEqualControl": true
+    },
+    {
+      "nativeFile": "sxc-working.xlsx",
+      "selectedObjectStructureEqualsControl": true,
+      "rawObjectPartsEqualControl": true
+    },
+    {
+      "nativeFile": "sxc-edited.xlsx",
+      "selectedObjectStructureEqualsControl": true,
+      "rawObjectPartsEqualControl": true
+    },
+    {
+      "nativeFile": "sxc-reopened.xlsx",
+      "selectedObjectStructureEqualsControl": true,
+      "rawObjectPartsEqualControl": true
+    }
+  ],
+  "allSelectedNativeStructuresEqualControl": true,
+  "scope": "Independent unchanged bundled converter reproduces selected differences without app editor. Raw and selected XML comparisons are separate. No new native, full visual, control behavior, signing or standalone acceptance."
+}
