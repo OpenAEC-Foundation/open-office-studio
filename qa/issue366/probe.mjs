@@ -29,7 +29,27 @@ const report = { source, fixtureSha256: sha(fixture), harnessSha256: sha(await f
   samples: [], actions: [], errors: [], cleanup: false };
 let server, browser, page;
 try {
+  // Serve both installed bundled-font packages, as kopieer-assets does, without
+  // changing a shared dependency directory or downloading extra font families.
+  const fonts = new Map();
+  for (const folder of ['fonts', 'fonts-cjk']) {
+    const directory = `node_modules/@betteroffice/${folder}/assets`;
+    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+      if (entry.isFile()) fonts.set(entry.name, resolve(directory, entry.name));
+    }
+  }
+  report.bundledFonts = [];
+  for (const [name, path] of fonts) report.bundledFonts.push({ name, sha256: sha(await fs.readFile(path)) });
   server = await createServer({ configFile: resolve('scripts/app-performance.config.ts'),
+    plugins: [{ name: 'issue366-bundled-font-assets', configureServer(server) {
+      server.middlewares.use('/fonts', async (request, response, next) => {
+        const name = request.url?.split('?')[0]?.replace(/^\//, '');
+        const path = fonts.get(name);
+        if (!path) return next();
+        response.setHeader('Content-Type', name.endsWith('.otf') ? 'font/otf' : 'font/ttf');
+        response.end(await fs.readFile(path));
+      });
+    } }],
     cacheDir: resolve(output, 'vite-cache'), server: { port: 0, strictPort: false,
       fs: { allow: [process.cwd(), await fs.realpath('node_modules')] } } });
   await server.listen();
