@@ -509,3 +509,45 @@ font, table, all-template or other-platform acceptance follows.
 per-image hashes/findings and limits; two raw independent audit reports are in
 `evidence/p5-mac-writer-stw/`. No own download/GUI/build/CI was used. Mac Suite
 exact #374 and native Windows review remain separate open scopes.
+
+## Native Windows Suite STW/field review, 24 November
+
+Native run45352763316/job138303038323/attempt1/QA f5363ce8 SUCCESS supplies
+the real original report.stw Suite import, keyboard edit, DOCX Save As, normal
+exit/new-PID reopen and Ctrl+S. The independent final-DOCX audit passes on
+39cfd2c1e236c945f79d675b5973a10f37db60dc9bf6e08a00aa773cb6c57f77 with exact
+marker ` -- STW30 EDIT 2026-11-23`, original DOCVARIABLE/cache, edit outside the
+field, eight source blocks/styles and two placeholders. Original STW5a5b is
+unchanged; no source table exists.
+
+All four original opened/edited/saved/reopened PNGs were viewed serially at
+their actual 100% app zoom and rehashed. Before edit shows only REPORT TITLE;
+afterwards all three expected title/marker/date lines are complete without
+overlap/clipping and the subtitle remains separated. Font substitution was
+recorded by the operator; no original-font/pagination/full-TOC claim follows.
+
+P5b696/e308/48.1, NSIS69a1fa6c, independent and installed signed PE48ff65c7,
+child14828676560, four valid Authenticode/timestamp checks, normal PIDs952→3308
+and cleanup are bound through retained receipts. Twelve earlier core checks
+are explicitly reused, not rerun. Three phase XML audits are operator evidence;
+only the final physical DOCX is independently audited here.
+
+The operator's original307524-byte ZIP existed only in RAM. Root authorized
+one necessary small result download for durable independent checking. Retained
+ZIP is `.local/field374/p5-windows-45352763316/artifact.zip`, artifact14901192137,
+official and actual SHA612ee988fbe97c860d22368fd8903c4b2d3a90dd97094106f2f4904de9d9c286,
+expiry2027-02-22T08:03:02Z. All22 original ZIP members independently equal the
+existing extracted raw files. Seven relevant raw files also equal exact Git
+proof9d8ab9fa bytes. QA script receipts match exact Git-source LF→CRLF Windows
+checkout bytes; source oracles are not accepted on a guessed hash basis.
+
+The old wrong-target Save As driver diagnostic remains unchanged. It saved to
+Documents while the requested target was absent; actual filename focus/keys/
+Tab/closure fixed the test driver. No product fix or extra issue is inferred.
+
+`evidence/p5-windows-stw-review-20261124.json` retains full source/package/run/
+job/attempt/archive, raw/Git comparisons, per-image hashes and limits; the raw
+independent audit is in `evidence/p5-windows-stw/`. No installer/parent download,
+own GUI, new CI/build, product or consumer change occurred. This completes the
+bounded Windows Suite STW/field review; exact native Mac Suite #374 remains
+open and no result is silently transferred from dedicated Mac Writer.
