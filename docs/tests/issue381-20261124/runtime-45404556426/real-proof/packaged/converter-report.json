@@ -1,0 +1,281 @@
+{
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "runtimeBase": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged",
+    "program": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test",
+    "designation": "DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME",
+    "canonicalInputPrivateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "canonicalBinding": "runtime-evidence/runtime-binding.json"
+  },
+  "overlay": {
+    "variant": "packaged",
+    "librarySha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+    "changedEntries": [],
+    "checkedEntries": 15082
+  },
+  "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+  "sourceSha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+  "passed": true,
+  "fontconfigHost": {
+    "passed": true,
+    "version": 21301,
+    "packageVersion": "2.13.1-4.2ubuntu5",
+    "library": "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.0",
+    "sha256": "7d688909aab1c566b60832045fef012ea118ff7ee189df87608fbff999d3bd0d",
+    "dynamic": "\nDynamic section at offset 0x47dc0 contains 28 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libfreetype.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libfontconfig.so.1]\n 0x000000000000000c (INIT)               0x7000\n 0x000000000000000d (FINI)               0x2fb20\n 0x0000000000000019 (INIT_ARRAY)         0x47c50\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x47c58\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x2f0\n 0x0000000000000005 (STRTAB)             0x2d30\n 0x0000000000000006 (SYMTAB)             0xac8\n 0x000000000000000a (STRSZ)              5725 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x49000\n 0x0000000000000002 (PLTRELSZ)           2952 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x6120\n 0x0000000000000007 (RELA)               0x4710\n 0x0000000000000008 (RELASZ)             6672 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffffe (VERNEED)            0x4670\n 0x000000006fffffff (VERNEEDNUM)         2\n 0x000000006ffffff0 (VERSYM)             0x438e\n 0x000000006ffffff9 (RELACOUNT)          270\n 0x0000000000000000 (NULL)               0x0\n",
+    "ldd": "\tlinux-vdso.so.1 (0x00007ffe60171000)\n\tlibfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x00007faff2375000)\n\tlibexpat.so.1 => /lib/x86_64-linux-gnu/libexpat.so.1 (0x00007faff2343000)\n\tlibuuid.so.1 => /lib/x86_64-linux-gnu/libuuid.so.1 (0x00007faff233a000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007faff2000000)\n\tlibpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x00007faff22ff000)\n\tlibz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007faff22e1000)\n\tlibbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007faff22d3000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007faff2495000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007faff1f19000)\n\tlibbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007faff22b0000)\n",
+    "dependencies": [
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libfreetype.so.6.18.1",
+        "sha256": "c338538f8d90eb85217e8525ab363e68e79b46d3c8acc0b6824190e032687e5f"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1.8.7",
+        "sha256": "683e2e41db14581194bf1f6616e95a8f02cd4ab599f0fba807e46325ec01d21f"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libuuid.so.1.3.0",
+        "sha256": "4472cf91dbc01395761fb45d0f4b25f6241406fe54cbf540c13755a3706a7b17"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "4ebb1967c395ca547dcfeaeeab7a2819724604a331aede44e8a749a7e1a4628e"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libpng16.so.16.37.0",
+        "sha256": "0c55d5776d3382cb7859ff48fcf813e0c3b27f33c46f9364633748830246c723"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.2.11",
+        "sha256": "64c206f0146cc58bbddc4f22054436f4ff278f5a554aa3ce6921ddf7e9133370"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libbrotlidec.so.1.0.9",
+        "sha256": "b877956d7814d95fb37473002f46a43fe7f09bebb48a41312c329c65631622b5"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "045fdb0436a8fb0d651f039e3444a9cbffc011d379c82b979cebf43571053eca"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1.0.9",
+        "sha256": "617035f98d836e37ccaefdd5fe56b45ef4f5e10460c5b4f68c2d488e5a62766f"
+      }
+    ],
+    "writerUuid": "4a642838-c58c-48bc-a2a7-778c14fdaa20",
+    "writerMode": "0644",
+    "readerPreserved": true,
+    "readerUuid": "a3eb9721-be88-5325-b026-63d68c4a002a",
+    "observerCache": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/real-proof/packaged/fontconfig-host/xdg",
+    "initialization": "Public FcInitLoadConfig/destroy followed by empty FcConfigCreate; no Fonts API or current-config setter",
+    "readerDebugToken": "FcDirCacheReadUUID /home/runner/work/open-office-studio/open-office-studio/.local/issue381/real-proof/packaged/fontconfig-host/reader/.uuid -> a3eb9721-be88-5325-b026-63d68c4a002a",
+    "scope": "Actual host API behavior plus pinned upstream2.13.1 reference; not historical writer attribution or complete ABI equivalence",
+    "readerDebugObserved": true
+  },
+  "fontMetadataDerivations": {
+    "payload/usr/libexec/Open Office Studio/kantoorruntime/program/resource/common/fonts/.uuid": {
+      "uuid": "cb802b78-7ac5-5803-89a3-b4679a4a40ab",
+      "bytes": 36,
+      "mode": "0644",
+      "sha256": "83c5697fbab612ebb176ef78159eb2f4105fb0df1468b6e527aaa8542a6b0cc1"
+    },
+    "payload/usr/libexec/Open Office Studio/kantoorruntime/share/fonts/truetype/.uuid": {
+      "uuid": "e2b78dfe-2da6-5bd8-9195-ed8dc41a9aab",
+      "bytes": 36,
+      "mode": "0644",
+      "sha256": "69976e213d7ce850ce6fb4905be0c6077e3ddd3a1d312df44758efa2af33e962"
+    }
+  },
+  "fontMetadataPolicySha256": "65c7d8c62d5777ad8739dfb915b6b0301a57a33abe1344899f12e634301e7a9f",
+  "launcherPid": 7639,
+  "exitCode": 0,
+  "seconds": 3.020640811999982,
+  "argv": [
+    "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "-env:UserInstallation=file:///tmp/wq2-381-l5xuogct/profile",
+    "--headless",
+    "--nologo",
+    "--nodefault",
+    "--norestore",
+    "--nolockcheck",
+    "--convert-to",
+    "xlsx:Calc MS Excel 2007 XML",
+    "--outdir",
+    "/tmp/wq2-381-l5xuogct/out",
+    "/tmp/wq2-381-l5xuogct/invoer.wq2"
+  ],
+  "ownedProfileProcessesAfter": [],
+  "actualFontconfigLoads": [
+    {
+      "pid": 7668,
+      "path": "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.0",
+      "sha256": "7d688909aab1c566b60832045fef012ea118ff7ee189df87608fbff999d3bd0d"
+    },
+    {
+      "pid": 7673,
+      "path": "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.0",
+      "sha256": "7d688909aab1c566b60832045fef012ea118ff7ee189df87608fbff999d3bd0d"
+    }
+  ],
+  "fontCache": {
+    "metadataReads": [
+      "FcDirCacheReadUUID /home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged/payload/usr/libexec/Open Office Studio/kantoorruntime/program/resource/common/fonts/.uuid -> cb802b78-7ac5-5803-89a3-b4679a4a40ab",
+      "FcDirCacheReadUUID /home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged/payload/usr/libexec/Open Office Studio/kantoorruntime/share/fonts/truetype/.uuid -> e2b78dfe-2da6-5bd8-9195-ed8dc41a9aab"
+    ],
+    "cacheWrites": [
+      "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache/packaged/xdg/fontconfig/cb802b78-7ac5-5803-89a3-b4679a4a40ab-le64.cache-7",
+      "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache/packaged/xdg/fontconfig/e2b78dfe-2da6-5bd8-9195-ed8dc41a9aab-le64.cache-7"
+    ],
+    "externalCache": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache/packaged"
+  },
+  "loaderFiles": [
+    {
+      "name": "loader.7639",
+      "sha256": "0275e69105624f438251a68a42b96be866bf2911f7c49706236118faea1a7267"
+    },
+    {
+      "name": "loader.7641",
+      "sha256": "1ff1881aa3726a64bf6168de39aa18c5adcd9945fbe84948e91add16ae942a49"
+    },
+    {
+      "name": "loader.7644",
+      "sha256": "89f95f8ec3c164e8d78f25f353ec544fbf6c390905314592e415ecd397017466"
+    },
+    {
+      "name": "loader.7645",
+      "sha256": "76c47974095d1a68ebc22ad0593028e735174db827d3f6a5bbc9e4b7ff003e10"
+    },
+    {
+      "name": "loader.7647",
+      "sha256": "0608292d62b2b7caf110c1754a3327e8ded0413b0618301d8926bc44acd8d0b4"
+    },
+    {
+      "name": "loader.7649",
+      "sha256": "cf72728fe469e0599b96bde3fa27a3b48e075c9a1fc6924ce17db89d79f092e1"
+    },
+    {
+      "name": "loader.7668",
+      "sha256": "bf795e2d544c6da3444428220d8dc0b06d468fbc1576e370d22fb29da0bee179"
+    },
+    {
+      "name": "loader.7673",
+      "sha256": "a532a3889016f5d9230b45ba00d07bb65fd766a05d36bd2f367cf566b9b3572a"
+    },
+    {
+      "name": "loader.7676",
+      "sha256": "888d28ccb37a8c6587439d5654e1039e64e04ecfcbc29f49be7cc1eddde775b8"
+    },
+    {
+      "name": "loader.7677",
+      "sha256": "5b9aafec9b1aaa427f65ba73f7f1222bfb4ab7e7b3e3a003d40bb6cb3b6c757d"
+    }
+  ],
+  "actualLibwpsLoads": [
+    {
+      "pid": 7673,
+      "path": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged/payload/usr/libexec/Open Office Studio/kantoorruntime/program/libwps-0.4-lo.so.4",
+      "sha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4"
+    }
+  ],
+  "sourceUnchanged": true,
+  "output": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/real-proof/packaged/converted.xlsx",
+  "outputSha256": "3efccfc4ccc871bc233e3f46c9f294331e8188ebb536b0433625187ec095a8b8",
+  "prefixInventoryPassed": true,
+  "prefixInventoryFailures": []
+}

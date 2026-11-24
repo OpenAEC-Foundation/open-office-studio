@@ -1,0 +1,539 @@
+{
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "harnessCommit": "3a8d209555e10709f13277ed1e1eb7b9c6762abf",
+  "parentRuntime": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "program": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+  },
+  "designation": "DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME",
+  "canonicalRuntime": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "artifact": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "package": {
+      "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "appVersion": "2026.48.1",
+      "run": 45143305147,
+      "job": 137586343061,
+      "jobConclusion": "success",
+      "installerArchive": {
+        "id": 14804062140,
+        "name": "open-office-studio-Linux",
+        "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "bytes": 811809091
+      },
+      "reportArchive": {
+        "id": 14804805305,
+        "name": "pakketcontrole-Linux",
+        "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+        "bytes": 671
+      },
+      "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+      "deb": {
+        "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+        "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+        "bytes": 383815340,
+        "control": {
+          "Package": "open-office-studio",
+          "Version": "2026.48.1",
+          "Architecture": "amd64",
+          "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+        },
+        "path": "canonical-office.deb",
+        "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+      },
+      "officeExecutableMetadataOnly": {
+        "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+        "bytes": 99899360,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "reusedVerifiedDebRun": 45146535263
+    },
+    "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "program": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+    "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "converterElf": {
+      "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "bytes": 15088,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "runtimeReceipt": {
+      "schemaVersion": 1,
+      "layoutVersion": 2,
+      "name": "LibreOffice",
+      "version": "26.8.2.2",
+      "target": "linux-x64",
+      "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+      "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+      "executable": "program/soffice",
+      "preparedMs": 33554
+    },
+    "entryManifest": {
+      "name": "entry-manifest.json",
+      "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "entries": 15082
+    },
+    "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+  },
+  "originalLibrarySha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+  "librevengeSha256": "2b19422f1da6181bacf3c73017349647ff918dbe5d1b8b589c796def13aad837",
+  "librevengeHeadersSha256": "52a65e904d255dbdd97a8b7bb28d6574e14f999eb01416aff004502406d0904d",
+  "libwpsArchiveSha256": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de",
+  "patches": [
+    {
+      "name": "rpath.patch.0",
+      "sha256": "20fe1c9b4ccb08a65711ee6fcd3bb5110d622a629cd9d4cde11ec2c0ab5ea3ad",
+      "strip": 0
+    },
+    {
+      "name": "libtool.patch.0",
+      "sha256": "69580b7671074caca0fa1cc9baa1b35121f9ef6703aebaf7bd5664f1643336e4",
+      "strip": 0
+    },
+    {
+      "name": "enumarith.patch",
+      "sha256": "df79211ff1b3b354f5952594635518095670d7260f3326a70616013693398aea",
+      "strip": 0
+    },
+    {
+      "name": "0001-const-up-some-things.patch.1",
+      "sha256": "d37957e9bcd538266cf81a9d247cf4e74beacccbbf2f6b28403a131e328f3e0f",
+      "strip": 1
+    },
+    {
+      "name": "tdf148749.patch.1",
+      "sha256": "9d3a3c64ced4703f9d94f0f1170d3885dbe8017cc37994e2fe7bea5989e37bf8",
+      "strip": 1
+    },
+    {
+      "name": "libwps-bundled-soname.patch.0",
+      "sha256": "36f3058e6e60b5e85ed0f1cfc937d9580a9a29186fd27cf1a388adbab96a0f92",
+      "strip": 0
+    }
+  ],
+  "configure": [
+    "--with-pic",
+    "--enable-shared",
+    "--disable-static",
+    "--with-sharedptr=c++11",
+    "--without-docs",
+    "--disable-tools",
+    "--disable-debug",
+    "--disable-werror",
+    "--enable-silent-rules",
+    "CXXFLAGS=-O2 -fPIC",
+    "LDFLAGS=-Wl,-z,origin -Wl,-rpath,'$$ORIGIN'"
+  ],
+  "compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "platform": "Linux runnervmxfy6o 6.8.0-1070-azure #78~22.04.1-Ubuntu SMP Thu Sep 24 18:46:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n",
+  "patchSha256": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+  "variants": {
+    "rebuilt-control": {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/build-proof/rebuilt-control.so",
+      "sha256": "00186a57c76193646e28aa6b06a67eeaff5a1d39f109b0c1d1339878181017ad",
+      "bytes": 2980136,
+      "sourceSha256": "7fa6e3028cda08e7b206228d4d14375e9c5c589186672f9fbaf2c8942845f888",
+      "dynamic": {
+        "soname": [
+          "libwps-0.4-lo.so.4"
+        ],
+        "needed": [
+          "libc.so.6",
+          "libgcc_s.so.1",
+          "libm.so.6",
+          "librevenge-0.0-lo.so.0",
+          "libstdc++.so.6"
+        ],
+        "paths": [
+          "$ORIGIN"
+        ],
+        "raw": "\nDynamic section at offset 0x257ab0 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [librevenge-0.0-lo.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x000000000000000e (SONAME)             Library soname: [libwps-0.4-lo.so.4]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0x23000\n 0x000000000000000d (FINI)               0x1da404\n 0x0000000000000019 (INIT_ARRAY)         0x251288\n 0x000000000000001b (INIT_ARRAYSZ)       496 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x251478\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x2f0\n 0x0000000000000005 (STRTAB)             0x4060\n 0x0000000000000006 (SYMTAB)             0xd90\n 0x000000000000000a (STRSZ)              41063 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x259000\n 0x0000000000000002 (PLTRELSZ)           8832 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x1fe40\n 0x0000000000000007 (RELA)               0xe698\n 0x0000000000000008 (RELASZ)             71592 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              ORIGIN\n 0x000000006ffffffb (FLAGS_1)            Flags: ORIGIN\n 0x000000006ffffffe (VERNEED)            0xe508\n 0x000000006fffffff (VERNEEDNUM)         4\n 0x000000006ffffff0 (VERSYM)             0xe0c8\n 0x000000006ffffff9 (RELACOUNT)          2494\n 0x0000000000000000 (NULL)               0x0\n"
+      },
+      "symbolContract": {
+        "status": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+        "baseline": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [],
+          "otherDefinedSymbolCount": 125
+        },
+        "candidate": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [
+            {
+              "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE24_M_get_insert_unique_posERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE24_M_get_insert_unique_posERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "otherDefinedSymbolCount": 341
+        },
+        "completeAbiCompatibility": false,
+        "requiredOtherGates": "SONAME/NEEDED/RPATH, dependencies, actual loaded ELF, original typed oracle and real conversion/edit/save/new-process reopen remain mandatory"
+      },
+      "symbolVersions": "\nVersion symbols section '.gnu.version' contains 542 entries:\n Addr: 0x000000000000e0c8  Offset: 0x00e0c8  Link: 4 (.dynsym)\n  000:   0 (*local*)       2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  004:   1 (*global*)      3 (GLIBC_2.2.5)   4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)\n  008:   5 (GLIBC_2.3)     4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)\n  00c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  010:   1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)      2 (GLIBCXX_3.4)\n  014:   1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)      1 (*global*)   \n  018:   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)\n  01c:   6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   7 (GLIBCXX_3.4.14) \n  020:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   9 (GLIBC_2.2.5)   1 (*global*)   \n  024:   1 (*global*)      1 (*global*)      3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21) \n  028:   3 (GLIBC_2.2.5)   3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    3 (GLIBC_2.2.5)\n  02c:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21) \n  030:   1 (*global*)      3 (GLIBC_2.2.5)   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)\n  034:   2 (GLIBCXX_3.4)   1 (*global*)      2 (GLIBCXX_3.4)   1 (*global*)   \n  038:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    a (GLIBCXX_3.4.9)\n  03c:   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)      2 (GLIBCXX_3.4)\n  040:   1 (*global*)      8 (CXXABI_1.3)    b (GLIBCXX_3.4.26)    2 (GLIBCXX_3.4)\n  044:   8 (CXXABI_1.3)    9 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    1 (*global*)   \n  048:   3 (GLIBC_2.2.5)   c (GLIBCXX_3.4.29)    1 (*global*)      1 (*global*)   \n  04c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  050:   1 (*global*)      d (GLIBC_2.14)    9 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21) \n  054:   1 (*global*)      1 (*global*)      1 (*global*)      3 (GLIBC_2.2.5)\n  058:   6 (GLIBCXX_3.4.21)    1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)   \n  05c:   a (GLIBCXX_3.4.9)   1 (*global*)      1 (*global*)      e (GLIBC_2.7)  \n  060:   2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  064:   1 (*global*)      1 (*global*)      f (CXXABI_1.3.9)   1 (*global*)   \n  068:   a (GLIBCXX_3.4.9)   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)\n  06c:   4 (GLIBCXX_3.4.15)    1 (*global*)      2 (GLIBCXX_3.4)  10 (GLIBC_2.4)  \n  070:   8 (CXXABI_1.3)    a (GLIBCXX_3.4.9)  11 (GLIBCXX_3.4.11)    2 (GLIBCXX_3.4)\n  074:   6 (GLIBCXX_3.4.21)    1 (*global*)      1 (*global*)      1 (*global*)   \n  078:   6 (GLIBCXX_3.4.21)    1 (*global*)      8 (CXXABI_1.3)    1 (*global*)   \n  07c:   1 (*global*)      1 (*global*)      2 (GLIBCXX_3.4)   1 (*global*)   \n  080:  12 (GLIBC_2.32)    2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    6 (GLIBCXX_3.4.21) \n  084:   6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)   9 (GLIBC_2.2.5)   1 (*global*)   \n  088:   3 (GLIBC_2.2.5)   3 (GLIBC_2.2.5)   2 (GLIBCXX_3.4)   1 (*global*)   \n  08c:   1 (*global*)      2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)\n  090:   1 (*global*)      8 (CXXABI_1.3)    1 (*global*)     13 (GLIBCXX_3.4.20) \n  094:   9 (GLIBC_2.2.5)   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21) \n  098:   2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    6 (GLIBCXX_3.4.21)    a (GLIBCXX_3.4.9)\n  09c:   6 (GLIBCXX_3.4.21)    3 (GLIBC_2.2.5)   8 (CXXABI_1.3)    8 (CXXABI_1.3) \n  0a0:   1 (*global*)     14 (GLIBC_2.3.4)   2 (GLIBCXX_3.4)   8 (CXXABI_1.3) \n  0a4:   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21)   15 (GLIBC_2.29)    1 (*global*)   \n  0a8:   4 (GLIBCXX_3.4.15)    1 (*global*)     16 (GCC_3.0)       1 (*global*)   \n  0ac:   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    8 (CXXABI_1.3)    9 (GLIBC_2.2.5)\n  0b0:   2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    1 (*global*)   \n  0b4:   6 (GLIBCXX_3.4.21)    1 (*global*)      8 (CXXABI_1.3)    8 (CXXABI_1.3) \n  0b8:   1 (*global*)      1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)   \n  0bc:   1 (*global*)      6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21) \n  0c0:   2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  0c4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0c8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0cc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0dc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0ec:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0fc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  100:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  104:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  108:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  10c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  110:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  114:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  118:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  11c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  120:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  124:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  128:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  12c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  130:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  134:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  138:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  13c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  140:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  144:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  148:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  14c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  150:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  154:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  158:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  15c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  160:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  164:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  168:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  16c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  170:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  174:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  178:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  17c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  180:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  184:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  188:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  18c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  190:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  194:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  198:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  19c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1ac:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1bc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1cc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1dc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1ec:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1fc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  200:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  204:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  208:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  20c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  210:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  214:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  218:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  21c:   1 (*global*)      1 (*global*)   \n\nVersion needs section '.gnu.version_r' contains 4 entries:\n Addr: 0x000000000000e508  Offset: 0x00e508  Link: 5 (.dynstr)\n  000000: Version: 1  File: libgcc_s.so.1  Cnt: 1\n  0x0010:   Name: GCC_3.0  Flags: none  Version: 22\n  0x0020: Version: 1  File: libm.so.6  Cnt: 2\n  0x0030:   Name: GLIBC_2.29  Flags: none  Version: 21\n  0x0040:   Name: GLIBC_2.2.5  Flags: none  Version: 9\n  0x0050: Version: 1  File: libc.so.6  Cnt: 7\n  0x0060:   Name: GLIBC_2.3.4  Flags: none  Version: 20\n  0x0070:   Name: GLIBC_2.32  Flags: none  Version: 18\n  0x0080:   Name: GLIBC_2.4  Flags: none  Version: 16\n  0x0090:   Name: GLIBC_2.7  Flags: none  Version: 14\n  0x00a0:   Name: GLIBC_2.14  Flags: none  Version: 13\n  0x00b0:   Name: GLIBC_2.3  Flags: none  Version: 5\n  0x00c0:   Name: GLIBC_2.2.5  Flags: none  Version: 3\n  0x00d0: Version: 1  File: libstdc++.so.6  Cnt: 11\n  0x00e0:   Name: GLIBCXX_3.4.20  Flags: none  Version: 19\n  0x00f0:   Name: GLIBCXX_3.4.11  Flags: none  Version: 17\n  0x0100:   Name: CXXABI_1.3.9  Flags: none  Version: 15\n  0x0110:   Name: GLIBCXX_3.4.29  Flags: none  Version: 12\n  0x0120:   Name: GLIBCXX_3.4.26  Flags: none  Version: 11\n  0x0130:   Name: GLIBCXX_3.4.9  Flags: none  Version: 10\n  0x0140:   Name: CXXABI_1.3  Flags: none  Version: 8\n  0x0150:   Name: GLIBCXX_3.4.14  Flags: none  Version: 7\n  0x0160:   Name: GLIBCXX_3.4.21  Flags: none  Version: 6\n  0x0170:   Name: GLIBCXX_3.4.15  Flags: none  Version: 4\n  0x0180:   Name: GLIBCXX_3.4  Flags: none  Version: 2\n",
+      "ldd": "\tlinux-vdso.so.1 (0x00007fff389e0000)\n\tlibrevenge-0.0-lo.so.0 => /home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/librevenge-0.0-lo.so.0 (0x00007f883301a000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f8832800000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f8832f27000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f8832400000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f8832f07000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f883304c000)\n"
+    },
+    "patched": {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/build-proof/patched.so",
+      "sha256": "e9f8123ab66523071efcef37790c29cd6cb19201d258df7d937e644bb6f03932",
+      "bytes": 2980136,
+      "sourceSha256": "b21a1aababcf78c981503f5b916797b981e37f2c30a0088d84bbc6db74a54846",
+      "dynamic": {
+        "soname": [
+          "libwps-0.4-lo.so.4"
+        ],
+        "needed": [
+          "libc.so.6",
+          "libgcc_s.so.1",
+          "libm.so.6",
+          "librevenge-0.0-lo.so.0",
+          "libstdc++.so.6"
+        ],
+        "paths": [
+          "$ORIGIN"
+        ],
+        "raw": "\nDynamic section at offset 0x257ab0 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [librevenge-0.0-lo.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x000000000000000e (SONAME)             Library soname: [libwps-0.4-lo.so.4]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0x23000\n 0x000000000000000d (FINI)               0x1da5f4\n 0x0000000000000019 (INIT_ARRAY)         0x251288\n 0x000000000000001b (INIT_ARRAYSZ)       496 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x251478\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x2f0\n 0x0000000000000005 (STRTAB)             0x4060\n 0x0000000000000006 (SYMTAB)             0xd90\n 0x000000000000000a (STRSZ)              41063 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x259000\n 0x0000000000000002 (PLTRELSZ)           8832 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x1fe40\n 0x0000000000000007 (RELA)               0xe698\n 0x0000000000000008 (RELASZ)             71592 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              ORIGIN\n 0x000000006ffffffb (FLAGS_1)            Flags: ORIGIN\n 0x000000006ffffffe (VERNEED)            0xe508\n 0x000000006fffffff (VERNEEDNUM)         4\n 0x000000006ffffff0 (VERSYM)             0xe0c8\n 0x000000006ffffff9 (RELACOUNT)          2494\n 0x0000000000000000 (NULL)               0x0\n"
+      },
+      "symbolContract": {
+        "status": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+        "baseline": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [],
+          "otherDefinedSymbolCount": 125
+        },
+        "candidate": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [
+            {
+              "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE24_M_get_insert_unique_posERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE24_M_get_insert_unique_posERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+              "type": "FUNC",
+              "bind": "WEAK",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "otherDefinedSymbolCount": 341
+        },
+        "completeAbiCompatibility": false,
+        "requiredOtherGates": "SONAME/NEEDED/RPATH, dependencies, actual loaded ELF, original typed oracle and real conversion/edit/save/new-process reopen remain mandatory"
+      },
+      "symbolVersions": "\nVersion symbols section '.gnu.version' contains 542 entries:\n Addr: 0x000000000000e0c8  Offset: 0x00e0c8  Link: 4 (.dynsym)\n  000:   0 (*local*)       2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  004:   1 (*global*)      3 (GLIBC_2.2.5)   4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)\n  008:   5 (GLIBC_2.3)     4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)\n  00c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  010:   1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)      2 (GLIBCXX_3.4)\n  014:   1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)      1 (*global*)   \n  018:   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    4 (GLIBCXX_3.4.15)    2 (GLIBCXX_3.4)\n  01c:   6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   7 (GLIBCXX_3.4.14) \n  020:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   9 (GLIBC_2.2.5)   1 (*global*)   \n  024:   1 (*global*)      1 (*global*)      3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21) \n  028:   3 (GLIBC_2.2.5)   3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    3 (GLIBC_2.2.5)\n  02c:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21) \n  030:   1 (*global*)      3 (GLIBC_2.2.5)   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)\n  034:   2 (GLIBCXX_3.4)   1 (*global*)      2 (GLIBCXX_3.4)   1 (*global*)   \n  038:   8 (CXXABI_1.3)    2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    a (GLIBCXX_3.4.9)\n  03c:   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)      2 (GLIBCXX_3.4)\n  040:   1 (*global*)      8 (CXXABI_1.3)    b (GLIBCXX_3.4.26)    2 (GLIBCXX_3.4)\n  044:   8 (CXXABI_1.3)    9 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    1 (*global*)   \n  048:   3 (GLIBC_2.2.5)   c (GLIBCXX_3.4.29)    1 (*global*)      1 (*global*)   \n  04c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  050:   1 (*global*)      d (GLIBC_2.14)    9 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21) \n  054:   1 (*global*)      1 (*global*)      1 (*global*)      3 (GLIBC_2.2.5)\n  058:   6 (GLIBCXX_3.4.21)    1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)   \n  05c:   a (GLIBCXX_3.4.9)   1 (*global*)      1 (*global*)      e (GLIBC_2.7)  \n  060:   2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  064:   1 (*global*)      1 (*global*)      f (CXXABI_1.3.9)   1 (*global*)   \n  068:   a (GLIBCXX_3.4.9)   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)\n  06c:   4 (GLIBCXX_3.4.15)    1 (*global*)      2 (GLIBCXX_3.4)  10 (GLIBC_2.4)  \n  070:   8 (CXXABI_1.3)    a (GLIBCXX_3.4.9)  11 (GLIBCXX_3.4.11)    2 (GLIBCXX_3.4)\n  074:   6 (GLIBCXX_3.4.21)    1 (*global*)      1 (*global*)      1 (*global*)   \n  078:   6 (GLIBCXX_3.4.21)    1 (*global*)      8 (CXXABI_1.3)    1 (*global*)   \n  07c:   1 (*global*)      1 (*global*)      2 (GLIBCXX_3.4)   1 (*global*)   \n  080:  12 (GLIBC_2.32)    2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    6 (GLIBCXX_3.4.21) \n  084:   6 (GLIBCXX_3.4.21)    2 (GLIBCXX_3.4)   9 (GLIBC_2.2.5)   1 (*global*)   \n  088:   3 (GLIBC_2.2.5)   3 (GLIBC_2.2.5)   2 (GLIBCXX_3.4)   1 (*global*)   \n  08c:   1 (*global*)      2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)\n  090:   1 (*global*)      8 (CXXABI_1.3)    1 (*global*)     13 (GLIBCXX_3.4.20) \n  094:   9 (GLIBC_2.2.5)   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21) \n  098:   2 (GLIBCXX_3.4)   8 (CXXABI_1.3)    6 (GLIBCXX_3.4.21)    a (GLIBCXX_3.4.9)\n  09c:   6 (GLIBCXX_3.4.21)    3 (GLIBC_2.2.5)   8 (CXXABI_1.3)    8 (CXXABI_1.3) \n  0a0:   1 (*global*)     14 (GLIBC_2.3.4)   2 (GLIBCXX_3.4)   8 (CXXABI_1.3) \n  0a4:   2 (GLIBCXX_3.4)   6 (GLIBCXX_3.4.21)   15 (GLIBC_2.29)    1 (*global*)   \n  0a8:   4 (GLIBCXX_3.4.15)    1 (*global*)     16 (GCC_3.0)       1 (*global*)   \n  0ac:   6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    8 (CXXABI_1.3)    9 (GLIBC_2.2.5)\n  0b0:   2 (GLIBCXX_3.4)   3 (GLIBC_2.2.5)   6 (GLIBCXX_3.4.21)    1 (*global*)   \n  0b4:   6 (GLIBCXX_3.4.21)    1 (*global*)      8 (CXXABI_1.3)    8 (CXXABI_1.3) \n  0b8:   1 (*global*)      1 (*global*)      6 (GLIBCXX_3.4.21)    1 (*global*)   \n  0bc:   1 (*global*)      6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21)    6 (GLIBCXX_3.4.21) \n  0c0:   2 (GLIBCXX_3.4)   2 (GLIBCXX_3.4)   1 (*global*)      1 (*global*)   \n  0c4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0c8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0cc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0d8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0dc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0e8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0ec:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0f8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  0fc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  100:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  104:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  108:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  10c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  110:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  114:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  118:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  11c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  120:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  124:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  128:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  12c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  130:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  134:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  138:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  13c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  140:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  144:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  148:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  14c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  150:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  154:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  158:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  15c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  160:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  164:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  168:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  16c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  170:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  174:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  178:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  17c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  180:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  184:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  188:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  18c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  190:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  194:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  198:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  19c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1a8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1ac:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1b8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1bc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1c8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1cc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1d8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1dc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1e8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1ec:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f0:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f4:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1f8:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  1fc:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  200:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  204:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  208:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  20c:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  210:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  214:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  218:   1 (*global*)      1 (*global*)      1 (*global*)      1 (*global*)   \n  21c:   1 (*global*)      1 (*global*)   \n\nVersion needs section '.gnu.version_r' contains 4 entries:\n Addr: 0x000000000000e508  Offset: 0x00e508  Link: 5 (.dynstr)\n  000000: Version: 1  File: libgcc_s.so.1  Cnt: 1\n  0x0010:   Name: GCC_3.0  Flags: none  Version: 22\n  0x0020: Version: 1  File: libm.so.6  Cnt: 2\n  0x0030:   Name: GLIBC_2.29  Flags: none  Version: 21\n  0x0040:   Name: GLIBC_2.2.5  Flags: none  Version: 9\n  0x0050: Version: 1  File: libc.so.6  Cnt: 7\n  0x0060:   Name: GLIBC_2.3.4  Flags: none  Version: 20\n  0x0070:   Name: GLIBC_2.32  Flags: none  Version: 18\n  0x0080:   Name: GLIBC_2.4  Flags: none  Version: 16\n  0x0090:   Name: GLIBC_2.7  Flags: none  Version: 14\n  0x00a0:   Name: GLIBC_2.14  Flags: none  Version: 13\n  0x00b0:   Name: GLIBC_2.3  Flags: none  Version: 5\n  0x00c0:   Name: GLIBC_2.2.5  Flags: none  Version: 3\n  0x00d0: Version: 1  File: libstdc++.so.6  Cnt: 11\n  0x00e0:   Name: GLIBCXX_3.4.20  Flags: none  Version: 19\n  0x00f0:   Name: GLIBCXX_3.4.11  Flags: none  Version: 17\n  0x0100:   Name: CXXABI_1.3.9  Flags: none  Version: 15\n  0x0110:   Name: GLIBCXX_3.4.29  Flags: none  Version: 12\n  0x0120:   Name: GLIBCXX_3.4.26  Flags: none  Version: 11\n  0x0130:   Name: GLIBCXX_3.4.9  Flags: none  Version: 10\n  0x0140:   Name: CXXABI_1.3  Flags: none  Version: 8\n  0x0150:   Name: GLIBCXX_3.4.14  Flags: none  Version: 7\n  0x0160:   Name: GLIBCXX_3.4.21  Flags: none  Version: 6\n  0x0170:   Name: GLIBCXX_3.4.15  Flags: none  Version: 4\n  0x0180:   Name: GLIBCXX_3.4  Flags: none  Version: 2\n",
+      "ldd": "\tlinux-vdso.so.1 (0x00007ffcc67c3000)\n\tlibrevenge-0.0-lo.so.0 => /home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/librevenge-0.0-lo.so.0 (0x00007f999afd0000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f999ac00000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f999aee9000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f999a800000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f999aec9000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f999b284000)\n"
+    },
+    "packaged": {
+      "file": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/build-proof/packaged.so",
+      "sha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+      "dynamic": {
+        "soname": [
+          "libwps-0.4-lo.so.4"
+        ],
+        "needed": [
+          "libc.so.6",
+          "libgcc_s.so.1",
+          "libm.so.6",
+          "librevenge-0.0-lo.so.0",
+          "libstdc++.so.6"
+        ],
+        "paths": [
+          "$ORIGIN"
+        ],
+        "raw": "\nDynamic section at offset 0x25cbf0 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [librevenge-0.0-lo.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x000000000000000e (SONAME)             Library soname: [libwps-0.4-lo.so.4]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0x19000\n 0x000000000000000d (FINI)               0x1df7a8\n 0x0000000000000019 (INIT_ARRAY)         0x255590\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x255598\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x260\n 0x0000000000000005 (STRTAB)             0x22b0\n 0x0000000000000006 (SYMTAB)             0x678\n 0x000000000000000a (STRSZ)              17855 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x25cfe8\n 0x0000000000000002 (PLTRELSZ)           4920 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x17a80\n 0x0000000000000007 (RELA)               0x6c50\n 0x0000000000000008 (RELASZ)             69168 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              ORIGIN\n 0x000000006ffffffb (FLAGS_1)            Flags: ORIGIN\n 0x000000006ffffffe (VERNEED)            0x6ad0\n 0x000000006fffffff (VERNEEDNUM)         4\n 0x000000006ffffff0 (VERSYM)             0x6870\n 0x000000006ffffff9 (RELACOUNT)          2438\n 0x0000000000000000 (NULL)               0x0\n"
+      },
+      "symbolContract": {
+        "status": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+        "baseline": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [],
+          "otherDefinedSymbolCount": 125
+        },
+        "candidate": {
+          "directApi": [
+            {
+              "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            },
+            {
+              "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+              "type": "FUNC",
+              "bind": "GLOBAL",
+              "visibility": "DEFAULT"
+            }
+          ],
+          "knownWeakStdExtras": [],
+          "otherDefinedSymbolCount": 125
+        },
+        "completeAbiCompatibility": false,
+        "requiredOtherGates": "SONAME/NEEDED/RPATH, dependencies, actual loaded ELF, original typed oracle and real conversion/edit/save/new-process reopen remain mandatory"
+      }
+    }
+  },
+  "passed": true,
+  "runtimeUntouched": true
+}

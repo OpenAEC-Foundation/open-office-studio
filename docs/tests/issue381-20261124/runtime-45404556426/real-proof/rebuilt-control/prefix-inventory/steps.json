@@ -1,0 +1,226 @@
+[
+  {
+    "label": "canonical-before-copy",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Exact verified input; never executed",
+    "passed": true,
+    "inventory": "canonical-before-copy.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "variant-copied",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "Byte/mode-identical private copy of canonical input",
+    "passed": true,
+    "inventory": "variant-copied.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "canonical-after-copy",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Copy must not modify canonical input",
+    "passed": true,
+    "inventory": "canonical-after-copy.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "variant-derived",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME; only selected libwps bytes may differ",
+    "passed": true,
+    "inventory": "variant-derived.json.gz",
+    "inventorySha256": "eb491ed12607bf1e5d28eb372ebf57d1dde3d4414b428638cbf243a35bc0b5cf",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "cache-created",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache",
+    "reason": "Own fresh external font cache may vary; every other variant path/mode/byte/hash stays exact",
+    "passed": true,
+    "inventory": "cache-created.json.gz",
+    "inventorySha256": "ad97af397fcfcab71ea81abca7465718c51689b6be52a0d3fa57a8d5d18a4121",
+    "entries": 8,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "converter-cache-before-host-probe",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache/rebuilt-control",
+    "reason": "Fresh converter cache must remain byte/mode/path-identical during observer qualification",
+    "passed": true,
+    "inventory": "converter-cache-before-host-probe.json.gz",
+    "inventorySha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70",
+    "entries": 2,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "converter-cache-after-host-probe",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache/rebuilt-control",
+    "reason": "Observer writes in the converter cache are rejected before converter launch",
+    "passed": true,
+    "inventory": "converter-cache-after-host-probe.json.gz",
+    "inventorySha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70",
+    "entries": 2,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "variant-caches-after-host-probe",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache",
+    "reason": "Own fresh external font cache may vary; every other variant path/mode/byte/hash stays exact",
+    "passed": true,
+    "inventory": "variant-caches-after-host-probe.json.gz",
+    "inventorySha256": "ad97af397fcfcab71ea81abca7465718c51689b6be52a0d3fa57a8d5d18a4121",
+    "entries": 8,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "before-font-metadata",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "No metadata present in original verified payload",
+    "passed": true,
+    "inventory": "before-font-metadata.json.gz",
+    "inventorySha256": "eb491ed12607bf1e5d28eb372ebf57d1dde3d4414b428638cbf243a35bc0b5cf",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "font-metadata-0",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "Explicit private metadata derivation, pinned UUID bytes/mode/hash; no existing entry normalized",
+    "passed": true,
+    "inventory": "font-metadata-0.json.gz",
+    "inventorySha256": "0a3d28dccb495c8bab6b32b016775e9e6369cd77713c000c37b911cf036af7e9",
+    "entries": 15083,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "font-metadata-1",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "Explicit private metadata derivation, pinned UUID bytes/mode/hash; no existing entry normalized",
+    "passed": true,
+    "inventory": "font-metadata-1.json.gz",
+    "inventorySha256": "257a0341a49e6a778b3ba7124929868dfc31fcb00602e38ada087d4367a67361",
+    "entries": 15084,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "canonical-after-font-metadata",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Metadata exists only in the explicitly derived private copy",
+    "passed": true,
+    "inventory": "canonical-after-font-metadata.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "before-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "Only explicit library delta and two pinned font metadata entries before private converter execution",
+    "passed": true,
+    "inventory": "before-converter.json.gz",
+    "inventorySha256": "257a0341a49e6a778b3ba7124929868dfc31fcb00602e38ada087d4367a67361",
+    "entries": 15084,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "after-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/rebuilt-control",
+    "reason": "No unknown cache/temp/byte/mode/entry mutation permitted",
+    "passed": true,
+    "inventory": "after-converter.json.gz",
+    "inventorySha256": "257a0341a49e6a778b3ba7124929868dfc31fcb00602e38ada087d4367a67361",
+    "entries": 15084,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "canonical-after-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Canonical input was never executed; full post-run immutability required",
+    "passed": true,
+    "inventory": "canonical-after-converter.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "cache-after-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/fontconfig-cache",
+    "reason": "Own fresh external font cache may vary; every other variant path/mode/byte/hash stays exact",
+    "passed": true,
+    "inventory": "cache-after-converter.json.gz",
+    "inventorySha256": "8449d2d56244ccb5eab2083a8350621f143739845ebe84556628f7e31907fd90",
+    "entries": 10,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  }
+]

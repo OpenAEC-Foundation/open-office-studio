@@ -1,0 +1,296 @@
+{
+  "run": 45404556426,
+  "job": 138481622164,
+  "attempt": 1,
+  "harnessCommit": "3a8d209555e10709f13277ed1e1eb7b9c6762abf",
+  "harnessSourceCommit": "81d065aec275e0e74208f1a877446f4f9f8848d0",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "status": "PASS_BOUNDED_LINUX_DERIVED_RUNTIME_CONVERTER_AND_P5_ENGINE_ROUNDTRIP",
+  "artifactDownloadCount": 1,
+  "artifact": {
+    "id": 14925097859,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkyNTA5Nzg1OQ==",
+    "name": "issue381-private-runtime-proof",
+    "size_in_bytes": 29454092,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14925097859",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14925097859/zip",
+    "expired": false,
+    "digest": "sha256:6ffd15ec37d659a0ecd62649ae2e4f0952d5f1cd30d556ab4c5aea13095bdd51",
+    "created_at": "2026-11-24T13:38:09Z",
+    "updated_at": "2026-11-24T13:38:09Z",
+    "expires_at": "2027-02-22T13:32:54Z",
+    "workflow_run": {
+      "id": 45404556426,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/fix-381-wq2-vlookup-index-20261124",
+      "head_sha": "3a8d209555e10709f13277ed1e1eb7b9c6762abf"
+    }
+  },
+  "privateRuntimeDesignation": "DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME",
+  "sourceSha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+  "unchangedProductPatchSha256": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+  "passed": [
+    "both original-control libraries reproduce wrong indices1..4 and strict source oracle FAIL",
+    "patched actual libwps CLI emits correct indices2..5; all61cells/4formulas typed oracle PASS",
+    "57constants and four typed formula results before/edit/Undo/Redo/textedit/fresh reopen",
+    "actual P5 engine save and separate new PID reopen; saved/reopened identical XLSX",
+    "actual fontconfig public initialization and UUID reader qualification, actual libwps/fontconfig same converterPID",
+    "all55 mode/byte/hash inventories: original canonical unchanged, explicit library+2UUID derived metadata only",
+    "observer/converter/othervariant cache isolation, actual own UUID cache files, no remaining own converter processes",
+    "five postdownload unchanged independent oracle checks reproduce expected2FAIL+3PASS",
+    "absolute deadline/cleanup"
+  ],
+  "enginePid": 7601,
+  "freshEnginePid": 7851,
+  "savedSha256": "689439d56d720978700d839247996e6585fdb8f6648f591f0cc71cbcd8110e83",
+  "remaining": [
+    "official production runtime packaging/integration and new pin not performed",
+    "Windows/macOS native converter builds and application acceptance not performed",
+    "browser GUI and real Tauri IPC not performed",
+    "complete ABI equivalence or full WQ2-format coverage not claimed"
+  ],
+  "productionRuntimeChanged": false,
+  "mainOrReleaseChanged": false,
+  "issueClosed": false,
+  "oldFailuresPreserved": [
+    45376152078,
+    45381046100,
+    45387643024,
+    45399533396
+  ],
+  "files": [
+    {
+      "name": ".gitattributes",
+      "bytes": 37,
+      "sha256": "9e8506983f5062e2fbfd1f88164e516e7537e9e5d56d3b9e26e12c0260265a94"
+    },
+    {
+      "name": "artifact.zip",
+      "bytes": 29454092,
+      "sha256": "6ffd15ec37d659a0ecd62649ae2e4f0952d5f1cd30d556ab4c5aea13095bdd51"
+    },
+    {
+      "name": "build-proof/build.json",
+      "bytes": 54933,
+      "sha256": "7872790b401f9e2e9a73e019e8e3eddbfe6ff4bc1f4443687744834910550689"
+    },
+    {
+      "name": "deadline-finish.json",
+      "bytes": 317,
+      "sha256": "dd5171f09326b789708f1f0c35c89706d866f2e8948d1c50235c65e20bb473be"
+    },
+    {
+      "name": "independent-audit.json",
+      "bytes": 14451,
+      "sha256": "52346f0d7a138a8eda56dba22ac11b59afd277f1135434d8aca9e53cf99ced6a"
+    },
+    {
+      "name": "independent-audit.py",
+      "bytes": 6191,
+      "sha256": "a5a3551fd8ee466c43b98a2bdb6db1b4d75a06ffa3bdce6bf3095f02fd365d85"
+    },
+    {
+      "name": "members.json",
+      "bytes": 39284,
+      "sha256": "2bbfce7a72bdd5ddf5b9b1fb93a11e47178c07874b866bb98c0630e75ecc9dbf"
+    },
+    {
+      "name": "official-artifact.json",
+      "bytes": 853,
+      "sha256": "0ac5e07a4cc6265f0fdc26adf0f83524ff0fc798b0c92d811cb1e27b020c679c"
+    },
+    {
+      "name": "official-job.json",
+      "bytes": 5675,
+      "sha256": "6bf23d698db905c7aa9465cb6227625fd834acf39d64e772cc955b713fc11a8f"
+    },
+    {
+      "name": "official-run.json",
+      "bytes": 15444,
+      "sha256": "e5fabb51f586904585f8ade21ce7f9c42b450692f1b6527396ca2456f97530e0"
+    },
+    {
+      "name": "operator-full-critical-queue.py",
+      "bytes": 2417,
+      "sha256": "470bbc766576bffd87613ba942638d2955ae429ac561bc3b38e2ee0278080fd8"
+    },
+    {
+      "name": "original-run-request.json",
+      "bytes": 12042,
+      "sha256": "6feb1c7733b1734d3b3403e78befd7294554c0a80308e4b6f54884c5ee9c8be6"
+    },
+    {
+      "name": "real-proof/packaged/converted-independent.json",
+      "bytes": 8901,
+      "sha256": "a2e94c7225ffb7823f5a0adef03b71f0548891096cec473014d4505c91d156ed"
+    },
+    {
+      "name": "real-proof/packaged/converted.xlsx",
+      "bytes": 6494,
+      "sha256": "3efccfc4ccc871bc233e3f46c9f294331e8188ebb536b0433625187ec095a8b8"
+    },
+    {
+      "name": "real-proof/packaged/converter-report.json",
+      "bytes": 15139,
+      "sha256": "5ae775f9c3e142a505b91e7a358782377e16dcf98fe747f9acf1ef727fb010db"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/report.json",
+      "bytes": 4913,
+      "sha256": "b7847702ab1e8f97a66f417e6c76c7d2f87ca2c767bedee124fa2c7ccd9a503e"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/stdout.log",
+      "bytes": 372,
+      "sha256": "9179c6c980f4462da8cf3a0c15bca68731216cb6e730a121da7ab423725fbab1"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/steps.json",
+      "bytes": 8264,
+      "sha256": "359bfd92af5d615fa1262a25e717492d77b3223dae519141470220ed14dc2489"
+    },
+    {
+      "name": "real-proof/packaged/source-oracle.json",
+      "bytes": 64671,
+      "sha256": "bfd7a552da9398f0bcb1833e85f7d8900bc9aeef6c04ddcb0b2f09acb998411b"
+    },
+    {
+      "name": "real-proof/patched/converted-independent.json",
+      "bytes": 7394,
+      "sha256": "b33a71f76aff70b45321ca5726c91b08a60bcf00002f6d930eeb120c85407f92"
+    },
+    {
+      "name": "real-proof/patched/converted.xlsx",
+      "bytes": 6497,
+      "sha256": "c2572232e40c629035a2ba9670e2e85916d8df18cae7c54a9e4968239e71310d"
+    },
+    {
+      "name": "real-proof/patched/converter-report.json",
+      "bytes": 15221,
+      "sha256": "11b1b9b7f5651870e64262a13a93df8bea69e0659dd050141146b5304a478694"
+    },
+    {
+      "name": "real-proof/patched/fontconfig-host/report.json",
+      "bytes": 4911,
+      "sha256": "f3f73cf4b373f12fb8bc6c79c2c6d0fbc8c5f35c8a13492d20856e9c7bb1bf12"
+    },
+    {
+      "name": "real-proof/patched/fontconfig-host/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "real-proof/patched/fontconfig-host/stdout.log",
+      "bytes": 370,
+      "sha256": "53569c56f2dc59c72e302d347068613d87d8b8e2bcb0d64fb46f075f560546c7"
+    },
+    {
+      "name": "real-proof/patched/fresh-process.json",
+      "bytes": 710,
+      "sha256": "0cab19d824a31b5ba2f7369af2243e964b274bbb9e6d97eea04a8952c78bbc07"
+    },
+    {
+      "name": "real-proof/patched/prefix-inventory/steps.json",
+      "bytes": 8258,
+      "sha256": "ff06542126cf86f784c844df844a90197855961ff9bffc2bfa6fa4e7518b6115"
+    },
+    {
+      "name": "real-proof/patched/reopened-independent.json",
+      "bytes": 7389,
+      "sha256": "cf3c21f8241a795989405d887ec8bf9301d3480133b7f8c4d5ac94ffeb368acd"
+    },
+    {
+      "name": "real-proof/patched/reopened.xlsx",
+      "bytes": 6419,
+      "sha256": "689439d56d720978700d839247996e6585fdb8f6648f591f0cc71cbcd8110e83"
+    },
+    {
+      "name": "real-proof/patched/saved-independent.json",
+      "bytes": 7386,
+      "sha256": "d14e669f9b426a909b9e4f5c271802556dde3dfc3228b5ac6aafecc565be3208"
+    },
+    {
+      "name": "real-proof/patched/saved.xlsx",
+      "bytes": 6419,
+      "sha256": "689439d56d720978700d839247996e6585fdb8f6648f591f0cc71cbcd8110e83"
+    },
+    {
+      "name": "real-proof/patched/source-oracle.json",
+      "bytes": 64671,
+      "sha256": "bfd7a552da9398f0bcb1833e85f7d8900bc9aeef6c04ddcb0b2f09acb998411b"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converted-independent.json",
+      "bytes": 8908,
+      "sha256": "772cfbd0f05982b54d14c7984a1024504624be38bb41f196fbc95a7ba3e56e20"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converted.xlsx",
+      "bytes": 6494,
+      "sha256": "ad4a6933edf739e21f753c03bd91c728a2b7bc2b4545ded55066672464e36409"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converter-report.json",
+      "bytes": 15325,
+      "sha256": "6ab91c408c2203c204dfa8750c82001157f239f01efc9f5fbb0013504f1492a5"
+    },
+    {
+      "name": "real-proof/rebuilt-control/fontconfig-host/report.json",
+      "bytes": 4927,
+      "sha256": "ee0b67bc35a449bb10feb5fbf22a10a156cc2d78fea318c7f2633b68d2281f27"
+    },
+    {
+      "name": "real-proof/rebuilt-control/fontconfig-host/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "real-proof/rebuilt-control/fontconfig-host/stdout.log",
+      "bytes": 386,
+      "sha256": "6ebf7882dc29a138aa2c57860af012bbd02ab2a7b37c13e7a56ea6def7628a10"
+    },
+    {
+      "name": "real-proof/rebuilt-control/prefix-inventory/steps.json",
+      "bytes": 8328,
+      "sha256": "c48ea151956397da5216868dedf8cf8d9c344b41cab876f014b97befe82c7d77"
+    },
+    {
+      "name": "real-proof/rebuilt-control/source-oracle.json",
+      "bytes": 64671,
+      "sha256": "bfd7a552da9398f0bcb1833e85f7d8900bc9aeef6c04ddcb0b2f09acb998411b"
+    },
+    {
+      "name": "real-proof/report.json",
+      "bytes": 54929,
+      "sha256": "99c376f0a7322c80f7aae0a3716bb9edec604acb3fac8862b2102aa6e3c0c4af"
+    },
+    {
+      "name": "reference-fixture.json",
+      "bytes": 2725,
+      "sha256": "20b776c38d2275590e4d2f08100ecb20d4fcc2585562ab5845fdefa0c68956e7"
+    },
+    {
+      "name": "reference-TESTLU.WQ2",
+      "bytes": 4784,
+      "sha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce"
+    },
+    {
+      "name": "request-verification.json",
+      "bytes": 411,
+      "sha256": "d6a02e7481a2458d37a07e0fe235d18522949e2e6fe48f81be7d628fa4618b91"
+    },
+    {
+      "name": "runner-frontgate.json",
+      "bytes": 122,
+      "sha256": "f0a54a01646a0ad2c029a20779d3fd6e3b74aaa0addb577053e12bda8f7e5ecf"
+    }
+  ]
+}
