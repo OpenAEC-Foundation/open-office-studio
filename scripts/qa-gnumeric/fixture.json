@@ -1,0 +1,136 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-gnumeric-1",
+    "ext": "gnumeric",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "sc/qa/unit/data/gnumeric/täßt.gnumeric",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/gnumeric/t%C3%A4%C3%9Ft.gnumeric",
+    "gitSha": "043616c3e3f67dc3415b92c44ea17d7cb5978510",
+    "sha256": "1bc3d97bb228f6d9735886600bfdbb5b75169c767ffc0ab6ed3a96abe9fcda36",
+    "bytes": 1716,
+    "variant": "täßt.gnumeric",
+    "expected": "open",
+    "expectedOn": [],
+    "expectEmptyWarning": false
+  },
+  "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+  "notices": [
+    {
+      "path": "COPYING",
+      "bytes": 35147,
+      "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+    },
+    {
+      "path": "COPYING.LGPL",
+      "bytes": 7639,
+      "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+    },
+    {
+      "path": "COPYING.MPL",
+      "bytes": 16725,
+      "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7167,
+      "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+      "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+      "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+    }
+  ],
+  "p2Bindings": {
+    "docs/tests/formatendekking/bronnen.json": {
+      "blob": "7b4dbe00c195168dffa138630f6cfc13e56c9364",
+      "bytes": 22270,
+      "sha256": "cf59a7134d2d910ddd59fa201411a4f6b75ab4410134feaf48d66c90eb93b3c5"
+    },
+    "docs/tests/formatendekking/resultaat-windows.json": {
+      "blob": "5d7e11bf168244e1d1e2dc400f6acea40a43ea1a",
+      "bytes": 12898,
+      "sha256": "ed3e887dfb50c177d11695a1d0f4b03f0fb330382abe1acbd56690c160de56b8"
+    },
+    "src/import/openen.ts": {
+      "blob": "9b76305605ea317e3545ff4f3baf0b992e82b803",
+      "bytes": 15945,
+      "sha256": "d8dc81003f3b4633b5f12608b40517c0763061979f9520666e177242e1c12c05"
+    },
+    "src/formaten.ts": {
+      "blob": "6feb0574af46ae7617f50db85ecc0fad15c21dd1",
+      "bytes": 6366,
+      "sha256": "b115a7414688c8c0c0700f76f6eb90c607a641246e78966d28baf99defa95d98"
+    },
+    "src/formaten.json": {
+      "blob": "3e9bec38f3c6600a170f93d41e0bb3c62312fc27",
+      "bytes": 12279,
+      "sha256": "3b81dbed325254d8118052c337f65d08d08d2b98ed5aefc3919bb2891f776297"
+    },
+    "src-tauri/src/conversieprofiel.xcu": {
+      "blob": "e04dcf34d16d140a3664a7fbb1365da3cff740c4",
+      "bytes": 2867,
+      "sha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40"
+    }
+  },
+  "retainedBindings": {
+    "empty-historical-result.xlsx": {
+      "bytes": 1648840,
+      "sha256": "df18582a4ecb0cace2847e261970de4ce27f5b8565694426bd4a10fa4d728264",
+      "role": "Actual local bytes equal the historical committed saved digest; app/P2 point is not inferred from that identity."
+    },
+    "mac-other-fixture-boundary.json": {
+      "bytes": 3205,
+      "sha256": "f0d559da0da47a7495a2d632335b3677a2515e7329f137189e9140bb763b6f1f"
+    }
+  },
+  "referenceGitBindings": {
+    "other-fixture-p2-route.md": {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "path": "docs/tests/formatendekking/2026-11-23-gnm-route.md",
+      "blob": "5680848e397eb457bc4d5bfbc76123b2ffaa3972",
+      "bytes": 11424,
+      "sha256": "e0b9b9184f5ae59dffc3f93dca9c29348019093cc09e3dc5d5162207df616262",
+      "role": "Other fixture proof; no borrowed source-content/container/native acceptance."
+    },
+    "other-fixture.json": {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "path": "docs/tests/formatendekking/2026-11-23-gnm-proof/fixture.json",
+      "blob": "78cf194c18c91fd2240ab0f772ae9ef13af7eb93",
+      "bytes": 1012,
+      "sha256": "3778b7e131a1d08ebf49f03f15c752bf24e3dd1f3025e7604b544babd5adc007",
+      "role": "Other fixture proof; no borrowed source-content/container/native acceptance."
+    },
+    "other-fixture-p2-windows.json": {
+      "commit": "436ee5b79562d7c9ef0292d45665bd9976f7e848",
+      "path": "docs/tests/formatendekking/2026-11-23-gnm-native-windows-proof/provenance.json",
+      "blob": "d32aaa0cfff90f0a9039e06b01762444dd43f4ec",
+      "bytes": 2305,
+      "sha256": "fdb1ea372a28cebb08683349c16ca11ea5206f10a37cff7bc213e50fb2a4a166",
+      "role": "Other fixture proof; no borrowed source-content/container/native acceptance."
+    },
+    "other-fixture-p2-linux.md": {
+      "commit": "0f7c505ec4c66e72fe038da991a944d7af3ba28d",
+      "path": "docs/tests/formatendekking/2026-11-23-gnm-linux-native-p2.md",
+      "blob": "7ad951ed2e9e415ce61c4aea84557182ee797bfe",
+      "bytes": 6168,
+      "sha256": "f14688c8245c168440e16b7fc9cbfdd450b719fba9b327bfaec17b46f085f13c",
+      "role": "Other fixture proof; no borrowed source-content/container/native acceptance."
+    }
+  },
+  "runtimeAllocation": "Coordinator ended old release hold, but granted only source/reuse now; no new runtime/CI/build/download allocation. None requested for an empty-source content gap.",
+  "scopeLimit": "Original1716-byte .gnumeric container only; three empty sheets cannot witness positive type/value/formula import. Other2062-byte universal-content fixture and its actual .gnm/.gnumeric routes stay separate.",
+  "gzipReference": {
+    "url": "https://www.rfc-editor.org/rfc/rfc1952.html",
+    "role": "Primary gzip header/trailer, CRC32 and ISIZE reference; source reader qualifies this one single-member FLAGS0 fixture only. General gzip permits concatenated members; that oracle control is outside this source contract, not proof of invalidity or product rejection."
+  }
+}

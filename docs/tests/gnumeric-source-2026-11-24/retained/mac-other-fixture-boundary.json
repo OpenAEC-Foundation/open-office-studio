@@ -1,0 +1,64 @@
+{
+  "owner": "6f92",
+  "scope": "Read-only source boundary of actual P5 files, not a re-audit/takeover of native package/process/visual acceptance",
+  "run": 45357794642,
+  "harnessCommit": "4c2d7637e61a39d851cccb39d296d13d520a9388",
+  "workflowConclusion": "failure",
+  "jobs": [
+    {
+      "route": ".gnm",
+      "job": 138320456572,
+      "conclusion": "success"
+    },
+    {
+      "route": ".gnumeric",
+      "job": 138320456566,
+      "conclusion": "success"
+    }
+  ],
+  "appPoint": "P5 per coordinator scope; package/application identity not reverified by this boundary inspection",
+  "actualFiles": [
+    {
+      "extensionRoute": ".gnm",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnm/raw/spreadsheet-documents/gnm/universal-content.gnm",
+      "bytes": 2062,
+      "sha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "role": "actual input of different2062-byte source"
+    },
+    {
+      "extensionRoute": ".gnm",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnm/raw/spreadsheet-documents/gnm/imported-original.xlsx",
+      "bytes": 79283,
+      "sha256": "0290d4f01028ebf49e1d3866025a376ad6def0ce4b678cdcf62481e847e3c841",
+      "role": "owner-retained actual output; not adopted as current-source acceptance"
+    },
+    {
+      "extensionRoute": ".gnm",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnm/raw/spreadsheet-documents/gnm/edited-native.xlsx",
+      "bytes": 75025,
+      "sha256": "65677cda24d53550503beb9a9b06e612b09176fc90970ea30905813c612beaed",
+      "role": "owner-retained actual output; not adopted as current-source acceptance"
+    },
+    {
+      "extensionRoute": ".gnumeric",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnumeric/raw/spreadsheet-documents/gnumeric/universal-content.gnumeric",
+      "bytes": 2062,
+      "sha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "role": "actual input of different2062-byte source"
+    },
+    {
+      "extensionRoute": ".gnumeric",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnumeric/raw/spreadsheet-documents/gnumeric/imported-original.xlsx",
+      "bytes": 79283,
+      "sha256": "0290d4f01028ebf49e1d3866025a376ad6def0ce4b678cdcf62481e847e3c841",
+      "role": "owner-retained actual output; not adopted as current-source acceptance"
+    },
+    {
+      "extensionRoute": ".gnumeric",
+      "relativePath": "oos-gnumeric-source-qa-e0d7/../oos-standalone-macos-20261123-6f92/.local/native-45357794642-2026-11-24/spreadsheet-gnumeric/raw/spreadsheet-documents/gnumeric/edited-native.xlsx",
+      "bytes": 75025,
+      "sha256": "65677cda24d53550503beb9a9b06e612b09176fc90970ea30905813c612beaed",
+      "role": "owner-retained actual output; not adopted as current-source acceptance"
+    }
+  ]
+}
