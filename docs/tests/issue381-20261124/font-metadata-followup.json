@@ -1,19 +1,19 @@
 {
-  "checkedAt": "2026-11-24T12:36:19.679002+00:00",
-  "baseCommit": "b25159c09a95b61571117064e7f1037fc7e68da4",
+  "checkedAt": "2026-11-24T12:49:18.531055+00:00",
+  "baseCommit": "1ba951003f4922906cc37ceb7976c58b2510ebb0",
   "platform": "win32",
-  "tests": 13,
+  "tests": 15,
   "returncode": 0,
   "stdout": "",
-  "stderr": "test_cache_is_fresh_and_separate_for_every_variant (__main__.MetadataTest.test_cache_is_fresh_and_separate_for_every_variant) ... ok\ntest_changed_uuid_bytes_without_pinned_hash_rejected (__main__.MetadataTest.test_changed_uuid_bytes_without_pinned_hash_rejected) ... ok\ntest_colliding_variant_uuid_rejected (__main__.MetadataTest.test_colliding_variant_uuid_rejected) ... ok\ntest_cross_variant_cache_mutation_rejected (__main__.MetadataTest.test_cross_variant_cache_mutation_rejected) ... ok\ntest_extra_metadata_path_rejected (__main__.MetadataTest.test_extra_metadata_path_rejected) ... ok\ntest_foreign_uuid_in_own_cache_rejected (__main__.MetadataTest.test_foreign_uuid_in_own_cache_rejected) ... ok\ntest_global_or_foreign_cache_write_rejected (__main__.MetadataTest.test_global_or_foreign_cache_write_rejected) ... ok\ntest_host_probe_loader_evidence_cannot_pollute_converter_logs (__main__.MetadataTest.test_host_probe_loader_evidence_cannot_pollute_converter_logs) ... ok\ntest_metadata_plan_preserves_all_existing_entries (__main__.MetadataTest.test_metadata_plan_preserves_all_existing_entries) ... ok\ntest_metadata_reads_and_own_cache_writes_required (__main__.MetadataTest.test_metadata_reads_and_own_cache_writes_required) ... ok\ntest_six_distinct_pinned_uuids_with_exact_modes_and_hashes (__main__.MetadataTest.test_six_distinct_pinned_uuids_with_exact_modes_and_hashes) ... ok\ntest_wrong_metadata_mode_rejected (__main__.MetadataTest.test_wrong_metadata_mode_rejected) ... ok\ntest_wrong_uuid_rejected_even_with_recomputed_hash (__main__.MetadataTest.test_wrong_uuid_rejected_even_with_recomputed_hash) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 0.176s\n\nOK\n",
+  "stderr": "test_cache_is_fresh_and_separate_for_every_variant (__main__.MetadataTest.test_cache_is_fresh_and_separate_for_every_variant) ... ok\ntest_changed_uuid_bytes_without_pinned_hash_rejected (__main__.MetadataTest.test_changed_uuid_bytes_without_pinned_hash_rejected) ... ok\ntest_colliding_variant_uuid_rejected (__main__.MetadataTest.test_colliding_variant_uuid_rejected) ... ok\ntest_cross_variant_cache_mutation_rejected (__main__.MetadataTest.test_cross_variant_cache_mutation_rejected) ... ok\ntest_extra_metadata_path_rejected (__main__.MetadataTest.test_extra_metadata_path_rejected) ... ok\ntest_foreign_uuid_in_own_cache_rejected (__main__.MetadataTest.test_foreign_uuid_in_own_cache_rejected) ... ok\ntest_global_or_foreign_cache_write_rejected (__main__.MetadataTest.test_global_or_foreign_cache_write_rejected) ... ok\ntest_host_probe_loader_evidence_cannot_pollute_converter_logs (__main__.MetadataTest.test_host_probe_loader_evidence_cannot_pollute_converter_logs) ... ok\ntest_metadata_plan_preserves_all_existing_entries (__main__.MetadataTest.test_metadata_plan_preserves_all_existing_entries) ... ok\ntest_metadata_reads_and_own_cache_writes_required (__main__.MetadataTest.test_metadata_reads_and_own_cache_writes_required) ... ok\ntest_observer_uuids_distinct_from_every_runtime_dir_and_variant (__main__.MetadataTest.test_observer_uuids_distinct_from_every_runtime_dir_and_variant) ... ok\ntest_probe_write_in_converter_cache_fails_before_converter (__main__.MetadataTest.test_probe_write_in_converter_cache_fails_before_converter) ... ok\ntest_six_distinct_pinned_uuids_with_exact_modes_and_hashes (__main__.MetadataTest.test_six_distinct_pinned_uuids_with_exact_modes_and_hashes) ... ok\ntest_wrong_metadata_mode_rejected (__main__.MetadataTest.test_wrong_metadata_mode_rejected) ... ok\ntest_wrong_uuid_rejected_even_with_recomputed_hash (__main__.MetadataTest.test_wrong_uuid_rejected_even_with_recomputed_hash) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.167s\n\nOK\n",
   "pythonAstChecks": 4,
   "passed": true,
   "localScope": "Portable metadata/cache policy and filesystem negatives; no native library/ELF/runtime/CI/converter executed",
   "files": {
-    "qa/issue381/convert_real.py": "b52dd8d5fb8b990fce85da2a1246a4dcc4644b0f85077a5dc2fcbe891cfd9de3",
-    "qa/issue381/font_cache.py": "a9f24fe81e0e9cc0f753a6aad9fe85270fc3c0adbfa873742522700a15601644",
-    "qa/issue381/font_cache_test.py": "700f35f3fa3ec285e4d8b5d3460b2f8c671d88caa8554f57e6e9db671d24610d",
-    "qa/issue381/fontconfig_host.py": "23451512da70ccaad1e258a7570e5c1bece52fb4ba8d7466304874ff662ab3ec",
+    "qa/issue381/convert_real.py": "5d4dd0aa00121c19d5c0d427d3838ee0940d443801ae959a177a51152dc01fac",
+    "qa/issue381/font_cache.py": "7e2251eeb385005803b28a19af41e3609f0e9dcc09588af06d97d09b1a474a4c",
+    "qa/issue381/font_cache_test.py": "5eff908ecd1cafc17bb0299b41b8646098192dc894e3e3ad8d3879db6d938a36",
+    "qa/issue381/fontconfig_host.py": "61e9a533193f7cde4e0e9272a0de1bb3d3c6d346d6b8468e5e9911f74a1976ef",
     "qa/issue381/font-cache-policy.json": "e511e883f95521be70f1478ae763706d3c47ca65b274e102efe99e3b8891219f"
   },
   "referenceFiles": {

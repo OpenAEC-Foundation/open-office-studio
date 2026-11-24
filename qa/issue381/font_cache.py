@@ -111,16 +111,41 @@ def validate_cache_log(log, prefix, variant, policy, cache):
 
 
 def qualification_environment(env, output):
-    return {**env, 'LD_DEBUG_OUTPUT': str(Path(output)/'host-loader')}
+    return {**env, 'LD_DEBUG_OUTPUT': str(Path(output)/'host-loader'),
+            'XDG_CACHE_HOME': str(Path(output)/'xdg')}
 
 
-def qualify_host(output, env, variant, policy, timeout):
+def observer_uuid(policy, variant):
+    namespace=uuid.UUID(policy['variants'][variant][UUID_PATHS[0]]['uuid'])
+    value=str(uuid.uuid5(namespace,'issue381-host-qualification-reader'))
+    assert value not in {e['uuid'] for entries in policy['variants'].values() for e in entries.values()}
+    return value
+
+
+def run_qualified_probe(cache, operation):
+    before=inventory(cache.path)
+    cache.audit.check('converter-cache-before-host-probe',cache.path,before,
+                      'Fresh converter cache must remain byte/mode/path-identical during observer qualification')
+    try:
+        return operation()
+    finally:
+        cache.audit.check('converter-cache-after-host-probe',cache.path,before,
+                          'Observer writes in the converter cache are rejected before converter launch')
+        cache.finish('variant-caches-after-host-probe')
+
+
+def qualify_host(output, env, variant, policy, timeout, cache):
     output = Path(output)
+    assert not output.resolve().is_relative_to(cache.path) and not cache.path.is_relative_to(output.resolve())
     output.mkdir(parents=True, exist_ok=False)
-    child = subprocess.run([sys.executable, 'qa/issue381/fontconfig_host.py', str(output), variant],
-                           env=qualification_environment(env,output), capture_output=True, timeout=timeout)
-    (output/'stdout.log').write_bytes(child.stdout)
-    (output/'stderr.log').write_bytes(child.stderr)
+    (output/'xdg/fontconfig').mkdir(parents=True,exist_ok=False)
+    def operation():
+        child=subprocess.run([sys.executable, 'qa/issue381/fontconfig_host.py', str(output), variant],
+                             env=qualification_environment(env,output), capture_output=True, timeout=timeout)
+        (output/'stdout.log').write_bytes(child.stdout)
+        (output/'stderr.log').write_bytes(child.stderr)
+        return child
+    child=run_qualified_probe(cache,operation)
     assert child.returncode == 0, child.stderr.decode(errors='replace')
     report = json.loads((output/'report.json').read_bytes())
     assert report['passed'] and report['version'] == policy['referenceVersion']

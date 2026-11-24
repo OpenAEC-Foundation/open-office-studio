@@ -69,7 +69,7 @@ def main():
     report=dict(applicationCommit=build['applicationCommit'],runtimeBase=binding,
         overlay=checked,profileSha256=sha(profile),sourceSha256=sha(source),passed=False)
     try:
-        host=qualify_host(out/'fontconfig-host',env,args.variant,policy,min(30,remaining('build')))
+        host=qualify_host(out/'fontconfig-host',env,args.variant,policy,min(30,remaining('build')),cache_guard)
         report['fontconfigHost']=host
         expected=seed_metadata(Path(binding['privateRoot']),expected,args.variant,prefix_audit,policy)
         report['fontMetadataDerivations']=policy['variants'][args.variant]

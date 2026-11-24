@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 from font_cache import (CacheGuard, UUID_PATHS, VARIANTS, load_policy, metadata_expected,
-                        validate_cache_log, validate_policy, qualification_environment)
+                        validate_cache_log, validate_policy, qualification_environment,
+                        observer_uuid, run_qualified_probe)
 from runtime_prefix import Audit
 
 
@@ -39,7 +40,27 @@ class MetadataTest(unittest.TestCase):
         self.assertNotEqual(probe['LD_DEBUG_OUTPUT'],env['LD_DEBUG_OUTPUT'])
         self.assertEqual(probe['LD_DEBUG_OUTPUT'],str(self.root/'qualification/host-loader'))
         self.assertEqual(env['LD_DEBUG_OUTPUT'],str(self.root/'converter-loader'))
-        self.assertEqual(probe['XDG_CACHE_HOME'],env['XDG_CACHE_HOME'])
+        self.assertNotEqual(probe['XDG_CACHE_HOME'],env['XDG_CACHE_HOME'])
+        self.assertEqual(probe['XDG_CACHE_HOME'],str(self.root/'qualification/xdg'))
+
+    def test_observer_uuids_distinct_from_every_runtime_dir_and_variant(self):
+        observers={observer_uuid(self.policy,v) for v in VARIANTS}
+        actual={e['uuid'] for entries in self.policy['variants'].values() for e in entries.values()}
+        self.assertEqual(len(observers),3)
+        self.assertFalse(observers & actual)
+
+    def test_probe_write_in_converter_cache_fails_before_converter(self):
+        clean=self.guard('packaged')
+        self.assertEqual(run_qualified_probe(clean,lambda:'read-only probe'),'read-only probe')
+        guard=self.guard('rebuilt-control')
+        launched=[]
+        def contaminating_probe():
+            (guard.xdg/'fontconfig/observer-write').write_bytes(b'not allowed')
+        with self.assertRaisesRegex(AssertionError,'converter-cache-after-host-probe'):
+            run_qualified_probe(guard,contaminating_probe)
+            launched.append('converter')
+        self.assertEqual(launched,[])
+        self.assertEqual(guard.audit.steps[-1]['differences']['extra'],['xdg/fontconfig/observer-write'])
 
     def test_wrong_uuid_rejected_even_with_recomputed_hash(self):
         policy=copy.deepcopy(self.policy)

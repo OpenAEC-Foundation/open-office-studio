@@ -13,7 +13,7 @@ import subprocess
 import sys
 import uuid
 
-from font_cache import load_policy
+from font_cache import load_policy, observer_uuid
 from runtime_prefix import inventory, sha
 
 
@@ -54,7 +54,7 @@ def main(output, variant):
         assert stat.S_IMODE((writer/'.uuid').stat().st_mode)==0o644
         assert set(inventory(writer))=={'.uuid'}
         reader=output/'reader';reader.mkdir()
-        text=next(iter(policy['variants'][variant].values()))['uuid']
+        text=observer_uuid(policy,variant)
         (reader/'.uuid').write_bytes(text.encode('ascii'))
         before=inventory(reader)
         assert lib.FcDirCacheCreateUUID(os.fsencode(reader),0,config)
@@ -63,7 +63,8 @@ def main(output, variant):
         assert inventory(reader)==before, 'Existing pinned UUID was rewritten'
         report=dict(passed=True,version=version,packageVersion=package,library=str(library),
             sha256=sha(library),dynamic=dynamic,ldd=linked,dependencies=dependencies,
-            writerUuid=data.decode('ascii'),writerMode='0644',readerPreserved=True,
+            writerUuid=data.decode('ascii'),writerMode='0644',readerPreserved=True,readerUuid=text,
+            observerCache=os.environ['XDG_CACHE_HOME'],
             readerDebugToken='FcDirCacheReadUUID '+str(reader/'.uuid')+' -> '+text,
             scope='Actual host API behavior plus pinned upstream2.13.1 reference; not historical writer attribution or complete ABI equivalence')
         (output/'report.json').write_bytes((json.dumps(report,indent=2)+'\n').encode())
