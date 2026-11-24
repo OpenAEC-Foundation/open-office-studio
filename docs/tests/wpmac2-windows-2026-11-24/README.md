@@ -48,3 +48,42 @@ There is no parent/suite/app build or dependency on another platform's download.
 Local checks pass original small result ZIP SHA, source SHA/blob/native oracle
 equality, exact fixture/reader bytes, one resource-path adaptation and18 prior
 XML cases. These static checks execute no app/converter or local GUI/capture.
+
+## Actual result: PASS for the declared Windows WPMac2 route
+
+[Run45374344659/job138376831669](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45374344659/job/138376831669)
+succeeded on executable harness6216787d717ebd457c9318b7d8c48b6bae8693fb,
+on unchanged signed P5 Writer bytes. The separate plan job138376417422 and
+native job both ran on Windows; no Linux runner slot was used.
+
+Actual owned native Open-dialog target/readback is the original504-byte
+source.wpd. Independent audit rereads the native header, framing and original
+first3/C3 source oracle. All6 cases in imported/edited/undo/initial/reopened
+DOCX pass:30 evaluations, zero mismatches. Normal focused prefix input,
+Ctrl+Z undo, Ctrl+Y redo, native Save As, full quit/new PID and reopen/resave
+pass. Two complete normal exits, PIDs8372→8320, original WPD SHA/size/mtime/
+nonzero inode281474976716005, app identity/profile/signatures/PE/private runtime
+and successful own resource cleanup are retained in the proof.
+
+Four actual source/completed screenshots were reviewed. The first original
+paragraph and visible Bold/Italic examples are present; the prefixed paragraph
+and both examples remain visible after native save and fresh-process reopen.
+Later column labels are only a screenshot observation, not independently
+accepted column/tail/layout semantics. The acceptance remains the source text,
+ordinary DOCX type and explicit C3 attribute spans, not full rendering or font
+metrics. No unique2.1.3 producer, WordPerfect6 or other-platform GUI claim.
+
+[Final review](evidence/45374344659/review.json) contains actual WPD picker
+target, independently qualified header/leading paragraphs, source/producer/
+child/report/PE/run/job/attempt/proof binding, expiry, five byte-oracle results,
+actual image hashes, phases and cleanup. Raw official ZIPs/API/collector output
+are byte-preserved with an SHA256 inventory; later manual image acceptance is
+separate from the original collector output. Proof14909399332,438686 bytes,
+SHA2562acd2c4d7104db84c80c733d6d9c74e50afaa27dbe1085700d82c3d8a30b9bb1,
+recorded expiry2027-02-22T10:23:31Z.
+
+Own ready/go flags are frozen false, with no next test/build scheduled. Accepted
+remote cleanup reports normal exits without errors. No local GUI/capture was
+started. Existing format/core proofs, other owners and the publisher correction
+remain untouched; wider #30 and main/tag/publication decisions stay with the
+integration coordinator.
