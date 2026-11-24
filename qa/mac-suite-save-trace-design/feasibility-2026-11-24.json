@@ -1,0 +1,208 @@
+{
+  "date": "2026-11-24",
+  "scope": "Read-only feasibility of four causal trace points on UNCHANGED SIGNED P5 Mac Suite; no new native execution",
+  "coordination": {
+    "soleFutureNativeOperator": "6f92",
+    "exclusiveSourceContractAndIndependentAudit": "d410",
+    "previousSuiteNativeOwner": "finished; currently publisher-code reviewer, no second Mac trial",
+    "centralDispatcher": "integration chat01a1bf9c-9635-7733-aa46-eb3bd68262aa"
+  },
+  "designPin": {
+    "commit": "7104443fa3282cb967493578c378ea8706273f28",
+    "path": "qa/mac-suite-save-trace-design/trace-design-2026-11-24.json",
+    "sha256": "036e4c9fc2be2f3e362a83fb1184c91ea3db92d2872e72e1f08e34baa40f4d5f"
+  },
+  "app": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "producerCommit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+    "producerIsNotAppCommit": true
+  },
+  "buildAndSigningFindings": [
+    "P5 Cargo.toml9-12 declares tauri-build and tauri with features=[]; no explicit devtools feature. Base/main window and macOS config contain no explicit devtools/inspectability or custom entitlement setting. This establishes configuration, not compiled absence of every framework inspection path.",
+    "package.json16 maps desktop:build to tauri build; exact actual Mac producer workflow invokes that without --debug or explicit trace/devtools feature. Vite build64-77 has no explicit sourcemap setting; actual distributed source maps/inspectability are not established.",
+    "Reviewed Rust app builder/main invoke handler and four frontend save functions contain no per-attempt key/handler/serializer/save logging or diagnostic bridge. Cargo has no declared tauri-plugin-log. Redirecting process stdout/stderr does not prove WebView console logs or promise results reach it.",
+    "Original exact-Suite signed-package preflight retained codesign --display --verbose=4 with flags0x10000(runtime), Developer ID identity and stapled notarization. Its four gates did NOT dump complete entitlements. No get-task-allow/inspection/attach entitlement value can be inferred from missing output or absent custom config.",
+    "The six-copy Suite helper8ecc provides AX/CGEvent observations and explicitly deliveryAcknowledged=false. 6f92 current standalone helper749c similarly reports input-sent after posting, not receipt. Standalone native.py redirects process logs but its standalone profile/Suite-absence rules are NOT a drop-in Suite host harness."
+  ],
+  "feasibilityMatrix": [
+    {
+      "point": 1,
+      "trace": "Actual WebView listener receipt/guard/dispatch",
+      "status": "INTERNAL TRACE NOT ESTABLISHED",
+      "available": "Owned PID/frontmost/focused Document input and source-side CGEvent posting receipt. Suite helper explicitly sets deliveryAcknowledged=false (writer-361-macos-ax.swift:322-345).",
+      "missing": "Actual DOM keydown/defaultPrevented/modal guard decision and handler invocation. Neither AX nor input-sent attests receiver delivery.",
+      "minimumMethodAndPrivileges": "Existing AX reads require established Accessibility trust; posting requires actual event-post permission and frontmost ownership. Internal receipt would additionally require a verified read-only WebView/handler observer. No such inspector endpoint or receiver hook is demonstrated; do not assume enabling a browser inspector preference creates one."
+    },
+    {
+      "point": 2,
+      "trace": "opslaanToets/opslaan entry, readiness and terminal result",
+      "status": "INTERNAL TRACE NOT ESTABLISHED; VISIBLE STATUS ONLY",
+      "available": "AX snapshots can read exposed Save enabled/selected document/title and visible message/modal at observation time, subject to completeness. App stdout/stderr can be retained, but the inspected save functions emit no per-attempt logs.",
+      "missing": "Live bezigRef, registered serializer/opslag, chosen route, documentId/revision and actual handler early-return/promise result. No console-to-native logging bridge or trace command is established in the inspected app setup/save paths.",
+      "minimumMethodAndPrivileges": "AX with existing Accessibility trust; optional original window capture/OCR with existing screen-capture permission. Actual closure/handler state needs a separately verified passive JS observer. AX enabled or dirty state is not that observer."
+    },
+    {
+      "point": 3,
+      "trace": "Prepare completion and serialized bytes before persistence",
+      "status": "NOT AVAILABLE THROUGH EXISTING HELPERS",
+      "available": "On-disk owned DOCX XML and visible Q can be inspected independently. These are final-file/paint evidence, not the serializer buffer. Suite raw AX snapshots deliberately omit Document textarea AXValue at111-119.",
+      "missing": "Completion/error of editors.tsx:282-286 prepared input/fields and274-277 save; exact buffer returned into DocumentOpslag.opslaan at81-86. No read-only serializer-byte capture hook is present in reviewed functions/helpers.",
+      "minimumMethodAndPrivileges": "Final file XML needs only ordinary read access to the private fixture. Intermediate bytes require a verified passive JS/native buffer observer and stable code mapping, neither established. Calling flush/save to obtain a buffer would execute a new action and is not passive tracing."
+    },
+    {
+      "point": 4,
+      "trace": "Final IPC payload, resolved target, native result and persisted bytes",
+      "status": "PARTIAL: EXTERNAL FILE EFFECT AVAILABLE; INTERNAL TRACE NOT ESTABLISHED",
+      "available": "Ordinary private-file read/stat/hash and offline DOCX XML; visible save/error/SaveAs outcome; normal quit/new-PID reopen through existing native controls. These can prove the specific observed final-file effect.",
+      "missing": "Correlated bewaar_document body/hash/result, actual Rust token-window-to-path resolution and atomic write stage/error. Current helper has no Rust IPC observer or filesystem syscall listener.",
+      "minimumMethodAndPrivileges": "Read/stat/hash of own fixture uses normal filesystem rights; AX/capture/event permissions as above for UI and fresh-process acceptance. A system/debugger native-write trace needs separately verified tooling/host rights and event coverage; root/elevated attach, DTrace/fs_usage access and Hardened Runtime exceptions are not assumed. Seeing normal .~oos-*.tmp is not wrong-target evidence."
+    }
+  ],
+  "metadataOnlyPrerequisiteForOperator": {
+    "method": "On the already authenticated Suite bundle, optionally retain a read-only codesign --display --entitlements :- <OWN_APP_BUNDLE> result (stdout/stderr/exit) and existing signature detail; bind to unchanged executable/package hash. No app launch is needed for the entitlement dump.",
+    "rights": "Ordinary read/execute access to own bundle and codesign. No re-signing, entitlement editing, TCC/security/profile changes or sudo implied.",
+    "boundary": "This dump determines declared entitlement facts only. It does not establish actual WebView inspection, debugger attachment, JS source mapping or four-point trace feasibility. Missing/denied capability must be reported, not bypassed."
+  },
+  "decision": "No full four-point passive trace GO is supported by current source/helper evidence. Points1-3 lack demonstrated internal observers;4 has external effect only. Existing normal save/fresh-PID tests remain valid within their own scope, but cannot be relabelled four-point causal tracing.",
+  "remaining": "Coordinator/6f92 may first establish any real passive observer capability on unchanged signed package. If absent, stop at capability limitation or separately scope an instrumented build with different identity; do not silently replace P5 or run another unobservable causal trial.",
+  "oldFailure": "45355259350 remains unexplained. Missing receiver/handler/buffer/write logs do not establish a root cause; successful new external save cannot retroactively explain it.",
+  "signedArtifactEvidence": {
+    "nativeRun": 45355259350,
+    "job": 138311374273,
+    "attempt": 1,
+    "artifactId": 14902571239,
+    "archivePath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\proof.zip",
+    "archiveSha256": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+    "signedLogMember": "mac-product-native/signed-package-preflight/codesign-display.log",
+    "signedLogBytes": 1174,
+    "signedLogSha256": "db1474c2d93cf1b2abc46e8985decb1e2e32d7a8d22e4d578e7670d0ea8db63d",
+    "suiteDmgSha256": "1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af",
+    "installedExecutableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87"
+  },
+  "sourceBindings": [
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/tauri.conf.json",
+      "bytes": 2175,
+      "sha256": "790b1ec7a70b9242d4f351a460611e26dd80bdb8f252e66a3b39867a2204b8e3"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/tauri.macos.conf.json",
+      "bytes": 1754,
+      "sha256": "c5e3d6feb5e4147e90bdf1b7bd88613ab9a92c35f2124b98c4aa2b402c7b5056"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/Cargo.toml",
+      "bytes": 2462,
+      "sha256": "bbff333657a85b1fb90ac1fae09c4022274b57ac6cfb3b99ac62dbf623d46651"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/capabilities/default.json",
+      "bytes": 890,
+      "sha256": "1693ef0e10a933fe409d47983185a0835638513001e40aecfcbab20a66e79129"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/src/main.rs",
+      "bytes": 13711,
+      "sha256": "ca5f06bf20fb923f4c9f5edb083be4238556e99093fc13c43973b030627fb68e"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src-tauri/src/werkbestanden.rs",
+      "bytes": 26583,
+      "sha256": "1b3fe52e199b234f626fc7f3a89f4f23ff61ce9b966620d2d9183b9f7ed5ca1e"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src/useTabSneltoetsen.ts",
+      "bytes": 5050,
+      "sha256": "dde71791c0983ad5269f1174eb3300afb100896059e05b251d3e0dd279aca9cb"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src/OfficeStudio.tsx",
+      "bytes": 54427,
+      "sha256": "ff08de011fc90c0739b50546b22f215381da9c58a5e7c0f565525ff3740245aa"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src/editors.tsx",
+      "bytes": 24579,
+      "sha256": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src/opslag.ts",
+      "bytes": 3200,
+      "sha256": "9f500b9b56a5bf4b233f0e9fcd8061758a2dfd3f710593b340460887262cfded"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "src/werkbestand.ts",
+      "bytes": 6930,
+      "sha256": "292882613921d4a34a6877528973199f98a172b2157aee31882c1bf2b66cb4eb"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "vite.config.ts",
+      "bytes": 4160,
+      "sha256": "05abc5085f911d7927789a803aedaba36403fdd7dbc3342542e90fb568154540"
+    },
+    {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "path": "package.json",
+      "bytes": 3108,
+      "sha256": "545005c16444efbddc001ecd1a4ab5b6bd792bec2504d476c831b9fd5e1152ac"
+    },
+    {
+      "commit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+      "path": ".github/workflows/release.yml",
+      "bytes": 25937,
+      "sha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62"
+    },
+    {
+      "commit": "8ecc16d09ff523ee2622882b4ce0ce52c9ed832f",
+      "path": "scripts/writer-361-macos-ax.swift",
+      "bytes": 27944,
+      "sha256": "3c323402036e8b407980adef6b2e2ecde52b2bbb5b48002abba748d71e202d56"
+    },
+    {
+      "commit": "8ecc16d09ff523ee2622882b4ce0ce52c9ed832f",
+      "path": "scripts/mac-native-signed-package.py",
+      "bytes": 2797,
+      "sha256": "41c925f7981477aa6322f6023b15059dbaf82d7fa8248f75c605b3fd319fec7e"
+    },
+    {
+      "commit": "8ecc16d09ff523ee2622882b4ce0ce52c9ed832f",
+      "path": "scripts/mac-native-current-session.py",
+      "bytes": 31311,
+      "sha256": "584e56df96b7df870365c4e80e0a497d02b33a435dedb2a581a3d332293574d9"
+    },
+    {
+      "commit": "8ecc16d09ff523ee2622882b4ce0ce52c9ed832f",
+      "path": "scripts/proef-writer-361-macos.py",
+      "bytes": 5337,
+      "sha256": "aeb418b70f98e276e554e9e2b091ae18efd1e2661a10757cc98fe7aa415c527b"
+    },
+    {
+      "commit": "749c80e4fa41b036c71f72685f132428609fc488",
+      "path": "scripts/standalone-macos/ax.swift",
+      "bytes": 20011,
+      "sha256": "3b35f623c4c0efd72e27c7dccd8d29e281624707f75e0c49372cc4039b48c859"
+    },
+    {
+      "commit": "749c80e4fa41b036c71f72685f132428609fc488",
+      "path": "scripts/standalone-macos/native.py",
+      "bytes": 21878,
+      "sha256": "85d698ad4477a2257d14138ede9155061ee50184adf49633b2e2c6eb122b7f77"
+    }
+  ],
+  "validation": "Exact immutable Git source/config review and existing ZIP/raw signature log hashes only. No functional test, download, build, host, GUI, capture or instrumentation executed.",
+  "excluded": "No new issue/product edit/main/tag/publication or alteration of bounded accepted release/closed377; no duplicate six-copy audit."
+}
