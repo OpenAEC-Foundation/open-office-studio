@@ -1,0 +1,1311 @@
+{
+  "status": "QUALIFIED_BOUNDED_DBF_SOURCE_HISTORICAL_CONTENT_REUSE_ONLY",
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-dbf-1",
+    "ext": "dbf",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "sc/qa/unit/data/dbf/pass/DBTest.dbf",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/dbf/pass/DBTest.dbf",
+    "gitSha": "03d737b281579700b104a1c572b693040d6b3023",
+    "sha256": "c5eddb601bd3ba98cd5ab3caf20c81eaa5a130ff497a39154745f884d76f55fb",
+    "bytes": 1575,
+    "variant": "dBASE DBTest",
+    "expected": "open",
+    "expectedOn": [
+      {
+        "platform": "linux",
+        "converter": "LibreOffice 7.3.7.2 30(Build:2)",
+        "expected": "reject",
+        "reason": "De minimale Ubuntu 22.04-runtime weigert dit bronbestand (source file could not be loaded)."
+      }
+    ],
+    "expectEmptyWarning": false
+  },
+  "nativeOracle": {
+    "versionByte": 3,
+    "updateBytes": [
+      1,
+      4,
+      9
+    ],
+    "codepageMark": 0,
+    "rawByte28": 0,
+    "recordCount": 5,
+    "headerLength": 385,
+    "recordLength": 238,
+    "trailerBytes": 0,
+    "fields": [
+      {
+        "name": "RowDsc",
+        "type": "C",
+        "length": 50,
+        "decimals": 0,
+        "offset": 1,
+        "descriptorHex": "526f774473630000000000430000000032000000000000000000000000000000"
+      },
+      {
+        "name": "Field1",
+        "type": "C",
+        "length": 50,
+        "decimals": 0,
+        "offset": 51,
+        "descriptorHex": "4669656c64310000000000430000000032000000000000000000000000000000"
+      },
+      {
+        "name": "Field2",
+        "type": "N",
+        "length": 11,
+        "decimals": 0,
+        "offset": 101,
+        "descriptorHex": "4669656c643200000000004e000000000b000000000000000000000000000000"
+      },
+      {
+        "name": "Field3",
+        "type": "N",
+        "length": 14,
+        "decimals": 10,
+        "offset": 112,
+        "descriptorHex": "4669656c643300000000004e000000000e0a0000000000000000000000000000"
+      },
+      {
+        "name": "RowNumber",
+        "type": "N",
+        "length": 11,
+        "decimals": 0,
+        "offset": 126,
+        "descriptorHex": "526f774e756d62657200004e000000000b000000000000000000000000000000"
+      },
+      {
+        "name": "BooleanFld",
+        "type": "L",
+        "length": 1,
+        "decimals": 0,
+        "offset": 137,
+        "descriptorHex": "426f6f6c65616e466c64004c0000000001000000000000000000000000000000"
+      },
+      {
+        "name": "IntFld",
+        "type": "N",
+        "length": 11,
+        "decimals": 0,
+        "offset": 138,
+        "descriptorHex": "496e74466c6400000000004e000000000b000000000000000000000000000000"
+      },
+      {
+        "name": "DoubleFld",
+        "type": "N",
+        "length": 17,
+        "decimals": 5,
+        "offset": 149,
+        "descriptorHex": "446f75626c65466c6400004e0000000011050000000000000000000000000000"
+      },
+      {
+        "name": "StringFld",
+        "type": "C",
+        "length": 50,
+        "decimals": 0,
+        "offset": 166,
+        "descriptorHex": "537472696e67466c640000430000000032000000000000000000000000000000"
+      },
+      {
+        "name": "TimeFld",
+        "type": "N",
+        "length": 14,
+        "decimals": 10,
+        "offset": 216,
+        "descriptorHex": "54696d65466c64000000004e000000000e0a0000000000000000000000000000"
+      },
+      {
+        "name": "DateFld",
+        "type": "D",
+        "length": 8,
+        "decimals": 0,
+        "offset": 230,
+        "descriptorHex": "44617465466c6400000000440000000008000000000000000000000000000000"
+      }
+    ],
+    "records": [
+      {
+        "index": 1,
+        "deleted": false,
+        "slots": [
+          {
+            "field": "RowDsc",
+            "type": "C",
+            "rawHex": "2446697273745265636f72642420245265636f72643124202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "$FirstRecord$ $Record1$"
+          },
+          {
+            "field": "Field1",
+            "type": "C",
+            "rawHex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "blank-character",
+            "value": ""
+          },
+          {
+            "field": "Field2",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "Field3",
+            "type": "N",
+            "rawHex": "2020202020202020202020202020",
+            "kind": "blank-numeric",
+            "value": null
+          },
+          {
+            "field": "RowNumber",
+            "type": "N",
+            "rawHex": "3100000000000000000000",
+            "kind": "number",
+            "value": "1",
+            "nulPadding": 10
+          },
+          {
+            "field": "BooleanFld",
+            "type": "L",
+            "rawHex": "54",
+            "kind": "boolean",
+            "value": true
+          },
+          {
+            "field": "IntFld",
+            "type": "N",
+            "rawHex": "3100000000000000000000",
+            "kind": "number",
+            "value": "1",
+            "nulPadding": 10
+          },
+          {
+            "field": "DoubleFld",
+            "type": "N",
+            "rawHex": "33342e3535363630000000000000000000",
+            "kind": "number",
+            "value": "34.55660",
+            "nulPadding": 9
+          },
+          {
+            "field": "StringFld",
+            "type": "C",
+            "rawHex": "6120202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "a"
+          },
+          {
+            "field": "TimeFld",
+            "type": "N",
+            "rawHex": "302e353230383333333333330000",
+            "kind": "number",
+            "value": "0.5208333333",
+            "nulPadding": 2
+          },
+          {
+            "field": "DateFld",
+            "type": "D",
+            "rawHex": "3139373830313236",
+            "kind": "date",
+            "value": "1978-01-26"
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "deleted": false,
+        "slots": [
+          {
+            "field": "RowDsc",
+            "type": "C",
+            "rawHex": "245265636f726432242024416674657246697273745265636f72642420202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "$Record2$ $AfterFirstRecord$"
+          },
+          {
+            "field": "Field1",
+            "type": "C",
+            "rawHex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "blank-character",
+            "value": ""
+          },
+          {
+            "field": "Field2",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "Field3",
+            "type": "N",
+            "rawHex": "302e303432333732363835320000",
+            "kind": "number",
+            "value": "0.0423726852",
+            "nulPadding": 2
+          },
+          {
+            "field": "RowNumber",
+            "type": "N",
+            "rawHex": "3200000000000000000000",
+            "kind": "number",
+            "value": "2",
+            "nulPadding": 10
+          },
+          {
+            "field": "BooleanFld",
+            "type": "L",
+            "rawHex": "20",
+            "kind": "unknown-logical",
+            "value": null
+          },
+          {
+            "field": "IntFld",
+            "type": "N",
+            "rawHex": "3334000000000000000000",
+            "kind": "number",
+            "value": "34",
+            "nulPadding": 9
+          },
+          {
+            "field": "DoubleFld",
+            "type": "N",
+            "rawHex": "2020202020202020202020202020202020",
+            "kind": "blank-numeric",
+            "value": null
+          },
+          {
+            "field": "StringFld",
+            "type": "C",
+            "rawHex": "6220202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "b"
+          },
+          {
+            "field": "TimeFld",
+            "type": "N",
+            "rawHex": "302e353230383333333333330000",
+            "kind": "number",
+            "value": "0.5208333333",
+            "nulPadding": 2
+          },
+          {
+            "field": "DateFld",
+            "type": "D",
+            "rawHex": "3230303130343031",
+            "kind": "date",
+            "value": "2001-04-01"
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "deleted": false,
+        "slots": [
+          {
+            "field": "RowDsc",
+            "type": "C",
+            "rawHex": "245265636f726433242020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "$Record3$"
+          },
+          {
+            "field": "Field1",
+            "type": "C",
+            "rawHex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "blank-character",
+            "value": ""
+          },
+          {
+            "field": "Field2",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "Field3",
+            "type": "N",
+            "rawHex": "302e303834373435333730340000",
+            "kind": "number",
+            "value": "0.0847453704",
+            "nulPadding": 2
+          },
+          {
+            "field": "RowNumber",
+            "type": "N",
+            "rawHex": "3300000000000000000000",
+            "kind": "number",
+            "value": "3",
+            "nulPadding": 10
+          },
+          {
+            "field": "BooleanFld",
+            "type": "L",
+            "rawHex": "46",
+            "kind": "boolean",
+            "value": false
+          },
+          {
+            "field": "IntFld",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "DoubleFld",
+            "type": "N",
+            "rawHex": "362e323336343000000000000000000000",
+            "kind": "number",
+            "value": "6.23640",
+            "nulPadding": 10
+          },
+          {
+            "field": "StringFld",
+            "type": "C",
+            "rawHex": "6320202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "c"
+          },
+          {
+            "field": "TimeFld",
+            "type": "N",
+            "rawHex": "302e383130343136363636370000",
+            "kind": "number",
+            "value": "0.8104166667",
+            "nulPadding": 2
+          },
+          {
+            "field": "DateFld",
+            "type": "D",
+            "rawHex": "3139373830313236",
+            "kind": "date",
+            "value": "1978-01-26"
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "deleted": false,
+        "slots": [
+          {
+            "field": "RowDsc",
+            "type": "C",
+            "rawHex": "244265666f72654c6173745265636f72642420245265636f7264342420202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "$BeforeLastRecord$ $Record4$"
+          },
+          {
+            "field": "Field1",
+            "type": "C",
+            "rawHex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "blank-character",
+            "value": ""
+          },
+          {
+            "field": "Field2",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "Field3",
+            "type": "N",
+            "rawHex": "302e313237313138303535360000",
+            "kind": "number",
+            "value": "0.1271180556",
+            "nulPadding": 2
+          },
+          {
+            "field": "RowNumber",
+            "type": "N",
+            "rawHex": "3400000000000000000000",
+            "kind": "number",
+            "value": "4",
+            "nulPadding": 10
+          },
+          {
+            "field": "BooleanFld",
+            "type": "L",
+            "rawHex": "20",
+            "kind": "unknown-logical",
+            "value": null
+          },
+          {
+            "field": "IntFld",
+            "type": "N",
+            "rawHex": "3700000000000000000000",
+            "kind": "number",
+            "value": "7",
+            "nulPadding": 10
+          },
+          {
+            "field": "DoubleFld",
+            "type": "N",
+            "rawHex": "332e333234303000000000000000000000",
+            "kind": "number",
+            "value": "3.32400",
+            "nulPadding": 10
+          },
+          {
+            "field": "StringFld",
+            "type": "C",
+            "rawHex": "6120202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "a"
+          },
+          {
+            "field": "TimeFld",
+            "type": "N",
+            "rawHex": "302e353835343136363636370000",
+            "kind": "number",
+            "value": "0.5854166667",
+            "nulPadding": 2
+          },
+          {
+            "field": "DateFld",
+            "type": "D",
+            "rawHex": "3139383530393031",
+            "kind": "date",
+            "value": "1985-09-01"
+          }
+        ]
+      },
+      {
+        "index": 5,
+        "deleted": false,
+        "slots": [
+          {
+            "field": "RowDsc",
+            "type": "C",
+            "rawHex": "244c6173745265636f72642420245265636f7264352420202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "$LastRecord$ $Record5$"
+          },
+          {
+            "field": "Field1",
+            "type": "C",
+            "rawHex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "blank-character",
+            "value": ""
+          },
+          {
+            "field": "Field2",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "Field3",
+            "type": "N",
+            "rawHex": "2020202020202020202020202020",
+            "kind": "blank-numeric",
+            "value": null
+          },
+          {
+            "field": "RowNumber",
+            "type": "N",
+            "rawHex": "3500000000000000000000",
+            "kind": "number",
+            "value": "5",
+            "nulPadding": 10
+          },
+          {
+            "field": "BooleanFld",
+            "type": "L",
+            "rawHex": "54",
+            "kind": "boolean",
+            "value": true
+          },
+          {
+            "field": "IntFld",
+            "type": "N",
+            "rawHex": "3232000000000000000000",
+            "kind": "number",
+            "value": "22",
+            "nulPadding": 9
+          },
+          {
+            "field": "DoubleFld",
+            "type": "N",
+            "rawHex": "352e313233343000000000000000000000",
+            "kind": "number",
+            "value": "5.12340",
+            "nulPadding": 10
+          },
+          {
+            "field": "StringFld",
+            "type": "C",
+            "rawHex": "6220202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+            "kind": "text",
+            "value": "b"
+          },
+          {
+            "field": "TimeFld",
+            "type": "N",
+            "rawHex": "302e343538333333333333330000",
+            "kind": "number",
+            "value": "0.4583333333",
+            "nulPadding": 2
+          },
+          {
+            "field": "DateFld",
+            "type": "D",
+            "rawHex": "3230303130343039",
+            "kind": "date",
+            "value": "2001-04-09"
+          }
+        ]
+      }
+    ],
+    "deletedCount": 0,
+    "memoFields": [],
+    "formulaWitness": false,
+    "numericPaddingQualification": "NUL-padded numeric prefixes observed; not canonical space-padding conformance",
+    "charsetQualification": "ASCII payload only; LDID 0 does not identify a codepage"
+  },
+  "slotKinds": {
+    "text": 10,
+    "blank-character": 5,
+    "number": 27,
+    "blank-numeric": 3,
+    "boolean": 3,
+    "date": 5,
+    "unknown-logical": 2
+  },
+  "historicalBinding": {
+    "date": "2026-11-10T08:48:03.136Z",
+    "platform": "win32",
+    "converter": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+    "result": {
+      "id": "lo-dbf-1",
+      "ext": "dbf",
+      "variant": "dBASE DBTest",
+      "passed": true,
+      "conversionMs": 13909,
+      "savedBytes": 6335,
+      "savedSha256": "31ee3dd78b8719413fe4e8c68896200f1597017091e604f27f6335214ec37199",
+      "outcome": "opened-saved-reopened"
+    },
+    "savedBytesIdentityVerified": true,
+    "currentP2RuntimeEquivalence": false
+  },
+  "independentHistoricalCases": [
+    {
+      "case": "ordered-field-names",
+      "passed": true
+    },
+    {
+      "case": "A2:RowDsc:text",
+      "passed": true
+    },
+    {
+      "case": "B2:Field1:blank-character",
+      "passed": true
+    },
+    {
+      "case": "C2:Field2:number",
+      "passed": true
+    },
+    {
+      "case": "D2:Field3:blank-numeric",
+      "passed": true
+    },
+    {
+      "case": "E2:RowNumber:number",
+      "passed": true
+    },
+    {
+      "case": "F2:BooleanFld:boolean",
+      "passed": true
+    },
+    {
+      "case": "G2:IntFld:number",
+      "passed": true
+    },
+    {
+      "case": "H2:DoubleFld:number",
+      "passed": true
+    },
+    {
+      "case": "I2:StringFld:text",
+      "passed": true
+    },
+    {
+      "case": "J2:TimeFld:number",
+      "passed": true
+    },
+    {
+      "case": "K2:DateFld:date",
+      "passed": true
+    },
+    {
+      "case": "A3:RowDsc:text",
+      "passed": true
+    },
+    {
+      "case": "B3:Field1:blank-character",
+      "passed": true
+    },
+    {
+      "case": "C3:Field2:number",
+      "passed": true
+    },
+    {
+      "case": "D3:Field3:number",
+      "passed": true
+    },
+    {
+      "case": "E3:RowNumber:number",
+      "passed": true
+    },
+    {
+      "case": "F3:BooleanFld:unknown-logical",
+      "passed": true
+    },
+    {
+      "case": "G3:IntFld:number",
+      "passed": true
+    },
+    {
+      "case": "H3:DoubleFld:blank-numeric",
+      "passed": true
+    },
+    {
+      "case": "I3:StringFld:text",
+      "passed": true
+    },
+    {
+      "case": "J3:TimeFld:number",
+      "passed": true
+    },
+    {
+      "case": "K3:DateFld:date",
+      "passed": true
+    },
+    {
+      "case": "A4:RowDsc:text",
+      "passed": true
+    },
+    {
+      "case": "B4:Field1:blank-character",
+      "passed": true
+    },
+    {
+      "case": "C4:Field2:number",
+      "passed": true
+    },
+    {
+      "case": "D4:Field3:number",
+      "passed": true
+    },
+    {
+      "case": "E4:RowNumber:number",
+      "passed": true
+    },
+    {
+      "case": "F4:BooleanFld:boolean",
+      "passed": true
+    },
+    {
+      "case": "G4:IntFld:number",
+      "passed": true
+    },
+    {
+      "case": "H4:DoubleFld:number",
+      "passed": true
+    },
+    {
+      "case": "I4:StringFld:text",
+      "passed": true
+    },
+    {
+      "case": "J4:TimeFld:number",
+      "passed": true
+    },
+    {
+      "case": "K4:DateFld:date",
+      "passed": true
+    },
+    {
+      "case": "A5:RowDsc:text",
+      "passed": true
+    },
+    {
+      "case": "B5:Field1:blank-character",
+      "passed": true
+    },
+    {
+      "case": "C5:Field2:number",
+      "passed": true
+    },
+    {
+      "case": "D5:Field3:number",
+      "passed": true
+    },
+    {
+      "case": "E5:RowNumber:number",
+      "passed": true
+    },
+    {
+      "case": "F5:BooleanFld:unknown-logical",
+      "passed": true
+    },
+    {
+      "case": "G5:IntFld:number",
+      "passed": true
+    },
+    {
+      "case": "H5:DoubleFld:number",
+      "passed": true
+    },
+    {
+      "case": "I5:StringFld:text",
+      "passed": true
+    },
+    {
+      "case": "J5:TimeFld:number",
+      "passed": true
+    },
+    {
+      "case": "K5:DateFld:date",
+      "passed": true
+    },
+    {
+      "case": "A6:RowDsc:text",
+      "passed": true
+    },
+    {
+      "case": "B6:Field1:blank-character",
+      "passed": true
+    },
+    {
+      "case": "C6:Field2:number",
+      "passed": true
+    },
+    {
+      "case": "D6:Field3:blank-numeric",
+      "passed": true
+    },
+    {
+      "case": "E6:RowNumber:number",
+      "passed": true
+    },
+    {
+      "case": "F6:BooleanFld:boolean",
+      "passed": true
+    },
+    {
+      "case": "G6:IntFld:number",
+      "passed": true
+    },
+    {
+      "case": "H6:DoubleFld:number",
+      "passed": true
+    },
+    {
+      "case": "I6:StringFld:text",
+      "passed": true
+    },
+    {
+      "case": "J6:TimeFld:number",
+      "passed": true
+    },
+    {
+      "case": "K6:DateFld:date",
+      "passed": true
+    },
+    {
+      "case": "no-extra-valued-cells",
+      "passed": true
+    },
+    {
+      "case": "no-output-formulas",
+      "passed": true
+    }
+  ],
+  "outputNegativeControls": [
+    {
+      "control": "numeric-value-as-string",
+      "passed": true,
+      "newFailedCases": [
+        "C2:Field2:number"
+      ]
+    },
+    {
+      "control": "unknown-logical-coerced-to-false",
+      "passed": true,
+      "newFailedCases": [
+        "F3:BooleanFld:unknown-logical"
+      ]
+    },
+    {
+      "control": "date-loses-date-style",
+      "passed": true,
+      "newFailedCases": [
+        "K2:DateFld:date"
+      ]
+    },
+    {
+      "control": "record-anchor-changed",
+      "passed": true,
+      "newFailedCases": [
+        "A6:RowDsc:text"
+      ]
+    },
+    {
+      "control": "formula-with-same-cached-value",
+      "passed": true,
+      "newFailedCases": [
+        "C2:Field2:number",
+        "no-output-formulas"
+      ]
+    }
+  ],
+  "nativeNegativeControls": [
+    {
+      "control": "header-length",
+      "passed": true
+    },
+    {
+      "control": "record-truncation",
+      "passed": true
+    },
+    {
+      "control": "numeric-tail-nonzero",
+      "passed": true
+    }
+  ],
+  "snapshotObservation": {
+    "sheetName": "Sheet1",
+    "date1904": false,
+    "cells": {
+      "A1": {
+        "type": "s",
+        "value": "RowDsc,C,50",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "B1": {
+        "type": "s",
+        "value": "Field1,C,50",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C1": {
+        "type": "s",
+        "value": "Field2,N,11,0",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "D1": {
+        "type": "s",
+        "value": "Field3,N,14,10",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "E1": {
+        "type": "s",
+        "value": "RowNumber,N,11,0",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "F1": {
+        "type": "s",
+        "value": "BooleanFld,L",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "G1": {
+        "type": "s",
+        "value": "IntFld,N,11,0",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "H1": {
+        "type": "s",
+        "value": "DoubleFld,N,17,5",
+        "formula": false,
+        "numFmtId": 167,
+        "formatCode": "0.00000"
+      },
+      "I1": {
+        "type": "s",
+        "value": "StringFld,C,50",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J1": {
+        "type": "s",
+        "value": "TimeFld,N,14,10",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K1": {
+        "type": "s",
+        "value": "DateFld,D",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "A2": {
+        "type": "s",
+        "value": "$FirstRecord$ $Record1$",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C2": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "E2": {
+        "type": "n",
+        "value": "1",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "F2": {
+        "type": "b",
+        "value": "1",
+        "formula": false,
+        "numFmtId": 168,
+        "formatCode": "\"WAAR\";\"WAAR\";\"ONWAAR\""
+      },
+      "G2": {
+        "type": "n",
+        "value": "1",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "H2": {
+        "type": "n",
+        "value": "34.5566",
+        "formula": false,
+        "numFmtId": 167,
+        "formatCode": "0.00000"
+      },
+      "I2": {
+        "type": "s",
+        "value": "a",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J2": {
+        "type": "n",
+        "value": "0.5208333333",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K2": {
+        "type": "n",
+        "value": "28516",
+        "formula": false,
+        "numFmtId": 169,
+        "formatCode": "dd/mm/yy"
+      },
+      "A3": {
+        "type": "s",
+        "value": "$Record2$ $AfterFirstRecord$",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C3": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "D3": {
+        "type": "n",
+        "value": "0.0423726852",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "E3": {
+        "type": "n",
+        "value": "2",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "G3": {
+        "type": "n",
+        "value": "34",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "I3": {
+        "type": "s",
+        "value": "b",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J3": {
+        "type": "n",
+        "value": "0.5208333333",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K3": {
+        "type": "n",
+        "value": "36982",
+        "formula": false,
+        "numFmtId": 169,
+        "formatCode": "dd/mm/yy"
+      },
+      "A4": {
+        "type": "s",
+        "value": "$Record3$",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C4": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "D4": {
+        "type": "n",
+        "value": "0.0847453704",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "E4": {
+        "type": "n",
+        "value": "3",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "F4": {
+        "type": "b",
+        "value": "0",
+        "formula": false,
+        "numFmtId": 168,
+        "formatCode": "\"WAAR\";\"WAAR\";\"ONWAAR\""
+      },
+      "G4": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "H4": {
+        "type": "n",
+        "value": "6.2364",
+        "formula": false,
+        "numFmtId": 167,
+        "formatCode": "0.00000"
+      },
+      "I4": {
+        "type": "s",
+        "value": "c",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J4": {
+        "type": "n",
+        "value": "0.8104166667",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K4": {
+        "type": "n",
+        "value": "28516",
+        "formula": false,
+        "numFmtId": 169,
+        "formatCode": "dd/mm/yy"
+      },
+      "A5": {
+        "type": "s",
+        "value": "$BeforeLastRecord$ $Record4$",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C5": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "D5": {
+        "type": "n",
+        "value": "0.1271180556",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "E5": {
+        "type": "n",
+        "value": "4",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "G5": {
+        "type": "n",
+        "value": "7",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "H5": {
+        "type": "n",
+        "value": "3.324",
+        "formula": false,
+        "numFmtId": 167,
+        "formatCode": "0.00000"
+      },
+      "I5": {
+        "type": "s",
+        "value": "a",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J5": {
+        "type": "n",
+        "value": "0.5854166667",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K5": {
+        "type": "n",
+        "value": "31291",
+        "formula": false,
+        "numFmtId": 169,
+        "formatCode": "dd/mm/yy"
+      },
+      "A6": {
+        "type": "s",
+        "value": "$LastRecord$ $Record5$",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "C6": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "E6": {
+        "type": "n",
+        "value": "5",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "F6": {
+        "type": "b",
+        "value": "1",
+        "formula": false,
+        "numFmtId": 168,
+        "formatCode": "\"WAAR\";\"WAAR\";\"ONWAAR\""
+      },
+      "G6": {
+        "type": "n",
+        "value": "22",
+        "formula": false,
+        "numFmtId": 165,
+        "formatCode": "0"
+      },
+      "H6": {
+        "type": "n",
+        "value": "5.1234",
+        "formula": false,
+        "numFmtId": 167,
+        "formatCode": "0.00000"
+      },
+      "I6": {
+        "type": "s",
+        "value": "b",
+        "formula": false,
+        "numFmtId": 164,
+        "formatCode": "General"
+      },
+      "J6": {
+        "type": "n",
+        "value": "0.4583333333",
+        "formula": false,
+        "numFmtId": 166,
+        "formatCode": "0.0000000000"
+      },
+      "K6": {
+        "type": "n",
+        "value": "36990",
+        "formula": false,
+        "numFmtId": 169,
+        "formatCode": "dd/mm/yy"
+      }
+    }
+  },
+  "p2Policy": {
+    "dbfInput": true,
+    "dbfOutput": false,
+    "conversionTarget": "xlsx",
+    "defaultModernSave": "xlsx",
+    "browser": "External converter is desktop-only. Static policy review only, no browser UI/runtime test."
+  },
+  "remaining": [
+    "Exact P2 private converter + production helper + engine edit/UndoRedo + XLSX save + fresh-process reopen not proved by historical cache.",
+    "LDID 0, ASCII only; producer identity and general non-ASCII decoding not proved.",
+    "NUL numeric padding observation is not canonical DBF conformance certification.",
+    "Blank character/numeric and unknown logical project blank; SQL NULL distinctions not proved.",
+    "No deleted record, memo sidecar, binary field, source formula, rendering or layout witness."
+  ],
+  "newRuntimeOrCIStarted": false,
+  "originalUnmodified": true
+}
