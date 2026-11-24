@@ -1,0 +1,77 @@
+name: Issue 381 private libwps witness
+
+on:
+  workflow_dispatch:
+    inputs:
+      dispatch_epoch:
+        description: Fresh allocated UTC epoch from the successful local frontgate
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: issue381-private-linux-witness
+  cancel-in-progress: false
+
+jobs:
+  private-linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_381_DISPATCH_EPOCH: ${{ inputs.dispatch_epoch }}
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Absolute clock, queued critical work and disk preflight
+        run: |
+          python3 qa/issue381/frontgate.py
+          python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 8 * 1024**3, "Need 8GiB private QA disk headroom"'
+          python3 qa/issue381/deadline.py preflight
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Small compiler prerequisites and frozen Node dependencies
+        run: |
+          python3 qa/issue381/deadline.py preflight sudo apt-get update -qq
+          python3 qa/issue381/deadline.py preflight sudo apt-get install -y --no-install-recommends build-essential libboost-dev pkg-config binutils
+          python3 qa/issue381/deadline.py preflight pnpm install --frozen-lockfile --ignore-scripts
+      - name: Preserve original source and derive the unchanged native oracle
+        run: |
+          python3 qa/issue381/deadline.py preflight python3 qa/issue381/prepare.py
+          python3 qa/issue381/deadline.py preflight python3 qa/issue381/original-oracle/oracle.py source --source .local/issue381/inputs/source.wq2 --out .local/issue381/inputs
+      - name: One verified original runtime-only input, unchanged shared verifier
+        run: python3 qa/issue381/deadline.py preflight python3 qa/issue381/runtime_input.py
+      - name: Actual libwps source control and incremental patch, ABI and loader prerequisites
+        run: python3 qa/issue381/deadline.py build python3 qa/issue381/build_runtime.py
+      - name: Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen
+        run: python3 qa/issue381/deadline.py build node qa/issue381/engine_real.mjs
+      - name: Final witness clock
+        if: always()
+        run: python3 qa/issue381/deadline.py finish
+      - uses: actions/upload-artifact@v4
+        if: always()
+        timeout-minutes: 10
+        with:
+          name: issue381-private-runtime-proof
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            .local/issue381/runner-frontgate.json
+            .local/issue381/deadline-*.json
+            .local/issue381/runtime-evidence/
+            .local/issue381/derived-binding.json
+            .local/issue381/build-proof/
+            .local/issue381/real-proof/
