@@ -1,0 +1,160 @@
+{
+  "kind": "INDEPENDENT STATIC/MOCK REVIEW; NO NATIVE ACCEPTANCE",
+  "reviewer": "/root/independent_save_observer_review; not author or implementation operator",
+  "recordedAtUTC": "2026-11-24T13:11:46.200183+00:00",
+  "patchCommit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+  "proposalCommit": "ede53dc73effef97d2b2a1a27ee93670bf6388e4",
+  "baseCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "baseTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "canonicalGitBindings": {
+    "observer.patch": {
+      "commit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+      "bytes": 23727,
+      "sha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+      "workingBytesEqualGit": true
+    },
+    "manifest.json": {
+      "commit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+      "bytes": 14614,
+      "sha256": "5727e176a15c1de38871759640c526fe51272c65ce353728fd8affe897739e8a",
+      "workingBytesEqualGit": true
+    },
+    "validation.json": {
+      "commit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+      "bytes": 2465,
+      "sha256": "5197e6caba6e5d5caa3ade0e2ca8c6f234f38e5d22f4e055179dc8c64c5ed7d5",
+      "workingBytesEqualGit": true
+    },
+    "derived-tauri-overlay.proposed.json": {
+      "commit": "ede53dc73effef97d2b2a1a27ee93670bf6388e4",
+      "bytes": 198,
+      "sha256": "023b8fd7a4be67385159dc5941c52ecd2bf2060dbaf4b6f3b224f9af50fc5ba7",
+      "workingBytesEqualGit": true
+    },
+    "research-build-native-proposal.json": {
+      "commit": "ede53dc73effef97d2b2a1a27ee93670bf6388e4",
+      "bytes": 9749,
+      "sha256": "fa71ac700aa2d003f5c74c9c4effa4e6908ab0d7b8e741112ca8715f7e49bcf9",
+      "workingBytesEqualGit": true
+    }
+  },
+  "verdict": "PASS_FOR_BOUNDED_RESEARCH_SCOPE_REVIEW_WITH_LIMITS",
+  "blockingPatchFindings": [],
+  "executionReady": false,
+  "executionAuthorized": false,
+  "observations": [
+    {
+      "id": "scope-01",
+      "severity": "execution-readiness blocker; not a blocker to scope approval",
+      "file": "qa/mac-suite-save-instrumentation/2026-11-24/research-build-native-proposal.json",
+      "field": "stage1Build.beforeDispatch / currentlyReady",
+      "detail": "No executable builder/consumer or frozen source/workflow/request nonce/expiry contract is supplied. Before dispatch these must exist, be independently reviewed and pinned. Scope approval may authorize preparing them, but this receipt is not execution-ready or a future-code review."
+    },
+    {
+      "id": "trace-01",
+      "severity": "bounded observability limit; no patch correction required for specified one-doc/one-save scope",
+      "file": "qa/mac-suite-save-instrumentation/2026-11-24/observer.patch",
+      "patchLine": 308,
+      "detail": "Native events69/71/73-76 use active session rather than per-request ownership/correlation. Buffer70 and target72 do check actual bound token/window. Within a single isolated process/document and exactly one Command-S, accept only one matching69→70→72→terminal chain with matching bytes/PID/session and no extra write; reject unexpected/multiple/missing events. Do not generalize to concurrent documents/requests."
+    },
+    {
+      "id": "trace-02",
+      "severity": "bounded observability limit; missing records are inconclusive",
+      "file": "qa/mac-suite-save-instrumentation/2026-11-24/observer.patch",
+      "patchLine": 321,
+      "detail": "Unchanged ?/?? error returns (header/body parsing, owned-token lookup, task join, dialog error) and early SaveAs/cancel returns can bypass71. Native atomic readonly/error paths do log75. Absence of71 alone is not missing command delivery or a complete native-error result. Existing proposal correctly makes incomplete traces inconclusive; pair frontend rejection44 + actual file/result and report exact missing boundary without invented cause."
+    },
+    {
+      "id": "artifact-01",
+      "severity": "wording correction before final proposal",
+      "file": "qa/mac-suite-save-instrumentation/2026-11-24/research-build-native-proposal.json",
+      "field": "stage1Build.outputs[1]",
+      "detail": "Expiring private CI artifacts is not a demonstrated privacy guarantee for artifacts in this public repository. Use expiring CI-only artifacts, access according to repository permissions; no release distribution/secrets."
+    }
+  ],
+  "checks": {
+    "canonicalFiles": 5,
+    "patchReconstructedInMemoryOnly": true,
+    "patchFiles": 10,
+    "patchHunks": 29,
+    "derivedHashesMatchActualUnifiedPatchAndAuthorPreview": true,
+    "sixFrontendSyntaxAndFiveOriginalProductASTChecks": {
+      "base": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "typescriptSyntax": "PASS six preview files",
+      "originalProductAst": [
+        {
+          "file": "src/useTabSneltoetsen.ts",
+          "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+        },
+        {
+          "file": "src/OfficeStudio.tsx",
+          "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+        },
+        {
+          "file": "src/opslag.ts",
+          "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+        },
+        {
+          "file": "src/editors.tsx",
+          "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+        },
+        {
+          "file": "src/werkbestand.ts",
+          "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+        }
+      ],
+      "observerOnlyMockTests": [
+        "default-off performs no IPC or key inspection",
+        "native bind rejection keeps every frontend observation disabled",
+        "actual snapshot digest matches independent SHA256; no body or workfile token in records",
+        "synchronous observer/IPC/metadata exceptions never escape into product calls",
+        "oversize buffer is explicitly incomplete and never hashed or logged",
+        "late digest cannot be attributed to a changed/unbound document scope"
+      ],
+      "mocksAreNotNativeOrTauriExecution": true,
+      "productPatchApplied": false
+    },
+    "rustParserOnly": [
+      {
+        "file": "src-tauri/src/main.rs",
+        "parser": "rustfmt stdin syntax only",
+        "exitCode": 0
+      },
+      {
+        "file": "src-tauri/src/werkbestanden.rs",
+        "parser": "rustfmt stdin syntax only",
+        "exitCode": 0
+      },
+      {
+        "file": "src-tauri/src/qa_save_trace.rs",
+        "parser": "rustfmt stdin syntax only",
+        "exitCode": 0
+      }
+    ],
+    "cargoOriginalDependenciesUnchangedDefaultFeatureEmpty": true,
+    "atomicWriterByteIdenticalSha256": "11525afa763fc120cb2d3ce312a50e7b3079434a59d69961e9801cbf0fc0e403",
+    "actualProductWorktreeStillP5": true,
+    "manualSourceReview": [
+      "Existing capture-phase keylistener and unchanged shortcut/modal/repeat guards",
+      "OfficeStudio save/readiness/result and DocumentOpslag original awaits/returns",
+      "Registered DOCX serializer, original flushPendingInput→field-update ordering and actual result buffers",
+      "Prepared raw IPC bytes/headers and original native command/atomic write path",
+      "Synthetic-only frontend/native gates, canonical owned path/original fixture digest and fresh create_new ledger",
+      "Numeric fixed-code/digest privacy, asynchronous loss/highwater and scope-generation handling",
+      "Tauri command arg naming/serde camelCase/source APIs statically checked; no compilation claim",
+      "Derived identity overlay/version, signer/no-security-downgrade and original-proof-preserving native proposal"
+    ]
+  },
+  "limits": [
+    "No full TypeScript semantic/Cargo/Tauri feature-on/off compilation or command registration/runtime validation",
+    "No app build, package/signing/notarization, host/GUI/input/attach or security/main/release action",
+    "Mock IPC/crypto tests are not actual native receiver acknowledgement; parser success is not Rust typecheck",
+    "Hash joins only prove byte equality. Q semantics require independent DOCX content join; unmatched intermediate bytes remain semantically unknown",
+    "Observer copies/hash/IPC/native mutex/metadata/fileappend and derived identity/build can perturb timing. No recurrence does not explain historical FAIL45355259350",
+    "No permission or evidence of universal absence/presence of task-for-pid/debug capabilities; empty historical codesign output remains limited observation"
+  ],
+  "originalCause": "OPEN",
+  "originalEvidenceModified": false,
+  "authorFilesModified": false,
+  "reviewerWrites": "Only .local/independent-save-observer-review scratch and receipts"
+}
