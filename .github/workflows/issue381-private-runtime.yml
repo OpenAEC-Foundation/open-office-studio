@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   private-linux:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/fix-381-wq2-vlookup-index-20261124' && github.event.head_commit.message == 'qa381 execute 381-20261124-9d3b-3ba602b64f4e17e9'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/fix-381-wq2-vlookup-index-20261124' && github.event.head_commit.message == 'qa381 execute 381-20261124-9d3b-57f7d99c06484928'
     runs-on: ubuntu-22.04
     timeout-minutes: 45
     env:
