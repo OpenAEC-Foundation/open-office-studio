@@ -1,0 +1,324 @@
+{
+  "status": "passed",
+  "identity": {
+    "applicationCommit": "727903cc7add7591444881cbe87620c9f8b78260",
+    "applicationTree": "779f342af0146a9a5e7c941ce3665878c20af802",
+    "version": "2026.48.1",
+    "executeNative": true,
+    "requireSigned": false,
+    "testTitleOverlap": false,
+    "titleOnly": false,
+    "focusedCase": null,
+    "runId": 45388309036,
+    "producerJobId": 138445625558,
+    "producerRunAttempt": 2,
+    "artifactId": 14923485569,
+    "archiveSha256": "4e1e26f682a0581dd76511410c3e0aeb06816a29ab640665efe2f527be2b320d",
+    "archiveBytes": 384563573,
+    "packageMember": "nsis/Open Office Studio_2026.48.1_x64-setup.exe",
+    "packageSha256": "838920e7da539b3dc878a28775844f96440d276afb6e490c44a13b6145471c0b",
+    "packageBytes": 384462585
+  },
+  "harnessCommit": "664d86a1af1bdf4e6967e0ee1688c85345a9cf83",
+  "harnessSha256": "5bf379010a08192ece401213e2069b6be18eceb943f38c8d9254c8901892fefb",
+  "checks": [
+    {
+      "name": "frozen application, builder, archive and installer identities verified"
+    },
+    {
+      "name": "independent NSIS payload identity and exact Tauri bundle patch verified"
+    },
+    {
+      "name": "installed package opens exact 3x3 baseline",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "native keyboard edit",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "NATIVE_WINDOWS_372 alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "native ordinary Undo",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "native ordinary Redo",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "NATIVE_WINDOWS_372 alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "Find input owns Undo",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "NATIVE_WINDOWS_372 alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "INPUT",
+        "label": "Find what",
+        "className": ""
+      }
+    },
+    {
+      "name": "Find close preserves document Undo",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "document Redo after pane close",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "NATIVE_WINDOWS_372 alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "normal close exits first process",
+      "pid": 9824
+    },
+    {
+      "name": "full process reopen renders saved cells",
+      "tables": [
+        {
+          "rows": 3,
+          "columns": 3,
+          "cells": [
+            "NATIVE_WINDOWS_372 alpha",
+            "beta",
+            "",
+            "",
+            "",
+            "omega",
+            "delta",
+            "",
+            ""
+          ]
+        }
+      ],
+      "focus": {
+        "tag": "TEXTAREA",
+        "label": "Document input",
+        "className": "paged-editor__yrs-input paged-editor__hidden-pm ProseMirror ProseMirror-focused"
+      }
+    },
+    {
+      "name": "normal close exits reopened process",
+      "pid": 5848
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "ownedAppsClosed": true,
+    "policyRestored": true,
+    "privateInstallRemoved": true
+  },
+  "platform": "Windows hosted runner / installed NSIS / actual WebView2 CDP keyboard and pointer",
+  "limits": [
+    "CDP input on an isolated native WebView2, not a physical user keyboard",
+    "Office Writer core and bundled-runtime detection only; not all module/release acceptance"
+  ],
+  "run": {
+    "id": 45388309036,
+    "head_sha": "727903cc7add7591444881cbe87620c9f8b78260",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 14923485569,
+    "name": "open-office-studio-Windows",
+    "digest": "sha256:4e1e26f682a0581dd76511410c3e0aeb06816a29ab640665efe2f527be2b320d"
+  },
+  "archiveSha256": "4e1e26f682a0581dd76511410c3e0aeb06816a29ab640665efe2f527be2b320d",
+  "packageSha256": "838920e7da539b3dc878a28775844f96440d276afb6e490c44a13b6145471c0b",
+  "payloadArchitecture": "x64 PE32+",
+  "payloadExecutableSha256": "e010cde9aaa3cf1a21788a439c21dddddf91c5c14135cf0fca01f891ec6ae67e",
+  "fixtureSha256": "71db2348369e2b2d3dbdc05a0be9cf5957bf24cd96072260ee81c67c3091b250",
+  "executableSha256": "e010cde9aaa3cf1a21788a439c21dddddf91c5c14135cf0fca01f891ec6ae67e",
+  "installedExecutableBytes": 88105472,
+  "fileVersion": "2026.48.1",
+  "saved": {
+    "sha256": "ef62cf214ef8f359f65ef12f7d432ef26c51fa7ab1fa30700bb0fea9af55d7e4",
+    "cells": [
+      "NATIVE_WINDOWS_372 alpha",
+      "beta",
+      "",
+      "",
+      "",
+      "omega",
+      "delta",
+      "",
+      ""
+    ]
+  },
+  "processes": [
+    {
+      "pid": 9824,
+      "executable": "D:\\a\\open-office-studio\\open-office-studio\\.local\\integration382-windows-native\\installed\\open-office-studio.exe",
+      "stdout": "",
+      "stderr": "",
+      "appIdentifier": "org.openaec.office-studio",
+      "runtimeStatus": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\D:\\a\\open-office-studio\\open-office-studio\\.local\\integration382-windows-native\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null
+      }
+    },
+    {
+      "pid": 5848,
+      "executable": "D:\\a\\open-office-studio\\open-office-studio\\.local\\integration382-windows-native\\installed\\open-office-studio.exe",
+      "stdout": "",
+      "stderr": "",
+      "appIdentifier": "org.openaec.office-studio",
+      "runtimeStatus": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\D:\\a\\open-office-studio\\open-office-studio\\.local\\integration382-windows-native\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  ]
+}
