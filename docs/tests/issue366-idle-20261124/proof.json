@@ -1,0 +1,332 @@
+{
+  "issue": 366,
+  "result": "NOT REPRODUCED; issue remains open; no product patch",
+  "scope": "One synthetic / browser case; >=120s passive observation after each real paste",
+  "source": {
+    "commit": "794ac2fc803d5e537331e16e843cfca544e3c527",
+    "tree": "779f342af0146a9a5e7c941ce3665878c20af802",
+    "version": "2026.48.1",
+    "oldProofCommit": "37ec6d04bbf9c21442a5c555605f5c132c3954cb",
+    "applicationChanges": false
+  },
+  "execution": {
+    "startedAtUTC": "2026-11-24T13:49:25.722Z",
+    "finishedAtUTC": "2026-11-24T13:56:33.796Z",
+    "helper": "qa/issue366-idle/probe.mjs",
+    "helperSha256": "2db9a1dc2e40733cb215337a084dd014b34bdc8d723d2f363670a076a4002b8a",
+    "nodeSyntaxCheck": "PASS",
+    "processExitCode": 0,
+    "pageErrors": [],
+    "preflight": {
+      "realCanvasClickKeyboardClipboard": true,
+      "ctrlSaveDialogDownload": true,
+      "independentXML": true,
+      "freshContextReopen": true,
+      "savedSha256": "4613ad793a0736e1271c7e7af2a7ad2d9467478e33eb926578e07e7e986be9f5"
+    },
+    "policy": "250ms samples first5s, then2000ms. Passive getters/text only; no API focus/content/layout setters or whenLayoutComplete; no idle interaction"
+  },
+  "phaseResults": [
+    {
+      "phase": "initial",
+      "samples": 20,
+      "observedAfterMs": 5108,
+      "finalCurrent": 1,
+      "finalTotal": 3,
+      "finalLayoutPages": 3,
+      "finalStatusTotal": 3,
+      "finalParagraphs": 20,
+      "firstMatchingFinalTotalElapsedMs": 863,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 15,
+          "refTotal": 3,
+          "layoutPages": 3,
+          "statusTotal": null
+        },
+        {
+          "elapsedMs": 333,
+          "refTotal": 3,
+          "layoutPages": 3,
+          "statusTotal": null
+        },
+        {
+          "elapsedMs": 598,
+          "refTotal": 3,
+          "layoutPages": 3,
+          "statusTotal": 0
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 1 of 31,080 words, 7,080 charactersEnglish (United States) · spelling not availableTrack Changes: off100%ReadyCtrl+S"
+    },
+    {
+      "phase": "preflight-fresh-reopen",
+      "samples": 20,
+      "observedAfterMs": 5029,
+      "finalCurrent": 1,
+      "finalTotal": 3,
+      "finalLayoutPages": 3,
+      "finalStatusTotal": 3,
+      "finalParagraphs": 20,
+      "firstMatchingFinalTotalElapsedMs": 1099,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 566,
+          "refTotal": 3,
+          "layoutPages": 3,
+          "statusTotal": 0
+        },
+        {
+          "elapsedMs": 831,
+          "refTotal": 3,
+          "layoutPages": 3,
+          "statusTotal": 0
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 1 of 31,080 words, 7,080 charactersEnglish (United States) · spelling not availableTrack Changes: off100%ReadyCtrl+S"
+    },
+    {
+      "phase": "double-1",
+      "samples": 78,
+      "observedAfterMs": 121896,
+      "finalCurrent": 5,
+      "finalTotal": 6,
+      "finalLayoutPages": 6,
+      "finalStatusTotal": 6,
+      "finalParagraphs": 39,
+      "firstMatchingFinalTotalElapsedMs": 400,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 13,
+          "refTotal": 6,
+          "layoutPages": 6,
+          "statusTotal": 3
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 5 of 62,160 words, 14,160 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "double-2",
+      "samples": 75,
+      "observedAfterMs": 120046,
+      "finalCurrent": 11,
+      "finalTotal": 11,
+      "finalLayoutPages": 11,
+      "finalStatusTotal": 11,
+      "finalParagraphs": 77,
+      "firstMatchingFinalTotalElapsedMs": 309,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 29,
+          "refTotal": 11,
+          "layoutPages": 11,
+          "statusTotal": 6
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 11 of 114,320 words, 28,320 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "double-3",
+      "samples": 70,
+      "observedAfterMs": 120526,
+      "finalCurrent": 21,
+      "finalTotal": 21,
+      "finalLayoutPages": 21,
+      "finalStatusTotal": 21,
+      "finalParagraphs": 153,
+      "firstMatchingFinalTotalElapsedMs": 84,
+      "transientMismatchSamples": [],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 21 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "undo",
+      "samples": 16,
+      "observedAfterMs": 5249,
+      "finalCurrent": 11,
+      "finalTotal": 11,
+      "finalLayoutPages": 11,
+      "finalStatusTotal": 11,
+      "finalParagraphs": 77,
+      "firstMatchingFinalTotalElapsedMs": 470,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 40,
+          "refTotal": 11,
+          "layoutPages": 11,
+          "statusTotal": 21
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 11 of 114,320 words, 28,320 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "redo",
+      "samples": 16,
+      "observedAfterMs": 5180,
+      "finalCurrent": 1,
+      "finalTotal": 21,
+      "finalLayoutPages": 21,
+      "finalStatusTotal": 21,
+      "finalParagraphs": 153,
+      "firstMatchingFinalTotalElapsedMs": 405,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 78,
+          "refTotal": 21,
+          "layoutPages": 21,
+          "statusTotal": 11
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 1 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%Unsaved changesCtrl+S"
+    },
+    {
+      "phase": "fresh-context-reopen",
+      "samples": 18,
+      "observedAfterMs": 5262,
+      "finalCurrent": 1,
+      "finalTotal": 21,
+      "finalLayoutPages": 21,
+      "finalStatusTotal": 21,
+      "finalParagraphs": 153,
+      "firstMatchingFinalTotalElapsedMs": 1676,
+      "transientMismatchSamples": [
+        {
+          "elapsedMs": 963,
+          "refTotal": 21,
+          "layoutPages": 21,
+          "statusTotal": null
+        },
+        {
+          "elapsedMs": 1407,
+          "refTotal": 21,
+          "layoutPages": 21,
+          "statusTotal": 0
+        }
+      ],
+      "mismatchAfter5000ms": false,
+      "finalStatusText": "LocalOpen Tekst StudioPage 1 of 218,640 words, 56,640 charactersEnglish (United States) · spelling not availableTrack Changes: off100%ReadyCtrl+S"
+    }
+  ],
+  "independentXmlOracle": {
+    "parser": "Python zipfile/ElementTree, independent source-derived three concatenation rounds",
+    "sourceParagraphs": 20,
+    "savedParagraphs": 153,
+    "words": 8640,
+    "characters": 56640,
+    "savedSha256": "c367a950be24a9ae5fe21d867f86b718f567b4550131cc09ebc6386ac078813f",
+    "preflightSavedExact": true,
+    "savedExact": true,
+    "freshContextReopenExact": true,
+    "zipCRCChecks": true
+  },
+  "sourceAnalysis": "source-analysis.json",
+  "originalPngVisualReview": {
+    "files": [
+      "preflight-fresh-reopen.png",
+      "double-3.png",
+      "fresh-context-reopen.png"
+    ],
+    "observation": "Original double-3 visibly Page21of21/8640words/56640characters; fresh context Page1of21. No screenshot-only inference of all21page contents"
+  },
+  "platforms": {
+    "WindowsHostedChromiumViteSlash": "PASS bounded case",
+    "WindowsNative": "NOT TESTED",
+    "LinuxNative": "NOT TESTED",
+    "macOSNative": "NOT TESTED",
+    "hostedOfficePath": "NOT TESTED",
+    "releasePackage": "NOT TESTED"
+  },
+  "limitations": [
+    "Original user fixture/formatting/exact rounds and independently verified15pages unavailable",
+    "Live layout array is internal oracle, not external pagination; XML/fresh context prove content persistence",
+    "Initial ref/status mismatches retained; none after5s. Stale10of10 for2minutes not reproduced",
+    "Spelling dictionaries unavailable and explicitly reported; bundled font hashes retained",
+    "No general paste-performance/format/native/release acceptance inferred"
+  ],
+  "cleanup": {
+    "browserAndViteClosedInFinally": true,
+    "allSixCapturedOwnProcessIdsAbsent": true,
+    "checkedAtUTC": "2026-11-24T13:56:49.6756437Z",
+    "computerUseOrScreenRecordingStarted": false,
+    "sharedProcessesTerminated": false
+  },
+  "nextStep": "Only after explicit next-week user instruction: obtain shareable original document/local path and exact formatting/paste sequence; no issue close or speculative polling fix",
+  "retained": {
+    "cleanup.json": {
+      "bytes": 377,
+      "sha256": "d497cb362ff233fe4bc0e32cac72ccd225248c0afbcb510e590238337bba330b"
+    },
+    "double-1.png": {
+      "bytes": 202088,
+      "sha256": "3cc62e32b7633ba29dcad39edd9020a342e567b781c9d9e22e111191877b18e2"
+    },
+    "double-2.png": {
+      "bytes": 197077,
+      "sha256": "cd7dbd840f57258b7a21d31d93fbb82dab8004893251ba148dd8f06e042bdfa7"
+    },
+    "double-3.png": {
+      "bytes": 205069,
+      "sha256": "4a684c862a23ae7b1a3f3bfbfa46672f08c72024ded4f52f8eb1aa27755a542e"
+    },
+    "environment.json": {
+      "bytes": 743,
+      "sha256": "ec4a89d21336f1cd3db39c0e8249be1fdffb5d18f9d97ce6e0502fc4cbee9bbc"
+    },
+    "fresh-context-reopen.png": {
+      "bytes": 245785,
+      "sha256": "cfe015a1c5bd3b2f4c1219d5a1862a48c22529ad952b5ced2c6051e7cc60272b"
+    },
+    "initial.png": {
+      "bytes": 246276,
+      "sha256": "c73b5f7efffb86afc5ecf1e5c66e676fcb8473afcab7069f9f6be6703b9ec05c"
+    },
+    "owned-listeners-before-cleanup.json": {
+      "bytes": 85,
+      "sha256": "8c2c10bc0eacbd47b1bc322fe871990e6eebbb935fb20b023683a7905531bb3b"
+    },
+    "owned-processes-before-cleanup.json": {
+      "bytes": 7814,
+      "sha256": "4bd66dc37de04bcb22ef605d91f8fce20e13b8a7a6626b9c436d5c6ce3ee1ea3"
+    },
+    "preflight-fresh-reopen.png": {
+      "bytes": 245503,
+      "sha256": "24a85b39a84495b2280dc3b4e7c034a714535e9bfebd020cd3e074cb3c7e8353"
+    },
+    "preflight-saved.docx": {
+      "bytes": 37076,
+      "sha256": "4613ad793a0736e1271c7e7af2a7ad2d9467478e33eb926578e07e7e986be9f5"
+    },
+    "redo.png": {
+      "bytes": 267900,
+      "sha256": "36afc0f35b3f2e608e24787e6cd31ddd61be51e07c622e24b836ebd1afa18886"
+    },
+    "report.json.gz": {
+      "bytes": 123415,
+      "sha256": "cd40bc8c3ddb88ae5e303e53d121e674fa56988bd8ff29ce2fbd8ada862ab5b1"
+    },
+    "saved.docx": {
+      "bytes": 38644,
+      "sha256": "c367a950be24a9ae5fe21d867f86b718f567b4550131cc09ebc6386ac078813f"
+    },
+    "source.docx": {
+      "bytes": 37049,
+      "sha256": "dc14873fbe33964fbf38f42e8104d3ce1c344ba2854f96b1e6cb3f7a36ec1633"
+    },
+    "undo.png": {
+      "bytes": 139957,
+      "sha256": "ce89fbbd8834a314a68dd522bb7d45088e1ed99d69be64f972fde9491cfea30f"
+    }
+  },
+  "rawReport": {
+    "bytes": 10387799,
+    "sha256": "970189cacc514aee1bc532cd2016471ddd4fbcffa8cc04b81056d731300d818e",
+    "compression": "lossless gzip mtime0"
+  },
+  "sourceAnalysisSha256": "a9ffdd3079ca10e7c818c4c97b1c992fbb93b733ad539a1d1508ba402ad3c7a4"
+}

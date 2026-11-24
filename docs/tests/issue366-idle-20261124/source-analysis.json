@@ -1,0 +1,133 @@
+{
+  "scope": "Read-only code path analysis; no causal bug claim or product patch",
+  "appSource": "794ac2fc803d5e537331e16e843cfca544e3c527",
+  "statusSource": {
+    "path": "src\\lint\\tekst-opdrachten.tsx",
+    "sha256": "9ed653b4d2315acb3d9721521a29f2f14197ce9428a42062454041f22c72c3af",
+    "findings": [
+      "src/editors.tsx memoizes an API function tekst:()=>docx.current. TekstStatus interval calls that function on each tick, rather than permanently retaining the initially bound ref.",
+      "TekstStatus paginas(ref) reads getCurrentPage/getTotalPages and setPagina only changes state when current/total differ.",
+      "A 500ms interval obtains const ref=api() on each tick and calls paginas(ref) while the previously bound visible viewport remains connected. It does not require content or selection events to publish a changed count.",
+      "onContentChange debounces paragraph statistics by600ms and also calls paginas; selection/scroll requestAnimationFrame calls paginas.",
+      "React publication effect depends on pagina; publiceerStatus writes to external status store; Statusbalk useSyncExternalStore renders info.pagina/info.paginas."
+    ]
+  },
+  "engineDependency": {
+    "name": "@betteroffice/docx-react",
+    "version": "0.5.1",
+    "readmeSha256": "b08cea962b06b2dfaa96dfa283b63b68ac22c8eeccbb75d03f4754fa8dcddbd8",
+    "documentedContract": "README: getTotalPages current possibly provisional count; whenLayoutComplete for final count. The diagnostic does not call whenLayoutComplete or force layout.",
+    "chunks": [
+      {
+        "path": "node_modules\\@betteroffice\\docx-react\\dist\\chunk-LZ2DPBZ6.mjs",
+        "sha256": "ae345c30d181b0a038a12a8057efb2351e86907bc448aff407d7ffc61c7284bd",
+        "snippets": [
+          {
+            "offset": 55913,
+            "text": ");m!==r.current&&(r.current=m,c({level:m,stats:d}));},[o,a,s,e!==void 0,...n]);}function ql(e){return e&&!e.partial?e.pages.length:0}var Af=0,ya=class{constructor(){b$1(this,\"generation\",++Af);b$1(this,\"layouts\",new Map);}workerLayoutVersion(t){return this.layouts.get(t)??t}adapt(t,o,n){if(t.version!==n)throw new Resid"
+          },
+          {
+            "offset": 60252,
+            "text": "m:\"independent\",getZoom:\"independent\",focus:\"sync\",getCurrentPage:\"independent\",getTotalPages:\"independent\",getMemoryStats:\"independent\",whenLayoutComplete:\"await\",scrollToPage:\"independent\",scrollToPosition:\"sync\",openPrintPreview:\"sync\",print:\"sync\",loadDocument:\"independent\",loadDocumentBuffer:\"independent\",readPara"
+          },
+          {
+            "offset": 72043,
+            "text": "Zoom:()=>a,focus:()=>N.current?.focus(),getCurrentPage:()=>c?.()??l.currentPage,getTotalPages:()=>E?.()?0:ql(r.current?.getLayout()),whenLayoutComplete:async H=>{if(!R)throw new Error(\"This editor paints no display list\");return (await R(null,H?.timeoutMs??null,O?\"window\":\"document\")).pages.length},getMemoryStats:()=>b"
+          }
+        ]
+      },
+      {
+        "path": "node_modules\\@betteroffice\\docx-react\\dist\\chunk-4ZGDANBA.mjs",
+        "sha256": "be9a8f6738e622a910521f8484af27c3b6e4448a0835389708ac036b83f8b6a8",
+        "snippets": [
+          {
+            "offset": 75101,
+            "text": "ew:()=>{t.print?.(true).catch(()=>{});},getCurrentPage:()=>t.currentPage?.()??1,getTotalPages:()=>r.view?.geometry?.pages.length??0,scrollToPage:i=>t.scrollToPage?.(i),scrollToParagraph:i=>t.scrollToParagraph?.(i)??Promise.resolve(false),scrollToComment:i=>Number.isSafeInteger(i)?rn({kind:\"comment\",id:i}):Promise.resol"
+          }
+        ]
+      }
+    ],
+    "boundedInterpretation": [
+      "One internal ref implementation returns0 for a partial layout, otherwise layout.pages.length; worker adapter returns geometry.pages.length. Both snippets retained without assuming which execution route is causal.",
+      "Polling already exists, so an additional blind refresh timer is not supported by current evidence. An observed stale displayed count must be separated from a stale/provisional engine layout or wrong active ref.",
+      "No ref/layout/content setters are used in the new functional case; passive getters and bridge inspection are observations only."
+    ]
+  },
+  "relatedFiles": [
+    {
+      "path": "src/status/statusinfo.ts",
+      "sha256": "bcfcaab0318d46ab486b6d77bdb3e83d36d917dc7b336d03856f0f643eb7fbff"
+    },
+    {
+      "path": "src/status/Statusbalk.tsx",
+      "sha256": "c8b550d588850a73bdbf6da9263190677a1964568621bc7f18c537c5132af8ed"
+    },
+    {
+      "path": "scripts/app-performance.config.ts",
+      "sha256": "09e9d9bd106f1572cf4f4ef01e4ce8d5cfbaa737c46a24838ddaa0f9e7e1a251"
+    }
+  ],
+  "oldHelper": {
+    "commit": "2b6edf15090b16095a4ba75c8d671ae4f00cee5d",
+    "path": "../oos-fix-366-page-counter-9d3b/qa/issue366/probe.mjs",
+    "sha256": "94ffc3a6adc7c1cde2d84ce932b9a1a2852d279a770df83d96c5ee943c40cc95"
+  },
+  "newHelperSha256": "2db9a1dc2e40733cb215337a084dd014b34bdc8d723d2f363670a076a4002b8a",
+  "exactOldEvidenceReuseBoundary": [
+    {
+      "path": "src/lint/tekst-opdrachten.tsx",
+      "sha256BySource": {
+        "oldQA": "d959a0a41d8918d9645d56e6048df7337d384d67b4ba02c24943025cbf4fb8b7",
+        "P5": "d959a0a41d8918d9645d56e6048df7337d384d67b4ba02c24943025cbf4fb8b7",
+        "testedMain": "d959a0a41d8918d9645d56e6048df7337d384d67b4ba02c24943025cbf4fb8b7"
+      },
+      "byteEqual": true
+    },
+    {
+      "path": "src/editors.tsx",
+      "sha256BySource": {
+        "oldQA": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce",
+        "P5": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce",
+        "testedMain": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce"
+      },
+      "byteEqual": true
+    },
+    {
+      "path": "src/status/statusinfo.ts",
+      "sha256BySource": {
+        "oldQA": "0b0c5b53b9c52f382df8a018bcc747d7a71620f9039b54df7fe74e47313dbaa5",
+        "P5": "0b0c5b53b9c52f382df8a018bcc747d7a71620f9039b54df7fe74e47313dbaa5",
+        "testedMain": "0b0c5b53b9c52f382df8a018bcc747d7a71620f9039b54df7fe74e47313dbaa5"
+      },
+      "byteEqual": true
+    },
+    {
+      "path": "src/status/Statusbalk.tsx",
+      "sha256BySource": {
+        "oldQA": "c98eabbf944595264c165d7ca342b4d69461bb163c4ad4f907795509c47bc04e",
+        "P5": "c98eabbf944595264c165d7ca342b4d69461bb163c4ad4f907795509c47bc04e",
+        "testedMain": "c98eabbf944595264c165d7ca342b4d69461bb163c4ad4f907795509c47bc04e"
+      },
+      "byteEqual": true
+    },
+    {
+      "path": "package.json",
+      "sha256BySource": {
+        "oldQA": "545005c16444efbddc001ecd1a4ab5b6bd792bec2504d476c831b9fd5e1152ac",
+        "P5": "545005c16444efbddc001ecd1a4ab5b6bd792bec2504d476c831b9fd5e1152ac",
+        "testedMain": "545005c16444efbddc001ecd1a4ab5b6bd792bec2504d476c831b9fd5e1152ac"
+      },
+      "byteEqual": true
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256BySource": {
+        "oldQA": "e33a6acff9e7bf90729d0993f3613aada071d1101ddeec647c6e15c1c7ef7f53",
+        "P5": "e33a6acff9e7bf90729d0993f3613aada071d1101ddeec647c6e15c1c7ef7f53",
+        "testedMain": "e33a6acff9e7bf90729d0993f3613aada071d1101ddeec647c6e15c1c7ef7f53"
+      },
+      "byteEqual": true
+    }
+  ],
+  "reuseLimit": "Only these relevant exact files/dependency inputs and old QA mechanics are reused; no P5 native or full application acceptance is inferred."
+}
