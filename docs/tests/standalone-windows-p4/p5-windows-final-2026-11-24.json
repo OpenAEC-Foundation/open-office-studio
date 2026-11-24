@@ -494,5 +494,19 @@
     "acceptedRemoteCases": "Normal full exits and disposable own app/profile cleanup, no forced process termination or cleanup errors in accepted reports",
     "local": "No local native app, GUI, browser automation or capture session started; no local operator resources to dispose",
     "startFlags": "Original parent and completed child-consumer/reuse configurations frozen; no follow-up dispatch"
+  },
+  "laterDirectCanvasSupplement": {
+    "status": "PASS separately reviewed Windows direct-canvas input/save/fresh-process reopen",
+    "run": 45358970678,
+    "job": 138323958706,
+    "harness": "99e52c16c9c5ce7f7bf7e5d94c9873ecd2ca184f",
+    "review": "docs/tests/standalone-windows-p4/evidence/canvas-45358970678/review.json",
+    "artifact": {
+      "id": 14902939231,
+      "size_in_bytes": 629643,
+      "digest": "sha256:686e5f5cbf511abcdbfd858a516170b77ae73894c591d6573a058e45759c1189",
+      "expires_at": "2027-02-22T08:45:53Z"
+    },
+    "note": "Original Outline-core results and original failures above remain historical; later direct-canvas coverage is recorded only in this supplement"
   }
 }

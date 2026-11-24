@@ -1,0 +1,179 @@
+{
+  "status": "PASS separate scoped direct-canvas native input after independent bytes and actual screenshot review",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45358970678,
+  "harness": "99e52c16c9c5ce7f7bf7e5d94c9873ecd2ca184f",
+  "preparerRun": 45195780472,
+  "artifact": {
+    "id": 14902939231,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkwMjkzOTIzMQ==",
+    "name": "standalone-windows-p5-presentation-canvas-proof",
+    "size_in_bytes": 629643,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14902939231",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14902939231/zip",
+    "expired": false,
+    "digest": "sha256:686e5f5cbf511abcdbfd858a516170b77ae73894c591d6573a058e45759c1189",
+    "created_at": "2026-11-24T08:49:06Z",
+    "updated_at": "2026-11-24T08:49:06Z",
+    "expires_at": "2027-02-22T08:45:53Z",
+    "workflow_run": {
+      "id": 45358970678,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/standalone-windows-p4-2026-11-23",
+      "head_sha": "99e52c16c9c5ce7f7bf7e5d94c9873ecd2ca184f"
+    }
+  },
+  "phases": [
+    {
+      "phase": "initial",
+      "pid": 4204,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-presentation\\fixtures\\Standalone23.pptx",
+      "started": "2026-11-24T08:48:14.777Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "expectedInputTabVisible": "Standalone23.pptx",
+      "exactInputTabActivated": true,
+      "nativeMetadata": {
+        "identifier": "org.openaec.presentation-studio",
+        "version": "2026.48.1",
+        "name": "Open Presentation Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "parent": 9836,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-presentation\\fixtures\\Standalone23.pptx",
+        "windowHandle": 327802,
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe",
+        "pid": 4204
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "signature": "Valid",
+        "productName": "LibreOffice",
+        "productVersion": "26.8.2.2",
+        "bytes": 523096,
+        "fileVersion": "26.8.2.2",
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    },
+    {
+      "phase": "reopened",
+      "pid": 7876,
+      "input": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-presentation\\initial.pptx",
+      "started": "2026-11-24T08:48:44.702Z",
+      "status": "passed-scoped-function",
+      "pageUrl": "http://tauri.localhost/",
+      "pageErrors": [],
+      "expectedInputTabVisible": "initial.pptx",
+      "exactInputTabActivated": true,
+      "nativeMetadata": {
+        "identifier": "org.openaec.presentation-studio",
+        "version": "2026.48.1",
+        "name": "Open Presentation Studio"
+      },
+      "ownWebviewProfile": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\webview-profile",
+        "createdByNativeWebview": true,
+        "entries": [
+          "EBWebView"
+        ]
+      },
+      "process": {
+        "path": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe",
+        "parent": 9836,
+        "commandLine": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-presentation\\initial.pptx",
+        "windowHandle": 262406,
+        "pid": 7876
+      },
+      "installCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed",
+      "executableCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\open-presentation-studio.exe",
+      "runtime": {
+        "bron": "meegeleverd",
+        "gekozen": null,
+        "gevonden": true,
+        "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+        "profiel": "veilig",
+        "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+      },
+      "runtimeCanonicalPath": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+      "runtimeOwnInstallRelative": "kantoorruntime\\program\\soffice.com",
+      "runtimeExecutable": {
+        "signer": "CN=The Document Foundation, O=The Document Foundation, L=Berlin, S=Berlin, C=DE",
+        "signature": "Valid",
+        "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-OJgyIF\\installed\\kantoorruntime\\program\\soffice.com",
+        "sha256": "4f133aba4d8db66122ec34bc17eeaa8b274cfa5ded03feb384953f6ae357d4cf",
+        "productName": "LibreOffice",
+        "timestampSigner": "CN=Certum Timestamp 2026, O=Asseco Data Systems S.A., C=PL",
+        "productVersion": "26.8.2.2",
+        "bytes": 523096,
+        "fileVersion": "26.8.2.2"
+      },
+      "normalFullExit": true,
+      "ownedWebviewsExited": true
+    }
+  ],
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "observation": "Actual direct canvas stage focus and genuine keyboard edit; source title and marker visible in actual slide and readonly Outline before and after full normal exit/newPID; actual saved PPTX XML and two slides checked; original source unchanged",
+  "images": [
+    {
+      "name": "initial-completed.png",
+      "sha256": "47f07875280f6977f4f39f2c5a2cd91ccc2da004c7cb783e8671c22bf692830f"
+    },
+    {
+      "name": "reopened-completed.png",
+      "sha256": "3ec8b0df7e646f65466ec09743ad59058b90fb36178f09391ae3136b94585ea1"
+    },
+    {
+      "name": "canvas-initial-after-keys.png",
+      "sha256": "18d36e069c2b16dae9cbe25e76f8934ac7112aab892bebb2b23a88fff2713446"
+    },
+    {
+      "name": "canvas-initial-readback.png",
+      "sha256": "b769980c1acf545495d3bea5ea4f73a539b349d9660e20f508d2521c27eefd69"
+    },
+    {
+      "name": "canvas-reopened-after-keys.png",
+      "sha256": "2f0a498b682b2f4a00e7f8922af34d0fe71b225664c9728570fefa7185c641ba"
+    },
+    {
+      "name": "canvas-reopened-readback.png",
+      "sha256": "299cb55ed2d3ac72a0740652b44ea8c187f3bf2ffd0ddda65c0ff0815b92546d"
+    }
+  ],
+  "limitations": [
+    "Windows direct-canvas text input/save/reopen only on exact P5; no Linux/macOS/browser canvas acceptance inferred.",
+    "Six actual screenshots reviewed. Initial and reopened text wrapping differs; no pixel/typographic fidelity acceptance or independently established new product bug is claimed. Raw images are retained for later assessment."
+  ]
+}
