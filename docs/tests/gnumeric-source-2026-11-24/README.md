@@ -129,4 +129,6 @@ python -B scripts/qa-gnumeric/analyse.py
 
 De replay controleert gzip/bron-/notice-/Git-/referentiehashes, drie lege
 XML-bladen, vier readercontroles, de historische lege XLSX en de expliciete
-andere-fixturegrens. `--write` schrijft alleen het afgeleide resultaat.
+andere-fixturegrens. De volledige bronmetadata, inclusief Unicode-pad en
+variantnaam, moet exact overeenkomen met de canonieke UTF-8-Gitcatalogus.
+`--write` schrijft alleen het afgeleide resultaat.

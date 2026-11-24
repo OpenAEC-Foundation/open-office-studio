@@ -57,6 +57,8 @@ def analyse():
         b=subprocess.check_output(['git','cat-file','blob',n['blob']],cwd=ROOT)
         assert len(b)==n['bytes'] and sha(b)==n['sha256']
         assert subprocess.check_output(['git','rev-parse',CONFIG['application']['commit']+':'+path],text=True,cwd=ROOT).strip()==n['blob']
+    catalog=json.loads(subprocess.check_output(['git','cat-file','blob',CONFIG['p2Bindings']['docs/tests/formatendekking/bronnen.json']['blob']],cwd=ROOT))
+    assert next(entry for entry in catalog['sources'] if entry['id']=='lo-gnumeric-1')==s,'Full source metadata, including the Unicode path, must equal canonical UTF-8 catalogue bytes'
     source=native(data);container_controls=controls(data)
     historical=(PROOF/'retained/historical-windows-report.json').read_bytes()
     assert sha(historical)==CONFIG['p2Bindings']['docs/tests/formatendekking/resultaat-windows.json']['sha256']
