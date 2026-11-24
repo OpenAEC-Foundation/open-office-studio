@@ -52,7 +52,7 @@ class SeparateProducer(unittest.TestCase):
             else:r["run_attempt"]=2
             with self.subTest(change=change),self.assertRaises(RuntimeError):M["verify_api"](v,r,a,j,c,f)
 
-    def test_parent_bytes_required_and_exact_in_api_and_envelope(self):
+    def test_parent_bytes_required_and_exact_in_api(self):
         v,w,raw,r,a,j,c,f=fixture()
         a["size_in_bytes"]+=1
         with self.assertRaises(RuntimeError):M["verify_api"](v,r,a,j,c,f)

@@ -1,0 +1,48 @@
+name: Native Mac361 remaining Tab Find document isolation
+on:
+  push:
+    branches: [codex/mac-native-body-blocker-20261120]
+    paths: [.github/workflows/mac-native-361-remaining.yml, .github/mac-native-361-remaining-request.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  product-acceptance:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    env:
+      OOS_361_EXECUTE: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: b696ab86bd1c128729a079b68c0082e6df3d36a5
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/mac-body-harness
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact producer/app witness, descriptor and complete Suite child
+        id: suite_fetch
+        run: python .local/mac-body-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-body-harness/.github/mac-native-361-remaining-request.json .local/mac361-remaining-input
+      - name: Only remaining361 controls; reuse verified same-package core
+        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac361-remaining-input/identity.json .local/mac361-remaining-native --acceptance --remaining361
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac361-remaining-native-${{ github.sha }}
+          path: |
+            .local/mac361-remaining-native/
+            .local/mac361-remaining-input/*.json
+            .local/mac361-remaining-input/*.log
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.suite_fetch.outcome == 'failure'
+        with:
+          name: mac361-remaining-failed-acquisition-${{ github.sha }}
+          path: .local/mac361-remaining-input/*.zip
+          include-hidden-files: true
+          if-no-files-found: warn
