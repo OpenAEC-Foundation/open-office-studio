@@ -50,3 +50,42 @@ No app/converter execution occurs in these static checks. The native route must
 earn its own result. No ZABW export/other compression variant/richer AWML,
 installed-font/glyph/pagination/full-render or full-format acceptance is claimed.
 Other-platform/browser GUI evidence is outside this Windows-only scope.
+
+## Actual result: PASS for the original compressed native route
+
+[Run45367203455/job138352068143](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45367203455/job/138352068143)
+succeeded on harness3d0cc7efe930939c60b6b174946ee821e3bb2de4, without product
+changes. Native Open-dialog target and actual filename readback identify the
+original source.zabw,1128 bytes, not an extracted ABW. The independent audit
+rereads and qualifies its original gzip/FNAME/CRC/ISIZE/EOF/inner XML against
+the pre-conversion oracle. All8 encoded source cases in each of five actual
+DOCX copies pass:40 evaluations, zero mismatches.
+
+Real prefix/Ctrl+Z/Ctrl+Y and native Save As pass. The app fully exits normally,
+another PID reopens initial.docx and resaves reopened.docx:7836→2556. Original
+compressed SHA/size/mtime/nonzero inode281474976716006 remain unchanged.
+Original-child binding/NSIS/PE/signatures/timestamps/appID/profile/private
+bundled-runtime identity and own cleanup pass without errors.
+
+All four actual source/completed screenshots were reviewed. The source hello
+world and QA_ZABW_24NOV hello world are visible before/after native save and
+fresh-process reopen; native ribbon shows Times New Roman12. This is scoped
+content/input evidence, not full font-render/pagination acceptance. Earlier
+ordinary ABW runtime outcomes were not used as the ZABW native result.
+
+[Final review](evidence/45367203455/review.json) contains the actual compressed
+picker target, independently checked container, source/producer/child/report/PE/
+run/job/attempt/proof identities, expiry, five byte-oracle results, actual image
+hashes, phases and cleanup. Original official ZIPs/metadata and collector output
+are preserved byte-for-byte with an SHA256 inventory; later manual visual
+acceptance is separate from raw collector output. Proof artifact14906624670,
+415986 bytes,SHA25670667d51f921d31f5f3546e187b0f615d9ff038b15b9ef2dafbb992a1f35c064,
+recorded expiry2027-02-22T09:39:03Z.
+
+Own ready/go flags are frozen false again, with no further test/build scheduled.
+Accepted remote cleanup reports normal exits and successful own resource
+cleanup without errors. No local GUI/capture was started. This coverage result
+does not reset the already completed P5 release assessment or other owners'
+work. Existing ABW/WRI/LWP/core evidence stays intact; broader #30 and main/tag/
+publication decisions remain with integration. Export, other compression
+variants, richer AWML/full-format or other-platform GUI remain outside scope.
