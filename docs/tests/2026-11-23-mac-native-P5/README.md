@@ -1,4 +1,4 @@
-> ACTIVE RESUME24NOV: explicit user/root Suite go restored. Actual parent/child/support/witness bindings are frozen in prepared-core-request.json; only the registered core workflow is enabled now. Remaining361/374 requests stay globally disabled until this exact core passes. The23Nov stop below is historical. See ../2026-11-24-mac-suite/manifest-review.json.
+> ACTIVE24NOV RESULT: required signed Suite359/core361/Tab/Find/two-document/374-DOCX cases passed on exact APPb696/e308/48.1. Original preflight save failure remains unresolved; bounded three-condition2-set diagnostic passed6/6 including ordinary HID2/2 and does not prove its cause. Actual reports/exports are preserved in core/, Tab-history/, Find-isolation/, field374-native-pass/ and save-transport-observations/. See ../2026-11-24-mac-suite/status.json. The23Nov stop and disabled/null-plan descriptions below are historical, not the current execution state.
 
 > USER STOP23NOV: saved WIP only. All unstarted go revoked; no automatic prep/native when CI finishes. Resume24Nov only on a new user instruction. See STOP-2026-11-23-dual-source-WIP.json.
 
