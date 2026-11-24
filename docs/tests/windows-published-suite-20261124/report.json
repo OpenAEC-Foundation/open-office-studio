@@ -1,0 +1,173 @@
+{
+  "status": "passed",
+  "harnessCommit": "3e03de335fdf9604f63664d03863e4e90252867d",
+  "run": "45387284170",
+  "attempt": "1",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "releaseId": 456623378,
+  "assetId": 786782581,
+  "scope": "Published Windows Suite download/signature/independent PE/private installation binding only",
+  "signatures": [
+    {
+      "sha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+      "signerThumbprint": "6CA044A50E18DA34A53465F42D15F62BA48B9D85",
+      "timestampThumbprint": "DEAE1DD9B03C7C70D88D763F0BE6AE36F1FFE805",
+      "label": "actual published installer",
+      "status": "Valid"
+    },
+    {
+      "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+      "signerThumbprint": "6CA044A50E18DA34A53465F42D15F62BA48B9D85",
+      "timestampThumbprint": "97BF33C8C2BD4964F3E22D63AD095162A3754237",
+      "label": "independently extracted public payload",
+      "status": "Valid"
+    },
+    {
+      "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+      "signerThumbprint": "6CA044A50E18DA34A53465F42D15F62BA48B9D85",
+      "timestampThumbprint": "97BF33C8C2BD4964F3E22D63AD095162A3754237",
+      "label": "installed published application",
+      "status": "Valid"
+    },
+    {
+      "sha256": "1a734f22c8a50c0011b35066ca06e150635fa57941145e543ba2b854aa95c8ec",
+      "signerThumbprint": "6CA044A50E18DA34A53465F42D15F62BA48B9D85",
+      "timestampThumbprint": "97BF33C8C2BD4964F3E22D63AD095162A3754237",
+      "label": "installed published uninstaller",
+      "status": "Valid"
+    }
+  ],
+  "checks": [
+    "Exact public tag/tree and prior native proof bytes bound",
+    "Actual public download == reviewed signed NSIS; independent x64 payload == installed PE",
+    "All four actual Authenticode signatures and timestamps valid; exact installed version"
+  ],
+  "cleanup": {
+    "extractedPayloadRemoved": true,
+    "privateInstallRemoved": true,
+    "environmentRestored": true,
+    "downloadRemoved": true,
+    "privateProfileRemoved": true,
+    "uninstallerExitCode": 0
+  },
+  "reusedNativeEvidence": {
+    "originWholeCoreRunRemains": "failed; its failed title case is excluded",
+    "coreRun": 45196601365,
+    "reviewSha256": "0fa679433d93aabea962a4e52841d623b399c0f47d392f01753c70f0770a17e4",
+    "meaning": "Same immutable signed installer/PE; no fresh Writer UI or screenshot claim from this job",
+    "titleHarness": "f5363ce8cb0160190b3e4f75a305b8f72fbb239f",
+    "reviewCommit": "9d8ab9fa0a979112d16faeaab7c24b64d570c6c3",
+    "titleJob": 138303038323,
+    "titleAttempt": 1,
+    "titleArtifact": 14901192137,
+    "titleRun": 45352763316,
+    "coreArtifact": 14829555350,
+    "reportSha256": "ea37236c2e1d25098d28c83c3d178214526e5fa2528c23958a2637c4a69eb58a",
+    "acceptedCoreChecks": 12
+  },
+  "limits": [
+    "Suite/Writer only, not standalone apps or all-platform release acceptance",
+    "Existing documented font/format/layout limits remain",
+    "No application GUI or capture session started by this preflight"
+  ],
+  "tagCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "before": {
+    "publishedAt": "2026-11-24T10:57:02Z",
+    "asset": {
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/releases/assets/786782581",
+      "id": 786782581,
+      "node_id": "RA_kwDOVRiTGs4u5Vl1",
+      "name": "Open.Office.Studio_2026.48.1_x64-setup.exe",
+      "label": "",
+      "uploader": {
+        "login": "github-actions[bot]",
+        "id": 41898282,
+        "node_id": "MDM6Qm90NDE4OTgyODI=",
+        "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/github-actions%5Bbot%5D",
+        "html_url": "https://github.com/apps/github-actions",
+        "followers_url": "https://api.github.com/users/github-actions%5Bbot%5D/followers",
+        "following_url": "https://api.github.com/users/github-actions%5Bbot%5D/following{/other_user}",
+        "gists_url": "https://api.github.com/users/github-actions%5Bbot%5D/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/github-actions%5Bbot%5D/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/github-actions%5Bbot%5D/subscriptions",
+        "organizations_url": "https://api.github.com/users/github-actions%5Bbot%5D/orgs",
+        "repos_url": "https://api.github.com/users/github-actions%5Bbot%5D/repos",
+        "events_url": "https://api.github.com/users/github-actions%5Bbot%5D/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/github-actions%5Bbot%5D/received_events",
+        "type": "Bot",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "content_type": "application/octet-stream",
+      "state": "uploaded",
+      "size": 384579648,
+      "digest": "sha256:69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+      "download_count": 12,
+      "created_at": "2026-11-24T10:48:08Z",
+      "updated_at": "2026-11-24T10:48:25Z",
+      "browser_download_url": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.48.1/Open.Office.Studio_2026.48.1_x64-setup.exe"
+    },
+    "release": 456623378
+  },
+  "download": {
+    "sha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "bytes": 384579648,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.48.1/Open.Office.Studio_2026.48.1_x64-setup.exe"
+  },
+  "payload": {
+    "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+    "bytes": 88121248,
+    "architecture": "x64 PE32+"
+  },
+  "installed": {
+    "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+    "productVersion": "2026.48.1",
+    "installerExitCode": 0,
+    "bytes": 88121248
+  },
+  "after": {
+    "publishedAt": "2026-11-24T10:57:02Z",
+    "asset": {
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/releases/assets/786782581",
+      "id": 786782581,
+      "node_id": "RA_kwDOVRiTGs4u5Vl1",
+      "name": "Open.Office.Studio_2026.48.1_x64-setup.exe",
+      "label": "",
+      "uploader": {
+        "login": "github-actions[bot]",
+        "id": 41898282,
+        "node_id": "MDM6Qm90NDE4OTgyODI=",
+        "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/github-actions%5Bbot%5D",
+        "html_url": "https://github.com/apps/github-actions",
+        "followers_url": "https://api.github.com/users/github-actions%5Bbot%5D/followers",
+        "following_url": "https://api.github.com/users/github-actions%5Bbot%5D/following{/other_user}",
+        "gists_url": "https://api.github.com/users/github-actions%5Bbot%5D/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/github-actions%5Bbot%5D/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/github-actions%5Bbot%5D/subscriptions",
+        "organizations_url": "https://api.github.com/users/github-actions%5Bbot%5D/orgs",
+        "repos_url": "https://api.github.com/users/github-actions%5Bbot%5D/repos",
+        "events_url": "https://api.github.com/users/github-actions%5Bbot%5D/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/github-actions%5Bbot%5D/received_events",
+        "type": "Bot",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "content_type": "application/octet-stream",
+      "state": "uploaded",
+      "size": 384579648,
+      "digest": "sha256:69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+      "download_count": 12,
+      "created_at": "2026-11-24T10:48:08Z",
+      "updated_at": "2026-11-24T10:48:25Z",
+      "browser_download_url": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.48.1/Open.Office.Studio_2026.48.1_x64-setup.exe"
+    },
+    "release": 456623378
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "scope": "Published Windows Suite/Writer release identity and installation binding; previously accepted native Writer tests reused only on exact same signed bytes",
+  "release": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/tag/v2026.48.1",
+  "releaseId": 456623378,
+  "publishedSuiteAssetId": 786782581,
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "harnessCommit": "3e03de335fdf9604f63664d03863e4e90252867d",
+  "branch": "codex/windows-published-suite-20261124",
+  "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45387284170",
+  "job": 138421422515,
+  "attempt": 1,
+  "artifact": {
+    "id": 14917751598,
+    "size_in_bytes": 2211,
+    "digest": "sha256:f95b65dda2197a64fb21465a9a77be02c2e9ea41f2296713c8aeeee4491a7bb9",
+    "expires_at": "2027-02-22T11:46:41Z"
+  },
+  "result": {
+    "publicActualDownloadBytes": {
+      "sha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+      "bytes": 384579648,
+      "url": "https://github.com/OpenAEC-Foundation/open-office-studio/releases/download/v2026.48.1/Open.Office.Studio_2026.48.1_x64-setup.exe"
+    },
+    "independentPayload": {
+      "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+      "bytes": 88121248,
+      "architecture": "x64 PE32+"
+    },
+    "privateInstallation": {
+      "sha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+      "productVersion": "2026.48.1",
+      "installerExitCode": 0,
+      "bytes": 88121248
+    },
+    "allFourCurrentAuthenticodeAndTimestamps": "PASS",
+    "unchangedPublicAssetBeforeAndAfter": true,
+    "cleanup": {
+      "extractedPayloadRemoved": true,
+      "privateInstallRemoved": true,
+      "environmentRestored": true,
+      "downloadRemoved": true,
+      "privateProfileRemoved": true,
+      "uninstallerExitCode": 0
+    }
+  },
+  "reused": {
+    "originWholeCoreRunRemains": "failed; its failed title case is excluded",
+    "coreRun": 45196601365,
+    "reviewSha256": "0fa679433d93aabea962a4e52841d623b399c0f47d392f01753c70f0770a17e4",
+    "meaning": "Same immutable signed installer/PE; no fresh Writer UI or screenshot claim from this job",
+    "titleHarness": "f5363ce8cb0160190b3e4f75a305b8f72fbb239f",
+    "reviewCommit": "9d8ab9fa0a979112d16faeaab7c24b64d570c6c3",
+    "titleJob": 138303038323,
+    "titleAttempt": 1,
+    "titleArtifact": 14901192137,
+    "titleRun": 45352763316,
+    "coreArtifact": 14829555350,
+    "reportSha256": "ea37236c2e1d25098d28c83c3d178214526e5fa2528c23958a2637c4a69eb58a",
+    "acceptedCoreChecks": 12
+  },
+  "limitations": [
+    "Suite/Writer only, not standalone apps or all-platform release acceptance",
+    "Existing documented font/format/layout limits remain",
+    "No application GUI or capture session started by this preflight"
+  ],
+  "localSession": {
+    "GUIOrCaptureStarted": false,
+    "backgroundServerStarted": false,
+    "userPCInstallationModified": false
+  },
+  "files": {
+    "report.json": {
+      "bytes": 8368,
+      "sha256": "ad51eaf27f45ca55d6ac98e3f7cbb2fe9358e225c531a66870c2d814bf006608"
+    },
+    "original-proof.zip": {
+      "bytes": 2211,
+      "sha256": "f95b65dda2197a64fb21465a9a77be02c2e9ea41f2296713c8aeeee4491a7bb9"
+    },
+    "artifact-api.json": {
+      "bytes": 830,
+      "sha256": "39357c4c77a5af5b882ab5a573e2424b9858068850a63eb4047d77ec5e6b2255"
+    }
+  }
+}
