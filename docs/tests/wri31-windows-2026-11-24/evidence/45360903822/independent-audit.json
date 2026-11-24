@@ -1,0 +1,208 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "preparerRun": 45195780472,
+  "executionRun": 45360903822,
+  "executionHarness": "a54a939f096699f0e8989a51fd882a1f5c7a9a43",
+  "apps": {
+    "writer": {
+      "visualAcceptance": "pending actual completed screenshot review",
+      "job": [
+        {
+          "id": 138330551982,
+          "run_id": 45360903822,
+          "workflow_name": "WRI31 Windows native single Writer child",
+          "head_branch": "codex/wri31-windows-native-2026-11-24",
+          "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45360903822",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVRiTGs8AAAAgNSS2rg",
+          "head_sha": "a54a939f096699f0e8989a51fd882a1f5c7a9a43",
+          "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/138330551982",
+          "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45360903822/job/138330551982",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-24T08:59:30Z",
+          "started_at": "2026-11-24T08:59:32Z",
+          "completed_at": "2026-11-24T09:03:25Z",
+          "name": "Native writer wri31 child reuse",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-24T08:59:33Z",
+              "completed_at": "2026-11-24T08:59:34Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-24T08:59:34Z",
+              "completed_at": "2026-11-24T08:59:44Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-24T08:59:44Z",
+              "completed_at": "2026-11-24T08:59:48Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-24T08:59:48Z",
+              "completed_at": "2026-11-24T08:59:49Z"
+            },
+            {
+              "name": "Strict original own-child ZIP only; no parent download or app build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-24T08:59:49Z",
+              "completed_at": "2026-11-24T09:00:06Z"
+            },
+            {
+              "name": "Native WebView driver only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-24T09:00:06Z",
+              "completed_at": "2026-11-24T09:00:12Z"
+            },
+            {
+              "name": "Actual WRI31 native picker prefix UndoRedo copy and fresh-process reopen",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-24T09:00:12Z",
+              "completed_at": "2026-11-24T09:03:18Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-24T09:03:18Z",
+              "completed_at": "2026-11-24T09:03:20Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-24T09:03:20Z",
+              "completed_at": "2026-11-24T09:03:20Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-24T09:03:20Z",
+              "completed_at": "2026-11-24T09:03:20Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-11-24T09:03:20Z",
+              "completed_at": "2026-11-24T09:03:23Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-11-24T09:03:23Z",
+              "completed_at": "2026-11-24T09:03:23Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/138330551982",
+          "labels": [
+            "windows-latest"
+          ],
+          "runner_id": 1000136999,
+          "runner_name": "GitHub Actions 1000136999",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      ],
+      "nativeStatus": "passed-scoped-native-function",
+      "scope": "Native WRI31:17 ordinary paragraphs+8font/justification anchors, edit/UndoRedo/native DOCXsave/newPID; not full format",
+      "status": "independently-rechecked-functional-only",
+      "savedByteOracles": [
+        {
+          "kind": "writer",
+          "bytes": 19468,
+          "sha256": "7d0ddb941f62c8f12ca7df4540aa25a8b1f46f93497cebf28840b5188f2db2c5",
+          "checkedOrdinaryCases": 25,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 19467,
+          "sha256": "572835e139121740e06645ce52c381e3a2b0b4940c065f63b0e74215efd6ac7b",
+          "checkedOrdinaryCases": 25,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 19230,
+          "sha256": "44328b1bda0f4cfd8db1adbc2583e0488a0a415a76b46154bfc5d858a4d89718",
+          "checkedOrdinaryCases": 25,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 19468,
+          "sha256": "fed35dcf3a7270d149acddb5d22985cfd6d4119ee5137de9b5f0851580c256c5",
+          "checkedOrdinaryCases": 25,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 19231,
+          "sha256": "e400a4c238fe29a921d909731025f0ffd0d30ab56d6de081795a7dad03d3ee0e",
+          "checkedOrdinaryCases": 25,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        }
+      ]
+    },
+    "spreadsheet": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "presentation": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "email": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "notition": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "database": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    }
+  },
+  "xlsb377": {
+    "status": "not-tested-in-this-execution",
+    "reference": "Retain separately accepted supplement; no new pass inferred"
+  }
+}

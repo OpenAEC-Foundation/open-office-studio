@@ -43,3 +43,38 @@ source-oracle bytes, retained original result ZIP SHA, native source reader
 equality and75 prior XML case evaluations. These static replays do not launch
 an app, convert a document, or claim new native acceptance. Native results and
 any failures will be retained separately; no local GUI/capture is authorized.
+
+## Actual result: PASS within the declared scope
+
+[Run45360903822/job138330551982](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45360903822/job/138330551982)
+succeeded on harnessa54a939f096699f0e8989a51fd882a1f5c7a9a43, without product
+changes. Independent replay checks all25 declared binary-source cases in each
+of the five actual DOCX files:125 evaluations, zero mismatches. Actual prefix,
+Ctrl+Z undo, Ctrl+Y redo, ordinary native Save As and new-process resave succeed.
+Two normal complete exits, PIDs5248/8572, unchanged original WRI
+SHA/size/mtime/nonzero inode, actual owned Open-dialog identity,
+signatures/PE/profile/private-runtime and own cleanup all pass.
+
+Four actual screenshots were reviewed. The original title, ordinary body/font
+examples and prefixed title survive native editing and fresh-process reopen.
+The app reports font substitutions (Century Gothic/Desdemona/Playbill/Wide Latin)
+and unsupported embedded objects. The8 font/justification anchor checks concern
+preserved XML metadata, not equivalent installed-font appearance.
+Symbol/Wingdings glyphs, opaque objects, headers/footers, geometry and full
+typography remain excluded. Other-platform/browser GUI acceptance is not
+inferred from this Windows-only case.
+
+[Final review](evidence/45360903822/review.json) retains the complete source,
+producer/child/report/PE/run/job/attempt/proof bindings, expiry, individual byte
+oracles, actual image hashes, phases and cleanup. Raw official ZIPs/metadata and
+the original collector output are preserved byte-for-byte with an SHA256
+inventory. Manual visual acceptance is recorded separately from the original
+collector output. Proof artifact14904268483,811079 bytes,
+SHA25620d13b4faa9137855e1773566869361cffb1804b97197cb48cb9ce942fc701f9,
+recorded expiry2027-02-22T08:59:15Z.
+
+Own ready/go flags are frozen false again. No subsequent test/build is scheduled.
+Accepted remote cleanup reports normal exits and successful own resource
+cleanup without errors. No local GUI/capture was started. Main/tag/publication
+and wider #30/release decisions remain with integration. Existing Windows
+six-core/377/direct-canvas results remain intact.
