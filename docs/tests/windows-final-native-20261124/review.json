@@ -1,0 +1,139 @@
+{
+  "status": "PASS_WITH_SCOPED_LIMITS",
+  "reviewDate": "2026-11-24",
+  "scope": "Signed Windows Suite/Writer SaveAs diagnosis and issue374 native title continuation only",
+  "source": {
+    "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "runId": 45177730188,
+    "producerRunAttempt": 1,
+    "producerJobId": 137703365803,
+    "artifactId": 14828525724,
+    "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+    "packageSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "expectedPackagedExecutableSha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b"
+  },
+  "native": {
+    "runId": 45352763316,
+    "jobId": 138303038323,
+    "attempt": 1,
+    "harnessCommit": "f5363ce8cb0160190b3e4f75a305b8f72fbb239f",
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45352763316",
+    "jobConclusion": "success"
+  },
+  "proofArtifact": {
+    "id": 14901192137,
+    "bytes": 307524,
+    "sha256": "612ee988fbe97c860d22368fd8903c4b2d3a90dd97094106f2f4904de9d9c286",
+    "expiresAt": "2027-02-22T08:03:02Z",
+    "all22ExtractedFilesIndependentlyEqualOriginalArchiveBytes": true
+  },
+  "suiteChild": {
+    "artifactId": 14828676560,
+    "bytes": 384582285,
+    "sha256": "3b8680e4b1560e05cdc3c90f0498fa066afef18c30a2a1ffb9c6c940238ee261",
+    "descriptorArtifactId": 14828970973,
+    "descriptorSha256": "ce84c697e475dcfc0f7cb2f8dbc69520e988b99434ce150563f54d3b911d40ed"
+  },
+  "saveAsDiagnosis": {
+    "observation": "Unchanged old setter+Invoke driver did not create requested target; native dialog closed and actual app notification said Saved: C:\\Users\\runneradmin\\Documents\\Title overlap roundtrip.docx. Next native picker listed Title overlap roundtrip in Documents.",
+    "classification": "Test-driver filename/path commit failure reproduced on identical product bytes; no demonstrated DOCX data-loss product defect",
+    "correction": "Focus exact native File name control, real Ctrl+A and filename typing, Tab commit, exact readback, invoke Save and require native dialog closure; actual target persistence and content then independently verified",
+    "limit": "Old default-Documents file bytes were not retrieved; its path is supported by native picker listing and app notification. Exact internal Windows UIA cache mechanism was not instrumented."
+  },
+  "titleAcceptance": {
+    "visualStatus": "PASS: assistant visually inspected actual opened/edited/saved/reopened native renderer PNGs, 100% zoom. After edit title wraps into 3 distinct lines; no overlapping glyphs/lines or notices obscuring title. Saved and reopened retain the same clear title.",
+    "marker": " -- STW30 EDIT 2026-11-23",
+    "sourceUnchanged": true,
+    "savedHashBeforeReopen": "4813ea38419c47c766c0448f33fbb4360b2dd5de4fcd61941bd9896adca2040c",
+    "finalResavedDocxHash": "39cfd2c1e236c945f79d675b5973a10f37db60dc9bf6e08a00aa773cb6c57f77",
+    "xmlStagesPassed": [
+      "saved",
+      "reopened",
+      "resaved"
+    ],
+    "content": "All8 nonempty source blocks, relevant source styles/heading/2 placeholders retained;0 source tables. DOCVARIABLE Report remains a real complex field with cached Report Title and appended ordinary marker outside field.",
+    "oracleCounterexamples": "All4 workflow tests PASS: actual field accepted; flattening/changed variable/marker inside field rejected even with identical visible text",
+    "independentDownloadedFinalDocxAudit": "PASS (independent-local-audit.json)"
+  },
+  "reusedCore": {
+    "runId": 45196601365,
+    "artifactId": 14829555350,
+    "harnessCommit": "3bb2641cd37785a1893e11bd4b0fb3172e9f25d0",
+    "archiveSha256": "7f7e329997cb41c1dcb4174bb933868456d300add1c25a55909048693ae4bb53",
+    "archiveBytes": 469220,
+    "reportMember": ".local/windows-final-native/report.json",
+    "reportSha256": "26838dff5c193bf6bcf30f1d91843d61f0e2e3d888023b4160714bafe37859bc",
+    "savedDocxSha256": "4fde38434a6e221935cb6e9b7915dcaf4285f9b6c841a74d519789cb5cd37dae",
+    "originWholeRunStatus": "failed",
+    "acceptedSpecificChecks": 12,
+    "excluded": "Original failed Title SaveAs and its forced cleanup are not accepted",
+    "originalCorePids": [
+      900,
+      8728
+    ]
+  },
+  "identityAndLifecycle": {
+    "actualSignedInstallerPayloadInstalledUninstaller": "All4 Authenticode Valid with real timestamps",
+    "independentNSISPayloadEqualsInstalledPE": true,
+    "actualAppId": "org.openaec.office-studio",
+    "actualVersion": "2026.48.1",
+    "firstPid": 952,
+    "newPid": 3308,
+    "bothNormalExit0": true,
+    "forcedCleanup": false,
+    "cleanup": {
+      "ownedAppsClosed": true,
+      "policyRestored": true,
+      "privateInstallRemoved": true
+    }
+  },
+  "limits": [
+    "Isolated GitHub Windows host with actual installed NSIS/WebView2; user PC untouched",
+    "Original failed whole run45196601365 remains failed; only its12 independently reviewed core checks reused",
+    "Fonts substituted as reported by app; no original-font/page-layout/full TOC/index-fidelity claim",
+    "No overall7-app, all-platform or full release-stability acceptance; no main/tag/publication"
+  ],
+  "localCleanup": {
+    "localGUIOrCaptureStarted": false,
+    "ownedLocalServersOrWatchers": false,
+    "remoteOwnedAppProcessesClosed": true,
+    "remoteProfilePolicyRestored": true,
+    "remotePrivateInstallRemoved": true
+  },
+  "evidenceFiles": {
+    "independent-local-audit.json": {
+      "bytes": 3735,
+      "sha256": "fd9a14ea6080bd4eeb93dc52c0b504f8b424b091be90d98853b3dba4436c8d07"
+    },
+    "report.json": {
+      "bytes": 39882,
+      "sha256": "ea37236c2e1d25098d28c83c3d178214526e5fa2528c23958a2637c4a69eb58a"
+    },
+    "Title verified roundtrip.docx": {
+      "bytes": 14763,
+      "sha256": "39cfd2c1e236c945f79d675b5973a10f37db60dc9bf6e08a00aa773cb6c57f77"
+    },
+    "title-edited.png": {
+      "bytes": 67759,
+      "sha256": "9ddd8df007d44f1fc18e0014a04bcce33b9d33064cd1b7fd1f0a4f8d455462d3"
+    },
+    "title-opened.png": {
+      "bytes": 58215,
+      "sha256": "19f9e18b0beaef63543dbfa44f87285f95a5da81bca52081bc8f0123d966bbc8"
+    },
+    "title-original-driver-diagnostic.json": {
+      "bytes": 1277,
+      "sha256": "3987aa6fda76af5894a90d56e83510cb1ebcebd78313f6fd5513faf6bdef94c9"
+    },
+    "title-reopened.png": {
+      "bytes": 69015,
+      "sha256": "bb92c4766a8753022ad345ee1897f305368356babf2fcd8c9653f6e20a6106d0"
+    },
+    "title-saved.png": {
+      "bytes": 69017,
+      "sha256": "a384fcaea786084163fb94c40df364685ff3d99fa4774f505fcccbf4819e57f0"
+    }
+  }
+}
