@@ -1,0 +1,74 @@
+{
+  "scope": "ZABW / lo-zabw-1 only under #30",
+  "branch": "codex/zabw-qa-2026-11-24-e0d7",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "boundedSourceAcceptance": true,
+  "fullFormatAcceptance": false,
+  "ci": {
+    "run": 45362594875,
+    "job": 138336125899,
+    "attempt": 1,
+    "harnessCommit": "c8a783153a915577e25e1f7dd2ebc89e439719c4",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T09:11:33Z"
+  },
+  "artifact": {
+    "id": 14904668447,
+    "bytes": 70012,
+    "sha256": "81d42e807ee043744174a4a0467fbd269aeda85859da285a48688aa6762413fe",
+    "expiresAt": "2027-02-22T09:10:03Z"
+  },
+  "officialArtifactName": "abw-targeted-result",
+  "sourceSha256": "dd4d8ebd37434315c3194d4d1251f507be791e03e44ee3736e17a2fbb32f9206",
+  "container": {
+    "magic": "1f8b",
+    "compressionMethod": 8,
+    "flags": 8,
+    "mtime": 1396102065,
+    "xfl": 0,
+    "os": 3,
+    "filename": "hello.abw",
+    "headerBytes": 20,
+    "compressedDeflateBytes": 1100,
+    "crc32": "b2fc4ff0",
+    "isize": 2615,
+    "members": 1,
+    "eof": true,
+    "unusedBytes": 0,
+    "maxXMLBytes": 1000000,
+    "expandedBytes": 2615,
+    "expandedSha256": "ddcde2c8876a316a8e02501202c1316e9e7c52d8728c7d78e43ccd41ade45d50"
+  },
+  "sourceParagraphs": 1,
+  "sourceSections": 1,
+  "checks": 32,
+  "newContainerQualificationControls": 4,
+  "noInheritedABWRuntimePass": true,
+  "readerCanonicalGitBytes": {
+    "commit": "f30db2736a7c27b27d13ace2810f08e68ee51de8",
+    "path": "scripts/qa-abw/native.py",
+    "gitBlob": "204fc6261042e6f75cc265c55ab123e9a890773f",
+    "sha256": "d1f05cfb24a4c5a3baafd3878a61ba35627805df22830a374dd213296fa630cb",
+    "role": "Exact unchanged source-XML reader reused only after byte-for-byte decompressed XML identity was verified; no inherited ABW runtime pass.",
+    "initialWindowsWorktreeSha256": "97b0dc1290878ab03bb3b1ef9eae61ae781756b9481ab8d095753d69096681e7",
+    "hashBasis": "Canonical Git blob bytes; CRLF worktree bytes normalized only when checking local execution file against Git"
+  },
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "noProductChangeOrNewIssue": true,
+  "limits": "Only this original ZABW gzip member and its actual XML; EOF/no extra members, decompression bound, CRC/ISIZE, one hello world paragraph, ordinary type/one section, effective encoded Times New Roman12pt/left/Letter dimensions. Inner bytes happen to equal prior ABW source; earlier runtime outcomes are not transferred. No ZABW export/other compression variants/fonts installed/rendering/metadata/history/RDF/richer AWML/native GUI/full-format acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}

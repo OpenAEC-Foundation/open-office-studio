@@ -1,0 +1,30 @@
+{
+  "role": "Synthetic negative controls only, never positive ZABW fixture/import evidence",
+  "controls": [
+    {
+      "control": "corrupt-crc",
+      "rejected": true,
+      "errorType": "error",
+      "reason": "Error -3 while decompressing data: incorrect data check"
+    },
+    {
+      "control": "truncated-trailer",
+      "rejected": true,
+      "errorType": "AssertionError",
+      "reason": "Incomplete gzip member"
+    },
+    {
+      "control": "concatenated-members",
+      "rejected": true,
+      "errorType": "AssertionError",
+      "reason": "Concatenated members or trailing gzip data"
+    },
+    {
+      "control": "over-expansion-bound",
+      "rejected": true,
+      "errorType": "AssertionError",
+      "reason": "Oversized XML expansion"
+    }
+  ],
+  "passed": true
+}
