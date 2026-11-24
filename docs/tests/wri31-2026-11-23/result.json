@@ -1,0 +1,356 @@
+{
+  "scope": "WRI / existing Microsoft Write3.1 lo-wri-1 only under #30; completed agreed bounded QA",
+  "reviewedOn": "2026-11-24 Europe/Amsterdam",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "branch": "codex/wri31-qa-2026-11-23-e0d7",
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "firstPublicationCommit": "eeba0f6db6775a459d64fb6a2e45c3bbdd451f41",
+    "path": "writerperfect/qa/unit/data/writer/libwps/pass/Write_3.1.wri",
+    "filename": "Write_3.1.wri",
+    "bytes": 176896,
+    "blob": "458482de0fe0da6411c2bc5f0f8880d52ec3aab5",
+    "sha256": "d13257b4df644eda291c1e3e7395ceeaf1706ad217106e8ccede595c9beb4364",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwps/pass/Write_3.1.wri",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native Microsoft Write3.1 BE32/AB00 binary with OLE-marked PAP ranges, not RTF/DOCX or Word-for-DOS",
+    "coverageLimit": "Bounded first17 ordinary ASCII body paragraphs including empties, their encoded font/style metadata, five later ordinary-font anchors and three justification anchors. Ten-font table, all FOD coverage and three opaque object bounds inventoried. No acceptance of Symbol/Wingdings glyph mappings, OLE/images/sound/macros, footer/page-number field, indent/tab/page geometry, full layout or other Write versions."
+  },
+  "sourceQualificationPassed": true,
+  "preConversionWipOracleMatches": true,
+  "original": {
+    "run": 45198852740,
+    "job": 137776546305,
+    "attempt": 1,
+    "harness": "d463a8c30a70e97ebbbf925b56489d6b1bf5cb66",
+    "conclusion": "success",
+    "completedAt": "2026-11-23T14:54:12Z",
+    "method": "Real approved private converter and P2 opening helper; real Word edit/UndoRedo/save/fresh document-session reopen"
+  },
+  "newProcess": {
+    "run": 45352073903,
+    "job": 138300730051,
+    "attempt": 1,
+    "harness": "2f51947993f4f39e2978c99df1d4c1ac8c7e3b7e",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T07:58:30Z",
+    "method": "Independent new CI VM/Node process reopens exact DOCX from the previous successful run; original SDK/session cannot persist across jobs",
+    "process": {
+      "pid": 2180,
+      "ppid": 2179,
+      "node": "v22.23.5",
+      "platform": "linux",
+      "startedAt": "2026-11-24T07:58:17.347Z"
+    },
+    "inputDocxSha256": "ed757ba060f5e144056630874c50ad59fc671315db120ec1b22a156bce00a41b",
+    "output": {
+      "bytes": 19354,
+      "sha256": "5ee7c029329a83c64c73859b51f210c246620118f415418d0946933de2d0330f"
+    },
+    "newOfficeExecution": false,
+    "privateRuntimeRedownloaded": false,
+    "cleanup": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localUserGuiOrCaptureUsed": false
+    }
+  },
+  "runtimeBindingReview": {
+    "pin": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+      "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+      "producerRun": 45147346793,
+      "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+      "artifactId": 14805600515,
+      "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+      "zipBytes": 305620081,
+      "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+      "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+      "manifestEntries": 15082,
+      "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+      "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+      "parentRun": 45143305147,
+      "parentJob": 137586343061,
+      "parentZipArtifact": 14804062140,
+      "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+    },
+    "receipt": {
+      "application": {
+        "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "version": "2026.48.1"
+      },
+      "artifact": {
+        "application": {
+          "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+          "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+          "version": "2026.48.1"
+        },
+        "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+        "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+        "producerRun": 45147346793,
+        "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+        "artifactId": 14805600515,
+        "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+        "zipBytes": 305620081,
+        "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+        "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+        "manifestEntries": 15082,
+        "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+        "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+        "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+        "parentRun": 45143305147,
+        "parentJob": 137586343061,
+        "parentZipArtifact": 14804062140,
+        "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+        "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+      },
+      "package": {
+        "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+        "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+        "appVersion": "2026.48.1",
+        "run": 45143305147,
+        "job": 137586343061,
+        "jobConclusion": "success",
+        "installerArchive": {
+          "id": 14804062140,
+          "name": "open-office-studio-Linux",
+          "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+          "bytes": 811809091
+        },
+        "reportArchive": {
+          "id": 14804805305,
+          "name": "pakketcontrole-Linux",
+          "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+          "bytes": 671
+        },
+        "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+        "deb": {
+          "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+          "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+          "bytes": 383815340,
+          "control": {
+            "Package": "open-office-studio",
+            "Version": "2026.48.1",
+            "Architecture": "amd64",
+            "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+          },
+          "path": "canonical-office.deb",
+          "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+          "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+        },
+        "officeExecutableMetadataOnly": {
+          "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+          "bytes": 99899360,
+          "format": "ELF64 little endian",
+          "machine": "x86_64"
+        },
+        "reusedVerifiedDebRun": 45146535263
+      },
+      "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/wri31-runtime-input/private",
+      "program": "/home/runner/work/open-office-studio/open-office-studio/.local/wri31-runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+      "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+      "converterElf": {
+        "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+        "bytes": 15088,
+        "format": "ELF64 little endian",
+        "machine": "x86_64"
+      },
+      "runtimeReceipt": {
+        "schemaVersion": 1,
+        "layoutVersion": 2,
+        "name": "LibreOffice",
+        "version": "26.8.2.2",
+        "target": "linux-x64",
+        "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+        "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+        "executable": "program/soffice",
+        "preparedMs": 33554
+      },
+      "entryManifest": {
+        "name": "entry-manifest.json",
+        "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+        "entries": 15082
+      },
+      "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+    },
+    "method": "Original successful verifier/converter receipts authenticated through the complete officially hashed small result ZIP; no new private Office download/conversion on 24 November"
+  },
+  "converter": {
+    "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+    "sourceUnchanged": true,
+    "outputSha256": "bffd64278c53f0e0cd5f257ffa0e991534216b8534faffedc5437a3dd712ce45",
+    "outputBytes": 19357,
+    "exitCode": 0
+  },
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "boundedSourceAcceptance": true,
+  "downstreamEnginePassed": true,
+  "separateNewProcessReopenPassed": true,
+  "totalBoundedCaseEvaluations": 100,
+  "fullFormatAcceptance": false,
+  "stages": [
+    {
+      "file": "converted.docx",
+      "bytes": 19357,
+      "sha256": "bffd64278c53f0e0cd5f257ffa0e991534216b8534faffedc5437a3dd712ce45",
+      "edited": false,
+      "checkedOrdinaryCases": 25,
+      "mismatches": 0,
+      "boundedSourceAcceptance": true,
+      "fullFormatAcceptance": false
+    },
+    {
+      "file": "saved.docx",
+      "bytes": 19355,
+      "sha256": "ed757ba060f5e144056630874c50ad59fc671315db120ec1b22a156bce00a41b",
+      "edited": true,
+      "checkedOrdinaryCases": 25,
+      "mismatches": 0,
+      "boundedSourceAcceptance": true,
+      "fullFormatAcceptance": false
+    },
+    {
+      "file": "reopened-saved.docx",
+      "bytes": 19355,
+      "sha256": "3521029b639dab9becaff27df846ead80b97aa0e514a2393c61e794a9e516ce8",
+      "edited": true,
+      "checkedOrdinaryCases": 25,
+      "mismatches": 0,
+      "boundedSourceAcceptance": true,
+      "fullFormatAcceptance": false
+    },
+    {
+      "file": "fresh-process-saved.docx",
+      "bytes": 19354,
+      "sha256": "5ee7c029329a83c64c73859b51f210c246620118f415418d0946933de2d0330f",
+      "edited": true,
+      "checkedOrdinaryCases": 25,
+      "mismatches": 0,
+      "boundedSourceAcceptance": true,
+      "fullFormatAcceptance": false
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14832170121,
+      "name": "wri31-targeted-result",
+      "bytes": 130453,
+      "fullZipSha256": "208d117678dd6dd3b889a8aaa9431a2a926576e35d34726277a40f8043c8c374",
+      "expiresAt": "2027-02-21T14:52:17Z",
+      "verifiedAgainstOfficialMetadata": true
+    },
+    {
+      "id": 14901165890,
+      "name": "wri31-new-process-result",
+      "bytes": 66593,
+      "fullZipSha256": "9998a5cdbaddcb703bc8f7cdeca403edb30467cd98692f75eed074bd03bfbb97",
+      "expiresAt": "2027-02-22T07:57:58Z",
+      "verifiedAgainstOfficialMetadata": true
+    }
+  ],
+  "historicalStopRecord": "hard-stop-WIP.json retained unchanged as the accurate 23 November snapshot, superseded for current QA status by this result",
+  "platforms": {
+    "linux": "PASS at headless approved private-converter/production helper/real Word Node SDK level; no native GUI claim",
+    "windows": "Static offline source/XML audit only; no native WRI app acceptance",
+    "macOS": "No native WRI execution",
+    "browser": "Actual negative production capability functions pass in Linux Node/Vite SSR; hosted browser UI not executed"
+  },
+  "limits": [
+    "Bounded first17 ordinary ASCII body paragraphs including empties, their encoded font/style metadata, five later ordinary-font anchors and three justification anchors. Ten-font table, all FOD coverage and three opaque object bounds inventoried. No acceptance of Symbol/Wingdings glyph mappings, OLE/images/sound/macros, footer/page-number field, indent/tab/page geometry, full layout or other Write versions.",
+    "First 17 ordinary ASCII body paragraphs/empties and eight later font/justification anchors are predeclared before conversion. Other text/glyph/object content is not silently accepted.",
+    "Character-/paragraph-format FOD ranges are not equated with a total logical paragraph count.",
+    "No full visual fidelity, actual glyph rendering, OLE/images/sound/macros, footer/page-number, indent/tab/page geometry, other Write versions, Tauri IPC or native app/installer acceptance.",
+    "Nonfatal original Vite WebSocket port 24678 warning did not stop actual engine steps; no product defect inferred."
+  ],
+  "remainingWithinAgreedScope": [],
+  "issues": {
+    "newProductBugConfirmed": false,
+    "action": "No new issue or product fix; all original bounded assertions and fresh-process checks pass. No catalog/shared-index/intake/main/tag/publication change."
+  },
+  "cleanup": {
+    "noLocalOfficeWordEngineServerWatcherGuiCaptureStarted": true,
+    "ciFreshSessionDestroyed": true,
+    "ciProductionLoaderClosed": true,
+    "otherChatOrUserResourcesTouched": false
+  },
+  "validation": {
+    "offlineReplay": "scripts/qa-wri31/analyse.py",
+    "report": "offline-analysis.json",
+    "platform": "Windows static Python only; no local Office/Word execution",
+    "passed": true
+  }
+}

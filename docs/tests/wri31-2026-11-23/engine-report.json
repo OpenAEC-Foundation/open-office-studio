@@ -1,0 +1,130 @@
+{
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "d463a8c30a70e97ebbbf925b56489d6b1bf5cb66",
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "firstPublicationCommit": "eeba0f6db6775a459d64fb6a2e45c3bbdd451f41",
+    "path": "writerperfect/qa/unit/data/writer/libwps/pass/Write_3.1.wri",
+    "filename": "Write_3.1.wri",
+    "bytes": 176896,
+    "blob": "458482de0fe0da6411c2bc5f0f8880d52ec3aab5",
+    "sha256": "d13257b4df644eda291c1e3e7395ceeaf1706ad217106e8ccede595c9beb4364",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwps/pass/Write_3.1.wri",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native Microsoft Write3.1 BE32/AB00 binary with OLE-marked PAP ranges, not RTF/DOCX or Word-for-DOS",
+    "coverageLimit": "Bounded first17 ordinary ASCII body paragraphs including empties, their encoded font/style metadata, five later ordinary-font anchors and three justification anchors. Ten-font table, all FOD coverage and three opaque object bounds inventoried. No acceptance of Symbol/Wingdings glyph mappings, OLE/images/sound/macros, footer/page-number field, indent/tab/page geometry, full layout or other Write versions."
+  },
+  "checks": [
+    "No-desktop WRI opening rejects with a concrete conversion limitation and DOCX alternative.",
+    "Real private converter/production open policy and strict original-source XML result recorded; downstream engine checks do not accept conversion discrepancies.",
+    "Actual production-patched Word engine opens source-derived text, inserts a test prefix and restores exact text through Undo/Redo.",
+    "Modern DOCX save/fresh reopen/second save preserve the actual downstream edited paragraph vector; source XML/text/font discrepancies stay in separate strict reports. Original WRI unchanged."
+  ],
+  "limits": [
+    "Bounded first17 ordinary ASCII body paragraphs including empties, their encoded font/style metadata, five later ordinary-font anchors and three justification anchors. Ten-font table, all FOD coverage and three opaque object bounds inventoried. No acceptance of Symbol/Wingdings glyph mappings, OLE/images/sound/macros, footer/page-number field, indent/tab/page geometry, full layout or other Write versions.",
+    "Private converter adapter + production opening helper/Word engine, not native GUI/Tauri IPC or installer acceptance",
+    "Browser boundary is a negative production-function check in Node, not hosted UI",
+    "No Windows/macOS runtime, font rendering or visual fidelity acceptance"
+  ],
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri bridge mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This WRI file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy."
+  },
+  "strictInitialSourceAcceptance": true,
+  "initialSourceMismatches": [],
+  "downstreamBaselineRole": "Predeclared first17 ordinary ASCII paragraphs only for engine operations; independent native font/style/anchor checks remain strict and all excluded glyph/object content stays unaccepted",
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "editedParagraphs": [
+    "QA_WRI31_23NOV Test document for Write conversion",
+    "",
+    "This paragraph has left indent of 0.75\", right 0.25\" and first line 1\". So we should have a sufficiently long line, so we can it wrap at least one but possibly twice.",
+    "",
+    "",
+    "Character properties.",
+    "1. Bold",
+    "2. italics",
+    "3. underlined",
+    "4. superscript: m2",
+    "5. subscript: CO2",
+    "",
+    "Font properties. We should test at least 8 diffent fonts as the encoding for font 8 and higher is a bit strange.",
+    "",
+    "1. Arial size 10",
+    "2. Time new roman size 8",
+    "3. Courier size 11"
+  ],
+  "downstreamEnginePassed": true,
+  "strictSourceAcceptance": true,
+  "passed": true
+}

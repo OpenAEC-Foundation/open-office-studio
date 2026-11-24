@@ -1,0 +1,83 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "2f51947993f4f39e2978c99df1d4c1ac8c7e3b7e",
+  "input": {
+    "artifactId": 14832170121,
+    "run": 45198852740,
+    "attempt": 1,
+    "job": 137776546305,
+    "harness": "d463a8c30a70e97ebbbf925b56489d6b1bf5cb66",
+    "zipBytes": 130453,
+    "zipSha256": "208d117678dd6dd3b889a8aaa9431a2a926576e35d34726277a40f8043c8c374",
+    "artifactExpiresAt": "2027-02-21T14:52:17Z",
+    "sourceSha256": "d13257b4df644eda291c1e3e7395ceeaf1706ad217106e8ccede595c9beb4364",
+    "savedDocxSha256": "ed757ba060f5e144056630874c50ad59fc671315db120ec1b22a156bce00a41b",
+    "savedDocxBytes": 19355,
+    "nativeOracleIndependentlyRederived": true,
+    "newOfficeExecution": false,
+    "privateRuntimeRedownloaded": false,
+    "originalRuntimeReceiptsAuthenticatedByResultZip": true
+  },
+  "method": "Independent new CI VM/Node process reopens exact DOCX from the previous successful run; original SDK/session cannot persist across jobs",
+  "process": {
+    "pid": 2180,
+    "ppid": 2179,
+    "node": "v22.23.5",
+    "platform": "linux",
+    "startedAt": "2026-11-24T07:58:17.347Z"
+  },
+  "scope": "Bounded first17 ordinary ASCII body paragraphs including empties, their encoded font/style metadata, five later ordinary-font anchors and three justification anchors. Ten-font table, all FOD coverage and three opaque object bounds inventoried. No acceptance of Symbol/Wingdings glyph mappings, OLE/images/sound/macros, footer/page-number field, indent/tab/page geometry, full layout or other Write versions.",
+  "fullFormatAcceptance": false,
+  "newOfficeExecution": false,
+  "checks": [
+    "Exact original saved DOCX opens in a new production Word process; original first17 edited native paragraphs/empty paragraphs survive.",
+    "New-process resave passes all 25 original bounded text/font/justification cases in independent XML; original source and input save remain unchanged."
+  ],
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "output": {
+    "bytes": 19354,
+    "sha256": "5ee7c029329a83c64c73859b51f210c246620118f415418d0946933de2d0330f"
+  },
+  "boundedSourceAcceptance": true,
+  "passed": true,
+  "cleanup": {
+    "sessionDestroyed": true,
+    "productionLoaderClosed": true,
+    "localUserGuiOrCaptureUsed": false
+  }
+}
