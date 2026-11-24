@@ -14,6 +14,26 @@ from test_contracts import request,producer
 
 
 class PrepareTests(unittest.TestCase):
+    def test_email_only_retry_fetches_only_its_original_child_never_suite_or_other_apps(self):
+        from test_suite_support import prepare as seven
+        with tempfile.TemporaryDirectory(prefix='standalone-selected-reuse-') as t:
+            root=Path(t);q,_,_,_=seven(root);current=copy.deepcopy(q)
+            current.update(reuseTransfersFromRun=99,executeApps=['email']);calls=[]
+            ownrun={'head_branch':'codex/standalone-macos-20261123',
+                'path':'.github/workflows/standalone-macos-20261123.yml','repository':{'full_name':REPO}}
+            artifacts={'artifacts':[{'name':'standalone-own-email','expired':False}]}
+            def download(args,**kwargs):
+                self.assertEqual(args[:3],['gh','run','download'])
+                name=args[args.index('--name')+1];self.assertEqual(name,'standalone-own-email')
+                shutil.copytree(root/'split/email',args[args.index('--dir')+1]);calls.append(name)
+            with patch('prepare.api',side_effect=[ownrun,artifacts]),patch('prepare.subprocess.run',side_effect=download):
+                self.assertEqual(reuse_transfers(current,root/'retry'),{'app':['email']})
+            self.assertEqual(calls,['standalone-own-email'])
+            self.assertEqual([p.name for p in (root/'retry').iterdir()],['email'])
+            self.assertEqual(len(current['packages']),6)
+            proof=json.loads((root/'retry/email/provenance.json').read_text())
+            self.assertTrue(proof['qaRequestRebind']['packageBytesUnchanged'])
+
     def test_frozen_attempt_two_never_borrows_global_latest_attempt_three(self):
         q=request();q['parentArtifact'].update(attempt=2,producerJobId=33)
         run,a,j=producer();run['run_attempt']=2;j.update(id=33,run_attempt=2)

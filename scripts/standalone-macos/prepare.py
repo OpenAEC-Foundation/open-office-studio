@@ -144,8 +144,10 @@ def reuse_transfers(request,output):
             or run.get("repository",{}).get("full_name")!=REPO):
         raise ValueError("Reuse run must be this own QA workflow/repository/branch")
     artifacts=api("/actions/runs/"+str(origin)+"/artifacts?per_page=100")["artifacts"]
-    products=[(app,"standalone-own-"+app,app) for app in APPS]
-    if request.get("supportingSuitePackage"):
+    selected=request.get('executeApps',list(APPS))
+    products=[(app,"standalone-own-"+app,app) for app in selected]
+    # An app-only retry must not download the other six installers again.
+    if request.get("supportingSuitePackage") and set(selected)==set(APPS):
         products.append(("office","standalone-support-suite","suite-support"))
     for app,name,folder in products:
         matching=[a for a in artifacts if a.get("name")==name and a.get("expired") is False]
@@ -182,12 +184,13 @@ def main():
         "applicationSource":request['source'],"producerWorkflow":request.get('producerWorkflow'),
         "frozenSourceApiReceipts":source_receipts,
         "preparationScope":request.get("preparationScope","six-app-only-split"),
+        "operation":"selected-child-reuse" if request.get('reuseTransfersFromRun') else "verified-parent-split",
         "nativeAppsRequested":matrix["app"],
         "nativeMatrixScope":"Only requested dedicated app identities; Suite never a native matrix member"},indent=2)+"\n")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as stream:
             stream.write("matrix="+json.dumps(matrix,separators=(",",":"))+"\nready=true\n")
-            stream.write("suite-support-prepared="+str(bool(request.get("supportingSuitePackage"))).lower()+"\n")
+            stream.write("suite-support-prepared="+str((args.output/'suite-support').is_dir()).lower()+"\n")
 
 
 if __name__ == "__main__":main()

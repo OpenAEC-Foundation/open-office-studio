@@ -1,7 +1,7 @@
 """Driver failures must stop input before touching the wrong native control."""
 import unittest
 from unittest.mock import patch
-from cases import Case
+from cases import Case,saved_draft_row_title
 from native import Unavailable
 
 
@@ -22,6 +22,43 @@ class FakeSession:
 
 
 class SelectorTests(unittest.TestCase):
+    def draft(self):
+        # Exact observed structure/label from P5 QA45351696628 Email ax-221 row86.
+        return {'frontmost':True,'bundleIdentifier':'org.openaec.email-studio','pid':42,'bounded':False,
+            'ownedScreenWindows':[{'kCGWindowOwnerPID':42,'kCGWindowIsOnscreen':True,'kCGWindowLayer':0,
+                'kCGWindowAlpha':1,'kCGWindowBounds':{'X':240,'Y':37,'Width':1440,'Height':950}}],
+            'rawNodes':[row(86,76,AXRole='AXStaticText',AXEnabled=True,actions=['AXPress'],
+                AXTitle='To: fixture@example.invalid 08:13\nSTANDALONE_EMAIL_SEED Add star',
+                frame={'x':475,'y':328,'width':380,'height':58})]}
+
+    def test_saved_draft_uses_exact_composite_actual_row_label_and_one_press(self):
+        snap=self.draft();title=saved_draft_row_title(snap)
+        self.assertEqual(title,snap['rawNodes'][0]['attributes']['AXTitle'])
+        own=FakeSession(snap)
+        with patch('cases.time.sleep'):Case(own,'fixture').open_saved_draft()
+        self.assertEqual(len(own.actions),1);self.assertEqual(own.actions[0][0],'press')
+        self.assertEqual(own.actions[0][1]['value'],title)
+
+    def test_saved_draft_rejects_wrong_recipient_subject_role_action_disabled_or_offscreen(self):
+        import copy
+        for change in ({'AXTitle':'To: somebody@example.invalid 08:13\nSTANDALONE_EMAIL_SEED Add star'},
+                {'AXTitle':'To: fixture@example.invalid 08:13\nOTHER_SUBJECT Add star'},
+                {'AXTitle':'STANDALONE_EMAIL_SEED'}, {'AXRole':'AXButton'}, {'actions':[]},
+                {'AXEnabled':False},{'frame':{'x':-300,'y':328,'width':380,'height':58}}):
+            snap=self.draft();snap['rawNodes'][0]['attributes'].update(change)
+            self.assertIsNone(saved_draft_row_title(snap),change)
+
+    def test_saved_draft_ambiguity_foreign_app_background_and_partial_tree_never_select(self):
+        import copy
+        snap=self.draft();snap['rawNodes'].append(copy.deepcopy(snap['rawNodes'][0]))
+        with self.assertRaises(Unavailable):saved_draft_row_title(snap)
+        for change in ({'frontmost':False},{'bundleIdentifier':'org.openaec.office-studio'},
+                       {'bounded':True},{'childrenTruncated':True},{'depthTruncated':True}):
+            snap=self.draft();snap.update(change)
+            with self.assertRaises(Unavailable):saved_draft_row_title(snap)
+        snap=self.draft();snap['ownedScreenWindows'][0]['kCGWindowOwnerPID']=43
+        self.assertIsNone(saved_draft_row_title(snap))
+
     def test_warming_full_tree_is_observed_again_before_any_input(self):
         class Warming(FakeSession):
             def __init__(self):

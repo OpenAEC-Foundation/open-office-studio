@@ -81,7 +81,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify source and split one parent into isolated product transfers
+      - name: Verify frozen source and prepare selected package transfers
         id: prepare
         run: python scripts/standalone-macos/prepare.py .github/standalone-macos-20261123-request.json transfer
       - name: Transfer Suite only to its separate validation owner
@@ -116,36 +116,42 @@ jobs:
           path: transfer/producer-receipt.json
           if-no-files-found: warn
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'writer')
         with:
           name: standalone-own-writer
           path: transfer/writer/
           if-no-files-found: error
           compression-level: 0
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'spreadsheet')
         with:
           name: standalone-own-spreadsheet
           path: transfer/spreadsheet/
           if-no-files-found: error
           compression-level: 0
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'presentation')
         with:
           name: standalone-own-presentation
           path: transfer/presentation/
           if-no-files-found: error
           compression-level: 0
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'email')
         with:
           name: standalone-own-email
           path: transfer/email/
           if-no-files-found: error
           compression-level: 0
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'notition')
         with:
           name: standalone-own-notition
           path: transfer/notition/
           if-no-files-found: error
           compression-level: 0
       - uses: actions/upload-artifact@v4
+        if: steps.prepare.outputs.ready == 'true' && contains(fromJSON(steps.prepare.outputs.matrix).app, 'database')
         with:
           name: standalone-own-database
           path: transfer/database/

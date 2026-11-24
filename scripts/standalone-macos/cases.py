@@ -22,6 +22,30 @@ def is_dialog(node):
             or node.get("AXRoleDescription")=="dialog" or node.get("AXModal") is True)
 
 
+def saved_draft_row_title(snapshot):
+    """One real pressable row observed in the saved synthetic Drafts list."""
+    if (snapshot.get('bounded') or snapshot.get('childrenTruncated') or snapshot.get('depthTruncated')
+            or snapshot.get('frontmost') is not True
+            or snapshot.get('bundleIdentifier')!='org.openaec.email-studio'):
+        raise Unavailable('Complete foreground own Email tree required for saved draft selection')
+    windows=[w['kCGWindowBounds'] for w in snapshot.get('ownedScreenWindows',[])
+             if w.get('kCGWindowOwnerPID')==snapshot.get('pid') and w.get('kCGWindowIsOnscreen') is True
+             and w.get('kCGWindowLayer')==0 and w.get('kCGWindowAlpha',0)>0]
+    pattern=r'To: fixture@example\.invalid (?:[01]\d|2[0-3]):[0-5]\d\n'+re.escape(SEEDS['email'])+r' Add star'
+    matches=[]
+    for node in attributes(snapshot):
+        title=node.get('AXTitle','');frame=node.get('frame',{})
+        if (node.get('AXRole')!='AXStaticText' or node.get('AXEnabled') is False
+                or 'AXPress' not in node.get('actions',[]) or not re.fullmatch(pattern,title)
+                or not all(type(frame.get(k)) in (int,float) for k in ('x','y','width','height'))
+                or frame['width']<=0 or frame['height']<=0):continue
+        if any(frame['x']>=w['X'] and frame['y']>=w['Y']
+               and frame['x']+frame['width']<=w['X']+w['Width']
+               and frame['y']+frame['height']<=w['Y']+w['Height'] for w in windows):matches.append(title)
+    if len(matches)>1:raise Unavailable('Synthetic saved draft row is ambiguous')
+    return matches[0] if matches else None
+
+
 class Case:
     def __init__(self,session,fixture):self.s=session;self.fixture=Path(fixture)
 
@@ -378,6 +402,18 @@ class Case:
         if not any(str(n.get("AXValue",""))=="60" or str(n.get("AXTitle",""))=="60" for n in attributes(snapshot)):
             raise Unavailable("Native SELECT aggregate result 60 is not visible")
 
+    def open_saved_draft(self):
+        deadline=time.monotonic()+45
+        while True:
+            title=saved_draft_row_title(self.snapshot())
+            if title is not None:break
+            if time.monotonic()>=deadline:raise Unavailable('Actual synthetic saved Drafts row not observed')
+            time.sleep(.2)
+        # Re-resolve the exact complete row label and frame in a fresh owned tree.
+        # No substring selector, hidden value assignment or message backend call.
+        self.select(['AXStaticText'],[title],action='press')
+        self.s.report['nativeDraftRowSelection']={'role':'AXStaticText','exactTitle':title,'action':'AXPress'}
+
     def email(self,server):
         # Own fake account is entered through the real wizard, never backend injection.
         # The verified fresh profile opens this dialog automatically.
@@ -448,7 +484,7 @@ class Case:
         if self.s.process.pid==old:raise Unavailable("Mail reopen reused old process")
         self.s.report["newPidReopenVerified"]=True
         self.select(["AXRow","AXButton","AXStaticText"],["Drafts"])
-        self.select(["AXRow","AXButton","AXStaticText"],[SEEDS["email"]])
+        self.open_saved_draft()
         snapshot=self.s.capture("draft-reopened")
         if not any(MARKERS["email"] in str(n.get("AXValue",""))+str(n.get("AXDescription","")) for n in attributes(snapshot)):
             raise Unavailable("Persisted synthetic draft body absent from reopened native UI")
