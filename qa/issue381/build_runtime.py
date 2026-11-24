@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tarfile
 from deadline import remaining
+from abi_contract import compare_files
 
 ROOT=Path('.local/issue381').resolve()
 OUT=ROOT/'build-proof'
@@ -40,10 +41,6 @@ def dynamic(path):
     return dict(soname=re.findall(r'\(SONAME\).*?\[(.*?)\]',listing),
         needed=sorted(re.findall(r'\(NEEDED\).*?\[(.*?)\]',listing)),
         paths=re.findall(r'\((?:RPATH|RUNPATH)\).*?\[(.*?)\]',listing),raw=listing)
-def exports(path):
-    symbols=[line.split()[-1] for line in text(['nm','-D','--defined-only',str(path)]).splitlines() if line.split()]
-    demangled=subprocess.check_output(['c++filt'],input='\n'.join(symbols),text=True).splitlines()
-    return sorted(s for s,d in zip(symbols,demangled) if 'libwps::' in d)
 
 def main():
     assert sys.platform=='linux' and os.environ.get('GITHUB_ACTIONS')=='true'
@@ -116,18 +113,18 @@ def main():
         assert old_dynamic['soname']==new_dynamic['soname']==[SONAME]
         assert old_dynamic['needed']==new_dynamic['needed'],'Dependencies differ from original runtime library'
         assert new_dynamic['paths']==['$ORIGIN'],new_dynamic['paths']
-        old_exports=exports(original);new_exports=exports(library)
-        assert old_exports and old_exports==new_exports,'Public libwps ABI exports differ'
+        symbol_contract=compare_files(original,library,'qa/issue381/abi-symbol-policy.json')
         linked=text(['ldd',str(library)],env=env)
         assert 'not found' not in linked
         revenge_line=next(line for line in linked.splitlines() if REVENGE in line)
         resolved=Path(revenge_line.split('=>',1)[1].split(' (',1)[0].strip()).resolve()
         assert resolved==program/REVENGE
         report['variants'][variant]=dict(file=str(library),sha256=sha(library),bytes=library.stat().st_size,
-            sourceSha256=sha(causal),dynamic=new_dynamic,publicExports=new_exports,
+            sourceSha256=sha(causal),dynamic=new_dynamic,symbolContract=symbol_contract,
             symbolVersions=text(['readelf','--version-info',str(library)]),ldd=linked)
         write('build.json',report)
-    report['variants']['packaged']=dict(file=str(baseline),sha256=sha(baseline),dynamic=dynamic(baseline),publicExports=exports(baseline))
+    report['variants']['packaged']=dict(file=str(baseline),sha256=sha(baseline),dynamic=dynamic(baseline),
+        symbolContract=compare_files(original,baseline,'qa/issue381/abi-symbol-policy.json'))
     report['runtimeUntouched']=sha(canonical_program.parent/SONAME)==report['originalLibrarySha256']
     assert report['runtimeUntouched']
     report['passed']=True;write('build.json',report)
