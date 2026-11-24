@@ -4,8 +4,9 @@ Source `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 `e30879fd772871e690847c061ef66e6b81808a05`, version `2026.48.1`.
 The actual standalone DEB passed the full native case, including both GNM
 aliases. AppImage passed its core XLSX flow and `.gnm`, but `.gnumeric` lost
-the WebDriver session after a verified real native OpenFile dialog. This
-remaining observation is open; no complete Spreadsheet release approval follows.
+the WebDriver session after a verified real native OpenFile dialog. The later
+bounded AppImage diagnostic also passed both aliases, audited on 24 November
+below. The earlier intermittent observation remains open; its cause is unproven.
 
 | Actual installer | SHA256 | Core XLSX | Additional GNM regression |
 | --- | --- | --- | --- |
@@ -57,3 +58,54 @@ cannot erase either earlier failure.
 `948517759acfc3e4be36aa3436aa6f27b697286860bcdb41524df8c53599611f`,
 raw reports, saved XLSX bytes, native PNGs and precise partial results.
 No main merge, publication or signature certification is claimed.
+
+## Existing diagnostic audited on 24 November
+
+Only the existing small artifact from
+[45197550291/job137772125699, attempt 1](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45197550291/job/137772125699)
+was downloaded and audited. No native rerun, app build, installer-parent
+download or matrix repetition occurred. Exact QA is
+`f5634851014a106c62e2ee2401fcc5a1d3cb95ee`; source, installer SHA256
+`950bb92b52af3977dd7f163670418acb72fc6230e20184c1a77a0bc23e2bc59d`,
+running ELF, identity and version match the preceding P5 input.
+
+Core XLSX passed PID **4666 → 4874**, `.gnm` **4992 → 14441**, and `.gnumeric`
+**14807 → 24392**. Both GNM cases completed the unchanged eight typed cells,
+four formulas with values, two sheets, real edit, recommended XLSX Save as and
+full quit/new-PID reopen. Independent offline ZIP/XML inspection of the actual
+saved bytes confirmed the same core and GNM hashes listed above. Reopened core
+and both marker PNGs, plus the imported formula/value image, were visually
+reviewed. The native imported C4 shows `=C1+C2` and value 11; both saved Sheet2
+reopens visibly contain `GNM30 EDIT`.
+
+Both OpenFile receipts bind actual app credentials/request handles to the
+private-bus GTK peers, exact PID/start/ELF/XID and the read-only observed focused
+filename. Observers stopped with code 0; attributed GTK peers were closed using
+the protocol's exact-owner SIGTERM cleanup. Two distinct
+WebDriver session IDs remained valid; the same driver PID **4658** was alive at
+both post-Open observations, with the correct AppImage app, WebKit Network/Web
+processes and bundled `oosplash`/`soffice.bin` conversion processes. These are
+positive observations of this run, not evidence of what happened in the earlier
+failed session. The same AT-SPI socket warning appears in this successful run
+and does not establish a cause.
+
+The successful QA control flow inventories the profile **after both GNM routes
+and the final normal close**. The recorded final inventory contains the own
+`org.openaec.spreadsheet-studio` WebKit/recent/settings paths and no suite profile.
+No separate inventory timestamp was emitted. Final checks report no remaining
+owned app/AppImage/WebKit/runtime resources, a stopped driver, and removed own
+profiles. No local GUI/capture sessions were opened for this offline audit.
+
+[audit.json](linux-spreadsheet-p5-proof/diagnostic-45197550291/audit.json) preserves
+the complete member hash manifest, original compressed reports/provenance,
+native receipts, saved inputs/outputs, reviewed PNGs and independent XML oracles.
+Official artifact **14829826268**, **3355358 bytes**, ZIP SHA256
+`9cc7f012da9f63a1d7b9717bad4aef04c4257de0418fb1370d277e12e128411e`,
+expires **2027-02-21T14:45:09Z**. The whole ZIP was locally hash-verified once.
+
+The bounded diagnostic is now **audited PASS**, retaining all twelve Linux core
+passes. The earlier P5 invalid-session and P2 “Couldn't open” remain **OPEN,
+unexplained**. Failure-only OS diagnostics were not triggered in this successful
+run, so no missing earlier crash/driver state has been recovered. This is no
+product fix, general reliability claim or stable-release approval. Further CI
+requires separate coordination; no new dispatch was made.

@@ -1,0 +1,521 @@
+{
+  "auditDate": "2026-11-24",
+  "scope": "Offline audit of existing exact P5 Spreadsheet AppImage diagnostic; no native rerun, build, parent/package download, or product change",
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "qaCommit": "f5634851014a106c62e2ee2401fcc5a1d3cb95ee",
+  "qaRun": 45197550291,
+  "qaJob": 137772125699,
+  "qaAttempt": 1,
+  "artifact": {
+    "id": 14829826268,
+    "node_id": "MDg6QXJ0aWZhY3QxNDgyOTgyNjI2OA==",
+    "name": "standalone-linux-spreadsheet",
+    "size_in_bytes": 3355358,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14829826268",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14829826268/zip",
+    "expired": false,
+    "digest": "sha256:9cc7f012da9f63a1d7b9717bad4aef04c4257de0418fb1370d277e12e128411e",
+    "created_at": "2026-11-23T14:51:20Z",
+    "updated_at": "2026-11-23T14:51:20Z",
+    "expires_at": "2027-02-21T14:45:09Z",
+    "workflow_run": {
+      "id": 45197550291,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/linux-release-input-p5-2026-11-23",
+      "head_sha": "f5634851014a106c62e2ee2401fcc5a1d3cb95ee"
+    }
+  },
+  "archiveSha256": "9cc7f012da9f63a1d7b9717bad4aef04c4257de0418fb1370d277e12e128411e",
+  "archiveBytes": 3355358,
+  "package": {
+    "path": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+    "canonicalMember": "dist-installers/spreadsheet/appimage/Open Spreadsheet Studio_2026.48.1_amd64.AppImage",
+    "sha256": "950bb92b52af3977dd7f163670418acb72fc6230e20184c1a77a0bc23e2bc59d",
+    "bytes": 429849080
+  },
+  "payloadExecutableSha256": "3f0af57e037c355a1e871c4b07a2b321a5f12146e650da1af8b236a29fa7e3ac",
+  "nativeMetadata": {
+    "identifier": "org.openaec.spreadsheet-studio",
+    "name": "Open Spreadsheet Studio",
+    "version": "2026.48.1"
+  },
+  "ownInputArtifact": 14824139421,
+  "ownInputArchiveSha256": "3d1863d088a45e3f93bfb568d53fa2924fd91782a0bacad28a6ed70e987fc41e",
+  "canonicalParentArtifact": 14824745492,
+  "canonicalParentZipSha256": "c64b0e90e2144d1a5a6d17ad7e4881429a70ade8c48e76f7a22858b54c3928c5",
+  "result": "PASS this bounded AppImage core and both GNM alias cases; earlier intermittent observations remain OPEN",
+  "core": {
+    "status": "passed",
+    "firstPid": 4666,
+    "reopenPid": 4874,
+    "independentXlsxSha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05",
+    "independentCells": {
+      "A1": {
+        "value": 9
+      },
+      "B1": {
+        "formula": "A1*3",
+        "value": 27
+      },
+      "C1": {
+        "formula": "A1+B1",
+        "value": 36
+      }
+    }
+  },
+  "gnmCases": [
+    {
+      "extension": "gnm",
+      "status": "passed",
+      "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "sourceBytes": 2062,
+      "xlsx": "gnm-saved.xlsx",
+      "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "firstPid": 4992,
+      "reopenPid": 14441,
+      "cells": 8,
+      "formulas": 4,
+      "sheets": 2,
+      "edit": "Sheet2!A1 = GNM30 EDIT",
+      "originalUnchanged": true
+    },
+    {
+      "extension": "gnumeric",
+      "status": "passed",
+      "sourceSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "sourceBytes": 2062,
+      "xlsx": "gnumeric-saved.xlsx",
+      "xlsxSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "firstPid": 14807,
+      "reopenPid": 24392,
+      "cells": 8,
+      "formulas": 4,
+      "sheets": 2,
+      "edit": "Sheet2!A1 = GNM30 EDIT",
+      "originalUnchanged": true
+    }
+  ],
+  "rawNativeChecks": 48,
+  "nativeProcessObservations": [
+    {
+      "phase": "gnm-import",
+      "at": "2026-11-23T14:48:57.143Z",
+      "stage": "after exact native OpenFile before content observation",
+      "sessionId": "a0a5c452-3829-45ea-a285-ad06f2d97c9b",
+      "driverPid": 4658,
+      "driverExitCode": null,
+      "driverSignalCode": null,
+      "ownedApplicationResources": [
+        {
+          "pid": 13880,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/libexec/Open Spreadsheet Studio/kantoorruntime/program/oosplash"
+        },
+        {
+          "pid": 13889,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/libexec/Open Spreadsheet Studio/kantoorruntime/program/soffice.bin"
+        },
+        {
+          "pid": 4991,
+          "executable": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.AppImage"
+        },
+        {
+          "pid": 4992,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/bin/open-spreadsheet-studio"
+        },
+        {
+          "pid": 5013,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess"
+        },
+        {
+          "pid": 5018,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess"
+        }
+      ],
+      "driverLogTail": "\n** (open-spreadsheet-studio:4992): WARNING **: 14:48:56.011: atk-bridge: Couldn't listen on dbus server: Socket name too long\n\n"
+    },
+    {
+      "phase": "gnumeric-import",
+      "at": "2026-11-23T14:50:52.197Z",
+      "stage": "after exact native OpenFile before content observation",
+      "sessionId": "0fa0f877-8882-4069-be1e-fcb4dd28799b",
+      "driverPid": 4658,
+      "driverExitCode": null,
+      "driverSignalCode": null,
+      "ownedApplicationResources": [
+        {
+          "pid": 14806,
+          "executable": "/home/runner/work/open-office-studio/open-office-studio/.local/standalone-linux-input/Open Spreadsheet Studio_2026.48.1_amd64.AppImage"
+        },
+        {
+          "pid": 14807,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/bin/open-spreadsheet-studio"
+        },
+        {
+          "pid": 14828,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitNetworkProcess"
+        },
+        {
+          "pid": 14833,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/lib/x86_64-linux-gnu/webkit2gtk-4.1/WebKitWebProcess"
+        },
+        {
+          "pid": 23837,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/libexec/Open Spreadsheet Studio/kantoorruntime/program/oosplash"
+        },
+        {
+          "pid": 23846,
+          "executable": "/tmp/appimage_extracted_c44d43c9feffafb68716e16b1449f399/usr/libexec/Open Spreadsheet Studio/kantoorruntime/program/soffice.bin"
+        }
+      ],
+      "driverLogTail": "\n** (open-spreadsheet-studio:4992): WARNING **: 14:48:56.011: atk-bridge: Couldn't listen on dbus server: Socket name too long\n\n\n** (open-spreadsheet-studio:14807): WARNING **: 14:50:51.018: atk-bridge: Couldn't listen on dbus server: Socket name too long\n\n"
+    }
+  ],
+  "profileAudit": {
+    "inventoryAfterBothGnmCasesAndFinalNormalClose": true,
+    "basis": "Pinned QA source invokes GNM regression and waits full final quit before find(home,maxdepth10); successful controlflow includes final inventory. No separate inventory timestamp was emitted.",
+    "ownIdentity": "org.openaec.spreadsheet-studio",
+    "ownProfilePresent": true,
+    "suiteProfileAbsent": true,
+    "paths": [
+      "<own-home>",
+      "<own-home>/runtime",
+      "<own-home>/runtime/dconf",
+      "<own-home>/runtime/dconf/user",
+      "<own-home>/.local",
+      "<own-home>/.local/share",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/CacheStorage",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/CacheStorage/salt",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/localstorage",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/localstorage/tauri_localhost_0.localstorage",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/localstorage/tauri_localhost_0.localstorage-shm",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/localstorage/tauri_localhost_0.localstorage-wal",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/storage",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/storage/salt",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/mediakeys",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/mediakeys/v1",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/mediakeys/v1/salt",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/herstel",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/hsts-storage.sqlite",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/WebKitCache",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/WebKitCache/Version 17",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/WebKitCache/Version 17/salt",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/WebKitCache/Version 17/Blobs",
+      "<own-home>/.local/share/org.openaec.spreadsheet-studio/recent.json",
+      "<own-home>/.cache",
+      "<own-home>/.cache/fontconfig",
+      "<own-home>/.cache/fontconfig/CACHEDIR.TAG",
+      "<own-home>/.cache/fontconfig/9dcf8325-e669-4c6b-85ce-c897b1b37b83-le64.cache-7",
+      "<own-home>/.cache/fontconfig/80cd1291-241a-4e48-a706-12162fb26a57-le64.cache-7",
+      "<own-home>/.config",
+      "<own-home>/.config/org.openaec.spreadsheet-studio",
+      "<own-home>/.config/org.openaec.spreadsheet-studio/voorkeuren.json"
+    ]
+  },
+  "cleanup": {
+    "ownedApplicationClosed": true,
+    "ownedDriverClosed": true,
+    "ownedKeyringClosed": true,
+    "ownedProfilesRemoved": true
+  },
+  "openProtocols": [
+    {
+      "extension": "gnm",
+      "appPid": 4992,
+      "appStartTime": "28274",
+      "appElfSha256": "3f0af57e037c355a1e871c4b07a2b321a5f12146e650da1af8b236a29fa7e3ac",
+      "gtkPid": 4695,
+      "gtkStartTime": "27316",
+      "gtkElfSha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+      "requestHandle": "/org/freedesktop/portal/desktop/request/1_32/ashpd_3lPLYMbKUX",
+      "exactFocusedNativePathVerified": true,
+      "observerClosed": true,
+      "attributedGtkPeerClosed": true
+    },
+    {
+      "extension": "gnumeric",
+      "appPid": 14807,
+      "appStartTime": "39428",
+      "appElfSha256": "3f0af57e037c355a1e871c4b07a2b321a5f12146e650da1af8b236a29fa7e3ac",
+      "gtkPid": 14341,
+      "gtkStartTime": "37993",
+      "gtkElfSha256": "a69aa09fa21ed197e8888c70516b6cec615f89ca4ba970ec89de2f76281f618a",
+      "requestHandle": "/org/freedesktop/portal/desktop/request/1_2746/ashpd_BCJHNp8xvr",
+      "exactFocusedNativePathVerified": true,
+      "observerClosed": true,
+      "attributedGtkPeerClosed": true
+    }
+  ],
+  "files": [
+    {
+      "path": "core-report.json.gz",
+      "originalArtifactMember": "standalone-linux-results/spreadsheet/appimage/report.json",
+      "originalSha256": "b579d6990f8a7c23a7a29ffceb6b1d7e35da0c74f6b75974eac3e8bcfc8fa284",
+      "originalBytes": 8392981,
+      "sha256": "a41a865bbc0036ea843ecc4a3eb36aef3b6cec93289474d30f77c470b782be2d",
+      "bytes": 363353,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnm-report.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/report.json",
+      "originalSha256": "f493f4fe95b782bf2eb494626274307379cd7471fd9a47adf6146e1593e18ede",
+      "originalBytes": 5788384,
+      "sha256": "34c88a8fceb4072856278e13db1785bcf2eebc5ccd4d16a76dd8d84b5f5650c8",
+      "bytes": 265010,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "origin.json.gz",
+      "originalArtifactMember": "standalone-linux-input/origin.json",
+      "originalSha256": "e5874b6b7ae81783cc356a1daef9132ac902b7d7e1dccc04ee8b21e992d8aa42",
+      "originalBytes": 6015,
+      "sha256": "68cd2abbd6b8202e642a7352824c0009029fadf47713b8b4307fd0b2bb15f4f3",
+      "bytes": 1972,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "input-artifact-receipt.json.gz",
+      "originalArtifactMember": "standalone-linux-input/input-artifact-receipt.json",
+      "originalSha256": "ab14b884b5e8e8d3410376fbf03040819cb6554ee002c85eb29627cac628d398",
+      "originalBytes": 1507,
+      "sha256": "b676b1197d7d9d1984e862e39d201d92990088d2325834db6b1add4be35d98fb",
+      "bytes": 777,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "package-report.json.gz",
+      "originalArtifactMember": "standalone-linux-input/pakketcontrole-spreadsheet-Linux.json",
+      "originalSha256": "8c626ce23b586451b51669b1ea96b4529584c74ad5f367db097eb346f3b89aae",
+      "originalBytes": 964,
+      "sha256": "dac91cd28493c9c80c89a0d587a8ac74a026b43e07f9d52a8d9089e738831ae4",
+      "bytes": 488,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "core-Synthetic spreadsheet.xlsx",
+      "originalArtifactMember": "standalone-linux-results/spreadsheet/appimage/Synthetic spreadsheet.xlsx",
+      "originalSha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05",
+      "originalBytes": 5037,
+      "sha256": "573093879ddeeaf21ebf5958267d146077ddc40ce148ca42e174f842966b7c05",
+      "bytes": 5037,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "core-reopened.png",
+      "originalArtifactMember": "standalone-linux-results/spreadsheet/appimage/reopened.png",
+      "originalSha256": "51e54733cf95cb3bb1fef39cc51e7df40fe21dceb369d5cc58974a285d04ee4b",
+      "originalBytes": 106150,
+      "sha256": "51e54733cf95cb3bb1fef39cc51e7df40fe21dceb369d5cc58974a285d04ee4b",
+      "bytes": 106150,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "source.gnm",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/source.gnm",
+      "originalSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "originalBytes": 2062,
+      "sha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "bytes": 2062,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnm-saved.xlsx",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-saved.xlsx",
+      "originalSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "originalBytes": 75029,
+      "sha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "bytes": 75029,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnm-reopened-marker.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-reopened-marker.png",
+      "originalSha256": "67d17f51b4f00d6f0c9675d8847c0ff291861e491429a54874cae694c69ec253",
+      "originalBytes": 117584,
+      "sha256": "67d17f51b4f00d6f0c9675d8847c0ff291861e491429a54874cae694c69ec253",
+      "bytes": 117584,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnm-import-open-protocol-exact-path.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-import-open-protocol-exact-path.png",
+      "originalSha256": "126d84c319754fbe3dc8f381fd45d10736db00c635ca529b1e93225e297baf58",
+      "originalBytes": 25943,
+      "sha256": "126d84c319754fbe3dc8f381fd45d10736db00c635ca529b1e93225e297baf58",
+      "bytes": 25943,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnm-import-sheet1.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-import-sheet1.png",
+      "originalSha256": "4dbbddee6f6d7dff48d38eb8026aaabfa88f49f7c7004e7bca88bcc08225b7e6",
+      "originalBytes": 112281,
+      "sha256": "4dbbddee6f6d7dff48d38eb8026aaabfa88f49f7c7004e7bca88bcc08225b7e6",
+      "bytes": 112281,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnm-import-open-protocol-receipt.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-import-open-protocol-receipt.json",
+      "originalSha256": "4bd04d5dcb190634ef25fcee1003fbe05ca91e2699aaff344d4dbd9affb814ca",
+      "originalBytes": 53132,
+      "sha256": "3949dbc7541109504b04f52232a1ae13e6b4cea67dc25627631e4f5c0215e585",
+      "bytes": 5319,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnm-import-open-protocol.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-import-open-protocol.json",
+      "originalSha256": "9dea19e21411681afe17e5b2d8239eb6b39bda680412c14e34e01ebbeed1dab9",
+      "originalBytes": 1927,
+      "sha256": "545e6fd4d1f1982ed319c5b3573bfedc929c550fa443247f8882740e3a8d476e",
+      "bytes": 602,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnm-import-open-protocol.dbus.txt.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-import-open-protocol.dbus.txt",
+      "originalSha256": "75f928fccc4d5b12f90d74765194a98926ce8dbfc013c02f95c57b3dd636cf86",
+      "originalBytes": 10703,
+      "sha256": "63152312356a927e3f654acd775236c3d17f35b4bcec6095114c555a37cc409d",
+      "bytes": 716,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnm-reopened.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnm-reopened.json",
+      "originalSha256": "acb786ec36aee796918cff7dc7c99bd2c603195fa171c1fd5a30aa0e4ec60907",
+      "originalBytes": 1570,
+      "sha256": "93dc7f5177b4bd6408667e897af0177a7cf809b535610767db04851147364e94",
+      "bytes": 620,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "source.gnumeric",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/source.gnumeric",
+      "originalSha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "originalBytes": 2062,
+      "sha256": "0ae783979ec180a4a6378d9b6c43ae5af05b47e5a5d18b26dea72e4fa1ed6be6",
+      "bytes": 2062,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-saved.xlsx",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-saved.xlsx",
+      "originalSha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "originalBytes": 75029,
+      "sha256": "1dcc4821688c4ef2f016c62879da03fc9915054e72b915c74f223ce52c1196c4",
+      "bytes": 75029,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-reopened-marker.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-reopened-marker.png",
+      "originalSha256": "6740401e66ae1dae9826ae72ed6dd10b974fa806e0c3abaae1b5824c597d9d26",
+      "originalBytes": 118547,
+      "sha256": "6740401e66ae1dae9826ae72ed6dd10b974fa806e0c3abaae1b5824c597d9d26",
+      "bytes": 118547,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-import-open-protocol-exact-path.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-import-open-protocol-exact-path.png",
+      "originalSha256": "3ce877acded99c51d31ccc53f95203896fb6d26fde50b730e34377fa42655eec",
+      "originalBytes": 33362,
+      "sha256": "3ce877acded99c51d31ccc53f95203896fb6d26fde50b730e34377fa42655eec",
+      "bytes": 33362,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-import-sheet1.png",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-import-sheet1.png",
+      "originalSha256": "a79485631bf07c9bcbea314cbac8dae12b9040c8d76859dead3801a9861206c1",
+      "originalBytes": 112277,
+      "sha256": "a79485631bf07c9bcbea314cbac8dae12b9040c8d76859dead3801a9861206c1",
+      "bytes": 112277,
+      "encoding": "unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-import-open-protocol-receipt.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-import-open-protocol-receipt.json",
+      "originalSha256": "232ef07c9bbcbe600cf5d6b42c15c290ed85b579af252bcde9e13d01976a0829",
+      "originalBytes": 57389,
+      "sha256": "799428a803a278602aabc32fec46b2a502102d8b48ca03c660a989b9d9a910c0",
+      "bytes": 5601,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-import-open-protocol.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-import-open-protocol.json",
+      "originalSha256": "ab7d1103dc2f01d9ca6d89bd60dc098ff1e5ed1cc86f45c5b1180aca0099a314",
+      "originalBytes": 1952,
+      "sha256": "3d2aa2286bd0c2abb40f218e735d70c6507c1840d7072d234908f2e98cddb86d",
+      "bytes": 605,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-import-open-protocol.dbus.txt.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-import-open-protocol.dbus.txt",
+      "originalSha256": "49a4447f20609b8eb75a51192f8c7ec349beac5126d7becfae7fd0c5a9115a1b",
+      "originalBytes": 10720,
+      "sha256": "d003be2dd3fea096b91ea049448c90401f21c7002b18fe839a2ffd7a6bc792c7",
+      "bytes": 716,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "gnumeric-reopened.json.gz",
+      "originalArtifactMember": "linux-p2-native/standalone-spreadsheet-appimage/gnumeric-reopened.json",
+      "originalSha256": "acb786ec36aee796918cff7dc7c99bd2c603195fa171c1fd5a30aa0e4ec60907",
+      "originalBytes": 1570,
+      "sha256": "93dc7f5177b4bd6408667e897af0177a7cf809b535610767db04851147364e94",
+      "bytes": 620,
+      "encoding": "gzip unchanged original bytes"
+    },
+    {
+      "path": "official-artifact.json.gz",
+      "sha256": "0a75734c16396f878e5398fa841505ad794227e670469e8d19ee4302ff07755a",
+      "bytes": 475
+    },
+    {
+      "path": "official-run-attempt1.json.gz",
+      "sha256": "2fd4fb219f04d60770befa891239aba02a476397dde86511c8e1d34793c17938",
+      "bytes": 1805
+    },
+    {
+      "path": "official-job-attempt1.json.gz",
+      "sha256": "1085b2d9d63ceb96cd2f32aeda4229d5cbdd4c836933f093f0bd44893d10cf37",
+      "bytes": 902
+    },
+    {
+      "path": "entry-manifest.json",
+      "sha256": "de5ebc66fdfa474e7dfbc5f4671a738d5d0a26fdbae5db3c7f61e90dcf37cf95",
+      "bytes": 10413
+    },
+    {
+      "path": "independent-gnm-oracle.json",
+      "sha256": "0ad02a1656392b8d655f8a8e2896aead18dd821aac80b6c55e49a759662a44c8",
+      "bytes": 1631
+    },
+    {
+      "path": "independent-gnumeric-oracle.json",
+      "sha256": "0ad02a1656392b8d655f8a8e2896aead18dd821aac80b6c55e49a759662a44c8",
+      "bytes": 1631
+    }
+  ],
+  "limits": [
+    "Both previous P5 invalid-session45194487509 and older P2 Could-not-open remain unexplained; this successful repetition does not establish a fix or broad reliability.",
+    "This successful run did not trigger failure-only OS/GDK diagnostics, so it provides no missing process state of the earlier failure.",
+    "Same two suffixes of one genuine Gnumeric fixture only; no all-format, all-variant or signature certification.",
+    "AppImage supported extract-and-run, Xvfb/software rendering. External OS GTK/WebKitGTK required; zenity absent on initial host and foreign-format native confirmation not exercised.",
+    "Twelve Linux core passes are retained; no other app or DEB test repeated during this audit."
+  ],
+  "sourceFiles": {
+    "proef-standalone-linux.mjs": "5250c96b126e9c2999e7bf1c186f3eed0bfb9c5552c31592e373b0b9231b5761",
+    "standalone-linux-gnm-native.mjs": "6c96f61b10a86b0db6ad025be38977f2b84789b59f36622691c68d6e7d663c69",
+    "standalone-gnm-open-picker.mjs": "640a2b644b8f7bc8ffa6da0a3b420ce7b721c57435985b24ec0e948b5db83aba"
+  }
+}
