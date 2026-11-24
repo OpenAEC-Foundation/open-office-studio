@@ -1,0 +1,5017 @@
+{
+  "status": "BOUNDED_WB1_HISTORICAL_DIFFERENCES_SEMANTICS_OPEN",
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-wb1-1",
+    "ext": "wb1",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/calc/libwps/pass/QuattroPro.wb1",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/calc/libwps/pass/QuattroPro.wb1",
+    "gitSha": "95a6331c9c3dbb8ae387d0a9066d7a72032bc37b",
+    "sha256": "f03c66495f1672e8a363c398669ef544c824e3b3a4c5ba5e43aaf3288aec4be6",
+    "bytes": 174166,
+    "variant": "QuattroPro.wb1",
+    "expected": "open",
+    "expectedOn": [],
+    "expectEmptyWarning": false
+  },
+  "nativeOracle": {
+    "nativeBOF": "1001",
+    "family": "WB1 native flat records; producer/application build not attested",
+    "sheets": [
+      {
+        "id": 0,
+        "name": "page1"
+      },
+      {
+        "id": 1,
+        "name": null
+      },
+      {
+        "id": 2,
+        "name": "bizarre"
+      }
+    ],
+    "cells": {
+      "0!A1": {
+        "sheet": 0,
+        "address": "A1",
+        "recordOffset": 7983,
+        "recordType": 16,
+        "styleWord": 5,
+        "rawHex": "000000000000004000000800020001030000010000e0",
+        "kind": "formula",
+        "formula": {
+          "programHex": "0103",
+          "referenceBytesHex": "0000010000e0",
+          "tokenOpcodes": [
+            1,
+            3
+          ],
+          "ast": {
+            "kind": "ref",
+            "reference": {
+              "note": 0,
+              "rawHex": "0000010000e0",
+              "candidateSheet": 0,
+              "candidateAddress": "B1",
+              "qualified": true
+            }
+          },
+          "sourceFlags": 0,
+          "rawCachedHex": "0000000000000040",
+          "cacheKind": "finite-number",
+          "cachedValue": "2.0",
+          "containsLookupOpcode": false,
+          "independentFraction": "2",
+          "independentlyCalculatedValue": "2.0",
+          "sourceCacheMatchesCalculation": true,
+          "numericSemanticsAccepted": true
+        }
+      },
+      "0!A2": {
+        "sheet": 0,
+        "address": "A2",
+        "recordOffset": 8015,
+        "recordType": 15,
+        "styleWord": 161,
+        "rawHex": "27677265656e0000",
+        "kind": "text",
+        "value": "green",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!A3": {
+        "sheet": 0,
+        "address": "A3",
+        "recordOffset": 8033,
+        "recordType": 15,
+        "styleWord": 185,
+        "rawHex": "277265640000",
+        "kind": "text",
+        "value": "red",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!A4": {
+        "sheet": 0,
+        "address": "A4",
+        "recordOffset": 8049,
+        "recordType": 12,
+        "styleWord": 232,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!A5": {
+        "sheet": 0,
+        "address": "A5",
+        "recordOffset": 8059,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2767656e6572616c0000",
+        "kind": "text",
+        "value": "general",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!A7": {
+        "sheet": 0,
+        "address": "A7",
+        "recordOffset": 8079,
+        "recordType": 15,
+        "styleWord": 361,
+        "rawHex": "2770726f746563743d6e6f00",
+        "kind": "text",
+        "value": "protect=no",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!A9": {
+        "sheet": 0,
+        "address": "A9",
+        "recordOffset": 8101,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "27287072657620726f7720696e7669736929002d",
+        "kind": "text",
+        "value": "(prev row invisi)",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "2d",
+        "tailAcceptedAsText": false
+      },
+      "0!A10": {
+        "sheet": 0,
+        "address": "A10",
+        "recordOffset": 8131,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2732696e636865730000",
+        "kind": "text",
+        "value": "2inches",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!A11": {
+        "sheet": 0,
+        "address": "A11",
+        "recordOffset": 8151,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2733636d0000",
+        "kind": "text",
+        "value": "3cm",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!B1": {
+        "sheet": 0,
+        "address": "B1",
+        "recordOffset": 8167,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "0!B2": {
+        "sheet": 0,
+        "address": "B2",
+        "recordOffset": 8179,
+        "recordType": 15,
+        "styleWord": 169,
+        "rawHex": "27677265656e3d7265640000",
+        "kind": "text",
+        "value": "green=red",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!B3": {
+        "sheet": 0,
+        "address": "B3",
+        "recordOffset": 8201,
+        "recordType": 15,
+        "styleWord": 193,
+        "rawHex": "27626c7565000000",
+        "kind": "text",
+        "value": "blue",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "0000",
+        "tailAcceptedAsText": false
+      },
+      "0!B4": {
+        "sheet": 0,
+        "address": "B4",
+        "recordOffset": 8219,
+        "recordType": 12,
+        "styleWord": 240,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!B5": {
+        "sheet": 0,
+        "address": "B5",
+        "recordOffset": 8229,
+        "recordType": 15,
+        "styleWord": 281,
+        "rawHex": "276c65667400",
+        "kind": "text",
+        "value": "left",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!B6": {
+        "sheet": 0,
+        "address": "B6",
+        "recordOffset": 8245,
+        "recordType": 12,
+        "styleWord": 312,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!B7": {
+        "sheet": 0,
+        "address": "B7",
+        "recordOffset": 8255,
+        "recordType": 15,
+        "styleWord": 369,
+        "rawHex": "276c6162656c206f6e6c7900",
+        "kind": "text",
+        "value": "label only",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!B9": {
+        "sheet": 0,
+        "address": "B9",
+        "recordOffset": 8277,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "273133707400",
+        "kind": "text",
+        "value": "13pt",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!B12": {
+        "sheet": 0,
+        "address": "B12",
+        "recordOffset": 8293,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2731316368617200",
+        "kind": "text",
+        "value": "11char",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!C1": {
+        "sheet": 0,
+        "address": "C1",
+        "recordOffset": 8311,
+        "recordType": 15,
+        "styleWord": 97,
+        "rawHex": "27626f6c6400",
+        "kind": "text",
+        "value": "bold",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!C2": {
+        "sheet": 0,
+        "address": "C2",
+        "recordOffset": 8327,
+        "recordType": 15,
+        "styleWord": 177,
+        "rawHex": "277265643d677265656e207061747465726e0070",
+        "kind": "text",
+        "value": "red=green pattern",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "70",
+        "tailAcceptedAsText": false
+      },
+      "0!C3": {
+        "sheet": 0,
+        "address": "C3",
+        "recordOffset": 8357,
+        "recordType": 15,
+        "styleWord": 201,
+        "rawHex": "27610000",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!C4": {
+        "sheet": 0,
+        "address": "C4",
+        "recordOffset": 8371,
+        "recordType": 12,
+        "styleWord": 248,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!C5": {
+        "sheet": 0,
+        "address": "C5",
+        "recordOffset": 8381,
+        "recordType": 15,
+        "styleWord": 289,
+        "rawHex": "2272696768740000",
+        "kind": "text",
+        "value": "right",
+        "alignmentByte": 34,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!C6": {
+        "sheet": 0,
+        "address": "C6",
+        "recordOffset": 8399,
+        "recordType": 12,
+        "styleWord": 320,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!C7": {
+        "sheet": 0,
+        "address": "C7",
+        "recordOffset": 8409,
+        "recordType": 16,
+        "styleWord": 381,
+        "rawHex": "c6a16bcbaba8603f08000c000c00050c000503000c05af070c03",
+        "kind": "formula",
+        "formula": {
+          "programHex": "050c000503000c05af070c03",
+          "referenceBytesHex": "",
+          "tokenOpcodes": [
+            5,
+            5,
+            12,
+            5,
+            12,
+            3
+          ],
+          "ast": {
+            "kind": "divide",
+            "left": {
+              "kind": "divide",
+              "left": {
+                "kind": "integer",
+                "value": 12
+              },
+              "right": {
+                "kind": "integer",
+                "value": 3
+              }
+            },
+            "right": {
+              "kind": "integer",
+              "value": 1967
+            }
+          },
+          "sourceFlags": 8,
+          "rawCachedHex": "c6a16bcbaba8603f",
+          "cacheKind": "finite-number",
+          "cachedValue": "0.0020335536349771225",
+          "containsLookupOpcode": false,
+          "independentFraction": "4/1967",
+          "independentlyCalculatedValue": "0.0020335536349771225",
+          "sourceCacheMatchesCalculation": true,
+          "numericSemanticsAccepted": true
+        }
+      },
+      "0!C9": {
+        "sheet": 0,
+        "address": "C9",
+        "recordOffset": 8445,
+        "recordType": 16,
+        "styleWord": 5,
+        "rawHex": "000000000000004000000800020001030000ff00f8ff",
+        "kind": "formula",
+        "formula": {
+          "programHex": "0103",
+          "referenceBytesHex": "0000ff00f8ff",
+          "tokenOpcodes": [
+            1,
+            3
+          ],
+          "ast": {
+            "kind": "ref",
+            "reference": {
+              "note": 0,
+              "rawHex": "0000ff00f8ff",
+              "candidateSheet": 0,
+              "candidateAddress": "B1",
+              "qualified": true
+            }
+          },
+          "sourceFlags": 0,
+          "rawCachedHex": "0000000000000040",
+          "cacheKind": "finite-number",
+          "cachedValue": "2.0",
+          "containsLookupOpcode": false,
+          "independentFraction": "2",
+          "independentlyCalculatedValue": "2.0",
+          "sourceCacheMatchesCalculation": true,
+          "numericSemanticsAccepted": true
+        }
+      },
+      "0!C12": {
+        "sheet": 0,
+        "address": "C12",
+        "recordOffset": 8477,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2731696e6368004b",
+        "kind": "text",
+        "value": "1inch",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "4b",
+        "tailAcceptedAsText": false
+      },
+      "0!D1": {
+        "sheet": 0,
+        "address": "D1",
+        "recordOffset": 8495,
+        "recordType": 15,
+        "styleWord": 105,
+        "rawHex": "276974616c696300",
+        "kind": "text",
+        "value": "italic",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!D3": {
+        "sheet": 0,
+        "address": "D3",
+        "recordOffset": 8513,
+        "recordType": 15,
+        "styleWord": 209,
+        "rawHex": "27610000",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!D4": {
+        "sheet": 0,
+        "address": "D4",
+        "recordOffset": 8527,
+        "recordType": 12,
+        "styleWord": 256,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!D5": {
+        "sheet": 0,
+        "address": "D5",
+        "recordOffset": 8537,
+        "recordType": 15,
+        "styleWord": 297,
+        "rawHex": "5e63656e74657200",
+        "kind": "text",
+        "value": "center",
+        "alignmentByte": 94,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!D6": {
+        "sheet": 0,
+        "address": "D6",
+        "recordOffset": 8555,
+        "recordType": 12,
+        "styleWord": 328,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!D12": {
+        "sheet": 0,
+        "address": "D12",
+        "recordOffset": 8565,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "276175746f00",
+        "kind": "text",
+        "value": "auto",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!E1": {
+        "sheet": 0,
+        "address": "E1",
+        "recordOffset": 8581,
+        "recordType": 15,
+        "styleWord": 121,
+        "rawHex": "27756e6465726c696e65000e",
+        "kind": "text",
+        "value": "underline",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "0e",
+        "tailAcceptedAsText": false
+      },
+      "0!E3": {
+        "sheet": 0,
+        "address": "E3",
+        "recordOffset": 8603,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "276100009f3d",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "009f3d",
+        "tailAcceptedAsText": false
+      },
+      "0!E4": {
+        "sheet": 0,
+        "address": "E4",
+        "recordOffset": 8619,
+        "recordType": 12,
+        "styleWord": 264,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!E5": {
+        "sheet": 0,
+        "address": "E5",
+        "recordOffset": 8629,
+        "recordType": 15,
+        "styleWord": 305,
+        "rawHex": "5e63656e74657220616363726f737320626c6f636b00",
+        "kind": "text",
+        "value": "center accross block",
+        "alignmentByte": 94,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "0!E6": {
+        "sheet": 0,
+        "address": "E6",
+        "recordOffset": 8661,
+        "recordType": 12,
+        "styleWord": 336,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!F1": {
+        "sheet": 0,
+        "address": "F1",
+        "recordOffset": 8671,
+        "recordType": 15,
+        "styleWord": 129,
+        "rawHex": "27737472696b656f75740000",
+        "kind": "text",
+        "value": "strikeout",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!F3": {
+        "sheet": 0,
+        "address": "F3",
+        "recordOffset": 8693,
+        "recordType": 15,
+        "styleWord": 217,
+        "rawHex": "27610010af2b",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "10af2b",
+        "tailAcceptedAsText": false
+      },
+      "0!F4": {
+        "sheet": 0,
+        "address": "F4",
+        "recordOffset": 8709,
+        "recordType": 12,
+        "styleWord": 272,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!F6": {
+        "sheet": 0,
+        "address": "F6",
+        "recordOffset": 8719,
+        "recordType": 12,
+        "styleWord": 344,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!G1": {
+        "sheet": 0,
+        "address": "G1",
+        "recordOffset": 8729,
+        "recordType": 15,
+        "styleWord": 137,
+        "rawHex": "272031347074000e",
+        "kind": "text",
+        "value": " 14pt",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "0e",
+        "tailAcceptedAsText": false
+      },
+      "0!G3": {
+        "sheet": 0,
+        "address": "G3",
+        "recordOffset": 8747,
+        "recordType": 15,
+        "styleWord": 193,
+        "rawHex": "27610000",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "0!G6": {
+        "sheet": 0,
+        "address": "G6",
+        "recordOffset": 8761,
+        "recordType": 12,
+        "styleWord": 352,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "0!H1": {
+        "sheet": 0,
+        "address": "H1",
+        "recordOffset": 8771,
+        "recordType": 15,
+        "styleWord": 145,
+        "rawHex": "2763656e746175720070",
+        "kind": "text",
+        "value": "centaur",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "70",
+        "tailAcceptedAsText": false
+      },
+      "0!H3": {
+        "sheet": 0,
+        "address": "H3",
+        "recordOffset": 8791,
+        "recordType": 15,
+        "styleWord": 225,
+        "rawHex": "27610000",
+        "kind": "text",
+        "value": "a",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "1!B1": {
+        "sheet": 1,
+        "address": "B1",
+        "recordOffset": 8941,
+        "recordType": 14,
+        "styleWord": 387,
+        "rawHex": "6666666666660240",
+        "kind": "float",
+        "value": "2.3"
+      },
+      "1!B2": {
+        "sheet": 1,
+        "address": "B2",
+        "recordOffset": 8959,
+        "recordType": 13,
+        "styleWord": 426,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "1!B3": {
+        "sheet": 1,
+        "address": "B3",
+        "recordOffset": 8971,
+        "recordType": 14,
+        "styleWord": 475,
+        "rawHex": "9a9999999999c93f",
+        "kind": "float",
+        "value": "0.2"
+      },
+      "1!B5": {
+        "sheet": 1,
+        "address": "B5",
+        "recordOffset": 8989,
+        "recordType": 14,
+        "styleWord": 531,
+        "rawHex": "9a9999999999b93f",
+        "kind": "float",
+        "value": "0.1"
+      },
+      "1!B6": {
+        "sheet": 1,
+        "address": "B6",
+        "recordOffset": 9007,
+        "recordType": 16,
+        "styleWord": 5,
+        "rawHex": "000000000000f0ff0000090003000108030200fffffdff",
+        "kind": "formula",
+        "formula": {
+          "programHex": "010803",
+          "referenceBytesHex": "0200fffffdff",
+          "tokenOpcodes": [
+            1,
+            8,
+            3
+          ],
+          "ast": {
+            "kind": "negate",
+            "child": {
+              "kind": "ref",
+              "reference": {
+                "note": 2,
+                "rawHex": "0200fffffdff",
+                "candidateSheet": 0,
+                "candidateAddress": "A3",
+                "qualified": false
+              }
+            }
+          },
+          "sourceFlags": 0,
+          "rawCachedHex": "000000000000f0ff",
+          "cacheKind": "nonfinite-unqualified",
+          "cachedValue": null,
+          "containsLookupOpcode": false,
+          "numericSemanticsAccepted": false,
+          "boundary": "Nonfinite cache and nonzero reference note / cross-sheet error projection unqualified"
+        }
+      },
+      "1!C1": {
+        "sheet": 1,
+        "address": "C1",
+        "recordOffset": 9040,
+        "recordType": 13,
+        "styleWord": 394,
+        "rawHex": "0300",
+        "kind": "integer",
+        "value": "3"
+      },
+      "1!C2": {
+        "sheet": 1,
+        "address": "C2",
+        "recordOffset": 9052,
+        "recordType": 13,
+        "styleWord": 434,
+        "rawHex": "900c",
+        "kind": "integer",
+        "value": "3216"
+      },
+      "1!C3": {
+        "sheet": 1,
+        "address": "C3",
+        "recordOffset": 9064,
+        "recordType": 14,
+        "styleWord": 483,
+        "rawHex": "333333333333d33f",
+        "kind": "float",
+        "value": "0.3"
+      },
+      "1!C5": {
+        "sheet": 1,
+        "address": "C5",
+        "recordOffset": 9082,
+        "recordType": 13,
+        "styleWord": 538,
+        "rawHex": "1d09",
+        "kind": "integer",
+        "value": "2333"
+      },
+      "1!D1": {
+        "sheet": 1,
+        "address": "D1",
+        "recordOffset": 9094,
+        "recordType": 13,
+        "styleWord": 402,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "1!D2": {
+        "sheet": 1,
+        "address": "D2",
+        "recordOffset": 9106,
+        "recordType": 13,
+        "styleWord": 442,
+        "rawHex": "8b0c",
+        "kind": "integer",
+        "value": "3211"
+      },
+      "1!D3": {
+        "sheet": 1,
+        "address": "D3",
+        "recordOffset": 9118,
+        "recordType": 14,
+        "styleWord": 491,
+        "rawHex": "3333333333332840",
+        "kind": "float",
+        "value": "12.1"
+      },
+      "1!D4": {
+        "sheet": 1,
+        "address": "D4",
+        "recordOffset": 9136,
+        "recordType": 15,
+        "styleWord": 305,
+        "rawHex": "5e6161626262616261626161626162002100",
+        "kind": "text",
+        "value": "aabbbababaabab",
+        "alignmentByte": 94,
+        "afterTerminatorHex": "2100",
+        "tailAcceptedAsText": false
+      },
+      "1!E1": {
+        "sheet": 1,
+        "address": "E1",
+        "recordOffset": 9164,
+        "recordType": 13,
+        "styleWord": 410,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "1!E2": {
+        "sheet": 1,
+        "address": "E2",
+        "recordOffset": 9176,
+        "recordType": 13,
+        "styleWord": 450,
+        "rawHex": "8c0c",
+        "kind": "integer",
+        "value": "3212"
+      },
+      "1!E3": {
+        "sheet": 1,
+        "address": "E3",
+        "recordOffset": 9188,
+        "recordType": 14,
+        "styleWord": 499,
+        "rawHex": "ae47e17a14aeef3f",
+        "kind": "float",
+        "value": "0.99"
+      },
+      "1!E4": {
+        "sheet": 1,
+        "address": "E4",
+        "recordOffset": 9206,
+        "recordType": 12,
+        "styleWord": 304,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "1!F1": {
+        "sheet": 1,
+        "address": "F1",
+        "recordOffset": 9216,
+        "recordType": 13,
+        "styleWord": 418,
+        "rawHex": "feff",
+        "kind": "integer",
+        "value": "-2"
+      },
+      "1!F2": {
+        "sheet": 1,
+        "address": "F2",
+        "recordOffset": 9228,
+        "recordType": 13,
+        "styleWord": 458,
+        "rawHex": "4b08",
+        "kind": "integer",
+        "value": "2123"
+      },
+      "1!F3": {
+        "sheet": 1,
+        "address": "F3",
+        "recordOffset": 9240,
+        "recordType": 15,
+        "styleWord": 505,
+        "rawHex": "277465787400",
+        "kind": "text",
+        "value": "text",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "1!F4": {
+        "sheet": 1,
+        "address": "F4",
+        "recordOffset": 9256,
+        "recordType": 12,
+        "styleWord": 304,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "1!G1": {
+        "sheet": 1,
+        "address": "G1",
+        "recordOffset": 9266,
+        "recordType": 13,
+        "styleWord": 418,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "1!G2": {
+        "sheet": 1,
+        "address": "G2",
+        "recordOffset": 9278,
+        "recordType": 13,
+        "styleWord": 466,
+        "rawHex": "4b08",
+        "kind": "integer",
+        "value": "2123"
+      },
+      "1!G3": {
+        "sheet": 1,
+        "address": "G3",
+        "recordOffset": 9290,
+        "recordType": 15,
+        "styleWord": 513,
+        "rawHex": "2768696464656e00",
+        "kind": "text",
+        "value": "hidden",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "1!G4": {
+        "sheet": 1,
+        "address": "G4",
+        "recordOffset": 9308,
+        "recordType": 12,
+        "styleWord": 288,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "1!H3": {
+        "sheet": 1,
+        "address": "H3",
+        "recordOffset": 9318,
+        "recordType": 13,
+        "styleWord": 522,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "1!H4": {
+        "sheet": 1,
+        "address": "H4",
+        "recordOffset": 9330,
+        "recordType": 12,
+        "styleWord": 304,
+        "rawHex": "",
+        "kind": "blank",
+        "value": null
+      },
+      "2!A2": {
+        "sheet": 2,
+        "address": "A2",
+        "recordOffset": 173615,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "227465737400",
+        "kind": "text",
+        "value": "test",
+        "alignmentByte": 34,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      },
+      "2!B3": {
+        "sheet": 2,
+        "address": "B3",
+        "recordOffset": 173631,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!B4": {
+        "sheet": 2,
+        "address": "B4",
+        "recordOffset": 173643,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!B5": {
+        "sheet": 2,
+        "address": "B5",
+        "recordOffset": 173655,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!B6": {
+        "sheet": 2,
+        "address": "B6",
+        "recordOffset": 173667,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!B7": {
+        "sheet": 2,
+        "address": "B7",
+        "recordOffset": 173679,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!B8": {
+        "sheet": 2,
+        "address": "B8",
+        "recordOffset": 173691,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!C3": {
+        "sheet": 2,
+        "address": "C3",
+        "recordOffset": 173703,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0000",
+        "kind": "integer",
+        "value": "0"
+      },
+      "2!C4": {
+        "sheet": 2,
+        "address": "C4",
+        "recordOffset": 173715,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0100",
+        "kind": "integer",
+        "value": "1"
+      },
+      "2!C5": {
+        "sheet": 2,
+        "address": "C5",
+        "recordOffset": 173727,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0200",
+        "kind": "integer",
+        "value": "2"
+      },
+      "2!C6": {
+        "sheet": 2,
+        "address": "C6",
+        "recordOffset": 173739,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0300",
+        "kind": "integer",
+        "value": "3"
+      },
+      "2!C7": {
+        "sheet": 2,
+        "address": "C7",
+        "recordOffset": 173751,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0400",
+        "kind": "integer",
+        "value": "4"
+      },
+      "2!C8": {
+        "sheet": 2,
+        "address": "C8",
+        "recordOffset": 173763,
+        "recordType": 13,
+        "styleWord": 2,
+        "rawHex": "0500",
+        "kind": "integer",
+        "value": "5"
+      },
+      "2!D5": {
+        "sheet": 2,
+        "address": "D5",
+        "recordOffset": 173775,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "27424c4f434b44340000",
+        "kind": "text",
+        "value": "BLOCKD4",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "00",
+        "tailAcceptedAsText": false
+      },
+      "2!E5": {
+        "sheet": 2,
+        "address": "E5",
+        "recordOffset": 173795,
+        "recordType": 15,
+        "styleWord": 1,
+        "rawHex": "2762697a617272653a443400",
+        "kind": "text",
+        "value": "bizarre:D4",
+        "alignmentByte": 39,
+        "afterTerminatorHex": "",
+        "tailAcceptedAsText": false
+      }
+    },
+    "records": [
+      {
+        "offset": 0,
+        "type": 0,
+        "bytes": 2,
+        "payloadSha256": "af340aa58ea7d72c2f9a7405f3734167bb27dd2a520d216addef65f8362102b6"
+      },
+      {
+        "offset": 6,
+        "type": 76,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 12,
+        "type": 77,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 18,
+        "type": 201,
+        "bytes": 2,
+        "payloadSha256": "a12871fee210fb8619291eaea194581cbd2531e4b23759d225f6806923f63222"
+      },
+      {
+        "offset": 24,
+        "type": 6,
+        "bytes": 8,
+        "payloadSha256": "638ce730c53166b48b9380a82735619598efa9343058f24a7ec9b49558f44a75"
+      },
+      {
+        "offset": 36,
+        "type": 153,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 41,
+        "type": 2,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 46,
+        "type": 3,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 51,
+        "type": 47,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 56,
+        "type": 306,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 61,
+        "type": 307,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 66,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "6fd8a867bac37d5dffcc6d8e10507ec7320a649183b38ba1e6f0bc948cf2a87e"
+      },
+      {
+        "offset": 106,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "3651e89dcb15129a87d0131bb7b923cfc1b9f76a5910a3429f1d62845a7f3576"
+      },
+      {
+        "offset": 146,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "c856b2c2541b9aa3a1f8be9ce4597ff335e108956f2e5f106b873ae143fb4a6d"
+      },
+      {
+        "offset": 186,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "21dfa739b4f7abf78835dc00fcd25059dba14be4afe51a829aff44d1235c713e"
+      },
+      {
+        "offset": 226,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "864ada1ac10dec965a11fa3e412dd0430e02662a7d3f052c1e36720167488030"
+      },
+      {
+        "offset": 266,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "7d29091b4fe438eb8527231c8a077cf8b69004175c39b05d657e2c113dfa83e2"
+      },
+      {
+        "offset": 306,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "0565d30bc9f86f16c5082a61a847a06ac8ec73a124a9ccbfcb3d60b0046955f6"
+      },
+      {
+        "offset": 346,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "40da2ba5bddff71ebad391988454cc7ce3af75381c06731286d67d1ce272a944"
+      },
+      {
+        "offset": 386,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "e02544fb55db7049ce7478924099a2ee277fb1e7b716133e49474bf0ecc88c12"
+      },
+      {
+        "offset": 426,
+        "type": 207,
+        "bytes": 36,
+        "payloadSha256": "548160a1f32575a417766f436c10d5b3cc59b5b925efd79ccbbbbc83caea9c43"
+      },
+      {
+        "offset": 466,
+        "type": 232,
+        "bytes": 64,
+        "payloadSha256": "82062f10304a1d5710daa1d2d3880f25a3139264125f7f1443ac3678debe288e"
+      },
+      {
+        "offset": 534,
+        "type": 230,
+        "bytes": 34,
+        "payloadSha256": "1c611b274a3c0a25d504683cf0130320d473f33e2636f0164f5211f862a03121"
+      },
+      {
+        "offset": 572,
+        "type": 230,
+        "bytes": 21,
+        "payloadSha256": "3a4061c67febe164a5f0e8d8ed7df8ebcfd6ac767565736dab7461fbe83d0803"
+      },
+      {
+        "offset": 597,
+        "type": 230,
+        "bytes": 8,
+        "payloadSha256": "ca9dd0b42c70165a111dee48e0a10e9886373fef6d350cf7b15bfa7dc765edba"
+      },
+      {
+        "offset": 609,
+        "type": 230,
+        "bytes": 8,
+        "payloadSha256": "5942e9ad8f06a9c5eaf274bd256dba1983a05f1d11275d525d579ad63fa893f2"
+      },
+      {
+        "offset": 621,
+        "type": 208,
+        "bytes": 11,
+        "payloadSha256": "23e8bebe062369f8297f6c9478ffcb5a4561f1e7f9283405ac5ba9b0876d65d0"
+      },
+      {
+        "offset": 636,
+        "type": 208,
+        "bytes": 10,
+        "payloadSha256": "050a2a91ad30c2ec161fbdae26f99540f2f1f72641c5433eaf3cd5d4e14bd70a"
+      },
+      {
+        "offset": 650,
+        "type": 208,
+        "bytes": 13,
+        "payloadSha256": "253be26a214641926fe0ae5cfd84c058b86ca57a28132e0ef3495357f195106f"
+      },
+      {
+        "offset": 667,
+        "type": 208,
+        "bytes": 12,
+        "payloadSha256": "dd68397ce193fd4b158e4118a1abcd64babd2a213c32fc38e4d8c9ca6fb8503b"
+      },
+      {
+        "offset": 683,
+        "type": 208,
+        "bytes": 10,
+        "payloadSha256": "caa927071530f55f8aa709c6854b2181b76d165b52ff36df39d7d372edfb2152"
+      },
+      {
+        "offset": 697,
+        "type": 208,
+        "bytes": 9,
+        "payloadSha256": "a4f008872de51d8fef514b22602114a532f8478a4a4d9e8ac3ba29a9dada02b1"
+      },
+      {
+        "offset": 710,
+        "type": 208,
+        "bytes": 14,
+        "payloadSha256": "d738785e804fb3032bbcf0e19c5cc4d4980295ad5cfd83f32a17d90433a1d901"
+      },
+      {
+        "offset": 728,
+        "type": 208,
+        "bytes": 14,
+        "payloadSha256": "df06974fbc171e3acadac9e8cc20b32158ca49cbad5a2b12b10e5e6a947e5374"
+      },
+      {
+        "offset": 746,
+        "type": 208,
+        "bytes": 10,
+        "payloadSha256": "9e08385e6bb1386fbd24e77ba75afff622fbe16904d2129bef1cf070cfc6ae29"
+      },
+      {
+        "offset": 760,
+        "type": 208,
+        "bytes": 11,
+        "payloadSha256": "564680c7e6426e3526358dc60b568a8422a0993bb183a24f33c7f3b61c842cd4"
+      },
+      {
+        "offset": 775,
+        "type": 208,
+        "bytes": 14,
+        "payloadSha256": "4aa44fb5521db8aa14d7182135180b2af79514731f4b9fd76919e16a2ccd5fe0"
+      },
+      {
+        "offset": 793,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "472a3100506d2db3b950b30609b4c0edcb6c4e6d5a58114d5c06308254751a1b"
+      },
+      {
+        "offset": 805,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "fe689d4664bb96a7e65ff9128949d5eec14a430fa55af1d9586acffdcdd412d2"
+      },
+      {
+        "offset": 817,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "6466dcecb47411466b0eb2e87488628bf1eb44ddd77bfe6d6d71a5725e8968ee"
+      },
+      {
+        "offset": 829,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0264c9e78412d477197768c2a2f639a874c7f7a158df5742bb18e666d6624805"
+      },
+      {
+        "offset": 841,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "309af0d329a6f8fb343e394e751d4ec36aa8fca8d88f86e4b7f0db36c2438b16"
+      },
+      {
+        "offset": 853,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "cda03a1442c3fa7be67acd10b506f10bb0a2d2a408a6e895c9ae238a49df11bb"
+      },
+      {
+        "offset": 865,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "fe578674492a99c19459014ce93602c2306c854b15d5ec4873a97e1824e029ce"
+      },
+      {
+        "offset": 877,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "ed6864c633a1fc1374fa845d61e1193b8f014e0cfabeaf68ca36f53a325ce4cf"
+      },
+      {
+        "offset": 889,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "d8b0a1a23e63ade75d7690e450fd68e5cc7ec0aaa9c3735e444d115f0b1914b5"
+      },
+      {
+        "offset": 901,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "81b7feb9943b3ea16c6132307b6d23068f27069062bb67a549e8e013d9416d51"
+      },
+      {
+        "offset": 913,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "6045c5cf02f2204353ad5d17bb29091244d6625a38365ea0cf20999a3dca8952"
+      },
+      {
+        "offset": 925,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "9d9557448dd656acf655be8cca1f0ae65d314f604d5cfef9c23f4eb9710b47ca"
+      },
+      {
+        "offset": 937,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "89fbc12bed963414e34d52c6ff0f8314a0d173dd1901cab01d4730fe35dad422"
+      },
+      {
+        "offset": 949,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "968fc3c7eaf0fcd843b5465cc1db3f133ca057c5b931111ece6315b842a2ed4a"
+      },
+      {
+        "offset": 961,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "4105eea17c4c2338b4b6b7276fcb352cfc1a43763d36942e7bd3b0861b4fc267"
+      },
+      {
+        "offset": 973,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "66ef2da22794bce3ee9cb5d0711039256c56aa2e8cb797dbda97cbbc4fc2cb0a"
+      },
+      {
+        "offset": 985,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "6b1d4a0bf05c46e00c8670c4ab32ce7acc15283be127f14dd27e0687233c3852"
+      },
+      {
+        "offset": 997,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "548e61d9b1cdb5b44f3d20566f0863b1a41326e6b9151b41a43b701061c7844f"
+      },
+      {
+        "offset": 1009,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "968fc3c7eaf0fcd843b5465cc1db3f133ca057c5b931111ece6315b842a2ed4a"
+      },
+      {
+        "offset": 1021,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "19c9ce5f752606f36afcebce194aa422ff7f2e94f1f2f2f74b4b70a4fa579fd7"
+      },
+      {
+        "offset": 1033,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "3690bef5392daa516e61cc25db5e5293a4f0c4daa13933973b6ddf354d4fe234"
+      },
+      {
+        "offset": 1045,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "f8103ba6ee7f6bea722a4d7c7ffea805ee380d2d192af139bff2e0d9cc57fdb6"
+      },
+      {
+        "offset": 1057,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "549f86a6975a6ba7b950526fc89d996923c59a0e08ed948ab6f558f7caade3ef"
+      },
+      {
+        "offset": 1069,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "a8af07ca80b3449b882adeb6e2d47e087fd89daef86f6bc50c9ea38bd1c547a1"
+      },
+      {
+        "offset": 1081,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "8b471abe1f26971422da432f131b69fbcb212649da2f0032e40b633fbf18aefc"
+      },
+      {
+        "offset": 1093,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "18e90a66b16330f2b09f8f156e6f8cb9e8f2053d95a526233d048a18bf93e231"
+      },
+      {
+        "offset": 1105,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "fbcf6eef0b58b405e229b9dfecfd8eafbcc661a673d9b9fc4a1b3bf522a75f3b"
+      },
+      {
+        "offset": 1117,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0ddb7d945d2bee56aee85a4d5a33c02c0507ad482f2a839766cdf9de568be341"
+      },
+      {
+        "offset": 1129,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "cd29146cf2e3f24fc270f96ce96a112667e0c8d184257c29fa99035fd6df7b97"
+      },
+      {
+        "offset": 1141,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "db080ad170b457a980d3b538e2e4c81017fb5ee5dde7c97f81cd5023222fbbce"
+      },
+      {
+        "offset": 1153,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "6a093a133acfa2099ba18275446f6fac77e727363cd32f719d6d1839ccfd977e"
+      },
+      {
+        "offset": 1165,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "38f296b88706f8e8523fb9a646c706b81a678a693e9c76cde744e56bfc261653"
+      },
+      {
+        "offset": 1177,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "c9da84d483335edb173a4e7eb3f9aac662345833eb39e7d38262be855cbd9df6"
+      },
+      {
+        "offset": 1189,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "5a6c9ca408b51b01c7b4f141d54e09a459a2b174b675e6d9ca2c56b3d70d12b8"
+      },
+      {
+        "offset": 1201,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "df6ce6a17ce81954694e5e423fed3c3445faadae37010db278a0616af423ec24"
+      },
+      {
+        "offset": 1213,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "f7b007647c8667118bdcd0cfcae1ff835c12e9aa8f4dd17e372a2f8583bdb9c1"
+      },
+      {
+        "offset": 1225,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "b8b9b2665bb3c1c0ac61e88a4b5713b15cc981a09035cebcd0ef969f27dfd46d"
+      },
+      {
+        "offset": 1237,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "7f581503cb9659797d72a6ff79717019255a67b54b6ae17cefaee92a46d67379"
+      },
+      {
+        "offset": 1249,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "cdba78efc020bae1231cf9d35efbaa13a1ac529b745eab054a52d3c7f7c3cb50"
+      },
+      {
+        "offset": 1261,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "2722f67000cd09f0fe1040cf384ae059d64dc107deced0d60e9233e296421fb4"
+      },
+      {
+        "offset": 1273,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "07527656213f6c4b94fd3c921d1c57fba258806a566975ab533840e732facc5f"
+      },
+      {
+        "offset": 1285,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "dd515fb7656dbc13c6b21dd7aacbf178b5ef7cb1fb3c67c56e225ddb3576a3c3"
+      },
+      {
+        "offset": 1297,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "5a3df2f6a323a48868532fe6de2ca9e62779aa56e249bab58121f06cf272490d"
+      },
+      {
+        "offset": 1309,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "75241228800275a3e96bbed67968bcd8c3b0ed0cef5f9e2bf697ea81c376a01e"
+      },
+      {
+        "offset": 1321,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "8d8fd5b94a6c02c6dec68cabe7c10766ccb655e7af87b39a815d618c5a2be44c"
+      },
+      {
+        "offset": 1333,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0389fe429dd772f46cfffcd43960e1a6d626cdafefc6d0f7db4f1e5ec08458a4"
+      },
+      {
+        "offset": 1345,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "9e7254d9a3b985f6139f30f8384d88ca479b471d2c9228ff1baaa6145806d5e5"
+      },
+      {
+        "offset": 1357,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "5d48c07cf4c9e689604001dcbe7c4ae3cbdcf85a0e4fc878c9c46d228ead0b4c"
+      },
+      {
+        "offset": 1369,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0c1ec5ceb95131baeb0fd0cda0150924ea6851e6e10d0993d1d29d096b9ea301"
+      },
+      {
+        "offset": 1381,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "d2876e99af227562519c834cb17a6f30c22c99d389bef7c2b58b6258cb6fc060"
+      },
+      {
+        "offset": 1393,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "394f974481df07720b2eb9c39fba831023a873a7a1c26d06ba7a4b5c5366d7ce"
+      },
+      {
+        "offset": 1405,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "7bd997e959d51a2558fc8684f4a82e23e4d23c944089b23a3a4776ee016912a8"
+      },
+      {
+        "offset": 1417,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "a4f3c8970753913fdfcce072eb38a601d7792341b5a6b7eb84f9021d08db4a01"
+      },
+      {
+        "offset": 1429,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "6e053e41ffffe20ffad99d1074a11a6c2565ee821d79a17a6e231ecafa41b70d"
+      },
+      {
+        "offset": 1441,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "d72f98c263b1fce82c0e7796d1cce7892c8c59492407d8556f36dfaa3e8308f5"
+      },
+      {
+        "offset": 1453,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "00593eca068d7a4f39c5991470a614d84ec796d69068f80ebfcab57a0a8e2db3"
+      },
+      {
+        "offset": 1465,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "a27a5126dc91201ef0ddf01b7a8c8f66ee226b81f0cd2887e1d56fc05a200655"
+      },
+      {
+        "offset": 1477,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "18556c68531a02c69e310ea82220f59e048948b53cf097a9eeaafea8930ca3eb"
+      },
+      {
+        "offset": 1489,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "84b709b4cfd8971b2ee0fc0f7c318fb97281dd20c23c742283dc464925c770a3"
+      },
+      {
+        "offset": 1501,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0199a7d2ae37a35961465fdba6920e1109acc643417361fb6cdc5dae3c24953a"
+      },
+      {
+        "offset": 1513,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "fb3c9e8584e55caed8407376e81cf6014d237e663d5b183765773cd36b3bea88"
+      },
+      {
+        "offset": 1525,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "623d3c6072fb20d25b3b9c35f57c95d9bc2710a69beb0792a70d60403d3b903c"
+      },
+      {
+        "offset": 1537,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "65d2c65dad5e615e856f116f78044e2abb22b536b1c54423a2834fe1232cd700"
+      },
+      {
+        "offset": 1549,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "04a7389f8ce1e345bf01649874085a06ba55bd230e9e9641f39dd17ca8e3d79a"
+      },
+      {
+        "offset": 1561,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "0388feb623cc81ed60faa28ed7a73f2e2b36f824d14c06bcafd9dd11f4631053"
+      },
+      {
+        "offset": 1573,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "f3cbadf3b3fc3bc1e04e957e46f3356e30765d9c24ed13af0c1f499cd6e2bf66"
+      },
+      {
+        "offset": 1585,
+        "type": 206,
+        "bytes": 8,
+        "payloadSha256": "7950fe50c0225e0e16e322d943387e7146d154c0141720aff6ad51a3d0f66462"
+      },
+      {
+        "offset": 1597,
+        "type": 151,
+        "bytes": 3,
+        "payloadSha256": "fb50dc0717ff266cf9baf82b1ce7a1c2ef6d9247859680b11a19fb7077f5f222"
+      },
+      {
+        "offset": 1604,
+        "type": 151,
+        "bytes": 19,
+        "payloadSha256": "4db49a5df57989d8235cb3c171b20fc5e0cb50caaf117c155817aec9174a713f"
+      },
+      {
+        "offset": 1627,
+        "type": 11,
+        "bytes": 18,
+        "payloadSha256": "73f7ef52b6274e69c70a441dae02f42650bde9bd9b4a6a162eb01d030dca021e"
+      },
+      {
+        "offset": 1649,
+        "type": 226,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 1654,
+        "type": 612,
+        "bytes": 4,
+        "payloadSha256": "d3f3e4a404195c625d39cb61e094860cb54a06ba0cb7d54036639971a282d586"
+      },
+      {
+        "offset": 1662,
+        "type": 601,
+        "bytes": 15,
+        "payloadSha256": "83fe6b9ca6e10298cee8781e6c49f3426876bf9906fdbba6424bdc0b09e39eeb"
+      },
+      {
+        "offset": 1681,
+        "type": 801,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 1685,
+        "type": 863,
+        "bytes": 93,
+        "payloadSha256": "b678f013280ca33498e5484d81464be25ca38f5d0045432ac46f1085ad3bc8d5"
+      },
+      {
+        "offset": 1782,
+        "type": 804,
+        "bytes": 16,
+        "payloadSha256": "68d778d8b668ff413497833ab7ed1ac2e1b0c647f20fe532124fbc384d7971c1"
+      },
+      {
+        "offset": 1802,
+        "type": 833,
+        "bytes": 1360,
+        "payloadSha256": "14cd785c83e0b08a2d1c41b714c2c3e4169d0a7f1154492ddb6d2636d25162da"
+      },
+      {
+        "offset": 3166,
+        "type": 804,
+        "bytes": 32,
+        "payloadSha256": "1732b2c0ec5c58249c5be0721c6a1bcc2b4a48e3d2c966f80f8fb519bd9926d1"
+      },
+      {
+        "offset": 3202,
+        "type": 916,
+        "bytes": 77,
+        "payloadSha256": "3df7d14fa2d18c4d25b816d14fe0ae539b775b5ba1faa54d5ea7e4435cf8be31"
+      },
+      {
+        "offset": 3283,
+        "type": 918,
+        "bytes": 77,
+        "payloadSha256": "620972d915baea089c66d67ff5f30763707a939537d9e6c1f9e7f4da026d4d68"
+      },
+      {
+        "offset": 3364,
+        "type": 919,
+        "bytes": 77,
+        "payloadSha256": "8c55e9c270fd0a36fac4c17abd3d2e9536a7a9ce8fe88c47961ccaa822a14105"
+      },
+      {
+        "offset": 3445,
+        "type": 909,
+        "bytes": 118,
+        "payloadSha256": "e7eec26b8aada6e9356d1e5134b66867dd27dfd5c8621e7effe3fa284eaa17c9"
+      },
+      {
+        "offset": 3567,
+        "type": 912,
+        "bytes": 82,
+        "payloadSha256": "8a3ced29df7cdd08f02cb3525a85acfa9df09f6fa07e16a7cdc27f79533699fb"
+      },
+      {
+        "offset": 3653,
+        "type": 914,
+        "bytes": 82,
+        "payloadSha256": "5f58faa478b89b55467d099a39cd8ff5a33c7bdd4430117eb4d31b9bb244e754"
+      },
+      {
+        "offset": 3739,
+        "type": 915,
+        "bytes": 82,
+        "payloadSha256": "b458cbe515675c93d72aa927a7f11ad694fde86b762016512015f58bd21daa94"
+      },
+      {
+        "offset": 3825,
+        "type": 911,
+        "bytes": 77,
+        "payloadSha256": "32a3ffc458ed88ae7271630849c441a5ea3ae71a0687daabcaf2d4f7020ec3dc"
+      },
+      {
+        "offset": 3906,
+        "type": 1149,
+        "bytes": 205,
+        "payloadSha256": "6f65dec3d7c0ddb80b83221fa1d8db0882c9e4832299fc617d4dd059e41a930c"
+      },
+      {
+        "offset": 4115,
+        "type": 802,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 4121,
+        "type": 605,
+        "bytes": 4,
+        "payloadSha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "offset": 4129,
+        "type": 602,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 4133,
+        "type": 601,
+        "bytes": 7,
+        "payloadSha256": "998126a451fd6111e27b8e3cc710b8418dc1cb2626636ee4b77c32392b3d910c"
+      },
+      {
+        "offset": 4144,
+        "type": 801,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 4148,
+        "type": 863,
+        "bytes": 93,
+        "payloadSha256": "1abdc5faa19c003cb57272edb2daebf2ae22c7f961ddaa0c277aa52e10f2ee7d"
+      },
+      {
+        "offset": 4245,
+        "type": 804,
+        "bytes": 16,
+        "payloadSha256": "68d778d8b668ff413497833ab7ed1ac2e1b0c647f20fe532124fbc384d7971c1"
+      },
+      {
+        "offset": 4265,
+        "type": 833,
+        "bytes": 1403,
+        "payloadSha256": "fdc253b6a77d2aa1a1eb235e28080299ae28c70fdbf22949e3b1b73d95d7cd8a"
+      },
+      {
+        "offset": 5672,
+        "type": 804,
+        "bytes": 32,
+        "payloadSha256": "1732b2c0ec5c58249c5be0721c6a1bcc2b4a48e3d2c966f80f8fb519bd9926d1"
+      },
+      {
+        "offset": 5708,
+        "type": 916,
+        "bytes": 77,
+        "payloadSha256": "f6d9e36a8d7b23e346a7c0b2a5641dafd0328494bfa8cd80f20e14e9a9092494"
+      },
+      {
+        "offset": 5789,
+        "type": 918,
+        "bytes": 77,
+        "payloadSha256": "9c9e8110fd3ed410744ced64110e2e9c247652716253c71cc0eb7a4fb11b559c"
+      },
+      {
+        "offset": 5870,
+        "type": 919,
+        "bytes": 77,
+        "payloadSha256": "8c55e9c270fd0a36fac4c17abd3d2e9536a7a9ce8fe88c47961ccaa822a14105"
+      },
+      {
+        "offset": 5951,
+        "type": 909,
+        "bytes": 118,
+        "payloadSha256": "405fafcacf5d1085dbd6bb49c3949926ac9b8a997e8437200f44b24d3078a0d8"
+      },
+      {
+        "offset": 6073,
+        "type": 912,
+        "bytes": 82,
+        "payloadSha256": "c335210f8a0ebe3a15f4ee464f3b9372d9f36aef944462dca85f89f5b1e921b8"
+      },
+      {
+        "offset": 6159,
+        "type": 914,
+        "bytes": 82,
+        "payloadSha256": "1a3bd6806392816c24d7c84d7af91d6895467a0045050e8699daf1de671112d9"
+      },
+      {
+        "offset": 6245,
+        "type": 915,
+        "bytes": 82,
+        "payloadSha256": "307e69a016d333c68152939ba9b4cf224b8a9da874b4959d9727ac3fb1fc07cc"
+      },
+      {
+        "offset": 6331,
+        "type": 911,
+        "bytes": 77,
+        "payloadSha256": "32a3ffc458ed88ae7271630849c441a5ea3ae71a0687daabcaf2d4f7020ec3dc"
+      },
+      {
+        "offset": 6412,
+        "type": 1149,
+        "bytes": 205,
+        "payloadSha256": "02b91c119a4cdd5e9e6d56a8c7cb111bf0af9834db57572969a07ddadc462ba3"
+      },
+      {
+        "offset": 6621,
+        "type": 802,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 6627,
+        "type": 605,
+        "bytes": 4,
+        "payloadSha256": "1d43ee26e5c4e09d9e05d2be2de7bde7804b3121ede735a7f6630071eabdb2b9"
+      },
+      {
+        "offset": 6635,
+        "type": 602,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 6639,
+        "type": 265,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6644,
+        "type": 26,
+        "bytes": 10,
+        "payloadSha256": "02ea3728237cf76188b924acea291bc5e4dfbeec77b00e1fa96f2fe754e995f5"
+      },
+      {
+        "offset": 6658,
+        "type": 37,
+        "bytes": 11,
+        "payloadSha256": "a99d5e858b10ca3de12faa91c0679dd0f3ac95d537219ef7f9d4d5fc910ee0bf"
+      },
+      {
+        "offset": 6673,
+        "type": 38,
+        "bytes": 11,
+        "payloadSha256": "3e74c79ed0fdcdf513d8cda1a3249007117092613dec95d9f8df6a0daa911e86"
+      },
+      {
+        "offset": 6688,
+        "type": 39,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6693,
+        "type": 40,
+        "bytes": 12,
+        "payloadSha256": "04644adcc33e4522be5e77611948b074b03946f3754a8f6a11e74fba10c29984"
+      },
+      {
+        "offset": 6709,
+        "type": 48,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6714,
+        "type": 238,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6719,
+        "type": 257,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6724,
+        "type": 258,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6729,
+        "type": 239,
+        "bytes": 4,
+        "payloadSha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "offset": 6737,
+        "type": 240,
+        "bytes": 4,
+        "payloadSha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "offset": 6745,
+        "type": 241,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 6751,
+        "type": 242,
+        "bytes": 6,
+        "payloadSha256": "b0ed7a68f1ceea0e634b0e744bf3aee1899e37384a231857c55135500432411c"
+      },
+      {
+        "offset": 6761,
+        "type": 243,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 6766,
+        "type": 244,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 6771,
+        "type": 245,
+        "bytes": 2,
+        "payloadSha256": "6fd27b6685dd017d06230f819aafdbd609480ce22aa2590ed1ed2f46c6af6716"
+      },
+      {
+        "offset": 6777,
+        "type": 246,
+        "bytes": 2,
+        "payloadSha256": "9dcf97a184f32623d11a73124ceb99a5709b083721e878a16d78f596718ba7b2"
+      },
+      {
+        "offset": 6783,
+        "type": 247,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6788,
+        "type": 248,
+        "bytes": 6,
+        "payloadSha256": "43a73da91ea8b26b89f53e88fd250505466b8383bfe11d5bf5526dd0f8c5fafe"
+      },
+      {
+        "offset": 6798,
+        "type": 249,
+        "bytes": 6,
+        "payloadSha256": "89f77f96bacc8a813cc2fd5a55ccccb3dd148c6a7148fcb5fd64995c0f678853"
+      },
+      {
+        "offset": 6808,
+        "type": 250,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6813,
+        "type": 252,
+        "bytes": 36,
+        "payloadSha256": "8dc5b1d21c9f3b1fd8b631caa0100c41df686d516d6dbecb9fc9dc37f31b8d0d"
+      },
+      {
+        "offset": 6853,
+        "type": 268,
+        "bytes": 12,
+        "payloadSha256": "e2ce499217ed82abefcb872dd3c71bd7d56aa843e3f281a99dec61d6a7fad560"
+      },
+      {
+        "offset": 6869,
+        "type": 251,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 6873,
+        "type": 266,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6878,
+        "type": 26,
+        "bytes": 6,
+        "payloadSha256": "65dae69e55b47d6ad5bbd455ae1bd751f8724f3ee2f05a08b4eb1820c3cb1de6"
+      },
+      {
+        "offset": 6888,
+        "type": 37,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6893,
+        "type": 38,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6898,
+        "type": 39,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6903,
+        "type": 40,
+        "bytes": 12,
+        "payloadSha256": "9821a55e098d1d70179a669cd05456647c64fa64a87471beb060dc3e4264c476"
+      },
+      {
+        "offset": 6919,
+        "type": 48,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6924,
+        "type": 238,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6929,
+        "type": 257,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6934,
+        "type": 258,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6939,
+        "type": 239,
+        "bytes": 4,
+        "payloadSha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "offset": 6947,
+        "type": 240,
+        "bytes": 4,
+        "payloadSha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "offset": 6955,
+        "type": 241,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 6961,
+        "type": 242,
+        "bytes": 6,
+        "payloadSha256": "b0ed7a68f1ceea0e634b0e744bf3aee1899e37384a231857c55135500432411c"
+      },
+      {
+        "offset": 6971,
+        "type": 243,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 6976,
+        "type": 244,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 6981,
+        "type": 245,
+        "bytes": 2,
+        "payloadSha256": "4658d6abbbaf7748c172ed5a3e003cdb8997648f88724834e41f75e54520e142"
+      },
+      {
+        "offset": 6987,
+        "type": 246,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 6993,
+        "type": 247,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 6998,
+        "type": 248,
+        "bytes": 6,
+        "payloadSha256": "efa42e723117a9656e095d09ebe2e5f10e273fc6b1bd95b4703b979e9452ef72"
+      },
+      {
+        "offset": 7008,
+        "type": 249,
+        "bytes": 6,
+        "payloadSha256": "7e938e2a4a74ea496c6e5ef4327aa90f396a6f90ed299650cdc2ec86dfb6375e"
+      },
+      {
+        "offset": 7018,
+        "type": 250,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 7023,
+        "type": 252,
+        "bytes": 36,
+        "payloadSha256": "77678fa87255eddf63d6ebf630b938c8f74e318b58e04b6a8d105aea425d5fda"
+      },
+      {
+        "offset": 7063,
+        "type": 268,
+        "bytes": 12,
+        "payloadSha256": "876f7e8bdaf6611731c78159769e68ef628a9b26cac7b23d2b238d04dfe596fc"
+      },
+      {
+        "offset": 7079,
+        "type": 251,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 7083,
+        "type": 28,
+        "bytes": 10,
+        "payloadSha256": "392e9567b26009c83ae56241c7537654bdd6dc920c193b8cee7bc9d89f1726bf"
+      },
+      {
+        "offset": 7097,
+        "type": 24,
+        "bytes": 32,
+        "payloadSha256": "afa325fc7d820da0c1c8a92cb3194d33963613f071874c326618d9ad2ea97e18"
+      },
+      {
+        "offset": 7133,
+        "type": 25,
+        "bytes": 32,
+        "payloadSha256": "afa325fc7d820da0c1c8a92cb3194d33963613f071874c326618d9ad2ea97e18"
+      },
+      {
+        "offset": 7169,
+        "type": 269,
+        "bytes": 10,
+        "payloadSha256": "7bfa4680ed5ab941375e44e178ce931cd99b03cf30ca52d8a2d3e524bb79a243"
+      },
+      {
+        "offset": 7183,
+        "type": 259,
+        "bytes": 94,
+        "payloadSha256": "dad14c0dea953f0d5f2e52cebb7a9ea36302e9d43eeef6155d90d8406f782094"
+      },
+      {
+        "offset": 7281,
+        "type": 183,
+        "bytes": 38,
+        "payloadSha256": "742e6e53d4d76e7059a8c5828992517e492c49a455dc0a2bdd563f9a23874897"
+      },
+      {
+        "offset": 7323,
+        "type": 27,
+        "bytes": 14,
+        "payloadSha256": "dcd0e78227a65516189317dccb385b0c4f790a040aa408ffc02ceff22e1193ea"
+      },
+      {
+        "offset": 7341,
+        "type": 29,
+        "bytes": 12,
+        "payloadSha256": "d6d63bf5fdb1909f8482df8148f08e9a9740842f44f2e661ed74d58822284810"
+      },
+      {
+        "offset": 7357,
+        "type": 35,
+        "bytes": 12,
+        "payloadSha256": "d6d63bf5fdb1909f8482df8148f08e9a9740842f44f2e661ed74d58822284810"
+      },
+      {
+        "offset": 7373,
+        "type": 159,
+        "bytes": 12,
+        "payloadSha256": "d6d63bf5fdb1909f8482df8148f08e9a9740842f44f2e661ed74d58822284810"
+      },
+      {
+        "offset": 7389,
+        "type": 160,
+        "bytes": 12,
+        "payloadSha256": "d6d63bf5fdb1909f8482df8148f08e9a9740842f44f2e661ed74d58822284810"
+      },
+      {
+        "offset": 7405,
+        "type": 161,
+        "bytes": 12,
+        "payloadSha256": "d6d63bf5fdb1909f8482df8148f08e9a9740842f44f2e661ed74d58822284810"
+      },
+      {
+        "offset": 7421,
+        "type": 32,
+        "bytes": 20,
+        "payloadSha256": "1725702612669dba65e27c364001e31ddc1f410936c4a72ede677e25db76cd4f"
+      },
+      {
+        "offset": 7445,
+        "type": 102,
+        "bytes": 20,
+        "payloadSha256": "1725702612669dba65e27c364001e31ddc1f410936c4a72ede677e25db76cd4f"
+      },
+      {
+        "offset": 7469,
+        "type": 103,
+        "bytes": 32,
+        "payloadSha256": "afa325fc7d820da0c1c8a92cb3194d33963613f071874c326618d9ad2ea97e18"
+      },
+      {
+        "offset": 7505,
+        "type": 105,
+        "bytes": 50,
+        "payloadSha256": "27124935dbdc2c0ab201eab8ac376c07b9b28c847fff0bc7f5ec96c4c2fa9a58"
+      },
+      {
+        "offset": 7559,
+        "type": 253,
+        "bytes": 2,
+        "payloadSha256": "2921a11f25dadaa24aa79a548e4e81508c2e5e56af2d833d65e2bcce448ce2f5"
+      },
+      {
+        "offset": 7565,
+        "type": 254,
+        "bytes": 10,
+        "payloadSha256": "e519b3e27f89cb4c5d705403ba3a1197ea2187d90b710d133284f918303d426b"
+      },
+      {
+        "offset": 7579,
+        "type": 301,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 7585,
+        "type": 302,
+        "bytes": 4,
+        "payloadSha256": "fb5e512425fc9449316ec95969ebe71e2d576dbab833d61e2a5b9330fd70ee02"
+      },
+      {
+        "offset": 7593,
+        "type": 303,
+        "bytes": 103,
+        "payloadSha256": "e15bb077ce1d6cf6c8e52af9efa9377e64ccb79c5fc781059328f30c32e0a301"
+      },
+      {
+        "offset": 7700,
+        "type": 304,
+        "bytes": 100,
+        "payloadSha256": "ec96daff9a077cd7d434d8425585678f4f59431533b60f0905aaf1e06b705ed7"
+      },
+      {
+        "offset": 7804,
+        "type": 202,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 7809,
+        "type": 204,
+        "bytes": 6,
+        "payloadSha256": "e4c7f8eeefd0dcaac78f0272d1b0406e969eaa5b8b3b1e43340736e4e2396224"
+      },
+      {
+        "offset": 7819,
+        "type": 36,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 7824,
+        "type": 209,
+        "bytes": 34,
+        "payloadSha256": "f39bff907bca191b7346b7e6f5affc505f3aaf05ee66fa146bd74de4fb2206f3"
+      },
+      {
+        "offset": 7862,
+        "type": 224,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 7868,
+        "type": 214,
+        "bytes": 4,
+        "payloadSha256": "385176230be8ca8729b968dec22bd529fc9dead99f3c7255e91a869f448398d5"
+      },
+      {
+        "offset": 7876,
+        "type": 214,
+        "bytes": 4,
+        "payloadSha256": "0c5d708f25f7eabbe0a243a8b3fc46e5a04d8ddf0e96ecb5921e48006c49ae11"
+      },
+      {
+        "offset": 7884,
+        "type": 214,
+        "bytes": 4,
+        "payloadSha256": "250591df9c3158b7f30ebe79a4a88c6b2c53f63e14be72b4e1c922fbfb064d6f"
+      },
+      {
+        "offset": 7892,
+        "type": 214,
+        "bytes": 4,
+        "payloadSha256": "9115e90b1e48033b1df2473036eb600e92174ac89261754b6b44b9354aecc417"
+      },
+      {
+        "offset": 7900,
+        "type": 216,
+        "bytes": 4,
+        "payloadSha256": "6f712c19363cfc945dfb62ae31503a056eb564fa8e8311cee17894b3287b85fc"
+      },
+      {
+        "offset": 7908,
+        "type": 216,
+        "bytes": 4,
+        "payloadSha256": "ce28a402423df2ccc220ff2597f7a5d1449bf15f7a4d696534d2cdeec8af2734"
+      },
+      {
+        "offset": 7916,
+        "type": 218,
+        "bytes": 3,
+        "payloadSha256": "1f8f12d1330e093575089e333067208dbad87f15c75f2cfd0ff62219bdd33448"
+      },
+      {
+        "offset": 7923,
+        "type": 603,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 7927,
+        "type": 604,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 7931,
+        "type": 150,
+        "bytes": 48,
+        "payloadSha256": "1bdd64289e5c265bd686d4987788da75896ec8492137cd4390aa8960ddc8a312"
+      },
+      {
+        "offset": 7983,
+        "type": 16,
+        "bytes": 28,
+        "payloadSha256": "42e80ca2384be882606a1782acfb271667986a4c24118b478a13f7f5da677759"
+      },
+      {
+        "offset": 8015,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "f464b0de0b56779181962b71a496afc10f8cdc2a580b90715fcad069079877ef"
+      },
+      {
+        "offset": 8033,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "54a83b250d4a41f2e0955259ee2e7eb286fb984d2e2d8b3d955710f057f45791"
+      },
+      {
+        "offset": 8049,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "52e69a3b08074514e71013e2068691fcb5e5afe2f5f9eff9f3a7a694cd659f72"
+      },
+      {
+        "offset": 8059,
+        "type": 15,
+        "bytes": 16,
+        "payloadSha256": "6ce4ec4cd670226ae1bf0fce7d140b01b662a2004178f5622122acacd4aeca3d"
+      },
+      {
+        "offset": 8079,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "20652056e7bf83e19d4e52a4879847db3046e52f044ea6cc423691ee618d9ce2"
+      },
+      {
+        "offset": 8101,
+        "type": 15,
+        "bytes": 26,
+        "payloadSha256": "44c384d5f7f0907c31eb0227b7651cb1f3f0e14c5e336f527815061a67326fa1"
+      },
+      {
+        "offset": 8131,
+        "type": 15,
+        "bytes": 16,
+        "payloadSha256": "20d48644469d73b680a631777a039529df681eaab559c1044a2698195b6c5fc4"
+      },
+      {
+        "offset": 8151,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "388936bfc26878326f27d49bd1498eec6b93c21aa1f9c7f4c1019a28be938831"
+      },
+      {
+        "offset": 8167,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "886e332727ad57dcad03d77bca65da46725b9bf42175605d57bf485f50e0367d"
+      },
+      {
+        "offset": 8179,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "10d3efd431c16dd7a2645e877939867271d6ffa1c61ca7eb1a462157b91dbacf"
+      },
+      {
+        "offset": 8201,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "0961032f4b3525ef3c7fdb3d7a35e6751962747162d0c6cde9ba706f4b44e2f0"
+      },
+      {
+        "offset": 8219,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "c9cf80d345903e5449acfef903de8874c9d9b58543133570bec97b40749db797"
+      },
+      {
+        "offset": 8229,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "951947b8a2b7967c3475e288e047433f7004a9f00025428ed68ecd173104df07"
+      },
+      {
+        "offset": 8245,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "7ed5a576fc33cc4ec6f9f7ab17f902adbe654e1f0e1a619e21663cc70efdbf00"
+      },
+      {
+        "offset": 8255,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "19af4c4a104a721ae81ed6e9ed5ec934448203049a95dc83fc18dddc324b8dcd"
+      },
+      {
+        "offset": 8277,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "db8ac0f702313ac215ae8e781d16778b16754b35240f83329d3617507d0d9f0d"
+      },
+      {
+        "offset": 8293,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "9fcfbd1c970c8d18874caf3928cbc72610023f7a43eec3325e4420550d8a232b"
+      },
+      {
+        "offset": 8311,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "958b57afd9084a076631998560dd54835ef6ce26d217f6733b042a4ea4556f1e"
+      },
+      {
+        "offset": 8327,
+        "type": 15,
+        "bytes": 26,
+        "payloadSha256": "688428a62ace6b7d8a99e2981357c2f972578a5491469415067258189cf64373"
+      },
+      {
+        "offset": 8357,
+        "type": 15,
+        "bytes": 10,
+        "payloadSha256": "47f985313649c2303294952c24d0676beb84e624602845a64281eba0fc40a32c"
+      },
+      {
+        "offset": 8371,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "29343cd775f5390c2e38fb8fd6b6e7fad39c0160f1105ca1264363185c6edb86"
+      },
+      {
+        "offset": 8381,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "bfadf10a3c6c751523c63ad0f5b31345e80b23cb8500302b351c3c4334732a99"
+      },
+      {
+        "offset": 8399,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "8a6f0fec2e300195c0ef7ed653ad206a0e7d2e953d9303ddde5d59b9cb4e899a"
+      },
+      {
+        "offset": 8409,
+        "type": 16,
+        "bytes": 32,
+        "payloadSha256": "43050cfa11dd5312181332b2bb155a58b1720a5fdc42a1fb32287414c0d61a0f"
+      },
+      {
+        "offset": 8445,
+        "type": 16,
+        "bytes": 28,
+        "payloadSha256": "540eb531f36fcf2f139ef2cf2d15d1512ba26fc916cbd0b2e8d9037f163e1e84"
+      },
+      {
+        "offset": 8477,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "7ed83c7a6d361226ce6946c76ea2cf45c7668e496c6d7d245be94e57cac77e1b"
+      },
+      {
+        "offset": 8495,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "9c75589dbba88481605bed7384997242cb8d3d1b402d6eb297f81dbb93cb3ca8"
+      },
+      {
+        "offset": 8513,
+        "type": 15,
+        "bytes": 10,
+        "payloadSha256": "262ef9825075185e71a97d21d3f9aa2273c707570e4647a87f1de9d192de485b"
+      },
+      {
+        "offset": 8527,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "0117048ade1541c1280426b25ce0762fccdb1084f273e3455354efb49aa80ae9"
+      },
+      {
+        "offset": 8537,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "2ac86f2b5e59875f0df04ed9726ca182e87787a54540927c560f26710f8f6b2c"
+      },
+      {
+        "offset": 8555,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "73fb972b24b688df0ba0178f7fa8edad8ca9ce364a0a826f1d7032ef096f37dc"
+      },
+      {
+        "offset": 8565,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "aee8dabcdac325d6801dafa8efa16cec9127fd57d35e0653ac291e6e87330874"
+      },
+      {
+        "offset": 8581,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "50c9fb8e8ee41a142f6712a798d8af1ddba277a4a9282856e5b9171bb7c33b37"
+      },
+      {
+        "offset": 8603,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "ee3dd658ab10cac7fbe7f07ab0a189008a84d0fc2ad3f8b7c6142bb3a1e3741a"
+      },
+      {
+        "offset": 8619,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "a551aae4d938f2155afae03f3b2558858d96be8c15084911b41dc0b878953058"
+      },
+      {
+        "offset": 8629,
+        "type": 15,
+        "bytes": 28,
+        "payloadSha256": "d25b335fd86d3bfbac9760957faef12a59d8bf9419da3200e46892b648b381f1"
+      },
+      {
+        "offset": 8661,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "0544cd03b0af5ed3f5123f665424746795b4ca3e25e9c08d444529071f8d5e15"
+      },
+      {
+        "offset": 8671,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "9f2d6e6f63df5031f609bf403e371b8ab1da307c122dd75da1c80debda63f69d"
+      },
+      {
+        "offset": 8693,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "175df24561a6de4ab6b9b3e84514e75675210c6477116312b14c5a8eecc82c9d"
+      },
+      {
+        "offset": 8709,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "de0169ab83d077c602d7a5a69f8562d8ce70f17d1fa66e2ab6399e893db16d43"
+      },
+      {
+        "offset": 8719,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "59d963597ac6b6fcd24a0b84052bb5baec5ce341f35b9c3f0634659867b53485"
+      },
+      {
+        "offset": 8729,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "cbeb05bc43d902b94ece3d73e5173cf2d39cbce8c0562a8a7b81c548795d57ff"
+      },
+      {
+        "offset": 8747,
+        "type": 15,
+        "bytes": 10,
+        "payloadSha256": "273bb211a621dedfb812c3948fee8b0294f01889583c94a1761bb7865c5ebbc4"
+      },
+      {
+        "offset": 8761,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "9d6556b5032708ddca7869784a1c0ec2cca696c45269d04e5229a0ddc23afa03"
+      },
+      {
+        "offset": 8771,
+        "type": 15,
+        "bytes": 16,
+        "payloadSha256": "e6f744210263e2975696a046b179a3424cd78c5a6d0d6514764cfbefe6a9f74c"
+      },
+      {
+        "offset": 8791,
+        "type": 15,
+        "bytes": 10,
+        "payloadSha256": "32251c2fbe62638632aeac2364bc12c12afa11c01531ff0c879c765042017e32"
+      },
+      {
+        "offset": 8805,
+        "type": 203,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 8810,
+        "type": 202,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 8815,
+        "type": 36,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 8820,
+        "type": 209,
+        "bytes": 34,
+        "payloadSha256": "f39bff907bca191b7346b7e6f5affc505f3aaf05ee66fa146bd74de4fb2206f3"
+      },
+      {
+        "offset": 8858,
+        "type": 224,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 8864,
+        "type": 216,
+        "bytes": 4,
+        "payloadSha256": "b9dbcf8be47e072d511e527205ef7218ca6ce111fd48b64f8fdad3acfb1c2c46"
+      },
+      {
+        "offset": 8872,
+        "type": 216,
+        "bytes": 4,
+        "payloadSha256": "63afb27bd4fc558e5c420de30e0d12a7ecb582f5a13867d20225859c4a9e931e"
+      },
+      {
+        "offset": 8880,
+        "type": 218,
+        "bytes": 3,
+        "payloadSha256": "cf7605ed1bc735f6c825554154627467e1cac9df54cee8699218ed434603c568"
+      },
+      {
+        "offset": 8887,
+        "type": 603,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 8891,
+        "type": 604,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 8895,
+        "type": 150,
+        "bytes": 42,
+        "payloadSha256": "e8448383d100b6f3ee7fec59a95a9ae89a1fa6450dd387238173af0a15d62471"
+      },
+      {
+        "offset": 8941,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "4596ab8e951f164bb63bb1a73cfe9a24d344ace7c9b2abac582969f6b1320005"
+      },
+      {
+        "offset": 8959,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "cdca77c531960fcd2a9d804500dc8e156e0e9462b5a4e1e2d5a2a484fe2e996c"
+      },
+      {
+        "offset": 8971,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "e9880f92527448354db688b039f33508af3165e8277bf8c6b62ff26c267f6426"
+      },
+      {
+        "offset": 8989,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "47ef94b9e99b51d6eec9a0a0b2d34b43a110e8ec5c65a2a00e86da15835c8c21"
+      },
+      {
+        "offset": 9007,
+        "type": 16,
+        "bytes": 29,
+        "payloadSha256": "ca4c657adfddcd401837caa5dfb6ae52312e37fe30ba93ace9adaa31940cc482"
+      },
+      {
+        "offset": 9040,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "e3620182145594704c8c9d7f4b290f5593f91752da9bba38228c5a028356a3fb"
+      },
+      {
+        "offset": 9052,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "4e1af05e4f7b1c9748c2fd14cdc227376765173b41d49ae3d4d7d6575c50302a"
+      },
+      {
+        "offset": 9064,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "c51f2a2052d7b1ff2c9016dd13f440f5984a2c610d9fe030229e3a495d3dd037"
+      },
+      {
+        "offset": 9082,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "436c4337f722c34bd5cee55ee983750a423eb72a47c8b474dbfe895fe6eeaf18"
+      },
+      {
+        "offset": 9094,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "58f9b1ead23d81b573fecf32af96594d1f5aadede476ad7033e848082c5749b9"
+      },
+      {
+        "offset": 9106,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "1db3e05fa0747af59f214a292baac974a359eb98188e1c92367bd5bb3f66de60"
+      },
+      {
+        "offset": 9118,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "9234e319ecd889696f7e7641e5613b8d97d970c06ad50ed1a9852a802b43100c"
+      },
+      {
+        "offset": 9136,
+        "type": 15,
+        "bytes": 24,
+        "payloadSha256": "4ffbfcc3aa04bec54a5a373093b80759ea9cdb8601e44ab47405fe249bcc8c02"
+      },
+      {
+        "offset": 9164,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "42eb43c53de3d8e2848c7ac5caad4d3b4137e4c3be780ed45e2a51356d13bf4d"
+      },
+      {
+        "offset": 9176,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "2713de61549d26e71975f0ae81fcc38f25e74d051af260452dad85d5ae39402c"
+      },
+      {
+        "offset": 9188,
+        "type": 14,
+        "bytes": 14,
+        "payloadSha256": "d341fa39de387a64b957aacff187cdf013437a05feaed9ed430307c8b8454f94"
+      },
+      {
+        "offset": 9206,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "f55c82c6717549220a507f3bd85303d40ac529db6946086edc87ad7a1aecef89"
+      },
+      {
+        "offset": 9216,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "ca578bf0a12f3f569c6a3b1a73132e79447da782ee5b76bd354a1cec305ef4ed"
+      },
+      {
+        "offset": 9228,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "04c86790a17538b89e1340c57f61d2f4a3394b39a6fb4c3b80548bcc40db4369"
+      },
+      {
+        "offset": 9240,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "218c8846144e24b970a5877de3c32323a35192bd38ecaadc515ef1ef801fd7a5"
+      },
+      {
+        "offset": 9256,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "2fa2f53488fa7ca88ffc6e128584621c8bd056270ec7bdad1777d7899ec7495c"
+      },
+      {
+        "offset": 9266,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "d1c7f4f32a6b92d18e3aa198cd828ea75f7f2e8ef23962bdd1298f9fa5bba1a5"
+      },
+      {
+        "offset": 9278,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "fb585e5696e6882118625c3df69e565f7a71e5c3df1ae6c3e3131dd0b1d15fdf"
+      },
+      {
+        "offset": 9290,
+        "type": 15,
+        "bytes": 14,
+        "payloadSha256": "57732763328217f1310f3ef2a7af56ba81efcb24a66b27973098a4060e93e7a9"
+      },
+      {
+        "offset": 9308,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "3a5a0c17771cc80fda7dd816e8e9265627a1f6263d241996ea607639b0b6a77b"
+      },
+      {
+        "offset": 9318,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "915f076dfc2dd1c6525a49719ed93f08ea1ab8811848aebd7a51a64a5b268531"
+      },
+      {
+        "offset": 9330,
+        "type": 12,
+        "bytes": 6,
+        "payloadSha256": "ecc9b9dbf2b3bad1b58637a10294e5f18b593f78991cdba132245b3bcbd7a5b6"
+      },
+      {
+        "offset": 9340,
+        "type": 203,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 9345,
+        "type": 202,
+        "bytes": 1,
+        "payloadSha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 9350,
+        "type": 204,
+        "bytes": 8,
+        "payloadSha256": "917133a97d0bb6d348fc50afd35f41667bd9dcee1419807f82cf767f8fb91ef0"
+      },
+      {
+        "offset": 9362,
+        "type": 36,
+        "bytes": 1,
+        "payloadSha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 9367,
+        "type": 209,
+        "bytes": 34,
+        "payloadSha256": "720ff932ea9ace418a572b134ef903ec251f6df3ef2a38ef2ae9e800faf58008"
+      },
+      {
+        "offset": 9405,
+        "type": 224,
+        "bytes": 2,
+        "payloadSha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+      },
+      {
+        "offset": 9411,
+        "type": 218,
+        "bytes": 3,
+        "payloadSha256": "cf7605ed1bc735f6c825554154627467e1cac9df54cee8699218ed434603c568"
+      },
+      {
+        "offset": 9418,
+        "type": 603,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 9422,
+        "type": 801,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 9426,
+        "type": 902,
+        "bytes": 82,
+        "payloadSha256": "68c971e55483d471aaa7d3f55bfcd740c6d3f704f3f5330a3a5048fde66bec52"
+      },
+      {
+        "offset": 9512,
+        "type": 802,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 9518,
+        "type": 801,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 9522,
+        "type": 901,
+        "bytes": 66,
+        "payloadSha256": "f5b6791bdbadd5ffb58263d2ebd7ee6d900953f1475407aa82d36e1ad4f17fae"
+      },
+      {
+        "offset": 9592,
+        "type": 907,
+        "bytes": 65280,
+        "payloadSha256": "aafe0b42fb78f12323994da9f0b8ab2039a63f267a8cbda0a05bbdbc357c5db7"
+      },
+      {
+        "offset": 74876,
+        "type": 271,
+        "bytes": 60648,
+        "payloadSha256": "66ca01323e4346a6803ed538d53f7278a2e2ebb2431b2cb4b0a50a30cfba71aa"
+      },
+      {
+        "offset": 135528,
+        "type": 802,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 135534,
+        "type": 801,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 135538,
+        "type": 901,
+        "bytes": 63,
+        "payloadSha256": "ade7abd84c0cea1de8f9775b50291614d8da7d6e62b5fb442e58a5f97ff2e142"
+      },
+      {
+        "offset": 135605,
+        "type": 907,
+        "bytes": 37962,
+        "payloadSha256": "52a92d8c1b3f1bc13fd848e0ecc29f73b99a89bf922a5b456cfde7cb57740e25"
+      },
+      {
+        "offset": 173571,
+        "type": 802,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 173577,
+        "type": 604,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 173581,
+        "type": 150,
+        "bytes": 30,
+        "payloadSha256": "96b3fff3baf6b578d3a4ebcc90fcb75b8dbb6f5a158faa4c42804f52a7e12e7f"
+      },
+      {
+        "offset": 173615,
+        "type": 15,
+        "bytes": 12,
+        "payloadSha256": "ddcb3baad12d21aa9c98bdf42f3573b030a10c0772856df76b498cfa6b28426b"
+      },
+      {
+        "offset": 173631,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "5745104aea5800c24155c5cfa481c8fcda3097d25158b28c471e67cc84ec733d"
+      },
+      {
+        "offset": 173643,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "a9345f6f981ca3c5d6db55733a6a30bbd1cd131e6018a72f7d2681972fee9a1e"
+      },
+      {
+        "offset": 173655,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "6bb4f069f34f3916fa384d07aacb62c356f33d8c71895e13f37494936b87c65d"
+      },
+      {
+        "offset": 173667,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "abd5e22ae5b1b4e98b1f21245a3da238ce934cd2f4a3bc2340cb92040e9b84a1"
+      },
+      {
+        "offset": 173679,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "1d9432c3af4fc44322631a21d1ce9654b4b11c16b2894a3c58d9d7bbe953f3da"
+      },
+      {
+        "offset": 173691,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "62f4cdaecb5f0a3cf037256486da85188296a2b60dcf04a36142d371f41e2fd4"
+      },
+      {
+        "offset": 173703,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "0a5c04977a024bdc6a6f7a78d225613377365a64f7a27293d1a4b9b32725a1e3"
+      },
+      {
+        "offset": 173715,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "b09be69d3081cb1c4609717897738ff6402784e25c3a0a8b141fb33fb1d0cf9c"
+      },
+      {
+        "offset": 173727,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "ba7699fe83942bbae7647e61b42d8f6e3b125a38022d9cc2845c02275fd2f25c"
+      },
+      {
+        "offset": 173739,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "1868d1beeff27e9f8e4845ab086151a1f59dc7db808e01c7f9204f0916ce1e8d"
+      },
+      {
+        "offset": 173751,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "396c3220fbafcbee136bf78032ea0fc31f20353a722916c3685d5321f8203e3a"
+      },
+      {
+        "offset": 173763,
+        "type": 13,
+        "bytes": 8,
+        "payloadSha256": "eb3f51645ecb12eef37c78ae1e61cdc7cb7983ffa2bb43f2083b32cfd970346c"
+      },
+      {
+        "offset": 173775,
+        "type": 15,
+        "bytes": 16,
+        "payloadSha256": "fedcf9d9d15305d1d46877299751025731ad27d3943a342d27cc291ee4614c29"
+      },
+      {
+        "offset": 173795,
+        "type": 15,
+        "bytes": 18,
+        "payloadSha256": "17a99c5b19e867a130d8e5f79b296c481ffb4b58285199043fad69b8885f9714"
+      },
+      {
+        "offset": 173817,
+        "type": 203,
+        "bytes": 1,
+        "payloadSha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 173822,
+        "type": 401,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 173826,
+        "type": 404,
+        "bytes": 4,
+        "payloadSha256": "217c0fcd370275312a0035d2781ecf8f5265c9f10b5b31a82ebfb38e81793577"
+      },
+      {
+        "offset": 173834,
+        "type": 403,
+        "bytes": 6,
+        "payloadSha256": "6dcd0c07b05b1b30d4df0737607cb5c44baa12b226a1cb1ae00886e9aeea9b8b"
+      },
+      {
+        "offset": 173844,
+        "type": 412,
+        "bytes": 8,
+        "payloadSha256": "78933a359e2a17c912567960857ad867de97cd642031fdd6e8c26acc2b426a55"
+      },
+      {
+        "offset": 173856,
+        "type": 414,
+        "bytes": 2,
+        "payloadSha256": "4658d6abbbaf7748c172ed5a3e003cdb8997648f88724834e41f75e54520e142"
+      },
+      {
+        "offset": 173862,
+        "type": 405,
+        "bytes": 6,
+        "payloadSha256": "9c10f27080a4339e731052f129b380903cfb32614a942f45ca1e80ef8d33d0f3"
+      },
+      {
+        "offset": 173872,
+        "type": 406,
+        "bytes": 2,
+        "payloadSha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "offset": 173878,
+        "type": 407,
+        "bytes": 21,
+        "payloadSha256": "5168caceee062183e9c513b11db4fde198ccc8707a83dcc545533927dce8974d"
+      },
+      {
+        "offset": 173903,
+        "type": 407,
+        "bytes": 21,
+        "payloadSha256": "d8e9aba10600e66f59dd7fa8872cb25d32295a701871fca47ab9b2df8152b938"
+      },
+      {
+        "offset": 173928,
+        "type": 407,
+        "bytes": 21,
+        "payloadSha256": "4fd4cac05c4a05f125a17e1baaf54a823ead56a455d5d728d6918ae46d633c7e"
+      },
+      {
+        "offset": 173953,
+        "type": 407,
+        "bytes": 21,
+        "payloadSha256": "5dcd44571fa474a4b433966ecb11525cf26886942297304cd287b581bbb78e0c"
+      },
+      {
+        "offset": 173978,
+        "type": 409,
+        "bytes": 1,
+        "payloadSha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 173983,
+        "type": 411,
+        "bytes": 1,
+        "payloadSha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 173988,
+        "type": 402,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 173992,
+        "type": 1011,
+        "bytes": 32,
+        "payloadSha256": "6e19b0cb0368909664c35d04f916aa02a0598362c04637948cabd2e6dfc07281"
+      },
+      {
+        "offset": 174028,
+        "type": 1009,
+        "bytes": 52,
+        "payloadSha256": "fdce105f85277f81179eabc8703b4e3bcacf1448ff7633b765f0f8555f7d0be3"
+      },
+      {
+        "offset": 174084,
+        "type": 1001,
+        "bytes": 22,
+        "payloadSha256": "b4279910b557b16193aa41c96ce0028790d4e1cdf60f51ec9baf6c015bbee123"
+      },
+      {
+        "offset": 174110,
+        "type": 1005,
+        "bytes": 10,
+        "payloadSha256": "008ed454fb78277c5aeddbb2e34bc32144daf562c95bfcf5235f807ab0a2fe20"
+      },
+      {
+        "offset": 174124,
+        "type": 1006,
+        "bytes": 6,
+        "payloadSha256": "abfdb7c8ad7abcea303ba232ceb4caff23115a50447ecefb75527ab6779618cc"
+      },
+      {
+        "offset": 174134,
+        "type": 1007,
+        "bytes": 6,
+        "payloadSha256": "abfdb7c8ad7abcea303ba232ceb4caff23115a50447ecefb75527ab6779618cc"
+      },
+      {
+        "offset": 174144,
+        "type": 1008,
+        "bytes": 6,
+        "payloadSha256": "abfdb7c8ad7abcea303ba232ceb4caff23115a50447ecefb75527ab6779618cc"
+      },
+      {
+        "offset": 174154,
+        "type": 1002,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 174158,
+        "type": 1010,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "offset": 174162,
+        "type": 1,
+        "bytes": 0,
+        "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "recordCount": 379,
+    "trailerBytes": 0,
+    "decodedFormulaPrograms": 4,
+    "lookupOpcodesObserved": 0,
+    "boundary381": "No lookup instruction in these four parsed programs. No #381 product parser, patch or overlay was inspected or changed.",
+    "opaqueSemantics": "Non-cell records inventoried by length/hash only; graph/font/style/macro/link/encryption semantics unaccepted",
+    "fullFormatAcceptance": false
+  },
+  "historicalBinding": {
+    "reportDate": "2026-11-10T08:48:03.136Z",
+    "converter": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+    "result": {
+      "id": "lo-wb1-1",
+      "ext": "wb1",
+      "variant": "QuattroPro.wb1",
+      "passed": true,
+      "conversionMs": 10758,
+      "savedBytes": 14601,
+      "savedSha256": "8fcc8f098f19c90b16b2b2b38bdf54eaaf7d4e5ec8ccc5c10f53e035ebb62a37",
+      "outcome": "opened-saved-reopened"
+    },
+    "savedDigestIdentityVerified": true,
+    "currentP2RuntimeEquivalence": false
+  },
+  "cellKinds": {
+    "formula": 4,
+    "text": 37,
+    "blank": 16,
+    "integer": 26,
+    "float": 6
+  },
+  "independentHistoricalCases": [
+    {
+      "case": "source-page-count",
+      "passed": true
+    },
+    {
+      "case": "sheet-0:explicit-name",
+      "passed": true
+    },
+    {
+      "case": "sheet-2:explicit-name",
+      "passed": true
+    },
+    {
+      "case": "0!A1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "formula",
+      "sourceValue": "2.0",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "0!A1:decoded-expression",
+      "passed": true
+    },
+    {
+      "case": "0!A2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "green",
+      "observedValue": "green",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "red",
+      "observedValue": "red",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!A5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "general",
+      "observedValue": "general",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A7:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "protect=no",
+      "observedValue": "protect=no",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A9:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "(prev row invisi)",
+      "observedValue": "(prev row invisi)",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A10:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "2inches",
+      "observedValue": "2inches",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!A11:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "3cm",
+      "observedValue": "3cm",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "0!B2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "green=red",
+      "observedValue": "green=red",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "blue",
+      "observedValue": "blue",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!B5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "left",
+      "observedValue": "left",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!B7:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "label only",
+      "observedValue": "label only",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B9:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "13pt",
+      "observedValue": "13pt",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!B12:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "11char",
+      "observedValue": "11char",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!C1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "bold",
+      "observedValue": "bold",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!C2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "red=green pattern",
+      "observedValue": "red=green pattern",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!C3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!C4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!C5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "right",
+      "observedValue": "right",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!C6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!C7:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "formula",
+      "sourceValue": "0.0020335536349771225",
+      "observedValue": "0.0020335536",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "0!C7:decoded-expression",
+      "passed": true
+    },
+    {
+      "case": "0!C9:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "formula",
+      "sourceValue": "2.0",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "0!C9:decoded-expression",
+      "passed": true
+    },
+    {
+      "case": "0!C12:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "1inch",
+      "observedValue": "1inch",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!D1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "italic",
+      "observedValue": "italic",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!D3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!D4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!D5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "center",
+      "observedValue": "center",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!D6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!D12:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "auto",
+      "observedValue": "auto",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!E1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "underline",
+      "observedValue": "underline",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!E3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!E4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!E5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "center accross block",
+      "observedValue": "center accross block",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!E6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!F1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "strikeout",
+      "observedValue": "strikeout",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!F3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!F4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!F6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!G1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": " 14pt",
+      "observedValue": " 14pt",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!G3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!G6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "0!H1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "centaur",
+      "observedValue": "centaur",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "0!H3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "a",
+      "observedValue": "a",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "1!B1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "float",
+      "sourceValue": "2.3",
+      "observedValue": "2.3",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!B2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!B3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "float",
+      "sourceValue": "0.2",
+      "observedValue": "0.2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!B5:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "float",
+      "sourceValue": "0.1",
+      "observedValue": "1",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!C1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "3",
+      "observedValue": "3",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!C2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "3216",
+      "observedValue": "3216",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!C3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "float",
+      "sourceValue": "0.3",
+      "observedValue": "0.3",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!C5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2333",
+      "observedValue": "2333",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!D1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!D2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "3211",
+      "observedValue": "3211",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!D3:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "float",
+      "sourceValue": "12.1",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!D4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "aabbbababaabab",
+      "observedValue": "aabbbababaabab",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "1!E1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!E2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "3212",
+      "observedValue": "3212",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!E3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "float",
+      "sourceValue": "0.99",
+      "observedValue": "0.99",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!E4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "1!F1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "-2",
+      "observedValue": "-2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!F2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2123",
+      "observedValue": "2123",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!F3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "text",
+      "observedValue": "text",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "1!F4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "1!G1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!G2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2123",
+      "observedValue": "2123",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!G3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "hidden",
+      "observedValue": "hidden",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "1!G4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "1!H3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "1!H4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "blank",
+      "sourceValue": null,
+      "observedValue": null,
+      "qualification": "Blank projection only, no style or SQL NULL claim"
+    },
+    {
+      "case": "2!A2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "test",
+      "observedValue": "test",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "2!B3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!B4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!B5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!B6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!B7:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!B8:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "0",
+      "observedValue": "0",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "1",
+      "observedValue": "1",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "2",
+      "observedValue": "2",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "3",
+      "observedValue": "3",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C7:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "4",
+      "observedValue": "4",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!C8:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "integer",
+      "sourceValue": "5",
+      "observedValue": "5",
+      "qualification": "15-significant-digit numeric projection; native format/unit/epoch semantics not certified"
+    },
+    {
+      "case": "2!D5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "BLOCKD4",
+      "observedValue": "BLOCKD4",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "2!E5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceValue": "bizarre:D4",
+      "observedValue": "bizarre:D4",
+      "qualification": "ASCII before first NUL; post-terminator bytes unaccepted"
+    },
+    {
+      "case": "literal-cells-no-spurious-formulas",
+      "passed": true
+    }
+  ],
+  "strictBoundedContentPassed": false,
+  "explicitlyUnqualifiedSourceCases": {
+    "1!B6": {
+      "accepted": false,
+      "boundary": "Nonfinite cache and nonzero reference note / cross-sheet error projection unqualified",
+      "source": {
+        "sheet": 1,
+        "address": "B6",
+        "recordOffset": 9007,
+        "recordType": 16,
+        "styleWord": 5,
+        "rawHex": "000000000000f0ff0000090003000108030200fffffdff",
+        "kind": "formula",
+        "formula": {
+          "programHex": "010803",
+          "referenceBytesHex": "0200fffffdff",
+          "tokenOpcodes": [
+            1,
+            8,
+            3
+          ],
+          "ast": {
+            "kind": "negate",
+            "child": {
+              "kind": "ref",
+              "reference": {
+                "note": 2,
+                "rawHex": "0200fffffdff",
+                "candidateSheet": 0,
+                "candidateAddress": "A3",
+                "qualified": false
+              }
+            }
+          },
+          "sourceFlags": 0,
+          "rawCachedHex": "000000000000f0ff",
+          "cacheKind": "nonfinite-unqualified",
+          "cachedValue": null,
+          "containsLookupOpcode": false,
+          "numericSemanticsAccepted": false,
+          "boundary": "Nonfinite cache and nonzero reference note / cross-sheet error projection unqualified"
+        }
+      },
+      "historicalObservation": {
+        "type": "e",
+        "value": "#N/A",
+        "formula": "-[1]Sheet1!A3",
+        "observedNumFmtId": 164,
+        "observedFormatCode": "General"
+      }
+    }
+  },
+  "outputOracleControls": [
+    {
+      "control": "text-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!A2:typed-value-or-cache"
+      ]
+    },
+    {
+      "control": "integer-type-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!B1:typed-value-or-cache"
+      ]
+    },
+    {
+      "control": "reference-formula-dropped",
+      "passed": true,
+      "newFailedCases": [
+        "0!A1:decoded-expression"
+      ]
+    },
+    {
+      "control": "division-association-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!C7:decoded-expression"
+      ]
+    },
+    {
+      "control": "known-name-changed",
+      "passed": true,
+      "newFailedCases": [
+        "sheet-0:explicit-name"
+      ]
+    },
+    {
+      "control": "reference-cache-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!C9:typed-value-or-cache"
+      ]
+    }
+  ],
+  "nativeReaderControls": [
+    {
+      "control": "wrong-wb-family",
+      "passed": true
+    },
+    {
+      "control": "record-overrun",
+      "passed": true
+    },
+    {
+      "control": "truncated-eof",
+      "passed": true
+    },
+    {
+      "control": "label-without-nul",
+      "passed": true
+    },
+    {
+      "control": "unknown-formula-token",
+      "passed": true
+    },
+    {
+      "control": "changed-reference-value-exposes-source-cache-mismatch",
+      "passed": true
+    },
+    {
+      "control": "post-nul-byte-not-promoted-to-label",
+      "passed": true
+    }
+  ],
+  "historicalPrecisionObservation": {
+    "sourceFraction": "4/1967",
+    "independentlyCalculatedDecimal": "0.002033553634977122521606507372",
+    "storedFormula": "12/3/1967",
+    "storedCache": "0.0020335536",
+    "absoluteDecimalDifference": "3.4977122521606507372E-11",
+    "boundary": "Static historical cache precision observation; actual recalculation/current runtime and cause not established"
+  },
+  "snapshotObservation": {
+    "sheets": [
+      {
+        "name": "page1",
+        "cells": {
+          "A1": {
+            "type": "n",
+            "value": "2",
+            "formula": "B1",
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B1": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C1": {
+            "type": "s",
+            "value": "bold",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D1": {
+            "type": "s",
+            "value": "italic",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E1": {
+            "type": "s",
+            "value": "underline",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F1": {
+            "type": "s",
+            "value": "strikeout",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "G1": {
+            "type": "s",
+            "value": " 14pt",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "H1": {
+            "type": "s",
+            "value": "centaur",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A2": {
+            "type": "s",
+            "value": "green",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B2": {
+            "type": "s",
+            "value": "green=red",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C2": {
+            "type": "s",
+            "value": "red=green pattern",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A3": {
+            "type": "s",
+            "value": "red",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B3": {
+            "type": "s",
+            "value": "blue",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "G3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "H3": {
+            "type": "s",
+            "value": "a",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A5": {
+            "type": "s",
+            "value": "general",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B5": {
+            "type": "s",
+            "value": "left",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C5": {
+            "type": "s",
+            "value": "right",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D5": {
+            "type": "s",
+            "value": "center",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E5": {
+            "type": "s",
+            "value": "center accross block",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "G6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A7": {
+            "type": "s",
+            "value": "protect=no",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B7": {
+            "type": "s",
+            "value": "label only",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C7": {
+            "type": "n",
+            "value": "0.0020335536",
+            "formula": "12/3/1967",
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A9": {
+            "type": "s",
+            "value": "(prev row invisi)",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B9": {
+            "type": "s",
+            "value": "13pt",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C9": {
+            "type": "n",
+            "value": "2",
+            "formula": "B1",
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A10": {
+            "type": "s",
+            "value": "2inches",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A11": {
+            "type": "s",
+            "value": "3cm",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B12": {
+            "type": "s",
+            "value": "11char",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C12": {
+            "type": "s",
+            "value": "1inch",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D12": {
+            "type": "s",
+            "value": "auto",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          }
+        }
+      },
+      {
+        "name": "Sheet2",
+        "cells": {
+          "B1": {
+            "type": "n",
+            "value": "2.3",
+            "formula": null,
+            "observedNumFmtId": 165,
+            "observedFormatCode": "0.0000"
+          },
+          "C1": {
+            "type": "n",
+            "value": "3",
+            "formula": null,
+            "observedNumFmtId": 166,
+            "observedFormatCode": "0.00E+00"
+          },
+          "D1": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 167,
+            "observedFormatCode": "[$$-409]0.00"
+          },
+          "E1": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 168,
+            "observedFormatCode": "0.00"
+          },
+          "F1": {
+            "type": "n",
+            "value": "-2",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "\"WAAR\";\"WAAR\";\"ONWAAR\""
+          },
+          "G1": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "\"WAAR\";\"WAAR\";\"ONWAAR\""
+          },
+          "B2": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 170,
+            "observedFormatCode": "0.00%"
+          },
+          "C2": {
+            "type": "n",
+            "value": "3216",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "d\\ mmm\\ yy"
+          },
+          "D2": {
+            "type": "n",
+            "value": "3211",
+            "formula": null,
+            "observedNumFmtId": 172,
+            "observedFormatCode": "d\\ mmm"
+          },
+          "E2": {
+            "type": "n",
+            "value": "3212",
+            "formula": null,
+            "observedNumFmtId": 173,
+            "observedFormatCode": "mmm/d"
+          },
+          "F2": {
+            "type": "n",
+            "value": "2123",
+            "formula": null,
+            "observedNumFmtId": 174,
+            "observedFormatCode": "m/d/yy"
+          },
+          "G2": {
+            "type": "n",
+            "value": "2123",
+            "formula": null,
+            "observedNumFmtId": 175,
+            "observedFormatCode": "m\\/d"
+          },
+          "B3": {
+            "type": "n",
+            "value": "0.2",
+            "formula": null,
+            "observedNumFmtId": 176,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "C3": {
+            "type": "n",
+            "value": "0.3",
+            "formula": null,
+            "observedNumFmtId": 177,
+            "observedFormatCode": "h:mm\\ AM/PM"
+          },
+          "D3": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 178,
+            "observedFormatCode": "hh:mm:ss"
+          },
+          "E3": {
+            "type": "n",
+            "value": "0.99",
+            "formula": null,
+            "observedNumFmtId": 179,
+            "observedFormatCode": "hh:mm"
+          },
+          "F3": {
+            "type": "s",
+            "value": "text",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "G3": {
+            "type": "s",
+            "value": "hidden",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "H3": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D4": {
+            "type": "s",
+            "value": "aabbbababaabab",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "G4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "H4": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B5": {
+            "type": "n",
+            "value": "1",
+            "formula": null,
+            "observedNumFmtId": 180,
+            "observedFormatCode": "\\:d"
+          },
+          "C5": {
+            "type": "n",
+            "value": "2333",
+            "formula": null,
+            "observedNumFmtId": 181,
+            "observedFormatCode": "\":B\""
+          },
+          "B6": {
+            "type": "e",
+            "value": "#N/A",
+            "formula": "-[1]Sheet1!A3",
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          }
+        }
+      },
+      {
+        "name": "bizarre",
+        "cells": {
+          "A2": {
+            "type": "s",
+            "value": "test",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F2": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B3": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C3": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B4": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C4": {
+            "type": "n",
+            "value": "1",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B5": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C5": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D5": {
+            "type": "s",
+            "value": "BLOCKD4",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E5": {
+            "type": "s",
+            "value": "bizarre:D4",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B6": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C6": {
+            "type": "n",
+            "value": "3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D6": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B7": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C7": {
+            "type": "n",
+            "value": "4",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B8": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C8": {
+            "type": "n",
+            "value": "5",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B10": {
+            "type": "n",
+            "value": null,
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          }
+        }
+      }
+    ]
+  },
+  "decimalProjection": "15 significant decimal digits; exact IEEE-bit/lexeme identity not claimed",
+  "p2Policy": {
+    "conversionTarget": "xlsx",
+    "wb1Output": false,
+    "modernDefault": "xlsx",
+    "browser": "External desktop converter; static source inspection only"
+  },
+  "remaining": [
+    "Unqualified nonfinite-cache/negated-reference/error projection at sheet1 B6 is explicit, not counted as a numeric pass.",
+    "Native style/unit/date/time mapping and all non-cell graph/font/macro/link/encryption semantics unqualified.",
+    "Historical evidence does not establish current P2 private package/runtime/helper/engine edit/UndoRedo/recalculation/save/fresh-process acceptance.",
+    "Native Windows/Linux/macOS and actual supported browser UI remain OPEN; no general Quattro/Works/Lotus variant claim."
+  ],
+  "boundary381": "No lookup instruction in these four parsed programs. No #381 product parser, patch or overlay was inspected or changed.",
+  "newRuntimeOrCIStarted": false,
+  "originalUnchanged": true
+}
