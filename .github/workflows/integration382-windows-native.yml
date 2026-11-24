@@ -19,6 +19,8 @@ jobs:
       PYTHONIOENCODING: utf-8
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch exact application commit for the source comparison
+        run: git fetch --no-tags --depth=1 origin 727903cc7add7591444881cbe87620c9f8b78260
       - uses: actions/setup-node@v4
         with:
           node-version: 22
