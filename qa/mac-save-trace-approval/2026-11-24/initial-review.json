@@ -1,0 +1,75 @@
+{
+  "kind": "INDEPENDENT EXECUTION SCRIPT STATIC/MOCK REVIEW; INITIAL FINDINGS",
+  "recordedAtUTC": "2026-11-24T13:52:06.132043+00:00",
+  "reviewer": "/root/independent_save_observer_review",
+  "candidateCommit": "443c80e2d7cf649f5a845fc1525e48820e987542",
+  "candidateTree": "1ea10213539cc846baaff67c8b8f9acb777f375a",
+  "filesManifestSha256": "a25176bd72172d8552e7fd9db278f06cfaac8cce4144b37cba878f8dd0b932d6",
+  "verdict": "CHANGES_REQUIRED; NO EXECUTION APPROVAL",
+  "executionAuthorized": false,
+  "blockingFindings": [
+    {
+      "id": "cleanup-timeout-01",
+      "priority": 2,
+      "file": "qa/mac-save-trace-execution/2026-11-24/native.py",
+      "line": 251,
+      "detail": "Commands.run timeout returns exitCode=None; truthiness test treats None as successful detach and can allow recursive own-root removal while mount may remain attached. Require exitCode==0, retain mount/roots and cleanup failure otherwise. Record pending mount before attach and guard recursive removal of a known mount."
+    },
+    {
+      "id": "subprocess-group-02",
+      "priority": 2,
+      "file": "qa/mac-save-trace-execution/2026-11-24/ops.py",
+      "line": 20,
+      "detail": "subprocess.run timeout kills direct child only; descendants may continue compilation/signing and write after command receipt/hash/redaction. Synthetic isolated late-child replay confirmed stdout changed from0B to29B after return, hash differed. Use own process session/group, bounded group shutdown/drain before hash/redaction and preserve timeout failure.",
+      "reproduction": "timeout-repro.json",
+      "reproductionSha256": "81b99e74f6c612a8ef20c390ac08765cb65c2875aab80c0f58c4e1e3f50ff546"
+    }
+  ],
+  "compatibilityQuestion": [
+    {
+      "file": "qa/mac-save-trace-execution/2026-11-24/contract.py",
+      "detail": "API version2026-03-10 has no support evidence in this offline review; use proven supported version or supply primary/current compatibility evidence. No live API/network check performed."
+    }
+  ],
+  "checks": {
+    "canonicalCandidateFiles": 26,
+    "manifestChecks": "all supplied canonical Git hashes verified",
+    "derivedAppCommit": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+    "derivedAppTree": "35a4a7f7af2ac3c460fac106c48f2845c3dc4c2b",
+    "exactP5DerivedDeltaFiles": 12,
+    "derivedCanonicalHashesVerified": true,
+    "historicalVendorSourceMatches": [
+      "proef-writer-361-macos.py",
+      "writer-361-macos-ax.swift",
+      "mac-native-body-ocr.swift",
+      "mac-native-writer-preflight.py",
+      "mac-native-body-target.py",
+      "writer361-macos-ribbon-observation.py",
+      "writer361-macos-viewport.py"
+    ],
+    "vendorFork": "Python expected bundle identifier only; Swift transport byte-identical",
+    "authorContractOracleDriverMocks": {
+      "count": 15,
+      "result": "PASS on canonical443 snapshot in reviewer-owned directory"
+    },
+    "manualEndToEndSourceReview": [
+      "manual disabled workflow and permissions/dispatch separation",
+      "producer/app/workflow/file hashes + actor/ref/attempt/expiry gates",
+      "signing compile/package/signature/notary and bounded private-key file lifetime",
+      "attempt-specific API/job/gates/artifact ID/digest/time/expiry + token-free redirect and wholeZIP validation",
+      "witness before member emission and copied DMG/.app identity/inventory",
+      "scrubbed env + empty CWD + ownPID/nonce90/91/99 before real native input",
+      "exact oneQ/CommandS guard, unchanged historical OCR/focus/native helpertransport",
+      "actual file/XML semantic oracle and strict single-owned-chain/loss/hash join",
+      "fullquit/newPID/visible readback and own lifecycle/always-run cleanup separation"
+    ]
+  },
+  "limits": [
+    "No app compile/build/sign/notary, new host/GUI/input/attach or security/main/release action",
+    "No artifact or API network operation; mock metadata does not establish future service compatibility",
+    "Static/mocks do not constitute native pass or actual signature/provenance acceptance",
+    "No automatic future execution authority; explicit user approval and live verified metadata remain mandatory",
+    "Original historical FAIL and diagnostic passes remain unchanged; original cause OPEN"
+  ],
+  "reviewerWrites": "Only own .local/independent-save-execution-review scratch/receipts; no author code changes"
+}

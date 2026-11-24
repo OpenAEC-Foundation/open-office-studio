@@ -1,0 +1,135 @@
+{
+  "kind": "EXACT RESEARCH EXECUTION APPROVAL PROPOSAL; REQUESTS CLOSED; NOTHING DISPATCHED",
+  "recordedAtUTC": "2026-11-24T13:59:10.790894+00:00",
+  "coordinatorThread": "01a1bf9c-9635-7733-aa46-eb3bd68262aa",
+  "soleOperator": "This Mac-save chat",
+  "researchSource": {
+    "branch": "codex/qa-mac-save-derived-p5-20261124",
+    "commit": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+    "tree": "35a4a7f7af2ac3c460fac106c48f2845c3dc4c2b",
+    "baseCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "baseTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "baseVersion": "2026.48.1",
+    "patchCommit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+    "patchSha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+    "overlaySha256": "023b8fd7a4be67385159dc5941c52ecd2bf2060dbaf4b6f3b224f9af50fc5ba7",
+    "identifier": "org.openaec.office-studio.qa-save-trace",
+    "declaredQaVersion": "2026.48.101",
+    "onlyReviewedObserverAndIdentity": true
+  },
+  "producer": {
+    "branch": "codex/mac-save-trace-producer-20261124",
+    "commit": "27cc1c2ab7a340f1dee8366767bc2378fd31fdcd",
+    "tree": "b27591390b9a4c4b3c77b45451827445f01214f6",
+    "workflow": ".github/workflows/release.yml",
+    "workflowSha256": "01babb503c300c91427d28b5624a73f7b6462291dabe17caffb395f0afff7244",
+    "filesManifest": "qa/mac-save-trace-execution/2026-11-24/files.json",
+    "filesManifestSha256": "24df4955a34c4b7397e486b7e771ed5dbb1a97eaea177a94e3527b80e360014e",
+    "dispatchOnly": true,
+    "defaultStage": "disabled",
+    "repositoryPermissions": [
+      "contents:read",
+      "actions:read"
+    ]
+  },
+  "independentReview": {
+    "reviewer": "/root/independent_save_observer_review",
+    "receipt": "independent-final-review.json",
+    "sha256": "f80876569e0d4de1b89b5c1325fd372e13ed282eb35ab34760b717767d5ccb5b",
+    "verdict": "PASS_FOR_EXACT_EXECUTION_CODE_PROPOSAL_WITH_RUNTIME_GATES_PENDING",
+    "initialFindingsRetained": "initial-review.json",
+    "blockingFindings": [],
+    "closedFindings": [
+      "Detach timeout is failure; uncertain mount/root retained",
+      "Own command session/group is drained before redaction/hash; unsealed output never uploaded"
+    ]
+  },
+  "offlineChecks": {
+    "passed": 19,
+    "skipped": [
+      {
+        "test": "test_actual_posix_timeout_has_no_late_child_writer (test_execution.SafetyTests.test_actual_posix_timeout_has_no_late_child_writer)",
+        "reason": "Actual POSIX session-drain replay requires POSIX; mocked ordering is tested separately"
+      }
+    ],
+    "failures": 0,
+    "actualPosixRegressionRequiredBeforeAppCompilation": true,
+    "apiVersionSupport": "api-version-support.json"
+  },
+  "requestedDecision": {
+    "scope": "Only on these exact reviewed pins, after a new user resumption instruction, allow integration one research build and conditionally one native observation; no automatic continuation today or next week",
+    "stageBuild": {
+      "count": 1,
+      "platform": "ARM64 macOS",
+      "maxMinutesIncludingEvidence": 90,
+      "signing": "Normal Developer ID/hardened runtime/notarization; no fallback",
+      "checksBeforePackage": "Own POSIX child-timeout regression, locked default/off + observer/on compilation, unchanged exact source before/after build, signature/identity/resources before upload"
+    },
+    "stageNative": {
+      "count": 1,
+      "platform": "fresh ARM64 macOS host",
+      "maxMinutesIncludingCleanupAndUpload": 20,
+      "inputs": "One Q then one Command-S, no replay/extra flush/post-Q observation barrier",
+      "mandatory": "Actual official run/attempt1/job/gates/artifact digest+expiry, wholeZIP and original witness, copied bundle/signature/resource checks, own Swift/HID/privacy/env90/91/99 preflight; exact DOCX one-Q oracle, normal full quit/newPID+visible cold readback and cleanup"
+    },
+    "stageTransition": "Separate manual integration dispatch only after real build artifact metadata and bytes gates; no automatic native successor",
+    "noAuthority": [
+      "main/integration merge",
+      "tag/publication/release assets/body",
+      "extra app/platform builds",
+      "automatic retry/extra host",
+      "attach/debugger/security/signing downgrade",
+      "product fixes or architectural changes"
+    ]
+  },
+  "currentAuthority": {
+    "approved": false,
+    "buildRequestEnabled": false,
+    "nativeRequestEnabled": false,
+    "publish": false,
+    "main": false,
+    "retry": false,
+    "liveNonce": null,
+    "liveExpiryUTC": null
+  },
+  "liveRequestRules": "After explicit user GO and resumption, integration alone records literal consent and exact frozen hashes, fresh32hex nonce and UTC lifetime<=2h. Native request additionally pins real build run/job/artifact/ZIP-size/SHA/buildnonce/canonicalbuildrequestSHA. Null placeholders are rejected.",
+  "runtimeGatesPending": [
+    "Actual POSIX child/session regression on Mac",
+    "Actual TypeScript/Cargo/Tauri compilation and command registration",
+    "Actual new package signing/notarization/identity/resources",
+    "Actual native focus, edit, save, trace completeness, cold reopen and normal cleanup"
+  ],
+  "limits": [
+    "Static/mocks and API compatibility are not a built app or native pass",
+    "Copies/hash/IPC/native file logging and changed research identity/build may perturb timing",
+    "Session-global native events require exactly one matching owned chain; duplicates/missing/early errors remain INCONCLUSIVE",
+    "Digest equality is not Q semantics without the independent saved-DOCX content join",
+    "A successful new run cannot by itself explain historical FAIL45355259350"
+  ],
+  "historicalEvidenceRecheckedUnchanged": {
+    "45355259350": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+    "45358252707": "09894d8ea1ee01349d88c26245450f88c03c86d09675bab75f2f5e7c7c1a11aa"
+  },
+  "originalSaveCause": "OPEN",
+  "safetyStop": {
+    "date": "2026-11-24",
+    "timezone": "Europe/Amsterdam",
+    "newExecutionWorkCutoff": "15:10",
+    "freezeCutoff": "15:15",
+    "handoffCleanupBy": "15:20",
+    "hardStop": "15:25",
+    "noDispatchToday": true,
+    "nextWeekOnlyOnNewUserInstruction": true,
+    "automaticResume": false
+  },
+  "currentExecutionFacts": {
+    "derivedSourcePreparedInOwnBranch": true,
+    "appCompilation": false,
+    "appBuild": false,
+    "signing": false,
+    "newHostOrRun": false,
+    "nativeInput": false,
+    "mainOrReleaseWritesByThisChat": false,
+    "localComputerUseOrRecordingSessionStarted": false
+  }
+}

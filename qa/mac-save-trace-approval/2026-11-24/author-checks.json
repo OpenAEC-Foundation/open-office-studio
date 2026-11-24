@@ -1,0 +1,21 @@
+{
+  "recordedAtUTC": "2026-11-24T13:54:03.491597+00:00",
+  "checks": "Static/parser/contract/oracle/driver mocks only",
+  "testsRun": 20,
+  "testsPassed": 19,
+  "skipped": [
+    {
+      "test": "test_actual_posix_timeout_has_no_late_child_writer (test_execution.SafetyTests.test_actual_posix_timeout_has_no_late_child_writer)",
+      "reason": "Actual POSIX session-drain replay requires POSIX; mocked ordering is tested separately"
+    }
+  ],
+  "failures": 0,
+  "errors": 0,
+  "filesManifestSha256": "24df4955a34c4b7397e486b7e771ed5dbb1a97eaea177a94e3527b80e360014e",
+  "workflowSha256": "01babb503c300c91427d28b5624a73f7b6462291dabe17caffb395f0afff7244",
+  "appCommit": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+  "appTree": "35a4a7f7af2ac3c460fac106c48f2845c3dc4c2b",
+  "noAppCompileBuildSigningDispatchHostOrNativeInput": true,
+  "originalCause": "OPEN",
+  "testOutput": "test_authority_and_pin_negatives (test_execution.ApprovalTests.test_authority_and_pin_negatives) ... ok\ntest_disabled_template (test_execution.ApprovalTests.test_disabled_template) ... ok\ntest_event_branch_actor_attempt_negatives (test_execution.ApprovalTests.test_event_branch_actor_attempt_negatives) ... ok\ntest_expiry_and_future_issuance (test_execution.ApprovalTests.test_expiry_and_future_issuance) ... ok\ntest_valid_synthetic_contract (test_execution.ApprovalTests.test_valid_synthetic_contract) ... ok\ntest_valid_specific_attempt_gates (test_execution.MetadataTests.test_valid_specific_attempt_gates) ... ok\ntest_wrong_run_and_gates (test_execution.MetadataTests.test_wrong_run_and_gates) ... ok\ntest_actual_posix_timeout_has_no_late_child_writer (test_execution.SafetyTests.test_actual_posix_timeout_has_no_late_child_writer) ... skipped 'Actual POSIX session-drain replay requires POSIX; mocked ordering is tested separately'\ntest_cleanup_refuses_known_mounted_child (test_execution.SafetyTests.test_cleanup_refuses_known_mounted_child) ... ok\ntest_command_receipts_do_not_retain_synthetic_secret (test_execution.SafetyTests.test_command_receipts_do_not_retain_synthetic_secret) ... ok\ntest_detach_timeout_or_error_retains_mount_and_root (test_execution.SafetyTests.test_detach_timeout_or_error_retains_mount_and_root) ... ok\ntest_exact_one_q_one_save_and_no_quit_replay (test_execution.SafetyTests.test_exact_one_q_one_save_and_no_quit_replay) ... ok\ntest_group_drain_precedes_log_hash_and_timeout_remains_failure (test_execution.SafetyTests.test_group_drain_precedes_log_hash_and_timeout_remains_failure) ... ok\ntest_group_escalates_only_own_session (test_execution.SafetyTests.test_group_escalates_only_own_session) ... ok\ntest_inner_witness_checked_before_member_emission (test_execution.SafetyTests.test_inner_witness_checked_before_member_emission) ... ok\ntest_manual_workflow_has_no_write_trigger_or_native_after_build (test_execution.SafetyTests.test_manual_workflow_has_no_write_trigger_or_native_after_build) ... ok\ntest_owned_path_escape_and_root_refused (test_execution.SafetyTests.test_owned_path_escape_and_root_refused) ... ok\ntest_missing71_is_inconclusive_not_delivery_failure (test_execution.TraceTests.test_missing71_is_inconclusive_not_delivery_failure) ... ok\ntest_ownership_loss_multiple_and_byte_join_negatives (test_execution.TraceTests.test_ownership_loss_multiple_and_byte_join_negatives) ... ok\ntest_valid_join_is_not_semantic_q_claim (test_execution.TraceTests.test_valid_join_is_not_semantic_q_claim) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.243s\n\nOK (skipped=1)\n"
+}
