@@ -66,18 +66,29 @@ class Gates(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'duplicate'): candidate.validate_report(report,studio,'Linux','2026.48.1',{name:package})
 
     def test_green_unsigned_job_is_not_signing_acceptance(self):
-        names = ['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)']
+        names = ['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)', *candidate.RUNTIME_GATES]
         job = {'name':'Bouwen – Windows','status':'completed','conclusion':'success','steps':[{'name':n,'status':'completed','conclusion':'skipped'} for n in names]}
         with self.assertRaisesRegex(ValueError,'signature gate'): candidate.validate_platform_job(job,'Windows')
         for step in job['steps']: step['conclusion']='success'
         candidate.validate_platform_job(job,'Windows')
 
     def binding_fixture(self):
-        names = ['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)']
+        names = ['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)', *candidate.RUNTIME_GATES]
         producer = {'id':42,'run_attempt':2,'head_sha':'a'*40}
         job = {'id':43,'run_id':42,'run_attempt':1,'head_sha':'a'*40,'name':'Bouwen – Windows','status':'completed','conclusion':'success','started_at':'2026-11-23T09:00:00Z','completed_at':'2026-11-23T09:02:00Z','steps':[{'name':n,'status':'completed','conclusion':'success','completed_at':'2026-11-23T09:01:00Z'} for n in names]}
         artifact = {'workflow_run':{'id':42,'head_sha':'a'*40},'created_at':'2026-11-23T09:01:30Z'}
         return producer, {'runAttempt':1}, job, artifact
+
+    def test_runtime_gate_failure_or_duplicate_prevents_package_acceptance(self):
+        producer,binding,job,artifact = self.binding_fixture()
+        for name in candidate.RUNTIME_GATES:
+            wrong = copy.deepcopy(job)
+            next(s for s in wrong['steps'] if s['name'] == name)['conclusion'] = 'skipped'
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                candidate.validate_artifact_binding(producer,binding,wrong,artifact,'Windows')
+        wrong = copy.deepcopy(job); wrong['steps'].append(copy.deepcopy(wrong['steps'][0]))
+        with self.assertRaisesRegex(ValueError,'duplicated'):
+            candidate.validate_artifact_binding(producer,binding,wrong,artifact,'Windows')
 
     def test_valid_earlier_platform_attempt_can_be_reused_explicitly(self):
         candidate.validate_artifact_binding(*self.binding_fixture(),'Windows')
@@ -178,7 +189,7 @@ class SeparateMacProducer(unittest.TestCase):
         producer,binding,job,artifact=Gates().binding_fixture()
         job['name']='Bouwen – macOS'
         job['steps']=[dict(name=n,status='completed',conclusion='success',completed_at='2026-11-23T09:01:00Z') for n in (
-            'Pakket bouwen (macOS, ondertekend en genotariseerd)','Handtekening en notarisatie controleren (macOS)',candidate.SOURCE_GATE,'Ondertekening beschikbaar')]
+            'Pakket bouwen (macOS, ondertekend en genotariseerd)','Handtekening en notarisatie controleren (macOS)',candidate.SOURCE_GATE,'Ondertekening beschikbaar',*candidate.RUNTIME_GATES)]
         candidate.validate_artifact_binding(producer,binding,job,artifact,'macOS',(candidate.SOURCE_GATE,'Ondertekening beschikbaar'))
         for index in (2,3):
             wrong=copy.deepcopy(job);wrong['steps'][index]['conclusion']='skipped'
@@ -208,12 +219,15 @@ class SeparateMacProducer(unittest.TestCase):
             request['platforms'][platform]=b
             producers[run_id]=dict(id=run_id,head_sha=head,head_repository=dict(full_name=candidate.REPO),path='.github/workflows/release.yml',run_attempt=1,event='workflow_dispatch',head_branch=candidate.MAC_REF.removeprefix('refs/heads/'),conclusion='success' if separate else 'failure')
             names={'Windows':['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)'],'Linux':['Linux-installers werkelijk uitpakken en controleren'],'macOS':['Pakket bouwen (macOS, ondertekend en genotariseerd)','Handtekening en notarisatie controleren (macOS)',candidate.SOURCE_GATE,'Ondertekening beschikbaar']}[platform]
+            names += list(candidate.RUNTIME_GATES)
             job=dict(id=job_id,run_id=run_id,run_attempt=1,head_sha=head,name='Bouwen – '+platform,status='completed',conclusion='success',started_at='2026-11-23T09:00:00Z',completed_at='2026-11-23T09:02:00Z',steps=[dict(name=n,status='completed',conclusion='success',completed_at='2026-11-23T09:01:00Z') for n in names])
             jobs.setdefault(run_id,[]).append(job)
             artifacts.setdefault(run_id,[]).append(dict(id=job_id,name='uitgave-'+platform,expired=False,workflow_run=dict(id=run_id,head_sha=head),created_at='2026-11-23T09:01:30Z',digest='sha256:'+b['archiveSha256'],size_in_bytes=len(archive)))
         jobs[candidate.P5_RUN].append(dict(id=137703365843,run_id=candidate.P5_RUN,run_attempt=1,head_sha=candidate.P5_SOURCE,status='completed',conclusion='failure',completed_at='2026-11-23T09:00:00Z',steps=[]))
         def api(route):
             parts=route.split('/');run_id=int(parts[2])
+            if not route.endswith(('/jobs?per_page=100','/artifacts?per_page=100')):
+                self.assertEqual(parts[3:], ['attempts','1'], 'Producer must use frozen attempt endpoint, never global latest')
             return {'jobs':jobs[run_id]} if route.endswith('/jobs?per_page=100') else {'artifacts':artifacts[run_id]} if route.endswith('/artifacts?per_page=100') else producers[run_id]
         def command(args,**kwargs):
             self.assertEqual(args[0],'gh','No gpg/signing command may run before witness validation')

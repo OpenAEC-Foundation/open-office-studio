@@ -58,3 +58,11 @@ Run checks with the existing Python runtime:
 ```text
 python -B scripts/qa-candidate-packages-20261123.test.py
 ```
+
+Root review on 24 November: separate-producer adapter accepted after checking
+all original gates, cleanup and nonpublishing workflow. Producer metadata now
+uses the frozen attempt endpoint; both private-runtime gates are also required
+and duplicate required steps are rejected. All 23 focused tests pass, including
+a failed/skipped runtime gate and frozen-endpoint orchestration. Actual Mac
+witness digest and archive bytes remain required before execution. No native
+acceptance is inferred from package signing.

@@ -28,6 +28,8 @@ MAC_JOB = 137763371873
 MAC_REF = 'refs/heads/codex/p5-macos-only-producer-20261123'
 MAC_WITNESS = '.local/macos-only-producer-source.json'
 SOURCE_GATE = 'Exacte P5-appbron en afzonderlijke producerhead bewijzen'
+RUNTIME_GATES = ('Meet- en inhoudscontrole voor de meegeleverde runtime',
+    'Standaardinstaller controleren met uitsluitend de private runtime')
 
 
 def producer_spec(request, platform, binding):
@@ -116,7 +118,9 @@ def validate_platform_job(job, platform):
         'macOS': ['Pakket bouwen (macOS, ondertekend en genotariseerd)', 'Handtekening en notarisatie controleren (macOS)'],
         'Linux': ['Linux-installers werkelijk uitpakken en controleren'],
     }[platform]
+    required += list(RUNTIME_GATES)
     steps = {s['name']:s for s in job['steps']}
+    check(all(sum(s['name'] == name for s in job['steps']) == 1 for name in required), 'Required package/signature gate missing or duplicated: '+platform)
     check(all(name in steps and steps[name]['status']=='completed' and steps[name]['conclusion']=='success' for name in required), 'Required package/signature gate did not pass: '+platform)
     return [steps[name] for name in required]
 
@@ -174,20 +178,24 @@ def run(request_path, app_path, output_path):
     # updater payloads if a later source enables them: its manifest needs review.
     config = json.loads((app_path/'src-tauri/tauri.conf.json').read_text())
     check(config['bundle']['createUpdaterArtifacts'] is False and not config['plugins']['updater']['pubkey'], 'Updater-enabled candidate requires explicit additional manifest coverage')
-    producer = api(f'actions/runs/{run_id}')
+    original_attempts = {b['runAttempt'] for b in request['platforms'].values() if b.get('producerRun', run_id) == run_id}
+    check(len(original_attempts) == 1, 'One explicit original producer attempt required')
+    original_attempt = original_attempts.pop()
+    producer = api(f'actions/runs/{run_id}/attempts/{original_attempt}')
     validate_producer_origin(producer, run_id, source, False)
     check(set(request['platforms']) == set(FORMS), 'All three platform artifact bindings required')
-    producers, artifacts_by_run, jobs_by_attempt, selected = {run_id:producer}, {}, {}, {}
+    producers, artifacts_by_run, jobs_by_attempt, selected = {(run_id, original_attempt):producer}, {}, {}, {}
     for platform, binding in request['platforms'].items():
         platform_run, platform_head, separate_mac = producer_spec(request, platform, binding)
-        if platform_run not in producers:
-            producers[platform_run] = api(f'actions/runs/{platform_run}')
-        platform_producer = producers[platform_run]
+        attempt = binding['runAttempt']
+        producer_key = (platform_run, attempt)
+        if producer_key not in producers:
+            producers[producer_key] = api(f'actions/runs/{platform_run}/attempts/{attempt}')
+        platform_producer = producers[producer_key]
         validate_producer_origin(platform_producer, platform_run, platform_head, separate_mac)
         if platform_run not in artifacts_by_run:
             artifacts_by_run[platform_run] = {a['id']:a for a in api(f'actions/runs/{platform_run}/artifacts?per_page=100')['artifacts']}
-        attempt = binding['runAttempt']
-        check(type(attempt) is int and 1 <= attempt <= platform_producer['run_attempt'], 'Invalid explicit producer attempt')
+        check(type(attempt) is int and attempt == platform_producer['run_attempt'], 'Invalid explicit producer attempt')
         key = (platform_run, attempt)
         if key not in jobs_by_attempt:
             jobs_by_attempt[key] = {j['id']:j for j in api(f'actions/runs/{platform_run}/attempts/{attempt}/jobs?per_page=100')['jobs']}
@@ -282,7 +290,7 @@ def run(request_path, app_path, output_path):
                         canonical = name.replace('pakketcontrole-', 'package-verification-').replace('Database-', 'database-')
                         (output_path/canonical).write_bytes(raw)
                         reports.append({'name':canonical,'platform':platform,'studio':studio['sleutel'],'artifactId':artifact['id'],'member':members[name].filename})
-                archives.append({'platform':platform,'producerRun':platform_producer['id'],'producerCommit':platform_producer['head_sha'],'producerLatestAttemptAtAudit':platform_producer['run_attempt'],'producerConclusionAtAudit':platform_producer['conclusion'],'producerAttempt':binding['runAttempt'],'producerJobId':job['id'],'producerJobStartedAt':job['started_at'],'producerJobCompletedAt':job['completed_at'],'artifactId':artifact['id'],'artifactCreatedAt':artifact['created_at'],'archiveSha256':binding['archiveSha256'],'applicationSourceWitness':mac_witness if separate_mac else None})
+                archives.append({'platform':platform,'producerRun':platform_producer['id'],'producerCommit':platform_producer['head_sha'],'producerSelectedAttemptAtAudit':platform_producer['run_attempt'],'producerConclusionAtAudit':platform_producer['conclusion'],'producerAttempt':binding['runAttempt'],'producerJobId':job['id'],'producerJobStartedAt':job['started_at'],'producerJobCompletedAt':job['completed_at'],'producerAttemptEndpoint':f"actions/runs/{platform_producer['id']}/attempts/{binding['runAttempt']}",'verifiedProducerSteps':job['steps'],'artifactId':artifact['id'],'artifactCreatedAt':artifact['created_at'],'archiveSha256':binding['archiveSha256'],'applicationSourceWitness':mac_witness if separate_mac else None})
                 archive.unlink()
             check(len(installers)==28 and len(reports)==14 and len(linux_signatures)==14, 'Incomplete release set')
             for p in output_path.iterdir():
@@ -294,7 +302,7 @@ def run(request_path, app_path, output_path):
         finally:
             cleanup = stop_gpg_agents((signing_home,verify_home))
     check(not temporary.exists(), 'Temporary signing-key/payload tree remains')
-    receipt = {'kind':'Verified existing installer bytes and prepared signatures; NOT published/native acceptance', 'source':source,'tree':tree,'version':version,'producerRun':run_id,'producerLatestAttemptAtAudit':producer['run_attempt'],'producerLatestConclusionAtAudit':producer['conclusion'],'archives':archives,'installers':installers,'reports':reports,'linuxSignatures':linux_signatures,'releasePayloadChecksums':checksums,'cleanup':{'scopedGpgconfTermination':cleanup,'temporaryKeyAndPayloadTreeRemoved':True,'scopeLimit':'Scoped termination command outcomes and private-directory removal; no global process-inventory claim.'},'publication':False,'mainOrTagWrite':False,'nativeAcceptance':False}
+    receipt = {'kind':'Verified existing installer bytes and prepared signatures; NOT published/native acceptance', 'source':source,'tree':tree,'version':version,'producerRun':run_id,'producerSelectedAttemptAtAudit':producer['run_attempt'],'producerSelectedConclusionAtAudit':producer['conclusion'],'archives':archives,'installers':installers,'reports':reports,'linuxSignatures':linux_signatures,'releasePayloadChecksums':checksums,'cleanup':{'scopedGpgconfTermination':cleanup,'temporaryKeyAndPayloadTreeRemoved':True,'scopeLimit':'Scoped termination command outcomes and private-directory removal; no global process-inventory claim.'},'publication':False,'mainOrTagWrite':False,'nativeAcceptance':False}
     receipt['originalMacFailure'] = original_mac_failure
     (output_path/'verification-receipt.json').write_text(json.dumps(receipt,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps({'verifiedInstallers':28,'verifiedReports':14,'signedLinuxPackages':14,'publication':False}))
