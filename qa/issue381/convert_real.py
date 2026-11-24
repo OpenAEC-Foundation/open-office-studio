@@ -6,12 +6,12 @@ import os
 from pathlib import Path
 import shutil
 import signal
-import stat
 import subprocess
 import sys
 import tempfile
 import time
 from deadline import remaining
+from runtime_prefix import Audit, fresh_variant
 
 ROOT=Path('.local/issue381').resolve()
 def sha(path):
@@ -19,35 +19,25 @@ def sha(path):
 def write(path,data):path.write_bytes((json.dumps(data,indent=2)+'\n').encode())
 
 def overlay(binding,build,variant):
-    private=Path(binding['privateRoot']).resolve()
-    destination=Path(binding['program']).resolve().parent/'libwps-0.4-lo.so.4'
-    assert destination.is_relative_to(private)
-    allowed={build['originalLibrarySha256'],*(v['sha256'] for v in build['variants'].values())}
-    assert sha(destination) in allowed,'Unrecorded library mutation'
+    canonical=Path(binding['privateRoot']).resolve()
+    private=ROOT/'variant-runtime'/variant
+    program_relative=Path(binding['program']).resolve().relative_to(canonical)
+    library_relative=(program_relative.parent/'libwps-0.4-lo.so.4').as_posix()
     selected=build['variants'][variant]
     assert sha(selected['file'])==selected['sha256']
-    if variant!='packaged':
-        assert binding['designation']=='DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME'
-        shutil.copyfile(selected['file'],destination);destination.chmod(0o755)
+    assert (selected['sha256']==build['originalLibrarySha256'])==(variant=='packaged')
     manifest=ROOT/'runtime-input/artifact/entry-manifest.json'
     assert sha(manifest)=='79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029'
-    entries=json.loads(manifest.read_bytes());changes=[]
-    assert {p.relative_to(private).as_posix() for p in private.rglob('*')}=={e['path'] for e in entries},'Unexpected runtime entries'
-    for entry in entries:
-        path=private/entry['path']
-        assert path.resolve().is_relative_to(private)
-        info=path.lstat()
-        assert stat.S_IMODE(info.st_mode)==int(entry['mode'],8),(entry['path'],'mode')
-        if entry['type']=='directory':assert stat.S_ISDIR(info.st_mode)
-        else:
-            assert entry['type']=='file' and stat.S_ISREG(info.st_mode)
-            actual=sha(path)
-            if path==destination:
-                assert actual==selected['sha256']
-                if actual!=entry['sha256']:changes.append(entry['path'])
-            else:assert actual==entry['sha256'],('Unexpected payload change',entry['path'])
-    assert len(changes)==(0 if variant=='packaged' else 1)
-    return destination,dict(variant=variant,librarySha256=sha(destination),changedEntries=changes,checkedEntries=len(entries))
+    audit=Audit(ROOT/'real-proof'/variant/'prefix-inventory')
+    expected,original=fresh_variant(canonical,private,json.loads(manifest.read_bytes()),library_relative,
+        selected['file'],build['originalLibrarySha256'],selected['sha256'],audit)
+    destination=private/library_relative
+    derived={**binding,'designation':'DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME',
+        'privateRoot':str(private),'program':str(private/program_relative),
+        'canonicalInputPrivateRoot':str(canonical),'canonicalBinding':'runtime-evidence/runtime-binding.json'}
+    write(audit.destination/'binding.json',derived)
+    return derived,destination,dict(variant=variant,librarySha256=sha(destination),
+        changedEntries=[] if variant=='packaged' else [library_relative],checkedEntries=len(original)),audit,expected,original
 
 def main():
     parser=argparse.ArgumentParser()
@@ -56,9 +46,9 @@ def main():
     args=parser.parse_args()
     assert sys.platform=='linux' and os.environ.get('GITHUB_ACTIONS')=='true'
     remaining('build')
-    binding=json.loads((ROOT/('runtime-evidence/runtime-binding.json' if args.variant=='packaged' else 'derived-binding.json')).read_bytes())
+    binding=json.loads((ROOT/'runtime-evidence/runtime-binding.json').read_bytes())
     build=json.loads((ROOT/'build-proof/build.json').read_bytes());assert build['passed']
-    library,checked=overlay(binding,build,args.variant)
+    binding,library,checked,prefix_audit,expected,canonical_expected=overlay(binding,build,args.variant)
     program=Path(binding['program']).resolve()
     assert sha(program)==binding['programSha256']
     source=ROOT/'inputs/source.wq2'
@@ -74,6 +64,7 @@ def main():
     report=dict(applicationCommit=build['applicationCommit'],runtimeBase=binding,
         overlay=checked,profileSha256=sha(profile),sourceSha256=sha(source),passed=False)
     try:
+        prefix_audit.check('before-converter',Path(binding['privateRoot']),expected,'Only explicit selected library delta before executing private converter')
         with tempfile.TemporaryDirectory(prefix='wq2-381-') as temp:
             work=Path(temp);user=work/'profile/user';user.mkdir(parents=True)
             shutil.copyfile(profile,user/'registrymodifications.xcu')
@@ -122,6 +113,20 @@ def main():
         report.update(passed=True,loaderFiles=loaders,actualLibwpsLoads=actual,sourceUnchanged=True,
             output=str(out/'converted.xlsx'),outputSha256=sha(out/'converted.xlsx'))
         print(json.dumps(dict(output=report['output'],sha256=report['outputSha256'],variant=args.variant)))
-    finally:write(out/'converter-report.json',report)
+    finally:
+        failures=[]
+        primary=sys.exc_info()[1]
+        if primary:report['failure']=repr(primary)
+        for label,root,contract,reason in [
+            ('after-converter',Path(binding['privateRoot']),expected,'No unknown cache/temp/byte/mode/entry mutation permitted'),
+            ('canonical-after-converter',Path(binding['canonicalInputPrivateRoot']),canonical_expected,'Canonical input was never executed; full post-run immutability required')]:
+            try:
+                prefix_audit.check(label,root,contract,reason)
+            except Exception as error:failures.append(repr(error))
+        report['prefixInventoryPassed']=not failures
+        report['prefixInventoryFailures']=failures
+        report['passed']=report['passed'] and not failures
+        write(out/'converter-report.json',report)
+        if failures and primary is None:raise AssertionError('; '.join(failures))
 
 if __name__=='__main__':main()

@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-11-24T11:15:39.133910+00:00",
+  "platform": "win32",
+  "scope": "Local filesystem QA with retained real ELF bytes; no ELF execution, converter, build, CI or new download",
+  "baseCommit": "6f594971bdb4d91bce2903292111c079cb0c1268",
+  "command": [
+    "C:\\Users\\alper\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "qa/issue381/runtime_prefix_test.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_canonical_mutation_blocks_before_copy (__main__.PrefixTest.test_canonical_mutation_blocks_before_copy) ... ok\ntest_cross_variant_mutation_rejected_and_not_inherited (__main__.PrefixTest.test_cross_variant_mutation_rejected_and_not_inherited) ... ok\ntest_existing_variant_cannot_be_reused (__main__.PrefixTest.test_existing_variant_cannot_be_reused) ... ok\ntest_missing_file_rejected_with_exact_path (__main__.PrefixTest.test_missing_file_rejected_with_exact_path) ... ok\ntest_mode_mutation_rejected_without_normalization (__main__.PrefixTest.test_mode_mutation_rejected_without_normalization) ... ok\ntest_three_fresh_variants_have_only_explicit_library_delta (__main__.PrefixTest.test_three_fresh_variants_have_only_explicit_library_delta) ... ok\ntest_unknown_hash_mutation_rejected (__main__.PrefixTest.test_unknown_hash_mutation_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.671s\n\nOK\n",
+  "pythonAstChecks": 4,
+  "tests": 7,
+  "passed": true,
+  "files": {
+    "qa/issue381/runtime_prefix.py": "79caa2815f844d6f7359103a50fac13e96320562aa082375736c6eeab516ef5e",
+    "qa/issue381/runtime_prefix_test.py": "1065425a1d85a27c32e1ef9008c03c2cdc86464cf6550600b7add74b356bd1b4",
+    "qa/issue381/build_runtime.py": "e58df3f95a69542733966e30122a27dbbb7bf1b09621cb84c4a4ac94176d8eed",
+    "qa/issue381/convert_real.py": "af9d0869d1c1db77c21450a993a75f30c5c0328efc2d66f7431097a763259923",
+    ".github/workflows/issue381-private-runtime.yml": "9e97a9ba134e57d61a9207d533e5969aa5045888f6cf9b8f6b1e4aa8419ea385"
+  },
+  "retainedElfs": {
+    "packaged.so": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+    "patched.so": "e9f8123ab66523071efcef37790c29cd6cb19201d258df7d937e644bb6f03932",
+    "rebuilt-control.so": "00186a57c76193646e28aa6b06a67eeaff5a1d39f109b0c1d1339878181017ad"
+  },
+  "unchangedInputs": {
+    "patches/libwps-wq2-vlookup.patch": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+    "patches/libwps-wq2-vlookup.json": "250f5c76019b8b6ef70205c134e811fae296736c8d81e7381747ce36cd344b28",
+    "qa/issue381/abi-symbol-policy.json": "bd976623361d0692130cf0d0fc1f38dde87d0261ec4e33dbc313940f0b8ccd77",
+    "qa/issue381/runtime_input.py": "b9230a60fb04a2387e5f5621f4f8ecd3c8cbf08d2d25d952c7959b3231acec95",
+    "qa/issue381/original-oracle/oracle.py": "f145c5278f6d1c8cb926c98943ed279884a80edb58820058fec73ae9c360dc66",
+    "qa/issue381/original-oracle/fixture.json": "20b776c38d2275590e4d2f08100ecb20d4fcc2585562ab5845fdefa0c68956e7"
+  },
+  "runtimeAcceptance": false,
+  "allocation": false
+}

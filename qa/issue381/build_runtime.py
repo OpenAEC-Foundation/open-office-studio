@@ -15,6 +15,7 @@ import sys
 import tarfile
 from deadline import remaining
 from abi_contract import compare_files
+from runtime_prefix import Audit, manifest_inventory
 
 ROOT=Path('.local/issue381').resolve()
 OUT=ROOT/'build-proof'
@@ -51,14 +52,12 @@ def main():
     canonical_root=Path(canonical['privateRoot']).resolve()
     canonical_program=Path(canonical['program']).resolve()
     assert canonical_program.is_relative_to(canonical_root)
-    private=ROOT/'derived-runtime';assert not private.exists()
-    shutil.copytree(canonical_root,private,symlinks=True)
-    binding={**canonical,'designation':'DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME',
-        'privateRoot':str(private),'program':str(private/canonical_program.relative_to(canonical_root)),
-        'canonicalInputPrivateRoot':str(canonical_root),
-        'canonicalBinding':'runtime-evidence/runtime-binding.json'}
-    (ROOT/'derived-binding.json').write_bytes((json.dumps(binding,indent=2)+'\n').encode())
-    program=Path(binding['program']).resolve().parent
+    manifest=ROOT/'runtime-input/artifact/entry-manifest.json'
+    assert sha(manifest)=='79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029'
+    expected=manifest_inventory(json.loads(manifest.read_bytes()))
+    prefix_audit=Audit(OUT/'canonical-build-inventory')
+    prefix_audit.check('before-build',canonical_root,expected,'Read-only library/header linkage, no canonical converter execution')
+    program=canonical_program.parent
     original=program/SONAME
     assert sha(original)=='c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4'
     assert sha(program/REVENGE)=='2b19422f1da6181bacf3c73017349647ff918dbe5d1b8b589c796def13aad837'
@@ -92,7 +91,7 @@ def main():
         '--disable-tools','--disable-debug','--disable-werror','--enable-silent-rules',
         'CXXFLAGS=-O2 -fPIC',"LDFLAGS=-Wl,-z,origin -Wl,-rpath,'$$ORIGIN'"]
     report=dict(applicationCommit=BASE,applicationTree=text(['git','rev-parse',BASE+'^{tree}']).strip(),
-        harnessCommit=text(['git','rev-parse','HEAD']).strip(),parentRuntime=binding,
+        harnessCommit=text(['git','rev-parse','HEAD']).strip(),parentRuntime=canonical,
         designation='DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME',canonicalRuntime=canonical,
         originalLibrarySha256=sha(original),librevengeSha256=sha(program/REVENGE),
         librevengeHeadersSha256=sha(headers),libwpsArchiveSha256=sha(archive),patches=recipe,
@@ -100,7 +99,9 @@ def main():
         patchSha256=sha('patches/libwps-wq2-vlookup.patch'),variants={},passed=False)
     write('build.json',report)
     run(['./configure',*flags],'configure',cwd=source,env=env)
+    prefix_audit.check('after-configure',canonical_root,expected,'Configure only writes the private source build tree')
     for variant in ('rebuilt-control','patched'):
+        prefix_audit.check('before-'+variant,canonical_root,expected,'Read-only canonical dependency linkage')
         if variant=='patched':
             run(['patch','--batch','--forward','--fuzz=0','-p1','-i',str(Path('patches/libwps-wq2-vlookup.patch').resolve())],
                 'apply-381',cwd=source)
@@ -123,10 +124,12 @@ def main():
             sourceSha256=sha(causal),dynamic=new_dynamic,symbolContract=symbol_contract,
             symbolVersions=text(['readelf','--version-info',str(library)]),ldd=linked)
         write('build.json',report)
+        prefix_audit.check('after-'+variant,canonical_root,expected,'Compiler/linker/ABI checks must preserve canonical entries/modes/bytes')
     report['variants']['packaged']=dict(file=str(baseline),sha256=sha(baseline),dynamic=dynamic(baseline),
         symbolContract=compare_files(original,baseline,'qa/issue381/abi-symbol-policy.json'))
     report['runtimeUntouched']=sha(canonical_program.parent/SONAME)==report['originalLibrarySha256']
     assert report['runtimeUntouched']
+    prefix_audit.check('after-build',canonical_root,expected,'Complete canonical inventory unchanged after compiler/linker/ldd')
     report['passed']=True;write('build.json',report)
 
 if __name__=='__main__':main()
