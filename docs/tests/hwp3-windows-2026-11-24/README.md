@@ -68,3 +68,44 @@ Source/charset/Unicode/package/focus/save/newPID/cleanup criteria and the copied
 source oracle are unchanged. A local targeted subprocess check reproduces the
 cp1252 rejection and verifies exact Hangul codepoints through UTF8 output.
 The missing native case is retried on a fresh original Writer-child host.
+
+## Actual result: PASS within the HWP3 Unicode/content scope
+
+[Run45370138999/job138362134510](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45370138999/job/138362134510)
+succeeded on harness1b297a238deba67b70942db64468b700f6c0b4e6, on unchanged signed
+P5 Writer bytes. Native picker actual target/readback is the original source.hwp.
+Independent audit rereads its native records, original source/charset facts and
+the exact two source paragraphs. All6 cases in5 actual DOCX files pass:30 checks,
+zero mismatches. Korean text remains exact precomposed Unicode/NFC; no output
+normalization or replacement/square codepoints are accepted.
+
+The prefix is read from the original fixture including its Korean syllables,
+then entered through ordinary focused UI keyboard input. Native edit/Undo/Redo,
+DOCX Save As, two complete normal exits and new-process reopen/resave pass.
+PIDs4732→3636 differ. Original HWP SHA/size/mtime/nonzero inode281474976716017,
+signatures/timestamps/PE/appID/ownprofile/private runtime and own cleanup pass.
+
+Four actual source/completed screenshots were reviewed: both original alinea
+contents, the prefix and Korean glyphs are visible before/after save and fresh
+reopen. The native UI reports that original font 바탕 is missing and substitutes
+Noto Sans KR. This is a factual fallback/glyph observation, not accepted original
+font rendering or measured metric equivalence. Full typography, pagination,
+IME composition, HWP5/HWPX/Hanja/archaic/metadata/full format remain excluded.
+No other-platform/browser GUI acceptance is inferred from this Windows case.
+
+[Final review](evidence/45370138999/review.json) retains actual HWP picker target,
+independently qualified source Unicode paragraphs/charset facts, complete
+source/producer/child/report/PE/run/job/attempt/proof bindings, expiry, five
+byte-oracle results, actual image hashes, phases and cleanup. Both original
+failed and successful ZIPs/API/reports remain byte-preserved with SHA256
+inventories; the first failed job log is retained too. Manual image review
+remains separate from original collector output. Successful proof14909415115,
+470380 bytes,SHA256654cc77914cbc08dab57bb36ed8c9239ac4625babb366b512746698c23cf8e3e,
+recorded expiry2027-02-22T09:57:46Z. The prelaunch logging failure is not relabelled
+an app failure or a pass.
+
+Own ready/go flags are frozen false, with no next test/build scheduled. Accepted
+remote cleanup reports normal exits and successful own resource cleanup without
+errors. No local GUI/capture was started. Existing format/core proofs and the
+completed P5 release assessment remain intact; wider #30 and main/tag/publication
+decisions stay with integration.

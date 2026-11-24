@@ -1,0 +1,240 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "preparerRun": 45195780472,
+  "executionRun": 45370138999,
+  "executionHarness": "1b297a238deba67b70942db64468b700f6c0b4e6",
+  "apps": {
+    "writer": {
+      "visualAcceptance": "pending actual completed screenshot review",
+      "job": [
+        {
+          "id": 138362134510,
+          "run_id": 45370138999,
+          "workflow_name": "HWP3 Windows native single Writer child",
+          "head_branch": "codex/hwp3-windows-native-2026-11-24",
+          "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45370138999",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVRiTGs8AAAAgNwaf7g",
+          "head_sha": "1b297a238deba67b70942db64468b700f6c0b4e6",
+          "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/138362134510",
+          "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45370138999/job/138362134510",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-24T09:58:03Z",
+          "started_at": "2026-11-24T09:58:05Z",
+          "completed_at": "2026-11-24T10:00:57Z",
+          "name": "Native writer hwp3 child reuse",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-24T09:58:05Z",
+              "completed_at": "2026-11-24T09:58:06Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-24T09:58:06Z",
+              "completed_at": "2026-11-24T09:58:15Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-24T09:58:15Z",
+              "completed_at": "2026-11-24T09:58:19Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-24T09:58:19Z",
+              "completed_at": "2026-11-24T09:58:20Z"
+            },
+            {
+              "name": "Strict original own-child ZIP only; no parent download or app build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-24T09:58:20Z",
+              "completed_at": "2026-11-24T09:58:33Z"
+            },
+            {
+              "name": "Native WebView driver only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-24T09:58:33Z",
+              "completed_at": "2026-11-24T09:58:37Z"
+            },
+            {
+              "name": "Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-24T09:58:37Z",
+              "completed_at": "2026-11-24T10:00:52Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-24T10:00:52Z",
+              "completed_at": "2026-11-24T10:00:53Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-24T10:00:53Z",
+              "completed_at": "2026-11-24T10:00:54Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-24T10:00:54Z",
+              "completed_at": "2026-11-24T10:00:54Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-11-24T10:00:54Z",
+              "completed_at": "2026-11-24T10:00:55Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-11-24T10:00:55Z",
+              "completed_at": "2026-11-24T10:00:55Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/138362134510",
+          "labels": [
+            "windows-latest"
+          ],
+          "runner_id": 1000137253,
+          "runner_name": "GitHub Actions 1000137253",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      ],
+      "nativeStatus": "passed-scoped-native-function",
+      "actualOriginalHwpPickerTarget": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\hwp3-source\\source.hwp",
+      "charsetQualification": {
+        "reference": {
+          "url": "https://www.unicode.org/notes/tn60/tn60-2.txt",
+          "description": "Unicode Technical Note60 version2, Ken Lunde/Jaemin Chung legacy modern Hangul/Johab mappings; technical note, not a vendor format specification.",
+          "bytes": 464316,
+          "sha256": "463bf47532273b09ed5e9218f4b9dd570ffbba7fef7f9529b5968af98cf8408d",
+          "rows": 11172,
+          "terms": "https://www.unicode.org/copyright.html",
+          "redistribution": "Reference table downloaded privately for verification; only digest, counts and observed facts retained, not the complete table."
+        },
+        "allModernRowsMatched": 11172,
+        "actualUniqueSourceSyllables": 9,
+        "observed": {
+          "b465": "U+C548",
+          "9177": "U+B155",
+          "d061": "U+D558",
+          "ad41": "U+C138",
+          "b661": "U+C694",
+          "b5a1": "U+C624",
+          "cf65": "U+D508",
+          "cfa1": "U+D53C",
+          "af61": "U+C2A4"
+        },
+        "method": "Own composition formula and independent Python Johab codec checked against pinned Unicode UTN60 table for all modern syllables; actual fixture codes then matched separately",
+        "notAccepted": "No Hanja/archaic/incomplete Jamo or general HNC charset acceptance",
+        "fullFormatAcceptance": false
+      },
+      "originalExpectedUnicodeParagraphs": [
+        "Hello OpenOffice.org!",
+        "\uc548\ub155\ud558\uc138\uc694 \uc624\ud508\uc624\ud53c\uc2a4!"
+      ],
+      "scope": "Native HWP3:Two native paragraphs, exact modern Johab Unicode/NFC and CR semantics, edit/UndoRedo/native DOCXsave/newPID; not full format",
+      "status": "independently-rechecked-functional-only",
+      "savedByteOracles": [
+        {
+          "kind": "writer",
+          "bytes": 7136,
+          "sha256": "7f9db6f8ebf2943e665dc406c33d6d4277b4fecb150a1ab3db0a433d46bdd4ea",
+          "checkedSourceCases": 6,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 7137,
+          "sha256": "1bcf83bc3aeb6131ea82db4359689ca3cd96609679770b5bec39149781f81516",
+          "checkedSourceCases": 6,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 7093,
+          "sha256": "083ef71c33210a4e528c7b30efc9e6c2067515b340f8fcd1d29be53b211b1b3f",
+          "checkedSourceCases": 6,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 7136,
+          "sha256": "11203a91f8e7b5f66844f5c24290be1c851ffcb6ce1c7e00a1a4b8111854dc99",
+          "checkedSourceCases": 6,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        },
+        {
+          "kind": "writer",
+          "bytes": 7094,
+          "sha256": "a299572084e7c157130d82514045d7ed9791468f898b9c376a10ce6e15b97f5c",
+          "checkedSourceCases": 6,
+          "fullFormatAcceptance": false,
+          "status": "passed"
+        }
+      ]
+    },
+    "spreadsheet": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "presentation": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "email": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "notition": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "database": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    }
+  },
+  "xlsb377": {
+    "status": "not-tested-in-this-execution",
+    "reference": "Retain separately accepted supplement; no new pass inferred"
+  }
+}
