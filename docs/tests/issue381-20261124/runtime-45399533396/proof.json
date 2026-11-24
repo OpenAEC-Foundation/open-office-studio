@@ -1,0 +1,277 @@
+{
+  "run": 45399533396,
+  "job": 138464165722,
+  "attempt": 1,
+  "harnessCommit": "2dce1679ee0817c1edb674b0ab29f17ee88cb358",
+  "harnessSourceCommit": "08d5a7e857dd564aafe6c323f3981d498924d090",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "status": "FAIL_OBSERVER_UUID_READER_TRACE_BEFORE_ANY_CONVERTER",
+  "artifactDownloadCount": 1,
+  "artifact": {
+    "id": 14921559711,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkyMTU1OTcxMQ==",
+    "name": "issue381-private-runtime-proof",
+    "size_in_bytes": 12004610,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14921559711",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14921559711/zip",
+    "expired": false,
+    "digest": "sha256:5ed9a48722fd5e8e6ed92a917c653725dc221370a902888ae649913d03679b35",
+    "created_at": "2026-11-24T13:06:39Z",
+    "updated_at": "2026-11-24T13:06:39Z",
+    "expires_at": "2027-02-22T13:03:34Z",
+    "workflow_run": {
+      "id": 45399533396,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/fix-381-wq2-vlookup-index-20261124",
+      "head_sha": "2dce1679ee0817c1edb674b0ab29f17ee88cb358"
+    }
+  },
+  "inventoryAudit": [
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-build",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-configure",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-rebuilt-control",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-rebuilt-control",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-patched",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-patched",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-build",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-before-copy",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "variant-copied",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-after-copy",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "variant-derived",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "cache-created",
+      "entries": 3,
+      "sha256": "ca2811bfa11ccdb3ecb72bdd0ba36cb930d646ce41cf90eb3e2a87b3de6b2d94"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "converter-cache-before-host-probe",
+      "entries": 2,
+      "sha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "converter-cache-after-host-probe",
+      "entries": 2,
+      "sha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "variant-caches-after-host-probe",
+      "entries": 3,
+      "sha256": "ca2811bfa11ccdb3ecb72bdd0ba36cb930d646ce41cf90eb3e2a87b3de6b2d94"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "after-converter",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-after-converter",
+      "entries": 15082,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "cache-after-converter",
+      "entries": 3,
+      "sha256": "ca2811bfa11ccdb3ecb72bdd0ba36cb930d646ce41cf90eb3e2a87b3de6b2d94"
+    }
+  ],
+  "passed": [
+    "request/source/queue/disk/original runtime verifier",
+    "both real libraries compile, bounded ABI/SONAME/NEEDED/ORIGIN/ldd",
+    "canonical and private prefix complete inventories unchanged",
+    "host actual version/package/ELF/dependencies captured; public UUID writer36B/0644 and existing-file preservation only",
+    "observer owns separate XDG cache; converter cache exact before/after unchanged",
+    "engine/SSR process cleanup; absolute deadline"
+  ],
+  "failure": "Mandatory actual UUID reader trace absent; observer stdout and stderr both0B. Host inner partial receipt passed=true is NOT full qualification; enclosing converter report passed=false. No metadata seeding or converter process reached.",
+  "sourceInference": "Pinned upstream2.13.1 fcdbg.c:566-578 initializes debug only via FcInitDebug; fcinit.c:77-88 and158-160 shows FcInitLoadConfig invokes this. Probe calls only FcConfigCreate. This is source-based explanation, not a new executed initialization differential or historical writer proof.",
+  "notRun": [
+    "private runtime UUID metadata seeding",
+    "packaged/control/patched actual conversion",
+    "61-cell typed original oracle in this run",
+    "P5 engine edit/UndoRedo/save/fresh-process reopen",
+    "native/other OS/browser acceptance"
+  ],
+  "retryOrAutofix": false,
+  "files": [
+    {
+      "name": ".gitattributes",
+      "bytes": 52,
+      "sha256": "589f9872ba939a24ad54b41a98c9868e6b98627e76207690d8205f75970535de"
+    },
+    {
+      "name": "artifact.zip",
+      "bytes": 12004610,
+      "sha256": "5ed9a48722fd5e8e6ed92a917c653725dc221370a902888ae649913d03679b35"
+    },
+    {
+      "name": "build-proof/build.json",
+      "bytes": 54933,
+      "sha256": "e0a4c84b1ccc88938c32bbf85367837d0c6613684afb251532db5662d825c923"
+    },
+    {
+      "name": "deadline-finish.json",
+      "bytes": 317,
+      "sha256": "8a3a41a79700c1012ad750d91e27674c55ba48a6232bcec74fb1ba06b5c515bd"
+    },
+    {
+      "name": "failed-job.log",
+      "bytes": 8102,
+      "sha256": "81950ada268f13e33c539148d9b20eba131aa98b2d3e23a20ccf84a0c5a71bae"
+    },
+    {
+      "name": "fontconfig-2.13.1-COPYING",
+      "bytes": 1313,
+      "sha256": "fa4cd9ab005185e10cd8f7504518856c7dd36c01e766c2bac87f4fc638e9f886"
+    },
+    {
+      "name": "fontconfig-2.13.1-fcdbg.c",
+      "bytes": 14421,
+      "sha256": "12848bedd2c6535f1a2d67b414e8c5e9e5121ae31c5ee2e55baf4694d71ebbcd"
+    },
+    {
+      "name": "fontconfig-2.13.1-fcinit.c",
+      "bytes": 6279,
+      "sha256": "8155a5490131be45d403af5fb94ae2e7acf2be97730d1fa03d6e70cd31c18e08"
+    },
+    {
+      "name": "members.json",
+      "bytes": 13770,
+      "sha256": "3679f46ab663b4e392dc19b125edf56259e68970a106e6d4c21bbf28a38b2d63"
+    },
+    {
+      "name": "official-artifact.json",
+      "bytes": 853,
+      "sha256": "79cfa0fd6909d42e718475f0115d5201deaa1077f1759067c5775190c93b76bc"
+    },
+    {
+      "name": "official-run.json",
+      "bytes": 15443,
+      "sha256": "e4d72ff78aa8020702f7afc1aa06dfdc214e922ae1ab6e92c13f3db6b5d0cdd2"
+    },
+    {
+      "name": "real-proof/packaged/converter-report.json",
+      "bytes": 5586,
+      "sha256": "100aad5bc240b355f3b95ad7dc094c456e7c1f6765248d86f41c2d1ae7ea6f31"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/reader/.uuid",
+      "bytes": 36,
+      "sha256": "bc09c8492a88a7c30983c274378c32233f6beb010461f01f7e421fc3fc7677dd"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/report.json",
+      "bytes": 4755,
+      "sha256": "2e9fe095b718560460592caa9d64d346f3c1a36a535d9f11dff7d32d4a680ed8"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "real-proof/packaged/fontconfig-host/writer/.uuid",
+      "bytes": 36,
+      "sha256": "a697adba6ff7202208822a0f601d6071ed08b751d1f2b259661fd1b7158b64aa"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/converter-cache-after-host-probe.json.gz",
+      "bytes": 74,
+      "sha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/converter-cache-before-host-probe.json.gz",
+      "bytes": 74,
+      "sha256": "422376b34fefe9d1a7e276b4d1695bea890c7475af911e54a212906575bddd70"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/steps.json",
+      "bytes": 5656,
+      "sha256": "5776f18b77d8fca2091a0e897607f90f19254f2511423d5db8060172e3044cf9"
+    },
+    {
+      "name": "real-proof/report.json",
+      "bytes": 1662,
+      "sha256": "ac0ec1d245829be6d7d91c66d709357c3b44d9dd9fe308f761d3ecf3498fcc94"
+    },
+    {
+      "name": "request-verification.json",
+      "bytes": 412,
+      "sha256": "5e6204f0e6d802ca311262da38c5161ea852c4da2f562cc2aae068427141e048"
+    },
+    {
+      "name": "runner-frontgate.json",
+      "bytes": 122,
+      "sha256": "99319fd358bf19779b9c681f812a62587a837ffc00e0dfcb01c80c32bed5d373"
+    }
+  ]
+}

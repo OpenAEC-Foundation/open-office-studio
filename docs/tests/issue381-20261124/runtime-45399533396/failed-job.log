@@ -1,0 +1,45 @@
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	﻿2026-11-24T13:06:13.7355571Z ##[group]Run python3 qa/issue381/deadline.py build node qa/issue381/engine_real.mjs
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7356585Z ^[[36;1mpython3 qa/issue381/deadline.py build node qa/issue381/engine_real.mjs^[[0m
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7422936Z shell: /usr/bin/bash -e {0}
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7423222Z env:
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7425717Z   GH_TOKEN: ***
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7425965Z   DEBIAN_FRONTEND: noninteractive
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7426243Z   OOS_381_DISPATCH_EPOCH: 1795525405
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7426584Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7427017Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7427437Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7427820Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7428187Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7428567Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7428975Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:13.7429293Z ##[endgroup]
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1907328Z node:internal/modules/run_main:123
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1907816Z     triggerUncaughtException(
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1908102Z     ^
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1908227Z 
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1908521Z AssertionError [ERR_ASSERTION]: Traceback (most recent call last):
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1909278Z   File "/home/runner/work/open-office-studio/open-office-studio/qa/issue381/convert_real.py", line 154, in <module>
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1909846Z     if __name__=='__main__':main()
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1910128Z                             ^^^^^^
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1910700Z   File "/home/runner/work/open-office-studio/open-office-studio/qa/issue381/convert_real.py", line 72, in main
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1911522Z     host=qualify_host(out/'fontconfig-host',env,args.variant,policy,min(30,remaining('build')),cache_guard)
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1912126Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1913126Z   File "/home/runner/work/open-office-studio/open-office-studio/qa/issue381/font_cache.py", line 152, in qualify_host
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1914245Z     assert report['readerDebugToken'].encode() in child.stdout, 'Actual host UUID reader not observed'
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1914776Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1915196Z AssertionError: Actual host UUID reader not observed
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1915432Z 
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1915442Z 
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1915539Z 1 !== 0
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1915656Z 
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1916023Z     at file:///home/runner/work/open-office-studio/open-office-studio/qa/issue381/engine_real.mjs:94:12 {
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1916512Z   generatedMessage: false,
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1916775Z   code: 'ERR_ASSERTION',
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1917012Z   actual: 1,
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1917222Z   expected: 0,
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1917444Z   operator: 'strictEqual',
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1917692Z   diff: 'simple'
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1917903Z }
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1918016Z 
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.1918120Z Node.js v22.23.5
+private-linux	Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen	2026-11-24T13:06:37.2195273Z ##[error]Process completed with exit code 1.
