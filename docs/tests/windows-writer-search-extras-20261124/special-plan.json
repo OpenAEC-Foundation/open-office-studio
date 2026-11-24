@@ -1,0 +1,217 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Three explicitly requested independent native Windows search families on public P5 only",
+  "coverage": "Prior ordinary/regex/core/title/public-installer results reused. Source unit cases cover these semantics; previous P5-native reports explicitly excluded these three families.",
+  "sourceSha256": {
+    "src/tekst/zoeken/logica.ts": "de985dd9b371b389fa079ed3e09e44865ec42a4753598ede7d5a77a9c4d591d1",
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/tekst/zoeken/zoeken.test.ts": "82d395e0c3a1979992400d459f7338521dd2572b321efcfe9b1f081ef33d880f",
+    "src/i18n/locales/en/writer.json": "31f10d92e853f5d83350458e5cddd42b8db747521af3c6a6bd979fe79c5ecb07"
+  },
+  "mode": "special-20261124",
+  "baseline": [
+    "code 12 ^ mark",
+    "bold",
+    "left\tright",
+    "hard\u000bline",
+    "first\nsecond",
+    "space\u00a0mark",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "code 12 ^ mark",
+    "bold",
+    "left\tright",
+    "hard\u000bline",
+    "first\nsecond",
+    "space\u00a0mark",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "code [^1][^2] ^ mark",
+    "bold",
+    "joined",
+    "hard\tline",
+    "first\nSECOND",
+    "gap\u00a0MARK",
+    "",
+    "",
+    ""
+  ],
+  "ariaWhitespaceProjection": true,
+  "patterns": [
+    {
+      "query": "^t",
+      "count": 1
+    },
+    {
+      "query": "^l",
+      "count": 1
+    },
+    {
+      "query": "first^psecond",
+      "count": 1
+    },
+    {
+      "query": "^s",
+      "count": 1
+    },
+    {
+      "query": "^^",
+      "count": 1
+    },
+    {
+      "query": "^#",
+      "count": 2
+    },
+    {
+      "query": "code^w12",
+      "count": 1
+    }
+  ],
+  "operations": [
+    {
+      "query": "left^tright",
+      "replacement": "joined",
+      "count": 1,
+      "before": [
+        "code 12 ^ mark",
+        "bold",
+        "left\tright",
+        "hard\u000bline",
+        "first\nsecond",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ],
+      "after": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\u000bline",
+        "first\nsecond",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "query": "hard^lline",
+      "replacement": "hard^tline",
+      "count": 1,
+      "before": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\u000bline",
+        "first\nsecond",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ],
+      "after": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nsecond",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "query": "first^psecond",
+      "replacement": "first^pSECOND",
+      "count": 1,
+      "before": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nsecond",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ],
+      "after": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nSECOND",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "query": "space^smark",
+      "replacement": "gap^sMARK",
+      "count": 1,
+      "before": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nSECOND",
+        "space\u00a0mark",
+        "",
+        "",
+        ""
+      ],
+      "after": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nSECOND",
+        "gap\u00a0MARK",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "query": "^#",
+      "replacement": "[^^^&]",
+      "count": 2,
+      "before": [
+        "code 12 ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nSECOND",
+        "gap\u00a0MARK",
+        "",
+        "",
+        ""
+      ],
+      "after": [
+        "code [^1][^2] ^ mark",
+        "bold",
+        "joined",
+        "hard\tline",
+        "first\nSECOND",
+        "gap\u00a0MARK",
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "reopenQuery": "joined",
+  "reopenCount": 1,
+  "semantics": "P5 caret-code table supports ^t tab/^l line break/^p paragraph/^s NBSP/^^ caret/^# digit/^w whitespace; replacement adds ^& found text. Fixture uses real w:tab/w:br/separate w:p. DOCX controls audited exactly. ARIA textContent whitespace projection is only visual text observation because sibling paragraphs omit separators."
+}

@@ -1,0 +1,118 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Three explicitly requested independent native Windows search families on public P5 only",
+  "coverage": "Prior ordinary/regex/core/title/public-installer results reused. Source unit cases cover these semantics; previous P5-native reports explicitly excluded these three families.",
+  "sourceSha256": {
+    "src/tekst/zoeken/logica.ts": "de985dd9b371b389fa079ed3e09e44865ec42a4753598ede7d5a77a9c4d591d1",
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/tekst/zoeken/zoeken.test.ts": "82d395e0c3a1979992400d459f7338521dd2572b321efcfe9b1f081ef33d880f",
+    "src/i18n/locales/en/writer.json": "31f10d92e853f5d83350458e5cddd42b8db747521af3c6a6bd979fe79c5ecb07"
+  },
+  "mode": "wildcard-20261124",
+  "baseline": [
+    "kat ket kit KAT katten",
+    "kat",
+    "cab car caat 123 *",
+    "item-12 item-34",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "a-k ket kit KAT katten",
+    "kat",
+    "cab car caat 123 *",
+    "item-12 item-34",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "a-k e-k i-k KAT katten",
+    "a-k",
+    "cab car caat 123 *",
+    "item-12 item-34",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "capturePattern": "<(k)([aei])t>",
+  "replacement": "\\2-\\1",
+  "patterns": [
+    {
+      "query": "<k?t>",
+      "count": 4,
+      "matches": [
+        "kat",
+        "ket",
+        "kit",
+        "kat"
+      ]
+    },
+    {
+      "query": "ka*ten",
+      "count": 1,
+      "matches": [
+        "kat ket kit KAT katten"
+      ]
+    },
+    {
+      "query": "<[ck]a[tbr]>",
+      "count": 4,
+      "matches": [
+        "kat",
+        "kat",
+        "cab",
+        "car"
+      ]
+    },
+    {
+      "query": "<[!k]a[br]>",
+      "count": 2,
+      "matches": [
+        "cab",
+        "car"
+      ]
+    },
+    {
+      "query": "a{2}",
+      "count": 1,
+      "matches": [
+        "aa"
+      ]
+    },
+    {
+      "query": "<[a-z]@>",
+      "count": 10,
+      "matches": [
+        "kat",
+        "ket",
+        "kit",
+        "katten",
+        "kat",
+        "cab",
+        "car",
+        "caat",
+        "item",
+        "item"
+      ]
+    },
+    {
+      "query": "\\*",
+      "count": 1,
+      "matches": [
+        "*"
+      ]
+    }
+  ],
+  "reopenQuery": "a-k",
+  "reopenCount": 2,
+  "semantics": "Actual P5 UI help offers ?,*,[],[!],{},@,<>,groups and backslash-number replacement. Wildcards always case-sensitive. Star can include spaces, so ka*ten spans the first full cell. Expected ASCII matches/captures independently Python-checked before runtime."
+}

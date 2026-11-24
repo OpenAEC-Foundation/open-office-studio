@@ -1,0 +1,146 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Three explicitly requested independent native Windows search families on public P5 only",
+  "coverage": "Prior ordinary/regex/core/title/public-installer results reused. Source unit cases cover these semantics; previous P5-native reports explicitly excluded these three families.",
+  "sourceSha256": {
+    "src/tekst/zoeken/logica.ts": "de985dd9b371b389fa079ed3e09e44865ec42a4753598ede7d5a77a9c4d591d1",
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/tekst/zoeken/zoeken.test.ts": "82d395e0c3a1979992400d459f7338521dd2572b321efcfe9b1f081ef33d880f",
+    "src/i18n/locales/en/writer.json": "31f10d92e853f5d83350458e5cddd42b8db747521af3c6a6bd979fe79c5ecb07"
+  },
+  "mode": "format-20261124",
+  "baseline": [
+    "token plain",
+    "token bold",
+    "token italic",
+    "token underline",
+    "token both",
+    "token heading",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "token plain",
+    "token bold",
+    "token italic",
+    "token underline",
+    "token both",
+    "token heading",
+    "",
+    "",
+    ""
+  ],
+  "boldReplaced": [
+    "token plain",
+    "ink bold",
+    "token italic",
+    "token underline",
+    "ink both",
+    "token heading",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "token plain",
+    "ink bold",
+    "token italic",
+    "token underline",
+    "ink both",
+    "ink heading",
+    "",
+    "",
+    ""
+  ],
+  "styleCells": {
+    "bold": [
+      1,
+      4
+    ],
+    "italic": [
+      2,
+      4
+    ],
+    "underline": [
+      3
+    ],
+    "heading": [
+      5
+    ]
+  },
+  "expectedStyleControls": {
+    "bold1": true,
+    "bold4": true,
+    "italic2": true,
+    "italic4": true,
+    "underline3": true,
+    "heading5": "Heading1"
+  },
+  "filters": [
+    {
+      "name": "bold yes",
+      "values": {
+        "Bold": "ja"
+      },
+      "cells": [
+        1,
+        4
+      ]
+    },
+    {
+      "name": "bold no",
+      "values": {
+        "Bold": "nee"
+      },
+      "cells": [
+        0,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "name": "italic yes",
+      "values": {
+        "Italic": "ja"
+      },
+      "cells": [
+        2,
+        4
+      ]
+    },
+    {
+      "name": "bold and italic",
+      "values": {
+        "Bold": "ja",
+        "Italic": "ja"
+      },
+      "cells": [
+        4
+      ]
+    },
+    {
+      "name": "underline yes",
+      "values": {
+        "Underline": "ja"
+      },
+      "cells": [
+        3
+      ]
+    },
+    {
+      "name": "Heading1",
+      "values": {
+        "Style": "Heading1"
+      },
+      "cells": [
+        5
+      ]
+    }
+  ],
+  "reopenQuery": "ink",
+  "reopenCount": 3,
+  "semantics": "UI explicitly offers any/yes/no format filters, paragraph style and formatting-only search without text. Fixture sets explicit true/false run formatting including false on Heading1 to avoid inheritance ambiguity. Source template has Heading1. Selects operated through actual Tab/Home/ArrowDown, never value setters."
+}
