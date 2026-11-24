@@ -1,0 +1,147 @@
+{
+  "status": "PASS_FOR_ORDINARY_FIND_REPLACE",
+  "date": "2026-11-24",
+  "scope": "Ordinary Find/Replace-only native continuation on identical public P5 Suite; earlier core checks reused, no new title test",
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "release": 456623378,
+    "publicAsset": 786782581,
+    "installerSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "installedPESha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+    "suiteChildArtifact": 14828676560
+  },
+  "native": {
+    "run": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45393902599",
+    "job": 138444476565,
+    "attempt": 1,
+    "harnessCommit": "76acf269ebb8e9f0ce7ce6c154b37c8efa8fc25b",
+    "branch": "codex/windows-writer-find-replace-20261124"
+  },
+  "artifact": {
+    "id": 14920691245,
+    "size_in_bytes": 168497,
+    "digest": "sha256:a6ce22adc548da5903c50d19e94832b73413db79c9b911fe3cc4d4d748e88546",
+    "expires_at": "2027-02-22T12:28:51Z"
+  },
+  "tests": [
+    {
+      "name": "Current real editor focus/keyboard/save/normal close/newPID reopen preflight",
+      "passed": true,
+      "pid0": 5680,
+      "pid1": 6788
+    },
+    {
+      "name": "Literal case-insensitive search includes substrings across cells",
+      "passed": true,
+      "status": "10 results"
+    },
+    {
+      "name": "Whole words exclude underscore/digit continuations; emoji is a boundary",
+      "passed": true,
+      "status": "6 results"
+    },
+    {
+      "name": "Match case filters the same whole-word result set",
+      "passed": true,
+      "status": "4 results"
+    },
+    {
+      "name": "Replace current changes only selected eligible match; immediate document Undo/Redo works with pane open",
+      "passed": true
+    },
+    {
+      "name": "Replace All affects exactly six eligible whole words; one-step Undo and both Redo shortcuts preserve excluded text",
+      "passed": true
+    },
+    {
+      "name": "Real CtrlS, normal exit, newPID reopen retains exact replacements and bold control; reopened native Find sees six replacements",
+      "passed": true,
+      "pid1": 6788,
+      "pid2": 8316
+    }
+  ],
+  "independentDownloadedDocxAudit": "PASS: exact nine cells, three rows, one table, bold second cell; actual final file SHA equals saved/reopened record",
+  "visualReview": "Assistant inspected actual saved/reopened native PNGs. Visible replacements and bold control match and remain readable after reopening. Different scroll positions are not compared as layout fidelity.",
+  "observationOutsideCurrentAcceptance": "Emoji is preserved exactly in text/XML and search boundary tests, but appears as a missing-glyph box on this CI host. Font/glyph rendering coverage is not certified by this test; no new independent font defect or cause is established. Recorded for integration triage, not converted into a search/data-loss bug.",
+  "processes": [
+    {
+      "pid": 5680,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    },
+    {
+      "pid": 6788,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    },
+    {
+      "pid": 8316,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    }
+  ],
+  "cleanup": {
+    "ownedAppsClosed": true,
+    "policyRestored": true,
+    "privateInstallRemoved": true
+  },
+  "cleanupLimits": "Raw native helper reports privateInstallRemoved after successful uninstaller invocation; it does not separately inventory residual installation directory files. All three owned application exits0 and policy restore are verified; hosted job completed. No local GUI/capture/session/server was created.",
+  "initialFailedRun": {
+    "run": 45393188892,
+    "artifact": 14918828955,
+    "artifactSha256": "da5e6a8b239726db0bf3d46a5cd91e8e9d1ecd6d59360239703e9fd6ad33dfab",
+    "meaning": "FAIL before child download/app launch: legacy consumer demanded title test. Corrected explicit signed Find mode with seven targeted passing consumer contracts. Not a product issue; never relabel initial run as passed."
+  },
+  "issues": "No ordinary Find/Replace product failure reproduced; no new issue or issue status change",
+  "limits": [
+    "Published P5b696/48.1 Windows Suite only; not new727903cc/PR384 combination acceptance",
+    "Reused earlier12 core checks and prior374/SaveAs/public installer binding; no repeat or new title acceptance",
+    "Regex/wildcards/style-search, other modules/OS and complete Writer certification outside this assigned group",
+    "No main/tag/publication/product edits"
+  ],
+  "files": {
+    "artifact-api.json": {
+      "bytes": 831,
+      "sha256": "34c9e9cee3b1edede1b3d9e57e8d0d53a6dab2118877d8f67b2208dd9d0efea9"
+    },
+    "Find Replace native.docx": {
+      "bytes": 37014,
+      "sha256": "eae310ed9baef8bb7760d867a85185f4959b77e311838f4d3aa3abf5d84f8e86"
+    },
+    "find-replace-reopened.png": {
+      "bytes": 57592,
+      "sha256": "764071a8cfc3a6805706805db597cc06c8f75a31b8c11a6b3de7b1705bad4c4a"
+    },
+    "find-replace-saved.png": {
+      "bytes": 57748,
+      "sha256": "11069376a08fa37fff2128cb3d7845ca87391b8823fee9e7e1cea5a56553ec2c"
+    },
+    "independent-audit.json": {
+      "bytes": 742,
+      "sha256": "124ff9c70e33f6de05508dcbef83c75ef18c2fd85265a117cd05b811fd9a3880"
+    },
+    "initial-harness-failure.json": {
+      "bytes": 10079,
+      "sha256": "ebc23ae76ae07965a8feb9653aa4a1b6d006d1d47f56f47cae18c3f2c3c4cfd7"
+    },
+    "original-proof.zip": {
+      "bytes": 168497,
+      "sha256": "a6ce22adc548da5903c50d19e94832b73413db79c9b911fe3cc4d4d748e88546"
+    },
+    "report.json": {
+      "bytes": 28417,
+      "sha256": "504482444adb86e6528a482d6cd992addfaab334fd485f82ed4e3be8e4cdbf80"
+    }
+  }
+}
