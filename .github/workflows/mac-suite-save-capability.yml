@@ -1,0 +1,56 @@
+name: One P5 Suite metadata-only capability host
+on:
+  push:
+    branches: [codex/mac-suite-save-capability-20261124]
+    paths: [.github/mac-suite-save-capability-request.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mac-suite-save-capability-20261124
+  cancel-in-progress: false
+jobs:
+  metadata-only:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: b696ab86bd1c128729a079b68c0082e6df3d36a5
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .local/mac-save-capability-harness
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard one ARM64 host, exact QA/app source, expiry and queue before download
+        timeout-minutes: 1
+        run: python .local/mac-save-capability-harness/scripts/mac-suite-save-capability.py guard .local/mac-save-capability-harness/.github/mac-suite-save-capability-request.json .local/mac-save-capability-proof
+      - name: Reuse authenticated Suite-only child and original source witness
+        timeout-minutes: 6
+        run: python .local/mac-save-capability-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-save-capability-harness/.github/mac-suite-save-capability-request.json .local/mac-save-capability-input
+      - name: Read-only signature, complete entitlements and host/tool metadata; no app launch
+        timeout-minutes: 5
+        run: python .local/mac-save-capability-harness/scripts/mac-suite-save-capability.py inspect .local/mac-save-capability-harness/.github/mac-suite-save-capability-request.json .local/mac-save-capability-proof --identity .local/mac-save-capability-input/identity.json
+      - name: Remove only own acquisition ZIPs and DMG; retain small raw receipts
+        if: always()
+        timeout-minutes: 1
+        run: python .local/mac-save-capability-harness/scripts/mac-suite-save-capability.py cleanup-acquisition .local/mac-save-capability-input .local/mac-save-capability-proof
+      - uses: actions/upload-artifact@v4
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: mac-save-capability-${{ github.sha }}
+          retention-days: 30
+          path: |
+            .local/mac-save-capability-proof/
+            .local/mac-save-capability-input/*.json
+            .local/mac-save-capability-input/*.log
+          include-hidden-files: true
+          if-no-files-found: error
