@@ -68,6 +68,7 @@ def audit(run, metadata, jobs, fetched, target):
     owner=fetched['standalone-windows-p5-reuse-binding' if reuse else 'standalone-windows-p5-binding']
     binding = json.loads(exactly(owner, 'binding.json').read_bytes())
     requested=set(APPS)
+    requested377=False
     if reuse:
         reuse_plan=json.loads(exactly(owner,'reuse-plan.json').read_bytes())
         config=reuse_plan['config']
@@ -80,6 +81,7 @@ def audit(run, metadata, jobs, fetched, target):
         assert parent_meta['digest']=='sha256:'+digest(archive) and archive.stat().st_size==parent_meta['size_in_bytes']
         with zipfile.ZipFile(archive) as z:assert json.loads(z.read('binding.json'))==binding
         requested={case['app'] for case in reuse_plan['matrix'] if case['mode']=='core'}
+        requested377=any(case['mode']=='xlsb377' for case in reuse_plan['matrix'])
         assert requested.issubset({'presentation','email','notition','database'})
         assert binding['preparerRun']==config['preparerRun'] and binding['preparerHarness']==config['preparerHarness']
     else:
@@ -179,9 +181,12 @@ def audit(run, metadata, jobs, fetched, target):
             entry.update(status='proof-audit-failed', error=repr(error))
     supplement_name='standalone-windows-p5-spreadsheet-xlsb377-proof'
     if supplement_name in fetched:
+        assert not reuse or requested377
         result['xlsb377']=audit377(fetched[supplement_name],binding,metadata,jobs)
-    elif reuse:
+    elif reuse and requested377:
         result['xlsb377']=dict(status='missing-proof')
+    elif reuse:
+        result['xlsb377']=dict(status='not-tested-in-this-execution',reference='Retain separately accepted supplement; no new pass inferred')
     write(target/'independent-audit.json', result)
     return result
 

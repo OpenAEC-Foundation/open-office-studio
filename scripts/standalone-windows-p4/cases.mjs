@@ -33,7 +33,7 @@ export async function officeCase(qa, kind, phase) {
     // Same supported native Outline route already proven by the P5 Mac owner.
     // The earlier direct-canvas focus failures remain separate evidence.
     await page.getByRole('tab',{name:/^(View|Beeld)$/i}).click();
-    await page.getByRole('button',{name:/^(Outline|Overzicht)$/i}).click();
+    await page.getByRole('toolbar',{name:/^(View|Beeld)$/i}).getByRole('button',{name:/^(Outline|Overzicht)$/i}).click();
     const paragraphs=page.locator('.dia-overzicht-inhoud textarea');
     await paragraphs.first().waitFor();
     const expected=qa.presentationText+(phase==='initial'?'':' STANDALONE23 PRESENTATION EDIT');

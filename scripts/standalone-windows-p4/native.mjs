@@ -58,8 +58,21 @@ async function focus(locator,label,physicalTarget=locator) {
  await checkFocus(locator,label);
 }
 async function checkFocus(locator,label) {
+ record({focusProbe:label,actual:await focusSnapshot()});
  assert(await locator.evaluate(el=>el===document.activeElement || el.contains(document.activeElement)),`Actual ${label} input must own renderer focus`);
  record({focus:label,osAndRenderer:true,keys:'Windows Control'});
+}
+async function focusSnapshot() {
+ return page.evaluate(()=>{
+  const chain=[];let el=document.activeElement;
+  while(el&&chain.length<8) {
+   const bounds=el.getBoundingClientRect();
+   chain.push({tag:el.tagName,id:el.id,role:el.getAttribute('role'),label:el.getAttribute('aria-label'),className:String(el.className),connected:el.isConnected,contentEditable:el.isContentEditable,readOnly:el.readOnly,disabled:el.disabled,bounds:{x:bounds.x,y:bounds.y,width:bounds.width,height:bounds.height}});
+   el=el.shadowRoot?.activeElement;
+  }
+  const selection=document.getSelection();
+  return {documentHasFocus:document.hasFocus(),activeElementChain:chain,domSelection:selection?{rangeCount:selection.rangeCount,collapsed:selection.isCollapsed,anchorTag:selection.anchorNode?.parentElement?.tagName,focusTag:selection.focusNode?.parentElement?.tagName}:null,scope:'Read-only focus/DOM selection observation; no canvas caret or input acceptance inferred'};
+ });
 }
 async function fileReady(path) {
  let previous=-1,stable=0; const deadline=Date.now()+20000;
@@ -221,7 +234,7 @@ try {
  report.status='passed-scoped-native-function';
 } catch(error) {
  primaryError=error; report.status=/BLOCKED:/.test(String(error))?'blocked':'failed';report.error=String(error.stack||error);
- try {await page?.screenshot({path:join(root,'failure.png')});report.failureVisibleText=await page?.locator('body').innerText();}catch{}
+ try {if(page)report.failureFocus=await focusSnapshot();await page?.screenshot({path:join(root,'failure.png')});report.failureVisibleText=await page?.locator('body').innerText();}catch{}
 } finally {
  try {if(child?.pid && child.exitCode===null) {await action('Close').catch(()=>{});await sleep(1500);if(child.exitCode===null){await run('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true});report.cleanup.forcedOwnedProcessTree=true;}}}catch(error){report.cleanup.processError=String(error);}
  await browser?.close().catch(()=>{});
