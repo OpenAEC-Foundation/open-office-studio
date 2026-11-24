@@ -1,0 +1,128 @@
+{
+  "kind": "PROPOSED RESEARCH ONLY; NO DISPATCH OR EXECUTION AUTHORITY",
+  "recordedAtUTC": "2026-11-24T13:00:40.141328+00:00",
+  "owner": "Mac-save chat; integration chat sole coordinator/dispatcher; no second GUI operator",
+  "patchCommit": "03730b78ad0dae5694cf107e2d966bd782d0dd8b",
+  "patchTree": "734e4779b14404be695e380abf80534b39690bcc",
+  "patchSha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+  "manifestSha256": "5727e176a15c1de38871759640c526fe51272c65ce353728fd8affe897739e8a",
+  "validationSha256": "5197e6caba6e5d5caa3ade0e2ca8c6f234f38e5d22f4e055179dc8c64c5ed7d5",
+  "baseApp": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "independentReview": {
+    "status": "PENDING_COORDINATOR_CONFIRMATION",
+    "receipt": null,
+    "sha256": null
+  },
+  "overlay": {
+    "file": "derived-tauri-overlay.proposed.json",
+    "sha256": "023b8fd7a4be67385159dc5941c52ecd2bf2060dbaf4b6f3b224f9af50fc5ba7",
+    "value": {
+      "productName": "Open Office Studio Save Trace QA",
+      "identifier": "org.openaec.office-studio.qa-save-trace",
+      "version": "2026.48.101",
+      "bundle": {
+        "createUpdaterArtifacts": false
+      }
+    },
+    "status": "PROPOSED NOT APPLIED; independent review required; no official version or release metadata change"
+  },
+  "objective": "Observe the four existing receiver/handler/serializer/native-write boundaries during one own synthetic Q and Command-S sequence; do not assume the historical failure recurs or infer a fix from nonrecurrence",
+  "originalEvidence": {
+    "negative": {
+      "run": 45355259350,
+      "artifact": 14902571239,
+      "zipSha256": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+      "status": "HISTORICAL FAIL; CAUSE OPEN"
+    },
+    "sixDiagnosticPasses": {
+      "run": 45358252707,
+      "artifact": 14903673521,
+      "zipSha256": "09894d8ea1ee01349d88c26245450f88c03c86d09675bab75f2f5e7c7c1a11aa",
+      "notAnExplanationOfNegative": true
+    },
+    "preservation": "Read-only historical archives; copy only pinned synthetic fixture into fresh own request root; never overwrite, relabel, or append new observations to old receipts"
+  },
+  "proposedAuthorization": {
+    "currentUserApproval": false,
+    "applyOnlyReviewedPatchToIsolatedResearchBranch": false,
+    "oneArm64SuiteBuild": false,
+    "oneFreshNativeHost": false,
+    "privateQaDeveloperIdSigningAndNotarization": false,
+    "mainOrIntegrationMerge": false,
+    "releaseTagAssetsBodyOrPublishing": false,
+    "attachDebugOrSecurityChanges": false,
+    "automaticRetryOrExtraHosts": false
+  },
+  "stage1Build": {
+    "count": 1,
+    "platform": "one ordinary GitHub macOS ARM64 build runner",
+    "maxMinutes": 90,
+    "checkout": "New own codex/qa research branch from exact b696 P5; apply only reviewed patch and reviewed identity overlay after explicit user go",
+    "beforeDispatch": [
+      "Independent review PASS of exact patch and overlay; every new source correction requires a new pin and reviewed receipt",
+      "Freeze actual applied research commit/tree and workflow commit/path/SHA, patch/config/fixture hashes, nonce, dispatch inputs, expiry and expected signer; no mutable branch-only binding",
+      "Integration coordinator checks critical Mac queue and allocates slot; no new main workflow or public release producer",
+      "Pin proposed builder/consumer code and their request hashes before starting; this proposal does not provide a finished or approved executable workflow"
+    ],
+    "checks": [
+      "Full TypeScript noEmit semantic check",
+      "Cargo/Tauri command compilation with default/off and explicit qa-save-trace on, locked dependencies; no new dependency or SDK/product fix",
+      "Observer-only gates/privacy/loss regressions; genuine command registration and transport remain runtime checks",
+      "Only Suite ARM64 package; no Windows/Linux/browser or six-standalone rebuild because this is a separate Mac observation experiment, not a product correction"
+    ],
+    "frontendOptIn": "VITE_OOS_QA_SAVE_TRACE=DERIVED_P5_SYNTHETIC_ONLY",
+    "buildCommandProposed": "pnpm desktop:build --bundles dmg --features qa-save-trace --config <reviewed-own-derived-overlay.json>",
+    "signingProposal": "Private QA Developer ID + hardened runtime and notarization via existing CI secret handling, only if explicitly included in approval; preserve normal entitlements, no debug/get-task-allow addition, no secret values in logs",
+    "signingFailurePolicy": "Stop; no ad hoc fallback, no Gatekeeper/quarantine/SIP change and no silent signing downgrade",
+    "outputs": [
+      "Exactly one clearly DERIVED QA DMG, source/config/witness manifest, build logs, identity/complete entitlements/signature/Gatekeeper/stapler reports and executable/resource hashes",
+      "Store as expiring private CI artifacts; no tag/release upload, updater signing or public distribution"
+    ],
+    "noAppInputOnBuildHost": true
+  },
+  "stage2Native": {
+    "count": 1,
+    "platform": "one fresh ARM64 macOS native runner; sole operator",
+    "maxMinutesIncludingOwnCleanupAndUpload": 20,
+    "entryGates": [
+      "Actual build SUCCESS and unique artifact ID/name/size/created/expires/digest independently match frozen workflow/app/attempt/job witness",
+      "Hash entire received derived artifact and exact DMG, .app identity, Mach-O, resources, signer/entitlements; prove own QA identifier/version and reject official-release or stale bundle",
+      "Fresh dedicated own profile/CWD/env; no installed or running official Suite/standalone; no borrowed user documents, accounts, credentials or remote mail",
+      "Current Swift compile and own native AX/HID/privacy/frontmost/PID/window/display preflight; fail closed before editor input on any mismatch",
+      "A fresh 32-lowerhex runtime nonce and short live request expiry; own RUNNER_TEMP/mac-save-trace-<nonce>/control.docx has exact immutable fixture bytes7480/SHA c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d",
+      "Enable runtime synthetic-only gate; bind actual owned workfile token/window; obtain90/91 and loss-free99 before Q; this handshake is not a post-Q save delay"
+    ],
+    "sequence": [
+      "Open actual synthetic control using genuine supported native document route and retain actual PID and initial file hash",
+      "Use the historical first-Q/Command-S sequence from scripts/mac-native-writer-preflight.py at b052808d6fcfed34c7543176f0a827891b02a60d: existing2x2 loaded control readiness before input, Maximize-once, exact unique EERSTE/TWEEDE visible OCR target, genuine HID bodyclick, AXTextArea Document input focus",
+      "Exactly one native Q then exactly one native Command-S with the existing input helper. No added post-Q read/pause/barrier, retry, scripted model/AX value setter, second save, undo or extra flush",
+      "After Command-S, use original bounded20second read-only file/XML poll; retain actual saved bytes/hash even on failure. Capture original pixels/AX after the action without more editor input",
+      "Join listener/guards→handler/readiness→actual serializer snapshot/hash→prepared IPC hash→native decoded request/target/write result→actual saved DOCX hash/XML; require exact source text plus one Q for persistence success",
+      "Set trace cutoff before cleanup. Only after action, check logger completion/loss and buffer correlations; missing records produce INCONCLUSIVE observation, not proof of absent receipt",
+      "If persisted: normal full Command-Q, confirm old PID exit, open saved copy in different verified PID, independently confirm same saved bytes and one Q plus native visible content, then normal quit",
+      "If persistence or focus fails: preserve current file, trace, original PNG/AX/helper receipts first; no retry. Own known save/discard prompt cleanup only with owned/focused modal binding; unknown modal stops further input and is reported",
+      "Upload sealed proof index/count/hashes and exact command/stdout/stderr records before removing only own app/mount/profile/workfiles/helpers/recording. Teardown outcomes kept distinct from functional result"
+    ],
+    "cleanup": "Normal cleanup plus always-run own teardown/upload guard within20min. A timeout/incomplete teardown is not a clean native PASS. Never touch shared/user processes.",
+    "noAutomaticFollowup": true
+  },
+  "interpretation": [
+    "DERIVED receiver/serializer evidence concerns new bytes only; does not retrospectively instrument unchanged signed P5",
+    "Callbacks, buffer copies, async hashing/IPC, native locking/metadata/log writes and identity/signing/build differences can perturb timing. Native and JS monotonic clocks have different origins.",
+    "A missing Q at a boundary requires complete correlated logs and an independent content join; SHA difference alone is not semantic Q proof. If intermediate bytes cannot be joined to inspected output, that semantic boundary remains unknown.",
+    "A successful single run is NONRECURRENCE only. A new failure may localize a boundary for this derived run; neither outcome automatically explains historical45355259350.",
+    "No product fix, published-release reacceptance, stability guarantee or cause resolution follows from this experiment alone. New investigation/fix scopes require coordination."
+  ],
+  "currentlyReady": "PROPOSAL ONLY; independent review, executable builder/consumer freeze and explicit user approval still required",
+  "notPerformed": [
+    "patch application",
+    "new app compile/build/sign/notarization",
+    "new host dispatch",
+    "new Q/save/input/attach",
+    "main/integration/release changes"
+  ]
+}
