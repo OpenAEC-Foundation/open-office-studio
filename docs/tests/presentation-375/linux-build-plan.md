@@ -3,8 +3,8 @@
 **Status on 2026-11-24: the fourth witness stopped on an own resource-build
 invocation error before the baseline test. Earlier failures remain unchanged;
 initialization, patched importer/Cppunit and runtime acceptance are unproven.
-The new user-requested source-wrapper correction is reviewable, without another
-allocated build yet.** This is a private QA witness for the reviewed importer patch,
+The reviewed source-wrapper correction is now running in one separately
+allocated fifth witness; no new acceptance is inferred.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -435,3 +435,26 @@ new build occurred. Historical FAIL receipts stay unchanged. See
 
 The correction is reviewable only until integration gives a separate allocation.
 No old start epoch or unused time is reused and no automatic dispatch follows.
+
+## Fifth allocation on the reviewed source-bootstrap correction
+
+Integration reviewed exact QA `4fbbdd39c1b6311d4705531a10e3f72b18931408` and
+explicitly allocated one new standard Ubuntu24 witness outside P5. The fresh
+pre-dispatch inventory examined two active runs and found no queued/waiting
+Linux job. LO/importer/test-initialization pins and all source/configuration/
+resource/toolchain requirements remain unchanged.
+
+Before dispatch, start epoch `1795508869` was recorded: **09:27:49 CET on
+2026-11-24**. Preparation ends **10:12:49**, controller **13:47:49**, total
+**13:57:49**, including ten minutes reserved for upload/cleanup. Compiler/tests
+remain capped at 210 minutes within the remaining controller budget. There is
+no automatic repair, retry, extra VM, paid host or dependency fallback.
+
+[Run 45356331378](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45356331378),
+attempt 1/job `138314969231`, confirms the exact producer commit. Fresh VM
+resource/toolchain and fixed dependency steps passed; the combined source witness
+is active. No bootstrap/resource/baseline/production-runtime acceptance follows
+from that status. Exact allocation/queue binding is in
+[`fifth-source-allocation.json`](fifth-source-allocation.json). Only real
+failure or final evidence will be delivered to integration; P5/app/runtimepin/
+main/intake remain unchanged.
