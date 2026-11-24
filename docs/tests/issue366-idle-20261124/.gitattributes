@@ -1,2 +1,2 @@
-# Preserve retained original evidence bytes, including Windows JSON line endings.
-retained/** -text
+# Original evidence is opaque to Git normalization/diff, including Windows JSON.
+retained/** -text -diff
