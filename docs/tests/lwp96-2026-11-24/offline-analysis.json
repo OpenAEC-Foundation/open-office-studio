@@ -1,0 +1,87 @@
+{
+  "scope": "LWP96 / lo-lwp-1 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "runtimeExecutedByThisOfflineAudit": false,
+  "ci": {
+    "run": 45356814684,
+    "job": 138316556238,
+    "attempt": 1,
+    "harnessCommit": "1b5bf94cc7968517f771d42c37f79eba58563c30",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T08:32:18Z"
+  },
+  "artifact": {
+    "id": 14902786728,
+    "bytes": 126989,
+    "sha256": "ada9d97455368c8cbc0cbf4fdf33f8f53e03e5fa675980718ea34a5996f7c04f",
+    "expiresAt": "2027-02-22T08:31:08Z"
+  },
+  "sourceSha256": "812888b2b621c2fe397881052d4bf8d755037adee9427320d9ea704dbcc66f91",
+  "sourceNativeObjects": 369,
+  "verifiedIndexEntries": 367,
+  "boundedSourceAcceptance": true,
+  "casesPerStage": 18,
+  "stages": 4,
+  "controls": [
+    {
+      "variant": "wrong-case-text",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native paragraph 0 exact text",
+          "actual": "BROKEN SOURCE TEXT",
+          "expected": "This document is created using Lotus Wordpro release 9.6 for Windows.",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "wrong-local-alignment",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native local alignment at paragraph11",
+          "actual": "left",
+          "expected": "center",
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "files": {
+    "converted.docx": {
+      "bytes": 10189,
+      "sha256": "5c8f41b595cb737123a9e3f181e4207bdc7ccf21bebbfa55307f24a43a866899"
+    },
+    "saved.docx": {
+      "bytes": 10052,
+      "sha256": "c77b3b247a95dd4374dd9c5572e458e7206804c70115707c6ab7b7af7761ef12"
+    },
+    "reopened-saved.docx": {
+      "bytes": 10053,
+      "sha256": "5b673c1024b9c487220e765688051d18c71b139641f0c747d246ed8eb480b6d1"
+    },
+    "fresh-process-saved.docx": {
+      "bytes": 10053,
+      "sha256": "940d1a1db84d1940b287a891edaeaa472710642292e453448e2f6e90b9d4ef04"
+    }
+  },
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "fullFormatAcceptance": false,
+  "limits": "First sixteen ordinary main-story ASCII paragraphs including two empties, exact text/order/trailing spaces, and explicit local center alignment at paragraph11. Native object RLE, index/time-table identities and 28-paragraph main chain verified. Character formatting named by text is not accepted; fonts/borders/shading/indent/line-spacing inheritance, subsequent tables/frames/lists/page breaks, header/footer and opaque suffix are inventoried or excluded. No visual/native/other-variant/full-format acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}

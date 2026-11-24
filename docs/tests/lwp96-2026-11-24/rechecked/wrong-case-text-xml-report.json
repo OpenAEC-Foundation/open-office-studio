@@ -1,0 +1,173 @@
+{
+  "file": "wrong-case-text.docx",
+  "sha256": "f26cdbe7dfccfb478f8f2777889194315b2c1dda9b6ec2fa5f65078b5525ce2b",
+  "paragraphTexts": [
+    "BROKEN SOURCE TEXT",
+    "",
+    "The page margins are top and bottom are 1.5 cm, left and right are 2.5 cm. The page size is A4 in portrait.",
+    "",
+    "This line is bold",
+    "This line is italicized",
+    "This line is underlined",
+    "This line is striked through",
+    "This line is superscript",
+    "This line is subscript",
+    "This line has borders and red background color",
+    "This line is centered align.",
+    "The indent of this line is 2 cm ",
+    "This line spacing is double",
+    "The default font is Times New Roman 12.",
+    "This line is Times New Roman 16"
+  ],
+  "allDirectBodyParagraphTexts": [
+    "BROKEN SOURCE TEXT",
+    "",
+    "The page margins are top and bottom are 1.5 cm, left and right are 2.5 cm. The page size is A4 in portrait.",
+    "",
+    "This line is bold",
+    "This line is italicized",
+    "This line is underlined",
+    "This line is striked through",
+    "This line is superscript",
+    "This line is subscript",
+    "This line has borders and red background color",
+    "This line is centered align.",
+    "The indent of this line is 2 cm ",
+    "This line spacing is double",
+    "The default font is Times New Roman 12.",
+    "This line is Times New Roman 16",
+    "This line is Courier New.",
+    "This text is green",
+    "This it a 4*5 tables",
+    "This is a bulleted list:",
+    "Item1",
+    "Item1.1",
+    "Item2",
+    "Item2.1",
+    "",
+    "This is a pagebreak.",
+    "New Page"
+  ],
+  "checkedCases": [
+    {
+      "case": "bounded prefix has sixteen paragraphs",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "case": "native paragraph 0 exact text",
+      "actual": "BROKEN SOURCE TEXT",
+      "expected": "This document is created using Lotus Wordpro release 9.6 for Windows.",
+      "passed": false
+    },
+    {
+      "case": "native paragraph 1 exact text",
+      "actual": "",
+      "expected": "",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 2 exact text",
+      "actual": "The page margins are top and bottom are 1.5 cm, left and right are 2.5 cm. The page size is A4 in portrait.",
+      "expected": "The page margins are top and bottom are 1.5 cm, left and right are 2.5 cm. The page size is A4 in portrait.",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 3 exact text",
+      "actual": "",
+      "expected": "",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 4 exact text",
+      "actual": "This line is bold",
+      "expected": "This line is bold",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 5 exact text",
+      "actual": "This line is italicized",
+      "expected": "This line is italicized",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 6 exact text",
+      "actual": "This line is underlined",
+      "expected": "This line is underlined",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 7 exact text",
+      "actual": "This line is striked through",
+      "expected": "This line is striked through",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 8 exact text",
+      "actual": "This line is superscript",
+      "expected": "This line is superscript",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 9 exact text",
+      "actual": "This line is subscript",
+      "expected": "This line is subscript",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 10 exact text",
+      "actual": "This line has borders and red background color",
+      "expected": "This line has borders and red background color",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 11 exact text",
+      "actual": "This line is centered align.",
+      "expected": "This line is centered align.",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 12 exact text",
+      "actual": "The indent of this line is 2 cm ",
+      "expected": "The indent of this line is 2 cm ",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 13 exact text",
+      "actual": "This line spacing is double",
+      "expected": "This line spacing is double",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 14 exact text",
+      "actual": "The default font is Times New Roman 12.",
+      "expected": "The default font is Times New Roman 12.",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 15 exact text",
+      "actual": "This line is Times New Roman 16",
+      "expected": "This line is Times New Roman 16",
+      "passed": true
+    },
+    {
+      "case": "native local alignment at paragraph11",
+      "actual": "center",
+      "expected": "center",
+      "passed": true
+    }
+  ],
+  "centerStyleChain": [],
+  "mismatches": [
+    {
+      "case": "native paragraph 0 exact text",
+      "actual": "BROKEN SOURCE TEXT",
+      "expected": "This document is created using Lotus Wordpro release 9.6 for Windows.",
+      "passed": false
+    }
+  ],
+  "boundedSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "limits": "First sixteen ordinary main-story ASCII paragraphs including two empties, exact text/order/trailing spaces, and explicit local center alignment at paragraph11. Native object RLE, index/time-table identities and 28-paragraph main chain verified. Character formatting named by text is not accepted; fonts/borders/shading/indent/line-spacing inheritance, subsequent tables/frames/lists/page breaks, header/footer and opaque suffix are inventoried or excluded. No visual/native/other-variant/full-format acceptance."
+}
