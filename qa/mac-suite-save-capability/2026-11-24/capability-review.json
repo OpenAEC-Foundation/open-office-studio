@@ -1,0 +1,129 @@
+{
+  "recordedAtUTC": "2026-11-24T12:19:06.646420+00:00",
+  "status": "METADATA_COMPLETE; FOUR_POINT_CAUSAL_OBSERVERS_NOT_ESTABLISHED",
+  "run": 45390900006,
+  "attempt": 1,
+  "job": 138434009672,
+  "qaCommit": "4a7ad42860f1bbabbd9a34b2ed46916474f03b71",
+  "qaBranch": "codex/mac-suite-save-capability-20261124",
+  "officialProof": {
+    "path": ".local\\run-45390900006\\proof.zip",
+    "bytes": 90728,
+    "sha256": "bbc29158f8be86d003ce1964724971e6b9fb7f5c12069d5e87913978c482f91f"
+  },
+  "artifactId": 14919295938,
+  "artifactExpiresAt": "2026-12-24T12:15:16Z",
+  "retainedMembers": 56,
+  "report": {
+    "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-mac-suite-save-capability-20261124-6f92\\.local\\run-45390900006\\raw\\mac-save-capability-proof\\report.json",
+    "sha256": "0726df6515e0e3138c5c95994289927d728f8b5e6d0b5375c0e99fb72eb05f70"
+  },
+  "sourceRequestBinding": {
+    "gitBlobAndActualAcquisitionRequestByteEqual": true,
+    "canonicalGitAndActualMacRequestSha256": "86b2a1a27d004cdc814be0ceca3ee37b058144e7e2073574c7e9b575a97049f3",
+    "previouslyReportedWindowsWorkingCopySha256": "050961d4036f27c31cee86f13703d39c5f20a18160b2a8007c8bfb56c1b548a4",
+    "parsedValuesEqual": true,
+    "explanation": "Earlier050961... described Windows CRLF working bytes; canonical Git/Mac LF bytes are86b2a1.... Source head/nonce/values unchanged; no new request is substituted."
+  },
+  "all18RawCommandStreamsHashAndExitVerified": true,
+  "actualHostSecondsIncludingUploadAndFinalSteps": 128.0,
+  "application": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "dmgSha256": "1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af",
+    "executableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87",
+    "bundleIdentity": {
+      "CFBundleIdentifier": "org.openaec.office-studio",
+      "CFBundleExecutable": "open-office-studio",
+      "CFBundleName": "Open Office Studio",
+      "CFBundleShortVersionString": "2026.48.1",
+      "CFBundleVersion": "2026.48.1"
+    }
+  },
+  "signatureGates": [
+    "codesign deep strictPASS",
+    "Developer ID identity and Hardened Runtimeflags0x10000PASS",
+    "GatekeeperNotarizedDeveloperIDPASS",
+    "stapledTicketPASS"
+  ],
+  "facts": {
+    "macOS": "26.7.2 build25G332",
+    "architecture": "arm64",
+    "teamIdentifier": "7KFV4QY98M",
+    "completeEntitlementsCommand": {
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 208,
+      "stderrSha256": "3b995b8a78abb1c93bb2d8fec16c44c909f799a4aa1586f42aa21059952389d5",
+      "stderrObservation": "Executable path and deprecated colon-path syntax warning only; no entitlement plist emitted",
+      "interpretation": "No usable inspection entitlement established by this output; do NOT equate absent parsed output with an explicit false entitlement or universal impossibility"
+    },
+    "bundleFilenameInventory": {
+      "mapNames": 0,
+      "dSYMNames": 0,
+      "scope": "Owned copied bundle filename inventory only; no claim about inline/external mappings"
+    },
+    "hostDeveloperMode": "enabled, observed only",
+    "hostSIP": "disabled, observed host default; not changed by this job",
+    "passiveHelperPrivacy": {
+      "sourceSha256": "529dd2f4554b8641cebf5adb586a4c36a786dc27747e407967be2bcccb84e12d",
+      "scope": "This nonprompting CLI helper only; no app receiver/attach grant inferred",
+      "value": {
+        "accessibilityTrustedForThisHelper": true,
+        "postEventPreflightForThisHelper": true,
+        "processId": 2627,
+        "scope": "nonprompting helper capability only; no target receiver/inspection/attach test",
+        "screenCapturePreflightForThisHelper": true
+      }
+    },
+    "toolPathsOnly": {
+      "dtrace": "/usr/sbin/dtrace",
+      "fs_usage": "/usr/bin/fs_usage",
+      "lldb": "/usr/bin/lldb",
+      "codesign": "/usr/bin/codesign",
+      "log": "/usr/bin/log"
+    },
+    "actualDebuggerAttachOrInspectorAvailability": "NOT TESTED; tool presence, developer group/SIP state and helper AX/input/capture preflight are not app attach/receiver/serializer evidence"
+  },
+  "fourPointObservability": {
+    "receiver": "not established",
+    "handler": "not established",
+    "serializerBytes": "not established",
+    "nativeWrite": "external own-file effects possible; internal IPC/path/write trace not attempted"
+  },
+  "originalCause": "OPEN; no new Q/save attempt or causal trace performed",
+  "originalEvidencePreserved": {
+    "failedRun45355259350": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+    "sixCopyRun45358252707": "09894d8ea1ee01349d88c26245450f88c03c86d09675bab75f2f5e7c7c1a11aa",
+    "noRelabelOrModification": true
+  },
+  "cleanup": {
+    "mountDetached": true,
+    "ownBundleAndHelperRemoved": true,
+    "appWasNeverLaunched": true
+  },
+  "acquisitionCleanup": {
+    "status": "own-archives-and-dmg-removed",
+    "removed": [
+      {
+        "name": "suite-child.zip",
+        "bytes": 373225524
+      },
+      {
+        "name": "suite-support-descriptor.zip",
+        "bytes": 2673
+      },
+      {
+        "name": "Open Office Studio_2026.48.1_aarch64.dmg",
+        "bytes": 373215593
+      }
+    ],
+    "noOtherFilesOrProcessesTouched": true
+  },
+  "ownWatcher": "gh run watch session26861 observed finished exit0; no local GUI/capture/session created",
+  "nextDecision": "Integration decides separately whether to establish an actual read-only observer/attach/inspector on unchanged P5, or scope an instrumented synthetic app build with a different identity. No such new job/build/input/attach/security change is authorized by this metadata pass. Do not run another unobservable Q/save loop.",
+  "localGuardTestsPassed": 22,
+  "mainOrReleaseChanges": false,
+  "scopeLimit": "MetadataPASS is not native savePASS, proof of inspection privilege, source-map correctness, explanation of old failure or a new release gate."
+}
