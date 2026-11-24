@@ -1,0 +1,103 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45353530654,
+  "harness": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+  "preparerRun": 45195780472,
+  "accepted": {
+    "xlsb377": {
+      "status": "PASS scoped native case after independent bytes and actual screenshot review",
+      "artifact": {
+        "id": 14901960371,
+        "name": "standalone-windows-p5-spreadsheet-xlsb377-proof",
+        "size_in_bytes": 602535,
+        "digest": "sha256:949d490d14c9df626968b62ccb525341a69090fd23bc74b342cc1039bd684fe5",
+        "expires_at": "2027-02-22T08:08:27Z"
+      },
+      "observation": "Both actual XLSX proposals and both cancelled dirty copies visibly reviewed; original genuine XLSB SHA/size/mtime/nonzero inode unchanged; short cancel-only scope, no30-formula or XLSB-export claim",
+      "phases": [
+        {
+          "phase": "xlsb377",
+          "pid": 6472,
+          "status": "passed-short-cancel-save-check",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "images": [
+        {
+          "name": "Control-s-xlsx-proposal.png",
+          "sha256": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b"
+        },
+        {
+          "name": "Control-s-cancelled-dirty.png",
+          "sha256": "1094a73b4181ee47343d1afa3c9053e3b8898910b2841c04f52ac0ec259a25e9"
+        },
+        {
+          "name": "ordinary-Save-xlsx-proposal.png",
+          "sha256": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b"
+        },
+        {
+          "name": "ordinary-Save-cancelled-dirty.png",
+          "sha256": "50c36dad6d4eb3ef100f9b367e40168f02a4dc9072afc286ce9fe50b37d630f7"
+        }
+      ]
+    },
+    "database": {
+      "status": "PASS scoped native case after independent bytes and actual screenshot review",
+      "artifact": {
+        "id": 14901511736,
+        "name": "standalone-windows-p5-database-proof",
+        "size_in_bytes": 421075,
+        "digest": "sha256:e705f1569989351fc500490c92b0b41ab27460ad156df39cb042930cb6419965",
+        "expires_at": "2027-02-22T08:08:27Z"
+      },
+      "observation": "Actual native query and result label/amount42 visible before/after full restart; independent readonly SQLite/source-hash oracle; actual OS AppUserModelID->canonical signed installed PE/process/profile identity",
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 10056,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 9244,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "images": [
+        {
+          "name": "initial-completed.png",
+          "sha256": "00bb44737e3ac453bd4acd71e893ce21c44ed96daed9bc997dd464cc3a1ee5ef"
+        },
+        {
+          "name": "reopened-completed.png",
+          "sha256": "00bb44737e3ac453bd4acd71e893ce21c44ed96daed9bc997dd464cc3a1ee5ef"
+        }
+      ]
+    }
+  },
+  "remaining": {
+    "presentation": "native-failure-preserved"
+  }
+}

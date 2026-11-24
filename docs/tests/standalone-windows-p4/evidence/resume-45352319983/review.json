@@ -1,0 +1,104 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45352319983,
+  "harness": "97710e2ba22d0939ef121fdebb18dec43ed2df9d",
+  "preparerRun": 45195780472,
+  "accepted": {
+    "notition": {
+      "status": "PASS scoped native case after independent bytes and actual screenshot review",
+      "artifact": {
+        "id": 14900238584,
+        "name": "standalone-windows-p5-notition-proof",
+        "size_in_bytes": 435241,
+        "digest": "sha256:dbf968829e258890e713173056507614e88b3065ba4027962c8baceabcb95695",
+        "expires_at": "2027-02-22T07:59:54Z"
+      },
+      "observation": "Actual own notebook/title/body visible before/after full restart; independent JSON exports contain all markers",
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 4480,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 5876,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "images": [
+        {
+          "name": "initial-completed.png",
+          "sha256": "fecf007f3b7a944d33996f5d41fa30ad5b4187fe92c96f5e738c2d3954d7d7a7"
+        },
+        {
+          "name": "reopened-completed.png",
+          "sha256": "188a3ec763086e1c4bb88ccf56faf13231e6fa3c7a5cb7d8616babfa528ae366"
+        }
+      ]
+    },
+    "email": {
+      "status": "PASS scoped native case after independent bytes and actual screenshot review",
+      "artifact": {
+        "id": 14901087138,
+        "name": "standalone-windows-p5-email-proof",
+        "size_in_bytes": 343146,
+        "digest": "sha256:ebe87c13b28c75bebbe350fe855a77b46d711e07511f66c72ab17baf03bc28d5",
+        "expires_at": "2027-02-22T07:59:54Z"
+      },
+      "observation": "Actual native draft subject/body visible before/after full restart; independently parsed actual IMAP APPEND MIME; synthetic loopback only",
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 8340,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 1220,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "loopbackServerClosed": true,
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "images": [
+        {
+          "name": "initial-completed.png",
+          "sha256": "424b8232cd8b1eaf393596557708fbfa2234124fc60cd1aaa088836bca5ad239"
+        },
+        {
+          "name": "reopened-completed.png",
+          "sha256": "77ff81bcb7e27728ab61da8bc0efd037b3557c13a5dd06c40138bd598cddf8c7"
+        }
+      ]
+    }
+  },
+  "remaining": {
+    "presentation": "native-failure-preserved",
+    "database": "native-failure-preserved"
+  }
+}

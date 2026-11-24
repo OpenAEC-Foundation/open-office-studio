@@ -1,0 +1,63 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45356834520,
+  "harness": "2449f6cf370d6de28e56ac9a6feb243df8f56ef0",
+  "preparerRun": 45195780472,
+  "accepted": {
+    "presentation": {
+      "status": "PASS scoped native case after independent bytes and actual screenshot review",
+      "artifact": {
+        "id": 14903610034,
+        "name": "standalone-windows-p5-presentation-proof",
+        "size_in_bytes": 497465,
+        "digest": "sha256:9413b4490c6b9821335a30b4c7c7ddf9b9a025162747a30b97b9adcdd5fa9a8b",
+        "expires_at": "2027-02-22T08:31:16Z"
+      },
+      "observation": "Actual source-title Outline textarea edited via ordinary UI and marker visible before/after full restart; independent PPTX XML and two-slide check; no direct-canvas input acceptance",
+      "phases": [
+        {
+          "phase": "initial",
+          "pid": 3816,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        },
+        {
+          "phase": "reopened",
+          "pid": 7984,
+          "status": "passed-scoped-function",
+          "normalFullExit": true,
+          "ownedWebviewsExited": true
+        }
+      ],
+      "cleanup": {
+        "residualOwnedWebviews": [],
+        "policyRestored": true,
+        "ownedInstallUninstalled": true,
+        "ownedAppExited": true,
+        "ownedNativeProfilesDisposed": true,
+        "ownedTemporaryProfileDisposed": true
+      },
+      "images": [
+        {
+          "name": "initial-completed.png",
+          "sha256": "f74ddfaeda06a22b7f5ba79782286ad8d583920511f1588b96aa66b41c5a782a"
+        },
+        {
+          "name": "reopened-completed.png",
+          "sha256": "1e9191839d505c17cbf718f7e2799f365e5c729061e89a4cb10de999869bb479"
+        },
+        {
+          "name": "presentation-initial-outline.png",
+          "sha256": "b02e9e6b15d670caff996e46bbd306727ed853c76aed73cf013b287244c4a3f7"
+        },
+        {
+          "name": "presentation-reopened-outline.png",
+          "sha256": "09d1191ab9c584282d8ee0199c36cfd150203c51ad003f4b83bedf74b58ecae7"
+        }
+      ]
+    }
+  },
+  "remaining": {}
+}

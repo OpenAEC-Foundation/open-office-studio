@@ -1,0 +1,498 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-24",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "platform": "Windows",
+  "scope": "Six bounded standalone native core cases and separate short Spreadsheet XLSB #377 supplement",
+  "status": "PASS within the recorded individual scopes; not a release or all-format acceptance",
+  "producer": {
+    "run": 45177730188,
+    "job": 137703365803,
+    "attempt": 1,
+    "artifact": 14828525724,
+    "archiveBytes": 2037941610,
+    "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d"
+  },
+  "preparer": {
+    "run": 45195780472,
+    "job": 137765723008,
+    "harness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "bindingArtifact": 14828032444,
+    "bindingZipSha256": "c6ee34b5bec7cd1368331bb02a182bbfb23d55bc70d68c78dee28c366b489d22"
+  },
+  "results": {
+    "writer": {
+      "status": "PASS scoped native case",
+      "executionRun": 45195780472,
+      "attempt": 1,
+      "job": 137767767915,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767915",
+      "harness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/p5-initial",
+      "review": {
+        "status": "passed-scoped-native-function",
+        "artifact": {
+          "id": 14827219657,
+          "bytes": 386632,
+          "digest": "sha256:1fa779f5b23ba7a9ef9a104f78864a760b01ba2c223c9abfba32093aa0c468af",
+          "expires": "2027-02-21T14:35:11Z"
+        },
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 2008,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 9568,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "result": "PASS bounded core: independent saved-byte/XML checks, two full normal exits/different PIDs, original source unchanged, native content actually reviewed",
+        "visualReview": [
+          {
+            "file": "initial-completed.png",
+            "sha256": "484303a9769122cf60c85857d2d86eadc8bc19705475228e92d9715c1f928347",
+            "observation": "Writer edit visible on document page"
+          },
+          {
+            "file": "reopened-completed.png",
+            "sha256": "cfd5f0ad0b74e4962ddc74a0e411570e70b39ec64fc1448df7ef016e26059da4",
+            "observation": "Writer edit visible on document page"
+          }
+        ]
+      }
+    },
+    "spreadsheet": {
+      "status": "PASS scoped native case",
+      "executionRun": 45195780472,
+      "attempt": 1,
+      "job": 137767767878,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45195780472/job/137767767878",
+      "harness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/p5-initial",
+      "review": {
+        "status": "passed-scoped-native-function",
+        "artifact": {
+          "id": 14827264661,
+          "bytes": 356491,
+          "digest": "sha256:91ae5b296d6ff9593efc6e12dda205c13cca0d9b82b58d976080a1179e99aee0",
+          "expires": "2027-02-21T14:35:11Z"
+        },
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 6924,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 7144,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "result": "PASS bounded core: independent saved-byte/XML checks, two full normal exits/different PIDs, original source unchanged, native content actually reviewed",
+        "visualReview": [
+          {
+            "file": "initial-completed.png",
+            "sha256": "099e865d2217b5c2115ac99ac5d6ac93ebe11b52077daffb93f8ffa9cf6902aa",
+            "observation": "Spreadsheet cells41/42 and formula=B1+1 visibly rendered; text clipped at normal column width"
+          },
+          {
+            "file": "reopened-completed.png",
+            "sha256": "2c4fbdec1c46ba98cd20ddf40a4e9474120c1c386cfd37eeb6a0b8297773c2a7",
+            "observation": "Spreadsheet cells41/42 and formula=B1+1 visibly rendered; text clipped at normal column width"
+          }
+        ],
+        "observation": "Native UI displays a compatibility warning about document/workbook protection; protection behavior was not accepted by this small cell/formula case."
+      }
+    },
+    "email": {
+      "status": "PASS scoped native case",
+      "executionRun": 45352319983,
+      "attempt": 1,
+      "job": 138301685242,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45352319983/job/138301685242",
+      "harness": "97710e2ba22d0939ef121fdebb18dec43ed2df9d",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/resume-45352319983",
+      "review": {
+        "status": "PASS scoped native case after independent bytes and actual screenshot review",
+        "artifact": {
+          "id": 14901087138,
+          "name": "standalone-windows-p5-email-proof",
+          "size_in_bytes": 343146,
+          "digest": "sha256:ebe87c13b28c75bebbe350fe855a77b46d711e07511f66c72ab17baf03bc28d5",
+          "expires_at": "2027-02-22T07:59:54Z"
+        },
+        "observation": "Actual native draft subject/body visible before/after full restart; independently parsed actual IMAP APPEND MIME; synthetic loopback only",
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 8340,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 1220,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "loopbackServerClosed": true,
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "images": [
+          {
+            "name": "initial-completed.png",
+            "sha256": "424b8232cd8b1eaf393596557708fbfa2234124fc60cd1aaa088836bca5ad239"
+          },
+          {
+            "name": "reopened-completed.png",
+            "sha256": "77ff81bcb7e27728ab61da8bc0efd037b3557c13a5dd06c40138bd598cddf8c7"
+          }
+        ]
+      },
+      "independentByteOracle": [
+        {
+          "kind": "email",
+          "status": "passed",
+          "actualMimeDrafts": [
+            {
+              "file": "append-2.eml",
+              "sha256": "912a9cdc9f6b9377b649522f6343508f8426e513a4d3b2104114e538aef221d8"
+            }
+          ],
+          "noRealMail": true
+        }
+      ]
+    },
+    "notition": {
+      "status": "PASS scoped native case",
+      "executionRun": 45352319983,
+      "attempt": 1,
+      "job": 138301685144,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45352319983/job/138301685144",
+      "harness": "97710e2ba22d0939ef121fdebb18dec43ed2df9d",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/resume-45352319983",
+      "review": {
+        "status": "PASS scoped native case after independent bytes and actual screenshot review",
+        "artifact": {
+          "id": 14900238584,
+          "name": "standalone-windows-p5-notition-proof",
+          "size_in_bytes": 435241,
+          "digest": "sha256:dbf968829e258890e713173056507614e88b3065ba4027962c8baceabcb95695",
+          "expires_at": "2027-02-22T07:59:54Z"
+        },
+        "observation": "Actual own notebook/title/body visible before/after full restart; independent JSON exports contain all markers",
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 4480,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 5876,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "images": [
+          {
+            "name": "initial-completed.png",
+            "sha256": "fecf007f3b7a944d33996f5d41fa30ad5b4187fe92c96f5e738c2d3954d7d7a7"
+          },
+          {
+            "name": "reopened-completed.png",
+            "sha256": "188a3ec763086e1c4bb88ccf56faf13231e6fa3c7a5cb7d8616babfa528ae366"
+          }
+        ]
+      },
+      "independentByteOracle": [
+        {
+          "kind": "notition",
+          "bytes": 2081,
+          "sha256": "c48dd1bcd2fc8da76bf2b043b4cdd5a66b3575fbc2cb878fd49b52f7dd9b972a",
+          "validJsonBackup": true,
+          "status": "passed"
+        },
+        {
+          "kind": "notition",
+          "bytes": 2081,
+          "sha256": "c48dd1bcd2fc8da76bf2b043b4cdd5a66b3575fbc2cb878fd49b52f7dd9b972a",
+          "validJsonBackup": true,
+          "status": "passed"
+        }
+      ]
+    },
+    "database": {
+      "status": "PASS scoped native case",
+      "executionRun": 45353530654,
+      "attempt": 1,
+      "job": 138305718586,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654/job/138305718586",
+      "harness": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/resume-45353530654",
+      "review": {
+        "status": "PASS scoped native case after independent bytes and actual screenshot review",
+        "artifact": {
+          "id": 14901511736,
+          "name": "standalone-windows-p5-database-proof",
+          "size_in_bytes": 421075,
+          "digest": "sha256:e705f1569989351fc500490c92b0b41ab27460ad156df39cb042930cb6419965",
+          "expires_at": "2027-02-22T08:08:27Z"
+        },
+        "observation": "Actual native query and result label/amount42 visible before/after full restart; independent readonly SQLite/source-hash oracle; actual OS AppUserModelID->canonical signed installed PE/process/profile identity",
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 10056,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 9244,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "images": [
+          {
+            "name": "initial-completed.png",
+            "sha256": "00bb44737e3ac453bd4acd71e893ce21c44ed96daed9bc997dd464cc3a1ee5ef"
+          },
+          {
+            "name": "reopened-completed.png",
+            "sha256": "00bb44737e3ac453bd4acd71e893ce21c44ed96daed9bc997dd464cc3a1ee5ef"
+          }
+        ]
+      },
+      "independentByteOracle": [
+        {
+          "kind": "database",
+          "bytes": 8192,
+          "sha256": "506d230347f4895adf45967e536dd3b0b4997374ce5c7e7f74e5ef99d985530e",
+          "status": "passed"
+        }
+      ]
+    },
+    "presentation": {
+      "status": "PASS scoped native case",
+      "executionRun": 45356834520,
+      "attempt": 1,
+      "job": 138316739095,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45356834520/job/138316739095",
+      "harness": "2449f6cf370d6de28e56ac9a6feb243df8f56ef0",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/resume-45356834520",
+      "review": {
+        "status": "PASS scoped native case after independent bytes and actual screenshot review",
+        "artifact": {
+          "id": 14903610034,
+          "name": "standalone-windows-p5-presentation-proof",
+          "size_in_bytes": 497465,
+          "digest": "sha256:9413b4490c6b9821335a30b4c7c7ddf9b9a025162747a30b97b9adcdd5fa9a8b",
+          "expires_at": "2027-02-22T08:31:16Z"
+        },
+        "observation": "Actual source-title Outline textarea edited via ordinary UI and marker visible before/after full restart; independent PPTX XML and two-slide check; no direct-canvas input acceptance",
+        "phases": [
+          {
+            "phase": "initial",
+            "pid": 3816,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          },
+          {
+            "phase": "reopened",
+            "pid": 7984,
+            "status": "passed-scoped-function",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "images": [
+          {
+            "name": "initial-completed.png",
+            "sha256": "f74ddfaeda06a22b7f5ba79782286ad8d583920511f1588b96aa66b41c5a782a"
+          },
+          {
+            "name": "reopened-completed.png",
+            "sha256": "1e9191839d505c17cbf718f7e2799f365e5c729061e89a4cb10de999869bb479"
+          },
+          {
+            "name": "presentation-initial-outline.png",
+            "sha256": "b02e9e6b15d670caff996e46bbd306727ed853c76aed73cf013b287244c4a3f7"
+          },
+          {
+            "name": "presentation-reopened-outline.png",
+            "sha256": "09d1191ab9c584282d8ee0199c36cfd150203c51ad003f4b83bedf74b58ecae7"
+          }
+        ]
+      },
+      "independentByteOracle": [
+        {
+          "kind": "presentation",
+          "bytes": 29078,
+          "sha256": "38f519f203df573e56931174e2f921e798eca6900f01da7b0b8cdfba1801e37e",
+          "slideCount": 2,
+          "status": "passed"
+        },
+        {
+          "kind": "presentation",
+          "bytes": 29078,
+          "sha256": "38f519f203df573e56931174e2f921e798eca6900f01da7b0b8cdfba1801e37e",
+          "slideCount": 2,
+          "status": "passed"
+        }
+      ]
+    },
+    "xlsb377": {
+      "status": "PASS scoped native case",
+      "executionRun": 45353530654,
+      "attempt": 1,
+      "job": 138305718627,
+      "jobUrl": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654/job/138305718627",
+      "harness": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+      "evidence": "docs/tests/standalone-windows-p4/evidence/resume-45353530654",
+      "review": {
+        "status": "PASS scoped native case after independent bytes and actual screenshot review",
+        "artifact": {
+          "id": 14901960371,
+          "name": "standalone-windows-p5-spreadsheet-xlsb377-proof",
+          "size_in_bytes": 602535,
+          "digest": "sha256:949d490d14c9df626968b62ccb525341a69090fd23bc74b342cc1039bd684fe5",
+          "expires_at": "2027-02-22T08:08:27Z"
+        },
+        "observation": "Both actual XLSX proposals and both cancelled dirty copies visibly reviewed; original genuine XLSB SHA/size/mtime/nonzero inode unchanged; short cancel-only scope, no30-formula or XLSB-export claim",
+        "phases": [
+          {
+            "phase": "xlsb377",
+            "pid": 6472,
+            "status": "passed-short-cancel-save-check",
+            "normalFullExit": true,
+            "ownedWebviewsExited": true
+          }
+        ],
+        "cleanup": {
+          "residualOwnedWebviews": [],
+          "policyRestored": true,
+          "ownedInstallUninstalled": true,
+          "ownedAppExited": true,
+          "ownedNativeProfilesDisposed": true,
+          "ownedTemporaryProfileDisposed": true
+        },
+        "images": [
+          {
+            "name": "Control-s-xlsx-proposal.png",
+            "sha256": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b"
+          },
+          {
+            "name": "Control-s-cancelled-dirty.png",
+            "sha256": "1094a73b4181ee47343d1afa3c9053e3b8898910b2841c04f52ac0ec259a25e9"
+          },
+          {
+            "name": "ordinary-Save-xlsx-proposal.png",
+            "sha256": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b"
+          },
+          {
+            "name": "ordinary-Save-cancelled-dirty.png",
+            "sha256": "50c36dad6d4eb3ef100f9b367e40168f02a4dc9072afc286ce9fe50b37d630f7"
+          }
+        ]
+      },
+      "independentByteOracle": {
+        "status": "independently-rechecked-cancel-save-only",
+        "visualAcceptance": "pending actual proposal/cancel screenshots review",
+        "nativeStatus": "passed-native-xlsb377-cancel-save",
+        "sourceFingerprint": {
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": "7651",
+          "mtimeNs": "1795507865971727500",
+          "inode": "281474976715793",
+          "device": "4069728439"
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Presentation uses the supported ordinary View/Outline UI and native keyboard input, then visible slide rendering, saved PPTX XML, two slides and fresh-process reopen. Earlier direct-canvas editable-focus failures remain failures; no direct-canvas input acceptance or proven product-input bug is inferred.",
+    "Database uses an explicitly UI-supported synthetic SQLite file: table/read/query/reopen only. No Access or arbitrary database write/save acceptance. Actual OS shortcut AppUserModelID/target, signed installed PE and running process/profile identity are bound without ACL changes.",
+    "#377 covers one real XLSB import, actual edit, Ctrl+S and ordinary Save proposing XLSX, then Cancel with dirty copy and original SHA/size/mtime/nonzero inode unchanged. No XLSB export or full 30-formula matrix acceptance.",
+    "Email uses synthetic local loopback account/draft MIME only; no external message sent or real credentials.",
+    "Original Writer and Spreadsheet passes are reused on the exact same product bytes. Spreadsheet workbook/document protection warning is outside this small cell/formula case.",
+    "Hosted Windows machines already provide WebView2; missing-WebView bootstrap is not accepted by these cases.",
+    "Original mixed and failed runs retain their actual failure conclusions. This join does not turn those runs green. Browser/Linux/macOS, Suite and overall #30 closure are owned separately by integration.",
+    "No new parent download, app build, product change, main merge, tag or publication in this resumed scope."
+  ],
+  "cleanup": {
+    "acceptedRemoteCases": "Normal full exits and disposable own app/profile cleanup, no forced process termination or cleanup errors in accepted reports",
+    "local": "No local native app, GUI, browser automation or capture session started; no local operator resources to dispose",
+    "startFlags": "Original parent and completed child-consumer/reuse configurations frozen; no follow-up dispatch"
+  }
+}

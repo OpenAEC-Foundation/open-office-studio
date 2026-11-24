@@ -1,0 +1,309 @@
+{
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "preparerRun": 45195780472,
+  "executionRun": 45353530654,
+  "executionHarness": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+  "apps": {
+    "writer": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "spreadsheet": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "presentation": {
+      "visualAcceptance": "pending actual completed screenshot review",
+      "job": [
+        {
+          "id": 138305718571,
+          "run_id": 45353530654,
+          "workflow_name": "P5 Windows individual app child reuse and XLSB377 supplement",
+          "head_branch": "codex/standalone-windows-p4-2026-11-23",
+          "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVRiTGs8AAAAgM6nJKw",
+          "head_sha": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+          "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/138305718571",
+          "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654/job/138305718571",
+          "status": "completed",
+          "conclusion": "failure",
+          "created_at": "2026-11-24T08:08:45Z",
+          "started_at": "2026-11-24T08:08:47Z",
+          "completed_at": "2026-11-24T08:12:12Z",
+          "name": "Native presentation core child reuse",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-24T08:08:48Z",
+              "completed_at": "2026-11-24T08:08:49Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-24T08:08:49Z",
+              "completed_at": "2026-11-24T08:09:00Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-24T08:09:00Z",
+              "completed_at": "2026-11-24T08:09:04Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-24T08:09:04Z",
+              "completed_at": "2026-11-24T08:09:05Z"
+            },
+            {
+              "name": "Strict original own-child ZIP only; no parent download or app build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-24T08:09:05Z",
+              "completed_at": "2026-11-24T08:09:24Z"
+            },
+            {
+              "name": "Native WebView driver only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-24T08:09:24Z",
+              "completed_at": "2026-11-24T08:09:31Z"
+            },
+            {
+              "name": "Actual native core or separately reported short XLSB377 supplement",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 7,
+              "started_at": "2026-11-24T08:09:31Z",
+              "completed_at": "2026-11-24T08:12:06Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-24T08:12:06Z",
+              "completed_at": "2026-11-24T08:12:07Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14,
+              "started_at": "2026-11-24T08:12:07Z",
+              "completed_at": "2026-11-24T08:12:07Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 15,
+              "started_at": "2026-11-24T08:12:07Z",
+              "completed_at": "2026-11-24T08:12:07Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-11-24T08:12:07Z",
+              "completed_at": "2026-11-24T08:12:10Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-11-24T08:12:10Z",
+              "completed_at": "2026-11-24T08:12:10Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/138305718571",
+          "labels": [
+            "windows-latest"
+          ],
+          "runner_id": 1000136725,
+          "runner_name": "GitHub Actions 1000136725",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      ],
+      "nativeStatus": "failed",
+      "status": "native-failure-preserved",
+      "error": "page.waitForFunction: Timeout 20000ms exceeded.\n    at officeCase (D:\\a\\open-office-studio\\open-office-studio\\scripts\\standalone-windows-p4\\cases.mjs:42:18)\n    at async file:///D:/a/open-office-studio/open-office-studio/scripts/standalone-windows-p4/native.mjs:205:10"
+    },
+    "email": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "notition": {
+      "status": "not-tested-in-this-execution",
+      "reference": "Retain original accepted core; no pass inferred from this reuse run"
+    },
+    "database": {
+      "visualAcceptance": "pending actual completed screenshot review",
+      "job": [
+        {
+          "id": 138305718586,
+          "run_id": 45353530654,
+          "workflow_name": "P5 Windows individual app child reuse and XLSB377 supplement",
+          "head_branch": "codex/standalone-windows-p4-2026-11-23",
+          "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVRiTGs8AAAAgM6nJOg",
+          "head_sha": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+          "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/138305718586",
+          "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45353530654/job/138305718586",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-24T08:08:45Z",
+          "started_at": "2026-11-24T08:08:47Z",
+          "completed_at": "2026-11-24T08:10:03Z",
+          "name": "Native database core child reuse",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-24T08:08:48Z",
+              "completed_at": "2026-11-24T08:08:49Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-24T08:08:49Z",
+              "completed_at": "2026-11-24T08:08:59Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-24T08:08:59Z",
+              "completed_at": "2026-11-24T08:09:05Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-24T08:09:05Z",
+              "completed_at": "2026-11-24T08:09:05Z"
+            },
+            {
+              "name": "Strict original own-child ZIP only; no parent download or app build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-24T08:09:05Z",
+              "completed_at": "2026-11-24T08:09:15Z"
+            },
+            {
+              "name": "Native WebView driver only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-24T08:09:15Z",
+              "completed_at": "2026-11-24T08:09:20Z"
+            },
+            {
+              "name": "Actual native core or separately reported short XLSB377 supplement",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-24T08:09:20Z",
+              "completed_at": "2026-11-24T08:09:57Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-24T08:09:57Z",
+              "completed_at": "2026-11-24T08:09:59Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-24T08:09:59Z",
+              "completed_at": "2026-11-24T08:09:59Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-24T08:09:59Z",
+              "completed_at": "2026-11-24T08:09:59Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-11-24T08:09:59Z",
+              "completed_at": "2026-11-24T08:10:02Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-11-24T08:10:02Z",
+              "completed_at": "2026-11-24T08:10:02Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/138305718586",
+          "labels": [
+            "windows-latest"
+          ],
+          "runner_id": 1000136723,
+          "runner_name": "GitHub Actions 1000136723",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      ],
+      "nativeStatus": "passed-scoped-native-function",
+      "status": "independently-rechecked-functional-only",
+      "savedByteOracles": [
+        {
+          "kind": "database",
+          "bytes": 8192,
+          "sha256": "506d230347f4895adf45967e536dd3b0b4997374ce5c7e7f74e5ef99d985530e",
+          "status": "passed"
+        }
+      ]
+    }
+  },
+  "xlsb377": {
+    "status": "independently-rechecked-cancel-save-only",
+    "visualAcceptance": "pending actual proposal/cancel screenshots review",
+    "nativeStatus": "passed-native-xlsb377-cancel-save",
+    "sourceFingerprint": {
+      "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "bytes": "7651",
+      "mtimeNs": "1795507865971727500",
+      "inode": "281474976715793",
+      "device": "4069728439"
+    }
+  }
+}

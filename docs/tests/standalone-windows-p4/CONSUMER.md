@@ -1,5 +1,10 @@
 # P5 Windows: seven-product split, six standalone hosts
 
+**Completed 24 November:** all six bounded native cores and the short #377
+case have individually reviewed PASS evidence. See `p5-windows-final-2026-11-24.json`
+and `RESUME-2026-11-24.md`. All own start flags are now frozen; the records below
+retain the original preparation/resume chronology. No automatic next case.
+
 **24 November explicit resume:** user and integration reauthorized only four
 missing native cores and the short #377 supplement on the unchanged original P5
 app children. `.github/standalone-windows-p5-consumer.json` is child-only approval;
@@ -9,7 +14,7 @@ their complete small ZIP hashes. The collector now joins new case receipts to
 the original verified binding while keeping execution and preparer identities
 separate. No second canonical download or app build is authorized.
 
-**Hard stop23 November before16:00CET:** all unused start grants are revoked.
+**Historical hard stop23 November before16:00CET (later explicitly resumed above):** all unused start grants are revoked.
 Both current input configs are frozen `ready:false` (parent also
 `officialMetadataGo:false`). The successful original package identity and prior
 execution below remain historical evidence. No child reuse, #377 supplement,
@@ -22,7 +27,7 @@ Product source is `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree
 Windowsjob137703365803, publication disabled. The original Windows attempt1 job
 succeeded at14:34:04UTC. Official artifact14828525724 is2037941610 bytes,
 ZIP SHA256 `24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d`.
-Config is now `ready:true` / `officialMetadataGo:true` under the conditional go;
+At original preparation, config was `ready:true` / `officialMetadataGo:true` under the conditional go;
 `p5-official-input.json` retains the exact source/attempt/job/time/gate binding.
 This is metadata acceptance; whole-ZIP verification and native cases follow.
 Old P4 bytes are invalid. The directory/workflow/config filenames retain their earlier
