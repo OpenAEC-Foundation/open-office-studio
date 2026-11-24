@@ -1,0 +1,37 @@
+{
+  "status": "Native failure preserved",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "executionRun": 45369384925,
+  "harness": "66108aaeeda93811f1d83967f3cba4354320f7ce",
+  "artifact": {
+    "id": 14907788148,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkwNzc4ODE0OA==",
+    "name": "standalone-windows-p5-writer-hwp3-proof",
+    "size_in_bytes": 41173,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14907788148",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14907788148/zip",
+    "expired": false,
+    "digest": "sha256:24567fcc8d328500415c1663d834f43e787ee3e9763a1241148835645a15d84a",
+    "created_at": "2026-11-24T09:55:22Z",
+    "updated_at": "2026-11-24T09:55:22Z",
+    "expires_at": "2027-02-22T09:52:57Z",
+    "workflow_run": {
+      "id": 45369384925,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/hwp3-windows-native-2026-11-24",
+      "head_sha": "66108aaeeda93811f1d83967f3cba4354320f7ce"
+    }
+  },
+  "nativeStatus": "failed",
+  "error": "Error: Command failed: python -B D:\\a\\open-office-studio\\open-office-studio\\scripts\\qa-hwp3-windows\\source-oracle\\oracle.py source --out D:\\a\\open-office-studio\\open-office-studio\\.local\\p4-native-writer\\hwp3-source\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:916:11)\n    at execFileSync (node:child_process:952:15)\n    at file:///D:/a/open-office-studio/open-office-studio/scripts/qa-hwp3-windows/native.mjs:202:2\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)",
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  }
+}

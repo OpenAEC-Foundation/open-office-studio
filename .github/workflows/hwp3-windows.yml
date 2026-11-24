@@ -62,6 +62,8 @@ jobs:
         run: npm install --prefix .local/hwp3-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
       - name: Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen
         env:
+          PYTHONUTF8: '1'
+          PYTHONIOENCODING: utf-8
           OOS_QA_APP: ${{ matrix.app }}
           OOS_QA_CASE: ${{ matrix.mode }}
           OOS_QA_HARNESS: ${{ github.sha }}

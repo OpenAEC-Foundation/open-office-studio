@@ -52,3 +52,19 @@ Local preparation passes original result ZIP SHA, native source SHA/blob/oracle
 equality, exact reader/fixture bytes, unchanged qualified9-syllable facts and18
 prior XML case evaluations. These static checks do not execute Office/Word or
 local GUI/capture and do not supply new Windows-native acceptance.
+
+## Preserved first attempt: logging failure before app start
+
+Run45369384925/job138359518901 at66108aaeeda93811f1d83967f3cba4354320f7ce
+failed before launch (`phases:[]`). Actual source/native-oracle and11172-row
+charset reports were already written and passed. The final Korean JSON console
+print then raised UnicodeEncodeError in Windows Python's cp1252 encoder.
+This is a QA log-encoding boundary, not a native application/content failure.
+Original ZIP/API/failure report and raw job log remain in
+`evidence/45369384925/`, with an SHA256 inventory; its FAIL is not rewritten.
+
+Only the native step's Python stdout environment is now explicitly UTF8.
+Source/charset/Unicode/package/focus/save/newPID/cleanup criteria and the copied
+source oracle are unchanged. A local targeted subprocess check reproduces the
+cp1252 rejection and verifies exact Hangul codepoints through UTF8 output.
+The missing native case is retried on a fresh original Writer-child host.

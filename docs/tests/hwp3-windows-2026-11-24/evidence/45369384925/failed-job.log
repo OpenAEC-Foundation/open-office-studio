@@ -1,0 +1,51 @@
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	﻿2026-11-24T09:53:46.9971992Z ##[group]Run node scripts/qa-hwp3-windows/native.mjs .local/standalone-windows-package ".local/p4-native-writer"
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:46.9973500Z ^[[36;1mnode scripts/qa-hwp3-windows/native.mjs .local/standalone-windows-package ".local/p4-native-writer"^[[0m
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:46.9974493Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0074443Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0075038Z env:
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0075461Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0076244Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0077010Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0077699Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0078383Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0079152Z   OOS_QA_APP: writer
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0079497Z   OOS_QA_CASE: hwp3
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0079888Z   OOS_QA_HARNESS: 66108aaeeda93811f1d83967f3cba4354320f7ce
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0080497Z   OOS_QA_APPROVED_CONFIG: .github/hwp3-windows-consumer.json
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0081045Z   OOS_QA_PREPARER_RUN: 45195780472
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0081568Z   OOS_QA_PREPARER_HARNESS: f88a805beb152d42a22806d135d9af1c912aedcb
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0082131Z   OOS_QA_CORE_RUN: 45195780472
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0082490Z   OOS_QA_CORE_JOB: 137767767915
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0082859Z   OOS_QA_CORE_PROOF: 14827219657
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:53:47.0083210Z ##[endgroup]
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3337890Z Traceback (most recent call last):
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3339629Z   File "D:\a\open-office-studio\open-office-studio\scripts\qa-hwp3-windows\source-oracle\oracle.py", line 57, in <module>
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3340667Z     if __name__=='__main__':main()
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3386121Z                             ^^^^^^
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3387128Z   File "D:\a\open-office-studio\open-office-studio\scripts\qa-hwp3-windows\source-oracle\oracle.py", line 56, in main
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3389917Z     print(json.dumps({'sourceSha256':CONFIG['source']['sha256'],'paragraphs':oracle['expected']['texts'],'nativeCRs':len(oracle['paragraphs']),'charsetRows':11172,'actualUniqueKoreanSyllables':len(oracle['observedModernSyllables'])},ensure_ascii=False))
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3392036Z   File "C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\encodings\cp1252.py", line 19, in encode
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3438194Z     return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3439088Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:15.3440537Z UnicodeEncodeError: 'charmap' codec can't encode characters in position 126-130: character maps to <undefined>
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1337202Z node:internal/modules/run_main:123
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1337621Z     triggerUncaughtException(
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1340345Z     ^
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1340774Z 
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1343251Z Error: Command failed: python -B D:\a\open-office-studio\open-office-studio\scripts\qa-hwp3-windows\source-oracle\oracle.py source --out D:\a\open-office-studio\open-office-studio\.local\p4-native-writer\hwp3-source
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1344986Z     at genericNodeError (node:internal/errors:983:15)
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1345584Z     at wrappedFn (node:internal/errors:537:14)
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1346157Z     at checkExecSyncError (node:child_process:916:11)
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1346757Z     at execFileSync (node:child_process:952:15)
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1347647Z     at file:///D:/a/open-office-studio/open-office-studio/scripts/qa-hwp3-windows/native.mjs:202:2
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1348753Z     at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1349460Z   status: 1,
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1349740Z   signal: null,
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1350079Z   output: [ null, null, null ],
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1350561Z   pid: 8272,
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1354004Z   stdout: null,
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1354326Z   stderr: null
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1354612Z }
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1354761Z 
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1354879Z Node.js v22.23.5
+Native writer hwp3 child reuse	Actual HWP3 native picker prefix UndoRedo copy and fresh-process reopen	2026-11-24T09:55:22.1964376Z ##[error]Process completed with exit code 1.
