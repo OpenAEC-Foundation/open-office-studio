@@ -1,0 +1,41 @@
+{
+  "status": "source/API/descriptor/witness/step/rawlog/time gates passed locally; child/full signature/native checks pending remote",
+  "app": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "producer": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+  "sourceWitnessSha256": "236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5",
+  "sourceWitnessBytes": 820,
+  "descriptorJsonSha256": "d3de8d84f08ad02ba20ee8b757df2b30c2737e6c907d2f9ae2c5c08515cda02c",
+  "parentDownloadedBySuite": false,
+  "steps": {
+    "requiredSteps": [
+      {
+        "name": "Transfer Suite only to its separate validation owner",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-24T07:56:39Z",
+        "completed_at": "2026-11-24T07:56:44Z"
+      },
+      {
+        "name": "Bind separate Suite child artifact to parent and DMG digests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-24T07:56:44Z",
+        "completed_at": "2026-11-24T07:56:45Z"
+      },
+      {
+        "name": "Preserve separate Suite-owner descriptor",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-24T07:56:45Z",
+        "completed_at": "2026-11-24T07:56:46Z"
+      }
+    ],
+    "rawPreparerLogSha256": "353108553d39e1a50ed280382cd927a09ba9a471d58b625e45f6156d29ab6c84",
+    "completeJobLogReviewed": true,
+    "policy": "Explicit successful step metadata + complete time-scoped raw log without runner failures + concrete in-window artifacts; API precision tolerance2s"
+  },
+  "nativeAccepted": false
+}

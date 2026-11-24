@@ -27,6 +27,8 @@ def validate_pins(value, require_witness_hash=True):
     if require_witness_hash and (not isinstance(value.get("sourceWitnessSha256"),str)
             or not re.fullmatch("[a-f0-9]{64}",value["sourceWitnessSha256"])):
         raise RuntimeError("Root-frozen hash of actual verified-parent witness required before download")
+    if type(value.get("archiveBytes")) is not int or value["archiveBytes"]<=0:
+        raise RuntimeError("Actual separate-producer parent byte count required")
 
 
 def expected_witness(value):
@@ -47,6 +49,7 @@ def verify_api(value, run, artifact, job, commit, workflow):
             or run.get("run_attempt")!=value["artifactAttempt"]
             or artifact.get("id")!=value["artifactId"] or artifact.get("name")!=value["artifactName"]
             or artifact.get("expired") is not False or artifact.get("digest")!="sha256:"+value["archiveSha256"]
+            or artifact.get("size_in_bytes")!=value["archiveBytes"]
             or artifact.get("workflow_run",{}).get("id")!=value["artifactRun"]
             or artifact.get("workflow_run",{}).get("head_sha")!=producer
             or job.get("id")!=value["successfulPlatformJob"] or job.get("run_id")!=value["artifactRun"]

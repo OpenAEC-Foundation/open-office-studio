@@ -1,4 +1,4 @@
-name: Native Mac product body and table acceptance
+name: Native P5 signed Suite core acceptance
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          ref: b696ab86bd1c128729a079b68c0082e6df3d36a5
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -24,8 +24,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify the successful Mac job and full canonical artifact before package derivation
-        run: python .local/mac-body-harness/scripts/mac-native-current-fetch.py .local/mac-body-harness/.github/mac-native-product-request.json .local/mac-product-input
+      - name: Verify producer/app witness, Suite support descriptor and complete own child ZIP
+        id: suite_fetch
+        run: python .local/mac-body-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-body-harness/.github/mac-native-product-request.json .local/mac-product-input
       - name: Untouched pixels, strict native preflight and original table Undo/save/reopen
         run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-product-input/identity.json .local/mac-product-native --acceptance
       - uses: actions/upload-artifact@v4
@@ -34,8 +35,14 @@ jobs:
           name: mac-product-body-native-${{ github.sha }}
           path: |
             .local/mac-product-native/
-            .local/mac-product-input/identity.json
-            .local/mac-product-input/request.json
-            .local/mac-product-input/artifact-origin.json
+            .local/mac-product-input/*.json
+            .local/mac-product-input/*.log
           include-hidden-files: true
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.suite_fetch.outcome == 'failure'
+        with:
+          name: mac-suite-failed-acquisition-${{ github.sha }}
+          path: .local/mac-product-input/*.zip
+          include-hidden-files: true
+          if-no-files-found: warn

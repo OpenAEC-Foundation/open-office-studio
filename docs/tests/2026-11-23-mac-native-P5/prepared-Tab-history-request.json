@@ -5,8 +5,8 @@
   "artifactRun": 45195055147,
   "artifactAttempt": 1,
   "artifactName": "uitgave-macOS",
-  "artifactId": null,
-  "archiveSha256": null,
+  "artifactId": 14836145077,
+  "archiveSha256": "45a88b40325f516e91b0b4cb557b88fd2a81d62bde2e4be26dc87bd1b55ff015",
   "successfulPlatformJob": 137763371873,
   "successfulPlatformJobName": "Bouwen \u2013 macOS",
   "packageMember": null,
@@ -29,16 +29,16 @@
   "derivePackageIdentityFromVerifiedArchive": true,
   "deriveExecutableFromVerifiedDmg": true,
   "requireSignedNotarized": true,
-  "nativeBodyAcceptanceApproved": false,
+  "nativeBodyAcceptanceApproved": true,
   "macViewportSetup": {
     "mode": "native-maximize-once",
-    "executionApproved": false
+    "executionApproved": true
   },
   "nativeControlVisibleAnchors": [
     "EERSTE",
     "TWEEDE"
   ],
-  "remainingBinding": "STOPPED: preserve source pins; no prep/native/download when producer finishes. Actual root witness/parent/child/descriptor bindings and renewed user authorization are still required.",
+  "remainingBinding": "Actual Suite child/support artifact/run/job/hash/size and root-frozen verified-parent witness SHA pending; one parent download remains exclusively6f92.",
   "previous361Core": {
     "reportPath": "docs/tests/2026-11-23-mac-native-P5/core/report.json",
     "run": null,
@@ -47,9 +47,9 @@
     "reportSha256": null,
     "bindingPending": true
   },
-  "tabSaveOracleApproved": false,
-  "tabHistoryOracleApproved": false,
-  "finalSuite361Approved": false,
+  "tabSaveOracleApproved": true,
+  "tabHistoryOracleApproved": true,
+  "finalSuite361Approved": true,
   "transferRequestMember": "request.json",
   "supportDescriptorRequired": true,
   "supportDescriptorContractQaCommit": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
@@ -66,7 +66,7 @@
     "Preserve separate Suite-owner descriptor"
   ],
   "consumerRequiresRawPreparerLog": true,
-  "separateProducerApproved": false,
+  "separateProducerApproved": true,
   "producerCommit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
   "producerTree": "94340e40228ddcb11aace00e4dd01f614a13273e",
   "producerRef": "refs/heads/codex/p5-macos-only-producer-20261123",
@@ -77,5 +77,6 @@
   "sourceWitnessMember": ".local/macos-only-producer-source.json",
   "sourceWitnessSha256": null,
   "sourceWitnessContract": "Root-approved rawBase64/member/SHA/bytes/value in raw provenance and support envelope",
-  "userStop": "2026-11-23: stop now; all unstarted conditional go revoked; resume24Nov only after a new user instruction"
+  "archiveBytes": 1972148013,
+  "userResume": "Explicit user resumption24Nov; only this own Suite scope. Native execution waits actual child/support/witness binding and all strict gates."
 }

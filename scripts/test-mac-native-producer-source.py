@@ -17,7 +17,7 @@ def fixture():
            "producerCommit":"c"*40,"producerTree":"d"*40,"producerWorkflowSha256":M["sha"](workflow),
            "checkoutWorkflowSha256":"e"*64,"producerRef":"refs/heads/codex/p5-macos-only-producer-20261123",
            "producerWorkflowPath":M["WORKFLOW"],"sourceWitnessRequired":True,"sourceWitnessMember":M["MEMBER"],
-           "artifactRun":2,"artifactAttempt":1,"artifactId":3,"artifactName":"uitgave-macOS","archiveSha256":"f"*64,
+           "archiveBytes":1234,"artifactRun":2,"artifactAttempt":1,"artifactId":3,"artifactName":"uitgave-macOS","archiveSha256":"f"*64,
            "successfulPlatformJob":4,"successfulPlatformJobName":"Bouwen – macOS"}
     parsed=M["expected_witness"](value)
     raw=json.dumps(parsed,indent=2).encode()+b"\n"
@@ -26,7 +26,7 @@ def fixture():
     run={"id":2,"head_sha":value["producerCommit"],"head_branch":value["producerRef"].removeprefix("refs/heads/"),
          "path":M["WORKFLOW"],"event":"workflow_dispatch","run_attempt":1,"conclusion":None}
     artifact={"id":3,"name":"uitgave-macOS","expired":False,"digest":"sha256:"+value["archiveSha256"],
-              "workflow_run":{"id":2,"head_sha":value["producerCommit"]}}
+              "size_in_bytes":1234,"workflow_run":{"id":2,"head_sha":value["producerCommit"]}}
     job={"id":4,"run_id":2,"head_sha":value["producerCommit"],"run_attempt":1,"name":"Bouwen – macOS",
          "status":"completed","conclusion":"success","labels":["macos-latest"]}
     commit={"sha":value["producerCommit"],"tree":{"sha":value["producerTree"]}}
@@ -51,6 +51,13 @@ class SeparateProducer(unittest.TestCase):
             elif change=="stale-run":j["run_id"]=1
             else:r["run_attempt"]=2
             with self.subTest(change=change),self.assertRaises(RuntimeError):M["verify_api"](v,r,a,j,c,f)
+
+    def test_parent_bytes_required_and_exact_in_api_and_envelope(self):
+        v,w,raw,r,a,j,c,f=fixture()
+        a["size_in_bytes"]+=1
+        with self.assertRaises(RuntimeError):M["verify_api"](v,r,a,j,c,f)
+        v["archiveBytes"]=None
+        with self.assertRaises(RuntimeError):M["validate_pins"](v)
 
     def test_actual_witness_wrong_app_tree_producer_run_or_scope_rejected(self):
         for key,bad in [("appHead","0"*40),("appTree","0"*40),("producerHead","0"*40),("runId","1"),

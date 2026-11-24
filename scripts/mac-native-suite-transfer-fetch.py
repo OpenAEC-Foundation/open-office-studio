@@ -28,7 +28,8 @@ def source_pin(value):
 
 def parent_pin(value):
     return {"id":value["artifactId"],"run":value["artifactRun"],"producerJobId":value["successfulPlatformJob"],
-            "name":value["artifactName"],"sha256":value["archiveSha256"],"attempt":value["artifactAttempt"]}
+            "name":value["artifactName"],"sha256":value["archiveSha256"],"attempt":value["artifactAttempt"],
+            **({"bytes":value["archiveBytes"]} if "archiveBytes" in value else {})}
 
 
 def installed_pin(value):

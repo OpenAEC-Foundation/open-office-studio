@@ -1,3 +1,5 @@
+> ACTIVE RESUME24NOV: explicit user/root Suite go restored. Actual parent/child/support/witness bindings are frozen in prepared-core-request.json; only the registered core workflow is enabled now. Remaining361/374 requests stay globally disabled until this exact core passes. The23Nov stop below is historical. See ../2026-11-24-mac-suite/manifest-review.json.
+
 > USER STOP23NOV: saved WIP only. All unstarted go revoked; no automatic prep/native when CI finishes. Resume24Nov only on a new user instruction. See STOP-2026-11-23-dual-source-WIP.json.
 
 # P5 disabled Mac Suite plan and transfer-contract review
