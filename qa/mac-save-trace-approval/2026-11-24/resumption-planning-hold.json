@@ -1,0 +1,41 @@
+{
+  "kind": "USER RESUMPTION RECEIVED; INTEGRATION PLANNING HOLD; NO DISPATCH",
+  "recordedAtUTC": "2026-11-24T14:11:45.231615+00:00",
+  "userQuote": "Hervat het Mac-opslagonderzoek in overleg met de integratiechat: één build op 27cc1c2a/c5138fb4 en bij geslaagde controles één native proef. Behoud het oorspronkelijke bewijs en wijzig niets aan main.",
+  "scopeApproved": true,
+  "resumptionReceived": true,
+  "previousNextWeekHoldRevokedByNewInstruction": true,
+  "producerCommit": "27cc1c2ab7a340f1dee8366767bc2378fd31fdcd",
+  "appCommit": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+  "priorLiteralConsent": {
+    "file": "execution-consent-held.json",
+    "sha256": "be91f8ecf515b08f8cac88cb480c75f4f1cc308714e3c18c764ceb5f2143b2b2",
+    "preservedUnchanged": true
+  },
+  "dispatcher": "Integration chat 01a1bf9c-9635-7733-aa46-eb3bd68262aa only",
+  "integrationDecision": "The new resumption removes the next-week hold but does not explicitly extend the hard 2026-11-24 15:25 Europe/Amsterdam stop. A90min build and conditional20min native case cannot fit. Integration has asked the user one timing choice; no duplicate scope approval or second question from this chat.",
+  "planningChoicePending": {
+    "owner": "integration chat",
+    "choices": [
+      "retain15:25 stop and build later",
+      "explicitly extend stop so build may continue"
+    ],
+    "answerReceivedByThisChat": false
+  },
+  "authorityNow": {
+    "allRequestsClosed": true,
+    "dispatchAllowed": false,
+    "runtimeApprovalEnabled": false,
+    "liveNonce": null,
+    "liveExpiryUTC": null,
+    "buildStarted": false,
+    "nativeStarted": false,
+    "quotaConsumed": false
+  },
+  "noAutomaticDeadlineExtension": true,
+  "noCodeChangeOrParallelDispatcher": true,
+  "originalEvidencePreserved": true,
+  "originalSaveCause": "OPEN",
+  "mainOrReleaseWritesByThisChat": false,
+  "supersedingStateRequired": "Integration must retain the explicit user timing answer before activating fresh live requests. This timestamped hold does not override a later direct user instruction."
+}
