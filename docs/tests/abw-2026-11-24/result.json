@@ -1,0 +1,44 @@
+{
+  "scope": "ABW / lo-abw-1 only under #30",
+  "branch": "codex/abw-qa-2026-11-24-e0d7",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "boundedSourceAcceptance": true,
+  "fullFormatAcceptance": false,
+  "ci": {
+    "run": 45361104855,
+    "job": 138331103369,
+    "attempt": 1,
+    "harnessCommit": "174b2e73d100ccab82582f8a20fa23e007e508e0",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T09:02:01Z"
+  },
+  "artifact": {
+    "id": 14904373156,
+    "bytes": 69213,
+    "sha256": "0815a55a1c06948d748ff0bc770df98b24f54c4b959f1ff92f85a30258860e7a",
+    "expiresAt": "2027-02-22T09:00:33Z"
+  },
+  "sourceSha256": "ddcde2c8876a316a8e02501202c1316e9e7c52d8728c7d78e43ccd41ade45d50",
+  "sourceParagraphs": 1,
+  "sourceSections": 1,
+  "checks": 32,
+  "negativeControls": 3,
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "noProductChangeOrNewIssue": true,
+  "limits": "One source paragraph hello world; ordinary-document type, one section, effective encoded ASCII font-family Times New Roman/12pt, left alignment and Letter portrait page dimensions. XML labels/properties only: installed fonts/glyph rendering/pagination not accepted. Metadata/history/RDF/other style properties and richer ABW features remain unaccepted. No ZABW or other variants/native GUI/full-format acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "scope": "ABW / lo-abw-1 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "runtimeExecutedByThisOfflineAudit": false,
+  "ci": {
+    "run": 45361104855,
+    "job": 138331103369,
+    "attempt": 1,
+    "harnessCommit": "174b2e73d100ccab82582f8a20fa23e007e508e0",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T09:02:01Z"
+  },
+  "artifact": {
+    "id": 14904373156,
+    "bytes": 69213,
+    "sha256": "0815a55a1c06948d748ff0bc770df98b24f54c4b959f1ff92f85a30258860e7a",
+    "expiresAt": "2027-02-22T09:00:33Z"
+  },
+  "sourceSha256": "ddcde2c8876a316a8e02501202c1316e9e7c52d8728c7d78e43ccd41ade45d50",
+  "sourceParagraphs": 1,
+  "sourceSections": 1,
+  "boundedSourceAcceptance": true,
+  "casesPerStage": 8,
+  "stages": 4,
+  "controls": [
+    {
+      "variant": "wrong-text",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "exact source XML paragraph text",
+          "actual": [
+            "HELLO WORLD"
+          ],
+          "expected": [
+            "hello world"
+          ],
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "wrong-direct-font",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "effective encoded ASCII font family per character",
+          "actual": [
+            [
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial",
+              "Arial"
+            ]
+          ],
+          "expected": [
+            [
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman",
+              "Times New Roman"
+            ]
+          ],
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "wrong-template-type",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "ordinary DOCX document main type",
+          "actual": "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml",
+          "expected": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "files": {
+    "converted.docx": {
+      "bytes": 5449,
+      "sha256": "83a97d797ae530eb185bb7da98a5642ca140bc4e9e21063ac4fc63fef46ec6c5"
+    },
+    "saved.docx": {
+      "bytes": 5360,
+      "sha256": "ff43bd9186c91e85ba8b08b4afb33190cd3b338eefc1e73898a14ef0078a8d4d"
+    },
+    "reopened-saved.docx": {
+      "bytes": 5360,
+      "sha256": "9fe54e974d945f879b04c9a9757941bfe74d279a03a210eaac546df5447f7457"
+    },
+    "fresh-process-saved.docx": {
+      "bytes": 5360,
+      "sha256": "0a29d121179bf26b934064b7e7b57726f8a93d7cd9b352c941ccc80f3f5b249a"
+    }
+  },
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "fullFormatAcceptance": false,
+  "limits": "One source paragraph hello world; ordinary-document type, one section, effective encoded ASCII font-family Times New Roman/12pt, left alignment and Letter portrait page dimensions. XML labels/properties only: installed fonts/glyph rendering/pagination not accepted. Metadata/history/RDF/other style properties and richer ABW features remain unaccepted. No ZABW or other variants/native GUI/full-format acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}
