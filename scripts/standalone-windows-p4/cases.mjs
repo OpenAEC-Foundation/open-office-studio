@@ -51,7 +51,7 @@ export async function officeCase(qa, kind, phase) {
     await qa.screenshot(`presentation-${phase}-outline.png`);
     await page.locator('.dia-overzicht').getByRole('button',{name:/^(Normal view|Normale weergave)$/i}).click();
     await page.locator('.dia-overzicht').waitFor({state:'hidden'});
-    await page.getByRole('tab',{name:/^(Home|Start)$/i}).click();
+    await page.locator('button[role="tab"]').filter({hasText:/^(Home|Start)$/i}).click();
     if(phase==='initial')await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
     const thumbnails=page.locator('.office-presentatie aside > button:has(canvas)');
     await page.waitForFunction(()=>document.querySelectorAll('.office-presentatie aside > button canvas').length>=2);
