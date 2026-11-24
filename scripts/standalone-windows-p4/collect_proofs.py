@@ -24,7 +24,7 @@ def collect(gh, repo, run, target, cache=None):
     fetched = {}
     for artifact in artifacts:
         name = artifact['name']
-        if name not in ('standalone-windows-p5-binding','standalone-windows-p5-reuse-binding','standalone-windows-p5-spreadsheet-xlsb377-proof') and name not in [f'standalone-windows-p5-{app}-proof' for app in APPS]:
+        if name not in ('standalone-windows-p5-binding','standalone-windows-p5-reuse-binding','standalone-windows-p5-spreadsheet-xlsb377-proof','standalone-windows-p5-presentation-canvas-proof') and name not in [f'standalone-windows-p5-{app}-proof' for app in APPS]:
             continue
         assert name not in fetched and not artifact['expired']
         assert artifact['workflow_run']['id'] == run
@@ -69,6 +69,7 @@ def audit(run, metadata, jobs, fetched, target):
     binding = json.loads(exactly(owner, 'binding.json').read_bytes())
     requested=set(APPS)
     requested377=False
+    canvas_requested=False
     if reuse:
         reuse_plan=json.loads(exactly(owner,'reuse-plan.json').read_bytes())
         config=reuse_plan['config']
@@ -80,7 +81,9 @@ def audit(run, metadata, jobs, fetched, target):
         assert parent_meta['workflow_run']['id']==config['preparerRun'] and parent_meta['workflow_run']['head_sha']==config['preparerHarness']
         assert parent_meta['digest']=='sha256:'+digest(archive) and archive.stat().st_size==parent_meta['size_in_bytes']
         with zipfile.ZipFile(archive) as z:assert json.loads(z.read('binding.json'))==binding
-        requested={case['app'] for case in reuse_plan['matrix'] if case['mode']=='core'}
+        requested={case['app'] for case in reuse_plan['matrix'] if case['mode'] in ('core','presentation-canvas')}
+        canvas_requested=any(case['mode']=='presentation-canvas' for case in reuse_plan['matrix'])
+        assert not canvas_requested or all(case['app']=='presentation' and case['mode']=='presentation-canvas' for case in reuse_plan['matrix'])
         requested377=any(case['mode']=='xlsb377' for case in reuse_plan['matrix'])
         assert requested.issubset({'presentation','email','notition','database'})
         assert binding['preparerRun']==config['preparerRun'] and binding['preparerHarness']==config['preparerHarness']
@@ -93,8 +96,9 @@ def audit(run, metadata, jobs, fetched, target):
         if app not in requested:
             result['apps'][app]=dict(status='not-tested-in-this-execution',reference='Retain original accepted core; no pass inferred from this reuse run')
             continue
-        name = f'standalone-windows-p5-{app}-proof'
-        own_jobs = [j for j in jobs if j['name'] == (f'Native {app} core child reuse' if reuse else f'Native {app} Windows app-only')]
+        mode='presentation-canvas' if canvas_requested and app=='presentation' else 'core'
+        name = f'standalone-windows-p5-{app}-'+('canvas-proof' if mode=='presentation-canvas' else 'proof')
+        own_jobs = [j for j in jobs if j['name'] == (f'Native {app} {mode} child reuse' if reuse else f'Native {app} Windows app-only')]
         entry = dict(visualAcceptance='pending actual completed screenshot review', job=own_jobs)
         result['apps'][app] = entry
         if name not in fetched:
@@ -176,6 +180,18 @@ def audit(run, metadata, jobs, fetched, target):
                 assert report['originalInput']['unchanged']
                 original_name = report['originalInput']['path'].replace('\\','/').split('/')[-1]
                 assert digest(exactly(proof/'fixtures', original_name)) == report['originalInput']['sha256']
+            if mode=='presentation-canvas':
+                assert report['caseMode']==mode
+                for phase in ('initial','reopened'):
+                    guards=[s for s in report['steps'] if s.get('phase')==phase and 'canvasFocusBeforeGuard' in s]
+                    assert len(guards)==1 and guards[0]['canvasFocusBeforeGuard']['documentHasFocus']
+                    active=guards[0]['canvasFocusBeforeGuard']['activeElementChain'][0]
+                    assert active['role']=='application' and active['tag']=='DIV' and active['connected']
+                    readbacks=[s for s in report['steps'] if s.get('phase')==phase and 'canvasReadback' in s]
+                    assert len(readbacks)==1 and readbacks[0]['noOutlineMutation']
+                    assert readbacks[0]['canvasReadback'].endswith(' STANDALONE23 PRESENTATION EDIT')
+                    for suffix in ('after-keys','readback'):assert (proof/f'canvas-{phase}-{suffix}.png').stat().st_size>0
+                entry['caseMode']=mode
             entry.update(status='independently-rechecked-functional-only', savedByteOracles=oracles)
         except Exception as error:
             entry.update(status='proof-audit-failed', error=repr(error))

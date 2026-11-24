@@ -63,10 +63,11 @@ cases=config['cases'];assert len(cases)==len({c['app'] for c in cases})<=6
 matrix=[]
 for case in cases:
     app,mode=case['app'],case['mode']
-    assert (mode=='core' and app in ('presentation','email','notition','database')) or (mode=='xlsb377' and app=='spreadsheet')
+    assert (mode=='core' and app in ('presentation','email','notition','database')) or (mode=='xlsb377' and app=='spreadsheet') or (mode=='presentation-canvas' and app=='presentation')
     product=binding['products'][app];child=product['childArtifact']
     assert product['application']['key']==app
-    matrix.append(dict(app=app,mode=mode,artifactId=child['id'],artifactSha256=child['digest'].removeprefix('sha256:'),receiptSha256=product['packageReceiptSha256'],preparerRun=config['preparerRun'],preparerHarness=config['preparerHarness'],coreRun=config['preparerRun'],coreJob=config['spreadsheetCoreJob'],coreProof=config['spreadsheetCoreProof'],proofName=f'standalone-windows-p5-{app}-'+('proof' if mode=='core' else 'xlsb377-proof')))
+    suffix={'core':'proof','xlsb377':'xlsb377-proof','presentation-canvas':'canvas-proof'}[mode]
+    matrix.append(dict(app=app,mode=mode,artifactId=child['id'],artifactSha256=child['digest'].removeprefix('sha256:'),receiptSha256=product['packageReceiptSha256'],preparerRun=config['preparerRun'],preparerHarness=config['preparerHarness'],coreRun=config['preparerRun'],coreJob=config['spreadsheetCoreJob'],coreProof=config['spreadsheetCoreProof'],proofName=f'standalone-windows-p5-{app}-'+suffix))
 write(target/'binding.json',binding);write(target/'reuse-plan.json',dict(config=config,matrix=matrix,scope='Own original app children only; no canonical parent download, product build or suite transfer'))
 with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf8') as f:f.write('apps='+json.dumps(matrix,separators=(',',':'))+'\n')
 print(json.dumps(dict(source=APP,cases=cases,scope='Four failed core drivers plus one #377 supplement; two valid original core cases retained')))

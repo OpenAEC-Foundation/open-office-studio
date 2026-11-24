@@ -11,6 +11,7 @@ import { tmpdir } from 'node:os';
 import { createServer } from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { officeCase, notitionCase, databaseCase, emailCase } from './cases.mjs';
+import { presentationCanvasCase } from './canvas-case.mjs';
 
 assert.equal(process.platform,'win32'); assert.equal(process.env.GITHUB_ACTIONS,'true');
 assert.equal(process.env.RUNNER_ENVIRONMENT,'github-hosted','Never start native QA on the user PC');
@@ -21,6 +22,8 @@ const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const run=promisify(execFile);
 async function ps(name,args=[]) { return (await run('pwsh',['-NoProfile','-File',join(driver,name),...args],{windowsHide:true,timeout:40000,maxBuffer:2*1024*1024})).stdout.trim(); }
 const receipt=JSON.parse(await readFile(join(packageDir,'package.json'),'utf8')), app=receipt.application;
+const caseMode=process.env.OOS_QA_CASE||'core';
+assert(caseMode==='core'||(caseMode==='presentation-canvas'&&app.key==='presentation'));
 const approvedPath=process.env.OOS_QA_APPROVED_CONFIG||'.github/standalone-windows-p4.json';
 assert(['.github/standalone-windows-p4.json','.github/standalone-windows-p5-consumer.json'].includes(approvedPath));
 const approved=JSON.parse(await readFile(approvedPath,'utf8'));
@@ -44,6 +47,7 @@ const install=join(temporary,'installed'), profile=join(temporary,'webview-profi
 const report={schemaVersion:1,applicationCommit:receipt.applicationCommit,applicationTree:receipt.applicationTree,
  version:receipt.version,harnessCommit:process.env.OOS_QA_HARNESS,package:receipt,scope:'Actual isolated standalone Windows native app; never a browser demo',
  status:'failed',steps:[],phases:[],cleanup:{},limitations:[]};
+report.caseMode=caseMode;
 report.visualAcceptance='Requires separate review of actual completed native screenshots';
 let child,browser,page,port,installed=false,policyChanged=false,firstPid,primaryError,mailChild,mail;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -210,12 +214,13 @@ try {
  let input=ext?fixtures[ext].file:app.key==='database'?fixtures.database.file:undefined;
  const sourceInput=input, original=input?hash(await readFile(input)):null;
  report.originalInput=sourceInput?{path:sourceInput,sha256:original}:null;
- const qa={get page(){return page;},focus,checkFocus,saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,presentationPoint:fixtures.pptx.nativeEditablePoint,presentationText:fixtures.pptx.nativeEditableText,screenshot:name=>page.screenshot({path:join(root,name)}),mail,
+ const qa={get page(){return page;},focus,checkFocus,focusSnapshot,prepareFocus:()=>action('Focus'),saveOffice,saveNative,record,oracle,databaseInput:fixtures.database.file,presentationPoint:fixtures.pptx.nativeEditablePoint,presentationText:fixtures.pptx.nativeEditableText,screenshot:name=>page.screenshot({path:join(root,name)}),mail,
   waitForDraft:async()=>{const deadline=Date.now()+20000;while(Date.now()<deadline){try{await oracle('email',join(root,'mail'));return;}catch{await sleep(250);}}throw Error('Real native draft append did not reach loopback fixture');}};
  for(const phase of ['initial','reopened']) {
   const current=await launch(input,phase);
   if(phase==='initial')firstPid=child.pid; else assert.notEqual(child.pid,firstPid,'New process required');
-  if(ext)await officeCase(qa,app.key,phase);
+  if(caseMode==='presentation-canvas')await presentationCanvasCase(qa,phase);
+  else if(ext)await officeCase(qa,app.key,phase);
   else if(app.key==='notition')await notitionCase(qa,phase);
   else if(app.key==='database')await databaseCase(qa,phase);
   else await emailCase(qa,phase);
