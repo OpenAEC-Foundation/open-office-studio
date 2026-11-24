@@ -2,8 +2,8 @@
 
 **Status on 2026-11-24: the external third witness failed during original-importer
 test initialization. CLI build/target-selection checks passed; the production
-patch remains uncompiled. Read-only diagnosis/proposal only; no new build
-allocation now.** This is a private QA witness for the reviewed importer patch,
+patch remains uncompiled. Test-only harness preparation is authorized; no new
+build allocation yet.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -349,6 +349,11 @@ official ZIP and stage hashes are preserved in
 test resource-dependency proposal and limits are in
 [`test-initialization-proposal.md`](test-initialization-proposal.md).
 
-Integration allows only this read-only diagnosis/proposal during P5 native
-acceptance. No new build, VM, cache assignment or retry is inferred. Earlier
-failures and the original stop receipt remain unchanged.
+Integration initially allowed only read-only diagnosis/proposal and then
+authorized reviewable own test-only harness preparation. A new build remains
+blocked until P5 package verifier `45352330223` and the independent LinuxSuite
+final audit finish, no critical P5 Linux job is queued, and integration explicitly
+allocates one witness with new epochs. There is no automatic dispatch on time or
+prerequisite completion. Four local source/resource controls and static checks
+pass; real initialization and color acceptance remain unproven. Earlier failures
+and the original stop receipt remain unchanged.

@@ -1,0 +1,34 @@
+{
+  "issue": 375,
+  "kind": "Reviewable test-only harness correction; no build or runtime execution",
+  "initializationPatchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828",
+  "unchangedImporterPatchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "resourceSHA256": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+  "localControls": {
+    "command": "python -B scripts/qa-presentation-375/test_initialization_checks.py --source .local/375-source",
+    "count": 4,
+    "exitCode": 0,
+    "result": "PASS; exact primary/target mapping, changed recipe rejected, missing resource rejected, exact resource bytes preserved and changed bytes rejected",
+    "input": "Small pinned source cache and temporary control copies; no Office/make invocation"
+  },
+  "syntaxASTParsed": [
+    "scripts/qa-presentation-375/source_build.py",
+    "scripts/qa-presentation-375/test_initialization.py",
+    "scripts/qa-presentation-375/test_initialization_checks.py"
+  ],
+  "productionOrRuntimePass": false,
+  "newBuildDispatched": false,
+  "scope": [
+    "Verify/apply exact separate modules/simpress test-recipe patch only in an allocated source checkout",
+    "Match canonical UIConfig .done target to pinned TargetLocations and actual configured workdir",
+    "Build UI resource under the existing compiler/total budget before baseline; retain actual installed bytes/hash",
+    "Include test-recipe change and resource receipts in new source/binary binding"
+  ],
+  "allocationPrerequisites": [
+    "P5 package verifier 45352330223 finished",
+    "Independent LinuxSuite final audit finished",
+    "No queued critical P5 Linux job at a new allocation",
+    "Explicit coordinator allocation with new absolute epochs; no automatic dispatch"
+  ]
+}

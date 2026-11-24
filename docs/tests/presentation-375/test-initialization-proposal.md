@@ -1,8 +1,11 @@
 # #375: third witness and minimal initialization proposal
 
-Status on 2026-11-24: **read-only diagnosis/proposal only**. Integration allows
-this review, with no new build/VM/cache allocation while P5 native acceptance
-is on its critical path. No changed runtime or production fix is accepted.
+Status on 2026-11-24: integration subsequently permits **reviewable test-only
+harness preparation**, with no new build/VM/cache allocation yet. P5 package
+verifier `45352330223` and the independent LinuxSuite final audit must finish;
+no critical P5 Linux job may be queued at a new allocation. A separate explicit
+allocation is still required; no automatic dispatch follows those conditions.
+No changed runtime or production fix is accepted.
 
 ## Actual result
 
@@ -55,7 +58,9 @@ established crash cause. No language-data/environment correction is bundled.
 [Cppunit UIConfig dependency](https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/solenv/gbuild/CppunitTest.mk#L472)
 on existing `modules/simpress` to the test recipe. Its input/output recipe and
 patch hashes are in `third-source-outcome.json`. It is separate from the unchanged
-importer patch and is not applied to the source cache or active harness.
+importer patch and has not been applied to the primary source cache or executed.
+The own QA harness is now prepared to verify and apply it only in a later
+explicitly allocated source witness.
 
 Keep the original UOP, actual Impress opening, RGB/content assertions and
 save/reopen semantics. Do not skip the view, simulate the importer, loosen the
@@ -73,3 +78,23 @@ bounded diagnosis; no automatic unrelated repair or extra build follows.
 Corrected-runtime Windows/Linux/macOS/native and real browser checks remain
 outstanding. No P5 intake, product activation, main/tag/publication or new
 allocation follows from this proposal.
+
+## Prepared own harness, without a build
+
+`test_initialization.py` verifies the exact patch and primary recipe/resource/
+gbuild hashes. The harness adds only that test-recipe patch, matches the actual
+configured workdir to the pinned canonical UIConfig `.done` target, and will
+record the installed `tabviewbar.ui` bytes/hash before the baseline test and
+again after corrected draw tests. The retained source tree and new runtime
+descriptor include this separate test-recipe change and its resource receipts.
+All make work, including UI resources, counts toward the existing 210-minute
+compiler/test ceiling and remaining total limit. Configuration, dependencies,
+upstream and production importer patch are unchanged.
+
+Four local source/resource controls pass using small cached primary inputs and
+temporary authored installed-file controls. They exercise exact input/target
+mapping, changed recipe rejection, missing resource rejection and exact/changed
+resource bytes. No LibreOffice or make is executed. The existing proposal
+context check and AST/whitespace checks also pass. See
+`test-initialization-harness-checks.json`; this is not initialization/runtime
+acceptance and does not establish the crash hypothesis.

@@ -15,6 +15,7 @@ import tempfile
 import time
 
 from source_targets import select_cli_targets
+from test_initialization import PATCH as INITIALIZATION_PATCH, RECIPE as INITIALIZATION_RECIPE, resource_receipt, verified_inputs
 
 START_EPOCH=os.environ.get('OOS_375_WITNESS_START_EPOCH') or os.environ.get('OOS_375_JOB_START_EPOCH') or str(int(time.time()))
 assert re.fullmatch(r'\d{10}',START_EPOCH) and 0<=time.time()-float(START_EPOCH)<270*60
@@ -153,6 +154,11 @@ def main():
     REPORT['upstreamTree']=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD^{tree}'],text=True).strip()
     # Full checked applicator preconditions before installing only the tests for the red witness.
     run('patchset-preconditions',[BUILD_PYTHON,str(OWN/'runtime-patch/apply.py'),str(source)])
+    REPORT['testInitializationBinding'] = verified_inputs(source)
+    run('initialization-controls',[BUILD_PYTHON,str(OWN/'test_initialization_checks.py'),'--source',str(source)])
+    run('initialization-patch-check',['git','apply','--check','--whitespace=error',str(INITIALIZATION_PATCH)],cwd=source)
+    run('initialization-test-recipe',['git','apply','--whitespace=error',str(INITIALIZATION_PATCH)],cwd=source)
+    assert sha(source/INITIALIZATION_RECIPE) == REPORT['testInitializationBinding']['recipeAfterSHA256']
     patch=OWN/'runtime-patch/375-solid-rgb-import.patch'
     run('test-diff',['git','apply','--include=xmloff/qa/unit/draw.cxx',str(patch)],cwd=source)
     for entry in PIN['fixtures']:
@@ -167,6 +173,9 @@ def main():
     REPORT['configureFlags']=flags
     assert sha(source/'autogen.sh')=='a79875cdff86bde59f8ab4c60b6da73cd9be82bf32cbdbb07262b9a712d69ca8'
     run('configure',['perl',str(source/'autogen.sh'),*flags],cwd=source,timeout=900)
+    configured_workdir = re.findall(r'^export WORKDIR=(.*)$', (source/'config_host.mk').read_text(), re.M)
+    assert configured_workdir == [str(source/'workdir')], 'UI resource target must match the actual configured workdir'
+    REPORT['testInitializationBinding']['configuredWorkdir'] = configured_workdir[0]
     cli_targets, REPORT['cliTargetSelection'] = select_cli_targets(source, source/'config_host.mk')
     receipt()
     run('target-selection-regressions',[BUILD_PYTHON,str(OWN/'test_source_targets.py'),'--source',str(source)])
@@ -177,7 +186,14 @@ def main():
         if p.is_file():shutil.copyfile(p,OUT/p.name)
     run('linker-version',['ld','--version'])
     compiler_start=time.monotonic()
-    run('source-cli-prerequisites',['make','-j3',*cli_targets],cwd=source,timeout=210*60)
+    run('impress-test-ui-resource',['make','-j3','-f','Makefile.gbuild',REPORT['testInitializationBinding']['resourceTarget']],cwd=source,timeout=210*60)
+    REPORT['impressResourceAfterUIBuild'] = resource_receipt(source)
+    receipt()
+    remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
+    run('source-cli-prerequisites',['make','-j3',*cli_targets],cwd=source,timeout=remaining)
+    REPORT['impressResourceBeforeBaseline'] = resource_receipt(source)
+    shutil.copyfile(source/REPORT['testInitializationBinding']['resourceInstalled'],OUT/'required-tabviewbar.ui')
+    receipt()
     remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
     red=run('baseline-red',['make','-j3','CppunitTest_xmloff_draw','CPPUNIT_TEST_NAME=testUOFExplicitRectangleFillColors'],cwd=source,timeout=remaining,check=False)
     log=(OUT/'baseline-red.log').read_text(errors='replace')
@@ -190,8 +206,9 @@ def main():
     remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
     run('corrected-xmloff-draw',['make','-j3','CppunitTest_xmloff_draw'],cwd=source,timeout=remaining)
     REPORT['correctedCppunitPassed']=True
+    REPORT['impressResourceAfterDrawTests'] = resource_receipt(source)
     # Freeze the exact reviewed source diff/fixtures; no source commit is pushed.
-    run('source-add',['git','add',*[e['path'] for e in PIN['sourceFiles']],*[e['destination'] for e in PIN['fixtures']]],cwd=source)
+    run('source-add',['git','add',INITIALIZATION_RECIPE,*[e['path'] for e in PIN['sourceFiles']],*[e['destination'] for e in PIN['fixtures']]],cwd=source)
     REPORT['patchedSourceTree']=subprocess.check_output(['git','-C',str(source),'write-tree'],text=True).strip()
     REPORT['patchedFiles']={e['path']:sha(source/e['path']) for e in PIN['sourceFiles']}
     runtime=source/'instdir';assert (runtime/'program/soffice').is_file()
@@ -204,7 +221,8 @@ def main():
     REPORT['runtimeVersion']=(OUT/'runtime-version.log').read_text().strip()
     binding={k:REPORT[k] for k in ('upstreamCommit','upstreamTree','patchSHA256','qaCommit','run','ownBuildRoot',
               'patchedSourceTree','patchedFiles','configureFlags','configurationHashes','correctedCppunitPassed',
-              'baselineExpectedStaleAccent1Failure','runtimeVersion','externalArchiveBindings','downloadListSHA256')}
+              'baselineExpectedStaleAccent1Failure','runtimeVersion','externalArchiveBindings','downloadListSHA256',
+              'testInitializationBinding','impressResourceBeforeBaseline','impressResourceAfterDrawTests')}
     binding.update(program=str(runtime/'program/soffice'),programSHA256=sha(runtime/'program/soffice'),
                    elf=str(runtime/'program/soffice.bin'),elfSHA256=sha(runtime/'program/soffice.bin'),
                    kind='new Ubuntu24 source-build witness; no original P2 binary or portable-runtime identity')
