@@ -1,0 +1,104 @@
+{
+  "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+  "applicationTree": "8bc608488760e48919d7fb4e72a42569175b52a4",
+  "desktopRun": 44715026752,
+  "harnessCommit": "81f4dbeb426a75c4aaa845650d2209886f34b8c6",
+  "platform": "Linux",
+  "source": {
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/sc/qa/unit/data/slk/pass/ooo80484-1.slk",
+    "sha256": "bcfaae8f2ce55e393c100dcd95c37301129b9121af0429586de75b3ec99df420",
+    "bytes": 2581,
+    "alias": ".sylk is tested with the immutable genuine SYLK bytes originally named .slk; not evidence of a different format"
+  },
+  "artifactVerification": {
+    "applicationCommit": "7f126f4b8e5269a54388cf78c48c78d2acc0daa1",
+    "desktopRun": 44715026752,
+    "platform": "Linux",
+    "artifactId": 14620765849,
+    "artifactName": "open-office-studio-Linux",
+    "archiveSha256": "190268d6b876931e06b52a915ca0af4082238ea1f7110d3d35461b1629692699",
+    "packages": [
+      {
+        "path": "appimage/Open Office Studio_2026.46.2_amd64.AppImage",
+        "kind": "appimage",
+        "sha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964"
+      },
+      {
+        "path": "deb/Open Office Studio_2026.46.2_amd64.deb",
+        "kind": "deb",
+        "sha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247"
+      }
+    ]
+  },
+  "scope": "Real private runtime + production TypeScript input/engine route; no native app/dialog/visual claim",
+  "cases": [
+    {
+      "kind": "appimage",
+      "packageSha256": "234448049dfb310ce2491387b8dd817313cd97246d2c44ac559978927f2b7964",
+      "status": "passed",
+      "extensions": [
+        {
+          "ext": "slk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "c8178935067b3ce69fe87347a891e4140083f758bc1115f85a63a0aca2681707",
+          "savedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+          "reopenedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        },
+        {
+          "ext": "sylk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "c8178935067b3ce69fe87347a891e4140083f758bc1115f85a63a0aca2681707",
+          "savedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+          "reopenedSha256": "b62de6c765ee5228a9104f2919083c0344b3105eb4335ebeead2fd66082d4f94",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        }
+      ],
+      "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+      "temporaryDisposed": true
+    },
+    {
+      "kind": "deb",
+      "packageSha256": "71a08c403dfb6b02cc49ceb45c5da3734a888657853ea58ea585ef1e66c88247",
+      "status": "passed",
+      "extensions": [
+        {
+          "ext": "slk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "f0e79c1ec2437517b43e12ae641f232f1d6e743a3c493b7882247e7e6fba5da3",
+          "savedSha256": "3850de0bbecda55cec8a5f8da800f5c6661068ac62101361d6e22c954f2e8374",
+          "reopenedSha256": "3850de0bbecda55cec8a5f8da800f5c6661068ac62101361d6e22c954f2e8374",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        },
+        {
+          "ext": "sylk",
+          "status": "passed",
+          "originalUnchanged": true,
+          "convertedSha256": "0a2fc884b48237675efc843e538efdf2320b1c640a6fa3d697b5bede0d7f4567",
+          "savedSha256": "b146c5c1fee83077a764818a0be12798845cb9a8107f13f4a38bef5cb15c4581",
+          "reopenedSha256": "b146c5c1fee83077a764818a0be12798845cb9a8107f13f4a38bef5cb15c4581",
+          "expectedCellsChecked": 12,
+          "markerSavedReopened": true
+        }
+      ],
+      "runtimeVersion": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "profileSha256": "847721a36ebe27c89fa08ca5fc12f228ae11c8429be77940f80dc82b7ed89e40",
+      "temporaryDisposed": true
+    }
+  ],
+  "status": "passed",
+  "browserLimitation": {
+    "noTauriGuard": true,
+    "desktopAlternative": true,
+    "scope": "Production source-level no-Tauri guard in Node; actual hosted GUI not executed by this job"
+  },
+  "dataAndRoutePassed": true,
+  "loaderClosed": true
+}
