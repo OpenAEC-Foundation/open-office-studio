@@ -1,0 +1,24 @@
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	﻿2026-11-24T10:37:01.8368061Z ##[group]Run python3 qa/issue381/deadline.py build python3 qa/issue381/build_runtime.py
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8368732Z ^[[36;1mpython3 qa/issue381/deadline.py build python3 qa/issue381/build_runtime.py^[[0m
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8432459Z shell: /usr/bin/bash -e {0}
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8432737Z env:
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8435619Z   GH_TOKEN: ***
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8436105Z   DEBIAN_FRONTEND: noninteractive
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8436401Z   OOS_381_DISPATCH_EPOCH: 1795516490
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8436759Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8437238Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8437710Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8438129Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8438555Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8439003Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8439475Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:37:01.8439815Z ##[endgroup]
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1076587Z Traceback (most recent call last):
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1078376Z   File "/home/runner/work/open-office-studio/open-office-studio/qa/issue381/build_runtime.py", line 135, in <module>
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1079180Z     if __name__=='__main__':main()
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1079479Z                             ^^^^^^
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1080085Z   File "/home/runner/work/open-office-studio/open-office-studio/qa/issue381/build_runtime.py", line 120, in main
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1080828Z     assert old_exports and old_exports==new_exports,'Public libwps ABI exports differ'
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1097028Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1097984Z AssertionError: Public libwps ABI exports differ
+private-linux	Actual libwps source control and incremental patch, ABI and loader prerequisites	2026-11-24T10:38:18.1254121Z ##[error]Process completed with exit code 1.
