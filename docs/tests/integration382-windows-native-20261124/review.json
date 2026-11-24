@@ -1,0 +1,63 @@
+{
+  "status": "PASS_BOUNDED_WINDOWS_NATIVE_CORE",
+  "reviewedAtUTC": "2026-11-24T13:21:33.714335+00:00",
+  "applicationCommit": "727903cc7add7591444881cbe87620c9f8b78260",
+  "applicationTree": "779f342af0146a9a5e7c941ce3665878c20af802",
+  "harnessCommit": "664d86a1af1bdf4e6967e0ee1688c85345a9cf83",
+  "run": 45401762056,
+  "job": 138471887511,
+  "attempt": 1,
+  "artifact": 14923732003,
+  "artifactBytes": 192914,
+  "artifactZIPsha256": "2cee373b321b4ace5947a6271f45222d27fbc39666570be3118478d731610e88",
+  "producerRun": 45388309036,
+  "producerAttempt": 2,
+  "producerArtifact": 14923485569,
+  "installerSHA256": "838920e7da539b3dc878a28775844f96440d276afb6e490c44a13b6145471c0b",
+  "installedEqualsExtractedPayloadSHA256": "e010cde9aaa3cf1a21788a439c21dddddf91c5c14135cf0fca01f891ec6ae67e",
+  "version": "2026.48.1",
+  "nativeChecks": 12,
+  "normalExitPIDs": [
+    9824,
+    5848
+  ],
+  "newPID": true,
+  "independentRootXML": "Exact9cells/3rows/1table and saved SHA256 match",
+  "documentSHA256": "ef62cf214ef8f359f65ef12f7d432ef26c51fa7ab1fa30700bb0fea9af55d7e4",
+  "visualReview": {
+    "saved.png": "PASS: exact marker and original beta/omega/delta visible; save toast below body",
+    "reopened.png": "PASS: same marker and original cell text visible in fresh app",
+    "fontObservation": "Courier substitution toast reports Liberation Mono; no installed-font/metric/render-fidelity certification"
+  },
+  "cleanup": {
+    "normalExit0Both": true,
+    "forcedClose": false,
+    "browserCDPClosed": true,
+    "scopedCIPolicyRestored": true,
+    "uninstallerExit0": true,
+    "remainingOwnedUninstallerRemovedAfterExit": true,
+    "remainingInstallFiles": [],
+    "localUserGUIOrRecordingStarted": false,
+    "host": "Disposable hosted Windows job completed"
+  },
+  "priorFailure": {
+    "run": 45401475190,
+    "harness": "1147811b810450568fcd144d3113d99b32e0d74a",
+    "classification": "Test setup: shallow checkout lacked application Git object",
+    "beforePackageDownloadAndAppStart": true,
+    "preserved": true,
+    "correction": "Only workflow fetch of immutable candidate added; six reused helpers unchanged"
+  },
+  "existing12CIChecksRetained": true,
+  "mainAndIntegrationSourceUnchanged": true,
+  "excludedIssues": [
+    381,
+    375
+  ],
+  "limits": [
+    "One synthetic installed Writer native case, not all modules/formats.",
+    "Existing unsigned CI installer; not a signed published-release claim.",
+    "ETT/DPT content qualification remains outside filename-policy382 scope.",
+    "No source rebuild or integration/main/tag/release mutation."
+  ]
+}
