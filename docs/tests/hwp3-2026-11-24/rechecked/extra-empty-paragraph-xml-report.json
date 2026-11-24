@@ -1,0 +1,124 @@
+{
+  "file": "extra-empty-paragraph.docx",
+  "sha256": "7d1fb6a29b1c380d7fc1967d891167353d3fa702dc43d2874e89b46bfd022cc3",
+  "paragraphTexts": [
+    "Hello OpenOffice.org!",
+    "안녕하세요 오픈오피스!",
+    ""
+  ],
+  "unicodeCodePoints": [
+    [
+      "U+0048",
+      "U+0065",
+      "U+006C",
+      "U+006C",
+      "U+006F",
+      "U+0020",
+      "U+004F",
+      "U+0070",
+      "U+0065",
+      "U+006E",
+      "U+004F",
+      "U+0066",
+      "U+0066",
+      "U+0069",
+      "U+0063",
+      "U+0065",
+      "U+002E",
+      "U+006F",
+      "U+0072",
+      "U+0067",
+      "U+0021"
+    ],
+    [
+      "U+C548",
+      "U+B155",
+      "U+D558",
+      "U+C138",
+      "U+C694",
+      "U+0020",
+      "U+C624",
+      "U+D508",
+      "U+C624",
+      "U+D53C",
+      "U+C2A4",
+      "U+0021"
+    ],
+    []
+  ],
+  "checkedCases": [
+    {
+      "case": "native CR-delimited paragraph count",
+      "actual": 3,
+      "expected": 2,
+      "passed": false
+    },
+    {
+      "case": "native paragraph 0 exact Unicode text",
+      "actual": "Hello OpenOffice.org!",
+      "expected": "Hello OpenOffice.org!",
+      "passed": true
+    },
+    {
+      "case": "native paragraph 1 exact Unicode text",
+      "actual": "안녕하세요 오픈오피스!",
+      "expected": "안녕하세요 오픈오피스!",
+      "passed": true
+    },
+    {
+      "case": "exact Korean precomposed codepoint vector",
+      "actual": [
+        50504,
+        45397,
+        54616,
+        49464,
+        50836,
+        32,
+        50724,
+        54536,
+        50724,
+        54588,
+        49828,
+        33
+      ],
+      "expected": [
+        50504,
+        45397,
+        54616,
+        49464,
+        50836,
+        32,
+        50724,
+        54536,
+        50724,
+        54588,
+        49828,
+        33
+      ],
+      "passed": true
+    },
+    {
+      "case": "output is already NFC without normalization",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "case": "no replacement or unexpected square glyphs",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    }
+  ],
+  "mismatches": [
+    {
+      "case": "native CR-delimited paragraph count",
+      "actual": 3,
+      "expected": 2,
+      "passed": false
+    }
+  ],
+  "boundedSourceAcceptance": false,
+  "fullFormatAcceptance": false,
+  "limits": "Exact two source paragraphs in order, ASCII and modern Johab Hangul syllables as exact NFC Unicode codepoints, native CR13 paragraph end semantics. Full Deflate CRC/size and font/style/line/character record bounds inventoried. Font/style/shape visual properties, summary text, opaque tails, Hanja/archaic/incomplete Jamo/other controls, encrypted variants, other HWP versions, native GUI and full-format fidelity remain outside acceptance."
+}

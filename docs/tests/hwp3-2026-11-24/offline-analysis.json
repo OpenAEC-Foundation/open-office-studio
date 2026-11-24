@@ -1,0 +1,184 @@
+{
+  "scope": "HWP3 / lo-hwp-1 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "runtimeExecutedByThisOfflineAudit": false,
+  "ci": {
+    "run": 45358706914,
+    "job": 138322961613,
+    "attempt": 1,
+    "harnessCommit": "760638c4a09a2e2e48d17bed8648e12d7bbbd738",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T08:45:27Z"
+  },
+  "artifact": {
+    "id": 14903970945,
+    "bytes": 85053,
+    "sha256": "34da29e3b42dbd17a4cb111c0804da6b66cd868f8e3a9455d4cbed5f9837fb87",
+    "expiresAt": "2027-02-22T08:44:06Z"
+  },
+  "sourceSha256": "2c98104a01860c809c9192109f74b2231374f5ab266014e976a120572909f9f7",
+  "nativeParagraphs": 2,
+  "recordedFullCharsetRows": 11172,
+  "actualUniqueSourceSyllables": 9,
+  "fullCharsetTableReplayedByOfflineAudit": false,
+  "boundedSourceAcceptance": true,
+  "casesPerStage": 6,
+  "stages": 4,
+  "controls": [
+    {
+      "variant": "wrong-Korean-syllable",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native paragraph 1 exact Unicode text",
+          "actual": "가녕하세요 오픈오피스!",
+          "expected": "안녕하세요 오픈오피스!",
+          "passed": false
+        },
+        {
+          "case": "exact Korean precomposed codepoint vector",
+          "actual": [
+            44032,
+            45397,
+            54616,
+            49464,
+            50836,
+            32,
+            50724,
+            54536,
+            50724,
+            54588,
+            49828,
+            33
+          ],
+          "expected": [
+            50504,
+            45397,
+            54616,
+            49464,
+            50836,
+            32,
+            50724,
+            54536,
+            50724,
+            54588,
+            49828,
+            33
+          ],
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "decomposed-Korean",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native paragraph 1 exact Unicode text",
+          "actual": "안녕하세요 오픈오피스!",
+          "expected": "안녕하세요 오픈오피스!",
+          "passed": false
+        },
+        {
+          "case": "exact Korean precomposed codepoint vector",
+          "actual": [
+            4363,
+            4449,
+            4523,
+            4354,
+            4455,
+            4540,
+            4370,
+            4449,
+            4361,
+            4454,
+            4363,
+            4461,
+            32,
+            4363,
+            4457,
+            4369,
+            4467,
+            4523,
+            4363,
+            4457,
+            4369,
+            4469,
+            4361,
+            4467,
+            33
+          ],
+          "expected": [
+            50504,
+            45397,
+            54616,
+            49464,
+            50836,
+            32,
+            50724,
+            54536,
+            50724,
+            54588,
+            49828,
+            33
+          ],
+          "passed": false
+        },
+        {
+          "case": "output is already NFC without normalization",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "extra-empty-paragraph",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native CR-delimited paragraph count",
+          "actual": 3,
+          "expected": 2,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "files": {
+    "converted.docx": {
+      "bytes": 7216,
+      "sha256": "a757f6765d9f78bc9cf7764b6e6990deb742f50d4b7afea3d223d2b8ec229423"
+    },
+    "saved.docx": {
+      "bytes": 7104,
+      "sha256": "e4522883741e483b70848c0a6e9b2e97d91fcfb276985ba9d877d46bd54f3f4f"
+    },
+    "reopened-saved.docx": {
+      "bytes": 7104,
+      "sha256": "d0f47870621e3f0f9a4c2e64fc2dba410ac53b9ac48a6871cc61d9cf06b8a563"
+    },
+    "fresh-process-saved.docx": {
+      "bytes": 7103,
+      "sha256": "2488cc5200793611ab1d152e96971fbfe4fc9880fcc072388d8efd720a7b4cd4"
+    }
+  },
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "fullFormatAcceptance": false,
+  "limits": "Exact two source paragraphs in order, ASCII and modern Johab Hangul syllables as exact NFC Unicode codepoints, native CR13 paragraph end semantics. Full Deflate CRC/size and font/style/line/character record bounds inventoried. Font/style/shape visual properties, summary text, opaque tails, Hanja/archaic/incomplete Jamo/other controls, encrypted variants, other HWP versions, native GUI and full-format fidelity remain outside acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}
