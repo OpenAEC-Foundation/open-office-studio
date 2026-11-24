@@ -1,0 +1,33 @@
+--- a/src/lib/QuattroDosSpreadsheet.cpp
++++ b/src/lib/QuattroDosSpreadsheet.cpp
+@@ -2107,6 +2107,30 @@
+ 		//
+ 		// first treat the special cases
+ 		//
++		// WQ2 VLOOKUP counts the first range column as zero; ODF/Calc
++		// formulas count it as one. Translate only this source variant.
++		if (vers==2 && arity==3 && instr.m_content=="VLookUp")
++		{
++			auto &column=stack.back();
++			if (column.size()==1 && column[0].m_type==WKSContentListener::FormulaInstruction::F_Long)
++				++column[0].m_longValue;
++			else
++			{
++				// Keep an expression's precedence and references intact.
++				WKSContentListener::FormulaInstruction adjust;
++				adjust.m_type=WKSContentListener::FormulaInstruction::F_Operator;
++				adjust.m_content="(";
++				column.insert(column.begin(), adjust);
++				adjust.m_content=")";
++				column.push_back(adjust);
++				adjust.m_content="+";
++				column.push_back(adjust);
++				adjust.m_type=WKSContentListener::FormulaInstruction::F_Long;
++				adjust.m_longValue=1;
++				column.push_back(adjust);
++			}
++		}
++
+ 		if (arity==3 && instr.m_type==WKSContentListener::FormulaInstruction::F_Function && instr.m_content=="TERM")
+ 		{
+ 			// @TERM(pmt,pint,fv) -> NPER(pint,-pmt,pv=0,fv)

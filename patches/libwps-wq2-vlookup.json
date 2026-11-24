@@ -1,0 +1,21 @@
+{
+  "issue": 381,
+  "status": "REVIEW_PROPOSAL_NOT_BUILT_OR_INTEGRATED",
+  "upstream": {
+    "project": "libwps",
+    "version": "0.4.14",
+    "url": "https://dev-www.libreoffice.org/src/libwps-0.4.14.tar.xz",
+    "tarSha256": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de",
+    "file": "src/lib/QuattroDosSpreadsheet.cpp",
+    "originalSha256": "7fa6e3028cda08e7b206228d4d14375e9c5c589186672f9fbaf2c8942845f888",
+    "patchedSha256": "b21a1aababcf78c981503f5b916797b981e37f2c30a0088d84bbc6db74a54846"
+  },
+  "patchSha256": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+  "applicationBase": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "runtimeChanged": false,
+  "limits": [
+    "Original WQ2 source/oracle preserved; WQ1/HLOOKUP/other Quattro parsers excluded.",
+    "No new converter library or package built; no patched conversion or engine/save/reopen acceptance yet.",
+    "Existing libwps runtime ELF is the unmodified baseline; this proposal does not change its pin or claim it contains the patch."
+  ]
+}
