@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 import time
 
@@ -12,8 +13,22 @@ p = argparse.ArgumentParser()
 p.add_argument("pid", type=int)
 p.add_argument("path", type=Path)
 p.add_argument("report", type=Path)
+p.add_argument("--inspect-only", action="store_true")
 args = p.parse_args()
 desktop = Desktop(backend="uia")
+if args.inspect_only:
+    observed = []
+    for w in desktop.windows(process=args.pid, class_name="#32770", visible_only=True):
+        controls = []
+        for c in w.descendants():
+            item = {"name": c.window_text(), "id": c.automation_id(), "type": c.element_info.control_type}
+            if item["type"] == "Edit" and item["id"] in ("1148", "1001"):
+                item["value"] = c.get_value()
+            controls.append(item)
+        observed.append({"title": w.window_text(), "controls": controls})
+    args.report.write_text(json.dumps({"pid": args.pid, "dialogs": observed}, indent=2), encoding="utf8")
+    print(json.dumps({"pid": args.pid, "observedDialogs": len(observed)}))
+    sys.exit(0)
 end = time.monotonic() + 45
 while time.monotonic() < end:
     dialogs = desktop.windows(process=args.pid, class_name="#32770", visible_only=True)

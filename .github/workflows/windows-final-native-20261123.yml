@@ -9,6 +9,7 @@ on:
       - scripts/windows-native-signature.test.mjs
       - scripts/windows-final-title-case.mjs
       - scripts/windows-stw-file-dialog.py
+      - scripts/windows-file-dialog-original-20261123.py
       - scripts/format30-stw-oracle.py
       - scripts/windows-final-title-oracle_test.py
       - scripts/windows-final-zip-member.py
@@ -44,7 +45,7 @@ jobs:
       - name: Verify actual signed bytes and exercise native Writer save/reopen
         run: node scripts/proef-windows-writer-native.mjs .github/windows-final-native-candidate.json .local/windows-final-native --require-signed --test-title-overlap --require-suite-child
       - name: Reject title-field flattening counterexamples on actual saved DOCX
-        run: python -B scripts/windows-final-title-oracle_test.py ".local/windows-final-native/Title overlap roundtrip.docx"
+        run: python -B scripts/windows-final-title-oracle_test.py ".local/windows-final-native/Title verified roundtrip.docx"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

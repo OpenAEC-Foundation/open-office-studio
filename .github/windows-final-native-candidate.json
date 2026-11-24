@@ -1,5 +1,5 @@
 {
-  "executeNative": false,
+  "executeNative": true,
   "requireSigned": true,
   "testTitleOverlap": true,
   "suitePrefixSealed": true,
@@ -24,11 +24,20 @@
   "packageMember": "dist-installers/office/nsis/Open Office Studio_2026.48.1_x64-setup.exe",
   "packageSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
   "expectedPackagedExecutableSha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
-  "stopGate": {
-    "stoppedByUser": true,
-    "deadlineCET": "2026-11-23T16:00:00+01:00",
-    "automaticResume": false,
-    "requiresNewUserInstruction": true,
-    "reason": "Hard stop supersedes all prior conditional start/native GO permissions. Preserve WIP; no new execution."
+  "titleOnly": true,
+  "reusedCore": {
+    "runId": 45196601365,
+    "artifactId": 14829555350,
+    "harnessCommit": "3bb2641cd37785a1893e11bd4b0fb3172e9f25d0",
+    "archiveSha256": "7f7e329997cb41c1dcb4174bb933868456d300add1c25a55909048693ae4bb53",
+    "archiveBytes": 469220,
+    "reportMember": ".local/windows-final-native/report.json",
+    "reportSha256": "26838dff5c193bf6bcf30f1d91843d61f0e2e3d888023b4160714bafe37859bc",
+    "savedDocxSha256": "4fde38434a6e221935cb6e9b7915dcaf4285f9b6c841a74d519789cb5cd37dae"
+  },
+  "resumeAuthorization": {
+    "date": "2026-11-24",
+    "scope": "Explicit user resume: diagnose missing SaveAs output and complete title overlap; reuse independently reviewed valid core only",
+    "automaticResume": false
   }
 }
