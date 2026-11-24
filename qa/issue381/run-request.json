@@ -1,0 +1,184 @@
+{
+  "branch": "codex/fix-381-wq2-vlookup-index-20261124",
+  "nonce": "381-20261124-9d3b-57f7d99c06484928",
+  "marker": "qa381 execute 381-20261124-9d3b-57f7d99c06484928",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "requestPath": "qa/issue381/run-request.json",
+  "preflightSeconds": 600,
+  "buildAndTestDeadlineSeconds": 2100,
+  "finalDeadlineSeconds": 2700,
+  "previousFailedRun": 45376152078,
+  "centralClassifierReviewSha256": "fc757527f33946cacd60d072a5430bbbf203fa34f9aa70b5d75ca151a561c7a7",
+  "previousFailedRuns": [
+    45376152078,
+    45381046100,
+    45387643024,
+    45399533396
+  ],
+  "centralPrefixIsolationReviewSha256": "e81c209e5e7ea6ef2b6899aef51d7bf8f9d98a483a6730e8e3106520dcce4134",
+  "centralFontObserverReviewSha256": "86bf75e527efd285329806f5c3bafb1069cad3b081e2d4c30bdbcbbb00ef03c6",
+  "centralFontInitializationReviewSha256": "d9d19c901c590c1d8fed0335486f262ea22e4f541c0d8269cd31a9df48f65e1c",
+  "harnessSourceCommit": "81d065aec275e0e74208f1a877446f4f9f8848d0",
+  "frontgate": {
+    "checkedEpoch": 1795527165,
+    "checked": [],
+    "blocking": [],
+    "passed": true,
+    "dispatchEpoch": 1795527165,
+    "preflightDeadline": 1795527765,
+    "buildDeadline": 1795529265,
+    "finalDeadline": 1795529865
+  },
+  "sourceFiles": {
+    ".github/workflows/issue381-private-runtime.yml": "80d6bb7715f3503f66bfd42feaf7b102a03324f183417554ef72b0ff2113a67e",
+    "docs/tests/issue381-20261124/retained/.gitattributes": "553b3236c3188abaf2999e93646ee2c38158293ebcad52330e606b5a626fb22b",
+    "docs/tests/issue381-20261124/retained/baseline-0.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tests/issue381-20261124/retained/baseline-0.stdout.txt": "8bdca72ea6bc1a2dce76089a0b3de45b5a5e2c1928ddd38376fd66c1224f641e",
+    "docs/tests/issue381-20261124/retained/baseline-1.stderr.txt": "be8c46a287ac0696a0f82a1ef895aafa9c2ded43525b035909eb24fc8e59cd49",
+    "docs/tests/issue381-20261124/retained/baseline-1.stdout.txt": "6ba8ead19643f8bf33cfe0b8119f65597ee80ef3d568a923b02f1bf07e8a9457",
+    "docs/tests/issue381-20261124/retained/baseline-converted-independent.json": "a706c1a2e07c7019b22bb4f14356f3340910fa1e8c0a692e0397803c21b4a593",
+    "docs/tests/issue381-20261124/retained/baseline-official-artifact.json": "c215847811c5be0984042b23147895d946ed5d9d27f857f501b635ecc3aaa76e",
+    "docs/tests/issue381-20261124/retained/baseline-receipts.json": "7a8675759a577152c60c07de6705978148ce9127b23e627163942745841807bf",
+    "docs/tests/issue381-20261124/retained/baseline-source-oracle.json": "036a618944ce1aa50ce5630b8b3272c42e3565ddf665e202518b015b5f607ac4",
+    "docs/tests/issue381-20261124/retained/cpp-receipt.json": "9531d9397894361f56be9a8d72d8742e83071e62c83829cf2b215e87b4ebce12",
+    "docs/tests/issue381-20261124/retained/download.lst": "907d5271ed226c414f8ede981ae91945799cba0ad25d72d01b48683568073cc4",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-COPYING": "fa4cd9ab005185e10cd8f7504518856c7dd36c01e766c2bac87f4fc638e9f886",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fccache.c": "2b86038c773792b5c5b1144e1bb15c917721fcb0e780fb9b118e3c9346a7501d",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fcdbg.c": "12848bedd2c6535f1a2d67b414e8c5e9e5121ae31c5ee2e55baf4694d71ebbcd",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fcdir.c": "71f8399cad46d21e0fd4b62fe946ec21a283aea63f898822614bd03cab17e250",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fcinit.c": "8155a5490131be45d403af5fb94ae2e7acf2be97730d1fa03d6e70cd31c18e08",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fontconfig.h": "fdaf99103c6646485ea5a9ca56dc4ed7d31872287e5508495c51b022f79c0516",
+    "docs/tests/issue381-20261124/retained/intake-binding.json": "9314a05b7616be26b7698088c9be2331520fcf898a04760399072a3cd77a6003",
+    "docs/tests/issue381-20261124/retained/libreoffice-tag.json": "42bb24a017ba8b139bef6b0945d0eebcce3e11f8f6568126e2da40efbbbe1f0e",
+    "docs/tests/issue381-20261124/retained/librevenge-0.0.6.tar.bz2": "52a65e904d255dbdd97a8b7bb28d6574e14f999eb01416aff004502406d0904d",
+    "docs/tests/issue381-20261124/retained/libwps-0.4.14.tar.xz": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de",
+    "docs/tests/issue381-20261124/retained/lo-0001-const-up-some-things.patch.1": "d37957e9bcd538266cf81a9d247cf4e74beacccbbf2f6b28403a131e328f3e0f",
+    "docs/tests/issue381-20261124/retained/lo-ExternalProject_libwps.mk": "99901bc961eeee543410f12f3577f30c142d12125a79fda0c2b3597f4570c78d",
+    "docs/tests/issue381-20261124/retained/lo-MSWorksCalcImportFilter.cxx": "1def05d40de50da6a33ba7c2567dc1ace5ff04277ee270c95e92910c47d84f95",
+    "docs/tests/issue381-20261124/retained/lo-UnpackedTarball_libwps.mk": "7a0cf3a3994bd60591f4f53a2490b9461d2b1cb1a6a06e3f8177f2f0a79c65e1",
+    "docs/tests/issue381-20261124/retained/lo-enumarith.patch": "df79211ff1b3b354f5952594635518095670d7260f3326a70616013693398aea",
+    "docs/tests/issue381-20261124/retained/lo-libtool.patch.0": "69580b7671074caca0fa1cc9baa1b35121f9ef6703aebaf7bd5664f1643336e4",
+    "docs/tests/issue381-20261124/retained/lo-libwps-bundled-soname.patch.0": "36f3058e6e60b5e85ed0f1cfc937d9580a9a29186fd27cf1a388adbab96a0f92",
+    "docs/tests/issue381-20261124/retained/lo-rpath.patch.0": "20fe1c9b4ccb08a65711ee6fcd3bb5110d622a629cd9d4cde11ec2c0ab5ea3ad",
+    "docs/tests/issue381-20261124/retained/lo-tdf148749.patch.1": "9d3a3c64ced4703f9d94f0f1170d3885dbe8017cc37994e2fe7bea5989e37bf8",
+    "docs/tests/issue381-20261124/retained/original-build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tests/issue381-20261124/retained/original-build.stdout": "7bc4416718388cc2d06ce4b203b5832457bc6d88024f533d2a5571ce7f1dd57c",
+    "docs/tests/issue381-20261124/retained/original-run.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tests/issue381-20261124/retained/original-run.stdout": "09f593a915cbedcd2a9d6fe9a7e50838833855817cf7703ad9cc7e984e2b0751",
+    "docs/tests/issue381-20261124/retained/patched-build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tests/issue381-20261124/retained/patched-build.stdout": "e027412f43d7fc34bd14fcaac10f7e52c61c16b1fb40d8d776d8b719800b96ea",
+    "docs/tests/issue381-20261124/retained/patched-run.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tests/issue381-20261124/retained/patched-run.stdout": "e3d3df981618e0e2df4d7665f520360bb32d7e67c7b7ebc20a4e9eae0bfa5177",
+    "docs/tests/issue381-20261124/retained/wq2-runtime-result.zip": "4fc2da77b1e52eaa9ddc97ba8c8b4e3f119b9f9b9a16f9b3747fe98dd1a8711b",
+    "patches/libwps-wq2-vlookup.json": "250f5c76019b8b6ef70205c134e811fae296736c8d81e7381747ce36cd344b28",
+    "patches/libwps-wq2-vlookup.patch": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+    "qa/issue381/.gitattributes": "386c361b55a69053b427a74f8aeeb66bf9e39330031341edfff2f267c2390a2e",
+    "qa/issue381/abi-symbol-policy.json": "bd976623361d0692130cf0d0fc1f38dde87d0261ec4e33dbc313940f0b8ccd77",
+    "qa/issue381/abi_contract.py": "97c95f0be2fe1e78836958dd3e6b1051bf80e4f3617c17cb17d331f6c18ab771",
+    "qa/issue381/abi_contract_test.py": "f7f948f22bd79249aa253cf41ae78f7ace9383b31355bfc39e8db68393d487c5",
+    "qa/issue381/build_runtime.py": "e58df3f95a69542733966e30122a27dbbb7bf1b09621cb84c4a4ac94176d8eed",
+    "qa/issue381/convert_real.py": "5d4dd0aa00121c19d5c0d427d3838ee0940d443801ae959a177a51152dc01fac",
+    "qa/issue381/deadline.py": "0ec3c8e4a17e4d90af4441dac909e9ca60ece2f6ec41df452dab5fc3a3bfc8d9",
+    "qa/issue381/engine_real.mjs": "45825a480015b72cd4974d36aa49ca0ba2587f05650297d6b370509e832ed058",
+    "qa/issue381/font-cache-policy.json": "65c7d8c62d5777ad8739dfb915b6b0301a57a33abe1344899f12e634301e7a9f",
+    "qa/issue381/font_cache.py": "7e2251eeb385005803b28a19af41e3609f0e9dcc09588af06d97d09b1a474a4c",
+    "qa/issue381/font_cache_test.py": "5eff908ecd1cafc17bb0299b41b8646098192dc894e3e3ad8d3879db6d938a36",
+    "qa/issue381/fontconfig_host.py": "343da495948443236ae188d1977e6d19f4b4f959880bda1d5f7d25a640d3743f",
+    "qa/issue381/fontconfig_host_test.py": "0e5f176fad2e5a320db61225c131b03f8678ad41d5f019ddfac21e6e9ea430a8",
+    "qa/issue381/frontgate.py": "55aea3d7ddf3208935683d8b86933f8dcbffc754f80a3ba2fe7a3c2d0b4e03ea",
+    "qa/issue381/original-oracle/fixture.json": "20b776c38d2275590e4d2f08100ecb20d4fcc2585562ab5845fdefa0c68956e7",
+    "qa/issue381/original-oracle/oracle.py": "f145c5278f6d1c8cb926c98943ed279884a80edb58820058fec73ae9c360dc66",
+    "qa/issue381/parser-adapter.cpp": "b68886fd37736058d1ac2c1724b00508459f623ac702b7418dcb6dc65bb31813",
+    "qa/issue381/prepare.py": "56daa29b2e95c1a70d22fa8eac324f1320a2acdceb8b0a27701e2f15ea19a0b9",
+    "qa/issue381/request_gate.py": "78c3f271930fb3fe97e5667f0cf7fc89f67f45757af3031d2f48ab2380ce3dff",
+    "qa/issue381/runtime-input.json": "4f1faecacd3f9b100cbed9b7596310ca2756be7a6cebe4f7a32b180fd4d4cc4a",
+    "qa/issue381/runtime_input.py": "b9230a60fb04a2387e5f5621f4f8ecd3c8cbf08d2d25d952c7959b3231acec95",
+    "qa/issue381/runtime_prefix.py": "79caa2815f844d6f7359103a50fac13e96320562aa082375736c6eeab516ef5e",
+    "qa/issue381/runtime_prefix_test.py": "1065425a1d85a27c32e1ef9008c03c2cdc86464cf6550600b7add74b356bd1b4",
+    "qa/issue381/source-regression.py": "525d5eab17831afb7ccef57643681acd6963c94fc670696c18c9ac4dc153d086",
+    "qa/issue381/witness-binding.json": "4f221e6297dc867a4c254040541e8f86601f4620f9d6da954ab42341b070f99b"
+  },
+  "supplementaryOperatorCriticalQueue": {
+    "method": "Supplementary read-only operator gate, including all main/publisher/release/P5 runs and explicit Linux/Ubuntu job labels",
+    "checkedEpoch": 1795527163,
+    "checked": [
+      {
+        "run": 45403429511,
+        "head": "794ac2fc803d5e537331e16e843cfca544e3c527",
+        "branch": "main",
+        "name": "Zelfstandige databasebrowser controleren en bouwen",
+        "state": "queued",
+        "jobs": [
+          {
+            "id": 138477679650,
+            "name": "database (windows-latest)",
+            "status": "in_progress",
+            "conclusion": null,
+            "labels": [
+              "windows-latest"
+            ]
+          },
+          {
+            "id": 138477680203,
+            "name": "database (ubuntu-22.04)",
+            "status": "in_progress",
+            "conclusion": null,
+            "labels": [
+              "ubuntu-22.04"
+            ]
+          },
+          {
+            "id": 138477680338,
+            "name": "database (macos-latest)",
+            "status": "queued",
+            "conclusion": null,
+            "labels": [
+              "macos-latest"
+            ]
+          }
+        ]
+      },
+      {
+        "run": 45403429210,
+        "head": "794ac2fc803d5e537331e16e843cfca544e3c527",
+        "branch": "main",
+        "name": "Kantooromgeving controleren en bouwen",
+        "state": "queued",
+        "jobs": [
+          {
+            "id": 138477679073,
+            "name": "desktop (windows-latest)",
+            "status": "in_progress",
+            "conclusion": null,
+            "labels": [
+              "windows-latest"
+            ]
+          },
+          {
+            "id": 138477679338,
+            "name": "desktop (ubuntu-22.04)",
+            "status": "in_progress",
+            "conclusion": null,
+            "labels": [
+              "ubuntu-22.04"
+            ]
+          },
+          {
+            "id": 138477679792,
+            "name": "desktop (macos-latest)",
+            "status": "queued",
+            "conclusion": null,
+            "labels": [
+              "macos-latest"
+            ]
+          }
+        ]
+      }
+    ],
+    "blocking": [],
+    "passed": true,
+    "operatorScriptSha256": "470bbc766576bffd87613ba942638d2955ae429ac561bc3b38e2ee0278080fd8"
+  }
+}
