@@ -57,7 +57,7 @@ jobs:
           OOS_QA_RECEIPT_SHA: ${{ matrix.receiptSha256 }}
           OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
           OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
-        run: python scripts/standalone-windows-p4/consume.py .github/standalone-windows-p4.json .local/standalone-windows-package
+        run: python scripts/standalone-windows-p4/consume.py .github/standalone-windows-p5-consumer.json .local/standalone-windows-package
       - name: Native WebView driver only
         run: npm install --prefix .local/standalone-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
       - name: Actual native core or separately reported short XLSB377 supplement
@@ -65,6 +65,7 @@ jobs:
           OOS_QA_APP: ${{ matrix.app }}
           OOS_QA_CASE: ${{ matrix.mode }}
           OOS_QA_HARNESS: ${{ github.sha }}
+          OOS_QA_APPROVED_CONFIG: .github/standalone-windows-p5-consumer.json
           OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
           OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
           OOS_QA_CORE_RUN: ${{ matrix.coreRun }}

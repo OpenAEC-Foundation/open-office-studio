@@ -1,5 +1,14 @@
 # P5 Windows: seven-product split, six standalone hosts
 
+**24 November explicit resume:** user and integration reauthorized only four
+missing native cores and the short #377 supplement on the unchanged original P5
+app children. `.github/standalone-windows-p5-consumer.json` is child-only approval;
+the original parent-preparation config remains frozen. The original binding ZIP
+and Spreadsheet core proof were rechecked against current official metadata and
+their complete small ZIP hashes. The collector now joins new case receipts to
+the original verified binding while keeping execution and preparer identities
+separate. No second canonical download or app build is authorized.
+
 **Hard stop23 November before16:00CET:** all unused start grants are revoked.
 Both current input configs are frozen `ready:false` (parent also
 `officialMetadataGo:false`). The successful original package identity and prior

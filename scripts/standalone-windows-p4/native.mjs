@@ -21,7 +21,9 @@ const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const run=promisify(execFile);
 async function ps(name,args=[]) { return (await run('pwsh',['-NoProfile','-File',join(driver,name),...args],{windowsHide:true,timeout:40000,maxBuffer:2*1024*1024})).stdout.trim(); }
 const receipt=JSON.parse(await readFile(join(packageDir,'package.json'),'utf8')), app=receipt.application;
-const approved=JSON.parse(await readFile('.github/standalone-windows-p4.json','utf8'));
+const approvedPath=process.env.OOS_QA_APPROVED_CONFIG||'.github/standalone-windows-p4.json';
+assert(['.github/standalone-windows-p4.json','.github/standalone-windows-p5-consumer.json'].includes(approvedPath));
+const approved=JSON.parse(await readFile(approvedPath,'utf8'));
 assert.equal(approved.ready,true);assert.equal(approved.officialMetadataGo,true);
 assert.equal(receipt.preflightOnly,undefined,'No old/public preflight package in final P5');
 assert.equal(receipt.applicationCommit,'b696ab86bd1c128729a079b68c0082e6df3d36a5');

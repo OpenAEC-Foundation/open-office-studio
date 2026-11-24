@@ -23,7 +23,7 @@ def collect(gh, repo, run, target):
     fetched = {}
     for artifact in artifacts:
         name = artifact['name']
-        if name != 'standalone-windows-p5-binding' and name not in [f'standalone-windows-p5-{app}-proof' for app in APPS]:
+        if name not in ('standalone-windows-p5-binding','standalone-windows-p5-reuse-binding','standalone-windows-p5-spreadsheet-xlsb377-proof') and name not in [f'standalone-windows-p5-{app}-proof' for app in APPS]:
             continue
         assert name not in fetched and not artifact['expired']
         assert artifact['workflow_run']['id'] == run
@@ -59,15 +59,35 @@ def exactly(root, relative):
 
 
 def audit(run, metadata, jobs, fetched, target):
-    binding_path = exactly(fetched['standalone-windows-p5-binding'], 'binding.json')
-    binding = json.loads(binding_path.read_bytes())
+    reuse='standalone-windows-p5-reuse-binding' in fetched
+    owner=fetched['standalone-windows-p5-reuse-binding' if reuse else 'standalone-windows-p5-binding']
+    binding = json.loads(exactly(owner, 'binding.json').read_bytes())
+    requested=set(APPS)
+    if reuse:
+        reuse_plan=json.loads(exactly(owner,'reuse-plan.json').read_bytes())
+        config=reuse_plan['config']
+        assert (config['preparerRun'],config['preparerHarness'])==(45195780472,'f88a805beb152d42a22806d135d9af1c912aedcb')
+        archive=exactly(owner,'standalone-windows-p5-binding.zip')
+        assert digest(archive)==config['bindingSha256']=='c6ee34b5bec7cd1368331bb02a182bbfb23d55bc70d68c78dee28c366b489d22'
+        parent_meta=json.loads(exactly(owner,'standalone-windows-p5-binding-metadata.json').read_bytes())
+        assert parent_meta['id']==config['bindingArtifact']==14828032444
+        assert parent_meta['workflow_run']['id']==config['preparerRun'] and parent_meta['workflow_run']['head_sha']==config['preparerHarness']
+        assert parent_meta['digest']=='sha256:'+digest(archive) and archive.stat().st_size==parent_meta['size_in_bytes']
+        with zipfile.ZipFile(archive) as z:assert json.loads(z.read('binding.json'))==binding
+        requested={case['app'] for case in reuse_plan['matrix'] if case['mode']=='core'}
+        assert requested.issubset({'presentation','email','notition','database'})
+        assert binding['preparerRun']==config['preparerRun'] and binding['preparerHarness']==config['preparerHarness']
+    else:
+        assert binding['preparerRun'] == run and binding['preparerHarness'] == metadata['head_sha']
     assert (binding['applicationCommit'], binding['applicationTree']) == (APP, TREE)
     assert (binding['artifactRun'], binding['platformJobId'], binding['sourceAttempt']) == (RUN, JOB, 1)
-    assert binding['preparerRun'] == run and binding['preparerHarness'] == metadata['head_sha']
-    result = dict(source=APP, tree=TREE, version='2026.48.1', preparerRun=run, apps={})
+    result = dict(source=APP, tree=TREE, version='2026.48.1', preparerRun=binding['preparerRun'], executionRun=run, executionHarness=metadata['head_sha'], apps={})
     for app in APPS:
+        if app not in requested:
+            result['apps'][app]=dict(status='not-tested-in-this-execution',reference='Retain original accepted core; no pass inferred from this reuse run')
+            continue
         name = f'standalone-windows-p5-{app}-proof'
-        own_jobs = [j for j in jobs if j['name'] == f'Native {app} Windows app-only']
+        own_jobs = [j for j in jobs if j['name'] == (f'Native {app} core child reuse' if reuse else f'Native {app} Windows app-only')]
         entry = dict(visualAcceptance='pending actual completed screenshot review', job=own_jobs)
         result['apps'][app] = entry
         if name not in fetched:
@@ -101,6 +121,7 @@ def audit(run, metadata, jobs, fetched, target):
             assert consumed['childArtifact']['digest'] == augmented['childArtifact']['digest']
             assert consumed['receiptSha256'] == augmented['packageReceiptSha256']
             assert report['package'] == receipt
+            assert report['harnessCommit']==metadata['head_sha']
             assert (report['applicationCommit'], report['applicationTree'], report['version']) == (APP, TREE, '2026.48.1')
             assert report['payloadEqualsInstalled'] is True
             executable = report['executable']
@@ -151,8 +172,63 @@ def audit(run, metadata, jobs, fetched, target):
             entry.update(status='independently-rechecked-functional-only', savedByteOracles=oracles)
         except Exception as error:
             entry.update(status='proof-audit-failed', error=repr(error))
+    supplement_name='standalone-windows-p5-spreadsheet-xlsb377-proof'
+    if supplement_name in fetched:
+        result['xlsb377']=audit377(fetched[supplement_name],binding,metadata,jobs)
+    elif reuse:
+        result['xlsb377']=dict(status='missing-proof')
     write(target/'independent-audit.json', result)
     return result
+
+
+def audit377(root,binding,metadata,jobs):
+    entry=dict(status='proof-audit-failed',visualAcceptance='pending actual proposal/cancel screenshots review')
+    proof=exactly(root,'p5-xlsb377/report.json').parent
+    report=json.loads((proof/'report.json').read_bytes());entry['nativeStatus']=report['status']
+    if report['status']!='passed-native-xlsb377-cancel-save':
+        entry.update(status='native-failure-preserved',error=report.get('error'));return entry
+    try:
+        own=[j for j in jobs if j['name']=='Native spreadsheet xlsb377 child reuse']
+        assert len(own)==1 and own[0]['conclusion']=='success'
+        receipt_path=exactly(root,'standalone-windows-package/package.json')
+        product=binding['products']['spreadsheet'];receipt=json.loads(receipt_path.read_bytes())
+        assert digest(receipt_path)==product['packageReceiptSha256']
+        assert receipt=={k:v for k,v in product.items() if k not in ('childArtifact','packageReceiptSha256')}
+        assert report['package']==receipt and report['harnessCommit']==metadata['head_sha']
+        assert (report['applicationCommit'],report['applicationTree'],report['version'])==(APP,TREE,'2026.48.1')
+        raw_report=exactly(root,'standalone-windows-package/canonical-package-report.json')
+        assert digest(raw_report)==receipt['canonicalPackageReport']['sha256'] and raw_report.stat().st_size==receipt['canonicalPackageReport']['bytes']
+        consumed=json.loads(exactly(root,'standalone-windows-package/consumer-binding.json').read_bytes())
+        assert consumed['status']=='strict-own-child-zip-nsis-report-source-receipt-verified'
+        assert consumed['childArtifact']['id']==product['childArtifact']['id'] and consumed['childArtifact']['digest']==product['childArtifact']['digest']
+        assert report['payloadEqualsInstalled'] and (report['executable']['sha256'],report['executable']['bytes'])==(receipt['application']['payloadExecutable']['sha256'],receipt['application']['payloadExecutable']['bytes'])
+        for identity in (report['installer'],report['executable']):assert identity['signature']=='Valid' and identity['timestampSigner']
+        assert report['executable']['productVersion']=='2026.48.1'
+        assert all(report['baseline'][k]==[] for k in ('profiles','apps','suitePaths'))
+        assert report['afterNative']['apps']==[] and report['afterNative']['suitePaths']==[]
+        assert all(p.replace('\\','/').split('/')[-1]=='org.openaec.spreadsheet-studio' for p in report['afterNative']['profiles'])
+        assert len(report['phases'])==1
+        phase=report['phases'][0]
+        assert phase['phase']=='xlsb377' and phase['status']=='passed-short-cancel-save-check' and phase['normalFullExit'] and phase['ownedWebviewsExited'] and not phase['pageErrors']
+        assert phase['nativeMetadata']['identifier']=='org.openaec.spreadsheet-studio' and phase['nativeMetadata']['version']=='2026.48.1'
+        assert phase['ownWebviewProfile']['createdByNativeWebview'] and phase['ownWebviewProfile']['entries']
+        assert phase['runtime']['bron']=='meegeleverd' and phase['runtime']['profiel']=='veilig'
+        relative=phase['runtimeOwnInstallRelative'];assert relative and not relative.startswith(('..','\\','/')) and ':' not in relative
+        cleanup=report['cleanup'];assert not any(k.endswith('Error') for k in cleanup) and not cleanup.get('forcedOwnedProcessTree') and cleanup['residualOwnedWebviews']==[]
+        assert all(cleanup[k] for k in ('policyRestored','ownedInstallUninstalled','ownedAppExited','ownedNativeProfilesDisposed','ownedTemporaryProfileDisposed'))
+        assert report['coreReference']==dict(run=45195780472,job=137767767878,proofArtifact=14827264661)
+        original=report['originalInput'];assert original['unchanged'] and original['sha256']=='e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3' and original['bytes']=='7651' and int(original['inode'])>0
+        source=proof/'shared_formula.xlsb';assert source.stat().st_size==7651 and digest(source)==original['sha256']
+        with zipfile.ZipFile(source) as z:assert 'xl/workbook.bin' in z.namelist() and 'xl/workbook.xml' not in z.namelist()
+        assert [case['route'] for case in report['cancelSaveChecks']]==['Control+s','ordinary-Save']
+        fingerprint={k:original[k] for k in ('sha256','bytes','mtimeNs','inode','device')}
+        for case in report['cancelSaveChecks']:
+            assert case['proposal']=='xlsx' and case['cancelled'] and case['copyRemainsDirty'] and case['source']==fingerprint
+            prefix=re.sub('[^a-z]','-',case['route'],flags=re.I)
+            for suffix in ('-xlsx-proposal.png','-cancelled-dirty.png'):assert (proof/(prefix+suffix)).stat().st_size>0
+        entry.update(status='independently-rechecked-cancel-save-only',sourceFingerprint=fingerprint)
+    except Exception as error:entry['error']=repr(error)
+    return entry
 
 
 if __name__ == '__main__':
@@ -164,4 +240,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     metadata, jobs, fetched = collect(args.gh, args.repo, args.run, args.destination)
     result = audit(args.run, metadata, jobs, fetched, args.destination)
-    print(json.dumps(dict(source=result['source'],preparerRun=result['preparerRun'],apps={k:{f:v for f,v in a.items() if f in ('status','nativeStatus','error','visualAcceptance')} for k,a in result['apps'].items()}),indent=2))
+    print(json.dumps(dict(source=result['source'],preparerRun=result['preparerRun'],executionRun=result['executionRun'],apps={k:{f:v for f,v in a.items() if f in ('status','nativeStatus','error','visualAcceptance')} for k,a in result['apps'].items()},xlsb377=result.get('xlsb377')),indent=2))

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "ready": false,
-  "blockedReason": "Hard user stop 2026-11-23 16:00 Europe/Amsterdam. No dispatch or automatic resumption; only a new user instruction on 2026-11-24 may authorize continuation. These are preserved WIP driver corrections, not native passes.",
+  "ready": true,
+  "blockedReason": null,
   "preparerRun": 45195780472,
   "preparerJob": 137765723008,
   "preparerHarness": "f88a805beb152d42a22806d135d9af1c912aedcb",
@@ -11,10 +11,26 @@
   "spreadsheetCoreProof": 14827264661,
   "spreadsheetCoreProofSha256": "91ae5b296d6ff9593efc6e12dda205c13cca0d9b82b58d976080a1179e99aee0",
   "cases": [
-    {"app": "presentation", "mode": "core"},
-    {"app": "email", "mode": "core"},
-    {"app": "notition", "mode": "core"},
-    {"app": "database", "mode": "core"},
-    {"app": "spreadsheet", "mode": "xlsb377"}
-  ]
+    {
+      "app": "presentation",
+      "mode": "core"
+    },
+    {
+      "app": "email",
+      "mode": "core"
+    },
+    {
+      "app": "notition",
+      "mode": "core"
+    },
+    {
+      "app": "database",
+      "mode": "core"
+    },
+    {
+      "app": "spreadsheet",
+      "mode": "xlsb377"
+    }
+  ],
+  "resumed": "2026-11-24 explicit user request and integration approval; four pending cores and short377 only"
 }

@@ -105,6 +105,7 @@ def main():
             with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf8') as f:f.write(values)
         print(values,end='');return
     assert command=='prepare' and plan['ready'] and os.environ.get('GITHUB_ACTIONS')=='true'
+    assert not plan.get('reuseOnly',False),'Child-only approval cannot trigger a canonical parent download'
     root=Path(args[0]);root.mkdir(parents=True,exist_ok=False)
     provenance=root/'provenance';provenance.mkdir()
     seven=shutil.which('7z') or shutil.which('7z.exe');assert seven,'7-Zip missing before canonical download'

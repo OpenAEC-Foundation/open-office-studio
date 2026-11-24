@@ -11,8 +11,9 @@ from intake import APP,TREE,RUN,JOB,validate,write
 from oracle import inspect
 
 config=json.loads(Path('.github/standalone-windows-p5-reuse.json').read_bytes())
-plan=json.loads(Path('.github/standalone-windows-p4.json').read_bytes());validate(plan)
+plan=json.loads(Path('.github/standalone-windows-p5-consumer.json').read_bytes());validate(plan)
 assert config['schemaVersion']==1 and config['ready'] is True and plan['ready'] is True
+assert plan['reuseOnly'] is True
 assert (config['preparerRun'],config['preparerJob'],config['preparerHarness'])==(45195780472,137765723008,'f88a805beb152d42a22806d135d9af1c912aedcb')
 repo=os.environ['GITHUB_REPOSITORY']
 def raw(endpoint):return subprocess.check_output(['gh','api',f'repos/{repo}/{endpoint}'])
