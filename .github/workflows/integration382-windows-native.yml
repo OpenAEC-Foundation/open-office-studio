@@ -1,0 +1,50 @@
+name: Integration 382 Windows native roundtrip
+on:
+  push:
+    branches: [codex/integration-382-windows-native-20261124]
+    paths:
+      - qa/integration382-windows-native/**
+      - .github/workflows/integration382-windows-native.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    if: contains(github.event.head_commit.message, '[integration-native-go]')
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: python -B qa/integration382-windows-native/verify.py preflight
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Existing candidate installer actual native edit save full exit and new process reopen
+        run: node qa/integration382-windows-native/proef-windows-writer-native.mjs qa/integration382-windows-native/candidate.json .local/integration382-windows-native
+      - name: Independent DOCX XML and normal exit cleanup audit
+        run: python -B qa/integration382-windows-native/verify.py audit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration382-windows-native-${{ github.sha }}
+          path: |
+            .local/integration382-preflight.json
+            .local/integration382-windows-native/*.json
+            .local/integration382-windows-native/*.png
+            .local/integration382-windows-native/*.docx
+            .local/integration382-windows-native/*.log
+            qa/integration382-windows-native/candidate.json
+            qa/integration382-windows-native/driver-origin.json
+          include-hidden-files: true
+          if-no-files-found: error

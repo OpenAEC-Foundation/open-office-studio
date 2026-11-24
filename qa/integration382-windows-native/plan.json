@@ -1,0 +1,28 @@
+{
+  "task": "Windows native edit/save/fullquit/new-PID reopen on existing integration candidate only",
+  "applicationCommit": "727903cc7add7591444881cbe87620c9f8b78260",
+  "applicationTree": "779f342af0146a9a5e7c941ce3665878c20af802",
+  "mainMustRemain": "1b6f9c647178bbe0df1b9e42b5c33cf9fa4c18af",
+  "existing12CIChecks": "Retained, not repeated",
+  "installerBuildRun": 45388309036,
+  "installerBuildAttempt": 2,
+  "installerArtifact": 14923485569,
+  "noBuild": true,
+  "host": "One disposable github-hosted windows-latest, own install/APPDATA/LOCALAPPDATA/WebView2 profile",
+  "budgetMinutes": 25,
+  "acceptance": [
+    "Exact source/run/attempt/archive/installer before app launch",
+    "Installed x64 executable equals independently extracted NSIS payload and expected version",
+    "Actual native focus and keyboard edit/Undo/Redo, including existing input-focus regression checks",
+    "Real Ctrl+S changes DOCX to exact nine expected cell strings",
+    "Normal full application exit0; new PID reopens same DOCX and exact rendered table",
+    "Independent OOXML audit and original saved/reopened screenshots",
+    "Normal second exit0, owned native client closed, scoped CI policy restored, uninstall plus residual owned file check"
+  ],
+  "limits": [
+    "Unsigned candidate CI installer; not a signed release verification",
+    "Synthetic Writer core only, no ETT/DPT import/save or broad all-module/renderer claims",
+    "No local user GUI/capture session",
+    "No381/375/main/tag/release changes"
+  ]
+}
