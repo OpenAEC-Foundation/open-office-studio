@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import stat
 import subprocess
 import zipfile
@@ -10,7 +11,7 @@ from intake import APPS, APP, TREE, RUN, JOB, digest, write
 from oracle import inspect
 
 
-def collect(gh, repo, run, target):
+def collect(gh, repo, run, target, cache=None):
     def api(endpoint):
         return json.loads(subprocess.check_output([gh, 'api', f'repos/{repo}/{endpoint}']))
     metadata = api(f'actions/runs/{run}')
@@ -31,8 +32,12 @@ def collect(gh, repo, run, target):
         assert re.fullmatch(r'sha256:[0-9a-f]{64}', artifact.get('digest', ''))
         assert 0 < artifact['size_in_bytes'] < 100*1024**2, 'Only small QA evidence, no installer transfers'
         archive = target/(name+'.zip')
-        with archive.open('xb') as stream:
-            subprocess.run([gh, 'api', f"repos/{repo}/actions/artifacts/{artifact['id']}/zip"], stdout=stream, check=True)
+        cached=cache/(name+'.zip') if cache else None
+        if cached and cached.exists() and cached.stat().st_size==artifact['size_in_bytes'] and digest(cached)==artifact['digest'].removeprefix('sha256:'):
+            shutil.copyfile(cached,archive)
+        else:
+            with archive.open('xb') as stream:
+                subprocess.run([gh, 'api', f"repos/{repo}/actions/artifacts/{artifact['id']}/zip"], stdout=stream, check=True)
         assert archive.stat().st_size == artifact['size_in_bytes']
         assert digest(archive) == artifact['digest'].removeprefix('sha256:')
         directory = target/name
@@ -237,7 +242,8 @@ if __name__ == '__main__':
     parser.add_argument('run', type=int)
     parser.add_argument('destination', type=Path)
     parser.add_argument('--gh', default='gh')
+    parser.add_argument('--cache',type=Path,help='Reuse locally saved ZIP only when its size/hash match current official metadata')
     args = parser.parse_args()
-    metadata, jobs, fetched = collect(args.gh, args.repo, args.run, args.destination)
+    metadata, jobs, fetched = collect(args.gh, args.repo, args.run, args.destination,args.cache)
     result = audit(args.run, metadata, jobs, fetched, args.destination)
     print(json.dumps(dict(source=result['source'],preparerRun=result['preparerRun'],executionRun=result['executionRun'],apps={k:{f:v for f,v in a.items() if f in ('status','nativeStatus','error','visualAcceptance')} for k,a in result['apps'].items()},xlsb377=result.get('xlsb377')),indent=2))

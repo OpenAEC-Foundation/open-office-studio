@@ -37,9 +37,14 @@ export async function officeCase(qa, kind, phase) {
       assert(qa.presentationPoint&&qa.presentationPoint.x>0&&qa.presentationPoint.y>0);
       await canvas.dblclick({position:{x:bounds.width*qa.presentationPoint.x,y:bounds.height*qa.presentationPoint.y}});
       qa.record({phase,nativePresentationHitPoint:qa.presentationPoint,source:'Unchanged original PPTX title/layout XML'});
-      const input=page.locator('.office-presentatie :is(textarea,[contenteditable]):focus'); await input.waitFor();
-      assert(await input.evaluate(el=>el instanceof HTMLTextAreaElement||el.isContentEditable),'Actual focused slide text editor required');
-      qa.record({phase,actualSlideEditor:await input.evaluate(el=>({tag:el.tagName,contentEditable:el.isContentEditable}))});
+      // The SDK may use a portal/zero-size keyboard sink for its visible canvas
+      // caret. Verify actual keyboard focus, not a particular CSS parent/type.
+      await page.waitForFunction(()=>{
+        const el=document.activeElement;
+        return el?.isConnected&&!el.disabled&&!el.readOnly&&(el.isContentEditable||el instanceof HTMLTextAreaElement||(el instanceof HTMLInputElement&&el.type==='text'));
+      });
+      const input=page.locator(':focus');
+      qa.record({phase,actualSlideEditor:await input.evaluate(el=>({tag:el.tagName,id:el.id,className:el.className,role:el.getAttribute('role'),contentEditable:el.isContentEditable}))});
       await qa.checkFocus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
       await page.keyboard.press('Escape');
       await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
@@ -88,7 +93,8 @@ export async function databaseCase(qa, phase) {
   // SQLite opening may require explicit "not a work copy" confirmation.
   const confirmation=page.getByRole('dialog').getByRole('button',{name:/^(Open anyway|Toch openen)$/i});
   await confirmation.waitFor(); await confirmation.click();
-  await page.getByRole('button',{name:'standalone_qa',exact:true}).click();
+  // The ordinary object button also contains its row-count label.
+  await page.locator('aside button').filter({has:page.getByText('standalone_qa',{exact:true})}).click();
   await page.getByText('STANDALONE23 DATABASE',{exact:true}).waitFor();
   const create=page.getByRole('tab',{name:/^(Create|Maken)$/i}); await create.click();
   await page.getByRole('button',{name:/^(Query|Query maken)$/i}).click();

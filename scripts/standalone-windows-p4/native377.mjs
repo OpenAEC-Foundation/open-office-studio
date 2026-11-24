@@ -193,7 +193,8 @@ try {
  report.coreReference={run:Number(process.env.OOS_QA_CORE_RUN),job:Number(process.env.OOS_QA_CORE_JOB),proofArtifact:Number(process.env.OOS_QA_CORE_PROOF)};
  assert(report.coreReference.run>0 && report.coreReference.job>0 && report.coreReference.proofArtifact>0);
  const current=await launch(undefined,'xlsb377');
- await page.locator('.rekenblad-naamvak').waitFor();await action('Focus');
+ // An isolated app starts on its Start page; the grid follows the real Open.
+ await action('Focus');
  await page.keyboard.press('Control+o');
  const openReport=join(root,'native-open.json');
  await ps('xlsb377-open.ps1',['-Action','OpenDialog','-OwnedPid',String(child.pid),'-Target',source,'-ReportPath',openReport]);
