@@ -1,0 +1,97 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/writer/libabw/pass/hello.zabw",
+    "filename": "hello.zabw",
+    "bytes": 1128,
+    "blob": "c83395b8600887d7b689961b9e081ec46888458d",
+    "sha256": "dd4d8ebd37434315c3194d4d1251f507be791e03e44ee3736e17a2fbb32f9206",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libabw/pass/hello.zabw",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Original independently published ZABW gzip-compressed AbiWord XML fixture; one gzip member with FNAME hello.abw and native AWML payload. Not an agent-created gzip of the ABW fixture.",
+    "coverageLimit": "Only this original ZABW gzip member and its actual XML; EOF/no extra members, decompression bound, CRC/ISIZE, one hello world paragraph, ordinary type/one section, effective encoded Times New Roman12pt/left/Letter dimensions. Inner bytes happen to equal prior ABW source; earlier runtime outcomes are not transferred. No ZABW export/other compression variants/fonts installed/rendering/metadata/history/RDF/richer AWML/native GUI/full-format acceptance."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_ZABW_24NOV "
+  },
+  "enginePrefixParagraphs": 1,
+  "parserReferences": {
+    "repository": "AbiWord/abiword",
+    "commit": "6940426ea7fd3810f1aa5477fa93c2d4278dea7d",
+    "role": "Official producer importer/exporter/property definitions consulted for namespace, style/property inheritance and native XML vocabulary only; not executed as oracle. Direct original source XML supplies expectations.",
+    "files": [
+      {
+        "path": "src/wp/impexp/xp/ie_exp_AbiWord_1.cpp",
+        "bytes": 39244,
+        "sha256": "7a03bf133482728c278e8774d6e292d89add93c9ffd7f1da8d0ca79b24661ef8"
+      },
+      {
+        "path": "src/wp/impexp/xp/ie_imp_AbiWord_1.cpp",
+        "bytes": 44405,
+        "sha256": "7f600056a80d5e064200c7a96fe543fa68816a0a17cc474c94659a8d667f4e40"
+      },
+      {
+        "path": "src/text/ptbl/xp/pp_Property.cpp",
+        "bytes": 27790,
+        "sha256": "e0562597280fbebfde01d7915c95e3a3da605b45cddba340dd595d5c37716abe"
+      }
+    ]
+  },
+  "reusedXMLReader": {
+    "commit": "f30db2736a7c27b27d13ace2810f08e68ee51de8",
+    "path": "scripts/qa-abw/native.py",
+    "gitBlob": "204fc6261042e6f75cc265c55ab123e9a890773f",
+    "sha256": "d1f05cfb24a4c5a3baafd3878a61ba35627805df22830a374dd213296fa630cb",
+    "role": "Exact unchanged source-XML reader reused only after byte-for-byte decompressed XML identity was verified; no inherited ABW runtime pass.",
+    "initialWindowsWorktreeSha256": "97b0dc1290878ab03bb3b1ef9eae61ae781756b9481ab8d095753d69096681e7",
+    "hashBasis": "Canonical Git blob bytes; CRLF worktree bytes normalized only when checking local execution file against Git"
+  },
+  "containerReference": {
+    "url": "https://www.rfc-editor.org/rfc/rfc1952.txt",
+    "description": "RFC1952 gzip header/trailer, Deflate method, CRC32 and ISIZE semantics; bounded one-member fixture proof, not a general gzip-conformance claim."
+  },
+  "innerXML": {
+    "bytes": 2615,
+    "sha256": "ddcde2c8876a316a8e02501202c1316e9e7c52d8728c7d78e43ccd41ade45d50",
+    "matchesPublishedABWBlob": "8103ce8236b73c1fd4acc2a4386f05131b0b7e8a",
+    "maxXMLBytes": 1000000
+  }
+}
