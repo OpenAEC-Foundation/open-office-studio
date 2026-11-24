@@ -596,3 +596,34 @@ separate exact MacSuite field regression, with the accepted browser proofs.
 Integration owns the final central scoped-route acceptance record. Broad #30,
 other formats/templates, overall release approval, main/tag/publication remain
 outside this delivery; historical source/runtime proofs keep their actual pins.
+
+## Scoped STW route completed, 24 November 2026
+
+Integration has confirmed the exact Mac Suite title case green: the saved and
+cold-reopened document preserves the field/cache and complete three-line title
+without glyph overlap. With the separate approved Windows Suite, Linux Suite
+DEB, genuine native Mac dedicated Writer and accepted browser/source/runtime
+proofs, no agreed STW/field374 audit check remains open in this chat's scope.
+
+The final independent Mac Suite report is delivered in commit0261063d. It
+explicitly keeps the transient post-save Done-toast image limited; the clear
+cold-reopen image and byte-identical saved/reopened DOCX establish the persisted
+result. Earlier failed receipts and the raw visual-pending flags are retained,
+not rewritten. Historical converter/browser-limit proofs retain their actual
+source/runtime pins; they are not relabelled as new executions.
+
+Completion covers one genuine original report.stw template, its source-derived
+eight blocks/styles/two placeholders, original DOCVARIABLE/cache, actual
+adjacent editing, recommended DOCX saves, normal exit/new-process reopen and
+the bounded title regression. It is not universal STW/template, table, font,
+TOC/index or full-pagination approval, nor an AppImage/native claim inferred
+solely from another package. The broader #30 issue and unrelated release
+checks remain integration-owned. No general explanation/fix of the historical
+rapid-save observation is claimed. Main/tag/publication remain unauthorized.
+
+All review data are saved on the own QA branch. The only retained new download
+is the authorized small Windows result ZIP at
+`.local/field374/p5-windows-45352763316/artifact.zip`; reuse that file. Other
+original archives remain in their existing owner worktrees. No own local GUI,
+capture, browser/server or unfinished CLI session remains from this audit;
+no shared/user app was closed and no extra closure test was started.
