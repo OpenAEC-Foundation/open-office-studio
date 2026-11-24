@@ -1,0 +1,28 @@
+name: Published Windows Suite identity and installation
+on:
+  push:
+    branches: [codex/windows-published-suite-20261124]
+    paths:
+      - .github/workflows/windows-published-suite-20261124.yml
+      - scripts/windows-published-suite-20261124.ps1
+permissions:
+  contents: read
+jobs:
+  published-suite:
+    if: contains(github.event.head_commit.message, '[published-suite-go]')
+    runs-on: windows-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public P5 Suite bytes, signatures, independent PE and private install
+        shell: pwsh
+        run: ./scripts/windows-published-suite-20261124.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: published-windows-suite-${{ github.sha }}
+          path: .local/published-suite/*.json
+          include-hidden-files: true
+          if-no-files-found: error
