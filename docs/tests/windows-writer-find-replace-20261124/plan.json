@@ -1,0 +1,59 @@
+{
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Missing native Windows ordinary Find/Replace checks on public P5, not a new integration-candidate acceptance",
+  "baseline": [
+    "kat katten Kat katapult KAT kat.",
+    "kat",
+    "kat_ kat1 kat😀",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "hond katten Kat katapult KAT kat.",
+    "kat",
+    "kat_ kat1 kat😀",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "hond katten hond katapult hond hond.",
+    "hond",
+    "kat_ kat1 hond😀",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "counts": {
+    "literal": 10,
+    "whole": 6,
+    "wholeCase": 4
+  },
+  "independentOracle": "Hard-coded expected whole-word and case outputs cross-checked before execution with Python Unicode word-boundary regex, not application engine. Actual output audited from DOCX XML independently of accessible DOM.",
+  "coverageLedger": {
+    "reused": "Exact P5 12 core checks from45196601365, later374/SaveAs from45352763316, public-installer binding45387284170. Includes actual Find input Undo and return to document history, but not executing Replace/Replace All.",
+    "older": "Nov9 docs/tests/2026-11-09-writer-vervangen-undo.json: six production-browser cases, nativeWebView2Retested:false. #188 initial native reproduction was a pre-fix failure; not a P5 pass. Nov10 remainingAcceptance explicitly requires final native checkpoint. Presentation whole-word tests are another module.",
+    "newMissing": [
+      "Ordinary literal/case/whole-word options across document table cells",
+      "Replace current and immediate native document Undo/Redo with pane open",
+      "Replace All exact eligible changes and one-step native Undo/both Redo shortcuts",
+      "Real save/normal quit/newPID reopen and independent DOCX text/bold audit"
+    ],
+    "excluded": [
+      "Already-passed374 title regression",
+      "Regex/wildcards/format search and other modules/platforms",
+      "New727903cc integration candidate and product fixes"
+    ]
+  }
+}

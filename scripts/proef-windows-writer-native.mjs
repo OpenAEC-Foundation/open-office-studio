@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 import { requireAuthenticode } from "./windows-native-signature.mjs";
 import { testFinalTitle } from "./windows-final-title-case.mjs";
+import { testNativeFindReplace } from "./windows-find-replace-case-20261124.mjs";
 
 assert.equal(process.platform, "win32");
 assert.equal(process.env.GITHUB_ACTIONS, "true");
@@ -22,6 +23,8 @@ assert.equal(process.env.RUNNER_ENVIRONMENT, "github-hosted");
 const [manifestFile, outputDirectory] = process.argv.slice(2);
 assert(manifestFile && outputDirectory, "Pass frozen candidate JSON and fresh output directory");
 const identity = JSON.parse(await readFile(manifestFile, "utf8"));
+const findReplaceOnly = identity.focusedCase === "find-replace-20261124";
+if (findReplaceOnly) assert(identity.requireSigned && !identity.titleOnly && !identity.testTitleOverlap);
 assert.equal(identity.executeNative, true);
 if (process.argv.includes("--require-signed")) assert.equal(identity.requireSigned, true, "Final native route requires an explicitly signed candidate");
 if (process.argv.includes("--test-title-overlap")) assert.equal(identity.testTitleOverlap, true, "Final requested title regression must be explicitly enabled in the frozen candidate");
@@ -69,7 +72,7 @@ const edited = [marker + "alpha", ...expected.slice(1)];
 const documentPath = join(out, "Writer native roundtrip.docx");
 async function reuseReviewedCore() {
   const ref = identity.reusedCore;
-  assert(ref && identity.titleOnly && identity.testTitleOverlap && identity.requireSigned);
+  assert(ref && identity.requireSigned && (findReplaceOnly || (identity.titleOnly && identity.testTitleOverlap)));
   const metadata = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/${ref.artifactId}`], { encoding: "utf8", windowsHide: true }));
   assert.equal(metadata.expired, false); assert.equal(metadata.workflow_run.id, ref.runId); assert.equal(metadata.workflow_run.head_sha, ref.harnessCommit);
   assert.equal(metadata.digest, `sha256:${ref.archiveSha256}`); assert.equal(metadata.size_in_bytes, ref.archiveBytes);
@@ -93,7 +96,9 @@ async function reuseReviewedCore() {
   assert(prior.cleanup.ownedAppsClosed && prior.cleanup.policyRestored && prior.cleanup.privateInstallRemoved);
   await writeFile(join(out, "reused-core-origin-report.json"), raw);
   report.reusedCore = { ...ref, originWholeRunStatus: "failed", acceptedSpecificChecks: 12, excluded: "Original failed Title SaveAs and its forced cleanup are not accepted", originalCorePids: prior.processes.slice(0, 2).map(p => p.pid) };
-  report.executionScope = "Title-only native continuation on the identical signed Suite; 12 independently reviewed earlier core checks reused";
+  report.executionScope = findReplaceOnly
+    ? "Ordinary Find/Replace-only native continuation on identical public P5 Suite; earlier core checks reused, no new title test"
+    : "Title-only native continuation on the identical signed Suite; 12 independently reviewed earlier core checks reused";
 }
 function ps(script) {
   return execFileSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", script], { encoding: "utf8", windowsHide: true, timeout: 30_000 }).trim();
@@ -180,6 +185,16 @@ try {
   assert.equal(artifact.workflow_run.id, identity.runId); assert.equal(artifact.expired, false);
   const gitCommit = JSON.parse(execFileSync("gh", ["api", `repos/OpenAEC-Foundation/open-office-studio/git/commits/${identity.applicationCommit}`], { encoding: "utf8", windowsHide: true }));
   assert.equal(gitCommit.tree.sha, identity.applicationTree);
+  if (findReplaceOnly) {
+    const published = JSON.parse(execFileSync("gh", ["api", "repos/OpenAEC-Foundation/open-office-studio/releases/tags/v2026.48.1"], { encoding: "utf8", windowsHide: true }));
+    assert.equal(published.id, 456623378); assert(!published.draft && !published.prerelease); assert.equal(published.target_commitish, identity.applicationCommit);
+    const assets = published.assets.filter(a => a.id === 786782581); assert.equal(assets.length, 1);
+    assert.equal(assets[0].name, "Open.Office.Studio_2026.48.1_x64-setup.exe");
+    assert.equal(assets[0].digest, `sha256:${identity.packageSha256}`); assert.equal(assets[0].size, 384579648);
+    const raw = await readFile("docs/tests/windows-published-suite-20261124/report.json");
+    assert.equal(sha(raw), "ad51eaf27f45ca55d6ac98e3f7cbb2fe9358e225c531a66870c2d814bf006608");
+    report.publicReleaseBinding = { release: published.id, asset: assets[0], actualPublicDownloadAndInstallRunReused: 45387284170, rawReportSha256: sha(raw) };
+  }
   if (identity.requireSigned) {
     assert.equal(run.head_sha, identity.applicationCommit, "Signed producer must use the exact approved application source");
     assert.equal(run.path, ".github/workflows/release.yml");
@@ -289,8 +304,8 @@ try {
     signature("independently extracted payload", join(payload, "open-office-studio.exe"));
     report.checks.at(-1).name = "independent signed NSIS payload identity verified; no unsigned binary normalization";
   }
-  if (identity.titleOnly) await reuseReviewedCore();
-  if (!identity.titleOnly) {
+  if (identity.titleOnly || findReplaceOnly) await reuseReviewedCore();
+  if (!identity.titleOnly && !findReplaceOnly) {
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const cell = t => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0, 3, 6].map(n => `<w:tr>${expected.slice(n, n + 3).map(cell).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
@@ -319,7 +334,7 @@ try {
   env.WEBVIEW2_USER_DATA_FOLDER = join(out, "webview-profile");
   policy = join(out, "policy-state.json");
   execFileSync("pwsh", ["-NoProfile", "-File", "scripts/runtime-webview2-ci.ps1", "-Phase", "Enable", "-StateFile", policy, "-Port", String(port)], { env, windowsHide: true, stdio: "inherit" });
-  if (!identity.titleOnly) {
+  if (!identity.titleOnly && !findReplaceOnly) {
   const firstPid = await startApplication(exe, port);
   await check("installed package opens exact 3x3 baseline", expected);
   await page.locator(".canvas-page canvas").first().click({ position: { x: 150, y: 110 } });
@@ -347,6 +362,7 @@ try {
   await closeApplication(); report.checks.push({ name: "normal close exits reopened process", pid: secondPid });
   }
   if (identity.testTitleOverlap) await testFinalTitle({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
+  if (findReplaceOnly) await testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage: () => page, waitFor, report });
   assert.deepEqual(report.errors, []); report.status = "passed";
 } catch (error) {
   report.status = "failed"; report.error = String(error.stack || error); process.exitCode = 1;
