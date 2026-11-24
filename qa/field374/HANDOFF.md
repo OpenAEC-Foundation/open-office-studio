@@ -454,3 +454,28 @@ this field374 acceptance does not approve that case or assign its cause. It
 does not transfer to AppImage, native Windows or macOS. Full STW-route closure
 still awaits those applicable native results. No new download, GUI, CI, build,
 product or consumer change occurred; all earlier failed proofs remain intact.
+
+## Explicit user resume and Mac transfer binding, 24 November
+
+The user explicitly resumed this scope on 24 November after yesterday's safe
+stop. The stop record remains historical. The independent export/image claim
+is active again; no own GUI, build, download or second platform operator.
+
+Mac preparer45351696628/QA03477b01/job138299734385 is reported successful.
+The small shared Suite descriptor/producer receipt independently binds the
+820-byte source witness SHA236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5
+to appP5b696/treee308/48.1 and producer2af94cd/run45195055147/job137763371873/a1.
+The executing workflow and checked-out P5 workflow hashes match the already
+accepted static source review. Suite DMG SHA is
+1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af.
+
+`evidence/p5-mac-transfer-binding-review-20261124.json` records this metadata/
+source-binding PASS and the exact parent/child identities and expiry. This
+review did not download or hash the full child ZIP. The descriptor explicitly
+keeps Suite native execution/acceptance and delivery to standalone hosts false;
+CF identity, signature checks and genuine Suite STW/native operation remain
+owner checks. Standalone app-host progress does not establish Suite STW proof.
+
+Linux658512c9 remains valid without repetition. No new Windows STW export has
+been delivered; the existing owner is preparing the Save As follow-up. Full
+STW-route acceptance remains open pending actual Windows/macOS native results.
