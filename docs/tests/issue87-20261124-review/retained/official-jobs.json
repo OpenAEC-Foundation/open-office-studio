@@ -1,0 +1,301 @@
+{
+  "total_count": 2,
+  "jobs": [
+    {
+      "id": 137621041497,
+      "run_id": 45153653733,
+      "workflow_name": "Presentation 87 automatic date on open",
+      "head_branch": "codex/presentation-87-auto-date-open-2026-11-23-0c73",
+      "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45153653733",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVRiTGs8AAAAgCtpxWQ",
+      "head_sha": "06fd06308b0688ab74ef076a59e4266623bb2eba",
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137621041497",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45153653733/job/137621041497",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-23T10:10:32Z",
+      "started_at": "2026-11-23T10:10:33Z",
+      "completed_at": "2026-11-23T10:13:08Z",
+      "name": "linux-browser",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T10:10:34Z",
+          "completed_at": "2026-11-23T10:10:35Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T10:10:35Z",
+          "completed_at": "2026-11-23T10:10:40Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T10:10:40Z",
+          "completed_at": "2026-11-23T10:10:43Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T10:10:43Z",
+          "completed_at": "2026-11-23T10:10:44Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T10:10:44Z",
+          "completed_at": "2026-11-23T10:10:47Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T10:10:47Z",
+          "completed_at": "2026-11-23T10:10:53Z"
+        },
+        {
+          "name": "Focused date/footer/number and actual engine regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T10:10:53Z",
+          "completed_at": "2026-11-23T10:10:56Z"
+        },
+        {
+          "name": "Run node scripts/controleer-i18n.mjs --ns presentation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T10:10:56Z",
+          "completed_at": "2026-11-23T10:10:56Z"
+        },
+        {
+          "name": "TypeScript and normal production bundle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-23T10:10:56Z",
+          "completed_at": "2026-11-23T10:11:58Z"
+        },
+        {
+          "name": "Hosted production bundle and required route check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-23T10:11:58Z",
+          "completed_at": "2026-11-23T10:12:22Z"
+        },
+        {
+          "name": "Run pnpm exec playwright install --with-deps chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-23T10:12:22Z",
+          "completed_at": "2026-11-23T10:12:53Z"
+        },
+        {
+          "name": "Real normal and hosted browser open-edit-save-fresh-reopen",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-23T10:12:53Z",
+          "completed_at": "2026-11-23T10:13:04Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-23T10:13:04Z",
+          "completed_at": "2026-11-23T10:13:05Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-23T10:13:05Z",
+          "completed_at": "2026-11-23T10:13:06Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-23T10:13:06Z",
+          "completed_at": "2026-11-23T10:13:06Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-23T10:13:06Z",
+          "completed_at": "2026-11-23T10:13:06Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-23T10:13:06Z",
+          "completed_at": "2026-11-23T10:13:06Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137621041497",
+      "labels": [
+        "ubuntu-22.04"
+      ],
+      "runner_id": 1000128447,
+      "runner_name": "GitHub Actions 1000128447",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 137621041861,
+      "run_id": 45153653733,
+      "workflow_name": "Presentation 87 automatic date on open",
+      "head_branch": "codex/presentation-87-auto-date-open-2026-11-23-0c73",
+      "run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/runs/45153653733",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVRiTGs8AAAAgCtpyxQ",
+      "head_sha": "06fd06308b0688ab74ef076a59e4266623bb2eba",
+      "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/jobs/137621041861",
+      "html_url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45153653733/job/137621041861",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-23T10:10:32Z",
+      "started_at": "2026-11-23T10:10:33Z",
+      "completed_at": "2026-11-23T10:12:54Z",
+      "name": "windows-web",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T10:10:34Z",
+          "completed_at": "2026-11-23T10:10:35Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T10:10:35Z",
+          "completed_at": "2026-11-23T10:10:45Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T10:10:45Z",
+          "completed_at": "2026-11-23T10:10:50Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T10:10:50Z",
+          "completed_at": "2026-11-23T10:10:53Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T10:10:53Z",
+          "completed_at": "2026-11-23T10:11:03Z"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T10:11:03Z",
+          "completed_at": "2026-11-23T10:11:13Z"
+        },
+        {
+          "name": "Focused date/footer/number and actual engine regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T10:11:13Z",
+          "completed_at": "2026-11-23T10:11:19Z"
+        },
+        {
+          "name": "Full frontend prebuild, TypeScript and production bundle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T10:11:19Z",
+          "completed_at": "2026-11-23T10:12:50Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-23T10:12:50Z",
+          "completed_at": "2026-11-23T10:12:51Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-23T10:12:51Z",
+          "completed_at": "2026-11-23T10:12:51Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-23T10:12:51Z",
+          "completed_at": "2026-11-23T10:12:51Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-23T10:12:51Z",
+          "completed_at": "2026-11-23T10:12:53Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-23T10:12:53Z",
+          "completed_at": "2026-11-23T10:12:53Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/check-runs/137621041861",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000128448,
+      "runner_name": "GitHub Actions 1000128448",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}
