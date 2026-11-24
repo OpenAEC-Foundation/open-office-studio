@@ -1,0 +1,67 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/writer/libe-book/pass/FictionBook2.fb2",
+    "filename": "FictionBook2.fb2",
+    "bytes": 685,
+    "blob": "4348cb75beff4be16c37288bc483b7d5504130c8",
+    "sha256": "1b758fb8128a660dafd4d2a0c001c9e37001f9a2a52c23d1451290713b709448",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libe-book/pass/FictionBook2.fb2",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Original minimal FictionBook2 XML regression fixture, namespace /fictionbook/2.0; metadata document version1.0 is not a file-format version. Missing required genre and document-info/id in pinned reference XSD, so not a complete schema-valid FB2 witness.",
+    "coverageLimit": "Only bounded minimal-regression import route: one body/one untitled logical section/one plain Hello world. paragraph, no injected tables/images/objects, recommended ordinary DOCX type. Metadata title/author/language/date/document-version inventoried but preservation not accepted; required genre/id missing against pinned reference schema. No general FB2/schema-conformance, nested section/headings/notes/poetry/tables/images/styles/fonts/rendering/native/other-variant acceptance."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_FB2_24NOV "
+  },
+  "enginePrefixParagraphs": 1,
+  "schemaReference": {
+    "repository": "gribuser/fb2",
+    "commit": "4d3740e319039911c30d291abb0c8b26ec99703b",
+    "path": "FictionBook.xsd",
+    "blob": "bc55511aba3b74b4a2f9ab931a6f1885deac6dc1",
+    "bytes": 34541,
+    "sha256": "db2c0a239f4654db808d580b4d835fda9b41df09c169556116c4092ca47865b3",
+    "license": "BSD-style original copyright Dmitry Gribov2004, full schema/license notices preserved in reference/",
+    "licenseSha256": "b5e8a64ae8c61c8587ac325cae8dafd5f49b16c1f2beff550f1e06eb9597e43c",
+    "role": "Creator-maintained primary schema read for body/metadata distinction and explicit missing required fields; no complete XSD-validation pass claimed."
+  }
+}
