@@ -90,6 +90,17 @@ class Gates(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'duplicated'):
             candidate.validate_artifact_binding(producer,binding,wrong,artifact,'Windows')
 
+    def test_linux_requires_its_actual_native_runtime_gate_and_not_the_skipped_other_platform_gate(self):
+        producer,binding,job,artifact = self.binding_fixture()
+        job['name'] = 'Bouwen – Linux'
+        names = ['Linux-installers werkelijk uitpakken en controleren',candidate.RUNTIME_GATES[0],
+            'Linux native WebKit-interface en private installer controleren']
+        job['steps'] = [dict(name=n,status='completed',conclusion='success',completed_at='2026-11-23T09:01:00Z') for n in names]
+        job['steps'].append(dict(name=candidate.RUNTIME_GATES[1],status='completed',conclusion='skipped'))
+        candidate.validate_artifact_binding(producer,binding,job,artifact,'Linux')
+        job['steps'][2]['conclusion'] = 'skipped'
+        with self.assertRaises(ValueError): candidate.validate_artifact_binding(producer,binding,job,artifact,'Linux')
+
     def test_valid_earlier_platform_attempt_can_be_reused_explicitly(self):
         candidate.validate_artifact_binding(*self.binding_fixture(),'Windows')
 
@@ -219,7 +230,7 @@ class SeparateMacProducer(unittest.TestCase):
             request['platforms'][platform]=b
             producers[run_id]=dict(id=run_id,head_sha=head,head_repository=dict(full_name=candidate.REPO),path='.github/workflows/release.yml',run_attempt=1,event='workflow_dispatch',head_branch=candidate.MAC_REF.removeprefix('refs/heads/'),conclusion='success' if separate else 'failure')
             names={'Windows':['Pakket bouwen (Windows, ondertekend)','Authenticode controleren (installer, programma en uninstaller)'],'Linux':['Linux-installers werkelijk uitpakken en controleren'],'macOS':['Pakket bouwen (macOS, ondertekend en genotariseerd)','Handtekening en notarisatie controleren (macOS)',candidate.SOURCE_GATE,'Ondertekening beschikbaar']}[platform]
-            names += list(candidate.RUNTIME_GATES)
+            names += [candidate.RUNTIME_GATES[0], 'Linux native WebKit-interface en private installer controleren' if platform=='Linux' else candidate.RUNTIME_GATES[1]]
             job=dict(id=job_id,run_id=run_id,run_attempt=1,head_sha=head,name='Bouwen – '+platform,status='completed',conclusion='success',started_at='2026-11-23T09:00:00Z',completed_at='2026-11-23T09:02:00Z',steps=[dict(name=n,status='completed',conclusion='success',completed_at='2026-11-23T09:01:00Z') for n in names])
             jobs.setdefault(run_id,[]).append(job)
             artifacts.setdefault(run_id,[]).append(dict(id=job_id,name='uitgave-'+platform,expired=False,workflow_run=dict(id=run_id,head_sha=head),created_at='2026-11-23T09:01:30Z',digest='sha256:'+b['archiveSha256'],size_in_bytes=len(archive)))

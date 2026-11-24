@@ -118,7 +118,7 @@ def validate_platform_job(job, platform):
         'macOS': ['Pakket bouwen (macOS, ondertekend en genotariseerd)', 'Handtekening en notarisatie controleren (macOS)'],
         'Linux': ['Linux-installers werkelijk uitpakken en controleren'],
     }[platform]
-    required += list(RUNTIME_GATES)
+    required += [RUNTIME_GATES[0], 'Linux native WebKit-interface en private installer controleren' if platform == 'Linux' else RUNTIME_GATES[1]]
     steps = {s['name']:s for s in job['steps']}
     check(all(sum(s['name'] == name for s in job['steps']) == 1 for name in required), 'Required package/signature gate missing or duplicated: '+platform)
     check(all(name in steps and steps[name]['status']=='completed' and steps[name]['conclusion']=='success' for name in required), 'Required package/signature gate did not pass: '+platform)
