@@ -245,5 +245,27 @@
     "productFixValidated": false,
     "allocationDecision": "Integration on 2026-11-24 allows read-only diagnosis/reviewable proposal only; no new build/VM/cache now during P5 native critical path",
     "receipt": "docs/tests/presentation-375/third-source-outcome.json"
+  },
+  "fourthSourceWitness": {
+    "run": 45354246604,
+    "attempt": 1,
+    "job": 138308003947,
+    "qaCommit": "f652710eca7301ca55113db7344c9bd6dd734409",
+    "conclusion": "failure",
+    "artifact": {
+      "id": 14902320491,
+      "bytes": 142002,
+      "zipSHA256": "97ca9de4c69fa75c9ebb8e84b681cb02c385ef58ff5fec4846a8e02b522077d2",
+      "expiresAtUTC": "2027-02-22T08:13:31Z",
+      "retained": "docs/tests/presentation-375/retained/source-witness-45354246604.zip"
+    },
+    "initializerControlsPassed": 4,
+    "targetSelectionControlsPassed": 7,
+    "failure": "Direct Makefile.gbuild resource invocation omitted normal top-level bootstrap/fetch prerequisites; existing pinned libxml2 archive absent",
+    "baselineStageReached": false,
+    "productionImporterAppliedOrCompiled": false,
+    "productFixValidated": false,
+    "automaticRepairOrRetryStarted": false,
+    "receipt": "docs/tests/presentation-375/fourth-source-outcome.json"
   }
 }

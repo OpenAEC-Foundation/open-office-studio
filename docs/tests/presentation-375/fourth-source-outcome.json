@@ -1,0 +1,337 @@
+{
+  "issue": 375,
+  "run": 45354246604,
+  "attempt": 1,
+  "job": 138308003947,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45354246604",
+  "qaCommit": "f652710eca7301ca55113db7344c9bd6dd734409",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "upstreamTree": "f96d5442101820c26fd9f19c15065d4ae7e63150",
+  "importerPatchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "testInitializationPatchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828",
+  "conclusion": "failure",
+  "finishedUTC": "2026-11-24T08:16:57Z",
+  "artifact": {
+    "id": 14902320491,
+    "bytes": 142002,
+    "zipSHA256": "97ca9de4c69fa75c9ebb8e84b681cb02c385ef58ff5fec4846a8e02b522077d2",
+    "expiresAtUTC": "2027-02-22T08:13:31Z",
+    "retained": "docs/tests/presentation-375/retained/source-witness-45354246604.zip"
+  },
+  "stageLogsVerified": 24,
+  "buildReportSHA256": "3fdb66dafa83b76fd3483d8a96bf4a9cacfdae6cd8cf965c48124a9b0c3bce8b",
+  "stages": [
+    {
+      "name": "official-binary-mirror",
+      "exitCode": 0,
+      "seconds": 0.007743975999972008,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ubuntu-source-index",
+      "exitCode": 0,
+      "seconds": 0.007695997000041643,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "apt-update",
+      "exitCode": 0,
+      "seconds": 9.231739756000024,
+      "retainedLogSHA256": "f4ed9d53b70724e8bcac8813ac07a7d08ebad63d68f07d995ea45b0db699044a"
+    },
+    {
+      "name": "dependency-plan",
+      "exitCode": 0,
+      "seconds": 3.7213393880000467,
+      "retainedLogSHA256": "fc686b466d00ef61414a67f6895a6cd1562848e1c2510004d3b4f1a0758da231"
+    },
+    {
+      "name": "build-dependencies",
+      "exitCode": 0,
+      "seconds": 72.347805472,
+      "retainedLogSHA256": "9fa2fa3e4c6f4c761ac80e8c072468da5fa3e786e60899a5b0e1fee425ff1e73"
+    },
+    {
+      "name": "explicit-dependencies",
+      "exitCode": 0,
+      "seconds": 3.5208036820000643,
+      "retainedLogSHA256": "9fa6af14148ef5dd90da5055b7c7d0de2ed086ea38c050e605bef7341c73c210"
+    },
+    {
+      "name": "package-versions",
+      "exitCode": 0,
+      "seconds": 0.015719450000005963,
+      "retainedLogSHA256": "6cfd97b93aed9900aaa65fdb12bf31577776c68db6d2391fcdad27a027906762"
+    },
+    {
+      "name": "post-install-resource-gate",
+      "exitCode": 0,
+      "seconds": 0.16399692200002391,
+      "retainedLogSHA256": "171debf5786e794a96fbd587ea437c76cf5ed489380ba3bcdb5e9f9937b3105b"
+    },
+    {
+      "name": "distribution-python-provider",
+      "exitCode": 0,
+      "seconds": 0.46496968499991453,
+      "retainedLogSHA256": "2b9b06c33b10742c6a7b5d9204564efd2d90ef6e99415650a84d4012e455eade"
+    },
+    {
+      "name": "distribution-python-cflags",
+      "exitCode": 0,
+      "seconds": 0.016332235000049877,
+      "retainedLogSHA256": "431d95bc960e071f6b9130341782edaebedddd1bce9b0cd918b861fdd78637c6"
+    },
+    {
+      "name": "distribution-python-libs",
+      "exitCode": 0,
+      "seconds": 0.0156540179999638,
+      "retainedLogSHA256": "39bdc1767060488e03c9f8695a2c7af7290323aba7905e0b74e50675863f14b6"
+    },
+    {
+      "name": "source-init",
+      "exitCode": 0,
+      "seconds": 0.0035465830000021015,
+      "retainedLogSHA256": "cc4951d348b9feeba7f46af48ba1559c2332fdd7dbbd4004c8f2f0c6a9f1011a"
+    },
+    {
+      "name": "source-remote",
+      "exitCode": 0,
+      "seconds": 0.0014477890000534899,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-fetch",
+      "exitCode": 0,
+      "seconds": 22.50927385,
+      "retainedLogSHA256": "136429080efc093874b01348793b3421bf35d18df153e0fdc3321c9d78a79d02"
+    },
+    {
+      "name": "source-checkout",
+      "exitCode": 0,
+      "seconds": 4.923493640999936,
+      "retainedLogSHA256": "87ffae06b16e6f263e30bf7ce4596a457da95419a6f99cf319d9994964c0dd31"
+    },
+    {
+      "name": "patchset-preconditions",
+      "exitCode": 0,
+      "seconds": 0.26519424099990374,
+      "retainedLogSHA256": "cced33d1aac360f3af26802257f79097e69c61eaddab479f9ec8a5a26cbbd0bc"
+    },
+    {
+      "name": "initialization-controls",
+      "exitCode": 0,
+      "seconds": 0.16404251400001613,
+      "retainedLogSHA256": "e2bcb8fb05e13b8a7e81636b8066b79c84513e553dd36d9d4626e8999592d5bb"
+    },
+    {
+      "name": "initialization-patch-check",
+      "exitCode": 0,
+      "seconds": 0.0014997979999407107,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "initialization-test-recipe",
+      "exitCode": 0,
+      "seconds": 0.0014372580000099333,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "test-diff",
+      "exitCode": 0,
+      "seconds": 0.0014278429999876607,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "configure",
+      "exitCode": 0,
+      "seconds": 33.93318109500001,
+      "retainedLogSHA256": "156a240a8506afd2d5e3fc07e36a5bf239142d9f971d04548f3f6225a059a117"
+    },
+    {
+      "name": "target-selection-regressions",
+      "exitCode": 0,
+      "seconds": 0.0638980689999471,
+      "retainedLogSHA256": "88e157aa829dafabd0be718fbbca314572d2411122698449d9c87962fbf100ac"
+    },
+    {
+      "name": "linker-version",
+      "exitCode": 0,
+      "seconds": 0.001505083999973067,
+      "retainedLogSHA256": "cbb0374a4d23f91537f8588348c460085a38ba5af336bed511060b72a1e76bf7"
+    },
+    {
+      "name": "impress-test-ui-resource",
+      "exitCode": 2,
+      "seconds": 21.50557668600004,
+      "retainedLogSHA256": "29ca0d87a74bfb6f9d836a7f079b55a5558e1c4309c7e1e2cab2caec8cef6436"
+    }
+  ],
+  "testInitializationBinding": {
+    "patchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828",
+    "recipe": "xmloff/CppunitTest_xmloff_draw.mk",
+    "recipeBeforeSHA256": "3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40",
+    "recipeAfterSHA256": "d6c2ac082894b09a8973eaf69141cad84a69d73fac724555c756bfc0bc45c0b2",
+    "primarySHA256": {
+      "xmloff/CppunitTest_xmloff_draw.mk": "3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40",
+      "sd/uiconfig/simpress/ui/tabviewbar.ui": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+      "sd/UIConfig_simpress.mk": "8442b06b6293e22491c0c9f59133b94282da6f0afae1eb4db3346f9167be1ae7",
+      "solenv/gbuild/CppunitTest.mk": "6eb8de580d678b77f00cdc8e5081825aaf173158c70d4021e5523fa05ddb420f",
+      "solenv/gbuild/UIConfig.mk": "e14f8fe33f88897ee0d02f0d6fbc92fc726bfa0bb9379a540e3bfca4e9d84c8d",
+      "solenv/gbuild/TargetLocations.mk": "a5b0b1186c3bc5afa3a955887e14a9fdacfe7ab8dff1a40eca9de6b1767250ed"
+    },
+    "resourceTarget": "/home/runner/work/_temp/presentation-375-45354246604/source/workdir/UIConfig/modules/simpress.done",
+    "resourceInstalled": "instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "resourceSHA256": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+    "initializationPatchChangesProductionImporter": false,
+    "configuredWorkdir": "/home/runner/work/_temp/presentation-375-45354246604/source/workdir"
+  },
+  "testRecipePatchAppliedAndHashChecked": true,
+  "initializerControlsPassed": 4,
+  "targetSelectionControlsPassed": 7,
+  "configurationHashes": {
+    "config_host.mk": "95a667ba0dba93be88cec753a39e2a3d1478dae30ea9e7eac65d942f06223039",
+    "config_global.h": "d2df11dc199dd08bc27404939bae35775e9fa71608ab8e8f9d45a5a6eccd351e"
+  },
+  "configuredFetchTarballs": [
+    "TRUE"
+  ],
+  "configuredTarfileLocation": [
+    "/home/runner/work/_temp/presentation-375-45354246604/external-tars"
+  ],
+  "failure": "Direct Makefile.gbuild resource invocation omitted normal top-level bootstrap/fetch prerequisites; existing pinned libxml2 archive absent",
+  "actualFailureLines": [
+    {
+      "line": 3244,
+      "text": "make: *** No rule to make target '/home/runner/work/_temp/presentation-375-45354246604/external-tars/libxml2-2.15.4.tar.xz', needed by '/home/runner/work/_temp/presentation-375-45354246604/source/workdir/UnpackedTarget/libxml2-2.15.4.tar.xz'.  Stop."
+    },
+    {
+      "line": 3245,
+      "text": "make: *** Waiting for unfinished jobs...."
+    }
+  ],
+  "sourceExplanation": [
+    {
+      "path": "Makefile.in",
+      "sha256": "435d9651550e33c7a0698fd09b4895b061dfc60503811e5e1279d7029ceb22f0",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/Makefile.in",
+      "excerpt": [
+        {
+          "line": 185,
+          "text": "# build a generic gbuild target"
+        },
+        {
+          "line": 186,
+          "text": "$(foreach target,$(gbuild_TARGETS),$(target)_% $(foreach module,$(gbuild_modules),$(target)_$(module)/%)) UIConfig_modules/% %.genpatch: bootstrap fetch"
+        },
+        {
+          "line": 187,
+          "text": "\t$(KEEP_AWAKE_CMD) $(MAKE) $(PARALLELISM_OPTION) $(GMAKE_OPTIONS) -f $(SRCDIR)/Makefile.gbuild $@"
+        },
+        {
+          "line": 188,
+          "text": ""
+        },
+        {
+          "line": 265,
+          "text": "ifneq ($(DO_FETCH_TARBALLS),)"
+        },
+        {
+          "line": 266,
+          "text": "include $(SRCDIR)/Makefile.fetch"
+        },
+        {
+          "line": 267,
+          "text": "fetch: download"
+        },
+        {
+          "line": 268,
+          "text": "fetch: get-submodules"
+        },
+        {
+          "line": 269,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "path": "Makefile.gbuild",
+      "sha256": "1078cee9cdfc50ae9902e6de32e0406a89ff20bb5dc3ca1ccd30d0b3a48d8a4f",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/Makefile.gbuild",
+      "excerpt": []
+    },
+    {
+      "path": "download.lst",
+      "sha256": "907d5271ed226c414f8ede981ae91945799cba0ad25d72d01b48683568073cc4",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/download.lst",
+      "excerpt": [
+        {
+          "line": 458,
+          "text": "LIBXML_SHA256SUM := 98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821"
+        },
+        {
+          "line": 459,
+          "text": "LIBXML_VERSION_MICRO := 4"
+        },
+        {
+          "line": 460,
+          "text": "LIBXML_TARBALL := libxml2-2.15.$(LIBXML_VERSION_MICRO).tar.xz"
+        },
+        {
+          "line": 461,
+          "text": "# three static lines"
+        }
+      ]
+    },
+    {
+      "path": "solenv/gbuild/Helper.mk",
+      "sha256": "968bb797d966c4c75b77132e25ba1e42d762943b7c2e4a43593b0bddcc4e17f9",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/solenv/gbuild/Helper.mk",
+      "excerpt": [
+        {
+          "line": 125,
+          "text": "# gb_Helper_make_userfriendly_targets target class build-target? clean-target?"
+        },
+        {
+          "line": 126,
+          "text": "define gb_Helper_make_userfriendly_targets"
+        },
+        {
+          "line": 127,
+          "text": ".PHONY: $(2) $(2)_$(1) $(2)_$(1).clean"
+        },
+        {
+          "line": 128,
+          "text": "$(2): $(2)_$(1)"
+        },
+        {
+          "line": 129,
+          "text": "$(2)_$(1) : $(if $(3),$(3),$(call gb_$(2)_get_target,$(1)))"
+        },
+        {
+          "line": 130,
+          "text": "$(2)_$(1).clean : $(if $(4),$(4),$(call gb_$(2)_get_clean_target,$(1)))"
+        },
+        {
+          "line": 131,
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "missingExistingArchive": {
+    "filename": "libxml2-2.15.4.tar.xz",
+    "expectedUpstreamSHA256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+    "downloadedOrVerifiedHere": false
+  },
+  "resourceBuildSeconds": 21.50557668600004,
+  "elapsedSeconds": 206.3135477556367,
+  "buildHelperCCompilationObserved": true,
+  "installedResourceProofReached": false,
+  "baselineStageReached": false,
+  "productionImporterAppliedOrCompiled": false,
+  "correctedConverterEngineReached": false,
+  "runtimePayloadProduced": false,
+  "productFixValidated": false,
+  "automaticRepairOrRetryStarted": false,
+  "futureStrategyOnly": "A later separately authorized harness change can use the pinned top-level UIConfig_modules/simpress wrapper, which explicitly depends on bootstrap/fetch. No code correction, archive fallback, dependency/config change or new dispatch is part of this result."
+}

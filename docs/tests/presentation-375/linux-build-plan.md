@@ -1,8 +1,8 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status on 2026-11-24: a fourth, explicitly allocated witness is running on
-reviewed harness f652710e. Earlier failures remain unchanged; initialization,
-patched importer/Cppunit and runtime acceptance are not yet established.** This is a private QA witness for the reviewed importer patch,
+**Status on 2026-11-24: the fourth witness stopped on an own resource-build
+invocation error before the baseline test. Earlier failures remain unchanged;
+initialization, patched importer/Cppunit and runtime acceptance are unproven.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -379,3 +379,39 @@ running. No initialization, stale-theme baseline, production fix or runtime
 acceptance is inferred. Full immutable input/time/queue binding is preserved in
 [`fourth-source-allocation.json`](fourth-source-allocation.json). This witness
 is outside P5/application builds, native acceptance, runtime pins and intake.
+
+## Fourth result: stopped at the early resource build
+
+The run finished at **09:16:57 CET** with FAILURE, well before its time limits.
+Exact source/fixture/hash gates, four initializer controls, the test-only recipe
+patch/context/output hash, configure and seven target-selection controls passed.
+The UI resource make stage returned exit 2 after 21.5056 seconds:
+
+```text
+No rule to make target '.../external-tars/libxml2-2.15.4.tar.xz',
+needed by '.../source/workdir/UnpackedTarget/libxml2-2.15.4.tar.xz'.
+```
+
+This is an own harness invocation error. The direct `make -f Makefile.gbuild`
+call omitted the normal top-level preparation. Pinned `Makefile.in:186–187`
+explicitly supplies `bootstrap fetch` prerequisites for `UIConfig_modules/%`
+before invoking gbuild. Actual `DO_FETCH_TARBALLS=TRUE`; the existing pinned
+archive was absent because that path had not run. `download.lst:458–460` already
+pins libxml2 2.15.4 and its checksum; no new dependency or upstream change is
+needed to explain this failure. Only the concat-deps C build helper is observed;
+the baseline and production importer stages were not reached.
+
+Artifact **14902320491** is retained byte-for-byte in
+`retained/source-witness-45354246604.zip`: 142,002 bytes; ZIP SHA256
+`97ca9de4c69fa75c9ebb8e84b681cb02c385ef58ff5fec4846a8e02b522077d2`;
+expiry **2027-02-22T08:13:31Z**. All 24 stage-log hashes were verified. Exact
+source/wrapper/configuration excerpts and result bindings are in
+[`fourth-source-outcome.json`](fourth-source-outcome.json).
+
+No installed resource proof, stale-theme assertion, production importer compile,
+full draw suite, converter/engine or new runtime payload was reached. The earlier
+SIGSEGV remains unexplained by a runtime differential. No automatic correction,
+retry or extra VM was started. A future separately allocated change could use
+the source-defined top-level `UIConfig_modules/simpress` wrapper; that is a
+recorded strategy only, not an implemented repair or a new allocation. P5,
+runtime pins, main, versions and release intake remain unchanged.
