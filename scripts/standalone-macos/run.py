@@ -113,11 +113,15 @@ def main():
         session.install(dmg)
         session.prepare_display()
         if route:
-            from sheet_formats import run_native
             session.report['reusedOrdinaryFunctionalCoreBaseline']=baseline
-            run_native(session,args.spreadsheet_format,baseline=baseline)
-            session.report.update(status='supplemental-functional-evidence-collected-review-pending',
-                                  supplementalFunctionalCaseCompleted=True)
+            if route.get('readback'):
+                from readback import native_readback
+                native_readback(session,request,proof,args.package.resolve())
+            else:
+                from sheet_formats import run_native
+                run_native(session,args.spreadsheet_format,baseline=baseline)
+                session.report.update(status='supplemental-functional-evidence-collected-review-pending',
+                                      supplementalFunctionalCaseCompleted=True)
         else:
             fixtures=create(session.documents/"synthetic-inputs",root/"public/templates")
             fixture=Path(fixtures["files"][args.app]["path"])

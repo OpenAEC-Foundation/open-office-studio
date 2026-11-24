@@ -11,6 +11,7 @@ import zipfile
 from contracts import (APPS, digest, validate_producer, validate_request, verify_under,verify_package,
                        verify_supporting_suite_package,approved_dual_producer,source_witness_record)
 from followup import matrix,prepare_baseline
+from readback import prepare_readback,READBACK
 
 REPO = "OpenAEC-Foundation/open-office-studio"
 
@@ -144,6 +145,9 @@ def reuse_transfers(request,output):
             or run.get("path")!=".github/workflows/standalone-macos-20261123.yml"
             or run.get("repository",{}).get("full_name")!=REPO):
         raise ValueError("Reuse run must be this own QA workflow/repository/branch")
+    if request.get('spreadsheetFollowup',{}).get('readback') and (
+            run.get('id')!=READBACK['run'] or run.get('head_sha')!=READBACK['qaCommit']):
+        raise ValueError('Readback child must originate from the exact inspected prior Spreadsheet QA run')
     artifacts=api("/actions/runs/"+str(origin)+"/artifacts?per_page=100")["artifacts"]
     selected=request.get('executeApps',list(APPS))
     products=[(app,"standalone-own-"+app,app) for app in selected]
@@ -159,6 +163,7 @@ def reuse_transfers(request,output):
                         "--dir",str(output/folder)],check=True)
         rebind_transfer(request,output/folder,app,origin)
     prepare_baseline(request,output,api)
+    prepare_readback(request,output,api)
     return matrix(request)
 
 

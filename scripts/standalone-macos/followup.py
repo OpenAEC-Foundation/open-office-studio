@@ -17,10 +17,15 @@ CORE_FLAGS=('identityVerified','installedSignatureGatesVerified','suiteAbsent','
 def validate_followup(q):
     route=q.get('spreadsheetFollowup')
     if route is None:return False
-    if (not isinstance(route,dict) or set(route)!={'formats','coreBaseline'} or route['coreBaseline']!=BASELINE
-            or q.get('source')!=P5_APP_SOURCE or q.get('executeApps')!=['spreadsheet']
-            or q.get('reuseTransfersFromRun')!=BASELINE['run']):
+    if (not isinstance(route,dict) or set(route) not in ({'formats','coreBaseline'},{'formats','coreBaseline','readback'})
+            or route['coreBaseline']!=BASELINE or q.get('source')!=P5_APP_SOURCE or q.get('executeApps')!=['spreadsheet']):
         raise ValueError('Only the exact P5 Spreadsheet child and functional baseline may route addons')
+    if 'readback' in route:
+        from readback import READBACK
+        if route['readback']!=READBACK or route['formats']!=['xlsb'] or q.get('reuseTransfersFromRun')!=READBACK['run']:
+            raise ValueError('Only the frozen previously saved XLSB output may enter readback-only mode')
+    elif q.get('reuseTransfersFromRun')!=BASELINE['run']:
+        raise ValueError('Exact original functional-core transfer run required')
     formats=route['formats']
     if (not isinstance(formats,list) or not formats
             or any(not isinstance(f,str) or f not in ('gnm','gnumeric','xlsb') for f in formats)
@@ -53,6 +58,10 @@ def load_baseline(q,proof,folder):
 
 def prepare_baseline(q,output,api):
     if not validate_followup(q):return
+    existing=Path(output)/'spreadsheet/core-baseline.json'
+    if existing.is_file():
+        proof=json.loads((existing.parent/'provenance.json').read_text());load_baseline(q,proof,existing.parent)
+        return  # The selected child already contains the exact authenticated baseline.
     meta=api('/actions/artifacts/'+str(BASELINE['artifact']))
     if (meta.get('id')!=BASELINE['artifact'] or meta.get('name')!=BASELINE['name'] or meta.get('expired') is not False
             or meta.get('digest')!='sha256:'+BASELINE['archiveSHA256'] or meta.get('size_in_bytes')!=BASELINE['archiveBytes']
