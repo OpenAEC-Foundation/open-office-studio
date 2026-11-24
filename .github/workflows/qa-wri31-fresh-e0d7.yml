@@ -1,0 +1,41 @@
+name: WRI31 saved DOCX in a new Word process
+on:
+  push:
+    branches: [codex/wri31-qa-2026-11-23-e0d7]
+    paths: [scripts/qa-wri31/fresh-process-request.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  fresh_process:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retain P5 Linux queue priority
+        run: python3 scripts/qa-wri31/capacity.py
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Authenticate only the small existing saved-result package
+        run: python -B scripts/qa-wri31/fresh_input.py
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Actual production Word in a separate process, save and independent XML
+        run: node scripts/qa-wri31/fresh_reopen.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wri31-new-process-result
+          path: .local/wri31-fresh/
+          include-hidden-files: true
+          if-no-files-found: error
