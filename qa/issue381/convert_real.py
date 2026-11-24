@@ -124,6 +124,7 @@ def main():
                     fontconfig_loads.append(dict(pid=int(path.suffix[1:]),path=str(loaded),sha256=sha(loaded)))
         assert actual,'No real loader observation for libwps'
         assert fontconfig_loads,'No real loader observation for qualified host fontconfig'
+        assert {entry['pid'] for entry in actual} & {entry['pid'] for entry in fontconfig_loads},'Qualified fontconfig and selected libwps must be loaded in the same real converter process'
         report['actualFontconfigLoads']=fontconfig_loads
         report['fontCache']=validate_cache_log((out/'converter.log').read_text(errors='replace'),
             Path(binding['privateRoot']),args.variant,policy,cache_guard)

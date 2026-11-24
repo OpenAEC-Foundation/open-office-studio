@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from font_cache import (CacheGuard, UUID_PATHS, VARIANTS, load_policy, metadata_expected,
-                        validate_cache_log, validate_policy)
+                        validate_cache_log, validate_policy, qualification_environment)
 from runtime_prefix import Audit
 
 
@@ -32,6 +32,14 @@ class MetadataTest(unittest.TestCase):
         entries=[e for v in self.policy['variants'].values() for e in v.values()]
         self.assertEqual(len({e['uuid'] for e in entries}),6)
         self.assertTrue(all(e['bytes']==36 and e['mode']=='0644' for e in entries))
+
+    def test_host_probe_loader_evidence_cannot_pollute_converter_logs(self):
+        env={'LD_DEBUG':'libs','LD_DEBUG_OUTPUT':str(self.root/'converter-loader'),'XDG_CACHE_HOME':'own-cache'}
+        probe=qualification_environment(env,self.root/'qualification')
+        self.assertNotEqual(probe['LD_DEBUG_OUTPUT'],env['LD_DEBUG_OUTPUT'])
+        self.assertEqual(probe['LD_DEBUG_OUTPUT'],str(self.root/'qualification/host-loader'))
+        self.assertEqual(env['LD_DEBUG_OUTPUT'],str(self.root/'converter-loader'))
+        self.assertEqual(probe['XDG_CACHE_HOME'],env['XDG_CACHE_HOME'])
 
     def test_wrong_uuid_rejected_even_with_recomputed_hash(self):
         policy=copy.deepcopy(self.policy)

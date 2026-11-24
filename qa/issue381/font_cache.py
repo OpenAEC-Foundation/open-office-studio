@@ -110,11 +110,15 @@ def validate_cache_log(log, prefix, variant, policy, cache):
     return dict(metadataReads=reads, cacheWrites=writes, externalCache=str(cache.path))
 
 
+def qualification_environment(env, output):
+    return {**env, 'LD_DEBUG_OUTPUT': str(Path(output)/'host-loader')}
+
+
 def qualify_host(output, env, variant, policy, timeout):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     child = subprocess.run([sys.executable, 'qa/issue381/fontconfig_host.py', str(output), variant],
-                           env=env, capture_output=True, timeout=timeout)
+                           env=qualification_environment(env,output), capture_output=True, timeout=timeout)
     (output/'stdout.log').write_bytes(child.stdout)
     (output/'stderr.log').write_bytes(child.stderr)
     assert child.returncode == 0, child.stderr.decode(errors='replace')
