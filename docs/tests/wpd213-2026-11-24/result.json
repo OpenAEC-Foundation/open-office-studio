@@ -1,0 +1,117 @@
+{
+  "scope": "WPD213 / lo-wpd-2 only under #30",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "runtimeExecutedByThisOfflineAudit": false,
+  "ci": {
+    "run": 45369522154,
+    "job": 138359857973,
+    "attempt": 1,
+    "harnessCommit": "1d973d6635e2c246b3984eae3f921757db8c2b40",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T09:55:00Z"
+  },
+  "artifact": {
+    "id": 14907753708,
+    "bytes": 68555,
+    "sha256": "c99b020b86c027b4437e9a6f621487be398a24f5e44c40b39f3a277f619b9c56",
+    "expiresAt": "2027-02-22T09:53:49Z"
+  },
+  "sourceSha256": "812d181f1bef7da145ddb20370de0b50acbd48f40ab905b3bfc8fffe4e3b34a2",
+  "nativeHeader": {
+    "documentOffset": 16,
+    "product": 1,
+    "type": 44,
+    "major": 2,
+    "minor": 2,
+    "encryptionField": 0
+  },
+  "acceptedSourceParagraphs": [
+    "This is a file created by WP 2.1.3",
+    "Bold",
+    "Italic"
+  ],
+  "boundedSourceAcceptance": true,
+  "casesPerStage": 6,
+  "stages": 4,
+  "controls": [
+    {
+      "variant": "changed-source-case",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "native leading paragraph 0",
+          "actual": "this is a file created by WP 2.1.3",
+          "expected": "This is a file created by WP 2.1.3",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "removed-explicit-bold",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "explicit C3 bold span Bold",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "variant": "removed-explicit-italic",
+      "passed": true,
+      "mismatches": [
+        {
+          "case": "explicit C3 italic span Italic",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "files": {
+    "converted.docx": {
+      "bytes": 5593,
+      "sha256": "8ed4b689b89dc25baf07b5aa3b6fd41fefb0ac5412d373c217c12e599a6fff99"
+    },
+    "saved.docx": {
+      "bytes": 5511,
+      "sha256": "216fdcc4b82fa113755259897bc5fddcf450abc8a615dcdcf349a19db64373be"
+    },
+    "reopened-saved.docx": {
+      "bytes": 5512,
+      "sha256": "08c4036ea919f8f501b5876bdcce80ec4732c3b2a8c8e33b1279ddf302b44b0a"
+    },
+    "fresh-process-saved.docx": {
+      "bytes": 5512,
+      "sha256": "f18b63cb9757d36b45dfaf925ecd3724c58f74759e2d7ec0012e272a734da3b6"
+    }
+  },
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "fullFormatAcceptance": false,
+  "limits": "Only three leading paragraphs and explicitly encoded bold/italic spans. Column layout, subsequent text/formatter style groups, font/rendering, macros/encryption and other versions remain outside acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  },
+  "sourceOracleProvenance": {
+    "preConversionWindowsSha256": "1f15c1dbaf9e02e8183ce1a90b5024babc4216087b276b768d203b026d911eb9",
+    "preConversionWindowsBytes": 7596,
+    "ciLinuxSha256": "5a9ffd1d8683e67a0e3dd6cb5d83186da625c7203d564c035020a88981367257",
+    "ciLinuxBytes": 7181,
+    "comparison": "Only CRLF to LF normalization; otherwise byte-identical; raw Windows bytes match request hash committed before CI"
+  }
+}

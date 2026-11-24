@@ -1,0 +1,100 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "artifact": {
+    "application": {
+      "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+      "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+      "version": "2026.48.1"
+    },
+    "coordinatorDescriptorCommit": "e1f1b84b94fdfa9932f8f33804da9b00c5cf6594",
+    "descriptorSha256": "1c0e508276b37fbd5b92e55bf113446d7e8522fc1d9e1817bb7722d5b5dd53c6",
+    "producerRun": 45147346793,
+    "producerCommit": "22a8577d215911976400adca4c541f2636212918",
+    "artifactId": 14805600515,
+    "zipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "zipBytes": 305620081,
+    "tarSha256": "f3308bea282aedc444a10a039ec2c4e3904915d4c6c0b5607b088108407fb2e3",
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "manifestEntries": 15082,
+    "consumerSha256": "5e17b69dc328e9491692b5e3a497f16977618afea08d259bbaf46063864874ca",
+    "launcherSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+    "elfSha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "parentRun": 45143305147,
+    "parentJob": 137586343061,
+    "parentZipArtifact": 14804062140,
+    "parentZipSha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+    "parentDebSha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1"
+  },
+  "package": {
+    "sourceCommit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "sourceTree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "appVersion": "2026.48.1",
+    "run": 45143305147,
+    "job": 137586343061,
+    "jobConclusion": "success",
+    "installerArchive": {
+      "id": 14804062140,
+      "name": "open-office-studio-Linux",
+      "sha256": "4704f7fdfe85a711a1c3f8a1da6114461bf17edde090d18f1665397ad23abbc6",
+      "bytes": 811809091
+    },
+    "reportArchive": {
+      "id": 14804805305,
+      "name": "pakketcontrole-Linux",
+      "sha256": "3dffb92f7b2cc418c154d48fc2574f155e912113ec0265fc870ffcba8d0b5576",
+      "bytes": 671
+    },
+    "packageReportSha256": "51f99b9955ed0116372c8b24527e153ebe9b91a2ee24c25b3dbf742294d85f8b",
+    "deb": {
+      "originalName": "Open Office Studio_2026.48.1_amd64.deb",
+      "sha256": "23258ac32f9368a6512b04ffcfda9a3f2be50dafeee6d8c7ca36a3a525a5f5d1",
+      "bytes": 383815340,
+      "control": {
+        "Package": "open-office-studio",
+        "Version": "2026.48.1",
+        "Architecture": "amd64",
+        "Depends": "libwebkit2gtk-4.1-0, libgtk-3-0"
+      },
+      "path": "canonical-office.deb",
+      "expectedInstalledElfSha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "installedValidation": "Not installed by runtime-only prep; native owner must compare the installed ELF to this exact payload hash"
+    },
+    "officeExecutableMetadataOnly": {
+      "sha256": "62923344ce4d11f6892ed1b1d4064ff5b85ce50c0286bb0a527bd121e46dd287",
+      "bytes": 99899360,
+      "format": "ELF64 little endian",
+      "machine": "x86_64"
+    },
+    "reusedVerifiedDebRun": 45146535263
+  },
+  "privateRoot": "/home/runner/work/open-office-studio/open-office-studio/.local/wpd213-runtime-input/private",
+  "program": "/home/runner/work/open-office-studio/open-office-studio/.local/wpd213-runtime-input/private/payload/usr/libexec/Open Office Studio/kantoorruntime/program/soffice",
+  "programSha256": "3d585422d7cdddf9bcc954e7064da24c7e44d43508a5abaeb11de9d918d24f13",
+  "converterElf": {
+    "sha256": "9ceb3439812e6196b181d362903d835ebfc0bff09bcc85617f6d5f0cb54bc947",
+    "bytes": 15088,
+    "format": "ELF64 little endian",
+    "machine": "x86_64"
+  },
+  "runtimeReceipt": {
+    "schemaVersion": 1,
+    "layoutVersion": 2,
+    "name": "LibreOffice",
+    "version": "26.8.2.2",
+    "target": "linux-x64",
+    "sourceUrl": "https://download.documentfoundation.org/libreoffice/stable/26.8.2/deb/x86_64/LibreOffice_26.8.2_Linux_x86-64_deb.tar.gz",
+    "sourceSha256": "8290c8f46cb33d6df8f681cb796e0697461ea070f86ec55b63c94d7eb9d9a476",
+    "executable": "program/soffice",
+    "preparedMs": 33554
+  },
+  "entryManifest": {
+    "name": "entry-manifest.json",
+    "sha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "entries": 15082
+  },
+  "method": "Pinned ZIP/tar and coordinator consumer contract; inherited producer DEB verification, not a new installer/GUI test"
+}

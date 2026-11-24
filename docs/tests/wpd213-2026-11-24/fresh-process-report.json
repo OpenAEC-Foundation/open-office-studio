@@ -1,0 +1,64 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "1d973d6635e2c246b3984eae3f921757db8c2b40",
+  "inputSavedSha256": "216fdcc4b82fa113755259897bc5fddcf450abc8a615dcdcf349a19db64373be",
+  "method": "New Linux CI Node process opens exact saved DOCX after original process exited",
+  "process": {
+    "pid": 2742,
+    "ppid": 2741,
+    "node": "v22.23.5",
+    "platform": "linux",
+    "startedAt": "2026-11-24T09:54:54.866Z"
+  },
+  "fullFormatAcceptance": false,
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "paragraphs": [
+    "QA_WPD213_24NOV This is a file created by WP 2.1.3",
+    "Bold",
+    "Italic"
+  ],
+  "boundedSourceAcceptance": true,
+  "sourceMismatches": [],
+  "downstreamEnginePassed": true,
+  "passed": true,
+  "cleanup": {
+    "sessionDestroyed": true,
+    "productionLoaderClosed": true,
+    "localGuiOrCaptureUsed": false
+  }
+}

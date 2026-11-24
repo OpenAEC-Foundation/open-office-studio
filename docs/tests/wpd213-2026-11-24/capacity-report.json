@@ -1,0 +1,32 @@
+{
+  "method": "Read-only queued/in_progress/waiting critical release workflow jobs and actual runner labels; unknown queued runner labels conservatively block",
+  "checked": [
+    {
+      "run": 45369384925,
+      "workflow": "HWP3 Windows native single Writer child",
+      "branch": "codex/hwp3-windows-native-2026-11-24",
+      "job": 138359392185,
+      "name": "plan",
+      "status": "completed",
+      "labels": [
+        "ubuntu-22.04"
+      ],
+      "linux": true
+    },
+    {
+      "run": 45369384925,
+      "workflow": "HWP3 Windows native single Writer child",
+      "branch": "codex/hwp3-windows-native-2026-11-24",
+      "job": 138359518901,
+      "name": "Native writer hwp3 child reuse",
+      "status": "in_progress",
+      "labels": [
+        "windows-latest"
+      ],
+      "linux": false
+    }
+  ],
+  "blockers": [],
+  "noCriticalP5LinuxJobQueued": true,
+  "mutationsOrCancellations": false
+}

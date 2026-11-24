@@ -1,0 +1,121 @@
+{
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "harnessCommit": "1d973d6635e2c246b3984eae3f921757db8c2b40",
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/writer/libwpd/pass/WP3.wpd",
+    "filename": "WP3.wpd",
+    "bytes": 504,
+    "blob": "75f4924e857f2b404579691af4bd08c2e89aa607",
+    "sha256": "812d181f1bef7da145ddb20370de0b50acbd48f40ab905b3bfc8fffe4e3b34a2",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwpd/pass/WP3.wpd",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native WordPerfect Macintosh 2.x (WPC product1/type0x2c/major2/minor2); body self-reports WP2.1.3; unique producer not authenticated.",
+    "coverageLimit": "Only three leading paragraphs and explicitly encoded bold/italic spans. Column layout, subsequent text/formatter style groups, font/rendering, macros/encryption and other versions remain outside acceptance."
+  },
+  "checks": [
+    "No-desktop WPD213 opening rejects with a concrete conversion limitation and DOCX alternative.",
+    "Real private converter/production open policy and strict original-source XML result recorded; downstream engine checks do not accept conversion discrepancies.",
+    "Actual production-patched Word engine opens source-derived text, inserts a test prefix and restores exact text through Undo/Redo.",
+    "Modern DOCX save/fresh reopen/second save preserve the actual downstream edited paragraph vector; source XML/body text/type/structure discrepancies stay in separate strict reports. Original WPD213 unchanged."
+  ],
+  "limits": [
+    "Only three leading paragraphs and explicitly encoded bold/italic spans. Column layout, subsequent text/formatter style groups, font/rendering, macros/encryption and other versions remain outside acceptance.",
+    "Private converter adapter + production opening helper/Word engine, not native GUI/Tauri IPC or installer acceptance",
+    "Browser boundary is a negative production-function check in Node, not hosted UI",
+    "No Windows/macOS runtime, font rendering or visual fidelity acceptance"
+  ],
+  "browserLimit": {
+    "method": "Real production functions in Linux Node with empty window, no Tauri bridge mock",
+    "status": {
+      "gevonden": false,
+      "profiel": "veilig"
+    },
+    "error": "This WPD file could not be opened. This format requires the desktop version with an office runtime (LibreOffice). Export the file from its original app as DOCX or RTF, then open that copy."
+  },
+  "strictInitialSourceAcceptance": true,
+  "initialSourceMismatches": [],
+  "downstreamBaselineRole": "Only three predeclared native leading paragraphs and explicit bold/italic spans are accepted. Remaining column/other formatting semantics stay outside full acceptance.",
+  "engine": {
+    "route": "productiekern",
+    "kernels": {
+      "edit": {
+        "pad": "vendor/tekstengine/docx_edit_bg.wasm",
+        "bytes": 24557871,
+        "sha256": "9e2025adc926c8831c16894bb60ccd996d0dfdd9d04bddd3dc08e0ddd3ca5acc"
+      },
+      "layout": {
+        "pad": "vendor/tekstengine/docx_layout_bg.wasm",
+        "bytes": 4368673,
+        "sha256": "918f167735595e15440c25722f399babba6ecc605d30abbbc151c982404e0478"
+      }
+    },
+    "productionJSBindings": [
+      {
+        "naam": "chunk-N5NWITJ6.mjs",
+        "oorspronkelijkSha256": "1f78f3e96fb70d257f376d53e7872242e9bb320b4845f2dfec5af556e74f334e",
+        "sha256": "b4be00c8d01057c7ab3624106020928dd70f7e93c30895b3aaa5254011312248"
+      },
+      {
+        "naam": "chunk-HAZBP3QT.mjs",
+        "oorspronkelijkSha256": "c1188440e1ccb0b491ceeb607cb92d229e28fa55534b53ee8b7b39a1845ccbc6",
+        "sha256": "6fd9bc35839909384e8823146441b9577c7c93ec1ba45416a721274c7c4d8348"
+      },
+      {
+        "naam": "chunk-VJFO26DF.mjs",
+        "oorspronkelijkSha256": "68d8f38eb518a36b94e692c1114b1a5207094e52b2819dd416213849b63997ce",
+        "sha256": "61f557d564f3d4dd86f4a050ae35ce232abce0685590a99cf9d324ccdcebb43b"
+      }
+    ]
+  },
+  "editedParagraphs": [
+    "QA_WPD213_24NOV This is a file created by WP 2.1.3",
+    "Bold",
+    "Italic"
+  ],
+  "process": {
+    "pid": 2662,
+    "ppid": 2661,
+    "node": "v22.23.5",
+    "startedAt": "2026-11-24T09:54:51.311Z"
+  },
+  "downstreamEnginePassed": true,
+  "strictSourceAcceptance": true,
+  "passed": true
+}
