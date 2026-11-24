@@ -928,7 +928,9 @@
   "p2StaticPolicyReview": {
     "level": "Read-only source, no production functions invoked",
     "route": "DIF input maps to xlsx and legacy fallback viaRuntime; browser converter needs Tauri bridge",
-    "saveRecommendation": "ordinary XLSX"
+    "actualRuntimeOpenExportProposal": "dif: src/formaten.json has DIF runtime output, so viaRuntime sets exportFormaat=dif",
+    "declaredDifExportLimit": "Only first sheet; values without formulas or formatting",
+    "proposedModernPreservationTestSave": "Explicit SaveAs ordinary XLSX; not an assertion that P2 defaults to XLSX after DIF import"
   },
   "status": "BOUNDED_NUMERIC_PREFIX_MATCH_SOURCE_END_FRAMING_UNQUALIFIED_P2_RUNTIME_OPEN",
   "completeDIFGrammarQualified": false,

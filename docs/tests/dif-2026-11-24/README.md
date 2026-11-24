@@ -97,8 +97,11 @@ Een geslaagde prefixvergelijking verandert de ongekwalificeerde eindframing niet
 
 Read-only controle van de gepinde P2-code: DIF-invoer hoort bij XLSX en gaat
 via de legacy `viaRuntime`-route. De echte converter vereist de desktop/Tauri-
-bridge; het normale savevoorstel is gewone XLSX. Er is geen nieuwe uitvoering
-van helper/Node-browsergrens/browser-UI geclaimd.
+bridge. P2 bevat ook DIF-uitvoer via de runtime; de openhelper kan daardoor
+`exportFormaat=dif` voorstellen. De catalogus vermeldt daarvoor alleen het
+eerste blad en waarden zonder formules/opmaak. De voorgestelde moderne
+behoudproef vereist daarom een expliciete SaveAs naar gewone XLSX. Er is geen
+nieuwe uitvoering van helper/Node-browsergrens/browser-UI geclaimd.
 
 Tijdens release-run45376499489 blijft nieuwe CI/runtime/build/artefactdownload
 verboden. Er is niets gestart. Concreet nog OPEN: echte P2-private converter →
