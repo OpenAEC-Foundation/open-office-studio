@@ -1,0 +1,101 @@
+{
+  "timeWindowLocal": {
+    "from": "2026-11-24T12:30:00+01:00",
+    "to": "2026-11-24T15:25:00+01:00"
+  },
+  "timeWindowUTC": {
+    "from": "2026-11-24T11:30:00Z",
+    "to": "2026-11-24T14:25:00Z"
+  },
+  "verifiedTimeline": [
+    {
+      "event": "Original release publication",
+      "timeUTC": "2026-11-24T10:57:02Z",
+      "timeLocal": "11:57:02CET",
+      "insideWindow": false,
+      "summaryRule": "Do not claimpublication happened since12:30; existingrelease/assets preserved"
+    },
+    {
+      "event": "Download table body edit",
+      "timeUTC": "2026-11-24T11:14:42Z",
+      "timeLocal": "12:14:42CET",
+      "insideWindow": false,
+      "summaryRule": "Table was retained during later edits, not newlycreatedinsidewindow"
+    },
+    {
+      "event": "Expanded changes/shortverification bodyedit",
+      "timeUTC": "2026-11-24T11:26:56Z",
+      "timeLocal": "12:26:56CET",
+      "insideWindow": false
+    },
+    {
+      "event": "Complete two-week changelog Gitcommit46f789f2",
+      "timeUTC": "2026-11-24T11:38:36Z",
+      "timeLocal": "12:38:36CET",
+      "insideWindow": true
+    },
+    {
+      "event": "ShortChanges/shortlimitations/fullchangeloglink releasebody",
+      "timeUTC": "2026-11-24T11:39:13Z",
+      "timeLocal": "12:39:13CET",
+      "insideWindow": true,
+      "bodySHA256": "d2eca357c431615cb6b871c20178430e8280ca0c047d6f7ff1072ab14de7ef72",
+      "downloadTableAnd60AssetsRetained": true
+    },
+    {
+      "event": "Integration candidate382 combined checks",
+      "candidate": "727903cc7add7591444881cbe87620c9f8b78260",
+      "insideWindow": true,
+      "result": "12CIchecksPASS;originalWindowsnegativeZIPtimeoutretainedandscopedunchangedrerunPASS"
+    },
+    {
+      "event": "Additional Windows native candidate roundtrip",
+      "run": 45401762056,
+      "insideWindow": true,
+      "result": "12corechecksPASS;originalshallowcheckoutpreappFAILretained"
+    },
+    {
+      "event": "PR384merge to main794ac2fc",
+      "timeUTC": "2026-11-24T13:26:15Z",
+      "timeLocal": "14:26:15CET",
+      "insideWindow": true,
+      "result": "Exacttestedtree779f342a;explicituserGO;nootherfuturefixintake"
+    },
+    {
+      "event": "Writer advancedsearchP5 QA",
+      "insideWindow": true,
+      "result": "Boundedordinary/regex/wildcard/formatandmostspecialsPASS;manualbreakreplacementFAILregistered388;bookmarkoffsetcauseOPEN"
+    },
+    {
+      "event": "381privateLinuxderived-runtimewitness",
+      "run": 45404556426,
+      "insideWindow": true,
+      "result": "61typedcellsandengine/edit/save/freshprocessPASSreported;production/fullplatformacceptanceOPEN"
+    },
+    {
+      "event": "Format source/historicalreuseQA",
+      "insideWindow": true,
+      "result": "Severalboundedsourceledgersrecorded;strictfailures/sourcegapsretained;nofullformatacceptance"
+    },
+    {
+      "event": "366andMacsave nextrelease priority",
+      "insideWindow": true,
+      "result": "Timeboxedrepro/source/disabledresearchcodeandindependentreview;finalresultspending"
+    }
+  ],
+  "primaryTimingSources": [
+    "GitHubGitcommit46f789f232e98253e4b9d513784917835de2fd32author/committer",
+    "Adviceownerbefore/afterreleaseJSONmetadatawithupdated_at",
+    "Rootmain-mergereceipts"
+  ],
+  "finalPlainLanguageSummary": [
+    "De releasepagina kreeg korte wijzigingsnotities en een volledige changelog over twee weken. De downloadtabel en alle 60 bestaande bestanden bleven behouden.",
+    "De goedgekeurde fix #382 is gecombineerd getest, inclusief Windows-native bewerken, opslaan en heropenen, en daarna met toestemming naar main gemerged. Vijf main-CI-jobs slaagden; twee nog niet gestarte Mac-jobs zijn wegens de harde stop geannuleerd.",
+    "Writer-zoekfuncties zijn verder getest. E\u00e9n echte fout is apart vastgelegd als #388; de bladwijzer-offsetwaarneming blijft onverklaard en is geen bevestigde nieuwe bug.",
+    "Bij #381 slaagde de begrensde priv\u00e9-Linuxproef; offici\u00eble runtime- en overige platformcontroles blijven open. #375 is voor de stop geannuleerd zonder kleurfix-PASS. Formaatonderzoek is opgeslagen met de resterende fouten en bronbeperkingen.",
+    "#366 is ook met ruim twee minuten wachten per verdubbeling niet gereproduceerd; er is geen productpatch. Voor het Mac-opslagrisico ligt een onafhankelijk gereviewd, uitgeschakeld onderzoeksvoorstel klaar; oorzaak en echte bouw-/bedieningstests blijven open.",
+    "Alle testuitvoering is gestopt en de overdracht is veilig opgeslagen v\u00f3\u00f3r15:25. Er is geen nieuwe release gepubliceerd; hervatten kan volgende week alleen na jouw opdracht."
+  ],
+  "finalStopStorageConfirmationPending": false,
+  "allTestExecutionStopped": true
+}

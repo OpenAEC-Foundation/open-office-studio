@@ -1,0 +1,241 @@
+{
+  "status": "STOPPED_SAFE_BEFORE_1525_NO_AUTOMATIC_RESUME",
+  "updatedAtUTC": "2026-11-24T14:09:29.970258+00:00",
+  "hardStopLocal": "2026-11-24T15:25:00+01:00",
+  "hardStopUTC": "2026-11-24T14:25:00Z",
+  "executionCutoffLocal": "15:10",
+  "handoffDueLocal": "15:15",
+  "cleanupDueLocal": "15:20",
+  "main": "794ac2fc803d5e537331e16e843cfca544e3c527",
+  "mainTree": "779f342af0146a9a5e7c941ce3665878c20af802",
+  "releaseUnchanged": {
+    "tag": "v2026.48.1",
+    "target": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "releaseId": 456623378,
+    "assets": 60
+  },
+  "mainTagPublicationAllowed": false,
+  "automaticResumeAllowed": false,
+  "resumeCondition": "Explicit user instruction next week, fresh scope/source/allocation check",
+  "priority366": {
+    "owner": "root/standalone_linux",
+    "branch": "codex/issue366-two-minute-idle-20261124",
+    "base": "794ac2fc803d5e537331e16e843cfca544e3c527",
+    "previousProof": "37ec6d04bbf9c21442a5c555605f5c132c3954cb",
+    "previousOutcome": "NOT_REPRODUCED on bounded synthetic browser case; original user document/formatting/rounds unknown",
+    "currentScope": "One repeated real keyboard copy/paste case plus two-minute idle observation and source review; no speculative refresh patch",
+    "status": "STOPPED_SAFE_NOT_REPRODUCED",
+    "proofHead": "46e2bc066012a0988c734cdcf4d3381a1a4452a7",
+    "proofPath": "docs/tests/issue366-idle-20261124",
+    "proofSHA256": "13f86cfe6122c22d298e9c9c7fd66980c9177a73979d9c2bf852d0f9ed5905bf",
+    "actualObservationMs": [
+      121896,
+      120046,
+      120526
+    ],
+    "pages": [
+      3,
+      6,
+      11,
+      21
+    ],
+    "undoPages": 11,
+    "redoPages": 21,
+    "savedParagraphs": 153,
+    "savedWords": 8640,
+    "savedCharacters": 56640,
+    "savedSHA256": "c367a950be24a9ae5fe21d867f86b718f567b4550131cc09ebc6386ac078813f",
+    "noProductPatch": true,
+    "issueRemainsOpen": true,
+    "platform": "Windows headlessChromium/Vite / only; no newnative/platformcertification",
+    "cleanup": "Actual browser/Viteclosed14:56:33CET;6ownedPIDsabsent14:56:49;noCUA/capturestarted;ownbranchclean/pushed",
+    "next": "Originaluserdocument/formatting/pasterounds and expected15pagesevidence needed;freshscopenextweekonly",
+    "originalUserFixtureReceived": false
+  },
+  "priorityMacSave": {
+    "owner": "Mac-save owner6f92",
+    "reviewer": "Existing independent_save_observer_review only",
+    "branch": "codex/qa-mac-save-instrumentation-20261124",
+    "code": "27cc1c2ab7a340f1dee8366767bc2378fd31fdcd",
+    "researchSource": "c5138fb47a76e2adaddad3037f63a39ebb2b447c",
+    "workflowSHA256": "01babb503c300c91427d28b5624a73f7b6462291dabe17caffb395f0afff7244",
+    "filesManifestSHA256": "24df4955a34c4b7397e486b7e771ed5dbb1a97eaea177a94e3527b80e360014e",
+    "status": "STOPPED_SAFE_REVIEWED_DISABLED_EXECUTION_PROPOSAL",
+    "originalCause": "OPEN",
+    "originalFailedRun": 45355259350,
+    "diagnosticSixCopiesRun": 45358252707,
+    "futureAcceptance": [
+      "One exact source/package/identity bound owned session",
+      "Real focus/input then singleQ and singleCmdS; no extra postQbarrier silently changing original scenario",
+      "Four observer joins with loss/doublechain detection; inconclusive if missing/extra",
+      "Independent savedXML/hash and normal fullquit/newPIDreopen; no timeout/forcedclose asPASS"
+    ],
+    "todayNo": [
+      "appbuild",
+      "sign/notary",
+      "newhost",
+      "attach",
+      "securitychanges",
+      "nativeinput"
+    ],
+    "head": "69a5ca824dc1349c5266f97b4ce8d32d8c0a58c0",
+    "producerBranch": "codex/mac-save-trace-producer-20261124",
+    "proposalSHA256": "81aff8562b8a87a84e59ca09da3a47c3d2791d8826dae3ee9c0021e2c11a6d85",
+    "independentReviewSHA256": "f80876569e0d4de1b89b5c1325fd372e13ed282eb35ab34760b717767d5ccb5b",
+    "envelopeReviewSHA256": "5ce9c073e0530e1b4a22079598316ced1646678e6661ed8a202941e5548b06a5",
+    "handoffSHA256": "4137f835b32e32c54c413f6234e494a1a81e64e2bd4b88e1ba8f70706e99d581",
+    "reviewScope": "Exact script/static/mockreview PASS; 19offlinePASS/1POSIXSKIP. ActualPOSIX/compile/sign/notary/package/native/focus/trace/reopen gates remainPENDING.",
+    "initialFindings": "TwoQAblockersfixed:detachuncertaintyretainsroot;ownedprocesssessiondrainedbeforeloghash/redaction. OriginalFAILreviewretained.",
+    "executionAuthorized": false,
+    "executionStarted": false,
+    "allRequestsClosed": true,
+    "automaticResume": false,
+    "cleanup": "Owner/reviewerfinished15:02CET;bothworktreesclean/pushed;nohost/watchers/server/CUA/capturestarted. Rootindependentlyverified4canonicalreceipthashes and3remoteheads.",
+    "next": "Only explicit userresumption nextweek enables one approved90minbuild then conditionalone20minnative on unchanged27cc/c513pins. Reuse heldscopeconsent;do notasksameapprovalagain. Freshlivecapacity/nonce/expiry/packagegatesstillrequired;none today.",
+    "scopeConsentHeld": true,
+    "consentPath": "qa/mac-save-trace-approval/2026-11-24/execution-consent-held.json",
+    "consentSHA256": "be91f8ecf515b08f8cac88cb480c75f4f1cc308714e3c18c764ceb5f2143b2b2",
+    "resumptionReceived": true,
+    "latestResumptionReceived": true,
+    "latestResumptionUserQuote": "Hervat het Mac-opslagonderzoek in overleg met de integratiechat: \u00e9\u00e9n build op 27cc1c2a/c5138fb4 en bij geslaagde controles \u00e9\u00e9n native proef. Behoud het oorspronkelijke bewijs en wijzig niets aan main.",
+    "runtimeStartBlockedByUnchangedHardStop": true,
+    "timeConstraintClarification": "Mandatory pending: retain15:25hardstop or explicitly extend for90minbuild/conditional20minnative;no repeatedscopeapprovalrequested"
+  },
+  "parkedWork": {
+    "381": {
+      "owner": "9d3b",
+      "proof": "40c01c7f5f0115b6206852859c85091dd6b51b6c",
+      "productProposal": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+      "actualRun": 45404556426,
+      "boundedPrivateLinuxWitness": "PASS reported; independent central proofreview stillOPEN",
+      "limits": "Private derivedlib only; no official runtimepin/fullplatform/native/fullappquit or issueclosure",
+      "ownerStoppedCleanPushed": true
+    },
+    "375": {
+      "owner": "0c73",
+      "run": 45398226670,
+      "source": "a0e2163a368832c9f4559991f691c29df5d0facd",
+      "status": "STOPPED_CLEAN_PUSHED_CANCELLED_NOT_RUN",
+      "next": "Verified fourarmblankA/B/UOPA/B and strict originalred review first; no automatic importer/full_draw/converter/engine followup",
+      "stopRule": "Owner cancel ownrun by15:15ifnotfinished; preservepartialstatus and cleanup",
+      "runConclusion": "cancelled",
+      "job": 138459618404,
+      "jobCompletedAt": "2026-11-24T14:05:38Z",
+      "rootAPIVerified": true,
+      "pendingOwner": null,
+      "head": "e38510eca89af7207269188a6b738427c3ecd4b1",
+      "branch": "codex/presentation-375-uop-rectangle-fills-2026-11-23-0c73",
+      "producer": "a0e2163a368832c9f4559991f691c29df5d0facd",
+      "artifact": 14928310356,
+      "artifactBytes": 176697,
+      "artifactSHA256": "a0bb5f543fdfa828e0ca91f80fe111da481b1b2653a43a55df46705ab2601877",
+      "proofPath": "docs/tests/presentation-375/sixth-startup-outcome.json",
+      "retainedZIP": "docs/tests/presentation-375/retained/source-witness-45398226670-cancelled.zip",
+      "result": "Preparation/resource/source/UI/CLI passed;startup-testbinarycompilationinterrupted;allfourarmsNOTRUN;nooriginalredorcolorfixacceptance",
+      "cleanup": "Normalcancelrequested15:05:13CET;noforce;watchsession12735CtrlCexit1,monitorcell165stopped,stopguard2891/PID1160exit0/helperStopped15:05:51CET;noLocalGUIcapture/sharedprocesschange",
+      "noCompleteBinaryHostCache": "No completebinary/profilebinding/finalsupervisorenvelope or retainedhost/cache",
+      "futureInstruction": "User explicitly requests continuationnextweek frome38510eca89af7207269188a6b738427c3ecd4b1;no executiontoday/no automaticresume;freshallocation/checkpoint/retention gates stillrequired"
+    },
+    "388": {
+      "issue": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/388",
+      "status": "OPEN_P5_REPRODUCED_NO_FIX_INTAKE",
+      "proof": "5c28e91fa1cf60b6079c2d07a0c578e7636afc1b"
+    },
+    "bookmarks": {
+      "owner": "750b",
+      "run": 45406084338,
+      "status": "STOPPED_SAFE_EXISTING_FAILURE_STATIC_REVIEW_ONLY",
+      "next": "Read-onlytriage/evidenceonly; no newnativeprobe today",
+      "head": "b4517f797aa207709f844282e2f578b272149d84",
+      "cleanup": "No localGUI/capture/helper;hostedjobcompleted;lastPIDforcedSIGTERM,policyrestore/uninstallreported;residualinventoryNOTRUN",
+      "remaining": "CauseandlaterbookmarkcasesOPEN;nonewprobe today",
+      "stoppedLocal": "15:02CET",
+      "staticFinding": "Originalbodyprefixspacepreserved;GoToselectionsourcepassesoffsetunchanged;liveeventselectionnotrecorded,causeOPEN"
+    },
+    "30": {
+      "owner": "e0d7",
+      "lastSource": "lo-pages-1",
+      "head": "000659cfd17723c447336de7b14ca84aa29b3d34",
+      "status": "STOPPED_CLEAN_PUSHED",
+      "result": "Source42277B/hasheddc5d4f;4ZIPmembersCRCPASS,boundedlegacyXMLnamespacePASS;historicalsavedrawbindingUNCONFIRMED;nofullformat/runtimeacceptance",
+      "cleanup": "OwnCLIcomplete, noGUI/capture/server/runtime started",
+      "branch": "codex/pages-xml-source-2026-11-24-e0d7",
+      "stoppedUTC": "2026-11-24T14:03:07Z"
+    }
+  },
+  "mainPostMergeCI": {
+    "verifiedAtUTC": "2026-11-24T14:01:05.580872+00:00",
+    "allOwnedMainRunsStopped": true,
+    "mainSuccessfulJobsPreserved": 5,
+    "mainMacCancelledBeforeRunner": 2,
+    "noMainCIFailures": true,
+    "completeMainCISuccess": false,
+    "runs": [
+      {
+        "run": 45403429210,
+        "conclusion": "cancelled",
+        "jobs": [
+          {
+            "id": 138477679073,
+            "name": "desktop (windows-latest)",
+            "conclusion": "success",
+            "runner": "GitHub Actions 1000138658"
+          },
+          {
+            "id": 138477679338,
+            "name": "desktop (ubuntu-22.04)",
+            "conclusion": "success",
+            "runner": "GitHub Actions 1000138657"
+          },
+          {
+            "id": 138477679792,
+            "name": "desktop (macos-latest)",
+            "conclusion": "cancelled",
+            "runner": ""
+          }
+        ]
+      },
+      {
+        "run": 45403429511,
+        "conclusion": "cancelled",
+        "jobs": [
+          {
+            "id": 138477679650,
+            "name": "database (windows-latest)",
+            "conclusion": "success",
+            "runner": "GitHub Actions 1000138659"
+          },
+          {
+            "id": 138477680203,
+            "name": "database (ubuntu-22.04)",
+            "conclusion": "success",
+            "runner": "GitHub Actions 1000138660"
+          },
+          {
+            "id": 138477680338,
+            "name": "database (macos-latest)",
+            "conclusion": "cancelled",
+            "runner": ""
+          }
+        ]
+      }
+    ]
+  },
+  "testExecutionStoppedVerifiedAtUTC": "2026-11-24T14:06:30.488903+00:00",
+  "finalNoNewWorkBoundary": {
+    "effectiveLocal": "15:05CET for newassignments",
+    "latestFormatRequestAtLocal": "15:06CET",
+    "decision": "No newformat allocation; latestexplicitresumption request remains constrained by retainedhardstop; no executionstarted"
+  },
+  "allAssignedTestExecutionStopped": true,
+  "allAssignedOwnersHandoffReceived": true,
+  "rootCleanup": {
+    "localGUIRecordingComputerUseStarted": false,
+    "ownedBrowserServerClients": "366agentclosedand6PIDsabsent;rootdidnotstartlocalGUI/native/capture",
+    "ownedMainCI": "5successfuljobspreserved;2queuedMacjobs cancelled before runner;allownedrunscompleted",
+    "375": "Ownoperatorconfirmedcancelandwatcher/helperexit",
+    "noSharedProcessesTerminated": true,
+    "automaticResume": false,
+    "futureMainTagReleaseAuthority": false
+  }
+}
