@@ -39,7 +39,11 @@ def stamp(value):
 
 
 def descriptor(plan):
-    assert plan["requireSigned"] is True and plan["testTitleOverlap"] is True
+    assert plan["requireSigned"] is True
+    if plan.get("focusedCase") == "find-replace-20261124":
+        assert plan["testTitleOverlap"] is False and plan["titleOnly"] is False
+    else:
+        assert plan.get("focusedCase") is None and plan["testTitleOverlap"] is True
     assert plan["suitePrefixSealed"] is True
     for key in ("runId", "producerRunAttempt", "producerJobId", "artifactId"):
         positive(plan[key])

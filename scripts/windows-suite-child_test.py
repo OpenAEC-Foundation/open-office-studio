@@ -63,6 +63,16 @@ class ChildContracts(unittest.TestCase):
             self.assertNotIn("packageReceiptSha256", result)
             self.assertEqual((root/entries[0][0]).read_bytes(),entries[0][1])
 
+    def test_find_scope_is_explicit_signed_and_cannot_disguise_a_title_pass(self):
+        plan,d,_=fixture(); plan.update(focusedCase="find-replace-20261124",testTitleOverlap=False,titleOnly=False)
+        freeze(plan,d)
+        c.descriptor(plan)
+        for change in (dict(requireSigned=False),dict(testTitleOverlap=True),dict(titleOnly=True),dict(focusedCase="arbitrary-case"),dict(focusedCase=None)):
+            bad=copy.deepcopy(plan);bad.update(change)
+            with self.subTest(change=change), self.assertRaises(AssertionError): c.descriptor(bad)
+        legacy,_,_=fixture();legacy["testTitleOverlap"]=False
+        with self.assertRaises(AssertionError): c.descriptor(legacy)
+
     def test_null_or_wrong_parent_source_rejects_even_with_matching_descriptor_hash(self):
         for key,value in (("parentArtifact",None),("commit","04fa6cd43b84e3f59fb9d5055bb2d00dde351a47"),("attempt",2)):
             plan,d,_=fixture(); d["source"][key]=value; freeze(plan,d)
