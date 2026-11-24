@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-11-24T12:29:36.599768+00:00",
+  "baseCommit": "5f0d21ca21f3466c3e6757d1e6b72887e2b2e94c",
+  "platform": "win32",
+  "tests": 12,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_cache_is_fresh_and_separate_for_every_variant (__main__.MetadataTest.test_cache_is_fresh_and_separate_for_every_variant) ... ok\ntest_changed_uuid_bytes_without_pinned_hash_rejected (__main__.MetadataTest.test_changed_uuid_bytes_without_pinned_hash_rejected) ... ok\ntest_colliding_variant_uuid_rejected (__main__.MetadataTest.test_colliding_variant_uuid_rejected) ... ok\ntest_cross_variant_cache_mutation_rejected (__main__.MetadataTest.test_cross_variant_cache_mutation_rejected) ... ok\ntest_extra_metadata_path_rejected (__main__.MetadataTest.test_extra_metadata_path_rejected) ... ok\ntest_foreign_uuid_in_own_cache_rejected (__main__.MetadataTest.test_foreign_uuid_in_own_cache_rejected) ... ok\ntest_global_or_foreign_cache_write_rejected (__main__.MetadataTest.test_global_or_foreign_cache_write_rejected) ... ok\ntest_metadata_plan_preserves_all_existing_entries (__main__.MetadataTest.test_metadata_plan_preserves_all_existing_entries) ... ok\ntest_metadata_reads_and_own_cache_writes_required (__main__.MetadataTest.test_metadata_reads_and_own_cache_writes_required) ... ok\ntest_six_distinct_pinned_uuids_with_exact_modes_and_hashes (__main__.MetadataTest.test_six_distinct_pinned_uuids_with_exact_modes_and_hashes) ... ok\ntest_wrong_metadata_mode_rejected (__main__.MetadataTest.test_wrong_metadata_mode_rejected) ... ok\ntest_wrong_uuid_rejected_even_with_recomputed_hash (__main__.MetadataTest.test_wrong_uuid_rejected_even_with_recomputed_hash) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.103s\n\nOK\n",
+  "pythonAstChecks": 4,
+  "passed": true,
+  "localScope": "Portable metadata/cache policy and filesystem negatives; no native library/ELF/runtime/CI/converter executed",
+  "files": {
+    "qa/issue381/convert_real.py": "93cfa6d349034c2b84903b244721c5515d7345dd920f31c6acdf40a83a8c55fb",
+    "qa/issue381/font_cache.py": "472c660d2ac1ddad90cb24304cf4bfac107ac2c1cd8065fcd54271b80f8c8a71",
+    "qa/issue381/font_cache_test.py": "a30dcd82a4e9720c9d4564c28f5bc83b0ed987293d1e3685a04e2641161128e4",
+    "qa/issue381/fontconfig_host.py": "23451512da70ccaad1e258a7570e5c1bece52fb4ba8d7466304874ff662ab3ec",
+    "qa/issue381/font-cache-policy.json": "e511e883f95521be70f1478ae763706d3c47ca65b274e102efe99e3b8891219f"
+  },
+  "referenceFiles": {
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fccache.c": "2b86038c773792b5c5b1144e1bb15c917721fcb0e780fb9b118e3c9346a7501d",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-fcdir.c": "71f8399cad46d21e0fd4b62fe946ec21a283aea63f898822614bd03cab17e250",
+    "docs/tests/issue381-20261124/retained/fontconfig-2.13.1-COPYING": "fa4cd9ab005185e10cd8f7504518856c7dd36c01e766c2bac87f4fc638e9f886"
+  },
+  "reusedSevenFilesystemTests": {
+    "receipt": "docs/tests/issue381-20261124/prefix-isolation-followup.json",
+    "sha256": "a943dc5aa9067d343b1808228cd175a9001ff620b9b24acb44fe62b968d81806",
+    "unchangedHelperFiles": [
+      "qa/issue381/runtime_prefix.py",
+      "qa/issue381/runtime_prefix_test.py"
+    ]
+  },
+  "unchangedInputs": {
+    "patches/libwps-wq2-vlookup.patch": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+    "patches/libwps-wq2-vlookup.json": "250f5c76019b8b6ef70205c134e811fae296736c8d81e7381747ce36cd344b28",
+    "qa/issue381/abi-symbol-policy.json": "bd976623361d0692130cf0d0fc1f38dde87d0261ec4e33dbc313940f0b8ccd77",
+    "qa/issue381/runtime_input.py": "b9230a60fb04a2387e5f5621f4f8ecd3c8cbf08d2d25d952c7959b3231acec95",
+    "qa/issue381/original-oracle/oracle.py": "f145c5278f6d1c8cb926c98943ed279884a80edb58820058fec73ae9c360dc66",
+    "qa/issue381/original-oracle/fixture.json": "20b776c38d2275590e4d2f08100ecb20d4fcc2585562ab5845fdefa0c68956e7"
+  },
+  "runtimeAcceptance": false,
+  "allocation": false,
+  "earlierLocalTestCorrection": "First new portable run:11pass/1fail because test finalized earlier cache guards after creating later variants. Sequential converter ordering retained; test corrected to finalize each before starting the next. No runtime trial."
+}

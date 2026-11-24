@@ -12,6 +12,7 @@ import tempfile
 import time
 from deadline import remaining
 from runtime_prefix import Audit, fresh_variant
+from font_cache import load_policy, seed_metadata, CacheGuard, qualify_host, validate_cache_log
 
 ROOT=Path('.local/issue381').resolve()
 def sha(path):
@@ -61,10 +62,20 @@ def main():
         env.pop(key,None)
     env.update(SAL_DISABLE_DEFAULTPRINTER='1',SAL_DISABLE_PRINTERLIST='1',
         LD_LIBRARY_PATH=str(program.parent),LD_DEBUG='libs',LD_DEBUG_OUTPUT=str(out/'loader'))
+    assert not env.get('FONTCONFIG_FILE') and not env.get('FONTCONFIG_PATH'),'Unqualified font configuration override'
+    policy=load_policy()
+    cache_guard=CacheGuard(ROOT/'fontconfig-cache',args.variant,prefix_audit)
+    env.update(cache_guard.environment())
     report=dict(applicationCommit=build['applicationCommit'],runtimeBase=binding,
         overlay=checked,profileSha256=sha(profile),sourceSha256=sha(source),passed=False)
     try:
-        prefix_audit.check('before-converter',Path(binding['privateRoot']),expected,'Only explicit selected library delta before executing private converter')
+        host=qualify_host(out/'fontconfig-host',env,args.variant,policy,min(30,remaining('build')))
+        report['fontconfigHost']=host
+        expected=seed_metadata(Path(binding['privateRoot']),expected,args.variant,prefix_audit,policy)
+        report['fontMetadataDerivations']=policy['variants'][args.variant]
+        report['fontMetadataPolicySha256']=sha('qa/issue381/font-cache-policy.json')
+        prefix_audit.check('canonical-after-font-metadata',Path(binding['canonicalInputPrivateRoot']),canonical_expected,'Metadata exists only in the explicitly derived private copy')
+        prefix_audit.check('before-converter',Path(binding['privateRoot']),expected,'Only explicit library delta and two pinned font metadata entries before private converter execution')
         with tempfile.TemporaryDirectory(prefix='wq2-381-') as temp:
             work=Path(temp);user=work/'profile/user';user.mkdir(parents=True)
             shutil.copyfile(profile,user/'registrymodifications.xcu')
@@ -98,7 +109,7 @@ def main():
                 if argv[1].encode() in command:active.append(int(entry.name))
             assert not active,('Private converter processes remain',active)
             report['ownedProfileProcessesAfter']=active
-        loaders=[];actual=[]
+        loaders=[];actual=[];fontconfig_loads=[]
         for path in sorted(out.glob('loader.*')):
             content=path.read_text(errors='replace')
             loaders.append(dict(name=path.name,sha256=sha(path)))
@@ -107,7 +118,15 @@ def main():
                     loaded=Path(line.split('calling init:',1)[1].strip()).resolve()
                     assert loaded==library
                     actual.append(dict(pid=int(path.suffix[1:]),path=str(loaded),sha256=sha(loaded)))
+                if 'calling init:' in line and 'libfontconfig.so.' in line:
+                    loaded=Path(line.split('calling init:',1)[1].strip()).resolve()
+                    assert loaded==Path(host['library']) and sha(loaded)==host['sha256'],'Converter loaded different fontconfig than actual API qualification'
+                    fontconfig_loads.append(dict(pid=int(path.suffix[1:]),path=str(loaded),sha256=sha(loaded)))
         assert actual,'No real loader observation for libwps'
+        assert fontconfig_loads,'No real loader observation for qualified host fontconfig'
+        report['actualFontconfigLoads']=fontconfig_loads
+        report['fontCache']=validate_cache_log((out/'converter.log').read_text(errors='replace'),
+            Path(binding['privateRoot']),args.variant,policy,cache_guard)
         assert sha(library)==checked['librarySha256']
         assert sha(source)==report['sourceSha256']
         report.update(passed=True,loaderFiles=loaders,actualLibwpsLoads=actual,sourceUnchanged=True,
@@ -123,6 +142,8 @@ def main():
             try:
                 prefix_audit.check(label,root,contract,reason)
             except Exception as error:failures.append(repr(error))
+        try:cache_guard.finish()
+        except Exception as error:failures.append(repr(error))
         report['prefixInventoryPassed']=not failures
         report['prefixInventoryFailures']=failures
         report['passed']=report['passed'] and not failures
