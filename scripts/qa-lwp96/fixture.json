@@ -1,0 +1,223 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "lotuswordpro/qa/cppunit/data/paragraphProperties.lwp",
+    "filename": "paragraphProperties.lwp",
+    "bytes": 23172,
+    "blob": "dc4048cb92204c15784d78afa2a4b64f2b8c77a4",
+    "sha256": "812888b2b621c2fe397881052d4bf8d755037adee9427320d9ea704dbcc66f91",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/lotuswordpro/qa/cppunit/data/paragraphProperties.lwp",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native WordPro/LWP7, file revision17/app revision0x0900; main text states Lotus Wordpro release9.6 for Windows. Header alone does not uniquely establish producer build.",
+    "coverageLimit": "First sixteen ordinary main-story ASCII paragraphs including two empties, exact text/order/trailing spaces, and explicit local center alignment at paragraph11. Native object RLE, index/time-table identities and 28-paragraph main chain verified. Character formatting named by text is not accepted; fonts/borders/shading/indent/line-spacing inheritance, subsequent tables/frames/lists/page breaks, header/footer and opaque suffix are inventoried or excluded. No visual/native/other-variant/full-format acceptance."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_LWP96_24NOV "
+  },
+  "enginePrefixParagraphs": 16,
+  "parserReferences": {
+    "repository": "LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "role": "Primary source layouts consulted; independently expressed static byte/RLE/index/frib reader, never parser/converter output as source oracle. Runtime importer shares source lineage; no independent vendor-spec conformance or complete format claim.",
+    "files": [
+      {
+        "name": "lwpatomholder.hxx",
+        "bytes": 3101,
+        "sha256": "32fe2f03a8d340b8681ece4d366da9891ff63e86de9d50114dd70a0a7dcab654"
+      },
+      {
+        "name": "lwpcolor.hxx",
+        "bytes": 4247,
+        "sha256": "e92c74ff6b5245f78796c6ae0213fbf3be7b1dfd77dd3a55fc1b845cc102255d"
+      },
+      {
+        "name": "lwpdefs.hxx",
+        "bytes": 6463,
+        "sha256": "91c13746b85a70ceaa6a03e3c660f9df396969ba14f3deed52307ab355aea39d"
+      },
+      {
+        "name": "lwpdlvlist.cxx",
+        "bytes": 5586,
+        "sha256": "8776cc2264a53774990ed659669113e9f81cf35dfbda44881251bc85a163cdd7"
+      },
+      {
+        "name": "lwpfilehdr.cxx",
+        "bytes": 3246,
+        "sha256": "aa8c84cabbd0f0e07023377922aefcaaba32caa81597f25b2b6ca6a7ae328abb"
+      },
+      {
+        "name": "lwpfilehdr.hxx",
+        "bytes": 3225,
+        "sha256": "4bfe1d029f69d004074baabb1e12dcf566926b046288e5ecfe933bc2cc304e9f"
+      },
+      {
+        "name": "lwpfrib.cxx",
+        "bytes": 14970,
+        "sha256": "dba347923798900ef1adaa486ef127053a1f9f6da8daf95b2bc46f032c5081fe"
+      },
+      {
+        "name": "lwpfrib.hxx",
+        "bytes": 5011,
+        "sha256": "1d13e131340d4872be856763b353ce0507a920e817c45a31c78071bfa151ce08"
+      },
+      {
+        "name": "lwpfribheader.hxx",
+        "bytes": 4584,
+        "sha256": "3fe70754f9c24d1c2c378d2b37f881d49f69797634a301ccd89dadd109ca3fff"
+      },
+      {
+        "name": "lwpfribptr.cxx",
+        "bytes": 19884,
+        "sha256": "73fafa46e5389af23aec8d1828838c782466f15da1ed454ffb770c5b03a3e306"
+      },
+      {
+        "name": "lwpfribtext.cxx",
+        "bytes": 12644,
+        "sha256": "57c6a672960d947891c203dc19b4225b6a844131675a5a2cc2b233f53f64c3c3"
+      },
+      {
+        "name": "lwpidxmgr.cxx",
+        "bytes": 9634,
+        "sha256": "6549007862220af512b31a74fdf06ff8ff70cbd63362a2df42d0ddf52a227f6d"
+      },
+      {
+        "name": "lwplaypiece.cxx",
+        "bytes": 11532,
+        "sha256": "8c77b73c3dbc250cd73cc11c84e1bf451567ed39b08d0870cb8188799ebe46a8"
+      },
+      {
+        "name": "lwpobj.cxx",
+        "bytes": 3575,
+        "sha256": "0524f221bf694ef5248df29504a50ce6372b50632dd51d9cc94451f4b8c9e788"
+      },
+      {
+        "name": "lwpobjhdr.cxx",
+        "bytes": 6555,
+        "sha256": "053b73ca3e96bf9826495112fd53d0b3407865a738cd96e85ba28b1ab32cd0b7"
+      },
+      {
+        "name": "lwpobjhdr.hxx",
+        "bytes": 4396,
+        "sha256": "a25f17ae4e5fa29d2b4657b287ed8c00d7bd0a233e9edc95bece592419748890"
+      },
+      {
+        "name": "lwpobjid.cxx",
+        "bytes": 6604,
+        "sha256": "11a4f5123ba1209fbc83e9004a27ec242f0545f8cadd73c7af4ec13612c7eb6d"
+      },
+      {
+        "name": "lwpobjid.hxx",
+        "bytes": 4700,
+        "sha256": "7e46a32efbac86e198295443dd8ff20e06b46ce8f3927cb5672b5748eb766196"
+      },
+      {
+        "name": "lwpobjstrm.cxx",
+        "bytes": 10520,
+        "sha256": "2f4587c556a813b382e4518a69078dd54afe8ce6e69f2b80a5dba911ef67f998"
+      },
+      {
+        "name": "lwpoverride.cxx",
+        "bytes": 15132,
+        "sha256": "cc08ff27f833fbd6cc35ad8633c0a2af67f89de7dcdb342371ca160e2d8573f1"
+      },
+      {
+        "name": "lwpoverride.hxx",
+        "bytes": 13677,
+        "sha256": "2777ba571fa5a6a243075381c026221e6466b5fd2c393ffaf6e540abd8f9020f"
+      },
+      {
+        "name": "lwppara.cxx",
+        "bytes": 28932,
+        "sha256": "5be196304c18e31a9a6a262d3aa89a0e4294da75f142a0c14988ab8b31e0b597"
+      },
+      {
+        "name": "lwppara.hxx",
+        "bytes": 11455,
+        "sha256": "15fdc61d504027e39032f8589327727afd2a7bc99681fe4b989606c0886b4812"
+      },
+      {
+        "name": "lwppara1.cxx",
+        "bytes": 18017,
+        "sha256": "6e7cb66b2186753112e5fa9b9c7019ed95f109f800a17a68acfa2e1ceb6de537"
+      },
+      {
+        "name": "lwpparaproperty.cxx",
+        "bytes": 8493,
+        "sha256": "be823ad6903f552a8c1c56a871ec68b03549f5ea573321e65a885f306e5b31de"
+      },
+      {
+        "name": "lwpparaproperty.hxx",
+        "bytes": 8102,
+        "sha256": "b0b2c81310fe066202b54d98b121d40fb8ebf7d40fa80d10521e868b8e8df9e8"
+      },
+      {
+        "name": "lwpparastyle.cxx",
+        "bytes": 23835,
+        "sha256": "73e3c4b18563fd7633d375955449b92ca18343a00d45f986febf7467c9754046"
+      },
+      {
+        "name": "lwppiece.hxx",
+        "bytes": 6414,
+        "sha256": "b045fbb78705a200dc1a1cf6c6e7298d88c225518e33b8b89c413d73ccb8be4a"
+      },
+      {
+        "name": "lwpstory.cxx",
+        "bytes": 17667,
+        "sha256": "f141a12543e4b8ceaf22dd26160e2dc18dac49ee91faf835bb27338d76dbe0e6"
+      },
+      {
+        "name": "lwptools.cxx",
+        "bytes": 23396,
+        "sha256": "42b1e1f0cd21aecfe0a8530ccd533ff167710525c2cb1583f5d01fa983116fa7"
+      },
+      {
+        "name": "lwptools.hxx",
+        "bytes": 5202,
+        "sha256": "80e52efc3529d6a2d10c9a9403f74377b007e08081d74b81b80f8af0cf29a133"
+      },
+      {
+        "name": "test_lotuswordpro.cxx",
+        "bytes": 2016,
+        "sha256": "5b30b8d764a23d9212c446e0af169eb2be5fe424a9114057edab94732355cbf7"
+      }
+    ]
+  }
+}
