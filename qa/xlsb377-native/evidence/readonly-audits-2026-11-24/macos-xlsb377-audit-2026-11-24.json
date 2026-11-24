@@ -1,0 +1,345 @@
+{
+  "issue": 377,
+  "status": "PASS-short-save-policy-only; broader-Mac-XLSB-case-remains-FAIL",
+  "short377FunctionalAndVisualPass": true,
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "run": 45357794642,
+  "job": 138320456545,
+  "attempt": 1,
+  "harness": "4c2d7637e61a39d851cccb39d296d13d520a9388",
+  "harnessFile": "scripts/standalone-macos/sheet_formats.py",
+  "harnessSha256": "4e0064ddeea8217a0eb02c8db09b7818f5e3f4d8762b8d8321327ee95e2a92b6",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-macos-20261123-6f92\\.local\\native-45357794642-2026-11-24\\spreadsheet-xlsb\\artifact.zip",
+  "artifact": 14904041365,
+  "proofBytes": 6053555,
+  "proofSha256": "fa28025fb854905a58643eb6f12b1a084e6569c418e6501d5fc964dd39981acd",
+  "expiry": "2027-02-22T08:37:50Z",
+  "officialArtifactDigestIndependentlyRechecked": true,
+  "rawReceiptSha256": "3b8ce7ab1e3fc913745dd5371fdf6da384dcfbf587902c335315da4226744844",
+  "rawPolicySha256": "6a90dd10169de9988566bbf63f9c2ffe66752abc4b272cf814d3f8c96c59c8f7",
+  "rawNativeAcceptedUnchanged": false,
+  "rawWholeCaseStatus": "unavailable-or-incomplete",
+  "laterWholeCaseFailure": {
+    "type": "Unavailable",
+    "message": "Visible Writer body target unavailable; no input or paint primer sent: Unique readable original body word unavailable: 42"
+  },
+  "provenance": {
+    "schemaVersion": 1,
+    "app": "spreadsheet",
+    "source": {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+      "version": "2026.48.1"
+    },
+    "parentArtifact": {
+      "id": 14836145077,
+      "run": 45195055147,
+      "producerJobId": 137763371873,
+      "attempt": 1,
+      "name": "uitgave-macOS",
+      "sha256": "45a88b40325f516e91b0b4cb557b88fd2a81d62bde2e4be26dc87bd1b55ff015",
+      "bytes": 1972148013
+    },
+    "member": "dist-installers/spreadsheet/dmg/Open Spreadsheet Studio_2026.48.1_aarch64.dmg",
+    "package": {
+      "filename": "Open Spreadsheet Studio_2026.48.1_aarch64.dmg",
+      "sha256": "13b2b517646a0aeb5ca1afb53827b4165f1fd3c3778918f988135f7f0f9e7ba0",
+      "bytes": 372946956
+    },
+    "memberSHA256DerivedFromVerifiedParent": true,
+    "nativeAccepted": false,
+    "producerWorkflow": {
+      "commit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+      "tree": "94340e40228ddcb11aace00e4dd01f614a13273e",
+      "run": 45195055147,
+      "attempt": 1,
+      "job": 137763371873,
+      "branch": "codex/p5-macos-only-producer-20261123",
+      "path": ".github/workflows/release.yml",
+      "event": "workflow_dispatch",
+      "workflowSha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+      "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+      "witnessMember": ".local/macos-only-producer-source.json"
+    },
+    "sourceWitness": {
+      "member": ".local/macos-only-producer-source.json",
+      "bytes": 820,
+      "sha256": "236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5",
+      "rawBase64": "ewogICJhcHBIZWFkIjogImI2OTZhYjg2YmQxYzEyODcyOWEwNzliNjhjMDA4MmU2ZGYzZDM2YTUiLAogICJhcHBUcmVlIjogImUzMDg3OWZkNzcyODcxZTY5MDg0N2MwNjFlZjY2ZTZiODE4MDhhMDUiLAogICJhcHBWZXJzaW9uIjogIjIwMjYuNDguMSIsCiAgInByb2R1Y2VySGVhZCI6ICIyYWY5NGNkY2VmYTNlODhlNDk4MGI2MzFkMTZhODhkN2Q3ZGU1YWU4IiwKICAicHJvZHVjZXJXb3JrZmxvd0hlYWQiOiAiMmFmOTRjZGNlZmEzZTg4ZTQ5ODBiNjMxZDE2YTg4ZDdkN2RlNWFlOCIsCiAgInByb2R1Y2VyUmVmIjogInJlZnMvaGVhZHMvY29kZXgvcDUtbWFjb3Mtb25seS1wcm9kdWNlci0yMDI2MTEyMyIsCiAgInByb2R1Y2VyV29ya2Zsb3dSZWYiOiAiT3BlbkFFQy1Gb3VuZGF0aW9uL29wZW4tb2ZmaWNlLXN0dWRpby8uZ2l0aHViL3dvcmtmbG93cy9yZWxlYXNlLnltbEByZWZzL2hlYWRzL2NvZGV4L3A1LW1hY29zLW9ubHktcHJvZHVjZXItMjAyNjExMjMiLAogICJldmVudCI6ICJ3b3JrZmxvd19kaXNwYXRjaCIsCiAgInJ1bklkIjogIjQ1MTk1MDU1MTQ3IiwKICAiYXR0ZW1wdCI6ICIxIiwKICAiam9iIjogImJvdXdlbiIsCiAgImNoZWNrb3V0V29ya2Zsb3dTaGEyNTYiOiAiNjIwZTkwNDg1NDkzMTYzYjg3MTYzYTg3NjNmZmJiZmNjMmYwYWY1ZjAzMjUxYjU5MmFmNTc3NzIxYzVhOWM2NCIsCiAgInB1YmxpY2VyZW4iOiAiZmFsc2UiLAogICJuYXRpdmVBY2NlcHRlZCI6IGZhbHNlLAogICJzY29wZSI6ICJCdWlsZC1vbmx5IHByb2R1Y2VyL3NvdXJjZSBiaW5kaW5nOyBubyBuYXRpdmUgb3BlcmF0aW9uIG9yIHB1YmxpY2F0aW9uIgp9Cg==",
+      "value": {
+        "appHead": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "appTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "appVersion": "2026.48.1",
+        "producerHead": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+        "producerWorkflowHead": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+        "producerRef": "refs/heads/codex/p5-macos-only-producer-20261123",
+        "producerWorkflowRef": "OpenAEC-Foundation/open-office-studio/.github/workflows/release.yml@refs/heads/codex/p5-macos-only-producer-20261123",
+        "event": "workflow_dispatch",
+        "runId": "45195055147",
+        "attempt": "1",
+        "job": "bouwen",
+        "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+        "publiceren": "false",
+        "nativeAccepted": false,
+        "scope": "Build-only producer/source binding; no native operation or publication"
+      }
+    },
+    "qaRequestRebind": {
+      "originQaRun": 45351696628,
+      "originalRequestSHA256": "a4b10ddaec17716ef7455ee50f45f68989c6d74c6513cdc31385eac3293b58f7",
+      "originalProofSHA256": "0236bd3034b201fe5cb15da8c4fc4d05bb632e81aefe1a984712be1f13c60a04",
+      "changedFields": [
+        "executeApps",
+        "expiresAt",
+        "harnessFiles",
+        "reuseTransfersFromRun",
+        "spreadsheetFollowup"
+      ],
+      "packageBytesUnchanged": true
+    }
+  },
+  "ownAppIdentifier": "org.openaec.spreadsheet-studio",
+  "ownAppExecutableSha256": "d75fc7d355b5cc10352126ea6e2fc6e8334a8cdae619778271a0fd1be437bbd2",
+  "signatureGateCodes": {
+    "signature": 0,
+    "signatureIdentity": 0,
+    "gatekeeper": 0,
+    "notarizationStaple": 0
+  },
+  "shortPolicyPid": 3165,
+  "nativeCmdSGridFocusReceipt": "spreadsheet/ax-37.json",
+  "ordinarySaveReceipt": "spreadsheet/ax-47.json",
+  "nativeCancelReceipts": [
+    "spreadsheet/ax-43.json",
+    "spreadsheet/ax-53.json"
+  ],
+  "sourceFingerprint": {
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "bytes": 7651,
+    "mtimeNs": 1795509774894110284
+  },
+  "sourceBytesPresentUnchangedAtEnd": true,
+  "policy": {
+    "status": "functional-evidence-collected-review-pending",
+    "nativeAccepted": false,
+    "sourceFingerprint": {
+      "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+      "bytes": 7651,
+      "mtimeNs": 1795509774894110284
+    },
+    "routes": {
+      "command-s": {
+        "status": "functional-evidence-collected-review-pending",
+        "proposal": {
+          "dialog": {
+            "actions": [
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "Save as",
+            "AXEnabled": true,
+            "AXFocused": false,
+            "AXHelp": "",
+            "AXRole": "AXGroup",
+            "AXRoleDescription": "web dialog",
+            "AXSelected": false,
+            "AXSubrole": "AXApplicationDialog",
+            "AXTitle": "Save as",
+            "AXValue": "",
+            "frame": {
+              "height": 778,
+              "width": 640,
+              "x": 640,
+              "y": 123
+            }
+          },
+          "selectedFormat": {
+            "actions": [
+              "AXPress",
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "Excel workbook (.xlsx)",
+            "AXEnabled": true,
+            "AXFocused": false,
+            "AXHelp": "",
+            "AXRole": "AXRadioButton",
+            "AXRoleDescription": "radio button",
+            "AXSelected": false,
+            "AXTitle": "Excel workbook (.xlsx)",
+            "AXValue": 1,
+            "frame": {
+              "height": 12,
+              "width": 12,
+              "x": 677,
+              "y": 381
+            }
+          },
+          "filename": {
+            "actions": [
+              "AXPress",
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "",
+            "AXEnabled": true,
+            "AXFocused": true,
+            "AXHelp": "",
+            "AXRole": "AXTextField",
+            "AXRoleDescription": "text field",
+            "AXSelected": false,
+            "AXTitle": "File name .xlsx",
+            "AXValue": "shared_formula",
+            "frame": {
+              "height": 34,
+              "width": 552,
+              "x": 667,
+              "y": 207
+            }
+          }
+        },
+        "sourceBytesUnchanged": true,
+        "sourceFingerprintAfterCancel": {
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651,
+          "mtimeNs": 1795509774894110284
+        },
+        "unsavedWorkingCopyPreserved": true,
+        "afterWorkingCopy": {
+          "AXTitle": "shared_formula.xlsx , unsaved changes Close shared_formula.xlsx",
+          "AXDescription": "",
+          "AXHelp": "shared_formula.xlsx \u00b7 unsaved changes\nDrag outside for a separate window",
+          "AXSelected": true,
+          "AXValue": true
+        }
+      },
+      "ordinary-save": {
+        "status": "functional-evidence-collected-review-pending",
+        "proposal": {
+          "dialog": {
+            "actions": [
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "Save as",
+            "AXEnabled": true,
+            "AXFocused": false,
+            "AXHelp": "",
+            "AXRole": "AXGroup",
+            "AXRoleDescription": "web dialog",
+            "AXSelected": false,
+            "AXSubrole": "AXApplicationDialog",
+            "AXTitle": "Save as",
+            "AXValue": "",
+            "frame": {
+              "height": 778,
+              "width": 640,
+              "x": 640,
+              "y": 123
+            }
+          },
+          "selectedFormat": {
+            "actions": [
+              "AXPress",
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "Excel workbook (.xlsx)",
+            "AXEnabled": true,
+            "AXFocused": false,
+            "AXHelp": "",
+            "AXRole": "AXRadioButton",
+            "AXRoleDescription": "radio button",
+            "AXSelected": false,
+            "AXTitle": "Excel workbook (.xlsx)",
+            "AXValue": 1,
+            "frame": {
+              "height": 12,
+              "width": 12,
+              "x": 677,
+              "y": 381
+            }
+          },
+          "filename": {
+            "actions": [
+              "AXPress",
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ],
+            "actionsError": 0,
+            "AXDescription": "",
+            "AXEnabled": true,
+            "AXFocused": true,
+            "AXHelp": "",
+            "AXRole": "AXTextField",
+            "AXRoleDescription": "text field",
+            "AXSelected": false,
+            "AXTitle": "File name .xlsx",
+            "AXValue": "shared_formula",
+            "frame": {
+              "height": 34,
+              "width": 552,
+              "x": 667,
+              "y": 207
+            }
+          }
+        },
+        "sourceBytesUnchanged": true,
+        "sourceFingerprintAfterCancel": {
+          "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+          "bytes": 7651,
+          "mtimeNs": 1795509774894110284
+        },
+        "unsavedWorkingCopyPreserved": true,
+        "afterWorkingCopy": {
+          "AXTitle": "shared_formula.xlsx , unsaved changes Close shared_formula.xlsx",
+          "AXDescription": "",
+          "AXHelp": "shared_formula.xlsx \u00b7 unsaved changes\nDrag outside for a separate window",
+          "AXSelected": true,
+          "AXValue": true
+        }
+      }
+    },
+    "beforeWorkingCopy": {
+      "AXTitle": "shared_formula.xlsx , unsaved changes Close shared_formula.xlsx",
+      "AXDescription": "",
+      "AXHelp": "shared_formula.xlsx \u00b7 unsaved changes\nDrag outside for a separate window",
+      "AXSelected": true,
+      "AXValue": true
+    }
+  },
+  "fourOriginalPngsViewedSerially": true,
+  "imageHashes": {
+    "39-xlsb377-command-s-proposal-0.png": "5092ffc54fa9010406c7b3393dd3865d7710bc7e06dcde902fa29e21eb1f7872",
+    "45-xlsb377-command-s-cancelled-0.png": "d6bf6ef85c8aa6a594dff79f9fef46014c9441f7ae50e4dc79cb25c6782e8168",
+    "49-xlsb377-ordinary-save-proposal-0.png": "5092ffc54fa9010406c7b3393dd3865d7710bc7e06dcde902fa29e21eb1f7872",
+    "55-xlsb377-ordinary-save-cancelled-0.png": "d6bf6ef85c8aa6a594dff79f9fef46014c9441f7ae50e4dc79cb25c6782e8168"
+  },
+  "normalQuitExit0Pids": [
+    3165,
+    10639,
+    16315
+  ],
+  "cleanupPassed": true,
+  "cleanupErrors": [],
+  "limits": [
+    "Only original import CmdS/Save default-XLSX/cancel/dirty-copy/source-preservation scope passes; no later A15/edit/XLSX-save/cold-reopen/30-formula-case acceptance inferred.",
+    "The later cold-reopen OCR/focus target42 failure remains unclassified and failed; no product-or-driver conclusion added by this audit.",
+    "Mac source fingerprints record SHA256/bytes/mtimeNs, not inode/device; all recorded fields match after each cancel and original source bytes are preserved in final ZIP.",
+    "Raw nativeAccepted remains false and whole-case status unchanged. Independent source/package/signature receipts reviewed, no own live Mac verification or new bundle download."
+  ],
+  "newRun": false,
+  "newHost": false,
+  "newGui": false,
+  "newDownload": false,
+  "productEdit": false
+}

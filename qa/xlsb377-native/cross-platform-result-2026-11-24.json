@@ -1,0 +1,45 @@
+{
+  "issue": 377,
+  "scope": "Only native import-only XLSB CtrlS/CommandS and ordinary Save -> default XLSX Save As -> Cancel -> original preserved/working copy unsaved",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "linux": {
+    "status": "PASS",
+    "package": "original SuiteDEB",
+    "run": 45190827271,
+    "job": 137748390686,
+    "proofCommit": "497c27eba01f9c3985c8a68af75b5629e7df7db1"
+  },
+  "windows": {
+    "status": "PASS-short-scope",
+    "package": "original standalone Spreadsheet NSIS",
+    "run": 45353530654,
+    "job": 138305718627,
+    "attempt": 1,
+    "artifact": 14901960371,
+    "zipSha256": "949d490d14c9df626968b62ccb525341a69090fd23bc74b342cc1039bd684fe5",
+    "audit": "evidence/readonly-audits-2026-11-24/windows-xlsb377-audit-2026-11-24.json",
+    "auditSha256": "ebfc0c57a2b8d9be5c30507edffd28d2b8ff76b0b04d5c8271a991fefc86b129"
+  },
+  "macos": {
+    "status": "PASS-short-scope-only; whole later XLSB case FAILED",
+    "package": "original standalone Spreadsheet DMG",
+    "run": 45357794642,
+    "job": 138320456545,
+    "attempt": 1,
+    "artifact": 14904041365,
+    "zipSha256": "fa28025fb854905a58643eb6f12b1a084e6569c418e6501d5fc964dd39981acd",
+    "audit": "evidence/readonly-audits-2026-11-24/macos-xlsb377-audit-2026-11-24.json",
+    "auditSha256": "44a37c924506bb3e8887c62fc00cf7c7fe860218524d21e208414d73209bde78",
+    "remaining": "Later cold-reopen OCR/focus target42 failed; no classification/product fix or full30-formula/native-roundtrip acceptance inferred. Existing Mac owner retains that continuation. Raw nativeAcceptedfalse and failed whole-case receipt preserved."
+  },
+  "originalXlsbSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+  "originalXlsbBytes": 7651,
+  "rawProofCopies": "evidence/cross-platform-377-2026-11-24",
+  "issueClosure": "Remains integration-owned; no issue close/main merge/publication implied",
+  "newRuns": false,
+  "newDownloads": false,
+  "newNativeHosts": false,
+  "productEdits": false
+}
