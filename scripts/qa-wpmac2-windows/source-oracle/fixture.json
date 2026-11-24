@@ -1,0 +1,64 @@
+{
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "repository": "https://github.com/LibreOffice/core",
+    "commit": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/writer/libwpd/pass/WP3.wpd",
+    "filename": "WP3.wpd",
+    "bytes": 504,
+    "blob": "75f4924e857f2b404579691af4bd08c2e89aa607",
+    "sha256": "812d181f1bef7da145ddb20370de0b50acbd48f40ab905b3bfc8fffe4e3b34a2",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/writer/libwpd/pass/WP3.wpd",
+    "license": "LibreOffice project-distributed original regression fixture; pinned COPYING (GPL-3.0), COPYING.LGPL and COPYING.MPL notices retained. No separate CC0/per-file grant asserted; no per-fixture override found in reviewed publication.",
+    "notices": [
+      {
+        "path": "COPYING",
+        "bytes": 35147,
+        "blob": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING"
+      },
+      {
+        "path": "COPYING.LGPL",
+        "bytes": 7639,
+        "blob": "fc8a5de7edf437cdc98a216370faf7c757279bcb",
+        "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.LGPL"
+      },
+      {
+        "path": "COPYING.MPL",
+        "bytes": 16725,
+        "blob": "a612ad9813b006ce81d1ee438dd784da99a54007",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/COPYING.MPL"
+      },
+      {
+        "path": "README.md",
+        "bytes": 7167,
+        "blob": "9960c18de240ee2a6a61be956684b02a803b97ff",
+        "sha256": "c78ab69318723d6cd5d898f58c5b04307bfd7a1a4b6acd0083287557734e7267",
+        "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/README.md"
+      }
+    ],
+    "variant": "Native WordPerfect Macintosh 2.x (WPC product1/type0x2c/major2/minor2); body self-reports WP2.1.3; unique producer not authenticated.",
+    "coverageLimit": "Only three leading paragraphs and explicitly encoded bold/italic spans. Column layout, subsequent text/formatter style groups, font/rendering, macros/encryption and other versions remain outside acceptance."
+  },
+  "edit": {
+    "paragraph": 0,
+    "offset": 0,
+    "text": "QA_WPD213_24NOV "
+  },
+  "enginePrefixParagraphs": 3,
+  "specificationReference": {
+    "url": "https://mendelson.org/wpdos/WPMac4FileFormat.pdf",
+    "bytes": 781069,
+    "sha256": "933b956fc612dc4aaef5ec11a9bc43c8fb82a51ce376a0cb390d84b2d93947ed",
+    "role": "Primary Corel Mac4 manual framing and C3/DC subset, not a complete Mac2 specification. Header family independently agrees with PRONOM fmt/1220; reviewed PDF pages10,14,15,23,99 (zero based); C3 page visually inspected. No manual redistribution.",
+    "headerReference": "https://pronom.nationalarchives.gov.uk/fmt/1220",
+    "secondaryParserCrosscheck": "deepin-community/libwpd@a6f90ad0f11f91eb4831e488aaa6013354bb94b3:src/lib/WP3FixedLengthGroup.cpp and WP3VariableLengthGroup.cpp; read only, not executed or used as output baseline."
+  }
+}

@@ -1,0 +1,89 @@
+name: WPMac2 Windows native single Writer child
+on:
+  push:
+    branches: [codex/wpmac2-windows-native-2026-11-24]
+    paths: [.github/wpmac2-windows.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: p5-windows-child-reuse-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    outputs:
+      apps: ${{ steps.plan.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/qa-wpmac2-windows/reuse_plan.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wpmac2-windows-binding
+          path: .local/p5-reuse-plan
+          include-hidden-files: true
+          if-no-files-found: error
+  app:
+    name: Native ${{ matrix.app }} ${{ matrix.mode }} child reuse
+    needs: plan
+    runs-on: windows-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Strict original own-child ZIP only; no parent download or app build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OOS_QA_APP: ${{ matrix.app }}
+          OOS_QA_CHILD_ID: ${{ matrix.artifactId }}
+          OOS_QA_CHILD_SHA: ${{ matrix.artifactSha256 }}
+          OOS_QA_RECEIPT_SHA: ${{ matrix.receiptSha256 }}
+          OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
+          OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
+        run: python scripts/qa-wpmac2-windows/consume.py .github/wpmac2-windows-consumer.json .local/standalone-windows-package
+      - name: Native WebView driver only
+        run: npm install --prefix .local/wpmac2-windows-driver --ignore-scripts --no-audit --no-fund playwright@1.62.1
+      - name: Actual WPMac2 native picker prefix UndoRedo copy and fresh-process reopen
+        env:
+          PYTHONUTF8: '1'
+          PYTHONIOENCODING: utf-8
+          OOS_QA_APP: ${{ matrix.app }}
+          OOS_QA_CASE: ${{ matrix.mode }}
+          OOS_QA_HARNESS: ${{ github.sha }}
+          OOS_QA_APPROVED_CONFIG: .github/wpmac2-windows-consumer.json
+          OOS_QA_PREPARER_RUN: ${{ matrix.preparerRun }}
+          OOS_QA_PREPARER_HARNESS: ${{ matrix.preparerHarness }}
+          OOS_QA_CORE_RUN: ${{ matrix.coreRun }}
+          OOS_QA_CORE_JOB: ${{ matrix.coreJob }}
+          OOS_QA_CORE_PROOF: ${{ matrix.coreProof }}
+        run: |
+          node scripts/qa-wpmac2-windows/native.mjs .local/standalone-windows-package ".local/p4-native-writer"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.proofName }}
+          path: |
+            .local/p4-native-${{ matrix.app }}
+            .local/standalone-windows-package/package.json
+            .local/standalone-windows-package/canonical-package-report.json
+            .local/standalone-windows-package/consumer-binding.json
+          include-hidden-files: true
+          if-no-files-found: error
