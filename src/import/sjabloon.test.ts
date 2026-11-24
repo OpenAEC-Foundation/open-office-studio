@@ -26,6 +26,29 @@ function sjabloon(soort: string, documenttype: string, sjabloontype: string) {
 }
 
 describe("sjablonen openen als zelfstandig document (#27)", () => {
+  it.each([
+    "Begroting.ett",
+    "Begroting.ETT",
+    "Begroting.eTt",
+    "Presentatie.dpt",
+    "Presentatie.DPT",
+    "Presentatie.dPt",
+  ])("herkent alleen de WPS-sjabloonbestandsnaam %s (#382)", (naam) => {
+    expect(isSjabloon(naam)).toBe(true);
+  });
+
+  it.each([
+    "Begroting.et",
+    "Begroting.ET",
+    "Presentatie.dps",
+    "Presentatie.DPS",
+  ])(
+    "houdt de gewone WPS-documentbestandsnaam %s buiten de sjablonen (#382)",
+    (naam) => {
+      expect(isSjabloon(naam)).toBe(false);
+    },
+  );
+
   it("herkent sjablonen inclusief macro-, oudere en ODF-formaten zonder documentbestanden mee te nemen", () => {
     for (const ext of [
       "dotx",

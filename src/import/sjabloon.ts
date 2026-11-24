@@ -15,11 +15,13 @@ const SJABLONEN = new Set([
   "xlt",
   "ots",
   "stc",
+  "ett",
   "potx",
   "potm",
   "pot",
   "otp",
   "sti",
+  "dpt",
 ]);
 export const OOXML_SJABLONEN = new Set(["dotx", "xltx", "potx"]);
 
