@@ -1,4 +1,4 @@
-name: Native P5 signed Suite core acceptance
+name: Native P5 signed Suite field374 DOCX regression
 on:
   push:
     branches: [codex/mac-native-body-blocker-20261120]
@@ -24,11 +24,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/checkout@v4
+        with:
+          ref: 3169b09020184e3a98a4d5364ad77b15f38ac063
+          path: .local/shared-field374
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Install immutable shared DOCX oracle dependencies only
+        working-directory: .local/shared-field374
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Verify producer/app witness, Suite support descriptor and complete own child ZIP
         id: suite_fetch
         run: python .local/mac-body-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-body-harness/.github/mac-native-product-request.json .local/mac-product-input
-      - name: Untouched pixels, strict native preflight and original table Undo/save/reopen
-        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-product-input/identity.json .local/mac-product-native --acceptance
+      - name: Current signed core prerequisite, fresh native preflight and field374 DOCX title-marker boundary
+        run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac-product-input/identity.json .local/mac-product-native --acceptance --field374
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,0 +1,125 @@
+{
+  "run": 45352741879,
+  "artifactId": 14902380591,
+  "harnessCommit": "48e7de0f5c94a7bb8f5e723be6cfd6c383d8b2ae",
+  "reportSha256": "ed6409f1f36a8a327056b2806279d405b9fa749ce0de3dda3e9784b60f7d3ccd",
+  "zipSha256": "0b63b96d5dfa25b95671c12cb39e32e0164a5f01adbfea161597eafd617e8721",
+  "payloadsIndividuallyHashed": 188,
+  "nativePass": true,
+  "scope": "P5 signed Suite359 and bounded361 column/body/save/fullquit/newPID core only; remaining361/374 pending",
+  "savedTableCells": [
+    [
+      "alpha",
+      "",
+      "beta",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "omega"
+    ],
+    [
+      "delta",
+      "",
+      "",
+      ""
+    ]
+  ],
+  "savedControlTextAndImageBytesMatchSource": true,
+  "sourceHelpersVerified": {
+    "scripts/mac-native-current-session.py": "66af948271143bdbe93eb8c4acc57226317ad24a8ea10951a69d065708649714",
+    "scripts/writer-361-macos-ax.swift": "82813e7a2b9509cc1e9238a8eaaadf4b7e281d4535df13a86257f99f4bc06573"
+  },
+  "compiledHelperBinariesVerified": true,
+  "payloadAndInstalledPlistHashesMatch": true,
+  "signedPackagePreflight": {
+    "status": "passed",
+    "app": "/Users/runner/work/_temp/writer361-owned-app-r9qs9be7/Open Office Studio.app",
+    "checks": [
+      {
+        "name": "codesign-verify",
+        "command": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "--verbose=2",
+          "/Users/runner/work/_temp/writer361-owned-app-r9qs9be7/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/signed-package-preflight/codesign-verify.log",
+        "logSha256": "fe3a363df02e6aff662576b47b21c8009f822d0ac0054bd577ba42741d348400"
+      },
+      {
+        "name": "codesign-display",
+        "command": [
+          "codesign",
+          "--display",
+          "--verbose=4",
+          "/Users/runner/work/_temp/writer361-owned-app-r9qs9be7/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/signed-package-preflight/codesign-display.log",
+        "logSha256": "f7e7e08da2c0c5fbe07ed4e6bad84c0938e4042a14a9ae21a53a0884c5cfb1cd"
+      },
+      {
+        "name": "gatekeeper",
+        "command": [
+          "spctl",
+          "--assess",
+          "--type",
+          "execute",
+          "--verbose=4",
+          "/Users/runner/work/_temp/writer361-owned-app-r9qs9be7/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/signed-package-preflight/gatekeeper.log",
+        "logSha256": "d78a66cd7f6740eca9fa97e9a4936917ef5680805e47c22f0acdd815b6e0566a"
+      },
+      {
+        "name": "stapled-ticket",
+        "command": [
+          "xcrun",
+          "stapler",
+          "validate",
+          "/Users/runner/work/_temp/writer361-owned-app-r9qs9be7/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac-product-native/signed-package-preflight/stapled-ticket.log",
+        "logSha256": "c51154eb59c9225a9f3de771ff6232f0efda127fbf6db7f51d79ac06e20524b7"
+      }
+    ],
+    "appModified": false,
+    "policy": "codesign strict verification, Developer ID identity, Gatekeeper notarization and stapled ticket before launch",
+    "identifier": "org.openaec.office-studio",
+    "teamIdentifier": "7KFV4QY98M",
+    "authorities": [
+      "Developer ID Application: Maarten Vroegindeweij (7KFV4QY98M)",
+      "Developer ID Certification Authority",
+      "Apple Root CA"
+    ]
+  },
+  "normalQuitNewPids": {
+    "control": [
+      4334,
+      5393
+    ],
+    "table": [
+      5961,
+      7589
+    ]
+  },
+  "originalImagesViewed": {
+    "table-original361/initial-ready.png": "05782d79c7e2acd3ecd7a41d602b727b4df6ca4797c338f560368c4f2ec86729",
+    "saved-epub356-control/initial-ready.png": "45c2ad21bcabf6615587ec4d7efd5162fd2cc199c760a143007e084118ee2c71",
+    "native-original-acceptance/reopened-original-before-input/original-display.png": "93712c61efcb79bd302eabd97c951dc362cd983f7d87bbacb022de23679abcfb"
+  },
+  "originalBeforeAnyInputAndMaximizeReadable": true,
+  "cleanup": {
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true
+  },
+  "rawZipLocal": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-mac-native-blocker-20261120\\.local\\nov24-suite\\45352741879\\proof.zip"
+}

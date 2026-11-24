@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+          ref: b696ab86bd1c128729a079b68c0082e6df3d36a5
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -24,8 +24,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify the successful Mac job and full canonical artifact before package derivation
-        run: python .local/mac-body-harness/scripts/mac-native-current-fetch.py .local/mac-body-harness/.github/mac-native-361-tab-history-request.json .local/mac361-tab-history-input
+      - name: Verify exact producer/app witness, descriptor and complete Suite child
+        id: suite_fetch
+        run: python .local/mac-body-harness/scripts/mac-native-suite-transfer-fetch.py .local/mac-body-harness/.github/mac-native-361-tab-history-request.json .local/mac361-tab-history-input
       - name: Exactly three Tabs and planned newrow; two Undo two Redo with saved XML
         run: python .local/mac-body-harness/scripts/mac-native-current-session.py .local/mac361-tab-history-input/identity.json .local/mac361-tab-history-native --acceptance --tab-save-oracle
       - uses: actions/upload-artifact@v4
@@ -34,8 +35,14 @@ jobs:
           name: mac361-tab-history-native-${{ github.sha }}
           path: |
             .local/mac361-tab-history-native/
-            .local/mac361-tab-history-input/identity.json
-            .local/mac361-tab-history-input/request.json
-            .local/mac361-tab-history-input/artifact-origin.json
+            .local/mac361-tab-history-input/*.json
+            .local/mac361-tab-history-input/*.log
           include-hidden-files: true
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.suite_fetch.outcome == 'failure'
+        with:
+          name: mac361-tab-history-failed-acquisition-${{ github.sha }}
+          path: .local/mac361-tab-history-input/*.zip
+          include-hidden-files: true
+          if-no-files-found: warn

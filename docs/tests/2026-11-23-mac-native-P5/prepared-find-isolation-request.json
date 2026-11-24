@@ -23,9 +23,9 @@
   "transferDescriptorMember": "provenance.json",
   "transferDmgMember": "Open Office Studio_2026.48.1_aarch64.dmg",
   "platform": "macOS",
-  "executionApproved": false,
-  "suiteChildTransferApproved": false,
-  "preparationOnly": true,
+  "executionApproved": true,
+  "suiteChildTransferApproved": true,
+  "preparationOnly": false,
   "derivePackageIdentityFromVerifiedArchive": true,
   "deriveExecutableFromVerifiedDmg": true,
   "requireSignedNotarized": true,
@@ -38,7 +38,7 @@
     "EERSTE",
     "TWEEDE"
   ],
-  "remainingBinding": "All actual package/source bindings frozen; waiting only for exact current signed core proof/API/report and review.",
+  "remainingBinding": "Exact current signed core45352741879 verified and independently reviewed; execute only the remaining scoped case.",
   "transferRequestMember": "request.json",
   "supportDescriptorRequired": true,
   "supportDescriptorContractQaCommit": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
@@ -70,13 +70,14 @@
   "userResume": "Explicit user resumption24Nov; only this own Suite scope. Native execution waits actual child/support/witness binding and all strict gates.",
   "previous361Core": {
     "reportPath": "docs/tests/2026-11-23-mac-native-P5/core/report.json",
-    "run": null,
-    "artifactId": null,
-    "archiveSha256": null,
-    "reportSha256": null,
-    "bindingPending": true
+    "run": 45352741879,
+    "artifactId": 14902380591,
+    "archiveSha256": "0b63b96d5dfa25b95671c12cb39e32e0164a5f01adbfea161597eafd617e8721",
+    "reportSha256": "ed6409f1f36a8a327056b2806279d405b9fa749ce0de3dda3e9784b60f7d3ccd",
+    "bindingPending": false
   },
   "remaining361Approved": true,
   "remaining361Scope": "find-isolation-only",
-  "finalSuite361Approved": true
+  "finalSuite361Approved": true,
+  "executableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87"
 }
