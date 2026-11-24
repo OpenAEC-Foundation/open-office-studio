@@ -1,0 +1,66 @@
+{
+  "run": 45376152078,
+  "job": 138382877139,
+  "attempt": 1,
+  "harnessCommit": "8b67ed6e30e98c67874b3f6d0d6e62fa29453374",
+  "harnessSourceCommit": "1c1cc32d34c3e5fd96a6c9e8ed8b47e59be09d23",
+  "status": "FAIL_ABI_CLASSIFIER_BEFORE_PATCH_AND_CONVERTER",
+  "gatesPassed": [
+    "request/nonce/parent/file bindings",
+    "queued-critical-work and disk",
+    "frozen prerequisites",
+    "original native source oracle",
+    "full original ZIP/tar/manifest/shared-verifier",
+    "original libwps control compilation",
+    "SONAME, dependency names, ORIGIN path assertions"
+  ],
+  "notRun": [
+    "381 patch applied to actual library build",
+    "actual WQ2 conversion differential",
+    "typed 61cell/4formula patched acceptance",
+    "P5 engine edit UndoRedo save new-process reopen"
+  ],
+  "failure": "Public libwps ABI exports differ: substring c++filt filter also includes 4 extra weak std::_Rb_tree template instantiations with an internal libwps::NumberingType",
+  "independentReadOnlyFinding": "3 direct libwps API exports identical as sets; none missing; four additions STB_WEAK in std namespace, internal NumberingType not present in installed public headers. Not a complete ABI/runtime pass.",
+  "retryOrCodeChange": false,
+  "artifactDownloadCount": 1,
+  "artifactId": 14910758776,
+  "artifactSha256": "9752a031fcce02a403127141bae34fc7c4031755f8ac5f440b501355f9b85b29",
+  "files": [
+    {
+      "name": "artifact.zip",
+      "bytes": 2451144,
+      "sha256": "9752a031fcce02a403127141bae34fc7c4031755f8ac5f440b501355f9b85b29"
+    },
+    {
+      "name": "official-artifact.json",
+      "bytes": 852,
+      "sha256": "8307a56b754aa5d2b696f83ef149769278aba7cccd76d2b08ad334e143c717dd"
+    },
+    {
+      "name": "members.json",
+      "bytes": 5460,
+      "sha256": "b9c75ccf4746901ede92506f0bdc61e50951734ef506cf226a6294bf420d741a"
+    },
+    {
+      "name": "export-difference.json",
+      "bytes": 2073,
+      "sha256": "5c2b4c1ebff5e3c29328550c0317f8f1c5279f55202705e4d50b6153e0dc32a7"
+    },
+    {
+      "name": "export-detail.json",
+      "bytes": 3870,
+      "sha256": "c02440c4039f92428ea5405b43f2281ede0dc35dc49ee0765eaba686f39fa290"
+    },
+    {
+      "name": "numbering-type-source.json",
+      "bytes": 452,
+      "sha256": "1fc6455e73934454023840cd3317a0fd72ae45a23ec7e176f1253c84e123fc8e"
+    },
+    {
+      "name": "failed-job.log",
+      "bytes": 4284,
+      "sha256": "fefa6e6fc2d2b1a0101eba71de1fb1f1a2f6ea96f15c2bd1e998ed4925dad506"
+    }
+  ]
+}

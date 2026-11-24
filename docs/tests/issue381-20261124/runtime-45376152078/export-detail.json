@@ -1,0 +1,131 @@
+{
+  "packaged": {
+    "symbols": [
+      {
+        "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      }
+    ],
+    "dynamic": [
+      {
+        "kind": "DT_NEEDED",
+        "value": "librevenge-0.0-lo.so.0"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libstdc++.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libm.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libc.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libgcc_s.so.1"
+      },
+      {
+        "kind": "DT_SONAME",
+        "value": "libwps-0.4-lo.so.4"
+      },
+      {
+        "kind": "DT_RUNPATH",
+        "value": "$ORIGIN"
+      }
+    ]
+  },
+  "rebuilt-control": {
+    "symbols": [
+      {
+        "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+        "bind": "STB_WEAK",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE24_M_get_insert_unique_posERS1_",
+        "bind": "STB_WEAK",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZN6libwps11WPSDocument21isFileFormatSupportedEPN10librevenge15RVNGInputStreamERNS_7WPSKindERNS_10WPSCreatorERb",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZNSt8_Rb_treeIiSt4pairIKiN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIiESaIS4_EE24_M_get_insert_unique_posERS1_",
+        "bind": "STB_WEAK",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZNSt8_Rb_treeIcSt4pairIKcN6libwps13NumberingTypeEESt10_Select1stIS4_ESt4lessIcESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+        "bind": "STB_WEAK",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_24RVNGSpreadsheetInterfaceEPKcS7_",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      },
+      {
+        "name": "_ZN6libwps11WPSDocument5parseEPN10librevenge15RVNGInputStreamEPNS1_17RVNGTextInterfaceEPKcS7_",
+        "bind": "STB_GLOBAL",
+        "type": "STT_FUNC",
+        "visibility": "STV_DEFAULT"
+      }
+    ],
+    "dynamic": [
+      {
+        "kind": "DT_NEEDED",
+        "value": "librevenge-0.0-lo.so.0"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libstdc++.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libm.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libc.so.6"
+      },
+      {
+        "kind": "DT_NEEDED",
+        "value": "libgcc_s.so.1"
+      },
+      {
+        "kind": "DT_SONAME",
+        "value": "libwps-0.4-lo.so.4"
+      },
+      {
+        "kind": "DT_RUNPATH",
+        "value": "$ORIGIN"
+      }
+    ]
+  },
+  "conclusion": "Three direct libwps public API exports identical as sets; four additional weak std::_Rb_tree instantiations contain a libwps template type"
+}
