@@ -551,3 +551,48 @@ independent audit is in `evidence/p5-windows-stw/`. No installer/parent download
 own GUI, new CI/build, product or consumer change occurred. This completes the
 bounded Windows Suite STW/field review; exact native Mac Suite #374 remains
 open and no result is silently transferred from dedicated Mac Writer.
+
+## Exact native Mac Suite field374 final review, 24 November
+
+The final actual case45358252518/job138321421313/attempt1/QA8ecc16d09ff523ee2622882b4ce0ce52c9ed832f
+is successful. Independent content and original-title review passes the bounded
+Suite field/cache/adjacent-text/edit/save/cold-reopen criteria on exact P5.
+The final DOCX SHA is
+1eeb35b3013812e7209653ac32d1e16e8a30a7580250984ef77ee4847e55fb04,
+identical to both retained saved and new-PID-reopened copies. The unchanged
+shared contract independently preserves Report Title cache/DOCVARIABLE,
+marker outside the field, eight source blocks/styles, two placeholders and
+Title32pt/caps/tracking80; source table count remains zero.
+
+Five actual original display PNGs were independently viewed serially and
+rehashed. Four bounded views pass: unchanged Windows-origin full marker,
+unmodified converted title/subtitle, real converted edit and clear cold-reopen
+full three-line title/marker/date. The direct post-save PNG is explicitly
+LIMITED: a transient Done toast covers part of marker/date. It is not marked
+as a full image pass. The identical persisted DOCX bytes and clear cold-reopen
+PNG cover the saved-state content/layout criterion. After multi-line editing,
+the subtitle is below the current viewport; no subtitle/full-page/font/TOC or
+pagination fidelity approval is inferred from those title-only captures.
+
+Existing ZIP14904845703 (5528052bytes) was independently hashed against official
+SHA38ea5b3167910a187c8fbc541f0744666e59cc5f7f9aea601ffd4a9c61df27c7;
+all181 original members equal extracted raw bytes. Expiry2027-02-22T08:40:58Z.
+Same P5b696/e308/48.1, Mac producer2af94cd, Suite DMG1d0cb79f,
+Mach-O0c6a58c7, org.openaec.office-studio and retained signature-log hashes
+match. Native Cmd-Q/new PID6246→8124 and own app/container cleanup are retained
+operator evidence. Raw nativePass=false/visual-pending records remain unchanged;
+this independent bounded approval is recorded separately.
+
+`evidence/p5-mac-suite-field374-review-20261124.json` retains full provenance,
+per-image findings/limits and acceptance coverage. Raw independent DOCX audit
+and181-member manifest are in `evidence/p5-mac-suite-field374/`. No download,
+own GUI, new CI/build, product or consumer modification occurred. The separate
+save differential and historical nonreproduced input/save incident remain
+root-owned forensic scope, with no general save-fix or cause claim here.
+
+All assigned native field/STW audit deliveries are now available: LinuxDEB
+658512c9, WindowsSuitec895437b, genuine dedicated MacWriter22cdd260 and this
+separate exact MacSuite field regression, with the accepted browser proofs.
+Integration owns the final central scoped-route acceptance record. Broad #30,
+other formats/templates, overall release approval, main/tag/publication remain
+outside this delivery; historical source/runtime proofs keep their actual pins.
