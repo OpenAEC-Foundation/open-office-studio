@@ -4,18 +4,16 @@ import json
 import os
 from pathlib import Path
 import re
-import runpy
 import shutil
 import signal
-import stat
 import subprocess
 import sys
-import tarfile
-import tempfile
 import time
 
 from source_targets import select_cli_targets
 from test_initialization import PATCH as INITIALIZATION_PATCH, RECIPE as INITIALIZATION_RECIPE, resource_receipt, verified_inputs
+from startup_matrix import execute as execute_startup_matrix
+from neutral_startup import MANIFEST as NEUTRAL_MANIFEST, PATCH_SHA256 as NEUTRAL_PATCH_SHA256
 
 START_EPOCH=os.environ.get('OOS_375_WITNESS_START_EPOCH') or os.environ.get('OOS_375_JOB_START_EPOCH') or str(int(time.time()))
 assert re.fullmatch(r'\d{10}',START_EPOCH) and 0<=time.time()-float(START_EPOCH)<270*60
@@ -27,6 +25,7 @@ REPORT = {'issue':375, 'upstreamCommit':PIN['upstreamCommit'], 'patchSHA256':PIN
           'qaCommit':os.environ.get('GITHUB_SHA'), 'run':os.environ.get('GITHUB_RUN_ID'),
           'allocatedWitnessStartEpoch':START_EPOCH,
           'stages':[], 'productActivation':False, 'portableRuntimeClaim':False, 'passed':False}
+REPORT['neutralStartupPatchSHA256'] = NEUTRAL_PATCH_SHA256
 
 
 def sha(p):
@@ -38,9 +37,11 @@ def receipt():
     (OUT/'build-report.json').write_text(json.dumps(REPORT,indent=2)+'\n')
 
 
-def run(name, argv, cwd=None, timeout=600, check=True):
+def run(name, argv, cwd=None, timeout=600, check=True, env=None):
     assert shutil.disk_usage(OUT).free >= 10*1024**3, 'Disk stop: less than 10 GiB'
-    timeout=min(timeout,max(1,int(260*60-(time.monotonic()-START))))
+    controller_left=int(260*60-(time.monotonic()-START))
+    assert controller_left>0, 'Allocated controller budget exhausted; no new subprocess'
+    timeout=min(timeout,controller_left)
     if not REPORT.get('preparationCompleted'):
         prep_left=int(45*60-(time.monotonic()-START))
         assert prep_left>0, 'Allocated 45-minute preparation window exhausted; no new source/compiler attempt'
@@ -48,7 +49,7 @@ def run(name, argv, cwd=None, timeout=600, check=True):
     log=OUT/(name+'.log'); started=time.monotonic()
     print(name,flush=True)
     with log.open('wb') as stream:
-        p=subprocess.Popen(argv,cwd=cwd,env=ENV,stdout=stream,stderr=subprocess.STDOUT,
+        p=subprocess.Popen(argv,cwd=cwd,env=ENV if env is None else env,stdout=stream,stderr=subprocess.STDOUT,
                            stdin=subprocess.DEVNULL,start_new_session=True)
         try: code=p.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -62,6 +63,7 @@ def run(name, argv, cwd=None, timeout=600, check=True):
             head=f.read(1024**2);f.seek(-7*1024**2,os.SEEK_END);tail=f.read()
         log.write_bytes(head+b'\n[owned log truncated: retained first 1 MiB / last 7 MiB]\n'+tail);truncated=True
     REPORT['stages'].append({'name':name,'argv':list(map(str,argv)),'exitCode':code,'logTruncated':truncated,
+                             'processGroupLeaderPID':p.pid,
                              'seconds':time.monotonic()-started,'log':log.name,'logSHA256':sha(log)})
     receipt()
     if check: assert code==0, name+' failed; inspect '+str(log)
@@ -90,6 +92,9 @@ ENV.update(CC='/usr/bin/gcc-13',CXX='/usr/bin/g++-13',SAL_USE_VCLPLUGIN='svp',
 
 def main():
     assert sys.platform.startswith('linux') and os.environ.get('GITHUB_ACTIONS')=='true'
+    assert os.environ.get('OOS_375_SOURCE_DIAGNOSTIC') == 'startup-differential', 'Only the reviewed startup matrix; no automatic importer continuation'
+    for key in ('CPPUNIT_TEST_NAME', 'gb_SUPPRESS_TESTS', 'CPPUNITTRACE', 'DEBUGCPPUNIT', 'OOS_375_STARTUP_ARM'):
+        ENV.pop(key, None)
     OUT.mkdir(parents=True,exist_ok=True)
     preflight=json.loads(Path('.local/presentation-375-build-preflight/build-preflight.json').read_text())
     assert preflight['buildReadyByPlanGates'] and preflight['patchSHA256']==PIN['patchSHA256']
@@ -156,6 +161,8 @@ def main():
     run('patchset-preconditions',[BUILD_PYTHON,str(OWN/'runtime-patch/apply.py'),str(source)])
     REPORT['testInitializationBinding'] = verified_inputs(source)
     run('initialization-controls',[BUILD_PYTHON,str(OWN/'test_initialization_checks.py'),'--source',str(source)])
+    run('neutral-startup-controls',[BUILD_PYTHON,str(OWN/'neutral_startup_checks.py'),'--source',str(source)])
+    run('startup-controller-controls',[BUILD_PYTHON,str(OWN/'startup_matrix_checks.py'),'--source',str(source)])
     run('initialization-patch-check',['git','apply','--check','--whitespace=error',str(INITIALIZATION_PATCH)],cwd=source)
     run('initialization-test-recipe',['git','apply','--whitespace=error',str(INITIALIZATION_PATCH)],cwd=source)
     assert sha(source/INITIALIZATION_RECIPE) == REPORT['testInitializationBinding']['recipeAfterSHA256']
@@ -165,6 +172,7 @@ def main():
         dest=source/entry['destination'];assert not dest.exists()
         shutil.copyfile(OWN/'runtime-patch'/entry['file'],dest)
         assert sha(dest)==entry['sha256']
+    run('neutral-startup-test-diff',[BUILD_PYTHON,str(OWN/'neutral_startup.py'),'--source',str(source),'--apply'])
     external=build/'external-tars';external.mkdir()
     flags=['--disable-mergelibs','--disable-lto','--disable-debug','--disable-dbgutil',
            '--disable-symbols','--disable-skia','--without-help','--without-myspell-dicts',
@@ -198,70 +206,32 @@ def main():
     shutil.copyfile(source/REPORT['testInitializationBinding']['resourceInstalled'],OUT/'required-tabviewbar.ui')
     receipt()
     remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
-    red=run('baseline-red',['make','-j3','CppunitTest_xmloff_draw','CPPUNIT_TEST_NAME=testUOFExplicitRectangleFillColors'],cwd=source,timeout=remaining,check=False)
-    log=(OUT/'baseline-red.log').read_text(errors='replace')
-    expected=red!=0 and 'testUOFExplicitRectangleFillColors' in log and 'UOP375_STALE_INHERITED_FILL_THEME' in log and 'equality assertion failed' in log
-    REPORT['baselineExpectedStaleAccent1Failure']=bool(expected)
-    assert expected, 'No proven expected red assertion; no green relabelling of a build/environment failure'
-    assert sha(source/PIN['sourceFiles'][0]['path'])==PIN['sourceFiles'][0]['sourceSHA256']
-    run('importer-diff',['git','apply','--include=xmloff/source/draw/XMLShapeStyleContext.cxx',str(patch)],cwd=source)
-    for entry in PIN['sourceFiles']: assert sha(source/entry['path'])==entry['patchedSHA256']
-    remaining=int(210*60-(time.monotonic()-compiler_start));assert remaining>0
-    run('corrected-xmloff-draw',['make','-j3','CppunitTest_xmloff_draw'],cwd=source,timeout=remaining)
-    REPORT['correctedCppunitPassed']=True
-    REPORT['impressResourceAfterDrawTests'] = resource_receipt(source)
-    # Freeze the exact reviewed source diff/fixtures; no source commit is pushed.
-    run('source-add',['git','add',INITIALIZATION_RECIPE,*[e['path'] for e in PIN['sourceFiles']],*[e['destination'] for e in PIN['fixtures']]],cwd=source)
-    REPORT['patchedSourceTree']=subprocess.check_output(['git','-C',str(source),'write-tree'],text=True).strip()
-    REPORT['patchedFiles']={e['path']:sha(source/e['path']) for e in PIN['sourceFiles']}
-    runtime=source/'instdir';assert (runtime/'program/soffice').is_file()
-    REPORT['sourceBuiltRuntime']=str(runtime)
-    REPORT['externalArchiveBindings']=[{'file':p.relative_to(external).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(external.rglob('*')) if p.is_file()]
-    REPORT['downloadListSHA256']=sha(source/'download.lst')
-    with tempfile.TemporaryDirectory(prefix='version-profile-',dir=build) as version_temp:
-        user=Path(version_temp)/'user';user.mkdir();shutil.copyfile('src-tauri/src/conversieprofiel.xcu',user/'registrymodifications.xcu')
-        run('runtime-version',[str(runtime/'program/soffice'),'-env:UserInstallation='+Path(version_temp).as_uri(),'--headless','--version'],timeout=45)
-    REPORT['runtimeVersion']=(OUT/'runtime-version.log').read_text().strip()
-    binding={k:REPORT[k] for k in ('upstreamCommit','upstreamTree','patchSHA256','qaCommit','run','ownBuildRoot',
-              'patchedSourceTree','patchedFiles','configureFlags','configurationHashes','correctedCppunitPassed',
-              'baselineExpectedStaleAccent1Failure','runtimeVersion','externalArchiveBindings','downloadListSHA256',
-              'testInitializationBinding','impressResourceBeforeBaseline','impressResourceAfterDrawTests')}
-    binding.update(program=str(runtime/'program/soffice'),programSHA256=sha(runtime/'program/soffice'),
-                   elf=str(runtime/'program/soffice.bin'),elfSHA256=sha(runtime/'program/soffice.bin'),
-                   kind='new Ubuntu24 source-build witness; no original P2 binary or portable-runtime identity')
-    binding_path=OUT/'source-build-binding.json';binding_path.write_text(json.dumps(binding,indent=2)+'\n')
-    engine=OUT/'engine';engine.mkdir()
-    shutil.copyfile(OWN/'runtime-patch/uop-explicit-rectangle-fills.uop',engine/'source.uop')
-    oracle=runpy.run_path(str(OWN/'engine/oracle.py'))
-    (engine/'source-oracle.json').write_text(json.dumps(oracle['parse_source'](engine/'source.uop'),ensure_ascii=False,indent=2)+'\n')
-    ENV.update(OOS_UOP_OUTPUT=str(engine),OOS_UOP_RUNTIME_BINDING=str(binding_path))
-    run('corrected-converter-engine',['node',str(OWN/'engine/built_engine.mjs')],timeout=600)
-    REPORT['scopedConverterEnginePassed']=True
-    REPORT['completeSourceAcceptancePassed']=json.loads((engine/'engine-report.json').read_text())['strictCompleteSourceAcceptancePassed']
-    manifest=[]
-    for p in [runtime]+sorted(runtime.rglob('*')):
-        e={'path':p.relative_to(runtime.parent).as_posix(),'mode':f'{stat.S_IMODE(p.lstat().st_mode):04o}'}
-        if p.is_symlink():
-            assert p.resolve(strict=True).is_relative_to(runtime), 'Outside-payload build link: '+str(p)
-            e.update(type='symlink',linkTarget=os.readlink(p))
-        elif p.is_file(): e.update(type='file',bytes=p.stat().st_size,sha256=sha(p))
-        else: assert p.is_dir();e.update(type='directory')
-        manifest.append(e)
-    (OUT/'runtime-entry-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    REPORT['runtimeEntryManifestSHA256']=sha(OUT/'runtime-entry-manifest.json')
-    REPORT['runtimeEntryCount']=len(manifest)
-    for name in ('soffice','soffice.bin'): REPORT[name+'SHA256']=sha(runtime/'program'/name)
-    run('runtime-elf',['readelf','-h',str(runtime/'program/soffice.bin')])
-    run('runtime-dependencies',['ldd',str(runtime/'program/soffice.bin')])
-    assert 'not found' not in (OUT/'runtime-dependencies.log').read_text()
-    archive=OUT/'runtime-source-witness.tar.gz'
-    with tarfile.open(archive,'w:gz',compresslevel=5) as z: z.add(runtime,arcname='instdir')
-    if archive.stat().st_size>900*1024**2:
-        REPORT['oversizePayloadBytes']=archive.stat().st_size;archive.unlink()
-        raise AssertionError('Payload exceeds agreed upload bound; own oversized archive not uploaded')
-    REPORT['payload']={'name':archive.name,'bytes':archive.stat().st_size,'sha256':sha(archive),
-                       'kind':'Ubuntu24 source-built QA runtime; not portable/product-activated/P2 artifact'}
-    REPORT['passed']=True
+    run('startup-test-binary',['make','-j3','CppunitTest_xmloff_draw','gb_SUPPRESS_TESTS=TRUE'],cwd=source,timeout=remaining)
+    assert sha(source/PIN['sourceFiles'][0]['path']) == PIN['sourceFiles'][0]['sourceSHA256']
+    neutral_files=json.loads(NEUTRAL_MANIFEST.read_text())['files']
+    REPORT['neutralStartupTestFileSHA256']={relative:sha(source/relative) for relative in neutral_files}
+    for relative,item in neutral_files.items():
+        assert REPORT['neutralStartupTestFileSHA256'][relative] == item['afterSHA256']
+    def remaining_diagnostic():
+        left=min(210*60-(time.monotonic()-compiler_start),260*60-(time.monotonic()-START))
+        assert left>0, 'Compiler/test allocation exhausted; no further arm'
+        return int(left)
+    def save_matrix(value):
+        REPORT['startupMatrix']=value
+        (OUT/'startup-matrix.json').write_text(json.dumps(value,indent=2)+'\n')
+        receipt()
+    matrix=execute_startup_matrix(source,OUT,run,ENV,remaining_diagnostic,save_matrix)
+    REPORT['baselineExpectedStaleAccent1Failure']=matrix['baselineExpectedStaleAccent1Failure']
+    REPORT['diagnosticCompleted']=matrix['completed']
+    REPORT['technicalReviewRequired']=True
+    REPORT['automaticImporterContinuation']=False
+    REPORT['productFixAccepted']=False
+    receipt()
+    assert all(a['classification']!='FAIL' for a in matrix['arms']), 'Actual startup/test failure retained; no importer continuation'
+    assert matrix['baselineExpectedStaleAccent1Failure'], 'No proven original stale-theme red; stop for review'
+    # This allocation stops at the diagnostic checkpoint even if its protocol
+    # completes. Product acceptance remains false pending central technical review.
+
 
 
 if __name__=='__main__':
@@ -272,7 +242,7 @@ if __name__=='__main__':
     finally:
         # Compact owned logs only; no source/runtime/cache deletion or status relabelling.
         if OUT.exists():
-            logs=list(OUT.glob('*.log'))
+            logs=[p for p in OUT.glob('*.log') if not p.name.endswith('-cppunit.log')]
             for log in sorted(logs,key=lambda p:p.stat().st_size,reverse=True):
                 if sum(p.stat().st_size for p in logs)<=50*1024**2:break
                 if log.stat().st_size>1024**2:

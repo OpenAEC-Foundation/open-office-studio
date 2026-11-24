@@ -49,7 +49,7 @@ def plan():
     # This function describes those requirements; it does not execute them.
     return [{'label': route + '-' + arm, 'arm': arm, 'route': route,
              'environment': {'OOS_375_STARTUP_ARM': arm},
-             'argv': ['make', '-j3', 'CppunitTest_xmloff_draw', 'CPPUNIT_TEST_NAME=' + selector],
+             'argv': ['make', '-j3', 'CppunitTest_xmloff_draw', 'CPPUNIT_TEST_NAME=' + selector + '::TestBody'],
              'freshProfile': True, 'retainProfileAs': 'startup-profiles/' + route + '-' + arm}
             for route, selector in [('blank', 'testUOP375BlankImpressStartup'),
                                     ('uop', 'testUOFExplicitRectangleFillColors')]

@@ -6,7 +6,7 @@ on:
         type: choice
         description: Explicit diagnostic phase
         default: components
-        options: [components, uno, uno-readonly, source-preflight, source-build]
+        options: [components, uno, uno-readonly, source-preflight, startup-differential]
       witness_start:
         type: string
         description: Preserve the original allocated witness start after a pre-source initialization failure
@@ -16,7 +16,7 @@ permissions:
   actions: read
 jobs:
   components:
-    if: inputs.phase != 'source-preflight' && inputs.phase != 'source-build'
+    if: inputs.phase != 'source-preflight' && inputs.phase != 'startup-differential'
     runs-on: ubuntu-22.04
     timeout-minutes: 12
     env:
@@ -50,11 +50,12 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   source-build:
-    if: github.event_name == 'workflow_dispatch' && inputs.phase == 'source-build'
+    if: github.event_name == 'workflow_dispatch' && inputs.phase == 'startup-differential'
     runs-on: ubuntu-24.04
     timeout-minutes: 270
     env:
       OOS_375_WITNESS_START_EPOCH: ${{ inputs.witness_start }}
+      OOS_375_SOURCE_DIAGNOSTIC: startup-differential
     steps:
       - run: echo "OOS_375_JOB_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
@@ -73,7 +74,7 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin e280e9521cfad3b2c61c26d19fbb5df8b5b74a42 dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
           pnpm install --frozen-lockfile --ignore-scripts
-      - name: One bounded source witness, expected baseline red, full corrected draw tests and scoped engine oracle
+      - name: One bounded original-importer startup matrix; stop for technical review
         run: python scripts/qa-presentation-375/source_build.py
       - uses: actions/upload-artifact@v4
         if: always()
