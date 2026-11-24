@@ -1,0 +1,65 @@
+name: Issue 382 filename policy only
+on:
+  push:
+    branches: [codex/fix-382-ett-dpt-templates-20261124]
+    paths: [.github/workflows/issue382-policy.yml, "qa/issue382/**"]
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: macos only after coordinator confirms a free release runner
+        type: choice
+        options: [linux, macos]
+        default: linux
+permissions:
+  contents: read
+jobs:
+  policy:
+    runs-on: ${{ inputs.platform == 'macos' && 'macos-latest' || 'ubuntu-22.04' }}
+    timeout-minutes: 10
+    env:
+      APP_COMMIT: bb781170bb28880e597cfbcb5293872f62b0fecc
+      APP_TREE: be87009307f4a855db9b2a715abe4e61dda7797d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bb781170bb28880e597cfbcb5293872f62b0fecc
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Frozen dependencies only, no application build
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Bind actual product checkout and separate QA helper
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$APP_COMMIT"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$APP_TREE"
+          git diff --quiet
+          mkdir -p .local/issue382-proof
+          git fetch --no-tags --depth=1 origin "$GITHUB_SHA"
+          git show "$GITHUB_SHA:qa/issue382/policy.mjs" > .local/issue382-policy.mjs
+      - name: Focused existing template regression
+        if: runner.os == 'Linux'
+        run: pnpm exec vitest run src/import/sjabloon.test.ts --reporter=json --outputFile=.local/issue382-proof/linux-vitest.json
+      - name: Locate existing CI browser, no browser download
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          browser="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$browser"
+          echo "ISSUE382_BROWSER_EXECUTABLE=$browser" >> "$GITHUB_ENV"
+      - name: Actual production module in SSR and Linux browser
+        shell: bash
+        run: |
+          mode=node
+          if [ "$RUNNER_OS" = Linux ]; then mode=browser; fi
+          node .local/issue382-policy.mjs "$APP_COMMIT" .local/issue382-proof "$mode"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: issue382-policy-${{ runner.os }}-${{ github.sha }}
+          path: .local/issue382-proof/*.json
+          include-hidden-files: true
+          if-no-files-found: error
