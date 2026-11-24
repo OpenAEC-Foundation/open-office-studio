@@ -1,0 +1,49 @@
+{
+  "scope": "FB2 / lo-fb2-1 only under #30",
+  "branch": "codex/fb2-qa-2026-11-24-e0d7",
+  "status": "LIMITED_BODY_ROUTE_PASS_SOURCE_SCHEMA_FAIL",
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "boundedBodyRoutePassed": true,
+  "sourceSchemaConformance": false,
+  "missingRequiredSchemaFields": [
+    "description/title-info/genre",
+    "description/document-info/id"
+  ],
+  "completeFB2Acceptance": false,
+  "fullFormatAcceptance": false,
+  "ci": {
+    "run": 45365158601,
+    "job": 138344859697,
+    "attempt": 1,
+    "harnessCommit": "1f383f40edfdbe4b0bb43c3eb61e1b8340268216",
+    "conclusion": "success",
+    "completedAt": "2026-11-24T09:27:27Z"
+  },
+  "artifact": {
+    "id": 14905653810,
+    "bytes": 68057,
+    "sha256": "845fd68be6efa8535f8ed24068cc56cec99d61c5ed7e7bd85d943fae6c9c6e47",
+    "expiresAt": "2027-02-22T09:26:08Z"
+  },
+  "sourceSha256": "1b758fb8128a660dafd4d2a0c001c9e37001f9a2a52c23d1451290713b709448",
+  "checks": 16,
+  "negativeOracleControls": 3,
+  "downstreamEnginePassed": true,
+  "newProcessReopenPassed": true,
+  "sourceUnchanged": true,
+  "noProductChangeOrNewIssue": true,
+  "limits": "Only bounded minimal-regression import route: one body/one untitled logical section/one plain Hello world. paragraph, no injected tables/images/objects, recommended ordinary DOCX type. Metadata title/author/language/date/document-version inventoried but preservation not accepted; required genre/id missing against pinned reference schema. No general FB2/schema-conformance, nested section/headings/notes/poetry/tables/images/styles/fonts/rendering/native/other-variant acceptance.",
+  "cleanup": {
+    "localGuiOrCaptureUsed": false,
+    "localRuntimeUsed": false,
+    "newProcess": {
+      "sessionDestroyed": true,
+      "productionLoaderClosed": true,
+      "localGuiOrCaptureUsed": false
+    }
+  }
+}

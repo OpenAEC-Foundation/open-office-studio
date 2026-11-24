@@ -1,0 +1,55 @@
+{
+  "file": "reopened-saved.docx",
+  "sha256": "2091e0e6c1fe8f81572244da84f614d91538a92bac501971919edb356e712f4f",
+  "paragraphTexts": [
+    "QA_FB2_24NOV Hello world."
+  ],
+  "objectInventory": {
+    "tbl": 0,
+    "drawing": 0,
+    "pict": 0,
+    "object": 0,
+    "altChunk": 0
+  },
+  "mainContentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+  "checkedCases": [
+    {
+      "case": "recommended ordinary DOCX main type",
+      "actual": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+      "expected": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+      "passed": true
+    },
+    {
+      "case": "source plain body paragraph count",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "case": "exact body text including case and punctuation, metadata not flattened into body",
+      "actual": [
+        "QA_FB2_24NOV Hello world."
+      ],
+      "expected": [
+        "QA_FB2_24NOV Hello world."
+      ],
+      "passed": true
+    },
+    {
+      "case": "no invented body tables images or opaque objects",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    }
+  ],
+  "mismatches": [],
+  "boundedSourceAcceptance": true,
+  "bodyRouteOnly": true,
+  "sourceSchemaConformance": false,
+  "sourceSchemaGap": [
+    "description/title-info/genre",
+    "description/document-info/id"
+  ],
+  "fullFormatAcceptance": false,
+  "limits": "Only bounded minimal-regression import route: one body/one untitled logical section/one plain Hello world. paragraph, no injected tables/images/objects, recommended ordinary DOCX type. Metadata title/author/language/date/document-version inventoried but preservation not accepted; required genre/id missing against pinned reference schema. No general FB2/schema-conformance, nested section/headings/notes/poetry/tables/images/styles/fonts/rendering/native/other-variant acceptance."
+}

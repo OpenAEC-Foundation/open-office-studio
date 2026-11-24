@@ -1,0 +1,75 @@
+{
+  "file": "metadata-flattened-into-body.docx",
+  "sha256": "c5d22c5f8f73e2ef3f2bcfd1a84846f5cc1de129ef57391c7c80d1d7105dfe9d",
+  "paragraphTexts": [
+    "Hello world",
+    "Hello world."
+  ],
+  "objectInventory": {
+    "tbl": 0,
+    "drawing": 0,
+    "pict": 0,
+    "object": 0,
+    "altChunk": 0
+  },
+  "mainContentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+  "checkedCases": [
+    {
+      "case": "recommended ordinary DOCX main type",
+      "actual": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+      "expected": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+      "passed": true
+    },
+    {
+      "case": "source plain body paragraph count",
+      "actual": 2,
+      "expected": 1,
+      "passed": false
+    },
+    {
+      "case": "exact body text including case and punctuation, metadata not flattened into body",
+      "actual": [
+        "Hello world",
+        "Hello world."
+      ],
+      "expected": [
+        "Hello world."
+      ],
+      "passed": false
+    },
+    {
+      "case": "no invented body tables images or opaque objects",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    }
+  ],
+  "mismatches": [
+    {
+      "case": "source plain body paragraph count",
+      "actual": 2,
+      "expected": 1,
+      "passed": false
+    },
+    {
+      "case": "exact body text including case and punctuation, metadata not flattened into body",
+      "actual": [
+        "Hello world",
+        "Hello world."
+      ],
+      "expected": [
+        "Hello world."
+      ],
+      "passed": false
+    }
+  ],
+  "boundedSourceAcceptance": false,
+  "bodyRouteOnly": true,
+  "sourceSchemaConformance": false,
+  "sourceSchemaGap": [
+    "description/title-info/genre",
+    "description/document-info/id"
+  ],
+  "fullFormatAcceptance": false,
+  "limits": "Only bounded minimal-regression import route: one body/one untitled logical section/one plain Hello world. paragraph, no injected tables/images/objects, recommended ordinary DOCX type. Metadata title/author/language/date/document-version inventoried but preservation not accepted; required genre/id missing against pinned reference schema. No general FB2/schema-conformance, nested section/headings/notes/poetry/tables/images/styles/fonts/rendering/native/other-variant acceptance."
+}
