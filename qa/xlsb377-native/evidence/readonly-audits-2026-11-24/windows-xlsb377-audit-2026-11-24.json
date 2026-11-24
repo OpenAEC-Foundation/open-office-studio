@@ -1,0 +1,148 @@
+{
+  "issue": 377,
+  "status": "PASS: Windows standalone Spreadsheet short native XLSB CtrlS/Save/XLSX/cancel/source-preservation",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "run": 45353530654,
+  "job": 138305718627,
+  "attempt": 1,
+  "harness": "07343ca93ee7f95575f2dbffe6cc87d69ca91358",
+  "harnessPath": "scripts/standalone-windows-p4/native377.mjs",
+  "harnessSha256": "645ee226abc69c858975c48f5e9a97fe98bae05bc688fc286b32f5670f555eaf",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-windows-p4-2026-11-23\\.local\\p5-reuse-second-20261124\\standalone-windows-p5-spreadsheet-xlsb377-proof.zip",
+  "artifact": 14901960371,
+  "expiry": "2027-02-22T08:08:27Z",
+  "proofBytes": 602535,
+  "proofSha256": "949d490d14c9df626968b62ccb525341a69090fd23bc74b342cc1039bd684fe5",
+  "wholeZipVerifiedAgainstOfficialDigest": true,
+  "officialMetadataIndependentlyRechecked": true,
+  "reportSha256": "6d89a80bc2864228c472777dd8cc1a6f556d212214c866e38ef42285a5005472",
+  "sourceFixtureSha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+  "originalFingerprint": {
+    "path": "D:\\a\\open-office-studio\\open-office-studio\\.local\\p5-xlsb377\\shared_formula.xlsb",
+    "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+    "bytes": "7651",
+    "mtimeNs": "1795507865971727500",
+    "inode": "281474976715793",
+    "device": "4069728439",
+    "unchanged": true
+  },
+  "cancelSaveChecks": [
+    {
+      "route": "Control+s",
+      "proposal": "xlsx",
+      "cancelled": true,
+      "source": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": "7651",
+        "mtimeNs": "1795507865971727500",
+        "inode": "281474976715793",
+        "device": "4069728439"
+      },
+      "copyRemainsDirty": true
+    },
+    {
+      "route": "ordinary-Save",
+      "proposal": "xlsx",
+      "cancelled": true,
+      "source": {
+        "sha256": "e06ae79ed345495eee0bf5e7fd7a32638af0b646c5819f7d83a4f6fb97a151a3",
+        "bytes": "7651",
+        "mtimeNs": "1795507865971727500",
+        "inode": "281474976715793",
+        "device": "4069728439"
+      },
+      "copyRemainsDirty": true
+    }
+  ],
+  "pid": 6472,
+  "nativeMetadata": {
+    "identifier": "org.openaec.spreadsheet-studio",
+    "version": "2026.48.1",
+    "name": "Open Spreadsheet Studio"
+  },
+  "package": {
+    "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "artifactRun": 45177730188,
+    "platformJobId": 137703365803,
+    "sourceAttempt": 1,
+    "artifactId": 14828525724,
+    "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+    "archiveBytes": 2037941610,
+    "preparerRun": 45195780472,
+    "preparerHarness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "application": {
+      "key": "spreadsheet",
+      "title": "Open Spreadsheet Studio",
+      "identifier": "org.openaec.spreadsheet-studio",
+      "executable": "open-spreadsheet-studio.exe",
+      "packagePath": "dist-installers/spreadsheet/nsis/Open Spreadsheet Studio_2026.48.1_x64-setup.exe",
+      "sha256": "4ea3e47a3945cbd192d55911cf0ad3a7287dbe6c9bba5b33be08e8191a4c84a7",
+      "bytes": 384547072,
+      "signature": "valid",
+      "timestampRequired": true,
+      "payloadExecutable": {
+        "member": "open-spreadsheet-studio.exe",
+        "bytes": 88115616,
+        "sha256": "6e346585ed4bbfe156edbb50409b785845f1496dedeb30f3d334dd67c1cbaaf5",
+        "pe": "x64",
+        "derivation": "Independent7-Zip stdout from official whole-ZIP/report-bound NSIS before install"
+      }
+    },
+    "installer": "Open Spreadsheet Studio_2026.48.1_x64-setup.exe",
+    "canonicalPackageReport": {
+      "parentMember": ".local/pakketcontrole-spreadsheet-Windows.json",
+      "sha256": "0a17958cfce2d4cf587d139cc4dec625340e7500d356f4fcd54a4582d0a0ef07",
+      "bytes": 604
+    },
+    "boundary": "Only this unchanged product NSIS, own canonical report and receipt. Six standalone hosts never receive suite bytes."
+  },
+  "executable": {
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-dz9oTt\\installed\\open-spreadsheet-studio.exe",
+    "sha256": "6e346585ed4bbfe156edbb50409b785845f1496dedeb30f3d334dd67c1cbaaf5",
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG",
+    "fileVersion": "2026.48.1",
+    "bytes": 88115616,
+    "timestampSigner": "CN=Microsoft Public RSA Time Stamping Authority, OU=nShield TSS ESN:7800-05E0-D947, OU=Microsoft America Operations, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+    "productVersion": "2026.48.1",
+    "signature": "Valid",
+    "productName": "Open Spreadsheet Studio"
+  },
+  "bundledSafeRuntime": {
+    "bron": "meegeleverd",
+    "gekozen": null,
+    "gevonden": true,
+    "pad": "\\\\?\\C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-dz9oTt\\installed\\kantoorruntime\\program\\soffice.com",
+    "profiel": "veilig",
+    "versie": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276"
+  },
+  "nativeFilePickerOwnershipBound": true,
+  "fourOriginalPngsIndependentlyViewed": true,
+  "screenshotHashes": {
+    "Control-s-xlsx-proposal.png": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b",
+    "Control-s-cancelled-dirty.png": "1094a73b4181ee47343d1afa3c9053e3b8898910b2841c04f52ac0ec259a25e9",
+    "ordinary-Save-xlsx-proposal.png": "c804a71ec720394a221334928a5f5e2e824ab4b0edc9c89a641e319b57582c7b",
+    "ordinary-Save-cancelled-dirty.png": "50c36dad6d4eb3ef100f9b367e40168f02a4dc9072afc286ce9fe50b37d630f7"
+  },
+  "normalFullQuit": true,
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "limits": [
+    "Only short import/edit/proposal/cancel #377 supplement; no actual XLSX save/reopen or30-formula matrix recertified here. A15 edited to42 before both proposals; both actual working-copy dirty states inspected.",
+    "Previous core is a separate reference, not borrowed as377 evidence. Overall workflow had another case failure; only exact job138305718627 is SUCCESS.",
+    "Native producer identity/signature/PE facts reviewed through immutable receipts and canonical payload binding, no separate live Windows verification or own installer download."
+  ],
+  "newRun": false,
+  "newHost": false,
+  "newDownload": false,
+  "productEdit": false
+}

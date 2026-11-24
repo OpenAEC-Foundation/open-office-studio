@@ -1,0 +1,149 @@
+{
+  "scope": "Independent read-only Mac Email379 CmdS/MIME/cold native draft-row/body audit",
+  "status": "PASS-scoped-functional-evidence; raw nativeAccepted remains false",
+  "run": 45355392623,
+  "job": 138313473395,
+  "attempt": 1,
+  "harness": "60863f2a6df6b31a26a2a329ce36f9adb4e9b336",
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-macos-20261123-6f92\\.local\\native-45355392623-2026-11-24\\email\\artifact.zip",
+  "artifact": 14902786206,
+  "proofBytes": 947213,
+  "proofSha256": "392d8e301591ec75d262c7cdf8b7be89fd7235bb091625fda513ab0eaa0929de",
+  "expiry": "2027-02-22T08:21:24Z",
+  "officialDigestIndependentlyRechecked": true,
+  "rawReceiptSha256": "f29ee17f04181fe2f28d83f9274d39378ba54a19b254d0198f5f7a2f86dbff47",
+  "reviewedOwnerReceiptSha256": "1577ff2da8b2895a847d58f65f48dba6ef09e481e1f37eef451f277c2fefc084",
+  "sourceCasesSha256": "1e8f7ed56a47daa78418a77a051350cf5a9b1e8f70e1cf79fbc966bf15a87ac6",
+  "sourceCleanupHashes": {
+    "scripts/standalone-macos/run.py": "d5fd4f879649bb0b9bcc1d60b713d07adcd45ae4fc7a4b6d7bd166aff8c1cd56",
+    "scripts/standalone-macos/mail_fixture_server.py": "9a86761229af2589780e61afa7fa92e16be314554addd638d8ca69e8a3366c6e"
+  },
+  "sourceWitnessSha256": "236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5",
+  "provenance": {
+    "schemaVersion": 1,
+    "app": "email",
+    "source": {
+      "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+      "version": "2026.48.1"
+    },
+    "parentArtifact": {
+      "id": 14836145077,
+      "run": 45195055147,
+      "producerJobId": 137763371873,
+      "attempt": 1,
+      "name": "uitgave-macOS",
+      "sha256": "45a88b40325f516e91b0b4cb557b88fd2a81d62bde2e4be26dc87bd1b55ff015",
+      "bytes": 1972148013
+    },
+    "member": "dist-installers/email/dmg/Open Email Studio_2026.48.1_aarch64.dmg",
+    "package": {
+      "filename": "Open Email Studio_2026.48.1_aarch64.dmg",
+      "sha256": "db4d930f736b4f0f164d5b615ebee17279a6f7683cb6f2c3fc402c6f1c04e173",
+      "bytes": 373215325
+    },
+    "memberSHA256DerivedFromVerifiedParent": true,
+    "nativeAccepted": false,
+    "producerWorkflow": {
+      "commit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+      "tree": "94340e40228ddcb11aace00e4dd01f614a13273e",
+      "run": 45195055147,
+      "attempt": 1,
+      "job": 137763371873,
+      "branch": "codex/p5-macos-only-producer-20261123",
+      "path": ".github/workflows/release.yml",
+      "event": "workflow_dispatch",
+      "workflowSha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+      "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+      "witnessMember": ".local/macos-only-producer-source.json"
+    },
+    "sourceWitness": {
+      "member": ".local/macos-only-producer-source.json",
+      "bytes": 820,
+      "sha256": "236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5",
+      "rawBase64": "ewogICJhcHBIZWFkIjogImI2OTZhYjg2YmQxYzEyODcyOWEwNzliNjhjMDA4MmU2ZGYzZDM2YTUiLAogICJhcHBUcmVlIjogImUzMDg3OWZkNzcyODcxZTY5MDg0N2MwNjFlZjY2ZTZiODE4MDhhMDUiLAogICJhcHBWZXJzaW9uIjogIjIwMjYuNDguMSIsCiAgInByb2R1Y2VySGVhZCI6ICIyYWY5NGNkY2VmYTNlODhlNDk4MGI2MzFkMTZhODhkN2Q3ZGU1YWU4IiwKICAicHJvZHVjZXJXb3JrZmxvd0hlYWQiOiAiMmFmOTRjZGNlZmEzZTg4ZTQ5ODBiNjMxZDE2YTg4ZDdkN2RlNWFlOCIsCiAgInByb2R1Y2VyUmVmIjogInJlZnMvaGVhZHMvY29kZXgvcDUtbWFjb3Mtb25seS1wcm9kdWNlci0yMDI2MTEyMyIsCiAgInByb2R1Y2VyV29ya2Zsb3dSZWYiOiAiT3BlbkFFQy1Gb3VuZGF0aW9uL29wZW4tb2ZmaWNlLXN0dWRpby8uZ2l0aHViL3dvcmtmbG93cy9yZWxlYXNlLnltbEByZWZzL2hlYWRzL2NvZGV4L3A1LW1hY29zLW9ubHktcHJvZHVjZXItMjAyNjExMjMiLAogICJldmVudCI6ICJ3b3JrZmxvd19kaXNwYXRjaCIsCiAgInJ1bklkIjogIjQ1MTk1MDU1MTQ3IiwKICAiYXR0ZW1wdCI6ICIxIiwKICAiam9iIjogImJvdXdlbiIsCiAgImNoZWNrb3V0V29ya2Zsb3dTaGEyNTYiOiAiNjIwZTkwNDg1NDkzMTYzYjg3MTYzYTg3NjNmZmJiZmNjMmYwYWY1ZjAzMjUxYjU5MmFmNTc3NzIxYzVhOWM2NCIsCiAgInB1YmxpY2VyZW4iOiAiZmFsc2UiLAogICJuYXRpdmVBY2NlcHRlZCI6IGZhbHNlLAogICJzY29wZSI6ICJCdWlsZC1vbmx5IHByb2R1Y2VyL3NvdXJjZSBiaW5kaW5nOyBubyBuYXRpdmUgb3BlcmF0aW9uIG9yIHB1YmxpY2F0aW9uIgp9Cg==",
+      "value": {
+        "appHead": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+        "appTree": "e30879fd772871e690847c061ef66e6b81808a05",
+        "appVersion": "2026.48.1",
+        "producerHead": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+        "producerWorkflowHead": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+        "producerRef": "refs/heads/codex/p5-macos-only-producer-20261123",
+        "producerWorkflowRef": "OpenAEC-Foundation/open-office-studio/.github/workflows/release.yml@refs/heads/codex/p5-macos-only-producer-20261123",
+        "event": "workflow_dispatch",
+        "runId": "45195055147",
+        "attempt": "1",
+        "job": "bouwen",
+        "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+        "publiceren": "false",
+        "nativeAccepted": false,
+        "scope": "Build-only producer/source binding; no native operation or publication"
+      }
+    },
+    "qaRequestRebind": {
+      "originQaRun": 45351696628,
+      "originalRequestSHA256": "a4b10ddaec17716ef7455ee50f45f68989c6d74c6513cdc31385eac3293b58f7",
+      "originalProofSHA256": "e7362dd2ec46a2a1ce498954d89d189d0d2fad522a16f27afc9cdbb382b7c784",
+      "changedFields": [
+        "executeApps",
+        "expiresAt",
+        "harnessFiles",
+        "reuseTransfersFromRun"
+      ],
+      "packageBytesUnchanged": true
+    }
+  },
+  "executableSha256": "8b624dd343da68fea42463774e2136db3d2a2123b78eaec93ca6bbc89b7c447c",
+  "signatureGateExitCodes": {
+    "signature": 0,
+    "signatureIdentity": 0,
+    "gatekeeper": 0,
+    "notarizationStaple": 0
+  },
+  "nativeComposerFocusReceipt": "email/ax-98.json",
+  "actualNativeDraftRowReceipt": "email/ax-111.json",
+  "actualDraftRow": {
+    "role": "AXStaticText",
+    "exactTitle": "To: fixture@example.invalid 08:28\nSTANDALONE_EMAIL_SEED Add star",
+    "action": "AXPress"
+  },
+  "oneAppend": true,
+  "rawMime": {
+    "bytes": 913,
+    "sha256": "f776ef1596f230a21f7420600e4633f86ad3823729e48fadfd2f432889812b6f",
+    "subject": "STANDALONE_EMAIL_SEED",
+    "to": "fixture@example.invalid",
+    "type": "multipart/alternative",
+    "body": "STANDALONE_EMAIL_SEED\r\n\r\nSTANDALONE_UNCHANGED_CONTROL\r\n\r\nSTANDALONE_EMAIL_EDIT",
+    "defects": []
+  },
+  "normalCmdQuitPids": [
+    2840,
+    4859
+  ],
+  "coldUidFetchCount": 2,
+  "noSmtpDataOrRelay": true,
+  "reopenedOriginalPngViewed": true,
+  "reopenedPngSha256": "6d29dd1615e4e0735c4e2c9fb231d97952b91771c438c8ce58c5ea0095e32548",
+  "cleanup": {
+    "receiptPassed": true,
+    "cleanupErrors": [],
+    "ownedKeychainItemDeletionExitCode": 0,
+    "serverShutdownSourceAndNativeJobSuccessRetained": true
+  },
+  "limits": [
+    "Synthetic loopback draft-only route, no real accounts/SMTP/send acceptance.",
+    "Cryptographic signature and own-install facts audited via immutable native receipts; no live Mac/DMG/signature re-execution.",
+    "Original raw nativeAccepted/visualReview/resourceIndependence fields remain false; this audit is separate functional/visual corroboration and does not rewrite them.",
+    "Resource sampling is not exhaustive dependency closure; old selector failure remains historical."
+  ],
+  "newRun": false,
+  "newDownload": false,
+  "newGui": false,
+  "productEdit": false
+}

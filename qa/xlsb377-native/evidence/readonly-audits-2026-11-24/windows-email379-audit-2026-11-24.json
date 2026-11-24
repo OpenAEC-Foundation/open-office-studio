@@ -1,0 +1,107 @@
+{
+  "scope": "Independent read-only Windows Email #379 scoped-core evidence audit",
+  "status": "scoped-core-save/MIME/cold-body-readback-supported; raw UID argument granularity unavailable",
+  "run": 45352319983,
+  "job": 138301685242,
+  "attempt": 1,
+  "harness": "97710e2ba22d0939ef121fdebb18dec43ed2df9d",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-windows-p4-2026-11-23\\.local\\p5-reuse-complete-20261124\\standalone-windows-p5-email-proof.zip",
+  "artifact": 14901087138,
+  "expiry": "2027-02-22T07:59:54Z",
+  "proofBytes": 343146,
+  "proofSha256": "ebe87c13b28c75bebbe350fe855a77b46d711e07511f66c72ab17baf03bc28d5",
+  "reportSha256": "e0aef675171aa4a2441e01968d4c3957a033f7a2500c624ccabf2dfa8e6af10a",
+  "emlBytes": 772,
+  "emlSha256": "912a9cdc9f6b9377b649522f6343508f8426e513a4d3b2104114e538aef221d8",
+  "subject": "STANDALONE23 LOCAL DRAFT",
+  "body": "STANDALONE23 DRAFT BODY",
+  "mimeType": "multipart/alternative",
+  "mimeDefects": [],
+  "nativeCtrlSConfirmedInPinnedCase": true,
+  "exactlyOneAppend": true,
+  "noSecondAppendOnColdReopen": true,
+  "pids": [
+    8340,
+    1220
+  ],
+  "normalFullQuitAndOwnWebviewsExit": true,
+  "coldFetchAndBodyConfirmed": true,
+  "ownNativeIdentity": [
+    {
+      "identifier": "org.openaec.email-studio",
+      "version": "2026.48.1",
+      "name": "Open Email Studio"
+    },
+    {
+      "identifier": "org.openaec.email-studio",
+      "version": "2026.48.1",
+      "name": "Open Email Studio"
+    }
+  ],
+  "bothCompletedPngsIndependentlyViewed": true,
+  "payloadEqualsInstalled": true,
+  "package": {
+    "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "artifactRun": 45177730188,
+    "platformJobId": 137703365803,
+    "sourceAttempt": 1,
+    "artifactId": 14828525724,
+    "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+    "archiveBytes": 2037941610,
+    "preparerRun": 45195780472,
+    "preparerHarness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "application": {
+      "key": "email",
+      "title": "Open Email Studio",
+      "identifier": "org.openaec.email-studio",
+      "executable": "open-email-studio.exe",
+      "packagePath": "dist-installers/email/nsis/Open Email Studio_2026.48.1_x64-setup.exe",
+      "sha256": "057d062b783f5ef2bb86e505b22b8d4b99d9ed268343bda35304596641502703",
+      "bytes": 384570680,
+      "signature": "valid",
+      "timestampRequired": true,
+      "payloadExecutable": {
+        "member": "open-email-studio.exe",
+        "bytes": 88120232,
+        "sha256": "ff3fd8ac43253497954329a6d4cd528e622463fc43b7c8d50fd7da0eaf9fd172",
+        "pe": "x64",
+        "derivation": "Independent7-Zip stdout from official whole-ZIP/report-bound NSIS before install"
+      }
+    },
+    "installer": "Open Email Studio_2026.48.1_x64-setup.exe",
+    "canonicalPackageReport": {
+      "parentMember": ".local/pakketcontrole-email-Windows.json",
+      "sha256": "822f85b96aad30d172119d42b5cc30e0332d8e652965cf52a14354777f8ce271",
+      "bytes": 592
+    },
+    "boundary": "Only this unchanged product NSIS, own canonical report and receipt. Six standalone hosts never receive suite bytes."
+  },
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "loopbackServerClosed": true,
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "sourceHashes": {
+    "cases.mjs": "a6c4affd74c07fee296b167a0bdbe664d2dfd726c1c5e673d003a9acb98b696f",
+    "loopback-mail.py": "dc280d05d2f5f89149206afd68712d9179c78eb13ce424461487907a9eee3482"
+  },
+  "limits": [
+    "Raw imapCommands serializes only normalized command names: source line34 strips UID prefix and does not retain arguments. Therefore cold FETCH/body readback is directly supported, but a literal raw UID FETCH BODY[] trace cannot be independently certified from this artifact.",
+    "Synthetic loopback only; no SMTP/send/real-provider claim.",
+    "Signature/process facts audited through immutable native receipts, no separate live Windows/PE/LNK verification.",
+    "Fixture stderr contains ConnectionResetError; completed body readback and normal app/server cleanup receipts pass. Timing and cause of that stderr exception are not independently classified by this audit."
+  ],
+  "newRun": false,
+  "newDownload": false,
+  "newGui": false,
+  "productEdit": false
+}

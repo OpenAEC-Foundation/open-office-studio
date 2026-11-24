@@ -1,0 +1,99 @@
+{
+  "scope": "Read-only Windows Database identity and precise failure boundary; no full core acceptance",
+  "status": "identity-receipt-consistent; exact selector failure after SQLite import remains failed",
+  "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "run": 45352319983,
+  "attempt": 1,
+  "job": 138301685154,
+  "harness": "97710e2ba22d0939ef121fdebb18dec43ed2df9d",
+  "artifact": 14900722154,
+  "artifactExpiry": "2027-02-22T07:59:54Z",
+  "proofPath": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-standalone-windows-p4-2026-11-23\\.local\\p5-reuse-first-20261124\\standalone-windows-p5-database-proof.zip",
+  "proofBytes": 240941,
+  "proofSha256": "351642a56a30f0e75ca393d0941c509bee1a3227865c1b1dcf7932e647f92039",
+  "reportSha256": "547f5eb1878ee0055d8edc65ffe2e2e2c0a6271e081d3d813de75e04c58bcfb2",
+  "failurePngSha256": "cc34f3b941f9eca3ccbb6cb27a08ea981a72ab904754ada206ac818b59a38258",
+  "appUserModelId": "org.openaec.database-studio",
+  "shortcut": {
+    "identifier": "org.openaec.database-studio",
+    "bytes": 1663,
+    "sha256": "cb48b897de7a2006e0b919deab6e9a28b8b3ea4848c806309f2c444bdb93b45a",
+    "path": "C:\\Users\\runneradmin\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Open Database Studio.lnk",
+    "target": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-ZcKJoP\\installed\\open-database-studio.exe",
+    "canonicalTarget": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-ZcKJoP\\installed\\open-database-studio.exe"
+  },
+  "installedSignedPe": {
+    "bytes": 45851048,
+    "path": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\oos-standalone23-ZcKJoP\\installed\\open-database-studio.exe",
+    "signature": "Valid",
+    "timestampSigner": "CN=Microsoft Public RSA Time Stamping Authority, OU=nShield TSS ESN:7A00-05E0-D947, OU=Microsoft America Operations, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+    "sha256": "e8d324a52fee20822f2af47581e9189cdb14fa71d6d25853bd05983731472c1b",
+    "signer": "CN=Impertio Studio B.V., O=Impertio Studio B.V., STREET=Burg de Raadtsingel 31, L=Dordrecht, S=Zuid-Holland, C=NL, PostalCode=3311 JG",
+    "fileVersion": "2026.48.1",
+    "productName": "Open Database Studio",
+    "productVersion": "2026.48.1"
+  },
+  "payloadEqualsInstalled": true,
+  "package": {
+    "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "artifactRun": 45177730188,
+    "platformJobId": 137703365803,
+    "sourceAttempt": 1,
+    "artifactId": 14828525724,
+    "archiveSha256": "24816ccb20360bbfc976abf38810988dfe4b27a3305c80d5b80b711719587e0d",
+    "archiveBytes": 2037941610,
+    "preparerRun": 45195780472,
+    "preparerHarness": "f88a805beb152d42a22806d135d9af1c912aedcb",
+    "application": {
+      "key": "database",
+      "title": "Open Database Studio",
+      "identifier": "org.openaec.database-studio",
+      "executable": "open-database-studio.exe",
+      "packagePath": "dist-installers/database/nsis/Open Database Studio_2026.48.1_x64-setup.exe",
+      "sha256": "42fb7d23811d53b8ac44638887e42dd150a56b3d01603f3e5185b5a3ecf40130",
+      "bytes": 41078608,
+      "signature": "valid",
+      "timestampRequired": true,
+      "payloadExecutable": {
+        "member": "open-database-studio.exe",
+        "bytes": 45851048,
+        "sha256": "e8d324a52fee20822f2af47581e9189cdb14fa71d6d25853bd05983731472c1b",
+        "pe": "x64",
+        "derivation": "Independent7-Zip stdout from official whole-ZIP/report-bound NSIS before install"
+      }
+    },
+    "installer": "Open Database Studio_2026.48.1_x64-setup.exe",
+    "canonicalPackageReport": {
+      "parentMember": ".local/pakketcontrole-Database-Windows.json",
+      "sha256": "0a0c3b21e46f6bc00cd9ff4c42736d08c559373b01c1e8adc05ed59a4aa75421",
+      "bytes": 521
+    },
+    "boundary": "Only this unchanged product NSIS, own canonical report and receipt. Six standalone hosts never receive suite bytes."
+  },
+  "observedPid": 8128,
+  "fixtureSha256": "506d230347f4895adf45967e536dd3b0b4997374ce5c7e7f74e5ef99d985530e",
+  "fixtureTable": "standalone_qa",
+  "fixtureRowCount": 1,
+  "visualReview": "Actual Database screenshot shows Standalone23.sqlite imported, table standalone_qa with adjacent row counter1; no table datasheet open",
+  "failure": "Exact getByRole(button,name=standalone_qa,exact=true) timeout; visible composite name includes row count. Owner correcting only selector.",
+  "unproven": [
+    "Table-row opening, edit, save, fullquit/newPID/reopen and database content acceptance have not run past this failure; no core pass.",
+    "OS identity/signature facts audited as immutable native receipts; no separate live .lnk/Authenticode rerun or independent PE download."
+  ],
+  "cleanup": {
+    "residualOwnedWebviews": [],
+    "policyRestored": true,
+    "ownedInstallUninstalled": true,
+    "ownedAppExited": true,
+    "ownedNativeProfilesDisposed": true,
+    "ownedTemporaryProfileDisposed": true
+  },
+  "newDownload": false,
+  "newCi": false,
+  "productEdit": false,
+  "newGui": false
+}
