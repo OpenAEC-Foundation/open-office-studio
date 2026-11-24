@@ -1,0 +1,12 @@
+PASS VLookUp($A$15;$A$2:$E$11;2) expected VLookUp($A$15;$A$2:$E$11;2)
+PASS HLookup($A$15;$A$2:$E$11;1) expected HLookup($A$15;$A$2:$E$11;1)
+PASS VLookUp($A$15;$A$2:$E$11;3) expected VLookUp($A$15;$A$2:$E$11;3)
+PASS HLookup($A$15;$A$2:$E$11;2) expected HLookup($A$15;$A$2:$E$11;2)
+PASS VLookUp($A$15;$A$2:$E$11;4) expected VLookUp($A$15;$A$2:$E$11;4)
+PASS HLookup($A$15;$A$2:$E$11;3) expected HLookup($A$15;$A$2:$E$11;3)
+PASS VLookUp($A$15;$A$2:$E$11;5) expected VLookUp($A$15;$A$2:$E$11;5)
+PASS HLookup($A$15;$A$2:$E$11;4) expected HLookup($A$15;$A$2:$E$11;4)
+PASS VLookUp(7;8;1) expected VLookUp(7;8;1)
+PASS VLookUp(7;8;2) expected VLookUp(7;8;2)
+PASS VLookUp(7;8;(2+3*4)+1) expected VLookUp(7;8;(2+3*4)+1)
+11 checks; 0 failures; four genuine source programs

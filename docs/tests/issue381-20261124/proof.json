@@ -1,0 +1,227 @@
+{
+  "issue": 381,
+  "date": "2026-11-24",
+  "status": "SOURCE_PATCH_AND_EXTRACTED_PARSER_UNIT_PASS_RUNTIME_ACCEPTANCE_OPEN",
+  "branch": "codex/fix-381-wq2-vlookup-index-20261124",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "applicationBase": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "source": {
+    "project": "libwps",
+    "version": "0.4.14",
+    "url": "https://dev-www.libreoffice.org/src/libwps-0.4.14.tar.xz",
+    "tarSha256": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de",
+    "file": "src/lib/QuattroDosSpreadsheet.cpp",
+    "originalSha256": "7fa6e3028cda08e7b206228d4d14375e9c5c589186672f9fbaf2c8942845f888",
+    "patchedSha256": "b21a1aababcf78c981503f5b916797b981e37f2c30a0088d84bbc6db74a54846"
+  },
+  "patchSha256": "757d58527ad30a6126ebbfe0d3f3a335be0ec8d3494904e261ef53da84b13887",
+  "compiler": {
+    "name": "MSVC",
+    "fileVersion": "19.44.35229.0",
+    "sha256": "fe251ef50a1545b1b0835ee17b1e785459712b38d79e45b5c1d3d28970a36619",
+    "platform": "Windows x64"
+  },
+  "results": {
+    "originalSourceOracle": "PASS, genuine 4784-byte TESTLU.WQ2, four negative guards",
+    "priorConvertedXlsx": "Strict FAIL, original four untranslated indices and typed-cache differences preserved",
+    "extractedParserBaseline": "5 PASS / 6 FAIL",
+    "extractedParserPatched": "11 PASS / 0 FAIL",
+    "patchApply": "PASS, pinned original and patched source SHA256 checked"
+  },
+  "method": "Actual pinned readCell/readFormula/functable and FormulaInstruction source compiled with a disclosed memory-stream/Vec2/librevenge-string adapter. Four original formula records read directly from genuine source bytes. No complete libwps binary or real Office converter built.",
+  "runtimeBaseline": {
+    "inputArtifact": 14805600515,
+    "inputZipSha256": "bac1a37b55deff80cabd4670c1bf65d76266285275c0552436dcc13fcdafa487",
+    "manifestSha256": "79204b36527a7fed0f073b5290df26a86c6a610ba4f78ddf36883507b28da029",
+    "libwpsElfSha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+    "libraryBytes": 2483104,
+    "changed": false
+  },
+  "sourceRuntimeBoundary": "Baseline runtime receipt identifies LibreOffice26.8.2.2; official tag/source recipe pins libwps0.4.14. No claim of a bit-reproduced official binary, a modified ABI-compatible library, or a runtime containing this patch.",
+  "nextGate": "Coordinator allocation required: targeted Linux libwps build using original LibreOffice patches, ABI/dependency/manifest verification, private runtime differential, genuine conversion and complete original 61-cell typed oracle, P5 engine edit/UndoRedo/save/fresh reopen. Later Windows/macOS/browser/native applicability explicit at a new candidate.",
+  "limits": [
+    "No HLOOKUP, WQ1 or other Quattro-version fix; only WQ2 VLOOKUP third operand.",
+    "No hardcoded fixture cell/address correction or cache rewrite in production patch.",
+    "No full library/Office converter/engine save-reopen/native/OS-matrix pass for patched bytes.",
+    "No appbuild, CI dispatch, runtime pin change, catalog change, release intake, main, tag or publication.",
+    "Existing e0d7 source/oracle ownership and all previous proofs preserved; baseline source/XML replays are new local checks, historical Office execution retains its original identity."
+  ],
+  "retained": [
+    {
+      "name": "libwps-0.4.14.tar.xz",
+      "bytes": 719016,
+      "sha256": "365b968e270e85a8469c6b160aa6af5619a4e6c995dbb04c1ecc1b4dd13e80de"
+    },
+    {
+      "name": "wq2-runtime-result.zip",
+      "bytes": 55220,
+      "sha256": "4fc2da77b1e52eaa9ddc97ba8c8b4e3f119b9f9b9a16f9b3747fe98dd1a8711b"
+    },
+    {
+      "name": "intake-binding.json",
+      "bytes": 6784,
+      "sha256": "9314a05b7616be26b7698088c9be2331520fcf898a04760399072a3cd77a6003"
+    },
+    {
+      "name": "libreoffice-tag.json",
+      "bytes": 2734,
+      "sha256": "42bb24a017ba8b139bef6b0945d0eebcce3e11f8f6568126e2da40efbbbe1f0e"
+    },
+    {
+      "name": "download.lst",
+      "bytes": 33411,
+      "sha256": "907d5271ed226c414f8ede981ae91945799cba0ad25d72d01b48683568073cc4"
+    },
+    {
+      "name": "cpp-receipt.json",
+      "bytes": 847,
+      "sha256": "9531d9397894361f56be9a8d72d8742e83071e62c83829cf2b215e87b4ebce12"
+    },
+    {
+      "name": "original-build.stdout",
+      "bytes": 14,
+      "sha256": "7bc4416718388cc2d06ce4b203b5832457bc6d88024f533d2a5571ce7f1dd57c"
+    },
+    {
+      "name": "original-build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "original-run.stdout",
+      "bytes": 768,
+      "sha256": "09f593a915cbedcd2a9d6fe9a7e50838833855817cf7703ad9cc7e984e2b0751"
+    },
+    {
+      "name": "original-run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "patched-build.stdout",
+      "bytes": 13,
+      "sha256": "e027412f43d7fc34bd14fcaac10f7e52c61c16b1fb40d8d776d8b719800b96ea"
+    },
+    {
+      "name": "patched-build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "patched-run.stdout",
+      "bytes": 772,
+      "sha256": "e3d3df981618e0e2df4d7665f520360bb32d7e67c7b7ebc20a4e9eae0bfa5177"
+    },
+    {
+      "name": "patched-run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "baseline-source-oracle.json",
+      "bytes": 67244,
+      "sha256": "036a618944ce1aa50ce5630b8b3272c42e3565ddf665e202518b015b5f607ac4"
+    },
+    {
+      "name": "baseline-converted-independent.json",
+      "bytes": 9403,
+      "sha256": "a706c1a2e07c7019b22bb4f14356f3340910fa1e8c0a692e0397803c21b4a593"
+    },
+    {
+      "name": "baseline-receipts.json",
+      "bytes": 819,
+      "sha256": "7a8675759a577152c60c07de6705978148ce9127b23e627163942745841807bf"
+    },
+    {
+      "name": "baseline-0.stdout.txt",
+      "bytes": 785,
+      "sha256": "8bdca72ea6bc1a2dce76089a0b3de45b5a5e2c1928ddd38376fd66c1224f641e"
+    },
+    {
+      "name": "baseline-0.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "baseline-1.stdout.txt",
+      "bytes": 3642,
+      "sha256": "6ba8ead19643f8bf33cfe0b8119f65597ee80ef3d568a923b02f1bf07e8a9457"
+    },
+    {
+      "name": "baseline-1.stderr.txt",
+      "bytes": 79,
+      "sha256": "be8c46a287ac0696a0f82a1ef895aafa9c2ded43525b035909eb24fc8e59cd49"
+    },
+    {
+      "name": "lo-UnpackedTarball_libwps.mk",
+      "bytes": 1168,
+      "sha256": "7a0cf3a3994bd60591f4f53a2490b9461d2b1cb1a6a06e3f8177f2f0a79c65e1",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/UnpackedTarball_libwps.mk",
+      "gitBlob": "522e4b11a1f573a84e1de488cae7efc4c874e462"
+    },
+    {
+      "name": "lo-MSWorksCalcImportFilter.cxx",
+      "bytes": 19122,
+      "sha256": "1def05d40de50da6a33ba7c2567dc1ace5ff04277ee270c95e92910c47d84f95",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "writerperfect/source/calc/MSWorksCalcImportFilter.cxx",
+      "gitBlob": "1cd595b25d6363555038846f0cd126c15b6a3c20"
+    },
+    {
+      "name": "lo-0001-const-up-some-things.patch.1",
+      "bytes": 2335,
+      "sha256": "d37957e9bcd538266cf81a9d247cf4e74beacccbbf2f6b28403a131e328f3e0f",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/0001-const-up-some-things.patch.1",
+      "gitBlob": "6b64bd92b83a69b8b6d17589e2cb7ad43c063a66"
+    },
+    {
+      "name": "lo-tdf148749.patch.1",
+      "bytes": 1865,
+      "sha256": "9d3a3c64ced4703f9d94f0f1170d3885dbe8017cc37994e2fe7bea5989e37bf8",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/tdf148749.patch.1",
+      "gitBlob": "823605c7eaae37e6c6bab9d9ea5a7a1c65d78edd"
+    },
+    {
+      "name": "lo-enumarith.patch",
+      "bytes": 1009,
+      "sha256": "df79211ff1b3b354f5952594635518095670d7260f3326a70616013693398aea",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/enumarith.patch",
+      "gitBlob": "9cee0cec6daebd0de1d7feb945832f6bfbd0b5d4"
+    },
+    {
+      "name": "lo-libtool.patch.0",
+      "bytes": 567,
+      "sha256": "69580b7671074caca0fa1cc9baa1b35121f9ef6703aebaf7bd5664f1643336e4",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/libtool.patch.0",
+      "gitBlob": "bccd0ebdbc060b27183cf9475ea14c3e90867400"
+    },
+    {
+      "name": "lo-libwps-bundled-soname.patch.0",
+      "bytes": 758,
+      "sha256": "36f3058e6e60b5e85ed0f1cfc937d9580a9a29186fd27cf1a388adbab96a0f92",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/libwps-bundled-soname.patch.0",
+      "gitBlob": "013ba7a88b9e92032d234d69620510382db95846"
+    },
+    {
+      "name": "lo-rpath.patch.0",
+      "bytes": 134,
+      "sha256": "20fe1c9b4ccb08a65711ee6fcd3bb5110d622a629cd9d4cde11ec2c0ab5ea3ad",
+      "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+      "sourcePath": "external/libwps/rpath.patch.0",
+      "gitBlob": "600cc3d34c2c68087253ceb0be93432a22f63435"
+    },
+    {
+      "name": "baseline-official-artifact.json",
+      "bytes": 826,
+      "sha256": "c215847811c5be0984042b23147895d946ed5d9d27f857f501b635ecc3aaa76e"
+    }
+  ]
+}
