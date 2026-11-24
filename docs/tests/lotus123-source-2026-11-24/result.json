@@ -1,0 +1,2423 @@
+{
+  "status": "BOUNDED_PREFIX_RAW_NUMBER_DIFFERENCES_NATIVE_SEMANTICS_OPEN",
+  "fullFormatAcceptance": false,
+  "application": {
+    "commit": "dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b",
+    "tree": "5a644e397ecc6af5452a49b6404edf953687d1b2",
+    "version": "2026.48.1"
+  },
+  "source": {
+    "id": "lo-123-1",
+    "ext": "123",
+    "repo": "LibreOffice/core",
+    "revision": "92c170f11d44857d8e365f2e29fb449dfb567ff5",
+    "path": "writerperfect/qa/unit/data/calc/libwps/pass/Lotus123_3.123",
+    "url": "https://raw.githubusercontent.com/LibreOffice/core/92c170f11d44857d8e365f2e29fb449dfb567ff5/writerperfect/qa/unit/data/calc/libwps/pass/Lotus123_3.123",
+    "gitSha": "fa2154967a032cef23439f7a44f6ffbbd1130c09",
+    "sha256": "407d798d58510ab88e667df275426c7ef58faca3180ec87fb43bba90e3f836fb",
+    "bytes": 30352,
+    "variant": "Lotus123_3.123",
+    "expected": "open",
+    "expectedOn": [],
+    "expectEmptyWarning": false
+  },
+  "nativeOracle": {
+    "versionWord": "1003",
+    "versionBoundary": "Lotus123-family revision word; filename/version labels are not producer attestations",
+    "sourceSheetCountFromBOF": 3,
+    "explicitSheetNames": {
+      "1": "graphic"
+    },
+    "prefix": {
+      "endExclusive": 3800,
+      "recordCount": 172,
+      "sha256": "6b8a2929e3e98c0a400af30a616585bd394f4ee93b722487a8dcd59aaf039c21"
+    },
+    "opaqueSuffix": {
+      "begin": 3800,
+      "bytes": 26552,
+      "sha256": "604c511c0cdfe23dd21196d83203247b92e132e32bffd5d0feddaf25db3ecc50",
+      "accepted": false,
+      "boundary": "Native object/graphics/other records not decoded or validated by this bounded reader"
+    },
+    "records": [
+      {
+        "offset": 0,
+        "type": 0,
+        "bytes": 26,
+        "payloadHex": "03100400000000000b0002053a002100010a0000000000000000"
+      },
+      {
+        "offset": 30,
+        "type": 260,
+        "bytes": 4,
+        "payloadHex": "000c1201"
+      },
+      {
+        "offset": 38,
+        "type": 266,
+        "bytes": 24,
+        "payloadHex": "bdce0e000000000000000000000000000000000000000000"
+      },
+      {
+        "offset": 66,
+        "type": 262,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 70,
+        "type": 260,
+        "bytes": 4,
+        "payloadHex": "00161201"
+      },
+      {
+        "offset": 78,
+        "type": 256,
+        "bytes": 4,
+        "payloadHex": "01000000"
+      },
+      {
+        "offset": 86,
+        "type": 259,
+        "bytes": 4,
+        "payloadHex": "00000000"
+      },
+      {
+        "offset": 94,
+        "type": 265,
+        "bytes": 20,
+        "payloadHex": "04000000000000006a0200002f01000001000000"
+      },
+      {
+        "offset": 118,
+        "type": 261,
+        "bytes": 4,
+        "payloadHex": "00161201"
+      },
+      {
+        "offset": 126,
+        "type": 263,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 130,
+        "type": 262,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 134,
+        "type": 260,
+        "bytes": 4,
+        "payloadHex": "00121201"
+      },
+      {
+        "offset": 142,
+        "type": 256,
+        "bytes": 4,
+        "payloadHex": "02000000"
+      },
+      {
+        "offset": 150,
+        "type": 270,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 154,
+        "type": 27,
+        "bytes": 10,
+        "payloadHex": "fa0f3eb8300101000000"
+      },
+      {
+        "offset": 168,
+        "type": 27,
+        "bytes": 26,
+        "payloadHex": "a10f000000000000ff004001ef0000000000000014012d000000"
+      },
+      {
+        "offset": 198,
+        "type": 27,
+        "bytes": 26,
+        "payloadHex": "a10f010012000000ff004001f30000000000000013022d000000"
+      },
+      {
+        "offset": 228,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f001000000000ef00000000000000"
+      },
+      {
+        "offset": 248,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f0110000000000000000000000000"
+      },
+      {
+        "offset": 268,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f0210000000009f00000000000000"
+      },
+      {
+        "offset": 288,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f0310000000005f00000000000000"
+      },
+      {
+        "offset": 308,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f041007000000f100000000000000"
+      },
+      {
+        "offset": 328,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f051002000000f200000000000000"
+      },
+      {
+        "offset": 348,
+        "type": 27,
+        "bytes": 16,
+        "payloadHex": "ab0f0610050000000000000000020000"
+      },
+      {
+        "offset": 368,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f002000000000ef00000002"
+      },
+      {
+        "offset": 385,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f012000000000ef00ef0002"
+      },
+      {
+        "offset": 402,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f022000000000ef009f0002"
+      },
+      {
+        "offset": 419,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f032000000000ef005f0002"
+      },
+      {
+        "offset": 436,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f042001000000f000f00002"
+      },
+      {
+        "offset": 453,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f052003000000ef00810002"
+      },
+      {
+        "offset": 470,
+        "type": 27,
+        "bytes": 13,
+        "payloadHex": "b40f062012000000ef00f00002"
+      },
+      {
+        "offset": 487,
+        "type": 27,
+        "bytes": 44,
+        "payloadHex": "dc0f0000000000000022417269616c000000000013022d0000002f024000b9005400b900c84ed50378afd403"
+      },
+      {
+        "offset": 535,
+        "type": 27,
+        "bytes": 44,
+        "payloadHex": "dc0f000101000000001243656e7461757200000013022d0000002f024000b9005400b900c84ed50378afd403"
+      },
+      {
+        "offset": 583,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f004000000000ef00000000000000ef00000002ef0000000200000200000000"
+      },
+      {
+        "offset": 620,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f014001000000ef009f00000200000000000001ef0000000200000200000000"
+      },
+      {
+        "offset": 657,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f02402b000000ef00000000000000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 694,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0340060000000000000000020000ef00000002ef0000000200000200000000"
+      },
+      {
+        "offset": 731,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0440030000000000000000021400ef00000002ef0000000200000200000000"
+      },
+      {
+        "offset": 768,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f05400d000000ef00000000000000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 805,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f064002000000ef00000000001300ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 842,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f074002000000ef00000000040000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 879,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f084003000000ef000000000000000000000002ef0000000200000200000000"
+      },
+      {
+        "offset": 916,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0940020000009100000000000000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 953,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0a4001000000ef000000000000004400810041ef0000000200000200000000"
+      },
+      {
+        "offset": 990,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0b400100000045000000000000005500450002ef0000000200000200000000"
+      },
+      {
+        "offset": 1027,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0c4001000000ef00000000000c008400000012ef0000000200000200000000"
+      },
+      {
+        "offset": 1064,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0d4001000000ef00000000020000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 1101,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0e4001000000ef00000000030000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 1138,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f0f4001000000ef00000000080000ef00000000ef0000000200000200000000"
+      },
+      {
+        "offset": 1175,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f104001000000ef000000000000007500800001ef0000000200000200000000"
+      },
+      {
+        "offset": 1212,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f114001000000ef00000000000000ef00800002ef0000000200000200000000"
+      },
+      {
+        "offset": 1249,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f124001000000ef00000000000000ef0000003def0000000200000200000000"
+      },
+      {
+        "offset": 1286,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f134001000000ef00000000000000ef00000043ef0000000200000200000000"
+      },
+      {
+        "offset": 1323,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f144001000000ef00000000000000ef00000042ef0000000200000200000000"
+      },
+      {
+        "offset": 1360,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f154001000000ef00000000000000ef00000041ef0000000200000200000000"
+      },
+      {
+        "offset": 1397,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f174001000000ef00000000002000ef00000040ef0000000200000200000000"
+      },
+      {
+        "offset": 1434,
+        "type": 27,
+        "bytes": 33,
+        "payloadHex": "c90f194001000000ef00000000000000f000f00001ef0000000200000200000000"
+      },
+      {
+        "offset": 1471,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f005000000000ff004001ef0000000000000014012d00ef000000020000000000b9"
+      },
+      {
+        "offset": 1510,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f015000000000ffffffffffffffff0080ffff00c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1549,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f025006000000ff003e01f50000000000000014042d00ef00f400020000000000b9"
+      },
+      {
+        "offset": 1588,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f035002000000ff004001f30000000000000014012d00ef00f000020000000000b9"
+      },
+      {
+        "offset": 1627,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f045003000000ff004001f50000000000000014012d00ef00f400020000000000b9"
+      },
+      {
+        "offset": 1666,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f055001000000ffffffffffffffff0080ffff00c0100effffffffff0060000000b9"
+      },
+      {
+        "offset": 1705,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f065001000000ffffffffffffffff0080ffff00c0100effffffffff0160000000b9"
+      },
+      {
+        "offset": 1744,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f075001000000ffffffffffffffff0180feff00c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1783,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f085001000000ffffffffffffffff0280fdff00c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1822,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f095001000000ffffffffffffffff0480fbf800c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1861,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0a5001000000ffff59018100ffff0080ffff36c2100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1900,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0b5001000000ffffffff8100ffff4080bfff60c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 1939,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0c5001000000ffffffffffffffff0081fbf800c0100effff8100ff0000000000b9"
+      },
+      {
+        "offset": 1978,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0d5001000000ffffde01ffffffff0080ffff51c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 2017,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0e5001000000ffff7301ffffffff0080ffff43c1100effffffffff0000000000b9"
+      },
+      {
+        "offset": 2056,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f0f5001000000ffffffffffffffff0082fbf800c0100effff6200ff0000000000b9"
+      },
+      {
+        "offset": 2095,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f105001000000ffffffffffffffff0080ffff04c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 2134,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f115001000000ff017807ffffffff0080ffff00c0100effffffffff0000000000b9"
+      },
+      {
+        "offset": 2173,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f125001000000ffffffff3200ffff0080ffff60c02100ffffffffff0000000000b9"
+      },
+      {
+        "offset": 2212,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f135001000000ffffffffffffffff0080ffff0040100effffffffff0000000000b9"
+      },
+      {
+        "offset": 2251,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f145001000000ff003e01f300ffff0080ffff01c0100effffffffff0160000000b9"
+      },
+      {
+        "offset": 2290,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f155001000000ffffffffffffffff0080ffff00c0100ec4009800040000000000b9"
+      },
+      {
+        "offset": 2329,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f165001000000ffffffffffffffff0080ffff00c0100effffffff190000000000b9"
+      },
+      {
+        "offset": 2368,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f175003000000ffffffffffffffff0080ffff00c0100effffffffff0260000000b9"
+      },
+      {
+        "offset": 2407,
+        "type": 27,
+        "bytes": 35,
+        "payloadHex": "d20f185001000000ff003e01f500ffff0080ffff01c0100effffffffff0160000000b9"
+      },
+      {
+        "offset": 2446,
+        "type": 27,
+        "bytes": 10,
+        "payloadHex": "e60f0060000000000350"
+      },
+      {
+        "offset": 2460,
+        "type": 27,
+        "bytes": 10,
+        "payloadHex": "e60f0160000000000450"
+      },
+      {
+        "offset": 2474,
+        "type": 27,
+        "bytes": 10,
+        "payloadHex": "e60f0260020000000a50"
+      },
+      {
+        "offset": 2488,
+        "type": 10998,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 2492,
+        "type": 271,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 2496,
+        "type": 261,
+        "bytes": 4,
+        "payloadHex": "00121201"
+      },
+      {
+        "offset": 2504,
+        "type": 260,
+        "bytes": 4,
+        "payloadHex": "00047601"
+      },
+      {
+        "offset": 2512,
+        "type": 1920,
+        "bytes": 12,
+        "payloadHex": "6f000000070000005f005700"
+      },
+      {
+        "offset": 2528,
+        "type": 261,
+        "bytes": 4,
+        "payloadHex": "00047601"
+      },
+      {
+        "offset": 2536,
+        "type": 260,
+        "bytes": 4,
+        "payloadHex": "00043201"
+      },
+      {
+        "offset": 2544,
+        "type": 256,
+        "bytes": 4,
+        "payloadHex": "03000000"
+      },
+      {
+        "offset": 2552,
+        "type": 3,
+        "bytes": 6,
+        "payloadHex": "010000000100"
+      },
+      {
+        "offset": 2562,
+        "type": 1793,
+        "bytes": 28,
+        "payloadHex": "0000000000000000000000000000f03f000000000000c04000000000"
+      },
+      {
+        "offset": 2594,
+        "type": 1794,
+        "bytes": 8,
+        "payloadHex": "0000000000000000"
+      },
+      {
+        "offset": 2606,
+        "type": 11,
+        "bytes": 1,
+        "payloadHex": "00"
+      },
+      {
+        "offset": 2611,
+        "type": 1795,
+        "bytes": 6,
+        "payloadHex": "000000000000"
+      },
+      {
+        "offset": 2621,
+        "type": 12,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 2625,
+        "type": 28,
+        "bytes": 6,
+        "payloadHex": "00002d000000"
+      },
+      {
+        "offset": 2635,
+        "type": 262,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 2639,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0000010000000800"
+      },
+      {
+        "offset": 2651,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0001010000000800"
+      },
+      {
+        "offset": 2663,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0002010000000800"
+      },
+      {
+        "offset": 2675,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0003010000000500"
+      },
+      {
+        "offset": 2687,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0004010001000500"
+      },
+      {
+        "offset": 2699,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0005010001000100"
+      },
+      {
+        "offset": 2711,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0200010000000b00"
+      },
+      {
+        "offset": 2723,
+        "type": 31,
+        "bytes": 8,
+        "payloadHex": "0201010000000b00"
+      },
+      {
+        "offset": 2735,
+        "type": 9,
+        "bytes": 26,
+        "payloadHex": "000052414e47452033000000c512f7bf02420800000008000000"
+      },
+      {
+        "offset": 2765,
+        "type": 9,
+        "bytes": 26,
+        "payloadHex": "000052414e47453100000000c512f7bf02420400000304000003"
+      },
+      {
+        "offset": 2795,
+        "type": 9,
+        "bytes": 26,
+        "payloadHex": "000052414e47453200000000c512f7bf02420400000404000004"
+      },
+      {
+        "offset": 2825,
+        "type": 10,
+        "bytes": 26,
+        "payloadHex": "000019024739003200000000c512f7bf02420100020005000200"
+      },
+      {
+        "offset": 2855,
+        "type": 10,
+        "bytes": 26,
+        "payloadHex": "00001902473a003200000000c512f7bf02420100020105000201"
+      },
+      {
+        "offset": 2885,
+        "type": 10,
+        "bytes": 26,
+        "payloadHex": "00001902473b003200000000c512f7bf02420100020205000202"
+      },
+      {
+        "offset": 2915,
+        "type": 10,
+        "bytes": 26,
+        "payloadHex": "00001902473c003200000000c512f7bf02420100020305000203"
+      },
+      {
+        "offset": 2945,
+        "type": 10,
+        "bytes": 26,
+        "payloadHex": "00001902475b003200000000c512f7bf02420100020005000203"
+      },
+      {
+        "offset": 2975,
+        "type": 35,
+        "bytes": 12,
+        "payloadHex": "b03601006772617068696300"
+      },
+      {
+        "offset": 2991,
+        "type": 40,
+        "bytes": 19,
+        "payloadHex": "00000000000000000000084001070000000103"
+      },
+      {
+        "offset": 3014,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "00000001c0000000"
+      },
+      {
+        "offset": 3026,
+        "type": 22,
+        "bytes": 12,
+        "payloadHex": "00000002276974616c696300"
+      },
+      {
+        "offset": 3042,
+        "type": 22,
+        "bytes": 15,
+        "payloadHex": "0000000327756e6465726c696e6500"
+      },
+      {
+        "offset": 3061,
+        "type": 22,
+        "bytes": 9,
+        "payloadHex": "010000002772656400"
+      },
+      {
+        "offset": 3074,
+        "type": 22,
+        "bytes": 12,
+        "payloadHex": "010000012779656c6c6f7700"
+      },
+      {
+        "offset": 3090,
+        "type": 22,
+        "bytes": 18,
+        "payloadHex": "0100000227726564287061747465726e2900"
+      },
+      {
+        "offset": 3112,
+        "type": 22,
+        "bytes": 10,
+        "payloadHex": "010000035e3134707400"
+      },
+      {
+        "offset": 3126,
+        "type": 22,
+        "bytes": 10,
+        "payloadHex": "01000004273138707400"
+      },
+      {
+        "offset": 3140,
+        "type": 22,
+        "bytes": 13,
+        "payloadHex": "010000052763656e7461757200"
+      },
+      {
+        "offset": 3157,
+        "type": 22,
+        "bytes": 15,
+        "payloadHex": "0200000027726564286261636b2900"
+      },
+      {
+        "offset": 3176,
+        "type": 22,
+        "bytes": 22,
+        "payloadHex": "020000012779656c6c6f77286261636b706174742900"
+      },
+      {
+        "offset": 3202,
+        "type": 22,
+        "bytes": 15,
+        "payloadHex": "040000002770726f74656374656400"
+      },
+      {
+        "offset": 3221,
+        "type": 22,
+        "bytes": 19,
+        "payloadHex": "04000001276e6f742070726f74656374656400"
+      },
+      {
+        "offset": 3244,
+        "type": 22,
+        "bytes": 18,
+        "payloadHex": "04000002276869646520636f6e74656e7400"
+      },
+      {
+        "offset": 3266,
+        "type": 22,
+        "bytes": 12,
+        "payloadHex": "040000032772616e67653100"
+      },
+      {
+        "offset": 3282,
+        "type": 22,
+        "bytes": 12,
+        "payloadHex": "040000042772616e67653200"
+      },
+      {
+        "offset": 3298,
+        "type": 22,
+        "bytes": 25,
+        "payloadHex": "0500000027616c69676e206163726f737320636f6c756d6e00"
+      },
+      {
+        "offset": 3327,
+        "type": 22,
+        "bytes": 15,
+        "payloadHex": "050000012777726170207465787400"
+      },
+      {
+        "offset": 3346,
+        "type": 22,
+        "bytes": 13,
+        "payloadHex": "05000002277061747465726e00"
+      },
+      {
+        "offset": 3363,
+        "type": 22,
+        "bytes": 15,
+        "payloadHex": "05000003277061747465726e203200"
+      },
+      {
+        "offset": 3382,
+        "type": 22,
+        "bytes": 22,
+        "payloadHex": "05000004276e65672076616c756520696e2072656400"
+      },
+      {
+        "offset": 3408,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "08000000c0050000"
+      },
+      {
+        "offset": 3420,
+        "type": 22,
+        "bytes": 13,
+        "payloadHex": "08000002277374796c65203100"
+      },
+      {
+        "offset": 3437,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0000020051030000"
+      },
+      {
+        "offset": 3449,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0000020151030000"
+      },
+      {
+        "offset": 3461,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0100020051030000"
+      },
+      {
+        "offset": 3473,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0100020151030000"
+      },
+      {
+        "offset": 3485,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0200020051030000"
+      },
+      {
+        "offset": 3497,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0200020151030000"
+      },
+      {
+        "offset": 3509,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0300020051030000"
+      },
+      {
+        "offset": 3521,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0300020151030000"
+      },
+      {
+        "offset": 3533,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0400020051030000"
+      },
+      {
+        "offset": 3545,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0400020151030000"
+      },
+      {
+        "offset": 3557,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0500020051030000"
+      },
+      {
+        "offset": 3569,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0500020151030000"
+      },
+      {
+        "offset": 3581,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0600020051030000"
+      },
+      {
+        "offset": 3593,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0600020151030000"
+      },
+      {
+        "offset": 3605,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0700020051030000"
+      },
+      {
+        "offset": 3617,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0700020151030000"
+      },
+      {
+        "offset": 3629,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0800020051030000"
+      },
+      {
+        "offset": 3641,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0800020151030000"
+      },
+      {
+        "offset": 3653,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0900020051030000"
+      },
+      {
+        "offset": 3665,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0900020151030000"
+      },
+      {
+        "offset": 3677,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0a00020051030000"
+      },
+      {
+        "offset": 3689,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0a00020151030000"
+      },
+      {
+        "offset": 3701,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0b00020051030000"
+      },
+      {
+        "offset": 3713,
+        "type": 37,
+        "bytes": 8,
+        "payloadHex": "0b00020151030000"
+      },
+      {
+        "offset": 3725,
+        "type": 38,
+        "bytes": 51,
+        "payloadHex": "0800000101556e6b6e6f776e20202031322f30312f3136202031323a35303a303320414d0d0a63656c6c20636f6d6d656e7400"
+      },
+      {
+        "offset": 3780,
+        "type": 263,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 3784,
+        "type": 1796,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 3788,
+        "type": 262,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 3792,
+        "type": 263,
+        "bytes": 0,
+        "payloadHex": ""
+      },
+      {
+        "offset": 3796,
+        "type": 262,
+        "bytes": 0,
+        "payloadHex": ""
+      }
+    ],
+    "cells": {
+      "0!A1": {
+        "recordOffset": 2991,
+        "sheet": 0,
+        "address": "A1",
+        "type": 40,
+        "rawHex": "000000000000084001070000000103",
+        "kind": "formula",
+        "cachedValue": "3.0",
+        "formulaHex": "01070000000103",
+        "formula": {
+          "expression": "B1",
+          "targetSheet": 0,
+          "target": "B1",
+          "rawFlags": 7,
+          "columnRelative": true,
+          "rowRelative": true,
+          "otherFlagSemanticsAccepted": false
+        },
+        "independentlyCalculatedValue": "3",
+        "sourceCacheMatchesCalculation": true
+      },
+      "0!B1": {
+        "recordOffset": 3014,
+        "sheet": 0,
+        "address": "B1",
+        "type": 37,
+        "rawHex": "c0000000",
+        "kind": "number",
+        "value": "3"
+      },
+      "0!C1": {
+        "recordOffset": 3026,
+        "sheet": 0,
+        "address": "C1",
+        "type": 22,
+        "rawHex": "276974616c696300",
+        "kind": "text",
+        "value": "italic",
+        "alignmentByte": 39
+      },
+      "0!D1": {
+        "recordOffset": 3042,
+        "sheet": 0,
+        "address": "D1",
+        "type": 22,
+        "rawHex": "27756e6465726c696e6500",
+        "kind": "text",
+        "value": "underline",
+        "alignmentByte": 39
+      },
+      "0!A2": {
+        "recordOffset": 3061,
+        "sheet": 0,
+        "address": "A2",
+        "type": 22,
+        "rawHex": "2772656400",
+        "kind": "text",
+        "value": "red",
+        "alignmentByte": 39
+      },
+      "0!B2": {
+        "recordOffset": 3074,
+        "sheet": 0,
+        "address": "B2",
+        "type": 22,
+        "rawHex": "2779656c6c6f7700",
+        "kind": "text",
+        "value": "yellow",
+        "alignmentByte": 39
+      },
+      "0!C2": {
+        "recordOffset": 3090,
+        "sheet": 0,
+        "address": "C2",
+        "type": 22,
+        "rawHex": "27726564287061747465726e2900",
+        "kind": "text",
+        "value": "red(pattern)",
+        "alignmentByte": 39
+      },
+      "0!D2": {
+        "recordOffset": 3112,
+        "sheet": 0,
+        "address": "D2",
+        "type": 22,
+        "rawHex": "5e3134707400",
+        "kind": "text",
+        "value": "14pt",
+        "alignmentByte": 94
+      },
+      "0!E2": {
+        "recordOffset": 3126,
+        "sheet": 0,
+        "address": "E2",
+        "type": 22,
+        "rawHex": "273138707400",
+        "kind": "text",
+        "value": "18pt",
+        "alignmentByte": 39
+      },
+      "0!F2": {
+        "recordOffset": 3140,
+        "sheet": 0,
+        "address": "F2",
+        "type": 22,
+        "rawHex": "2763656e7461757200",
+        "kind": "text",
+        "value": "centaur",
+        "alignmentByte": 39
+      },
+      "0!A3": {
+        "recordOffset": 3157,
+        "sheet": 0,
+        "address": "A3",
+        "type": 22,
+        "rawHex": "27726564286261636b2900",
+        "kind": "text",
+        "value": "red(back)",
+        "alignmentByte": 39
+      },
+      "0!B3": {
+        "recordOffset": 3176,
+        "sheet": 0,
+        "address": "B3",
+        "type": 22,
+        "rawHex": "2779656c6c6f77286261636b706174742900",
+        "kind": "text",
+        "value": "yellow(backpatt)",
+        "alignmentByte": 39
+      },
+      "0!A5": {
+        "recordOffset": 3202,
+        "sheet": 0,
+        "address": "A5",
+        "type": 22,
+        "rawHex": "2770726f74656374656400",
+        "kind": "text",
+        "value": "protected",
+        "alignmentByte": 39
+      },
+      "0!B5": {
+        "recordOffset": 3221,
+        "sheet": 0,
+        "address": "B5",
+        "type": 22,
+        "rawHex": "276e6f742070726f74656374656400",
+        "kind": "text",
+        "value": "not protected",
+        "alignmentByte": 39
+      },
+      "0!C5": {
+        "recordOffset": 3244,
+        "sheet": 0,
+        "address": "C5",
+        "type": 22,
+        "rawHex": "276869646520636f6e74656e7400",
+        "kind": "text",
+        "value": "hide content",
+        "alignmentByte": 39
+      },
+      "0!D5": {
+        "recordOffset": 3266,
+        "sheet": 0,
+        "address": "D5",
+        "type": 22,
+        "rawHex": "2772616e67653100",
+        "kind": "text",
+        "value": "range1",
+        "alignmentByte": 39
+      },
+      "0!E5": {
+        "recordOffset": 3282,
+        "sheet": 0,
+        "address": "E5",
+        "type": 22,
+        "rawHex": "2772616e67653200",
+        "kind": "text",
+        "value": "range2",
+        "alignmentByte": 39
+      },
+      "0!A6": {
+        "recordOffset": 3298,
+        "sheet": 0,
+        "address": "A6",
+        "type": 22,
+        "rawHex": "27616c69676e206163726f737320636f6c756d6e00",
+        "kind": "text",
+        "value": "align across column",
+        "alignmentByte": 39
+      },
+      "0!B6": {
+        "recordOffset": 3327,
+        "sheet": 0,
+        "address": "B6",
+        "type": 22,
+        "rawHex": "2777726170207465787400",
+        "kind": "text",
+        "value": "wrap text",
+        "alignmentByte": 39
+      },
+      "0!C6": {
+        "recordOffset": 3346,
+        "sheet": 0,
+        "address": "C6",
+        "type": 22,
+        "rawHex": "277061747465726e00",
+        "kind": "text",
+        "value": "pattern",
+        "alignmentByte": 39
+      },
+      "0!D6": {
+        "recordOffset": 3363,
+        "sheet": 0,
+        "address": "D6",
+        "type": 22,
+        "rawHex": "277061747465726e203200",
+        "kind": "text",
+        "value": "pattern 2",
+        "alignmentByte": 39
+      },
+      "0!E6": {
+        "recordOffset": 3382,
+        "sheet": 0,
+        "address": "E6",
+        "type": 22,
+        "rawHex": "276e65672076616c756520696e2072656400",
+        "kind": "text",
+        "value": "neg value in red",
+        "alignmentByte": 39
+      },
+      "0!A9": {
+        "recordOffset": 3408,
+        "sheet": 0,
+        "address": "A9",
+        "type": 37,
+        "rawHex": "c0050000",
+        "kind": "number",
+        "value": "23"
+      },
+      "0!C9": {
+        "recordOffset": 3420,
+        "sheet": 0,
+        "address": "C9",
+        "type": 22,
+        "rawHex": "277374796c65203100",
+        "kind": "text",
+        "value": "style 1",
+        "alignmentByte": 39
+      },
+      "2!A1": {
+        "recordOffset": 3437,
+        "sheet": 2,
+        "address": "A1",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B1": {
+        "recordOffset": 3449,
+        "sheet": 2,
+        "address": "B1",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A2": {
+        "recordOffset": 3461,
+        "sheet": 2,
+        "address": "A2",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B2": {
+        "recordOffset": 3473,
+        "sheet": 2,
+        "address": "B2",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A3": {
+        "recordOffset": 3485,
+        "sheet": 2,
+        "address": "A3",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B3": {
+        "recordOffset": 3497,
+        "sheet": 2,
+        "address": "B3",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A4": {
+        "recordOffset": 3509,
+        "sheet": 2,
+        "address": "A4",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B4": {
+        "recordOffset": 3521,
+        "sheet": 2,
+        "address": "B4",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A5": {
+        "recordOffset": 3533,
+        "sheet": 2,
+        "address": "A5",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B5": {
+        "recordOffset": 3545,
+        "sheet": 2,
+        "address": "B5",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A6": {
+        "recordOffset": 3557,
+        "sheet": 2,
+        "address": "A6",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B6": {
+        "recordOffset": 3569,
+        "sheet": 2,
+        "address": "B6",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A7": {
+        "recordOffset": 3581,
+        "sheet": 2,
+        "address": "A7",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B7": {
+        "recordOffset": 3593,
+        "sheet": 2,
+        "address": "B7",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A8": {
+        "recordOffset": 3605,
+        "sheet": 2,
+        "address": "A8",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B8": {
+        "recordOffset": 3617,
+        "sheet": 2,
+        "address": "B8",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A9": {
+        "recordOffset": 3629,
+        "sheet": 2,
+        "address": "A9",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B9": {
+        "recordOffset": 3641,
+        "sheet": 2,
+        "address": "B9",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A10": {
+        "recordOffset": 3653,
+        "sheet": 2,
+        "address": "A10",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B10": {
+        "recordOffset": 3665,
+        "sheet": 2,
+        "address": "B10",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A11": {
+        "recordOffset": 3677,
+        "sheet": 2,
+        "address": "A11",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B11": {
+        "recordOffset": 3689,
+        "sheet": 2,
+        "address": "B11",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!A12": {
+        "recordOffset": 3701,
+        "sheet": 2,
+        "address": "A12",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      },
+      "2!B12": {
+        "recordOffset": 3713,
+        "sheet": 2,
+        "address": "B12",
+        "type": 37,
+        "rawHex": "51030000",
+        "kind": "number",
+        "value": "1.3"
+      }
+    },
+    "comments": [
+      {
+        "recordOffset": 3725,
+        "sheet": 0,
+        "address": "B9",
+        "rawHex": "01556e6b6e6f776e20202031322f30312f3136202031323a35303a303320414d0d0a63656c6c20636f6d6d656e7400",
+        "accepted": false,
+        "boundary": "Leading control/comment metadata and rendering unqualified"
+      }
+    ],
+    "styleBoundary": "Literal labels such as red/protected/italic are cell text, not tested formatting properties",
+    "fullFormatAcceptance": false
+  },
+  "historicalBinding": {
+    "reportDate": "2026-11-10T08:48:03.136Z",
+    "converter": "LibreOffice 26.8.2.2 9dea406ab7695df6325b11b0e19fdca8db4b7276",
+    "profileSha256": "8f301a135c288b99cc984a895030eee27ba40d3d9722f81c1d691d5f66f3de6c",
+    "result": {
+      "id": "lo-123-1",
+      "ext": "123",
+      "variant": "Lotus123_3.123",
+      "passed": true,
+      "conversionMs": 11410,
+      "savedBytes": 17456,
+      "savedSha256": "b0c94fed8d1414a8225df8549de49f107dd25a71ae30db5471f3b0d2460c14c4",
+      "outcome": "opened-saved-reopened"
+    },
+    "conversionReceipt": {
+      "ms": 11410,
+      "timedOut": false,
+      "log": "convert C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-9cb0Pw\\bron.123 as a Calc document -> C:\\Users\\alper\\AppData\\Local\\Temp\\oos-dekking-9cb0Pw\\uit\\bron.xlsx using filter : Calc MS Excel 2007 XML\n"
+    },
+    "savedDigestIdentityVerified": true,
+    "currentP2RuntimeEquivalence": false
+  },
+  "independentHistoricalCases": [
+    {
+      "case": "BOF-sheet-count",
+      "passed": true
+    },
+    {
+      "case": "sheet-1:explicit-name",
+      "passed": true
+    },
+    {
+      "case": "0!A1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "formula",
+      "sourceRawValue": "3.0",
+      "observedValue": "3",
+      "qualification": "Decoded same-sheet reference cache"
+    },
+    {
+      "case": "0!A1:reference-formula",
+      "passed": true
+    },
+    {
+      "case": "0!B1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "3",
+      "observedValue": "3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "0!C1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "italic",
+      "observedValue": "italic",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!D1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "underline",
+      "observedValue": "underline",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!A2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "red",
+      "observedValue": "red",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!B2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "yellow",
+      "observedValue": "yellow",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!C2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "red(pattern)",
+      "observedValue": "red(pattern)",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!D2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "14pt",
+      "observedValue": "14pt",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!E2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "18pt",
+      "observedValue": "18pt",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!F2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "centaur",
+      "observedValue": "centaur",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!A3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "red(back)",
+      "observedValue": "red(back)",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!B3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "yellow(backpatt)",
+      "observedValue": "yellow(backpatt)",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!A5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "protected",
+      "observedValue": "protected",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!B5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "not protected",
+      "observedValue": "not protected",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!C5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "hide content",
+      "observedValue": "hide content",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!D5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "range1",
+      "observedValue": "range1",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!E5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "range2",
+      "observedValue": "range2",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!A6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "align across column",
+      "observedValue": "align across column",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!B6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "wrap text",
+      "observedValue": "wrap text",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!C6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "pattern",
+      "observedValue": "pattern",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!D6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "pattern 2",
+      "observedValue": "pattern 2",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!E6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "neg value in red",
+      "observedValue": "neg value in red",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "0!A9:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "23",
+      "observedValue": "23",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "0!C9:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "text",
+      "sourceRawValue": "style 1",
+      "observedValue": "style 1",
+      "qualification": "Literal ASCII cell text"
+    },
+    {
+      "case": "2!A1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B1:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B2:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B3:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B4:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B5:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A6:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B6:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "2",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A7:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "2",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B7:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A8:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "0",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B8:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "0",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A9:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "0",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B9:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "0",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A10:typed-value-or-cache",
+      "passed": false,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "0",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B10:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A11:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B11:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!A12:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "2!B12:typed-value-or-cache",
+      "passed": true,
+      "sourceKind": "number",
+      "sourceRawValue": "1.3",
+      "observedValue": "1.3",
+      "qualification": "Raw numeric equality only; native unit/format/epoch/projection unqualified"
+    },
+    {
+      "case": "decoded-literals-remain-literals",
+      "passed": true
+    }
+  ],
+  "strictBoundedContentPassed": false,
+  "outputOracleControls": [
+    {
+      "control": "text-label-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!C1:typed-value-or-cache"
+      ]
+    },
+    {
+      "control": "number-type-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!B1:typed-value-or-cache"
+      ]
+    },
+    {
+      "control": "compact-number-value-changed",
+      "passed": true,
+      "newFailedCases": [
+        "2!A1:typed-value-or-cache"
+      ]
+    },
+    {
+      "control": "formula-dropped",
+      "passed": true,
+      "newFailedCases": [
+        "0!A1:reference-formula"
+      ]
+    },
+    {
+      "control": "formula-reference-changed",
+      "passed": true,
+      "newFailedCases": [
+        "0!A1:reference-formula"
+      ]
+    },
+    {
+      "control": "known-sheet-name-changed",
+      "passed": true,
+      "newFailedCases": [
+        "sheet-1:explicit-name"
+      ]
+    }
+  ],
+  "nativeReaderControls": [
+    {
+      "control": "wrong-family-word",
+      "passed": true
+    },
+    {
+      "control": "prefix-record-overrun",
+      "passed": true
+    },
+    {
+      "control": "text-without-terminal-nul",
+      "passed": true
+    },
+    {
+      "control": "formula-without-return",
+      "passed": true
+    },
+    {
+      "control": "truncated-content-prefix",
+      "passed": true
+    },
+    {
+      "control": "changed-referenced-number-exposes-cache-mismatch",
+      "passed": true
+    }
+  ],
+  "snapshotObservation": {
+    "sheets": [
+      {
+        "name": "Sheet1",
+        "cells": {
+          "A1": {
+            "type": "n",
+            "value": "3",
+            "formula": "B1",
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B1": {
+            "type": "n",
+            "value": "3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C1": {
+            "type": "s",
+            "value": "italic",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D1": {
+            "type": "s",
+            "value": "underline",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A2": {
+            "type": "s",
+            "value": "red",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B2": {
+            "type": "s",
+            "value": "yellow",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C2": {
+            "type": "s",
+            "value": "red(pattern)",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D2": {
+            "type": "s",
+            "value": "14pt",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E2": {
+            "type": "s",
+            "value": "18pt",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "F2": {
+            "type": "s",
+            "value": "centaur",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A3": {
+            "type": "s",
+            "value": "red(back)",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B3": {
+            "type": "s",
+            "value": "yellow(backpatt)",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A5": {
+            "type": "s",
+            "value": "protected",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B5": {
+            "type": "s",
+            "value": "not protected",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C5": {
+            "type": "s",
+            "value": "hide content",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D5": {
+            "type": "s",
+            "value": "range1",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E5": {
+            "type": "s",
+            "value": "range2",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A6": {
+            "type": "s",
+            "value": "align across column",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B6": {
+            "type": "s",
+            "value": "wrap text",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C6": {
+            "type": "s",
+            "value": "pattern",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "D6": {
+            "type": "s",
+            "value": "pattern 2",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "E6": {
+            "type": "s",
+            "value": "neg value in red",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A9": {
+            "type": "n",
+            "value": "23",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "C9": {
+            "type": "s",
+            "value": "style 1",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          }
+        }
+      },
+      {
+        "name": "graphic",
+        "cells": {}
+      },
+      {
+        "name": "Sheet3",
+        "cells": {
+          "A1": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B1": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A2": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 165,
+            "observedFormatCode": "0.00"
+          },
+          "B2": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 166,
+            "observedFormatCode": "0.000"
+          },
+          "A3": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 165,
+            "observedFormatCode": "0.00"
+          },
+          "B3": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 167,
+            "observedFormatCode": "0.00E+00"
+          },
+          "A4": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 168,
+            "observedFormatCode": "0.00%"
+          },
+          "B4": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "[$$-409]0.00"
+          },
+          "A5": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "[$$-409]0.00"
+          },
+          "B5": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "[$$-409]0.00"
+          },
+          "A6": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 169,
+            "observedFormatCode": "[$$-409]0.00"
+          },
+          "B6": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 170,
+            "observedFormatCode": "m/d/yy"
+          },
+          "A7": {
+            "type": "n",
+            "value": "2",
+            "formula": null,
+            "observedNumFmtId": 170,
+            "observedFormatCode": "m/d/yy"
+          },
+          "B7": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A8": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "B8": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "A9": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "B9": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "A10": {
+            "type": "n",
+            "value": "0",
+            "formula": null,
+            "observedNumFmtId": 171,
+            "observedFormatCode": "h:mm:ss\\ AM/PM"
+          },
+          "B10": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A11": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B11": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "A12": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          },
+          "B12": {
+            "type": "n",
+            "value": "1.3",
+            "formula": null,
+            "observedNumFmtId": 164,
+            "observedFormatCode": "General"
+          }
+        }
+      }
+    ]
+  },
+  "p2Policy": {
+    "conversionTarget": "xlsx",
+    "native123Output": false,
+    "modernDefault": "xlsx",
+    "browser": "External converter desktop boundary; no actual browser test"
+  },
+  "remaining": [
+    "Only the first3800-byte content-prefix oracle is decoded; remaining26552 bytes and native objects/graphics/styles are opaque, not validated or rejected.",
+    "Seven raw-number differences correlate with output date/time styles; native per-cell format/epoch/projection must be independently qualified before calling these value loss or product defects.",
+    "Single reference formula cache matches the source calculation; actual recalculation/edit/UndoRedo/save/fresh-process acceptance remains unexecuted.",
+    "Labels mentioning styles/protection are ordinary cell text in this audit, not tested style/protection properties.",
+    "Comment control/metadata remain raw; no comment preservation or visual rendering acceptance.",
+    "Lotus123-family header1003 is not original producer/app-version attestation; no general Lotus/Works/Quattro variant claim.",
+    "Current P2 private-runtime/package/helper/engine/native Windows/Linux/macOS and supported browser checks remain OPEN."
+  ],
+  "newRuntimeOrCIStarted": false,
+  "originalUnchanged": true
+}
