@@ -1,0 +1,158 @@
+{
+  "run": 45381046100,
+  "job": 138399833987,
+  "attempt": 1,
+  "harnessCommit": "75efe1bc1845f8b91fb931a54e844987a9260a9f",
+  "harnessSourceCommit": "25ccc32710526d54ab2ce83066eaa806e2f84903",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "status": "FAIL_RUNTIME_ENTRYSET_GUARD_BEFORE_PATCHED_CONVERTER",
+  "artifactDownloadCount": 1,
+  "sourceSha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+  "variants": {
+    "rebuilt-control": {
+      "sha256": "00186a57c76193646e28aa6b06a67eeaff5a1d39f109b0c1d1339878181017ad",
+      "symbolStatus": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+      "completeAbiCompatibility": false
+    },
+    "patched": {
+      "sha256": "e9f8123ab66523071efcef37790c29cd6cb19201d258df7d937e644bb6f03932",
+      "symbolStatus": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+      "completeAbiCompatibility": false
+    },
+    "packaged": {
+      "sha256": "c6f5c5dc6bcabf01e83591a9365983171a538fcf41f77294523bc0a77f82ecc4",
+      "symbolStatus": "DIRECT_LIBWPS_API_SYMBOL_CONTRACT_MATCH_ONLY",
+      "completeAbiCompatibility": false
+    }
+  },
+  "passed": [
+    "frozen request/source/nonce/queue/disk",
+    "whole original runtime ZIP/tar/manifest/shared verifier",
+    "both real libwps builds; SONAME/NEEDED/ORIGIN/ldd and bounded direct API contract",
+    "packaged and rebuilt-control real CLI conversions, observed loaded ELF, original source bytes and no remaining own converter profile process",
+    "both unchanged independent 61-cell/four-formula oracles preserve original strict failure with indices1,2,3,4",
+    "engine/SSR cleanup and finish deadline"
+  ],
+  "notRun": [
+    "patched real CLI conversion and actual patched library load",
+    "patched typed 61-cell oracle",
+    "P5 engine edit/Undo/Redo/save/fresh-process reopen",
+    "Windows/macOS/browser GUI/native acceptance",
+    "post-conversion full canonical prefix inventory"
+  ],
+  "failure": "Second derived-prefix entryset assertion failed after rebuilt-control conversion; differing paths were not captured, so exact cause is unknown. No verifier relaxation, retry or autofix.",
+  "canonicalCaveat": "Build report verifies canonical library untouched before conversion. Packaged control executes the canonical extracted prefix; no post-conversion full manifest was retained. Do not claim full canonical post-run immutability.",
+  "cleanup": {
+    "engineDisposed": true,
+    "loaderClosed": true
+  },
+  "artifact": {
+    "id": 14913128859,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkxMzEyODg1OQ==",
+    "name": "issue381-private-runtime-proof",
+    "size_in_bytes": 3777450,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14913128859",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14913128859/zip",
+    "expired": false,
+    "digest": "sha256:2eb191f39ab30479a535f0f2125d188c47bd48a2d3a9b1884b12030f9e71d509",
+    "created_at": "2026-11-24T11:08:48Z",
+    "updated_at": "2026-11-24T11:08:48Z",
+    "expires_at": "2027-02-22T11:06:13Z",
+    "workflow_run": {
+      "id": 45381046100,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/fix-381-wq2-vlookup-index-20261124",
+      "head_sha": "75efe1bc1845f8b91fb931a54e844987a9260a9f"
+    }
+  },
+  "files": [
+    {
+      "name": ".gitattributes",
+      "bytes": 20,
+      "sha256": "2199d532e3836627014a38692a34c49da747cd5baeb033c2a88b90d1490f1fe0"
+    },
+    {
+      "name": "artifact.zip",
+      "bytes": 3777450,
+      "sha256": "2eb191f39ab30479a535f0f2125d188c47bd48a2d3a9b1884b12030f9e71d509"
+    },
+    {
+      "name": "build-proof/build.json",
+      "bytes": 55171,
+      "sha256": "894edef677dccfb0700ca59b59eb91a6e7a82c7e82fe8fc62378aba157695fac"
+    },
+    {
+      "name": "deadline-finish.json",
+      "bytes": 317,
+      "sha256": "7a07a9fdc40d46585ed0acbb0e7d6fbd22ba8fe78c5c01e17caac1c792017d4f"
+    },
+    {
+      "name": "failed-job.log",
+      "bytes": 12527,
+      "sha256": "2d3de67059cc07453b6510f8ff95a8cb24163ac73bd8fe1651c7a28f46b0c98b"
+    },
+    {
+      "name": "members.json",
+      "bytes": 13611,
+      "sha256": "bb56cbed43980d034beacba8d057d82affa0dc1f776bd1fcada8c3f1d209c83a"
+    },
+    {
+      "name": "official-artifact.json",
+      "bytes": 852,
+      "sha256": "394b22e76c4429bd5537b44cce63e3a84424d44494a716139a4216a7efb9d89c"
+    },
+    {
+      "name": "official-run.json",
+      "bytes": 15443,
+      "sha256": "4c50f88a13f6f94b703cf9a4f842ec0f960a0d4cc2561a46a9eeeee9df5424e7"
+    },
+    {
+      "name": "real-proof/packaged/converted-independent.json",
+      "bytes": 8901,
+      "sha256": "c53334d445acee3d0865a175385a86ac8b99ee3c836dbc2ad47983d9ee76a70c"
+    },
+    {
+      "name": "real-proof/packaged/converted.xlsx",
+      "bytes": 6494,
+      "sha256": "f69a8e62cd11659e9c421a89dfe69d8b7da68ed8731cc1aa7d2cf75a151cb763"
+    },
+    {
+      "name": "real-proof/packaged/converter-report.json",
+      "bytes": 7622,
+      "sha256": "c5c3f07050a3bb6ca1e020d1ad6229349ccaef5c9128071dfea3d924eaf29fdf"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converted-independent.json",
+      "bytes": 8908,
+      "sha256": "4ffc5e73b144d1f9e9995a237e985c2c33533423d26ab1c11dd8b260ba968896"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converted.xlsx",
+      "bytes": 6494,
+      "sha256": "651bec27909be2387215ff3922d41c53229afa1bfb370a39dd97f7192681df27"
+    },
+    {
+      "name": "real-proof/rebuilt-control/converter-report.json",
+      "bytes": 7969,
+      "sha256": "6766f71df4f8c5351191a29a2cf1a77a52cc596f6b4287e06e131acd3632dbc5"
+    },
+    {
+      "name": "real-proof/report.json",
+      "bytes": 19814,
+      "sha256": "23c2ecf0d5452213cb561fe04f6b009fdcae578ecc68345c31d87a6b883b1d7e"
+    },
+    {
+      "name": "request-verification.json",
+      "bytes": 411,
+      "sha256": "ef1847285565386bda6f47c54bd17e71b89d3f985a01ce79ab0d84be093a538a"
+    },
+    {
+      "name": "runner-frontgate.json",
+      "bytes": 122,
+      "sha256": "2dc138d5fa0f4dbc40b62e23ff909a5b1967a8a0af36b3a8321540e417b463a7"
+    }
+  ]
+}
