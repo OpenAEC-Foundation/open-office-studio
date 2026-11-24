@@ -1,0 +1,174 @@
+{
+  "issue": 382,
+  "scope": "ETT/DPT filename classification only",
+  "status": "product fix and focused policy checks passed; not integrated",
+  "recordedAt": "2026-11-24T09:28:48.931255+00:00",
+  "base": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "productCommit": "bb781170bb28880e597cfbcb5293872f62b0fecc",
+  "productTree": "be87009307f4a855db9b2a715abe4e61dda7797d",
+  "productFiles": [
+    "src/import/sjabloon.ts",
+    "src/import/sjabloon.test.ts"
+  ],
+  "productionModuleSha256": "862c8f285a434f5afaf13150afeb2b73adf91d1a6f38cac8b3c5f2ec6059ce7d",
+  "tests": {
+    "windowsVitest": {
+      "before": {
+        "passed": 19,
+        "failed": 6
+      },
+      "after": {
+        "passed": 25,
+        "failed": 0
+      },
+      "node": "v24.22.3",
+      "platform": "win32"
+    },
+    "windowsSSR": {
+      "cases": 62,
+      "status": "passed"
+    },
+    "linuxVitest": {
+      "passed": 25,
+      "failed": 0
+    },
+    "linuxSSR": {
+      "cases": 62,
+      "status": "passed",
+      "node": "v22.23.5"
+    },
+    "linuxBrowser": {
+      "cases": 62,
+      "status": "passed",
+      "browser": {
+        "executable": "/usr/bin/google-chrome",
+        "version": "157.0.8103.78"
+      }
+    },
+    "macosSSR": {
+      "cases": 62,
+      "status": "passed",
+      "node": "v22.23.5",
+      "arch": "arm64"
+    }
+  },
+  "qaApplicability": {
+    "originalQaCommit": "1fd0407e81562111cd21ef6120b0c0adda3725d0",
+    "browserAdapterCorrectionCommit": "f79337e50c400f74777115d58366cb2ed3b120c6",
+    "exactOnlyDelta": "ESM import of require-resolved Playwright CJS entry changed to require(playwright), inside mode===browser branch only",
+    "nodeModeProofRetained": "Windows/macOS node-mode source, cases and product byte hashes unchanged; browser branch never executed there",
+    "initialLinuxFailure": {
+      "status": "failed",
+      "error": "TypeError: Cannot read properties of undefined (reading 'launch')\n    at file:///home/runner/work/open-office-studio/open-office-studio/.local/issue382-policy.mjs:73:30\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)",
+      "ssrCasesPassed": 62,
+      "productClassificationFailure": false
+    }
+  },
+  "artifacts": [
+    {
+      "label": "linux-initial",
+      "run": 45364573124,
+      "job": 138342854154,
+      "attempt": 1,
+      "qaCommit": "1fd0407e81562111cd21ef6120b0c0adda3725d0",
+      "id": 14905288781,
+      "zipBytes": 2808,
+      "officialAndActualZipSha256": "b60a7b956fef77ed763fa5551efc6dc10424d2065394085e691820eec5c3cd09",
+      "expiresAt": "2027-02-22T09:22:27Z"
+    },
+    {
+      "label": "linux-final",
+      "run": 45364977021,
+      "job": 138344243691,
+      "attempt": 1,
+      "qaCommit": "f79337e50c400f74777115d58366cb2ed3b120c6",
+      "id": 14905774298,
+      "zipBytes": 2834,
+      "officialAndActualZipSha256": "a89669984cf8b5bfbea502e2e231ca51116b21772427d4d974fad09f766e9e77",
+      "expiresAt": "2027-02-22T09:24:59Z"
+    },
+    {
+      "label": "macos",
+      "run": 45364682874,
+      "job": 138343246937,
+      "attempt": 1,
+      "qaCommit": "1fd0407e81562111cd21ef6120b0c0adda3725d0",
+      "id": 14906402299,
+      "zipBytes": 1274,
+      "officialAndActualZipSha256": "0d51e2dcf294047ce57b752fb73bff59ed3a1172acad4d879a549c219afd69c2",
+      "expiresAt": "2027-02-22T09:23:11Z"
+    }
+  ],
+  "retainedFiles": {
+    "linux-initial-artifact.zip": {
+      "bytes": 2808,
+      "sha256": "b60a7b956fef77ed763fa5551efc6dc10424d2065394085e691820eec5c3cd09"
+    },
+    "linux-initial-metadata.json": {
+      "bytes": 798,
+      "sha256": "db09b8fd980fef763d43b7eae36a603c578ff400f8ef7e45a263c2c3e912c24a"
+    },
+    "linux-initial-module-policy.json": {
+      "bytes": 10099,
+      "sha256": "db0af6a8cda5aae3532c7cc554bfbb198ffc6823013c2a0c4f47a5584c8732b4"
+    },
+    "linux-final-artifact.zip": {
+      "bytes": 2834,
+      "sha256": "a89669984cf8b5bfbea502e2e231ca51116b21772427d4d974fad09f766e9e77"
+    },
+    "linux-final-metadata.json": {
+      "bytes": 798,
+      "sha256": "deb4b24c2bc2ee1723b3f3614e8188d921a8e97fa03e377a46a0ddb98b82e192"
+    },
+    "linux-final-module-policy.json": {
+      "bytes": 18618,
+      "sha256": "2d6bc2ec743942332b6d5cf3bda92d0cb2a98e3377c727d3ac3055da9ce7fd9a"
+    },
+    "macos-artifact.zip": {
+      "bytes": 1274,
+      "sha256": "0d51e2dcf294047ce57b752fb73bff59ed3a1172acad4d879a549c219afd69c2"
+    },
+    "macos-metadata.json": {
+      "bytes": 798,
+      "sha256": "21ec751a4de02bb3aaaa3e83183a1f56dd201e2d71a5ab3c91fbeacd9952eedf"
+    },
+    "macos-module-policy.json": {
+      "bytes": 9831,
+      "sha256": "44985e80d21850946c79797cc5b163d9212c8421361a5d7a7272d21f682b2512"
+    },
+    "windows-before.json": {
+      "bytes": 21502,
+      "sha256": "91ee9a95bbd1e102085524f6394bd6c7e400b6967ebd7c0d143802d4f4a76a02"
+    },
+    "windows-final.json": {
+      "bytes": 9788,
+      "sha256": "b97f0a4a6df56cc3236830917d5c613db024b323b8ba730980433569736c7ed9"
+    },
+    "windows-module.json": {
+      "bytes": 9782,
+      "sha256": "a22d0fb42bac2885b9b683ba17f4c196e3357a07f81b8b47032f6b4269332296"
+    }
+  },
+  "cleanup": {
+    "windows": {
+      "browser": "not-started",
+      "server": "closed"
+    },
+    "linux": {
+      "browser": "closed",
+      "server": "closed"
+    },
+    "macos": {
+      "browser": "not-started",
+      "server": "closed"
+    },
+    "nativeGuiOrCaptureUsed": false
+  },
+  "integration": "Coordinator owns next product round/PR base. Frozen P5, versions, runtime and catalog unchanged. No main/tag/publication.",
+  "limits": [
+    "No actual ETT or DPT input fixture was used or qualified. Existing source/permission/content-oracle gaps remain.",
+    "No conversion, engine, new-document/save behavior, source overwrite/data preservation or native application acceptance is claimed.",
+    "62 cases per module adapter are filenames and existing controls, not62 supported file-format/corpus passes.",
+    "The Mac check was explicitly coordinator-approved after a fresh queued-runs check returned no queued critical jobs; Node/Vite SSR only, no Mac app/browser/runtime build."
+  ]
+}
