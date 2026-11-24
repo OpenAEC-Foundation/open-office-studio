@@ -1,0 +1,137 @@
+{
+  "status": "FAIL",
+  "classification": "OPEN: product cause versus native pointer/selection/driver interaction not qualified",
+  "reviewedAtUtc": "2026-11-24T13:52:23.308995+00:00",
+  "source": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1"
+  },
+  "qa": {
+    "branch": "codex/windows-writer-bookmarks-20261124",
+    "executionCommit": "b43155702241b9df5cf2a47fb0e8ab5b34b99faa",
+    "run": 45406084338,
+    "job": 138487078502,
+    "attempt": 1,
+    "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45406084338",
+    "conclusion": "failure",
+    "completedAt": "2026-11-24T13:44:56Z"
+  },
+  "package": {
+    "installerSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "installedAndIndependentPayloadSha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+    "childArtifact": 14828676560,
+    "childZipSha256": "3b8680e4b1560e05cdc3c90f0498fa066afef18c30a2a1ffb9c6c940238ee261",
+    "signed": true,
+    "currentSignatureChecks": 4
+  },
+  "artifact": {
+    "id": 14926531184,
+    "bytes": 114254,
+    "sha256": "aaeb26d79050dc5e73359e495bdeff2941d8722fad88f3133aa74e1c44664cd1",
+    "expiresAt": "2027-02-22T13:41:44Z",
+    "members": [
+      {
+        "name": ".local/windows-final-native/Bookmark native.docx",
+        "bytes": 36872,
+        "sha256": "f6883b86b3c102f22d9d5759b1ea0d06e1c8158fce7e24cd0fa3281875ceced6"
+      },
+      {
+        "name": ".local/windows-final-native/payload-extraction.log",
+        "bytes": 1857,
+        "sha256": "54f47d673afee3227fa5039f8db604681b87390d2e9748a63eec0261be616cad"
+      },
+      {
+        "name": ".local/windows-final-native/policy-state.json",
+        "bytes": 65,
+        "sha256": "8d6bf0cb646059cd5ce7a5733998df9b0dbf8a51d1ee5a66d3a1aa7ff5548535"
+      },
+      {
+        "name": ".local/windows-final-native/failure.png",
+        "bytes": 57491,
+        "sha256": "a48efbc8e7cd9519b03ed868137fa9178773a6aca6cdbb75e63ae86d1b215488"
+      },
+      {
+        "name": ".local/windows-final-native/report.json",
+        "bytes": 28871,
+        "sha256": "4d7bcfee491987854ee050d96f152d4b44141ce665bf9655018490e779786615"
+      },
+      {
+        "name": ".local/windows-final-native/suite-input/canonical-package-report.json",
+        "bytes": 594,
+        "sha256": "c698382dc8998a8e20d8e4ae10cdc727fc0e811977bc56daaab45b9b69e7bab7"
+      },
+      {
+        "name": ".local/windows-final-native/reused-core-origin-report.json",
+        "bytes": 27510,
+        "sha256": "26838dff5c193bf6bcf30f1d91843d61f0e2e3d888023b4160714bafe37859bc"
+      },
+      {
+        "name": ".local/windows-final-native/suite-input/package.json",
+        "bytes": 1579,
+        "sha256": "0074999fe56c3753c64db6113cffedd90710e9e86b9adb67e88b8c3155ca749e"
+      },
+      {
+        "name": ".local/windows-final-native/suite-input/suite-child-binding.json",
+        "bytes": 8004,
+        "sha256": "56a8026258a79050a67867a3f358850fd22195b27f3c7d6ce9f4fef5d6ecd750"
+      },
+      {
+        "name": ".github/windows-writer-bookmarks-20261124.json",
+        "bytes": 5728,
+        "sha256": "db5700b9d05e11ceb98d221b7e2bc9696a9bc6929d24abec62ecffa8c441cc7d"
+      }
+    ]
+  },
+  "rawReportSha256": "4d7bcfee491987854ee050d96f152d4b44141ce665bf9655018490e779786615",
+  "PASS": [
+    "Exact source/descriptor/child/archive/installer/app identity and four current Authenticode plus timestamp gates",
+    "Existing user bookmark list has BodyTarget and CellTarget, hides three internal Word bookmarks",
+    "Real editor focus, keyboard edit, Ctrl+S, first normal full exit and new-PID reopen preflight"
+  ],
+  "observedFailure": {
+    "route": "Ctrl+G, Bookmark, double-click BodyTarget, real keyboard BODY_, Ctrl+S",
+    "storedBookmarkStart": 5,
+    "storedBookmarkEnd": 11,
+    "expectedParagraph": "BODY BODY_target tail",
+    "actualParagraph": "BODYBODY_ target tail",
+    "actualInsertionOffset": 4,
+    "activeInput": "Focused body-story document textarea; dialog closed",
+    "tableCellsUnchanged": true,
+    "cause": "OPEN; click/range/selection hypotheses are not independently established"
+  },
+  "OPEN": [
+    "Alternative navigation routes and driver/product qualification",
+    "Table bookmark destination and numeric Go To",
+    "Target offset changes and Undo/Redo",
+    "Bookmark-specific final normal quit/newPID reopen and revisit"
+  ],
+  "issue": {
+    "created": false,
+    "reason": "Cause/product classification remains OPEN; integration explicitly barred issues on suspicion before project stop"
+  },
+  "cleanup": {
+    "firstPid": 8184,
+    "firstExitCode": 0,
+    "secondPid": 8972,
+    "secondExitSignal": "SIGTERM",
+    "forcedCleanup": true,
+    "harnessFlags": {
+      "ownedAppsClosed": true,
+      "policyRestored": true,
+      "privateInstallRemoved": true
+    },
+    "limitation": "Uninstaller-success flag is not a separate inventory of residual files; bookmark failure did not satisfy second normal-quit criteria",
+    "localComputerUseStarted": false,
+    "localRecordingStarted": false,
+    "localHelpersStarted": false
+  },
+  "stop": {
+    "noNewProbeOrRetry": true,
+    "noAutomaticResume": true,
+    "reason": "Explicit user project stop relayed by integration; existing run completed before stop",
+    "appBuildOrParentDownload": false,
+    "productEdits": false,
+    "mainTagReleaseWrites": false
+  }
+}
