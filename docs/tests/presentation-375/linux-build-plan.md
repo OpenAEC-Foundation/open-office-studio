@@ -1,8 +1,9 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status: local work/watchers stopped for the user's new 16:00 CET hard stop;
-the already running external third witness may finish independently. Patched
-importer/Cppunit/runtime acceptance remains unverified.** This is a private QA witness for the reviewed importer patch,
+**Status on 2026-11-24: the external third witness failed during original-importer
+test initialization. CLI build/target-selection checks passed; the production
+patch remains uncompiled. Read-only diagnosis/proposal only; no new build
+allocation now.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -337,3 +338,17 @@ FAIL/CANCELLED outcomes remain unchanged.
 The later hard stop supersedes local continued work and all unused start
 permissions. See [`stop-2026-11-23.md`](stop-2026-11-23.md). The external job is
 left to finish without local monitoring; no follow-up is automatic.
+
+## Result inspected after the new user instruction on 2026-11-24
+
+The completed third witness passes CLI prerequisites and target-selection
+regressions, but crashes opening the original UOP in the baseline test before
+the required stale-theme assertion. It produced no corrected runtime. The exact
+official ZIP and stage hashes are preserved in
+[`third-source-outcome.json`](third-source-outcome.json). The unapplied, separate
+test resource-dependency proposal and limits are in
+[`test-initialization-proposal.md`](test-initialization-proposal.md).
+
+Integration allows only this read-only diagnosis/proposal during P5 native
+acceptance. No new build, VM, cache assignment or retry is inferred. Earlier
+failures and the original stop receipt remain unchanged.

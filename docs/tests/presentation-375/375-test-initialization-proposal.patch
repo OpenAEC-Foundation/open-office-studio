@@ -1,0 +1,14 @@
+--- a/xmloff/CppunitTest_xmloff_draw.mk
++++ b/xmloff/CppunitTest_xmloff_draw.mk
+@@ -50,6 +50,11 @@
+ 
+ $(eval $(call gb_CppunitTest_use_configuration,xmloff_draw))
+ 
++# The genuine UOP fixture opens an Impress view and its tab bar.
++$(eval $(call gb_CppunitTest_use_uiconfigs,xmloff_draw,\
++    modules/simpress \
++))
++
+ $(eval $(call gb_CppunitTest_add_arguments,xmloff_draw, \
+     -env:arg-env=$(gb_Helper_LIBRARY_PATH_VAR)"$$$${$(gb_Helper_LIBRARY_PATH_VAR)+=$$$$$(gb_Helper_LIBRARY_PATH_VAR)}" \
+ ))
