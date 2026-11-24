@@ -29,9 +29,9 @@ def main():
             if queued or (state=='queued' and not jobs['jobs']):blocking.append(row)
     now=int(time.time())
     report=dict(checkedEpoch=now,checked=checked,blocking=blocking,passed=not blocking)
-    if '--create' in sys.argv:
+    if '--create' in sys.argv and not blocking:
         report.update(dispatchEpoch=now,preflightDeadline=now+600,buildDeadline=now+2100,finalDeadline=now+2700)
-    else:
+    elif '--create' not in sys.argv:
         from deadline import remaining
         report['remainingPreflightSeconds']=remaining('preflight')
     output=Path('.local/issue381');output.mkdir(parents=True,exist_ok=True)

@@ -1,12 +1,11 @@
 name: Issue 381 private libwps witness
 
 on:
-  workflow_dispatch:
-    inputs:
-      dispatch_epoch:
-        description: Fresh allocated UTC epoch from the successful local frontgate
-        required: true
-        type: string
+  push:
+    branches: [codex/fix-381-wq2-vlookup-index-20261124]
+    paths:
+      - .github/workflows/issue381-private-runtime.yml
+      - qa/issue381/run-request.json
 
 permissions:
   contents: read
@@ -18,16 +17,18 @@ concurrency:
 
 jobs:
   private-linux:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/fix-381-wq2-vlookup-index-20261124' && github.event.head_commit.message == 'qa381 execute 381-20261124-9d3b-a55d0f5849d3416e'
     runs-on: ubuntu-22.04
     timeout-minutes: 45
     env:
       GH_TOKEN: ${{ github.token }}
-      OOS_381_DISPATCH_EPOCH: ${{ inputs.dispatch_epoch }}
       DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Exact frozen request, nonce, parent source and byte bindings
+        run: python3 qa/issue381/request_gate.py
       - name: Absolute clock, queued critical work and disk preflight
         run: |
           python3 qa/issue381/frontgate.py
@@ -58,7 +59,7 @@ jobs:
       - name: Original strict failure, patched real conversion, typed engine edit-save-new-process-reopen
         run: python3 qa/issue381/deadline.py build node qa/issue381/engine_real.mjs
       - name: Final witness clock
-        if: always()
+        if: always() && env.OOS_381_DISPATCH_EPOCH != ''
         run: python3 qa/issue381/deadline.py finish
       - uses: actions/upload-artifact@v4
         if: always()
@@ -70,7 +71,9 @@ jobs:
           retention-days: 90
           path: |
             .local/issue381/runner-frontgate.json
+            .local/issue381/request-*.json
             .local/issue381/deadline-*.json
+            qa/issue381/run-request.json
             .local/issue381/runtime-evidence/
             .local/issue381/derived-binding.json
             .local/issue381/build-proof/
