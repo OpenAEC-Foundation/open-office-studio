@@ -1,0 +1,102 @@
+{
+  "issue": 375,
+  "qaCommit": "a0e2163a368832c9f4559991f691c29df5d0facd",
+  "branch": "codex/presentation-375-uop-rectangle-fills-2026-11-23-0c73",
+  "phase": "startup-differential",
+  "rootReviewReceiptSHA256": "0415261db72bff374e5163afe0ab27d54353d84192fdb4885b1762d7c08d4d96",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "linuxQueueGate": {
+    "checkedAtUTC": "2026-11-24T12:55:29.519225+00:00",
+    "runs": [
+      {
+        "id": 45392009477,
+        "status": "in_progress",
+        "head": "76d7f256845d27cac18fef60cca939efbdcd065a"
+      },
+      {
+        "id": 45388309036,
+        "status": "in_progress",
+        "head": "727903cc7add7591444881cbe87620c9f8b78260"
+      }
+    ],
+    "jobs": [
+      {
+        "id": 138437883746,
+        "run": 45392009477,
+        "name": "desktop (macos-latest)",
+        "status": "completed",
+        "labels": [
+          "macos-latest"
+        ]
+      },
+      {
+        "id": 138437883812,
+        "run": 45392009477,
+        "name": "desktop (windows-latest)",
+        "status": "in_progress",
+        "labels": [
+          "windows-latest"
+        ]
+      },
+      {
+        "id": 138437884863,
+        "run": 45392009477,
+        "name": "desktop (ubuntu-22.04)",
+        "status": "completed",
+        "labels": [
+          "ubuntu-22.04"
+        ]
+      },
+      {
+        "id": 138445625558,
+        "run": 45388309036,
+        "name": "desktop (windows-latest)",
+        "status": "in_progress",
+        "labels": [
+          "windows-latest"
+        ]
+      },
+      {
+        "id": 138445627419,
+        "run": 45388309036,
+        "name": "desktop (ubuntu-22.04)",
+        "status": "completed",
+        "labels": [
+          "ubuntu-22.04"
+        ]
+      },
+      {
+        "id": 138445628943,
+        "run": 45388309036,
+        "name": "desktop (macos-latest)",
+        "status": "completed",
+        "labels": [
+          "macos-latest"
+        ]
+      }
+    ],
+    "queuedLinuxOrUnknown": []
+  },
+  "retryAllowed": false,
+  "extraVMAllowed": false,
+  "automaticImporterContinuation": false,
+  "dispatched": true,
+  "startEpoch": 1795524929,
+  "preparationEndEpoch": 1795527629,
+  "controllerEndEpoch": 1795540529,
+  "totalEndEpoch": 1795541129,
+  "maxCompilerSeconds": 12600,
+  "cleanupUploadReserveSeconds": 600,
+  "dispatchExitCode": 0,
+  "dispatchOutput": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45398226670",
+  "dispatchError": "",
+  "run": 45398226670,
+  "job": 138459618404,
+  "attempt": 1,
+  "runURL": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45398226670",
+  "officialRunCreatedUTC": "2026-11-24T12:55:31Z",
+  "officialJobStartedUTC": "2026-11-24T12:55:34Z",
+  "originalImporterOnly": true,
+  "technicalReviewCheckpointMandatory": true,
+  "acceptance": "OPEN: one authorized startup diagnostic running; no product acceptance"
+}
