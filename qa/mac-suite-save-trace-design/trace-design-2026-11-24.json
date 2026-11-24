@@ -1,0 +1,158 @@
+{
+  "date": "2026-11-24",
+  "scope": "Exclusive read-only passive trace design for unresolved Mac Suite one-Q/one-CmdS observation; no issue377 reopening or release-acceptance rerun",
+  "owner": "d410; integration chat remains sole dispatcher. Previous native owner finished; no parallel trace implementor assigned.",
+  "application": {
+    "commit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "sources": [
+      {
+        "path": "src/useTabSneltoetsen.ts",
+        "sha256": "dde71791c0983ad5269f1174eb3300afb100896059e05b251d3e0dd279aca9cb"
+      },
+      {
+        "path": "src/OfficeStudio.tsx",
+        "sha256": "ff08de011fc90c0739b50546b22f215381da9c58a5e7c0f565525ff3740245aa"
+      },
+      {
+        "path": "src/opslag.ts",
+        "sha256": "9f500b9b56a5bf4b233f0e9fcd8061758a2dfd3f710593b340460887262cfded"
+      },
+      {
+        "path": "src/editors.tsx",
+        "sha256": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce"
+      },
+      {
+        "path": "src/werkbestand.ts",
+        "sha256": "292882613921d4a34a6877528973199f98a172b2157aee31882c1bf2b66cb4eb"
+      },
+      {
+        "path": "src/import/bron.ts",
+        "sha256": "d6d83400f83fc5050c864a2308f4461cd6c28de4eba5d2ac6aebf988f1623335"
+      },
+      {
+        "path": "src-tauri/src/werkbestanden.rs",
+        "sha256": "1b3fe52e199b234f626fc7f3a89f4f23ff61ce9b966620d2d9183b9f7ed5ca1e"
+      },
+      {
+        "path": "src-tauri/src/main.rs",
+        "sha256": "ca5f06bf20fb923f4c9f5edb083be4238556e99093fc13c43973b030627fb68e"
+      }
+    ]
+  },
+  "originalObservation": {
+    "run": 45355259350,
+    "attempt": 1,
+    "job": 138311374273,
+    "qaCommit": "b052808d6fcfed34c7543176f0a827891b02a60d",
+    "artifactId": 14902571239,
+    "artifactZipSha256": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+    "pid": 2942,
+    "packageSha256": "1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af",
+    "installedExecutableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87",
+    "facts": "Focused Document input; Q native Unicode virtualKey0 then CmdS virtualKey1 maskCommand to PID2942. Dirty title already sampled before CmdS; screenshot shows EERQSTE, final private DOCX remains exact source without Q. Cause unresolved.",
+    "retainedEvidence": [
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\review.json",
+        "bytes": 6319,
+        "sha256": "89323f4822bbe0684c1c3982869bd6a48b98ae4c532ac219130a81faf223fcb5"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\retained\\mac-product-native\\report.json",
+        "bytes": 22217,
+        "sha256": "c68c412d47db8e37910429bb76bce34196e06b9bc1847ee4392b3fef378b5e63"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\retained\\mac-product-native\\action-010.json",
+        "bytes": 6333,
+        "sha256": "483f10e99d5bf19163d503a2985d9d51a9f37548fb684254597941b370f2f4a4"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\retained\\mac-product-native\\action-011.json",
+        "bytes": 6319,
+        "sha256": "b450c1ba953f33159cb69f4ce58bcbd8a04cef94e09dbd6111fe8a21229aced2"
+      },
+      {
+        "path": "C:\\Users\\alper\\Desktop\\Documents\\ChatGPT\\code slaafjes\\work\\oos-release-prep-2026-11-20-9635\\docs\\releases\\2026-11-20\\P5-Mac-Suite-save-readiness-review\\retained\\mac-product-native\\action-012.json",
+        "bytes": 965940,
+        "sha256": "88c39a14ed2287e4270daf2bd9c1d414c1d50db248d5898866507be4def0e1c0"
+      }
+    ]
+  },
+  "proposedPassiveObservations": [
+    {
+      "id": 1,
+      "name": "Shortcut receipt and routing decision",
+      "sourcePoints": [
+        "src/useTabSneltoetsen.ts:111-139 (toetsen/window capture, tabToets at37-49)",
+        "src/OfficeStudio.tsx:733-740 (uit and opslaanToets binding)"
+      ],
+      "minimalFutureRecord": "At listener entry record monotonic sequence/time, own PID/webview/window, key/code/modifier/repeat/defaultPrevented, event target/focus role, active tab identity; record actual guard disposition: uit, no command, dialog target, visible modal, repeat, or invocation. Observe existing decisions without invoking tabToets or callbacks a second time.",
+      "distinguishes": "A positive entry establishes P5 listener receipt; a recorded guard explains receipt without dispatch. Accepted opslaan invocation links to observation2.",
+      "cannotProve": "Native CGEvent input-sent alone is not WebView delivery. Missing listener entry cannot prove OS non-delivery: earlier capture/preemption, missing observer/trace or webview/lifecycle changes remain possible. Absolute WebView non-receipt requires an independently validated earlier delivery witness; none is established here.",
+      "oldGap": "action011 records native postToPid/focus/dirty pre-action window, not DOM keydown entry, guard decision, handler acknowledgement or monotonic delivery timing."
+    },
+    {
+      "id": 2,
+      "name": "Save entry, readiness and terminal result",
+      "sourcePoints": [
+        "src/OfficeStudio.tsx:571-576 (opslaanToets)",
+        "src/OfficeStudio.tsx:339-360,403-407,426-457,500-507 (opslaan)",
+        "src/opslag.ts:70-105 (DocumentOpslag.opslaan)"
+      ],
+      "minimalFutureRecord": "Correlate actual opslaanToets/opslaan entry with active tab id/type/workfile alias, chosen route, serialiseerder/opslag presence, bezigRef and DocumentOpslag busy state. Record the executed return/throw/rejection or await stage plus documentId/revision and returned DocumentOpslag result (bezig/verouderd/mislukt/afgerond and uitkomst/actueel/schoon). Include composer diversion if actually taken.",
+      "distinguishes": "Positive dispatch followed by an actual early return, busy result, document switch or error separates a received shortcut with no completed save from missing receipt. A pending await at observation end is pending, not a proven clean no-op or fault.",
+      "cannotProve": "Dirty title alone does not prove handler execution or matching serialiser registration. No general clean-DOCX early return exists in the reviewed path; this does not prove runtime execution.",
+      "oldGap": "No actual handler/gate/result trace. Pre-Q AX Save was enabled; immediately post-Q/pre-CmdS button/busy/modal/selected-document/load state was not retained. Do not infer disabled Save."
+    },
+    {
+      "id": 3,
+      "name": "Prepared serializer output, separate from visible paint",
+      "sourcePoints": [
+        "src/editors.tsx:267-288 (registered DOCX serializer and bereidVoor)",
+        "src/opslag.ts:78-86 (prepare, revision capture, serialize, byte validation, bewaar)"
+      ],
+      "minimalFutureRecord": "Record actual bereidVoor start/completion/error (flushPendingInput then werkDocumentVeldenBij), actual docx.current.save completion/error, and the serializer result passed to bewaar at DocumentOpslag line86: length/SHA256 plus retained owned fixture bytes. Parse word/document.xml offline for the expected EERQSTE text; exclude metadata/property Q matches. Carry same document identity and sequence across awaits.",
+      "distinguishes": "Completed serializer result without expected Q localizes absence to the preparation/model/serializer boundary, before persistence. Q in serializer output redirects investigation downstream. This alone does not identify a serializer bug versus an earlier model/input state.",
+      "cannotProve": "Use the registered serializer at267-288, not the separate useHerladen serialization closure at143-167. A visible Q/dirty title and completed flush are not evidence that the model/serialized XML contains Q. Raw engine/WASM internals are outside this source review.",
+      "oldGap": "No prepare/save completion, serializer payload/hash or XML retained before write. Only final on-disk source-identical DOCX lacking Q was retained."
+    },
+    {
+      "id": 4,
+      "name": "Native payload, resolved target and actual persistence outcome",
+      "sourcePoints": [
+        "src/werkbestand.ts:100-158 (schrijfTerug; prepared payload and bewaar_document invoke)",
+        "src/import/bron.ts:35-59 (bereidOpslag transformations)",
+        "src-tauri/src/werkbestanden.rs:301-376 (bewaar_document)",
+        "src-tauri/src/werkbestanden.rs:191-237 (Werkbestanden.schrijf)",
+        "src-tauri/src/main.rs:76-90 (schrijf_atomair)"
+      ],
+      "minimalFutureRecord": "Correlate actual final IPC body length/SHA256 (Q checked offline for this plain DOCX), token alias+own window label, actual Rust-resolved private target, typed command/result/error and executed persistence stage. Compare post-result target bytes/SHA/XML against the final IPC payload; retain source/expected target fingerprints. Distinguish tempfile creation/write_all/sync_all/persist from the final target; record errors/alternate-path outcomes if actually observed.",
+      "distinguishes": "Serializer Q but final IPC lacks Q points to downstream preparation before persistence. Final IPC Q plus explicit native permission/format/conflict/error status separates failed/redirected save. Different actual resolved target establishes wrong-target writing; successful target write/hash match with Q rules out missing Q at that observed persistence boundary, not later external modification.",
+      "cannotProve": "IPC success alone is not independent target verification. Rust can return AlleenLezen/AnderFormaat or conflict/missing outcomes, not only exceptions. A .~oos-*.tmp sibling is the intended atomic-write route, not evidence of wrong-path save. No assumption of filesystem syscall tracing or path-resolution hook availability.",
+      "oldGap": "No correlated IPC payload, native save return, resolved token/path, write/rename result, permissions/ACL/lock context or alternate target trace. Final unchanged file alone cannot distinguish no call, old payload, rejected write, or other target."
+    }
+  ],
+  "feasibilityAndAuthorization": [
+    "These are proposed observation boundaries, NOT implemented instrumentation or claims of existing hooks. Reviewed source functions provide no complete per-attempt key/handler/payload/native-write receipt; old raw artifacts do not contain these missing signals.",
+    "Capturing any missing runtime sequence now requires a separately assigned new native session. No existing bytes can retrospectively supply it. A new run diagnoses its own observed outcome; an absent recurrence or later success cannot explain the old failure.",
+    "Before scheduling, an owner must establish feasible read-only observation for the exact signed P5 package, including code/source mapping and debugger/inspection permissions. Release WebView/native attach/logpoint availability is NOT verified or assumed. No entitlement/signature/security changes are authorized.",
+    "If available passive tooling cannot observe the boundaries, report the capability gap; an instrumented app build requires separate approval and different package identity, and cannot be claimed as the original accepted P5 signed bytes.",
+    "Future observation must not call editor getters with side effects, flush/save/setters, dispatch keys, add retries/readiness waits or alter document/focus state. Correlate existing work rather than introducing a save barrier; even passive logging/byte capture can perturb timing and must be disclosed.",
+    "Use one bounded trace attempt with monotonic identities, explicit trace-start/end/coverage and existing producer/package/PID binding. Do not infer non-delivery or non-execution from missing/unreliable logs. Parse owned synthetic DOCX payloads offline; do not collect user documents/tokens/secrets."
+  ],
+  "result": "Design complete, original cause remains unresolved. Four source-bound observation groups locate the missing causal boundaries; no product fix/root-cause or new native acceptance claimed.",
+  "validation": "Read-only exact Git source inspection; seven prior source hashes match P5; original report hash matches its retained forensic pin. No new functional tests, downloads, builds, native input or capture.",
+  "workPerformed": {
+    "productEdits": false,
+    "newNativeRun": false,
+    "newCI": false,
+    "newBuild": false,
+    "newDownload": false,
+    "newGuiOrCapture": false,
+    "newIssue": false,
+    "mainTagPublication": false
+  },
+  "handoff": "This separate causal study does not reopen completed377 or delay accepted bounded release disposition. Future trace implementation/execution remains unassigned pending coordinator decision."
+}
