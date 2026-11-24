@@ -1,0 +1,362 @@
+{
+  "issue": 375,
+  "run": 45356331378,
+  "attempt": 1,
+  "job": 138314969231,
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45356331378",
+  "qaCommit": "4fbbdd39c1b6311d4705531a10e3f72b18931408",
+  "upstreamCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "upstreamTree": "f96d5442101820c26fd9f19c15065d4ae7e63150",
+  "importerPatchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+  "testInitializationPatchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828",
+  "conclusion": "failure",
+  "finishedUTC": "2026-11-24T10:42:25Z",
+  "artifact": {
+    "id": 14912540854,
+    "bytes": 228534,
+    "zipSHA256": "a0feeeee31dc57e34f31e2ac9d673aeb4f42d8392d6d1c2bb3bda06d2bb51b48",
+    "expiresAtUTC": "2027-02-22T08:27:55Z",
+    "retained": "docs/tests/presentation-375/retained/source-witness-45356331378.zip"
+  },
+  "buildReportSHA256": "2758ece3fc746703f413106bd6c0070a76748d7cf60eb527001af4fd1acc59ca",
+  "stageLogsVerified": 26,
+  "stages": [
+    {
+      "name": "official-binary-mirror",
+      "exitCode": 0,
+      "seconds": 0.007947290000004159,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ubuntu-source-index",
+      "exitCode": 0,
+      "seconds": 0.007713264000003051,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "apt-update",
+      "exitCode": 0,
+      "seconds": 9.538394615000001,
+      "retainedLogSHA256": "c6abd9f63f0fca3b52dff85e9f335f4570b38f65fd7b47b83f5f6f19902b242c"
+    },
+    {
+      "name": "dependency-plan",
+      "exitCode": 0,
+      "seconds": 3.9255700089999976,
+      "retainedLogSHA256": "fc686b466d00ef61414a67f6895a6cd1562848e1c2510004d3b4f1a0758da231"
+    },
+    {
+      "name": "build-dependencies",
+      "exitCode": 0,
+      "seconds": 72.04482034100002,
+      "retainedLogSHA256": "820d7015804c48b291318ac2348d796b4939bf9b56e9fc12bca1ea697d8acbc6"
+    },
+    {
+      "name": "explicit-dependencies",
+      "exitCode": 0,
+      "seconds": 3.7240564939999956,
+      "retainedLogSHA256": "77c6945b54ca2e02688d81c9c25a5aa7855d92d9fafe8ea613e7d84f4e97d8cb"
+    },
+    {
+      "name": "package-versions",
+      "exitCode": 0,
+      "seconds": 0.016163532000007308,
+      "retainedLogSHA256": "6cfd97b93aed9900aaa65fdb12bf31577776c68db6d2391fcdad27a027906762"
+    },
+    {
+      "name": "post-install-resource-gate",
+      "exitCode": 0,
+      "seconds": 0.164181990000003,
+      "retainedLogSHA256": "3ec32e24417e1d69205d82e6c71574e7e4ab7527424c9bd41463b92a54c52c66"
+    },
+    {
+      "name": "distribution-python-provider",
+      "exitCode": 0,
+      "seconds": 0.4152691139999831,
+      "retainedLogSHA256": "2b9b06c33b10742c6a7b5d9204564efd2d90ef6e99415650a84d4012e455eade"
+    },
+    {
+      "name": "distribution-python-cflags",
+      "exitCode": 0,
+      "seconds": 0.01654688800002191,
+      "retainedLogSHA256": "431d95bc960e071f6b9130341782edaebedddd1bce9b0cd918b861fdd78637c6"
+    },
+    {
+      "name": "distribution-python-libs",
+      "exitCode": 0,
+      "seconds": 0.015714924000008068,
+      "retainedLogSHA256": "39bdc1767060488e03c9f8695a2c7af7290323aba7905e0b74e50675863f14b6"
+    },
+    {
+      "name": "source-init",
+      "exitCode": 0,
+      "seconds": 0.0035596980000036638,
+      "retainedLogSHA256": "365f2b44b89d6a46f3e61a3cd3e8c10a38375b7bf735b12ccfc2a3af371a6f92"
+    },
+    {
+      "name": "source-remote",
+      "exitCode": 0,
+      "seconds": 0.0014550340000027973,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-fetch",
+      "exitCode": 0,
+      "seconds": 22.372539158999984,
+      "retainedLogSHA256": "136429080efc093874b01348793b3421bf35d18df153e0fdc3321c9d78a79d02"
+    },
+    {
+      "name": "source-checkout",
+      "exitCode": 0,
+      "seconds": 4.978612494999993,
+      "retainedLogSHA256": "87ffae06b16e6f263e30bf7ce4596a457da95419a6f99cf319d9994964c0dd31"
+    },
+    {
+      "name": "patchset-preconditions",
+      "exitCode": 0,
+      "seconds": 0.26464913099999876,
+      "retainedLogSHA256": "cced33d1aac360f3af26802257f79097e69c61eaddab479f9ec8a5a26cbbd0bc"
+    },
+    {
+      "name": "initialization-controls",
+      "exitCode": 0,
+      "seconds": 0.16443747599998915,
+      "retainedLogSHA256": "3d142b8d6091444c389d9e5c1c2f1ce29a25703d2e52e66587a62551ff695037"
+    },
+    {
+      "name": "initialization-patch-check",
+      "exitCode": 0,
+      "seconds": 0.001682321999993519,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "initialization-test-recipe",
+      "exitCode": 0,
+      "seconds": 0.001596175000003086,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "test-diff",
+      "exitCode": 0,
+      "seconds": 0.0014667240000107995,
+      "retainedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "configure",
+      "exitCode": 0,
+      "seconds": 34.71060087000001,
+      "retainedLogSHA256": "a7c7a6b9a335e3ac805526326059eb831c0d45429f8118f018bc851a99bc18f2"
+    },
+    {
+      "name": "target-selection-regressions",
+      "exitCode": 0,
+      "seconds": 0.06391880000001038,
+      "retainedLogSHA256": "88e157aa829dafabd0be718fbbca314572d2411122698449d9c87962fbf100ac"
+    },
+    {
+      "name": "linker-version",
+      "exitCode": 0,
+      "seconds": 0.0015918210000052113,
+      "retainedLogSHA256": "cbb0374a4d23f91537f8588348c460085a38ba5af336bed511060b72a1e76bf7"
+    },
+    {
+      "name": "impress-test-ui-resource",
+      "exitCode": 0,
+      "seconds": 185.42670775300002,
+      "retainedLogSHA256": "174426ff8002d8618338c1c8f8f0db7405bb319218213a152cb40b050805a930"
+    },
+    {
+      "name": "source-cli-prerequisites",
+      "exitCode": 0,
+      "seconds": 2272.1504997509996,
+      "retainedLogSHA256": "22095ad14ccb9e4b4d68f638ccb41482548996431aacfc4d70e862d1389b9c5e"
+    },
+    {
+      "name": "baseline-red",
+      "exitCode": 2,
+      "seconds": 5424.89121786,
+      "retainedLogSHA256": "3eb30aa3e2029082a1e24c574184b2a15bcba568560326ee8e418dca1c62d830"
+    }
+  ],
+  "environment": {
+    "imageVersion": "20261116.133.1",
+    "imageOS": "ubuntu24",
+    "kernel": "7.0.0-1014-aws",
+    "availableCPUs": 4,
+    "toolchain": {
+      "gcc13": {
+        "path": "/usr/bin/gcc-13",
+        "available": true,
+        "output": "gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "g++13": {
+        "path": "/usr/bin/g++-13",
+        "available": true,
+        "output": "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "jdk17": {
+        "path": "/usr/lib/jvm/temurin-17-jdk-amd64/bin/javac",
+        "available": true,
+        "output": "javac 17.0.21"
+      },
+      "make": {
+        "path": "/usr/bin/make",
+        "available": true,
+        "output": "GNU Make 4.3\nBuilt for x86_64-pc-linux-gnu\nCopyright (C) 1988-2020 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law."
+      }
+    }
+  },
+  "configurationHashes": {
+    "config_host.mk": "389dad4536dce6530bd0e9e913b991a730f4a5518e42f20a78a673a4b437b2dc",
+    "config_global.h": "d2df11dc199dd08bc27404939bae35775e9fa71608ab8e8f9d45a5a6eccd351e"
+  },
+  "testInitializationBinding": {
+    "patchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828",
+    "recipe": "xmloff/CppunitTest_xmloff_draw.mk",
+    "recipeBeforeSHA256": "3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40",
+    "recipeAfterSHA256": "d6c2ac082894b09a8973eaf69141cad84a69d73fac724555c756bfc0bc45c0b2",
+    "primarySHA256": {
+      "Makefile.in": "435d9651550e33c7a0698fd09b4895b061dfc60503811e5e1279d7029ceb22f0",
+      "solenv/gbuild/Helper.mk": "968bb797d966c4c75b77132e25ba1e42d762943b7c2e4a43593b0bddcc4e17f9",
+      "xmloff/CppunitTest_xmloff_draw.mk": "3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40",
+      "sd/uiconfig/simpress/ui/tabviewbar.ui": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+      "sd/UIConfig_simpress.mk": "8442b06b6293e22491c0c9f59133b94282da6f0afae1eb4db3346f9167be1ae7",
+      "solenv/gbuild/CppunitTest.mk": "6eb8de580d678b77f00cdc8e5081825aaf173158c70d4021e5523fa05ddb420f",
+      "solenv/gbuild/UIConfig.mk": "e14f8fe33f88897ee0d02f0d6fbc92fc726bfa0bb9379a540e3bfca4e9d84c8d",
+      "solenv/gbuild/TargetLocations.mk": "a5b0b1186c3bc5afa3a955887e14a9fdacfe7ab8dff1a40eca9de6b1767250ed"
+    },
+    "resourceTarget": "/home/runner/work/_temp/presentation-375-45356331378/source/workdir/UIConfig/modules/simpress.done",
+    "topLevelResourceGoal": "UIConfig_modules/simpress",
+    "preparationMethod": "Pinned top-level Makefile.in UIConfig_modules/% wrapper requires bootstrap fetch",
+    "resourceInstalled": "instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "resourceSHA256": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+    "initializationPatchChangesProductionImporter": false,
+    "configuredWorkdir": "/home/runner/work/_temp/presentation-375-45356331378/source/workdir",
+    "configuredFetchTarballs": "TRUE"
+  },
+  "sourceBootstrapUIResourcePassed": true,
+  "cliPrerequisitesPassed": true,
+  "initializerControlsPassed": 5,
+  "targetSelectionControlsPassed": 7,
+  "installedResourceAfterUIBuild": {
+    "relativePath": "instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "resolvedPath": "/home/runner/work/_temp/presentation-375-45356331378/source/instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "bytes": 1701,
+    "sha256": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+    "method": "Actual installed file bytes, checked before baseline execution"
+  },
+  "installedResourceBeforeBaseline": {
+    "relativePath": "instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "resolvedPath": "/home/runner/work/_temp/presentation-375-45356331378/source/instdir/share/config/soffice.cfg/modules/simpress/ui/tabviewbar.ui",
+    "bytes": 1701,
+    "sha256": "90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec",
+    "method": "Actual installed file bytes, checked before baseline execution"
+  },
+  "retainedUIResourceIndependentlyHashChecked": true,
+  "baselineCompiledAndStarted": true,
+  "baselineExpectedStaleAccent1Failure": false,
+  "observedFailure": "SIGSEGV during original-importer loadFromFile / Impress view initialization; current top frame SfxBindings::Invalidate, settings/icon-theme/window update stack",
+  "crashObservations": [
+    {
+      "line": 7775,
+      "text": "[_RUN_____] testUOFExplicitRectangleFillColors::TestBody"
+    },
+    {
+      "line": 7778,
+      "text": "W:   Unable to read the xml file: /usr/local/share/liblangtag/language-subtag-registry.xml"
+    },
+    {
+      "line": 7851,
+      "text": "W:   Unable to read the xml file: /usr/local/share/liblangtag/language-subtag-registry.xml"
+    },
+    {
+      "line": 7925,
+      "text": "        Signal: 11 (SEGV)"
+    },
+    {
+      "line": 7953,
+      "text": "Program terminated with signal SIGSEGV, Segmentation fault."
+    },
+    {
+      "line": 7954,
+      "text": "#0  0x00007f2333262e7f in SfxBindings::Invalidate(unsigned short) () from /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsfxlo.so"
+    },
+    {
+      "line": 7983,
+      "text": "#0  0x00007f2333262e7f in SfxBindings::Invalidate(unsigned short) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsfxlo.so"
+    },
+    {
+      "line": 7984,
+      "text": "#1  0x00007f232d942e47 in sd::Window::DataChanged(DataChangedEvent const&) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsdlo.so"
+    },
+    {
+      "line": 7985,
+      "text": "#2  0x00007f23380dcc34 in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7986,
+      "text": "#3  0x00007f23380dcb9b in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7987,
+      "text": "#4  0x00007f23380dcb9b in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7988,
+      "text": "#5  0x00007f23380dcb9b in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7989,
+      "text": "#6  0x00007f23380dcb9b in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7990,
+      "text": "#7  0x00007f23380dcb9b in vcl::Window::UpdateSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7991,
+      "text": "#8  0x00007f233846fab0 in Application::SetSettings(AllSettings const&, bool) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libvcllo.so"
+    },
+    {
+      "line": 7992,
+      "text": "#9  0x00007f2333921bef in SvtMiscOptions_Impl::SetIconTheme(rtl::OUString const&, SvtMiscOptions_Impl::SetModifiedFlag) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsvtlo.so"
+    },
+    {
+      "line": 7993,
+      "text": "#10 0x00007f2333922785 in SvtMiscOptions_Impl::Load(com::sun::star::uno::Sequence<rtl::OUString> const&) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsvtlo.so"
+    },
+    {
+      "line": 7994,
+      "text": "#11 0x00007f2333922be1 in SvtMiscOptions_Impl::SvtMiscOptions_Impl() () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsvtlo.so"
+    },
+    {
+      "line": 7995,
+      "text": "#12 0x00007f2333922f50 in SvtMiscOptions::SvtMiscOptions() () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libsvtlo.so"
+    },
+    {
+      "line": 7996,
+      "text": "#13 0x00007f2331ba19ce in framework::ToolBarManager::Init() () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libfwklo.so"
+    },
+    {
+      "line": 7997,
+      "text": "#14 0x00007f2331ba1e05 in framework::ToolBarManager::ToolBarManager(com::sun::star::uno::Reference<com::sun::star::uno::XComponentContext> const&, com::sun::star::uno::Reference<com::sun::star::frame::XFrame> const&, rtl::OUString, ToolBox*) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libfwklo.so"
+    },
+    {
+      "line": 7998,
+      "text": "#15 0x00007f2331bae7fd in framework::ToolBarWrapper::initialize(com::sun::star::uno::Sequence<com::sun::star::uno::Any> const&) () at /home/runner/work/_temp/presentation-375-45356331378/source/instdir/program/libfwklo.so"
+    }
+  ],
+  "liblangtagWarnings": "Still observed; no crash-cause claim or correction",
+  "elapsedSeconds": 8071.010584245693,
+  "productionImporterAppliedOrCompiled": false,
+  "fullDrawSuiteExecuted": false,
+  "correctedConverterEngineReached": false,
+  "newRuntimeBindingOrPayloadProduced": false,
+  "productFixValidated": false,
+  "automaticRepairOrRetryStarted": false,
+  "ownWatchSessionFinished": true,
+  "ownWatchSession": 87023,
+  "localGuiCaptureOrServerStarted": false,
+  "limits": "No complete installed-tree manifest/core dump/built runtime retained; only exact official diagnostic ZIP and copied required UI resource. Presence of that UI file in this run does not establish startup causality or a general resource/fidelity pass.",
+  "remainingPrerequisite": "Explain the original-source settings/view-initialization crash under a separately coordinated bounded scope before requiring the unchanged stale-theme baseline. No further code repair or build included."
+}

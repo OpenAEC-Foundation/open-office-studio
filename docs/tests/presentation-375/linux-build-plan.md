@@ -3,8 +3,9 @@
 **Status on 2026-11-24: the fourth witness stopped on an own resource-build
 invocation error before the baseline test. Earlier failures remain unchanged;
 initialization, patched importer/Cppunit and runtime acceptance are unproven.
-The reviewed source-wrapper correction is now running in one separately
-allocated fifth witness; no new acceptance is inferred.** This is a private QA witness for the reviewed importer patch,
+The fifth witness passed the source-wrapper/UI-resource/CLI stages, but the
+original-importer baseline still crashed before its color assertion. No further
+repair or build is started.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -458,3 +459,43 @@ from that status. Exact allocation/queue binding is in
 [`fifth-source-allocation.json`](fifth-source-allocation.json). Only real
 failure or final evidence will be delivered to integration; P5/app/runtimepin/
 main/intake remain unchanged.
+
+## Fifth result: resource proof passed, original baseline still crashes
+
+[Run 45356331378](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45356331378)
+ended at **11:42:25 CET on 2026-11-24**, FAILURE, within its allocation. The normal
+top-level source-bootstrap/UI-resource make succeeded in 185.4267 seconds;
+CLI prerequisite make succeeded in 2272.1505 seconds. Five actual Linux
+initializer controls and seven target-selection controls passed. The exact
+installed `tabviewbar.ui` was checked after UI build and again immediately before
+baseline: **1701 bytes**, SHA256
+`90b5b37d690ae59fe5cd24e8c9078499cab25056c28be0126a86dc823109b1ec`.
+Its retained copied bytes were independently checked after download.
+
+The original-importer test compiled and started, but baseline make returned
+exit 2 after 5424.8912 seconds. It terminates with SIGSEGV before the expected
+stale-theme assertion. The current top frame is `SfxBindings::Invalidate`, with
+`sd::Window::DataChanged`, `Window::UpdateSettings`, `Application::SetSettings`,
+`SvtMiscOptions_Impl::SetIconTheme` and toolbar/frame initialization on the stack.
+This observed stack differs from the earlier ViewTabBar destructor stack; no
+general crash-causality conclusion follows. Missing liblangtag registry warnings
+also remain observations, not a proven cause or an extra repair scope.
+
+Artifact **14912540854** is retained byte-for-byte in
+`retained/source-witness-45356331378.zip`: **228,534 bytes**, ZIP SHA256
+`a0feeeee31dc57e34f31e2ac9d673aeb4f42d8392d6d1c2bb3bda06d2bb51b48`,
+expiry **2027-02-22T08:27:55Z**. All **26 stage-log hashes** were verified. Full
+source/environment/configuration/resource/crash bindings are in
+[`fifth-source-outcome.json`](fifth-source-outcome.json).
+
+The exact resource's presence and source preparation now have real evidence.
+The required original color failure is still unproven. The production importer
+diff was never applied/compiled; full corrected draw regressions, converter/
+engine/edit/save/fresh-reopen and new runtime binding/payload were not reached.
+No built runtime, full installed-tree manifest or core file was retained. Earlier
+FAILs remain unchanged; no product/native/visual/complete-format pass is claimed.
+
+No automatic repair, retry, extra VM or dispatch follows. The own local watcher
+session 87023 has ended; no local GUI/capture/server was started. Further bounded
+initialization diagnosis requires separate coordination. P5, runtime pins, main,
+versions and release intake are unchanged.

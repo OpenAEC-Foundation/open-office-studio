@@ -267,5 +267,31 @@
     "productFixValidated": false,
     "automaticRepairOrRetryStarted": false,
     "receipt": "docs/tests/presentation-375/fourth-source-outcome.json"
+  },
+  "fifthSourceWitness": {
+    "run": 45356331378,
+    "attempt": 1,
+    "job": 138314969231,
+    "qaCommit": "4fbbdd39c1b6311d4705531a10e3f72b18931408",
+    "conclusion": "failure",
+    "artifact": {
+      "id": 14912540854,
+      "bytes": 228534,
+      "zipSHA256": "a0feeeee31dc57e34f31e2ac9d673aeb4f42d8392d6d1c2bb3bda06d2bb51b48",
+      "expiresAtUTC": "2027-02-22T08:27:55Z",
+      "retained": "docs/tests/presentation-375/retained/source-witness-45356331378.zip"
+    },
+    "sourceBootstrapUIResourcePassed": true,
+    "cliPrerequisitesPassed": true,
+    "initializerControlsPassed": 5,
+    "targetSelectionControlsPassed": 7,
+    "retainedUIResourceIndependentlyHashChecked": true,
+    "baselineCompiledAndStarted": true,
+    "baselineExpectedStaleAccent1Failure": false,
+    "observedFailure": "SIGSEGV during original-importer loadFromFile / Impress view initialization; current top frame SfxBindings::Invalidate, settings/icon-theme/window update stack",
+    "productionImporterAppliedOrCompiled": false,
+    "productFixValidated": false,
+    "automaticRepairOrRetryStarted": false,
+    "receipt": "docs/tests/presentation-375/fifth-source-outcome.json"
   }
 }
