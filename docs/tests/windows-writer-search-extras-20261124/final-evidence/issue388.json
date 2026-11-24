@@ -1,0 +1,27 @@
+{
+  "body": "## Problem and scope\n\nWriter finds text spanning a manual line break in a table cell, but **Replace All** fails with an internal inline-atom error. The requested replacement contains a supported tab (`^t`). This issue covers that independently reproduced replacement failure.\n\n## Environment and independent evidence\n\n- Published Open Office Studio **2026.48.1**, application commit `b696ab86bd1c128729a079b68c0082e6df3d36a5`, tree `e30879fd772871e690847c061ef66e6b81808a05`.\n- Signed Windows x64 Suite installer, SHA256 `69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334`. Independently extracted PE equals installed PE, SHA256 `48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b`.\n- Actual installed WebView2 app on an isolated GitHub-hosted `windows-latest` runner, private profile. Real pointer/keyboard input; no editor-API or DOM-value mutation used as input.\n- [Initial reproduction](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45399525727) and [targeted diagnostic](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45401582689), attempt 1. The diagnostic records the actual UI error and independently reads the saved DOCX. These are separate from earlier user screenshot reports.\n- [Final scoped verification](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45402982685), job `138476128880`, attempt 1, repeats this exact failure as its first replacement operation on a fresh fixture. The run deliberately remains failed for this product defect; the other control-character operations and save/full-quit/new-PID reopen complete. All three final app processes exit normally with code 0. Independent XML verifies that the original manual line break remains (`w:br`), alongside the correctly persisted independent replacements.\n- Other platforms have not independently reproduced this specific failure in this QA scope.\n\n## Reproduction\n\n1. Open Writer and create a 3\u00d73 table. In a cell, enter `hard`, a **manual line break** (Shift+Enter), then `line`. The tested synthetic fixture used row 2, column 1.\n2. Open Find and Replace with Ctrl+H. Leave Regular expression and Use wildcards off.\n3. Set **Find what** to `hard^lline`. Writer reports one result.\n4. Set **Replace with** to `hard^tline` and click **Replace All**.\n5. Inspect the result/status and save/reopen the document to check the actual control character.\n\n## Actual behavior\n\nThe pane reports:\n\n> Replace failed (replacing or deleting inline atoms is not supported).\n\nThe original manual line break remains. The diagnostic's saved XML still contains the original line-break structure, and the actual cell text is `hard\\vline`, not `hard\\tline`. Focus stays on Replace All because the operation failed. No data loss is claimed.\n\n## Expected behavior\n\nReplace the found span with `hard`, a tab, and `line`, preserving unrelated cells and formatting. Report one successful replacement and return document focus for the promised one-step Undo.\n\n## Investigation pointer\n\nIn exact P5 `src/tekst/zoeken/zoeken.ts`, the simple replacement route excludes paragraph/page-break text (`\\n`/`\\f`) but not manual-line-break text (`\\v`). It submits a `replaceText` edit for the span; the observed runtime error rejects replacing/deleting inline atoms. This is a source-based investigation pointer, not a proven fix or a claim that other inline-object types have been tested.\n\n## Acceptance criteria\n\n- The literal query/replacement above succeeds without the inline-atom error, changing only the intended span.\n- The actual output contains the intended tab; unrelated text and run formatting survive.\n- One document Undo restores the manual line break, and Redo restores the tab while the pane remains open.\n- Saving, normal full application exit and a new-process reopen retain the correct text/control structure. Record remaining platform checks explicitly at the fixed codepoint.\n- Record focused Windows/Linux/macOS/browser results at the same fixed commit; distinguish actual native checks from source/build-only results.\n\n## Duplicate check and coordination\n\nOpen and closed searches covered manual line break, line break, linebreak, regeleinde, inline atoms, and replacement. Descriptions of #29, #135 and #188 were read. #29 remains the appropriate existing overview. #188 concerns Undo focus after a successful replacement; here replacement itself is rejected. #135 concerns an old Linux worker-initialization message.\n\nThe existing integration chat coordinates this report; this Windows QA chat owns its registration and reproduction. No product fix, priority/status reassignment or release change is included.\n",
+  "labels": [
+    {
+      "id": "LA_kwDOVRiTGs8AAAAC-VkWwQ",
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "id": "LA_kwDOVRiTGs8AAAAC_W4VDw",
+      "name": "tekst",
+      "description": "Open Tekst Studio",
+      "color": "1f6feb"
+    },
+    {
+      "id": "LA_kwDOVRiTGs8AAAADArTE2A",
+      "name": "ui",
+      "description": "Interface, zichtbaarheid, toegankelijkheid en bediening",
+      "color": "c2e0c6"
+    }
+  ],
+  "number": 388,
+  "state": "OPEN",
+  "title": "Writer: replacing text across a manual line break in a table cell fails",
+  "url": "https://github.com/OpenAEC-Foundation/open-office-studio/issues/388"
+}

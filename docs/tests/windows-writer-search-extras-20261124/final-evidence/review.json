@@ -1,0 +1,137 @@
+{
+  "status": "TESTING_COMPLETE_ONE_PRODUCT_BUG",
+  "date": "2026-11-24",
+  "source": {
+    "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "tree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "version": "2026.48.1",
+    "installerSha256": "69a1fa6cd5e5ad84707a3f627ee26cfdefd8a7cc27193a2d543f92f42e2a3334",
+    "installedPESha256": "48ff65c7a2a83c0bc60593ef518cde0ce2798745b034a0cfa58063fe6193176b",
+    "suiteChildArtifact": 14828676560,
+    "publicRelease": 456623378,
+    "publicAsset": 786782581
+  },
+  "branch": "codex/windows-writer-search-extras-20261124",
+  "executedHarnessCommit": "7294e6d28464f042ffe8ba7d10c887b308cd31f9",
+  "families": {
+    "wildcard": {
+      "status": "PASS",
+      "steps": 13,
+      "run": 45399525727,
+      "job": 138464139608,
+      "attempt": 1,
+      "evidence": "../initial-evidence; independent-wildcard-format.json"
+    },
+    "format": {
+      "status": "PASS",
+      "steps": 11,
+      "run": 45399525727,
+      "job": 138464139608,
+      "attempt": 1,
+      "evidence": "../initial-evidence; independent-wildcard-format.json"
+    },
+    "special": {
+      "status": "FAIL_ONE_CONFIRMED_PRODUCT_DEFECT_OTHER_ASSIGNED_CHECKS_COMPLETE",
+      "issue": 388,
+      "failedQuery": "hard^lline",
+      "replacement": "hard^tline",
+      "actualError": "1 result \u00b7 Replace failed (replacing or deleting inline atoms is not supported).",
+      "sourceUnchangedForFailedOperation": true,
+      "otherAccepted": "Seven queries and actual InsertTab button from initial run; tab-removal and NBSP replacement+exact XML/Undo/Redo from diagnostic; paragraph and digit/caret replacements+exact XML/Undo/Redo and normal save/fullquit/newPID reopen from final run",
+      "finalRun": 45402982685,
+      "job": 138476128880,
+      "attempt": 1
+    }
+  },
+  "artifact": {
+    "id": 14924297641,
+    "size_in_bytes": 174740,
+    "digest": "sha256:63f5fff85e4a8675ee51f6f560e5e197d19fcd8bfed9e3f099b35b54f8da3d9f",
+    "expires_at": "2027-02-22T13:23:43Z"
+  },
+  "docxSha256": "c42d7598f5121dcd9eecfdf0e37f4971ec1813ad60af606a30648489393d6915",
+  "visualReview": "Assistant inspected saved/reopened wildcard, format and final special native PNGs. Exact words, bold/italic/underline/Heading1 and control-containing text remain visibly consistent. No complete font/layout certification.",
+  "independentXML": "All three final DOCX outputs independently parsed and compared with declared cells/styles. Special output retains exactly one manual break for failed operation, two paragraphs in its separate cell, one NBSP and no remaining tab; source control structures and successful substitutions preserved.",
+  "processes": [
+    {
+      "pid": 5576,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    },
+    {
+      "pid": 3096,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    },
+    {
+      "pid": 2352,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "forcedCleanup": false
+    }
+  ],
+  "cleanup": {
+    "ownedAppsClosed": true,
+    "policyRestored": true,
+    "privateInstallRemoved": true
+  },
+  "cleanupLimits": "Current three owned processes verified exit0, browser connection closed, policy restored, uninstaller invoked successfully. Native helper privateInstallRemoved is not a separate residual-file inventory. No local user-PC app/capture/server session created.",
+  "driverCorrections": {
+    "initialRun": "Whole run45399525727 remains failed; wildcard/format passes retained. Whitespace projection never accepted control mutation alone; focus timeout stopped special acceptance. Last special PID was forced closed.",
+    "diagnosticRun": "Whole run45401582689 remains failed. It incorrectly classified success notices as errors when results remain, and bound file hash before the final producing app had closed. Those two false product classifications are explicitly rejected. Current three real status regressions pass.",
+    "saveBarrier": "Current hash freezes after producing app normal exit, then exact full-file hash must remain unchanged after newPID reopen. Current before-close->closed difference is confined to docProps/core.xml; no unsupported causal claim about older uncaptured byte differences."
+  },
+  "issue": "#388 created with tekst/bug/ui after open+closed duplicate descriptions; no priority/status/assignment modification of existing issues",
+  "limits": [
+    "Only public P5b696/48.1 Windows Suite; not727903cc/PR384 acceptance",
+    "Whole final run intentionally FAIL for actual product defect, no green release claim",
+    "No product fix/build/parentdownload/main/tag/releasewrite",
+    "Original failed runs preserved; no broad wildcard/format/regex repeat"
+  ],
+  "files": {
+    "artifact-api.json": {
+      "bytes": 905,
+      "sha256": "11ea7d7c91745ae328de64452a479c37d1fffac1159495b62cd35c9d4559ca20"
+    },
+    "independent-audit.json": {
+      "bytes": 857,
+      "sha256": "a89ab7d192de14b9fd753ad27c898efb8f882fcaf36e0b5820d8c65d25f83f39"
+    },
+    "independent-wildcard-format.json": {
+      "bytes": 1164,
+      "sha256": "ef6a1a5b95379ce50e36f7fd59d2445959c7ea1979b3d4831f9ab13a56923128"
+    },
+    "issue388.json": {
+      "bytes": 5467,
+      "sha256": "e4ce928d6c278378b2a229b42484c52d81860575f481e8a1367a9d2c194fc9de"
+    },
+    "original-proof.zip": {
+      "bytes": 174740,
+      "sha256": "63f5fff85e4a8675ee51f6f560e5e197d19fcd8bfed9e3f099b35b54f8da3d9f"
+    },
+    "report.json": {
+      "bytes": 56145,
+      "sha256": "9655ace1f6f6e77935accfe240a597dcfe60aa78d47da9e11f57b464c97fd409"
+    },
+    "Special native.docx": {
+      "bytes": 37065,
+      "sha256": "c42d7598f5121dcd9eecfdf0e37f4971ec1813ad60af606a30648489393d6915"
+    },
+    "special-reopened.png": {
+      "bytes": 58580,
+      "sha256": "77c68c7575fde8fc52f9ce62f324eac221ca9cf65c37f24ae87fefaed516e26a"
+    },
+    "special-saved.png": {
+      "bytes": 59453,
+      "sha256": "884853b92935d860f1e510ccd4272acb95f69868d8e14ff8f3ae88524f37f36c"
+    }
+  }
+}
