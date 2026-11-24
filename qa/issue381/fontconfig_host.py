@@ -17,6 +17,26 @@ from font_cache import load_policy, observer_uuid
 from runtime_prefix import inventory, sha
 
 
+def new_observer_config(lib):
+    """Initialize diagnostics via public API, then retain the empty probe context.
+
+    FcInitLoadConfig invokes FcInitDebug in the pinned source. No Fonts API,
+    font scan or current/default converter configuration is installed here.
+    """
+    lib.FcInitLoadConfig.argtypes=[]
+    lib.FcInitLoadConfig.restype=ctypes.c_void_p
+    lib.FcConfigDestroy.argtypes=[ctypes.c_void_p]
+    lib.FcConfigDestroy.restype=None
+    initialized=lib.FcInitLoadConfig()
+    assert initialized, 'Public observer configuration initialization failed'
+    lib.FcConfigDestroy(initialized)
+    lib.FcConfigCreate.argtypes=[]
+    lib.FcConfigCreate.restype=ctypes.c_void_p
+    empty=lib.FcConfigCreate()
+    assert empty, 'Empty observer configuration creation failed'
+    return empty
+
+
 def main(output, variant):
     assert sys.platform == 'linux' and os.environ.get('GITHUB_ACTIONS') == 'true'
     policy = load_policy()
@@ -38,14 +58,12 @@ def main(output, variant):
         dependencies.append(dict(path=str(target),sha256=sha(target)))
     package = subprocess.check_output(['dpkg-query','-W','-f=${Version}', 'libfontconfig1'],text=True,timeout=5)
     assert package.startswith('2.13.1-'), ('Package version differs from qualified base',package)
-    lib.FcConfigCreate.restype=ctypes.c_void_p
-    lib.FcConfigDestroy.argtypes=[ctypes.c_void_p]
     lib.FcDirCacheCreateUUID.argtypes=[ctypes.c_char_p,ctypes.c_int,ctypes.c_void_p]
     lib.FcDirCacheCreateUUID.restype=ctypes.c_int
     lib.FcDirCacheLoad.argtypes=[ctypes.c_char_p,ctypes.c_void_p,ctypes.c_void_p]
     lib.FcDirCacheLoad.restype=ctypes.c_void_p
     lib.FcDirCacheUnload.argtypes=[ctypes.c_void_p]
-    config=lib.FcConfigCreate();assert config
+    config=new_observer_config(lib)
     try:
         writer=output/'writer';writer.mkdir()
         assert lib.FcDirCacheCreateUUID(os.fsencode(writer),0,config)
@@ -65,6 +83,7 @@ def main(output, variant):
             sha256=sha(library),dynamic=dynamic,ldd=linked,dependencies=dependencies,
             writerUuid=data.decode('ascii'),writerMode='0644',readerPreserved=True,readerUuid=text,
             observerCache=os.environ['XDG_CACHE_HOME'],
+            initialization='Public FcInitLoadConfig/destroy followed by empty FcConfigCreate; no Fonts API or current-config setter',
             readerDebugToken='FcDirCacheReadUUID '+str(reader/'.uuid')+' -> '+text,
             scope='Actual host API behavior plus pinned upstream2.13.1 reference; not historical writer attribution or complete ABI equivalence')
         (output/'report.json').write_bytes((json.dumps(report,indent=2)+'\n').encode())
