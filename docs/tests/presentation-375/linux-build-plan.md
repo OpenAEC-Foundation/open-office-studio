@@ -1,9 +1,8 @@
 # #375: bounded Linux source-build/test proposal
 
-**Status on 2026-11-24: the external third witness failed during original-importer
-test initialization. CLI build/target-selection checks passed; the production
-patch remains uncompiled. Test-only harness preparation is authorized; no new
-build allocation yet.** This is a private QA witness for the reviewed importer patch,
+**Status on 2026-11-24: a fourth, explicitly allocated witness is running on
+reviewed harness f652710e. Earlier failures remain unchanged; initialization,
+patched importer/Cppunit and runtime acceptance are not yet established.** This is a private QA witness for the reviewed importer patch,
 outside P2/P3/374 intake. It does not authorize application installers, macOS
 builds, a runtime catalog pin, release publication or a main merge.
 
@@ -357,3 +356,26 @@ allocates one witness with new epochs. There is no automatic dispatch on time or
 prerequisite completion. Four local source/resource controls and static checks
 pass; real initialization and color acceptance remain unproven. Earlier failures
 and the original stop receipt remain unchanged.
+
+## Fourth allocation after release-capacity clearance
+
+Integration confirmed P5 package verifier `45352330223` SUCCESS and independent
+LinuxSuite final audit completion, then explicitly allocated one standard
+Ubuntu24 source witness on exact QA `f652710eca7301ca55113db7344c9bd6dd734409`.
+The fresh pre-dispatch inventory examined two active runs and found no queued
+or waiting Linux job. Source/configuration, importer patch `e29ec641...` and
+test-initialization patch `bf6b5995...` are unchanged from the reviewed inputs.
+
+Epochs were recorded before dispatch: start `1795508007`, **09:13:27 CET on
+2026-11-24**; preparation end **09:58:27**, controller end **13:33:27**, total
+end **13:43:27**, with ten minutes reserved for upload/cleanup. All compiler/test
+work, including UI resources, remains within 210 minutes and the remaining total
+budget. No automatic retry, repair, extra VM or paid host is authorized.
+
+[Run 45354246604](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45354246604),
+attempt 1/job `138308003947`, confirms that exact QA commit. Actual VM resource/
+toolchain and fixed dependency steps passed; the combined witness step is
+running. No initialization, stale-theme baseline, production fix or runtime
+acceptance is inferred. Full immutable input/time/queue binding is preserved in
+[`fourth-source-allocation.json`](fourth-source-allocation.json). This witness
+is outside P5/application builds, native acceptance, runtime pins and intake.
