@@ -75,7 +75,7 @@ jobs:
           git fetch --no-tags --depth=1 origin e280e9521cfad3b2c61c26d19fbb5df8b5b74a42 dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
           pnpm install --frozen-lockfile --ignore-scripts
       - name: One bounded original-importer startup matrix; stop for technical review
-        run: python scripts/qa-presentation-375/source_build.py
+        run: python scripts/qa-presentation-375/source_supervisor.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

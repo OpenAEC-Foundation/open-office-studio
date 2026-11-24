@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 import re
 import shutil
-import signal
 import subprocess
 import sys
 import time
@@ -34,7 +33,9 @@ def sha(p):
 
 def receipt():
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/'build-report.json').write_text(json.dumps(REPORT,indent=2)+'\n')
+    temporary=OUT/'build-report.json.tmp'
+    temporary.write_text(json.dumps(REPORT,indent=2)+'\n')
+    temporary.replace(OUT/'build-report.json')
 
 
 def run(name, argv, cwd=None, timeout=600, check=True, env=None):
@@ -47,15 +48,17 @@ def run(name, argv, cwd=None, timeout=600, check=True, env=None):
         assert prep_left>0, 'Allocated 45-minute preparation window exhausted; no new source/compiler attempt'
         timeout=min(timeout,prep_left)
     log=OUT/(name+'.log'); started=time.monotonic()
+    REPORT['activeStage']=name
+    receipt()
     print(name,flush=True)
     with log.open('wb') as stream:
         p=subprocess.Popen(argv,cwd=cwd,env=ENV if env is None else env,stdout=stream,stderr=subprocess.STDOUT,
-                           stdin=subprocess.DEVNULL,start_new_session=True)
+                           stdin=subprocess.DEVNULL)
         try: code=p.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            os.killpg(p.pid,signal.SIGTERM)
+            p.terminate()
             try: p.wait(timeout=10)
-            except subprocess.TimeoutExpired: os.killpg(p.pid,signal.SIGKILL);p.wait()
+            except subprocess.TimeoutExpired: p.kill();p.wait()
             code=124
     truncated=False
     if log.stat().st_size>8*1024**2:
@@ -63,9 +66,11 @@ def run(name, argv, cwd=None, timeout=600, check=True, env=None):
             head=f.read(1024**2);f.seek(-7*1024**2,os.SEEK_END);tail=f.read()
         log.write_bytes(head+b'\n[owned log truncated: retained first 1 MiB / last 7 MiB]\n'+tail);truncated=True
     REPORT['stages'].append({'name':name,'argv':list(map(str,argv)),'exitCode':code,'logTruncated':truncated,
-                             'processGroupLeaderPID':p.pid,
+                             'subprocessPID':p.pid, 'ownedControllerProcessGroup':os.getpgrp(),
                              'seconds':time.monotonic()-started,'log':log.name,'logSHA256':sha(log)})
     receipt()
+    if code==124:
+        raise TimeoutError(name+' timed out; supervisor cleans the exclusively owned controller group')
     if check: assert code==0, name+' failed; inspect '+str(log)
     return code
 
@@ -92,6 +97,7 @@ ENV.update(CC='/usr/bin/gcc-13',CXX='/usr/bin/g++-13',SAL_USE_VCLPLUGIN='svp',
 
 def main():
     assert sys.platform.startswith('linux') and os.environ.get('GITHUB_ACTIONS')=='true'
+    assert os.environ.get('OOS_375_SUPERVISED')=='1' and os.getpgrp()==os.getpid(), 'Require the own deadline-supervised session'
     assert os.environ.get('OOS_375_SOURCE_DIAGNOSTIC') == 'startup-differential', 'Only the reviewed startup matrix; no automatic importer continuation'
     for key in ('CPPUNIT_TEST_NAME', 'gb_SUPPRESS_TESTS', 'CPPUNITTRACE', 'DEBUGCPPUNIT', 'OOS_375_STARTUP_ARM'):
         ENV.pop(key, None)
@@ -100,6 +106,7 @@ def main():
     assert preflight['buildReadyByPlanGates'] and preflight['patchSHA256']==PIN['patchSHA256']
     assert sha(OWN/'runtime-patch/375-solid-rgb-import.patch')==PIN['patchSHA256']
     REPORT['initialPreflight']=preflight
+    run('controller-deadline-controls',[BUILD_PYTHON,str(OWN/'source_supervisor_checks.py')])
     temp=Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
     build=temp/('presentation-375-'+os.environ['GITHUB_RUN_ID'])
     assert not build.exists() and build.parent==temp
