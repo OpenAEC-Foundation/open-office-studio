@@ -73,6 +73,13 @@ class ChildContracts(unittest.TestCase):
         legacy,_,_=fixture();legacy["testTitleOverlap"]=False
         with self.assertRaises(AssertionError): c.descriptor(legacy)
 
+    def test_regex_scope_preserves_all_signature_source_and_title_boundaries(self):
+        plan,d,_=fixture();plan.update(focusedCase="regex-20261124",testTitleOverlap=False,titleOnly=False);freeze(plan,d)
+        c.descriptor(plan)
+        for change in (dict(requireSigned=False),dict(testTitleOverlap=True),dict(titleOnly=True),dict(focusedCase="regex-arbitrary"),dict(applicationCommit="f"*40)):
+            bad=copy.deepcopy(plan);bad.update(change)
+            with self.subTest(change=change), self.assertRaises(AssertionError):c.descriptor(bad)
+
     def test_null_or_wrong_parent_source_rejects_even_with_matching_descriptor_hash(self):
         for key,value in (("parentArtifact",None),("commit","04fa6cd43b84e3f59fb9d5055bb2d00dde351a47"),("attempt",2)):
             plan,d,_=fixture(); d["source"][key]=value; freeze(plan,d)

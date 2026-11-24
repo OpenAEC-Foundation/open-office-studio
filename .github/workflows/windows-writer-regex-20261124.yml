@@ -1,0 +1,65 @@
+name: Writer native regex and capture replacement
+on:
+  push:
+    branches: [codex/windows-writer-regex-20261124]
+    paths:
+      - .github/windows-writer-regex-20261124.json
+      - scripts/windows-find-replace-case-20261124.mjs
+      - scripts/windows-regex-case-20261124.mjs
+      - docs/tests/windows-writer-regex-20261124/plan.json
+      - scripts/proef-windows-writer-native.mjs
+      - scripts/windows-native-signature.mjs
+      - scripts/windows-native-signature.test.mjs
+      - scripts/windows-final-title-case.mjs
+      - scripts/windows-stw-file-dialog.py
+      - scripts/windows-file-dialog-original-20261123.py
+      - scripts/format30-stw-oracle.py
+      - scripts/windows-final-title-oracle_test.py
+      - scripts/windows-final-zip-member.py
+      - scripts/windows-suite-child.py
+      - scripts/windows-suite-child_test.py
+      - docs/tests/format30-stw/source.json
+      - .github/workflows/windows-writer-regex-20261124.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native:
+    if: contains(github.event.head_commit.message, '[writer-regex-go]')
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: node --test scripts/windows-native-signature.test.mjs
+      - run: python -B scripts/windows-suite-child_test.py
+      - run: python -m pip install pywinauto==0.6.9
+      - name: Verify actual signed bytes and exercise native Writer save/reopen
+        run: node scripts/proef-windows-writer-native.mjs .github/windows-writer-regex-20261124.json .local/windows-final-native --require-signed --require-suite-child
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: writer-regex-native-${{ github.sha }}
+          path: |
+            .local/windows-final-native/*.json
+            .local/windows-final-native/*.png
+            .local/windows-final-native/*.docx
+            .local/windows-final-native/*.stw
+            .local/windows-final-native/*.log
+            .github/windows-writer-regex-20261124.json
+            .local/windows-final-native/suite-input/suite-child-binding.json
+            .local/windows-final-native/suite-input/package.json
+            .local/windows-final-native/suite-input/canonical-package-report.json
+          include-hidden-files: true
+          if-no-files-found: warn

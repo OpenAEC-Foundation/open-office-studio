@@ -6,18 +6,21 @@ import { createHash } from "node:crypto";
 import { DOMParser } from "@xmldom/xmldom";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";
 
-export async function testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage, waitFor, report }) {
-  const plan = JSON.parse(await readFile("docs/tests/windows-writer-find-replace-20261124/plan.json", "utf8"));
+export async function testNativeFindReplace({ out, exe, port, startApplication, closeApplication, getPage, waitFor, report,
+  planPath = "docs/tests/windows-writer-find-replace-20261124/plan.json", runCases }) {
+  const plan = JSON.parse(await readFile(planPath, "utf8"));
+  const regexMode = plan.mode === "regex-20261124";
+  assert.equal(Boolean(runCases), regexMode, "Only the explicit regex continuation has a delegated case body");
   const baseline = plan.baseline, bulk = plan.bulk, single = plan.single;
   const sha = b => createHash("sha256").update(b).digest("hex");
-  const path = join(out, "Find Replace native.docx");
+  const path = join(out, regexMode ? "Regex native.docx" : "Find Replace native.docx");
   const parts = unzipSync(await readFile("public/templates/nieuw.docx"));
   const escape = s => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
   const cell = (text, n) => `<w:tc><w:tcPr><w:tcW w:w="2880" w:type="dxa"/></w:tcPr><w:p><w:r>${n === 1 ? "<w:rPr><w:b/></w:rPr>" : ""}<w:t xml:space="preserve">${escape(text)}</w:t></w:r></w:p></w:tc>`;
   const table = `<w:tbl><w:tblPr><w:tblW w:w="8640" w:type="dxa"/></w:tblPr><w:tblGrid>${'<w:gridCol w:w="2880"/>'.repeat(3)}</w:tblGrid>${[0,3,6].map(n => `<w:tr>${baseline.slice(n,n+3).map((t,i)=>cell(t,n+i)).join("")}</w:tr>`).join("")}</w:tbl><w:p/>`;
   parts["word/document.xml"] = strToU8(strFromU8(parts["word/document.xml"]).replace(/(<w:body>)[\s\S]*?(<w:sectPr)/, `$1${table}$2`));
   await writeFile(path, zipSync(parts), { flag: "wx" });
-  const evidence = report.findReplaceCase = { plan, steps: [], fixtureSha256: sha(await readFile(path)), screenshots: [] };
+  const evidence = report[regexMode ? "regexCase" : "findReplaceCase"] = { plan, steps: [], fixtureSha256: sha(await readFile(path)), screenshots: [] };
   let page;
   async function disk() {
     const b = await readFile(path);
@@ -56,7 +59,8 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   assert.equal((await disk()).sha256,preflightSaved.sha256);
   await focus();await page.keyboard.press("Control+Home");
   for(let i=0;i<3;i++) await page.keyboard.press("Shift+ArrowRight");
-  await page.keyboard.press("Backspace");await visible(baseline);await save(baseline);
+  await page.keyboard.press("Backspace");await visible(baseline);const baselineSaved=await save(baseline);
+  evidence.preflightSaved = preflightSaved; evidence.baselineSaved = baselineSaved;
   evidence.steps.push({name:"Current real editor focus/keyboard/save/normal close/newPID reopen preflight",passed:true,pid0,pid1});
   await page.keyboard.press("Control+h");
   const pane=page.getByRole("search",{name:"Find and Replace",exact:true});
@@ -66,6 +70,9 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   const matchCase=pane.getByRole("checkbox",{name:"Match case",exact:true});
   async function textInput(field,text){await field.click();await page.keyboard.press("Control+a");await page.keyboard.type(text);assert.equal(await field.inputValue(),text);}
   async function results(n){await waitFor(async()=>await pane.locator('.tw-zoek-resultaten li').count()===n,`Native search must report ${n} results`);return await pane.locator('.tw-zoek-telling').textContent();}
+  if (runCases) {
+    await runCases({page,pane,query,replacement,whole,matchCase,textInput,results,visible,baseline,bulk,single,plan,evidence,disk,baselineSaved});
+  } else {
   await textInput(query,"kat");let status=await results(plan.counts.literal);
   evidence.steps.push({name:"Literal case-insensitive search includes substrings across cells",passed:true,status});
   await whole.check();status=await results(plan.counts.whole);
@@ -89,16 +96,18 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   await page.keyboard.press('Control+z');await visible(baseline);
   await page.keyboard.press('Control+Shift+z');await visible(bulk);
   evidence.steps.push({name:"Replace All affects exactly six eligible whole words; one-step Undo and both Redo shortcuts preserve excluded text",passed:true});
+  }
   await page.locator('.tw-zoek-sluit').click();await page.waitForFunction(()=>document.activeElement?.matches('.paged-editor__yrs-input'));
-  const saved=await save(bulk);evidence.saved=saved;await shot('find-replace-saved');await closeApplication();
+  const prefix=regexMode?'regex':'find-replace';
+  const saved=await save(bulk);evidence.saved=saved;await shot(`${prefix}-saved`);await closeApplication();
   const pid2=await startApplication(exe,port,path,true);assert.notEqual(pid1,pid2);page=getPage();await visible(bulk);
-  assert.deepEqual(await disk(),saved);await shot('find-replace-reopened');
+  assert.deepEqual(await disk(),saved);await shot(`${prefix}-reopened`);
   await page.keyboard.press('Control+h');
   const reopenedPane=page.getByRole('search',{name:'Find and Replace',exact:true});
-  await textInput(reopenedPane.getByRole('searchbox',{name:'Find what',exact:true}),'hond');
-  await waitFor(async()=>await reopenedPane.locator('.tw-zoek-resultaten li').count()===6,'Reopened actual document finds all six persisted replacements');
-  evidence.steps.push({name:"Real CtrlS, normal exit, newPID reopen retains exact replacements and bold control; reopened native Find sees six replacements",passed:true,pid1,pid2});
+  await textInput(reopenedPane.getByRole('searchbox',{name:'Find what',exact:true}),regexMode?plan.reopenQuery:'hond');
+  await waitFor(async()=>await reopenedPane.locator('.tw-zoek-resultaten li').count()===(regexMode?plan.reopenCount:6),'Reopened actual document finds every persisted replacement');
+  evidence.steps.push({name:"Real CtrlS, normal exit, newPID reopen retains exact replacements and bold control; reopened native Find confirms persisted text",passed:true,pid1,pid2});
   await page.locator('.tw-zoek-sluit').click();await closeApplication();
   evidence.processIds=[pid0,pid1,pid2];evidence.docx=path;evidence.visualStatus='requires screenshot review';
-  report.checks.push({name:'Focused native ordinary Find/Replace acceptance',steps:evidence.steps.length});
+  report.checks.push({name:regexMode?'Focused native regex acceptance':'Focused native ordinary Find/Replace acceptance',steps:evidence.steps.length});
 }

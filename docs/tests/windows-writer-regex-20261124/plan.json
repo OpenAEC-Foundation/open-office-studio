@@ -1,0 +1,75 @@
+{
+  "mode": "regex-20261124",
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "version": "2026.48.1",
+  "scope": "Missing native Windows regex/capture replacement acceptance on public P5; no wildcards/format/special-character family or new integration candidate",
+  "baseline": [
+    "item-12 item-34 ITEM-56",
+    "item-78",
+    "keep-90 item-09",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "single": [
+    "12/item item-34 ITEM-56",
+    "item-78",
+    "keep-90 item-09",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "bulk": [
+    "12/item 34/item ITEM-56",
+    "78/item",
+    "keep-90 09/item",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "pattern": "(item)-(\\d{2})",
+  "replacement": "$2/$1",
+  "reopenQuery": "/item",
+  "reopenCount": 4,
+  "supportedSemantics": {
+    "ui": "Regular expression checkbox in exact P5 English Writer UI; wildcard-only help syntax is not borrowed",
+    "implementation": "Exact P5 logica.ts explicitly handles regex $1..$9, $& and $$; chosen $2/$1 uses supported numbered captures only",
+    "existingTests": "Exact P5 zoeken.test.ts asserts regex $2$1 => atk; older browser export test also verifies capture output",
+    "sourceSha256": {
+      "src/tekst/zoeken/logica.ts": "de985dd9b371b389fa079ed3e09e44865ec42a4753598ede7d5a77a9c4d591d1",
+      "src/tekst/zoeken/zoeken.test.ts": "82d395e0c3a1979992400d459f7338521dd2572b321efcfe9b1f081ef33d880f",
+      "src/i18n/locales/en/writer.json": "31f10d92e853f5d83350458e5cddd42b8db747521af3c6a6bd979fe79c5ecb07"
+    }
+  },
+  "independentExpectedValues": "Hard-coded full cell outputs checked before runtime with Python re named numeric captures via backreferences, not importing application code. Counts5 case-insensitive and4 case-sensitive; single occurrence and all4 replacements independently checked.",
+  "coverageLedger": {
+    "reused": [
+      "P5 native ordinary Find/Replace45393902599: seven controlsPASS, regex explicitly excluded",
+      "P5 core45196601365 and374/SaveAs45352763316 retained separately",
+      "Actual public installer/signature/install binding45387284170"
+    ],
+    "older": "docs/tests/2026-11-09-writer-ongeldige-regex.json and writer-unicode-regex.md are source/production-browser results; nativeWebView2Retested:false/no new native Windows installer. Closed189 original native failure on2026.45.4 is not a P5pass.",
+    "new": [
+      "Valid regex quantifier/class/groups and case setting",
+      "Invalid [/[abc/( with whole-words toggled; no source mutations and disabled actions",
+      "Empty-matching a* rejected safely",
+      "Supported regex $2/$1 single/bulk captures with real native Undo/Redo",
+      "Real save/normal exit/newPID reopen preserves capture output and bold control"
+    ],
+    "excluded": [
+      "Word wildcards and their backslash capture syntax",
+      "Formatting/style/special-character search",
+      "Emoji-font follow-up and Unicode zero-width surrogate regression",
+      "Product fixes, other platforms, new727903cc/PR384 candidate"
+    ]
+  }
+}
