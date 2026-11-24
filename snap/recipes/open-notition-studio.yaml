@@ -28,11 +28,15 @@ slots:
     interface: dbus
     bus: session
     name: org.openaec.notition-studio.SingleInstance
+layout:
+  /usr/share/zenity:
+    bind: $SNAP/usr/share/zenity
 parts:
   open-notition-studio:
     plugin: nil
     stage-packages:
     - libappindicator3-1
+    - zenity
     override-build: 'set -eu
 
       dpkg-deb -x "${CRAFT_PROJECT_DIR}/release.deb" "${CRAFT_PART_INSTALL}"

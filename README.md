@@ -120,7 +120,8 @@ Get-FileHash .\Open.Office.Studio_VERSION_x64-setup.exe -Algorithm SHA256   # Wi
 All seven Linux products require `zenity` for native confirmation dialogs.
 Install DEB packages with `sudo apt install ./PACKAGE.deb` so their declared
 dependencies are resolved. AppImage users must install the `zenity` package
-through their distribution's package manager. If it is missing or is not
+through their distribution's package manager. The Snap packages stage their
+own `zenity`, because strict confinement cannot use the host's. If it is missing or is not
 executable through PATH, the app reports the missing requirement before a
 confirmation; the requested overwrite or close is not approved. File pickers
 continue to use the desktop portal.
