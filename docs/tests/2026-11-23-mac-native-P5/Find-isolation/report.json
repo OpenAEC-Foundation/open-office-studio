@@ -1,0 +1,2731 @@
+{
+  "issue": 361,
+  "status": "native361-final-find-isolation-passed-tab-separate",
+  "nativePass": false,
+  "diagnosticOnly": false,
+  "applicationModified": false,
+  "identity": {
+    "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "sourceTree": "e30879fd772871e690847c061ef66e6b81808a05",
+    "declaredVersion": "2026.48.1",
+    "artifactRun": 45195055147,
+    "artifactAttempt": 1,
+    "artifactName": "uitgave-macOS",
+    "artifactId": 14836145077,
+    "archiveSha256": "45a88b40325f516e91b0b4cb557b88fd2a81d62bde2e4be26dc87bd1b55ff015",
+    "successfulPlatformJob": 137763371873,
+    "successfulPlatformJobName": "Bouwen – macOS",
+    "packageMember": "dist-installers/office/dmg/Open Office Studio_2026.48.1_aarch64.dmg",
+    "packageSha256": "1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af",
+    "requireExactPackageMember": true,
+    "transferRun": 45351696628,
+    "transferCommit": "03477b0199daeb50ae7b20d552b111630c3271ce",
+    "transferAttempt": 1,
+    "transferArtifactId": 14901001083,
+    "transferArtifactName": "standalone-support-suite",
+    "transferArchiveSha256": "76ad8b48534cec1833954358e0c71195b6dc5e62ab30bbac094f37367b0d8650",
+    "transferProducerJob": 138299734385,
+    "transferProducerJobName": "prepare",
+    "transferDescriptorMember": "provenance.json",
+    "transferDmgMember": "Open Office Studio_2026.48.1_aarch64.dmg",
+    "platform": "macOS",
+    "executionApproved": true,
+    "suiteChildTransferApproved": true,
+    "preparationOnly": false,
+    "derivePackageIdentityFromVerifiedArchive": true,
+    "deriveExecutableFromVerifiedDmg": true,
+    "requireSignedNotarized": true,
+    "nativeBodyAcceptanceApproved": true,
+    "macViewportSetup": {
+      "mode": "native-maximize-once",
+      "executionApproved": true
+    },
+    "nativeControlVisibleAnchors": [
+      "EERSTE",
+      "TWEEDE"
+    ],
+    "remainingBinding": "Exact current signed core45352741879 verified and independently reviewed; execute only the remaining scoped case.",
+    "transferRequestMember": "request.json",
+    "supportDescriptorRequired": true,
+    "supportDescriptorContractQaCommit": "8c4c3b5b441b3e39e2efa711f43d43d9931b1a9d",
+    "supportDescriptorArtifactId": 14901235362,
+    "supportDescriptorArtifactName": "standalone-suite-support-descriptor-03477b0199daeb50ae7b20d552b111630c3271ce",
+    "supportDescriptorArchiveSha256": "c73e2691c61a4dd11f320c65e3ff4541754f6f67eddb47d1ba0294429d3eef8e",
+    "supportDescriptorMember": "suite-support-descriptor.json",
+    "supportDescriptorBindingStatus": "Pinned actual descriptor and child; no native pass yet.",
+    "transferArchiveBytes": 373225524,
+    "supportDescriptorArchiveBytes": 2673,
+    "consumerRequiredSuiteSteps": [
+      "Transfer Suite only to its separate validation owner",
+      "Bind separate Suite child artifact to parent and DMG digests",
+      "Preserve separate Suite-owner descriptor"
+    ],
+    "consumerRequiresRawPreparerLog": true,
+    "separateProducerApproved": true,
+    "producerCommit": "2af94cdcefa3e88e4980b631d16a88d7d7de5ae8",
+    "producerTree": "94340e40228ddcb11aace00e4dd01f614a13273e",
+    "producerRef": "refs/heads/codex/p5-macos-only-producer-20261123",
+    "producerWorkflowPath": ".github/workflows/release.yml",
+    "producerWorkflowSha256": "2ae3b7aa85bb4d4e394e71af43a93da45332e9b5f78fd7ed2151aca732726d62",
+    "checkoutWorkflowSha256": "620e90485493163b87163a8763ffbbfcc2f0af5f03251b592af577721c5a9c64",
+    "sourceWitnessRequired": true,
+    "sourceWitnessMember": ".local/macos-only-producer-source.json",
+    "sourceWitnessSha256": "236085a316b40b2e5033316a3e3ed45f91cb9a27e83d518117160ba4aff4e7d5",
+    "sourceWitnessContract": "Root-approved rawBase64/member/SHA/bytes/value in raw provenance and support envelope",
+    "archiveBytes": 1972148013,
+    "userResume": "Explicit user resumption24Nov; only this own Suite scope. Native execution waits actual child/support/witness binding and all strict gates.",
+    "previous361Core": {
+      "reportPath": "docs/tests/2026-11-23-mac-native-P5/core/report.json",
+      "run": 45352741879,
+      "artifactId": 14902380591,
+      "archiveSha256": "0b63b96d5dfa25b95671c12cb39e32e0164a5f01adbfea161597eafd617e8721",
+      "reportSha256": "ed6409f1f36a8a327056b2806279d405b9fa749ce0de3dda3e9784b60f7d3ccd",
+      "bindingPending": false
+    },
+    "remaining361Approved": true,
+    "remaining361Scope": "find-isolation-only",
+    "finalSuite361Approved": true,
+    "executableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87",
+    "packagePath": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-input/Open Office Studio_2026.48.1_aarch64.dmg",
+    "executablePath": "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app/Contents/MacOS/open-office-studio"
+  },
+  "harnessCommit": "b052808d6fcfed34c7543176f0a827891b02a60d",
+  "sessionDriverSha256": "66af948271143bdbe93eb8c4acc57226317ad24a8ea10951a69d065708649714",
+  "checks": [],
+  "limits": [
+    "Only final signed-package Find/two-document controls and short cell preflight are newly executed; current-package Tab history stays separate",
+    "Earlier same-package body/column core and quit/reopen are explicitly reused",
+    "Native modal-dialog Undo and signed-package final combination are not executed here"
+  ],
+  "cleanup": {
+    "ownedAppClosed": true,
+    "ownedAppContainerRemoved": true
+  },
+  "acceptanceRequested": true,
+  "native359Reopened": false,
+  "newSwiftHelperCompiledBeforeAppLaunch": true,
+  "helperSourceSha256": "82813e7a2b9509cc1e9238a8eaaadf4b7e281d4535df13a86257f99f4bc06573",
+  "helperBinarySha256": "a5801173ac47104b774547dc22b6a6019a0dec9b53924daae47c116822e944b6",
+  "ocrHelper": {
+    "sourceSha256": "97fff21fd71fc40db46c6560681ce2fed814e22ac5dbbade1df3b98429372a7c",
+    "binarySha256": "f5fa4d6ff41d788812c884085358248749d88066553398e850b857ceb29d7ea3",
+    "compiledBeforeAppLaunch": true
+  },
+  "payloadInfoPlistSha256": "24c37316245cf655db0d8fb4655972bcd14380619841ab32754210c782624b3d",
+  "ownedAppContainer": "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p",
+  "appCopyMethod": "Native cp -R, matching official signed Mac package preflight",
+  "installedInfoPlistSha256": "24c37316245cf655db0d8fb4655972bcd14380619841ab32754210c782624b3d",
+  "installedBundleIdentity": {
+    "CFBundleIdentifier": "org.openaec.office-studio",
+    "CFBundleExecutable": "open-office-studio",
+    "CFBundleName": "Open Office Studio",
+    "CFBundleDisplayName": "Open Office Studio",
+    "CFBundleShortVersionString": "2026.48.1",
+    "CFBundleVersion": "2026.48.1"
+  },
+  "installedVersion": "2026.48.1",
+  "signedPackagePreflight": {
+    "status": "passed",
+    "app": "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app",
+    "checks": [
+      {
+        "name": "codesign-verify",
+        "command": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "--verbose=2",
+          "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/signed-package-preflight/codesign-verify.log",
+        "logSha256": "4be30709262975474f2aa6b96a1084be86692d2e5196c4efa04781ffa2e98ce7"
+      },
+      {
+        "name": "codesign-display",
+        "command": [
+          "codesign",
+          "--display",
+          "--verbose=4",
+          "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/signed-package-preflight/codesign-display.log",
+        "logSha256": "8da859a419ca838484ee411ccaf5ebc2aa357205a3b4fee44b079830489afe90"
+      },
+      {
+        "name": "gatekeeper",
+        "command": [
+          "spctl",
+          "--assess",
+          "--type",
+          "execute",
+          "--verbose=4",
+          "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/signed-package-preflight/gatekeeper.log",
+        "logSha256": "ecb35e41d4410c71d73848fe951b211f0f25d854d5898960f121bc3dbbfb51e0"
+      },
+      {
+        "name": "stapled-ticket",
+        "command": [
+          "xcrun",
+          "stapler",
+          "validate",
+          "/Users/runner/work/_temp/writer361-owned-app-r9rtre8p/Open Office Studio.app"
+        ],
+        "returncode": 0,
+        "log": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/signed-package-preflight/stapled-ticket.log",
+        "logSha256": "00412e3f828bed40ef1009c6197130a74b0394205e4528377ca83f69a6431a40"
+      }
+    ],
+    "appModified": false,
+    "policy": "codesign strict verification, Developer ID identity, Gatekeeper notarization and stapled ticket before launch",
+    "identifier": "org.openaec.office-studio",
+    "teamIdentifier": "7KFV4QY98M",
+    "authorities": [
+      "Developer ID Application: Maarten Vroegindeweij (7KFV4QY98M)",
+      "Developer ID Certification Authority",
+      "Apple Root CA"
+    ]
+  },
+  "ownedRunnerProfileCreated": true,
+  "experiment": "Only missing native361 controls; prior same-package body/core explicitly reused",
+  "host": "ProductName:\t\tmacOS\nProductVersion:\t\t26.7.2\nBuildVersion:\t\t25G332\n",
+  "native361Remaining": {
+    "status": "final-find-isolation-passed-tab-separate",
+    "issue361FullAcceptance": false,
+    "scope": "Final signed-package native Find and two-document controls; current-package core prerequisite, Tab history separate",
+    "checks": [
+      {
+        "name": "A correct baseline",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 395,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A-before-any-input original pixels",
+        "receipt": {
+          "nativeWindowCapture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/A-before-any-input/original-window.png",
+            "sha256": "2cab749a698e51dfed56d3dd594dae2f741f2954e08802a54f77d292bb2589ca",
+            "pixelWidth": 1070,
+            "pixelHeight": 723,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 35,
+              "pid": 2521,
+              "title": "361-remaining-A.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true,
+            "originalOwnedWindowCount": 1,
+            "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+          },
+          "originalDisplaySha256": "c81b3500d102afa385b09c8f8f0e223f15fbbf8b3044ee0129587c1ce2901f1e",
+          "noShadowSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+          "rawAxSha256": "983423907bbeb65c29b915fc47cb60de48a3a1e63f0776ab9ce9fe5a2b398fcd",
+          "ocrSha256": "5f9e18272ad5b1598d394931893c95bfa0c517c074e6d6f24224b80ce1006d32",
+          "target": {
+            "text": "alpha",
+            "confidence": 1,
+            "point": {
+              "x": 249.00000002499996,
+              "y": 390.46902674837764
+            },
+            "pixelScale": 1.0,
+            "originalImageSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 35,
+              "pid": 2521,
+              "title": "361-remaining-A.docx — Open Office Studio (Text)"
+            },
+            "source": "Vision OCR on untouched no-shadow native capture"
+          },
+          "visibleWordWitnesses": {
+            "alpha": {
+              "text": "alpha",
+              "confidence": 1,
+              "point": {
+                "x": 249.00000002499996,
+                "y": 390.46902674837764
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-A.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "beta": {
+              "text": "beta",
+              "confidence": 1,
+              "point": {
+                "x": 438.00000028,
+                "y": 387.4734512675221
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-A.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "omega": {
+              "text": "omega",
+              "confidence": 1,
+              "point": {
+                "x": 637.0000005249999,
+                "y": 422.4218288087021
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-A.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "delta": {
+              "text": "delta",
+              "confidence": 1,
+              "point": {
+                "x": 248.00000032000003,
+                "y": 452.377581041062
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "296ef60a141940f4a2bac13e17db586e6844ebcc0f1269b89840a8c62c857aec",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-A.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            }
+          },
+          "editorInputSent": false
+        }
+      },
+      {
+        "name": "ordinary native cell typing",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpXha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 373,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A-cell-typed saved XML oracle",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/A-cell-typed-saved.docx",
+        "sha256": "5753aed92ef565549233f4627b77eb84c7b7e7a61d5d7972096d8bd454580e85",
+        "cells": [
+          [
+            "alpXha",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            ""
+          ]
+        ],
+        "beforeSha256": "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1",
+        "beforeMtimeNs": 1795508554076850666,
+        "afterMtimeNs": 1795508595928943749,
+        "actualFileWriteObserved": true
+      },
+      {
+        "name": "cell typing Undo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 378,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "cell typing Redo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpXha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 380,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "cell typing reset",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 371,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A-host-preflight-restored saved XML oracle",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/A-host-preflight-restored-saved.docx",
+        "sha256": "99ea8f045a379e454476d4b229fec77b4db33d0279f71e7af630377974f31d88",
+        "cells": [
+          [
+            "alpha",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            ""
+          ]
+        ],
+        "beforeSha256": "5753aed92ef565549233f4627b77eb84c7b7e7a61d5d7972096d8bd454580e85",
+        "beforeMtimeNs": 1795508595928943749,
+        "afterMtimeNs": 1795508604585141874,
+        "actualFileWriteObserved": true
+      },
+      {
+        "name": "Find reuses actual first-cell native preflight focus",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 378,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A Find sentinel column",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 375,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find empty focused input",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find empty focused input document sentinel intact",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find native typed value",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 10,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": "abc"
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 401,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find native typed value document sentinel intact",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 10,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": "abc"
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 401,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find-native-typed original pixels",
+        "capture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/Find-native-typed/original-window.png",
+          "sha256": "7778055d062ea2453d14ef4a29dcf2a7c17a8f5435ae3892b2faada98eba43dd",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 35,
+            "pid": 2521,
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true,
+          "originalOwnedWindowCount": 3,
+          "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+        },
+        "displaySha256": "22535caf01379cc44b521dd997f1929a5bca26d2353b859ba7ea5a7c148f1c2d"
+      },
+      {
+        "name": "Find owns native Undo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find owns native Undo document sentinel intact",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find-native-Undo original pixels",
+        "capture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/Find-native-Undo/original-window.png",
+          "sha256": "8a4dceb406f13e9f7dbe9e4fa24f6ceb6e68791797c60e423e17222f578d864a",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 35,
+            "pid": 2521,
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true,
+          "originalOwnedWindowCount": 1,
+          "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+        },
+        "displaySha256": "6554b77dd727ff3c6890f9de819a01ee016437c539be80326f306c1be130994a"
+      },
+      {
+        "name": "Find owns native Redo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": "abc"
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 397,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find owns native Redo document sentinel intact",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": "abc"
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": "abc"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 397,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find input reset",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find input reset document sentinel intact",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [
+            {
+              "description": "Find what",
+              "role": "AXTextField",
+              "title": "Find what",
+              "value": ""
+            }
+          ],
+          "focusAfter": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "focusBefore": {
+            "description": "Find what",
+            "role": "AXTextField",
+            "title": "Find what",
+            "value": ""
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 396,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "Find close document Undo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 354,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B correct baseline in same process",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 379,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B-before-input original pixels",
+        "receipt": {
+          "nativeWindowCapture": {
+            "status": "captured",
+            "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/B-before-input/original-window.png",
+            "sha256": "c2f45665ac15ac6e06d9b16b4f28c576a7e85acc868650875c347a633562d48a",
+            "pixelWidth": 1070,
+            "pixelHeight": 723,
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 35,
+              "pid": 2521,
+              "title": "361-remaining-B.docx — Open Office Studio (Text)"
+            },
+            "unaltered": true,
+            "captureProcessExited": true,
+            "originalOwnedWindowCount": 1,
+            "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+          },
+          "originalDisplaySha256": "d1007df45727e291b7e91e217c943babeaf82dcc667b043d52452f74db7127e9",
+          "noShadowSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+          "rawAxSha256": "b8323c662babb4c466c370cb06c88392544d74138d14dcbe6e33e41b6567dd5c",
+          "ocrSha256": "428bc30b136a514a1d61222941e364e9e17cfef3b658653192f2ecb4ab57076c",
+          "target": {
+            "text": "alpha",
+            "confidence": 1,
+            "point": {
+              "x": 249.00000002499996,
+              "y": 390.46902674837764
+            },
+            "pixelScale": 1.0,
+            "originalImageSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+            "nativeWindow": {
+              "bounds": {
+                "Height": 677,
+                "Width": 1024,
+                "X": 0,
+                "Y": 31
+              },
+              "id": 35,
+              "pid": 2521,
+              "title": "361-remaining-B.docx — Open Office Studio (Text)"
+            },
+            "source": "Vision OCR on untouched no-shadow native capture"
+          },
+          "visibleWordWitnesses": {
+            "alpha": {
+              "text": "alpha",
+              "confidence": 1,
+              "point": {
+                "x": 249.00000002499996,
+                "y": 390.46902674837764
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-B.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "beta": {
+              "text": "beta",
+              "confidence": 1,
+              "point": {
+                "x": 438.00000028,
+                "y": 387.4734512675221
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-B.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "omega": {
+              "text": "omega",
+              "confidence": 1,
+              "point": {
+                "x": 637.0000005249999,
+                "y": 422.4218288087021
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-B.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            },
+            "delta": {
+              "text": "delta",
+              "confidence": 1,
+              "point": {
+                "x": 248.00000045000002,
+                "y": 454.37463116858413
+              },
+              "pixelScale": 1.0,
+              "originalImageSha256": "f44423522cb7fcf2a1a3d37a0620ecd3323005a5b0b9d8dd017b7ed6d9ee05e0",
+              "nativeWindow": {
+                "bounds": {
+                  "Height": 677,
+                  "Width": 1024,
+                  "X": 0,
+                  "Y": 31
+                },
+                "id": 35,
+                "pid": 2521,
+                "title": "361-remaining-B.docx — Open Office Studio (Text)"
+              },
+              "source": "Vision OCR on untouched no-shadow native capture"
+            }
+          },
+          "editorInputSent": false
+        }
+      },
+      {
+        "name": "B inserted column",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 370,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B own Undo",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 356,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "361-remaining-A selected",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 356,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A own Redo while B inactive",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 370,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "361-remaining-B selected",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 356,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B own Redo while A inactive",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 370,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B own reset",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 356,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "361-remaining-A selected",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 4,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 370,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-A.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "A-isolated-final saved XML oracle",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/A-isolated-final-saved.docx",
+        "sha256": "8c043da6af8c55f905d0db0f6ac29b951d39e0efe3844de224ce3239531a3c40",
+        "cells": [
+          [
+            "alpha",
+            "",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "beforeSha256": "99ea8f045a379e454476d4b229fec77b4db33d0279f71e7af630377974f31d88",
+        "beforeMtimeNs": 1795508604585141874,
+        "afterMtimeNs": 1795508672990484208,
+        "actualFileWriteObserved": true
+      },
+      {
+        "name": "A-isolated-final original pixels",
+        "capture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/A-isolated-final/original-window.png",
+          "sha256": "0ce00c2559a58c48f865fe9d9a5a0043b95b81742ce920b4c6c73f08d761e11e",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 35,
+            "pid": 2521,
+            "title": "361-remaining-A.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true,
+          "originalOwnedWindowCount": 1,
+          "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+        },
+        "displaySha256": "1d410ed21be6fa617b49e25c0cc244c27a2548678664b8bf3a28311a388d568a"
+      },
+      {
+        "name": "361-remaining-B selected",
+        "native": {
+          "action": "snapshot",
+          "applicationActive": true,
+          "bounded": false,
+          "childListsTruncated": true,
+          "errors": {
+            "-25205": 4,
+            "-25212": 2
+          },
+          "findInputs": [],
+          "focusAfter": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "focusBefore": {
+            "description": "Document input",
+            "role": "AXTextArea",
+            "title": "Document input"
+          },
+          "frontmostPid": 2521,
+          "pid": 2521,
+          "status": "observed",
+          "tables": [
+            {
+              "cellTexts": [
+                [
+                  "alpha",
+                  "beta",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "omega"
+                ],
+                [
+                  "delta",
+                  "",
+                  ""
+                ]
+              ],
+              "columnEvidenceAvailable": true,
+              "columns": 3,
+              "rowEvidenceAvailable": true,
+              "rows": 3
+            }
+          ],
+          "trusted": true,
+          "visited": 356,
+          "window": {
+            "description": "",
+            "role": "AXWindow",
+            "title": "361-remaining-B.docx • — Open Office Studio (Text)"
+          }
+        }
+      },
+      {
+        "name": "B-isolated-final saved XML oracle",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/B-isolated-final-saved.docx",
+        "sha256": "d375384a6ddc373542059f06e009e239a9099d40b6fc890da39d60e7b68727f1",
+        "cells": [
+          [
+            "alpha",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            ""
+          ]
+        ],
+        "beforeSha256": "f0eddcec6a630776774e4c3baf834ff4f89e3970d86ce183bba9814494b3f4f1",
+        "beforeMtimeNs": 1795508554077366333,
+        "afterMtimeNs": 1795508679414047666,
+        "actualFileWriteObserved": true
+      },
+      {
+        "name": "B-isolated-final original pixels",
+        "capture": {
+          "status": "captured",
+          "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/B-isolated-final/original-window.png",
+          "sha256": "cb5199c97ec927da8dc6b3ac5a80b477f757b8711c501aca52e7de9f20f4f986",
+          "pixelWidth": 1070,
+          "pixelHeight": 723,
+          "nativeWindow": {
+            "bounds": {
+              "Height": 677,
+              "Width": 1024,
+              "X": 0,
+              "Y": 31
+            },
+            "id": 35,
+            "pid": 2521,
+            "title": "361-remaining-B.docx — Open Office Studio (Text)"
+          },
+          "unaltered": true,
+          "captureProcessExited": true,
+          "originalOwnedWindowCount": 1,
+          "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+        },
+        "displaySha256": "fa0a05ea8f308db1cf1ea5395a7c70428bf5655ba7949e4ae08ee4b6cccfdc42"
+      }
+    ],
+    "reusedCore": {
+      "reportPath": "docs/tests/2026-11-23-mac-native-P5/core/report.json",
+      "run": 45352741879,
+      "artifactId": 14902380591,
+      "archiveSha256": "0b63b96d5dfa25b95671c12cb39e32e0164a5f01adbfea161597eafd617e8721",
+      "reportSha256": "ed6409f1f36a8a327056b2806279d405b9fa749ce0de3dda3e9784b60f7d3ccd",
+      "bindingPending": false,
+      "status": "reused-valid",
+      "priorHarnessCommit": "48e7de0f5c94a7bb8f5e723be6cfd6c383d8b2ae",
+      "scope": "Only earlier body/column core and full quit/reopen; not a new execution of those cases"
+    },
+    "limits": [
+      "Native modal-dialog Undo not executed here",
+      "Signed package combination requires its own binding"
+    ],
+    "historicalFailures": "Earlier P2 failures remain preserved; no earlier-source acceptance is reused",
+    "pid": 2521,
+    "viewport": {
+      "status": "observed",
+      "pid": 2521,
+      "source": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+      "packageSha256": "1d0cb79f23e1e082d1aa4e32aa1dd3997c297fb0cb2629aa530a3e29e685c4af",
+      "executableSha256": "0c6a58c7438f1ba2b3b9b1e74ea23e29fb9a93523723bc5694bb3727702a9d87",
+      "actionsSent": 1,
+      "limits": [
+        "Only the observed maximized viewport; no359cause/paint-fix claim",
+        "No editor input, script bridge, privacy change or AX size setter"
+      ],
+      "beforeWindow": {
+        "bounds": {
+          "Height": 950,
+          "Width": 1440,
+          "X": -208,
+          "Y": 31
+        },
+        "id": 35,
+        "pid": 2521,
+        "title": "361-remaining-A.docx — Open Office Studio (Text)"
+      },
+      "beforeMainDisplay": {
+        "bounds": {
+          "Height": 768,
+          "Width": 1024,
+          "X": 0,
+          "Y": 0
+        },
+        "coordinateSystem": "CG global desktop",
+        "id": 1
+      },
+      "maxControl": {
+        "attributes": {
+          "actions": {
+            "axError": 0,
+            "value": [
+              "AXPress",
+              "AXShowMenu",
+              "AXScrollToVisible"
+            ]
+          },
+          "AXDescription": {
+            "status": "available",
+            "truncated": false,
+            "value": "Maximize"
+          },
+          "AXEnabled": {
+            "status": "available",
+            "value": true
+          },
+          "AXFocused": {
+            "status": "available",
+            "value": false
+          },
+          "AXHelp": {
+            "status": "available",
+            "truncated": false,
+            "value": "Maximize"
+          },
+          "AXIdentifier": {
+            "axError": -25212,
+            "status": "unavailable"
+          },
+          "AXPosition": {
+            "status": "available",
+            "value": {
+              "x": 1144,
+              "y": 31
+            }
+          },
+          "AXRole": {
+            "status": "available",
+            "truncated": false,
+            "value": "AXButton"
+          },
+          "AXSelected": {
+            "status": "available",
+            "value": false
+          },
+          "AXSize": {
+            "status": "available",
+            "value": {
+              "height": 31,
+              "width": 44
+            }
+          },
+          "AXSubrole": {
+            "axError": -25212,
+            "status": "unavailable"
+          },
+          "AXTitle": {
+            "status": "available",
+            "truncated": false,
+            "value": "Maximize"
+          },
+          "AXValue": {
+            "status": "available",
+            "truncated": false,
+            "value": ""
+          }
+        },
+        "depth": 6,
+        "index": 23,
+        "parent": 5
+      },
+      "beforeOriginalCapture": {
+        "status": "captured",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/viewport/before-ready.png",
+        "sha256": "225779cd8dbe0ada40c9644a4528f164bd28780afb08c5495f452ac92d25eda2",
+        "pixelWidth": 1486,
+        "pixelHeight": 996,
+        "nativeWindow": {
+          "bounds": {
+            "Height": 950,
+            "Width": 1440,
+            "X": -208,
+            "Y": 31
+          },
+          "id": 35,
+          "pid": 2521,
+          "title": "361-remaining-A.docx — Open Office Studio (Text)"
+        },
+        "unaltered": true,
+        "captureProcessExited": true,
+        "originalOwnedWindowCount": 1,
+        "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+      },
+      "actionsAttempted": 1,
+      "afterWindow": {
+        "bounds": {
+          "Height": 677,
+          "Width": 1024,
+          "X": 0,
+          "Y": 31
+        },
+        "id": 35,
+        "pid": 2521,
+        "title": "361-remaining-A.docx — Open Office Studio (Text)"
+      },
+      "afterMainDisplay": {
+        "bounds": {
+          "Height": 768,
+          "Width": 1024,
+          "X": 0,
+          "Y": 0
+        },
+        "coordinateSystem": "CG global desktop",
+        "id": 1
+      },
+      "afterOriginalCapture": {
+        "status": "captured",
+        "path": "/Users/runner/work/open-office-studio/open-office-studio/.local/mac361-remaining-native/native361-remaining/viewport/after-maximize.png",
+        "sha256": "30bfe9f7718c6f10a9714c498ff995808810da4b6bd77850c9233e049bc3a658",
+        "pixelWidth": 1070,
+        "pixelHeight": 723,
+        "nativeWindow": {
+          "bounds": {
+            "Height": 677,
+            "Width": 1024,
+            "X": 0,
+            "Y": 31
+          },
+          "id": 35,
+          "pid": 2521,
+          "title": "361-remaining-A.docx — Open Office Studio (Text)"
+        },
+        "unaltered": true,
+        "captureProcessExited": true,
+        "originalOwnedWindowCount": 1,
+        "selectionPolicy": "unique PID window, or exact unique AX main-window title and geometry among auxiliary CG windows"
+      }
+    },
+    "newHostFocusSaveUndoRedoPreflightPassed": true,
+    "finalDocuments": {
+      "A": {
+        "sha256": "8c043da6af8c55f905d0db0f6ac29b951d39e0efe3844de224ce3239531a3c40",
+        "cells": [
+          [
+            "alpha",
+            "",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "B": {
+        "sha256": "d375384a6ddc373542059f06e009e239a9099d40b6fc890da39d60e7b68727f1",
+        "cells": [
+          [
+            "alpha",
+            "beta",
+            ""
+          ],
+          [
+            "",
+            "",
+            "omega"
+          ],
+          [
+            "delta",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    "findIsolationPassed": true,
+    "sourceFixtureUnchanged": true
+  },
+  "native361RemainingPassed": false,
+  "native361FindIsolationPassed": true,
+  "issue361FullAcceptance": false
+}

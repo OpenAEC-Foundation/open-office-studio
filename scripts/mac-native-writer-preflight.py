@@ -56,6 +56,28 @@ def click_target(action, target):
     return action("click-body-point", json.dumps(dict(target["point"], windowId=target["nativeWindow"]["id"], bounds=target["nativeWindow"]["bounds"])))
 
 
+def wait_native_save_state(snapshot, pid, filename, dirty, seconds=20, clock=time.monotonic, pause=time.sleep):
+    """Observe completion of input/save in native UI; never send another input."""
+    start = clock()
+    attempts = 0
+    while True:
+        state = snapshot()
+        attempts += 1
+        focus = state.get("focusAfter", {})
+        title = state.get("window", {}).get("title", "")
+        if (state.get("pid") != pid or state.get("frontmostPid") != pid
+                or state.get("applicationActive") is not True
+                or focus.get("role") != "AXTextArea" or focus.get("description") != "Document input"
+                or not title.startswith(filename + " ")):
+            raise PermissionError("Native save readiness lost the exact document/input/PID focus")
+        if (" \u2022 " in title) == dirty:
+            return {"native": state, "dirtyExpected": dirty, "attempts": attempts,
+                    "elapsedSeconds": round(clock() - start, 3), "editorInputSent": False}
+        if clock() - start >= seconds:
+            raise AssertionError("Native document did not reach the expected dirty/saved UI state")
+        pause(.2)
+
+
 def run_preflight(action, launch_document, quit_app, current_pid, viewport, identity, ocr_binary, out, report, readiness_snapshot):
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
@@ -119,16 +141,25 @@ def run_preflight(action, launch_document, quit_app, current_pid, viewport, iden
     if focused.get("role") != "AXTextArea" or focused.get("description") != "Document input":
         raise PermissionError("Genuine visible body click did not focus the native document input")
     proof["checks"].append({"name": "native body input focused", "focus": focused})
+    def ui_ready(dirty, label):
+        if identity.get("nativePreflightUiReadinessRequired") is True:
+            evidence = wait_native_save_state(readiness_snapshot, first_pid, document.name, dirty)
+            proof["checks"].append({"name": label, "readiness": evidence})
+
     action("type-test-character", "Q")
+    ui_ready(True, "native Q completed before the single CommandS")
     action("chord", "cmd-s")
     edited = persisted(lambda value: value.count("Q") == 1 and value.replace("Q", "", 1) == before,
                        "Native Q input + CommandS did not persist exactly the expected text insertion")
     proof["checks"].append({"name": "native Q and CommandS independently persisted", "savedSha256": sha(document), "persistedText": edited})
+    ui_ready(False, "native saved UI completed before Undo")
     action("chord", "cmd-z")
+    ui_ready(True, "native Undo completed before the single CommandS")
     action("chord", "cmd-s")
     persisted(lambda value: value == before, "Native CommandZ + CommandS did not restore the control text")
     restored_sha = sha(document)
     proof["checks"].append({"name": "native CommandZ and CommandS restored exact source text", "savedSha256": restored_sha})
+    ui_ready(False, "native restored save completed before full quit")
     quit_app()
     second_pid = launch_document(document)
     if second_pid == first_pid or second_pid != current_pid():
