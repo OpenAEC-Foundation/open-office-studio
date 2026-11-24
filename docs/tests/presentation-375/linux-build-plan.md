@@ -460,6 +460,17 @@ from that status. Exact allocation/queue binding is in
 failure or final evidence will be delivered to integration; P5/app/runtimepin/
 main/intake remain unchanged.
 
+## Read-only startup investigation after the fifth result
+
+The new user request resumes only the integration-authorized source/log analysis
+during release `45376499489`. The settings-event chain and fixture comparison,
+with explicit limits on causality, are recorded in
+[`startup-settings-analysis.md`](startup-settings-analysis.md) and its primary
+hash/excerpt receipt. The sole proposed next experiment compares existing setup
+with neutral default misc-options initialization before document creation, using
+fresh processes/profiles and unchanged original color assertions. It is not
+implemented or executed, and no host/cache/build is assigned.
+
 ## Fifth result: resource proof passed, original baseline still crashes
 
 [Run 45356331378](https://github.com/OpenAEC-Foundation/open-office-studio/actions/runs/45356331378)

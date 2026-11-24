@@ -1,0 +1,221 @@
+{
+  "issue": 375,
+  "kind": "Read-only startup/settings diagnosis and unexecuted differential proposal",
+  "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "evidenceBaseCommit": "fd2de16f0b3f408f36d2f91c2d81eb38afa3f856",
+  "runtimeEvidence": {
+    "run": 45356331378,
+    "attempt": 1,
+    "job": 138314969231,
+    "artifact": 14912540854,
+    "zipSHA256": "a0feeeee31dc57e34f31e2ac9d673aeb4f42d8392d6d1c2bb3bda06d2bb51b48",
+    "expiresAtUTC": "2027-02-22T08:27:55Z",
+    "outcome": "SIGSEGV before color assertion; no production patch applied",
+    "qaCommit": "4fbbdd39c1b6311d4705531a10e3f72b18931408",
+    "importerPatchSHA256": "e29ec641661c7d114606f058d2e36c5744673cf6ea1781590938d9c5d927f2b4",
+    "testInitializationPatchSHA256": "bf6b59953999970e8982133f6e6e6a1abe7c3ea27d4b1550e863a68e5b016828"
+  },
+  "provenSourcePath": [
+    "ToolBarManager::Init constructs SvtMiscOptions when registering its listener",
+    "New SvtMiscOptions_Impl constructor calls Load; SetIconTheme calls Application::SetSettings synchronously",
+    "STYLE settings event enters sd::Window::DataChanged then Resize",
+    "sd::Window::Resize calls frame.GetBindings().Invalidate when view shell and frame are non-null",
+    "Recorded stack matches the settings/window/bindings path; runtime object state is unavailable"
+  ],
+  "setupComparison": "Directly inspected BootstrapFixtureBase/BootstrapFixture/UnoApiTest/SdModelTestBase contain no explicit SvtMiscOptions preinitialization; no canonical test fix is established. Indirect initialization is not excluded.",
+  "preinitializationPrecedent": "LOK preloadData constructs static SvtMiscOptions before component document loads; this is a different entry point and not a proposal to enable LOK or copy all its initialization.",
+  "hypothesis": "A new misc-settings implementation initializes late during an in-progress Impress frame and synchronously delivers settings updates to that partially initialized view. Constructor history, object validity and causality remain unproven.",
+  "sources": [
+    {
+      "path": "framework/source/uielement/toolbarmanager.cxx",
+      "sha256": "53e0fcf487f2d4b6cdc7e7d0b714eb0d2247eb21ee134c718fc0288cabe40832",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/framework/source/uielement/toolbarmanager.cxx",
+      "excerpts": [
+        {
+          "firstLine": 580,
+          "lastLine": 617,
+          "text": "void ToolBarManager::Init()\n{\n    OSL_ASSERT( m_xContext.is() );\n\n    m_pImpl->Init();\n\n    m_xToolbarControllerFactory = frame::theToolbarControllerFactory::get( m_xContext );\n    m_xURLTransformer = URLTransformer::create( m_xContext );\n\n    m_pImpl->ConnectCallbacks(this);\n\n    if (m_eSymbolSize == SFX_SYMBOLS_SIZE_LARGE)\n        m_pImpl->SetIconSize(ToolBoxButtonSize::Large);\n    else if (m_eSymbolSize == SFX_SYMBOLS_SIZE_32)\n        m_pImpl->SetIconSize(ToolBoxButtonSize::Size32);\n    else\n        m_pImpl->SetIconSize(ToolBoxButtonSize::Small);\n\n    // enables a menu for clipped items and customization\n    SvtCommandOptions aCmdOptions;\n    ToolBoxMenuType nMenuType = ToolBoxMenuType::ClippedItems;\n    if ( !aCmdOptions.LookupDisabled( u\"CreateDialog\"_ustr))\n         nMenuType |= ToolBoxMenuType::Customize;\n\n    m_pImpl->SetMenuType( nMenuType );\n\n    // set name for testtool, the useful part is after the last '/'\n    sal_Int32 idx = m_aResourceName.lastIndexOf('/');\n    idx++; // will become 0 if '/' not found: use full string\n    std::u16string_view aToolbarName = m_aResourceName.subView( idx );\n    OUString aHelpIdAsString = \".HelpId:\" + OUString::Concat(aToolbarName);\n    m_pImpl->SetHelpId( aHelpIdAsString );\n\n    m_aAsyncUpdateControllersTimer.SetTimeout( 50 );\n    m_aAsyncUpdateControllersTimer.SetInvokeHandler( LINK( this, ToolBarManager, AsyncUpdateControllersHdl ) );\n\n    SvtMiscOptions().AddListenerLink( LINK( this, ToolBarManager, MiscOptionsChanged ) );\n}"
+        }
+      ]
+    },
+    {
+      "path": "svtools/source/config/miscopt.cxx",
+      "sha256": "a14b7b178d5b5ba5015df47be79e75adf06f877857aa8582e9eda6fd7e3538c4",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/svtools/source/config/miscopt.cxx",
+      "excerpts": [
+        {
+          "firstLine": 139,
+          "lastLine": 151,
+          "text": "SvtMiscOptions_Impl::SvtMiscOptions_Impl()\n    // Init baseclasses first\n    : ConfigItem( ROOTNODE_MISC )\n\n    , m_bIsSymbolsStyleRO( false )\n    , m_bIconThemeWasSetAutomatically( false )\n{\n    // Use our static list of configuration keys to get his values.\n    Sequence< OUString >    seqNames    = GetPropertyNames  (           );\n    Load( seqNames );\n    Sequence< Any >         seqValues   = GetProperties     ( seqNames  );\n    Sequence< sal_Bool >    seqRO       = GetReadOnlyStates ( seqNames  );\n"
+        },
+        {
+          "firstLine": 193,
+          "lastLine": 216,
+          "text": "void SvtMiscOptions_Impl::Load( const Sequence< OUString >& rPropertyNames )\n{\n    const uno::Sequence< OUString> aInternalPropertyNames( GetPropertyNames());\n    Sequence< Any > seqValues = GetProperties( rPropertyNames  );\n\n    // Safe impossible cases.\n    // We need values from ALL configuration keys.\n    // Follow assignment use order of values in relation to our list of key names!\n    DBG_ASSERT( !(rPropertyNames.getLength()!=seqValues.getLength()), \"SvtSecurityOptions_Impl::SvtSecurityOptions_Impl()\\nI miss some values of configuration keys!\\n\" );\n\n    // Copy values from list in right order to our internal member.\n    sal_Int32 nPropertyCount = seqValues.getLength();\n    for( sal_Int32 nProperty=0; nProperty<nPropertyCount; ++nProperty )\n    {\n        if (!seqValues[nProperty].hasValue())\n            continue;\n        switch( comphelper::findValue(aInternalPropertyNames, rPropertyNames[nProperty]) )\n        {\n            case PROPERTYHANDLE_SYMBOLSTYLE         :   {\n                                                            OUString aIconTheme;\n                                                            if (seqValues[nProperty] >>= aIconTheme)\n                                                                SetIconTheme(aIconTheme, SetModifiedFlag::DONT_SET);\n                                                            else\n                                                                OSL_FAIL(\"Wrong type of \\\"Misc\\\\SymbolStyle\\\"!\" );"
+        },
+        {
+          "firstLine": 245,
+          "lastLine": 266,
+          "text": "SvtMiscOptions_Impl::SetIconTheme(const OUString &rName, SetModifiedFlag setModified)\n{\n    OUString aTheme(rName);\n    if (aTheme.isEmpty() || aTheme == \"auto\")\n    {\n        aTheme = Application::GetSettings().GetStyleSettings().GetAutomaticallyChosenIconTheme();\n        m_bIconThemeWasSetAutomatically = true;\n    }\n    else\n        m_bIconThemeWasSetAutomatically = false;\n\n    AllSettings aAllSettings = Application::GetSettings();\n    StyleSettings aStyleSettings = aAllSettings.GetStyleSettings();\n    aStyleSettings.SetIconTheme(aTheme);\n\n    aAllSettings.SetStyleSettings(aStyleSettings);\n    Application::MergeSystemSettings( aAllSettings );\n    Application::SetSettings(aAllSettings);\n\n    if (setModified == SetModifiedFlag::SET) {\n        SetModified();\n    }"
+        },
+        {
+          "firstLine": 327,
+          "lastLine": 341,
+          "text": "SvtMiscOptions::SvtMiscOptions()\n{\n    // Global access, must be guarded (multithreading!).\n    std::unique_lock aGuard( GetInitMutex() );\n\n    m_pImpl = g_pMiscOptions.lock();\n    if( !m_pImpl )\n    {\n        m_pImpl = std::make_shared<SvtMiscOptions_Impl>();\n        g_pMiscOptions = m_pImpl;\n        aGuard.unlock(); // because holdConfigItem will call this constructor\n        svtools::ItemHolder2::holdConfigItem(EItem::MiscOptions);\n    }\n}\n"
+        }
+      ]
+    },
+    {
+      "path": "sd/source/ui/view/sdwindow.cxx",
+      "sha256": "e427fe9157fdc69d60ee57faac31503ac7613daabb3c769a6219666d6c1dc017",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sd/source/ui/view/sdwindow.cxx",
+      "excerpts": [
+        {
+          "firstLine": 195,
+          "lastLine": 202,
+          "text": "void Window::Resize()\n{\n    vcl::Window::Resize();\n    CalcMinZoom();\n\n    if( mpViewShell && mpViewShell->GetViewFrame() )\n        mpViewShell->GetViewFrame()->GetBindings().Invalidate( SID_ATTR_ZOOMSLIDER );\n}"
+        },
+        {
+          "firstLine": 756,
+          "lastLine": 781,
+          "text": "void Window::DataChanged( const DataChangedEvent& rDCEvt )\n{\n    vcl::Window::DataChanged( rDCEvt );\n\n    /* Omit PRINTER by all documents which are not using a printer.\n       Omit FONTS and FONTSUBSTITUTION if no text output is available or if the\n       document does not allow text.  */\n\n    if ( !((rDCEvt.GetType() == DataChangedEventType::PRINTER) ||\n         (rDCEvt.GetType() == DataChangedEventType::DISPLAY) ||\n         (rDCEvt.GetType() == DataChangedEventType::FONTS) ||\n         (rDCEvt.GetType() == DataChangedEventType::FONTSUBSTITUTION) ||\n         ((rDCEvt.GetType() == DataChangedEventType::SETTINGS) &&\n          (rDCEvt.GetFlags() & AllSettingsFlags::STYLE))) )\n        return;\n\n    if ( (rDCEvt.GetType() == DataChangedEventType::SETTINGS) &&\n         (rDCEvt.GetFlags() & AllSettingsFlags::STYLE) )\n    {\n        /* Rearrange or initiate Resize for scroll bars since the size of\n           the scroll bars my have changed. Within this, inside the resize-\n           handler, the size of the scroll bars will be asked from the\n           Settings. */\n        Resize();\n\n        /* Re-set data, which are from system control or from Settings. May"
+        }
+      ]
+    },
+    {
+      "path": "sfx2/source/control/bindings.cxx",
+      "sha256": "196ce969202be94a6f4677f7f884a24f169f586e3ce7502946095fe7e85173bc",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sfx2/source/control/bindings.cxx",
+      "excerpts": [
+        {
+          "firstLine": 640,
+          "lastLine": 662,
+          "text": "void SfxBindings::Invalidate\n(\n    sal_uInt16 nId              // Status value to be set\n)\n{\n    if ( pImpl->bInUpdate )\n    {\n        AddSlotToInvalidateSlotsMap_Impl( nId );\n        if ( pImpl->pSubBindings )\n            pImpl->pSubBindings->Invalidate( nId );\n        return;\n    }\n\n    if ( pImpl->pSubBindings )\n        pImpl->pSubBindings->Invalidate( nId );\n\n    if ( !pDispatcher || pImpl->bAllDirty || SfxGetpApp()->IsDowning() )\n        return;\n\n    SfxStateCache* pCache = GetStateCache(nId);\n    if ( pCache )\n    {\n        pCache->Invalidate(false);"
+        }
+      ]
+    },
+    {
+      "path": "unotest/source/cpp/bootstrapfixturebase.cxx",
+      "sha256": "0d6b0d1bf6c9e087d89b61dec666767fedf842e8c5e7268847fa96af42337351",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/unotest/source/cpp/bootstrapfixturebase.cxx",
+      "excerpts": [
+        {
+          "firstLine": 29,
+          "lastLine": 34,
+          "text": "void test::BootstrapFixtureBase::setUp()\n{\n    m_xContext = comphelper::getProcessComponentContext();\n    m_xFactory = m_xContext->getServiceManager();\n    m_xSFactory.set(m_xFactory, uno::UNO_QUERY_THROW);\n}"
+        }
+      ]
+    },
+    {
+      "path": "test/source/bootstrapfixture.cxx",
+      "sha256": "8e83aa279e2431cb3a3f8aa5cf1477c5670916b142be57b593362e1f75ca2469",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/test/source/bootstrapfixture.cxx",
+      "excerpts": [
+        {
+          "firstLine": 67,
+          "lastLine": 85,
+          "text": "\n    // Make GraphicConverter work, normally done in desktop::Desktop::Main()\n    Application::SetFilterHdl(\n            LINK(nullptr, test::BootstrapFixture, ImplInitFilterHdl));\n\n    if (bNeedUCB)\n    {\n        // initialise unconfigured UCB:\n        uno::Reference<ucb::XUniversalContentBroker> xUcb(pSFactory->createInstance(u\"com.sun.star.ucb.UniversalContentBroker\"_ustr), uno::UNO_QUERY_THROW);\n        uno::Reference<ucb::XContentProvider> xFileProvider(pSFactory->createInstance(u\"com.sun.star.ucb.FileContentProvider\"_ustr), uno::UNO_QUERY_THROW);\n        xUcb->registerContentProvider(xFileProvider, u\"file\"_ustr, true);\n        uno::Reference<ucb::XContentProvider> xTdocProvider(pSFactory->createInstance(u\"com.sun.star.ucb.TransientDocumentsContentProvider\"_ustr), uno::UNO_QUERY);\n        if (xTdocProvider.is())\n        {\n            xUcb->registerContentProvider(xTdocProvider, u\"vnd.sun.star.tdoc\"_ustr, true);\n        }\n    }\n}\n"
+        },
+        {
+          "firstLine": 106,
+          "lastLine": 116,
+          "text": "void test::BootstrapFixture::setUp()\n{\n    test::BootstrapFixtureBase::setUp();\n\n    test_init_impl(m_bAssertOnDialog, m_bNeedUCB, m_xSFactory.get());\n\n#if OSL_DEBUG_LEVEL > 0\n    Scheduler::ProcessEventsToIdle();\n#endif\n}\n"
+        }
+      ]
+    },
+    {
+      "path": "test/source/unoapi_test.cxx",
+      "sha256": "6569cd2476e823aa4dc0d4773e1c84e579de2ea7938b70796c36cc829685e80a",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/test/source/unoapi_test.cxx",
+      "excerpts": [
+        {
+          "firstLine": 43,
+          "lastLine": 53,
+          "text": "void UnoApiTest::setUp()\n{\n    test::BootstrapFixture::setUp();\n\n    mxDesktop\n        = css::frame::Desktop::create(comphelper::getComponentContext(getMultiServiceFactory()));\n    CPPUNIT_ASSERT_MESSAGE(\"no desktop!\", mxDesktop.is());\n    SfxApplication::GetOrCreate();\n}\n\nvoid UnoApiTest::tearDown()"
+        }
+      ]
+    },
+    {
+      "path": "sd/qa/unit/sdmodeltestbase.hxx",
+      "sha256": "a5fb91bd62fafccbc5c9dbb34f54b68471dc667f9776fb44a76cc9710caa2bac",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/sd/qa/unit/sdmodeltestbase.hxx",
+      "excerpts": [
+        {
+          "firstLine": 43,
+          "lastLine": 60,
+          "text": "class SdModelTestBase : public UnoApiTest\n{\npublic:\n    SdModelTestBase(const OUString& path)\n        : UnoApiTest(path)\n    {\n    }\n\n    void createSdImpressDoc(const char* pName = nullptr, const char* pPassword = nullptr)\n    {\n        if (!pName)\n            loadFromURL(u\"private:factory/simpress\"_ustr);\n        else\n            loadFromFile(OUString::createFromAscii(pName), /*rParams*/ {}, pPassword);\n\n        uno::Reference<lang::XServiceInfo> xServiceInfo(mxComponent, uno::UNO_QUERY_THROW);\n        CPPUNIT_ASSERT(\n            xServiceInfo->supportsService(u\"com.sun.star.presentation.PresentationDocument\"_ustr));"
+        }
+      ]
+    },
+    {
+      "path": "svtools/source/config/itemholder2.cxx",
+      "sha256": "19e1b75bb99b0a8f8b085825037aa1f09901bf9c04c286c6ff67d73052b31d0a",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/svtools/source/config/itemholder2.cxx",
+      "excerpts": [
+        {
+          "firstLine": 67,
+          "lastLine": 94,
+          "text": "{\n    impl_releaseAllItems();\n}\n\n\nvoid ItemHolder2::holdConfigItem(EItem eItem)\n{\n    static rtl::Reference<ItemHolder2> pHolder = new ItemHolder2();\n    pHolder->impl_addItem(eItem);\n}\n\n\nvoid SAL_CALL ItemHolder2::disposing(const css::lang::EventObject&)\n{\n    impl_releaseAllItems();\n}\n\n\nvoid ItemHolder2::impl_addItem(EItem eItem)\n{\n    std::scoped_lock aLock(m_aLock);\n\n    for ( auto const & rInfo : m_lItems )\n    {\n        if (rInfo.eItem == eItem)\n            return;\n    }\n"
+        },
+        {
+          "firstLine": 119,
+          "lastLine": 125,
+          "text": "        case EItem::ColorConfig :\n            rItem.pItem.reset( new ::svtools::ColorConfig() );\n            break;\n\n        case EItem::MiscOptions :\n            rItem.pItem.reset( new SvtMiscOptions() );\n            break;"
+        }
+      ]
+    },
+    {
+      "path": "desktop/source/lib/init.cxx",
+      "sha256": "f771863ac74428aab24d719a5c20dc84dc8425d86b29d9f06684eea927b4993e",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/desktop/source/lib/init.cxx",
+      "excerpts": [
+        {
+          "firstLine": 7868,
+          "lastLine": 7874,
+          "text": "\n/// Used only by LibreOfficeKit when used by Online to pre-initialize\nstatic void preloadData()\n{\n    comphelper::ProfileZone aZone(\"preload data\");\n\n    // Create user profile in the temp directory for loading the dictionaries"
+        },
+        {
+          "firstLine": 8007,
+          "lastLine": 8027,
+          "text": "    std::cerr << \"Preload config\\n\";\n#if defined __GNUC__ || defined __clang__\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wunused-variable\"\n#endif\n    static SvtOptionsDialogOptions aDialogOptions;\n    static SvtCTLOptions aSvtCTLOptions;\n    static svtools::ColorConfig aColorConfig;\n    static SvtMiscOptions aSvtMiscOptions;\n    static SvtCommandOptions aSvtCommandOptions;\n    static SvtLinguConfig aSvtLinguConfig;\n    static SvtModuleOptions aSvtModuleOptions;\n    static SvtPathOptions aSvtPathOptions;\n    static SvtSearchOptions aSvtSearchOptions;\n    static SvtSysLocaleOptions aSvtSysLocaleOptions;\n    static SvtUserOptions aSvtUserOptions;\n    //static SvtViewOptions aSvtViewOptions;\n    static AllSettings aAllSettings;\n#if defined __GNUC__ || defined __clang__\n#pragma GCC diagnostic pop\n#endif"
+        },
+        {
+          "firstLine": 8030,
+          "lastLine": 8048,
+          "text": "    {\n        OUString factory;\n        OUString sampleImage;\n    };\n\n    static constexpr PreloadComponent preloadComponents[] = {\n        { u\"private:factory/swriter\"_ustr, u\".uno:StyleApply\"_ustr },\n        { u\"private:factory/scalc\"_ustr, u\".uno:NumberFormatCurrency\"_ustr },\n        { u\"private:factory/simpress\"_ustr, u\".uno:MoveSlideLast\"_ustr },\n        { u\"private:factory/sdraw\"_ustr, u\".uno:MovePageLast\"_ustr }\n    };\n    // getting the remote LibreOffice service manager\n    uno::Reference<frame::XDesktop2> xCompLoader(frame::Desktop::create(xContext));\n\n    // Preload and close each of the main components once to initialize global state\n    uno::Sequence<css::beans::PropertyValue> szEmptyArgs(0);\n    for (const auto& component : preloadComponents)\n    {\n        auto xComp = xCompLoader->loadComponentFromURL(component.factory, u\"_blank\"_ustr, 0, szEmptyArgs);"
+        }
+      ]
+    },
+    {
+      "path": "xmloff/CppunitTest_xmloff_draw.mk",
+      "sha256": "3c426f9108fa93901839250be91a39ca1c35eee79dc75065f979268a042fce40",
+      "url": "https://github.com/LibreOffice/core/blob/9dea406ab7695df6325b11b0e19fdca8db4b7276/xmloff/CppunitTest_xmloff_draw.mk",
+      "excerpts": [
+        {
+          "firstLine": 23,
+          "lastLine": 40,
+          "text": "$(eval $(call gb_CppunitTest_use_libraries,xmloff_draw, \\\n    comphelper \\\n    cppu \\\n    cppuhelper \\\n    docmodel \\\n    embobj \\\n    sal \\\n    subsequenttest \\\n    test \\\n    unotest \\\n    utl \\\n    tl \\\n    avmedia \\\n    svxcore \\\n    vcl \\\n))\n\n$(eval $(call gb_CppunitTest_use_sdk_api,xmloff_draw))"
+        }
+      ]
+    }
+  ],
+  "runtimeExperimentsExecuted": false,
+  "productionOrSharedTestSourceEdited": false,
+  "newBuildVMInstallOrDispatch": false,
+  "fixValidated": false,
+  "diagnosticProposal": {
+    "scope": "Same original-importer binary/config/fixture, own test only; fresh process/profile per arm",
+    "controlInput": "Canonical private:factory/simpress blank document as startup control; not another format claim",
+    "armA": "Existing unmodified initialization and unchanged authentic-UOP color assertions",
+    "armB": "Only neutral SvtMiscOptions construction before any document/frame load; no setter, selected icon theme, Hidden, LOK activation or skipped view",
+    "receipts": "Input/binary/config/resource hashes; configured style/default observations; zero document frames before preinit; phase markers and actual crash/assertion outcomes; explicit profile/process cleanup",
+    "acceptance": "Require unchanged stale-theme assertion on original importer. No crash/error counts as expected red. A positive ordering differential supports only the initialization hypothesis until broader checks.",
+    "laterProductValidation": "Only after accepted initialization: unchanged importer correction, full xmloff_draw, converter/engine/edit/Undo/Redo/PPTX save/fresh reopen and new source/build/runtime identities",
+    "futureFileClaimIfApproved": [
+      "Own added UOP test in xmloff/qa/unit/draw.cxx only",
+      "Test recipe direct svt link if needed; existing library, no external package change"
+    ],
+    "notApprovedOrExecuted": true
+  },
+  "allocationStatus": "Integration allows read-only analysis/strategy only during release45376499489; no host/cache assigned; no automatic follow-up build"
+}
