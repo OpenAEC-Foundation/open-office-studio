@@ -7,6 +7,8 @@ on:
       - scripts/windows-find-replace-case-20261124.mjs
       - scripts/windows-regex-case-20261124.mjs
       - scripts/windows-search-extras-case-20261124.mjs
+      - scripts/windows-search-status-20261124.mjs
+      - scripts/windows-search-status-20261124.test.mjs
       - 'docs/tests/windows-writer-search-extras-20261124/*-plan.json'
       - scripts/proef-windows-writer-native.mjs
       - scripts/windows-native-signature.mjs
@@ -43,7 +45,7 @@ jobs:
         with:
           version: 11.25.0
       - run: pnpm install --frozen-lockfile --ignore-scripts
-      - run: node --test scripts/windows-native-signature.test.mjs
+      - run: node --test scripts/windows-native-signature.test.mjs scripts/windows-search-status-20261124.test.mjs
       - run: python -B scripts/windows-suite-child_test.py
       - run: python -m pip install pywinauto==0.6.9
       - name: Verify actual signed bytes and exercise native Writer save/reopen

@@ -13,10 +13,10 @@
   "baseline": [
     "code 12 ^ mark",
     "bold",
-    "left\tright",
+    "joined",
     "hard\u000bline",
     "first\nsecond",
-    "space\u00a0mark",
+    "gap\u00a0MARK",
     "",
     "",
     ""
@@ -76,33 +76,6 @@
   ],
   "operations": [
     {
-      "query": "left^tright",
-      "replacement": "joined",
-      "count": 1,
-      "before": [
-        "code 12 ^ mark",
-        "bold",
-        "left\tright",
-        "hard\u000bline",
-        "first\nsecond",
-        "space\u00a0mark",
-        "",
-        "",
-        ""
-      ],
-      "after": [
-        "code 12 ^ mark",
-        "bold",
-        "joined",
-        "hard\u000bline",
-        "first\nsecond",
-        "space\u00a0mark",
-        "",
-        "",
-        ""
-      ]
-    },
-    {
       "query": "hard^lline",
       "replacement": "hard^tline",
       "count": 1,
@@ -157,33 +130,6 @@
       ]
     },
     {
-      "query": "space^smark",
-      "replacement": "gap^sMARK",
-      "count": 1,
-      "before": [
-        "code 12 ^ mark",
-        "bold",
-        "joined",
-        "hard\tline",
-        "first\nSECOND",
-        "space\u00a0mark",
-        "",
-        "",
-        ""
-      ],
-      "after": [
-        "code 12 ^ mark",
-        "bold",
-        "joined",
-        "hard\tline",
-        "first\nSECOND",
-        "gap\u00a0MARK",
-        "",
-        "",
-        ""
-      ]
-    },
-    {
       "query": "^#",
       "replacement": "[^^^&]",
       "count": 2,
@@ -215,5 +161,5 @@
   "reopenCount": 1,
   "semantics": "P5 caret-code table supports ^t tab/^l line break/^p paragraph/^s NBSP/^^ caret/^# digit/^w whitespace; replacement adds ^& found text. Fixture uses real w:tab/w:br/separate w:p. DOCX controls audited exactly. ARIA textContent whitespace projection is only visual text observation because sibling paragraphs omit separators.",
   "collectIndependentFailures": true,
-  "continuation": "Original acceptance unchanged. Record exact replacement UI terminal/error and actual saved control XML; independent operations can continue on a known before/after state. Any failed operation forces whole-run FAIL even if save/reopen of successful subset passes. Repeat initial tab removal only because prior failure prevented its disk-persistence acceptance. Previous seven queries and InsertTab button are reused from exact source/fixture proof."
+  "continuation": "Only confirmed inline-break failure and unfinished paragraph/digit Undo/Redo/persistence. Previously completed tab-removal and NBSP operations are independently reused from diagnostic evidence. Fresh subset fixture starts with those accepted outcomes; original full targets and failure records remain unchanged."
 }

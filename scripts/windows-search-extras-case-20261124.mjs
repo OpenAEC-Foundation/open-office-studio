@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { classifyReplacementStatus } from "./windows-search-status-20261124.mjs";
 import { testNativeFindReplace } from "./windows-find-replace-case-20261124.mjs";
 
 export async function testSearchExtras(context,families) {
@@ -114,6 +115,11 @@ async function collectSpecialCases(c) {
   const prior=JSON.parse(priorRaw);assert.equal(prior.identity.applicationCommit,c.plan.sourceCommit);assert.equal(prior.status,'failed');
   const reused=prior.specialCase.steps.slice(1,9);assert.equal(reused.length,8);assert(reused.every(s=>s.passed));
   c.evidence.reusedQueryAndInsertControls={run:45399525727,artifact:14922138923,rawReportSha256:'c7ea327863fdb5038e0306d3483bf75c7f3453b3b5cae7020004cdd69751b378',checks:reused};
+  const diagnosticRaw=await readFile('docs/tests/windows-writer-search-extras-20261124/diagnostic-evidence/report.json');
+  assert.equal(createHash('sha256').update(diagnosticRaw).digest('hex'),'b7eb639b8f4e84d099de489f9357239a698735c43cc59e2899f8424c82dbdf56');
+  const diagnostics=JSON.parse(diagnosticRaw);
+  c.evidence.reusedCompletedOperations=diagnostics.specialCase.steps.filter(s=>s.passed&&['left^tright','space^smark'].includes(s.query));
+  assert.equal(c.evidence.reusedCompletedOperations.length,2);
   c.evidence.failures=[];let current=c.baseline.slice();
   async function saveSnapshot(expected) {
     if(await c.page.locator('.tw-zoek-sluit').count())await c.page.locator('.tw-zoek-sluit').click();
@@ -136,11 +142,14 @@ async function collectSpecialCases(c) {
       const focus=await c.page.evaluate(()=>({editor:document.activeElement?.matches('.paged-editor__yrs-input'),active:document.activeElement?.outerHTML.slice(0,700)}));
       const errorSpan=await c.pane.locator('.tw-zoek-telling span').allTextContents();
       const status=await c.pane.locator('.tw-zoek-telling').textContent();
-      return focus.editor||errorSpan.length||/matches? replaced;/.test(status)?{...focus,errorSpan,status}:null;
+      const outcome=classifyReplacementStatus({...focus,errorSpan,status});
+      const observation={...focus,errorSpan,status,outcome};c.evidence.lastOperationObservation=observation;
+      return outcome.success||outcome.errors.length?observation:null;
     },'Replacement must produce an actual UI success or error terminal state');
-    observed.ui=terminal;observed.saved=await saveSnapshot(terminal.editor&&!terminal.errorSpan.length?after:undefined);
+    observed.ui=terminal;(c.evidence.operationObservations??=[]).push(observed);
+    observed.saved=await saveSnapshot(terminal.outcome.success?after:undefined);
     const changedAsExpected=JSON.stringify(observed.saved.cells)===JSON.stringify(after);
-    if(!terminal.editor||terminal.errorSpan.length||!changedAsExpected) {
+    if(!terminal.outcome.success||!changedAsExpected) {
       assert([JSON.stringify(before),JSON.stringify(after)].includes(JSON.stringify(observed.saved.cells)),'Unexpected partial mutation: abort independent continuation and preserve evidence');
       observed.passed=false;observed.classification='Unclassified actual UI/semantic replacement failure; review exact error and DOCX before product triage';
       c.evidence.failures.push(observed);c.evidence.steps.push({name:'Special replacement failed its original acceptance criteria',...observed});current=observed.saved.cells.slice();

@@ -34,8 +34,8 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   await writeFile(path, zipSync(parts), { flag: "wx" });
   const evidence = report[customMode ? mode[0] : "findReplaceCase"] = { plan, steps: [], fixtureSha256: sha(await readFile(path)), screenshots: [] };
   let page;
-  async function disk() {
-    const b = await readFile(path);
+  async function disk(snapshot) {
+    const b = snapshot??await readFile(path);
     const doc = new DOMParser().parseFromString(strFromU8(unzipSync(b)["word/document.xml"]), "application/xml");
     const ns = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     const cells = [...doc.getElementsByTagNameNS(ns,"tc")];
@@ -124,7 +124,17 @@ export async function testNativeFindReplace({ out, exe, port, startApplication, 
   }
   await page.locator('.tw-zoek-sluit').click();await page.waitForFunction(()=>document.activeElement?.matches('.paged-editor__yrs-input'));
   const prefix=customMode?mode[2]:'find-replace';
-  const saved=await save(finalExpected);evidence.saved=saved;await shot(`${prefix}-saved`);await closeApplication();
+  evidence.saveRequestObserved=await save(finalExpected);
+  const beforeCloseBytes=await readFile(path);evidence.beforeCloseSnapshot=await disk(beforeCloseBytes);
+  await shot(`${prefix}-saved`);await closeApplication();
+  const closedBytes=await readFile(path),saved=await disk(closedBytes);
+  assert.deepEqual(saved.cells,finalExpected);assert(saved.secondCellBold);
+  if(plan.styleCells)assert.deepEqual(saved.styleControls,plan.expectedStyleControls);
+  evidence.saved=saved;evidence.closedProducerSnapshot=saved;
+  if(evidence.beforeCloseSnapshot.sha256!==saved.sha256) {
+    const a=unzipSync(beforeCloseBytes),b=unzipSync(closedBytes),names=[...new Set([...Object.keys(a),...Object.keys(b)])];
+    evidence.beforeCloseToClosedDifferences={changedParts:names.filter(n=>!a[n]||!b[n]||sha(a[n])!==sha(b[n])),note:'Hash is frozen only after the producing app exits normally; semantic data is still checked exactly'};
+  }
   const pid2=await startApplication(exe,port,path,true);assert.notEqual(pid1,pid2);page=getPage();await visible(finalExpected);
   assert.deepEqual(await disk(),saved);await shot(`${prefix}-reopened`);
   await page.keyboard.press('Control+h');
