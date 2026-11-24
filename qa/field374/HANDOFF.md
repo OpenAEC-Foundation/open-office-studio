@@ -479,3 +479,33 @@ owner checks. Standalone app-host progress does not establish Suite STW proof.
 Linux658512c9 remains valid without repetition. No new Windows STW export has
 been delivered; the existing owner is preparing the Save As follow-up. Full
 STW-route acceptance remains open pending actual Windows/macOS native results.
+
+## Genuine native Mac dedicated Writer STW review, 24 November
+
+Native run45351696628/job138300391320/attempt1/QA03477b01 SUCCESS supplies
+actual report.stw import and native DOCX save/cold-reopen evidence from the
+dedicated Open Writer Studio DMG. Independently hashed existing proof ZIP
+14900483427 (4500781bytes) matches official SHA
+b06ce4ec6877486e26a20b7387d4096e60133649cd349a320a1876d0c72d12c3;
+expiry2027-02-22T07:55:02Z. All audited inputs/receipts/images equal ZIP members.
+
+Both independent field/content audits pass: original import cf730aee with
+empty marker, and reopened b58f3147 with the exact different marker
+` STANDALONE_STW_EDIT MARIGOLD`. Original field/cache, marker outside field,
+eight source blocks/styles and two placeholders remain intact; original STW
+5a5b633e remains unchanged. Four original import/before/reopen title images were
+viewed serially and rehashed. Complete first-page text is readable without
+overlap/clipping, with explicitly disclosed font substitution. The longer
+marker wraps across lines; no STW30-marker or general layout claim is inferred.
+
+Retained identity/signature/action receipts bind P5b696/e308/48.1, Writer DMG
+a11c8f09, Mach-O c53577e2, org.openaec.writer-studio, private converter child
+10341/parent6986, normal Command-Q and new PID14662, plus successful cleanup.
+This is the dedicated Writer route, not Mac Suite or unconditional #374 proof.
+Raw nativeAccepted=false receipts remain unchanged. No full TOC/pagination,
+font, table, all-template or other-platform acceptance follows.
+
+`evidence/p5-mac-writer-stw-review-20261124.json` retains exact bindings,
+per-image hashes/findings and limits; two raw independent audit reports are in
+`evidence/p5-mac-writer-stw/`. No own download/GUI/build/CI was used. Mac Suite
+exact #374 and native Windows review remain separate open scopes.
