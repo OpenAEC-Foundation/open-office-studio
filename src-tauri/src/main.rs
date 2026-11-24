@@ -1,6 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use std::{io::Write, path::Path};
 mod conversie;
+mod qa_save_trace;
 mod database_export;
 mod documentkoppeling;
 mod email;
@@ -223,6 +224,8 @@ fn main() {
             herstel::bij_venstergebeurtenis(venster, gebeurtenis);
         })
         .invoke_handler(tauri::generate_handler![
+            qa_save_trace::qa_save_trace_bind,
+            qa_save_trace::qa_save_trace_push,
             bewaar_kopie,
             lettertypen::systeemlettertypen,
             lettertypen::systeemlettertype,

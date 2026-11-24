@@ -1,3 +1,4 @@
+import { qaTrace, qaKey } from "./qaMacSaveTrace";
 import { useEffect, useRef } from "react";
 import type { Soort } from "./editors";
 import type { Tabblad, TabbladActie } from "./tabbladen";
@@ -110,17 +111,19 @@ export function useTabSneltoetsen(opties: Opties) {
   useEffect(() => {
     const toetsen = (e: KeyboardEvent) => {
       const o = recent.current;
-      if (o.uit || e.defaultPrevented) return;
+      qaKey(e, o.uit, o.actief?.id);
+      if (o.uit || e.defaultPrevented) { qaTrace(11, [+o.uit, +e.defaultPrevented]); return; }
       const uitkomst = tabToets(e, o);
+      qaTrace(12, [uitkomst ? ["opslaan","opslaanAls","openen","sluit","terug","actie","nieuw"].indexOf(uitkomst.opdracht)+1 : 0]);
       if (!uitkomst) return;
       // Module- en werkruimtedialogen staan vaak in een portal en zijn niet
       // opgenomen in `uit`. Hun eigen toetsen/invoervelden hebben voorrang.
       const doel = e.target instanceof Element ? e.target : document.activeElement;
-      if (doel?.closest("[role='dialog'], [role='alertdialog'], dialog")) return;
+      if (doel?.closest("[role='dialog'], [role='alertdialog'], dialog")) { qaTrace(13); return; }
       // Ook bij verloren focus (body) mag een toets de achtergrond niet wijzigen.
       if ([...document.querySelectorAll("[aria-modal='true'], dialog[open]")]
         .some(venster => venster.getClientRects().length > 0 && !venster.closest("[hidden], [inert]")))
-        return;
+        { qaTrace(14); return; }
       // Escape mag menu's en dialogen binnen Start eerst laten sluiten.
       if (uitkomst.opdracht === "terug") {
         if (
@@ -131,7 +134,8 @@ export function useTabSneltoetsen(opties: Opties) {
       }
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (e.repeat && uitkomst.opdracht !== "actie") return;
+      if (e.repeat && uitkomst.opdracht !== "actie") { qaTrace(16); return; }
+      qaTrace(17);
       if (uitkomst.opdracht === "actie") o.verwerk(uitkomst.actie);
       else if (uitkomst.opdracht === "nieuw") o.nieuw(uitkomst.soort);
       else o[uitkomst.opdracht]();

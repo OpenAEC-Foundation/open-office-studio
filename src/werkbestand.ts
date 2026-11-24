@@ -1,3 +1,4 @@
+import { qaTrace, qaBytes, qaStatus } from "./qaMacSaveTrace";
 import type { Soort } from "./editors";
 import type { BewaarUitkomst } from "./opslag";
 import { blokkeerBijVerlies } from "./export/bewaar";
@@ -142,6 +143,8 @@ export async function schrijfTerug(
     }
   }
   const { invoke } = await core();
+  qaBytes(60, uitvoer);
+  qaTrace(63);
   const uitkomst = await invoke<Terugschrijfuitkomst>(
     "bewaar_document",
     uitvoer,
@@ -152,6 +155,7 @@ export async function schrijfTerug(
       },
     },
   );
+  qaTrace(64, [qaStatus(uitkomst)]);
   const vertaald = vertaal(uitkomst, werkbestand.naam);
   return vertaald.status === "opgeslagen"
     ? { ...vertaald, toelichting, ifcx }

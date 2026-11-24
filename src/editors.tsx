@@ -1,3 +1,4 @@
+import { qaTrace, qaBytes } from "./qaMacSaveTrace";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DocxEditor, type DocxEditorRef } from "@betteroffice/docx-react";
 import { configureDefaultFonts } from "@betteroffice/docx/layout";
@@ -267,11 +268,14 @@ export default function OfficeEditor(props: EditorProps) {
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
     props.registreer(Object.assign(async () => {
+      qaTrace(50);
       if (!docx.current?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
       exporteren.current = true;
       try {
+        qaTrace(54);
         const bytes = await docx.current.save();
+        if (bytes) qaBytes(51, bytes);
         if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
         // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
         return werkEigenschappenBij(herladen.api, docx.current, new Uint8Array(bytes), true);
@@ -282,8 +286,12 @@ export default function OfficeEditor(props: EditorProps) {
       bereidVoor: async () => {
         const ref = docx.current;
         if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
+        qaTrace(55);
         await ref.flushPendingInput();
+        qaTrace(56);
+        qaTrace(57);
         await werkDocumentVeldenBij(ref);
+        qaTrace(58);
       },
     }));
     // Laad de opslagafhankelijkheden vooraf, ook voor later offline opslaan.

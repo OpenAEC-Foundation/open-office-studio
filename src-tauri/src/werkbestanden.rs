@@ -204,25 +204,31 @@ impl Werkbestanden {
                 .ok_or_else(|| crate::taal::t("errors.file.notLinked"))?;
             (v.pad.clone(), v.stempel.clone())
         };
+        crate::qa_save_trace::target(&pad, token, venster);
         let ext = ext.to_lowercase();
         if extensie(&pad) != ext || !(EIGEN.contains(&ext.as_str()) || mag_terugschrijven(&ext)) {
+            crate::qa_save_trace::event(73, &[13]);
             return Ok(Schrijfuitkomst::AnderFormaat);
         }
         if !forceer {
             match stempel.as_ref().map(|s| controleer(&pad, s)) {
-                Some(Toestand::ExternGewijzigd) => return Ok(Schrijfuitkomst::ExternGewijzigd),
-                Some(Toestand::Ontbreekt) => return Ok(Schrijfuitkomst::Ontbreekt),
-                None if !pad.exists() => return Ok(Schrijfuitkomst::Ontbreekt),
+                Some(Toestand::ExternGewijzigd) => { crate::qa_save_trace::event(73, &[10]); return Ok(Schrijfuitkomst::ExternGewijzigd); },
+                Some(Toestand::Ontbreekt) => { crate::qa_save_trace::event(73, &[11]); return Ok(Schrijfuitkomst::Ontbreekt); },
+                None if !pad.exists() => { crate::qa_save_trace::event(73, &[11]); return Ok(Schrijfuitkomst::Ontbreekt); },
                 _ => {}
             }
         }
         if std::fs::metadata(&pad).is_ok_and(|m| m.permissions().readonly()) {
+            crate::qa_save_trace::event(73, &[12]);
             return Ok(Schrijfuitkomst::AlleenLezen);
         }
+        crate::qa_save_trace::event(74, &[]);
         if let Err(fout) = crate::schrijf_atomair(&pad, bytes) {
             if is_alleen_lezen(&fout) {
+                crate::qa_save_trace::event(75, &[12]);
                 return Ok(Schrijfuitkomst::AlleenLezen);
             }
+            crate::qa_save_trace::event(75, &[4]);
             return Err(fout);
         }
         let stempel = stempel_van(&pad, bytes);
@@ -231,6 +237,7 @@ impl Werkbestanden {
                 v.stempel = stempel;
             }
         }
+        crate::qa_save_trace::event(76, &[5]);
         Ok(Schrijfuitkomst::Opgeslagen {
             naam: bestandsnaam(&pad),
             pad: pad.to_string_lossy().into_owned(),
@@ -304,10 +311,12 @@ pub async fn bewaar_document(
     request: tauri::ipc::Request<'_>,
 ) -> Result<serde_json::Value, String> {
     use tauri::Manager;
+    crate::qa_save_trace::event(69, &[0]);
     let token = kop(&request, "x-office-token").ok_or_else(|| crate::taal::t("errors.file.tokenMissing"))?;
     let ext = kop(&request, "x-office-ext").ok_or_else(|| crate::taal::t("errors.file.formatMissing"))?;
     let bytes = crate::lees_binaire_inhoud(request.body(), false)?;
     let label = venster.label().to_owned();
+    crate::qa_save_trace::buffer(70, &bytes, &token, &label);
     let schrijf = |forceer: bool, bytes: Vec<u8>| {
         let app = app.clone();
         let token = token.clone();
@@ -373,6 +382,11 @@ pub async fn bewaar_document(
             crate::recent::noteer(&app, &pad);
         }
     }
+    crate::qa_save_trace::event(71, &[match &uitkomst {
+        Schrijfuitkomst::Opgeslagen { .. } => 5, Schrijfuitkomst::ExternGewijzigd => 10,
+        Schrijfuitkomst::Ontbreekt => 11, Schrijfuitkomst::AlleenLezen => 12,
+        Schrijfuitkomst::AnderFormaat => 13,
+    }]);
     serde_json::to_value(uitkomst).map_err(|e| e.to_string())
 }
 

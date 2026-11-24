@@ -1,3 +1,4 @@
+import { qaTrace, qaBind, qaStatus } from "./qaMacSaveTrace";
 import {
   Component,
   Suspense,
@@ -235,6 +236,8 @@ export function OfficeStudio() {
     }),
   );
   const actiefDocument = actief?.type === "document" ? actief : null;
+  const qaToken = actiefDocument?.werkbestand?.token;
+  useEffect(() => { void qaBind(qaToken); }, [qaToken]);
   const documentGereed = !!actiefDocument?.gereed;
   useEffect(() => {
     // Opslaan mag niet afhangen van onderdelen die later van de server moeten komen.
@@ -337,9 +340,11 @@ export function OfficeStudio() {
    * net uit Opslaan als.
    */
   async function opslaan(id = actief?.id, als = false): Promise<boolean> {
+    qaTrace(22, [id ?? 0, +als]);
     const tabblad = tabs.toestandRef.current.tabbladen.find((t) => t.id === id);
-    if (!tabblad) return false;
+    if (!tabblad) { qaTrace(23); return false; }
     if (tabblad.type === "module") {
+      qaTrace(24);
       if (tabblad.module === "notities") notitieActies.current?.bewaren();
       // In Email Studio bewaart Opslaan het concept van de open opstelling.
       if (tabblad.module === "email") emailActies.current?.bewaren();
@@ -357,6 +362,7 @@ export function OfficeStudio() {
             opslaanKeuzes.current.has(tabblad.id) ||
             (!!officeHost() && hostBestandBekend(tabblad.naam)),
         });
+    qaTrace(25, [["keuze","terugschrijven","opslaanAls"].indexOf(plan.route)+1]);
     if (plan.route === "opslaanAls") return vraagOpslaanAls(tabblad.id);
     // Een versleuteld origineel nooit stil onversleuteld terugschrijven.
     if (
@@ -401,7 +407,7 @@ export function OfficeStudio() {
       });
     }
     const serialiseer = tabs.serialiseerder(tabblad.id);
-    if (!serialiseer || !opslag || bezigRef.current) return false;
+    if (!serialiseer || !opslag || bezigRef.current) { qaTrace(26, [+!!serialiseer, +!!opslag, +bezigRef.current]); return false; }
     bezigRef.current = true;
     setBezig(true);
     setOpslaanBezig(true);
@@ -446,6 +452,7 @@ export function OfficeStudio() {
               { ongewijzigd: !als && ongewijzigd },
             );
       });
+      qaTrace(27, [qaStatus(resultaat)]);
       if (resultaat.status === "mislukt") {
         meld(
           t("errors.saveFailed", { error: resultaat.fout }),
@@ -501,6 +508,7 @@ export function OfficeStudio() {
       // In de browser is een aangevraagde download het beste dat we weten.
       return resultaat.schoon || uitkomst.status === "download";
     } finally {
+      qaTrace(29);
       bezigRef.current = false;
       setBezig(false);
       setOpslaanBezig(false);
@@ -569,7 +577,9 @@ export function OfficeStudio() {
 
   /** Ctrl+S: in een opstelling het concept bewaren, anders het actieve tabblad. */
   function opslaanToets() {
+    qaTrace(20, [+!!verzending]);
     if (verzending) {
+      qaTrace(21);
       verzendActies.current?.bewaren();
       return;
     }

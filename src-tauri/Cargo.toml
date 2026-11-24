@@ -5,6 +5,10 @@ description = "Lokale OpenAEC-kantooromgeving"
 license = "Apache-2.0"
 edition = "2021"
 
+[features]
+default = []
+qa-save-trace = []
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
