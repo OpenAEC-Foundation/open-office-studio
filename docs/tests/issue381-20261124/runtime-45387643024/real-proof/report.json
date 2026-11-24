@@ -1,0 +1,19 @@
+{
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "version": "2026.48.1",
+  "harnessCommit": "b660bab3ff11181dead7c8227b3ee44b42fa91b7",
+  "pid": 7709,
+  "engineWasmSha256": "2b1b74a572ad97bfe0f5bf25798fd123a46505a85b80a477792a180a13deddad",
+  "sourceSha256": "5431c7f8ae2840b93864049531448cdd7c79d939d31465e23abfefd1817703ce",
+  "passed": false,
+  "phases": [],
+  "nativeGui": false,
+  "realTauriIpc": false,
+  "browserGui": false,
+  "failure": "AssertionError [ERR_ASSERTION]: Traceback (most recent call last):\n  File \"/home/runner/work/open-office-studio/open-office-studio/qa/issue381/convert_real.py\", line 132, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/runner/work/open-office-studio/open-office-studio/qa/issue381/convert_real.py\", line 130, in main\n    if failures and primary is None:raise AssertionError('; '.join(failures))\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: AssertionError('Unexpected runtime mutation: after-converter; see /home/runner/work/open-office-studio/open-office-studio/.local/issue381/real-proof/packaged/prefix-inventory/steps.json')\n\n\n1 !== 0\n\n    at file:///home/runner/work/open-office-studio/open-office-studio/qa/issue381/engine_real.mjs:94:12",
+  "cleanup": {
+    "engineDisposed": true,
+    "loaderClosed": true
+  }
+}

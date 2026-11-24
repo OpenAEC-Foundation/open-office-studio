@@ -1,0 +1,103 @@
+[
+  {
+    "label": "canonical-before-copy",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Exact verified input; never executed",
+    "passed": true,
+    "inventory": "canonical-before-copy.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "variant-copied",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged",
+    "reason": "Byte/mode-identical private copy of canonical input",
+    "passed": true,
+    "inventory": "variant-copied.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "canonical-after-copy",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Copy must not modify canonical input",
+    "passed": true,
+    "inventory": "canonical-after-copy.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "variant-derived",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged",
+    "reason": "DERIVED_PRIVATE_QA_ONLY_NOT_OFFICIAL_RUNTIME; only selected libwps bytes may differ",
+    "passed": true,
+    "inventory": "variant-derived.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "before-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged",
+    "reason": "Only explicit selected library delta before executing private converter",
+    "passed": true,
+    "inventory": "before-converter.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  },
+  {
+    "label": "after-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/variant-runtime/packaged",
+    "reason": "No unknown cache/temp/byte/mode/entry mutation permitted",
+    "passed": false,
+    "inventory": "after-converter.json.gz",
+    "inventorySha256": "637e870a9769d361366ea95345acc76770c0ad87c12e486c7de04bf9444932a6",
+    "entries": 15084,
+    "differences": {
+      "missing": [],
+      "extra": [
+        "payload/usr/libexec/Open Office Studio/kantoorruntime/program/resource/common/fonts/.uuid",
+        "payload/usr/libexec/Open Office Studio/kantoorruntime/share/fonts/truetype/.uuid"
+      ],
+      "changed": {}
+    }
+  },
+  {
+    "label": "canonical-after-converter",
+    "root": "/home/runner/work/open-office-studio/open-office-studio/.local/issue381/runtime-input/private",
+    "reason": "Canonical input was never executed; full post-run immutability required",
+    "passed": true,
+    "inventory": "canonical-after-converter.json.gz",
+    "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212",
+    "entries": 15082,
+    "differences": {
+      "missing": [],
+      "extra": [],
+      "changed": {}
+    }
+  }
+]

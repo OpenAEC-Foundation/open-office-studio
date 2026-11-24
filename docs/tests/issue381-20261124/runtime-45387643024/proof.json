@@ -1,0 +1,252 @@
+{
+  "run": 45387643024,
+  "job": 138422666059,
+  "attempt": 1,
+  "harnessCommit": "b660bab3ff11181dead7c8227b3ee44b42fa91b7",
+  "harnessSourceCommit": "d186c4f9dddc61feae5ce0fed7f000e1e9821837",
+  "applicationCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "applicationTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "productProposalCommit": "b9233f3c61322cd1f2d27aca49138829c8b7bc9c",
+  "status": "FAIL_TWO_EXTRA_UUID_FILES_IN_PACKAGED_DERIVED_PREFIX",
+  "artifactDownloadCount": 1,
+  "extraEntries": {
+    "payload/usr/libexec/Open Office Studio/kantoorruntime/program/resource/common/fonts/.uuid": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "d75e32724649cd9597d7745731230d112d47ce9570d9c2cb0e4fb0a90619be96",
+      "type": "file"
+    },
+    "payload/usr/libexec/Open Office Studio/kantoorruntime/share/fonts/truetype/.uuid": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "fcd1f717a467fef7c519cbf03078500637d068f01a7ea8a44d547f7ae2e59fb9",
+      "type": "file"
+    }
+  },
+  "missingEntries": [],
+  "changedExistingEntries": {},
+  "inventoryAudit": [
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-build",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-configure",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-rebuilt-control",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-rebuilt-control",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "before-patched",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-patched",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "build-proof/canonical-build-inventory/steps.json",
+      "label": "after-build",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-before-copy",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "variant-copied",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-after-copy",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "variant-derived",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "before-converter",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "after-converter",
+      "entries": 15084,
+      "passed": false,
+      "inventorySha256": "637e870a9769d361366ea95345acc76770c0ad87c12e486c7de04bf9444932a6"
+    },
+    {
+      "file": "real-proof/packaged/prefix-inventory/steps.json",
+      "label": "canonical-after-converter",
+      "entries": 15082,
+      "passed": true,
+      "inventorySha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    }
+  ],
+  "canonicalAfterConverterUnchanged": true,
+  "passed": [
+    "request/source/queue/disk/runtime verifier",
+    "both real libraries compile; bounded ABI/SONAME/NEEDED/ORIGIN/ldd",
+    "full canonical build inventories",
+    "private packaged converter exit0, actual original ELF load, source unchanged, no remaining own-profile processes",
+    "canonical full post-converter inventory unchanged",
+    "engine/SSR cleanup; absolute deadline"
+  ],
+  "notRun": [
+    "control/patched CLI conversion and actual patched library load",
+    "independent typed 61-cell oracle in this run",
+    "P5 engine edit/UndoRedo/save/fresh-process reopen",
+    "native/browser/other OS acceptance"
+  ],
+  "causeLimit": "Two new 36-byte mode0644 .uuid paths observed. Actual loader uses system libfontconfig.so.1; exact writer/source mechanism is not proven. Historical second-run entrydelta remains unknown.",
+  "retryOrAutofix": false,
+  "artifact": {
+    "id": 14916663707,
+    "node_id": "MDg6QXJ0aWZhY3QxNDkxNjY2MzcwNw==",
+    "name": "issue381-private-runtime-proof",
+    "size_in_bytes": 12659429,
+    "url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14916663707",
+    "archive_download_url": "https://api.github.com/repos/OpenAEC-Foundation/open-office-studio/actions/artifacts/14916663707/zip",
+    "expired": false,
+    "digest": "sha256:276080f66922453ed000976f19b0a07cbed53d7476200f513afcb4fb182bb357",
+    "created_at": "2026-11-24T11:52:11Z",
+    "updated_at": "2026-11-24T11:52:11Z",
+    "expires_at": "2027-02-22T11:49:03Z",
+    "workflow_run": {
+      "id": 45387643024,
+      "repository_id": 1427673882,
+      "head_repository_id": 1427673882,
+      "head_branch": "codex/fix-381-wq2-vlookup-index-20261124",
+      "head_sha": "b660bab3ff11181dead7c8227b3ee44b42fa91b7"
+    }
+  },
+  "files": [
+    {
+      "name": ".gitattributes",
+      "bytes": 20,
+      "sha256": "2199d532e3836627014a38692a34c49da747cd5baeb033c2a88b90d1490f1fe0"
+    },
+    {
+      "name": "artifact.zip",
+      "bytes": 12659429,
+      "sha256": "276080f66922453ed000976f19b0a07cbed53d7476200f513afcb4fb182bb357"
+    },
+    {
+      "name": "build-proof/build.json",
+      "bytes": 54933,
+      "sha256": "b46e77fc03d7701645fa33be2ba103c9690e21a738cddfcf942eadd5654bf3a4"
+    },
+    {
+      "name": "deadline-finish.json",
+      "bytes": 317,
+      "sha256": "296f631d4fe931f21b3764659bdd1ad164ee94dfc78196638a4ad34cab8b7351"
+    },
+    {
+      "name": "failed-job.log",
+      "bytes": 7505,
+      "sha256": "27958f65d44224f11596366c0067fe65442e63b347ee1ab09111413467a4b124"
+    },
+    {
+      "name": "members.json",
+      "bytes": 12347,
+      "sha256": "4c116f03781af63dd2ed095f759c7f9e903dad87532719be7fb1b080f20afa42"
+    },
+    {
+      "name": "official-artifact.json",
+      "bytes": 853,
+      "sha256": "fc82a67cc316469d9870ee0c99e930eb2e245bc66f6574214cae93256f23bfd9"
+    },
+    {
+      "name": "official-run.json",
+      "bytes": 15443,
+      "sha256": "87c8ed932d4a04bb6fc5254dfb231d373683036d832422c1d30ff481b7612008"
+    },
+    {
+      "name": "real-proof/packaged/converted.xlsx",
+      "bytes": 6494,
+      "sha256": "432f7f88ff906be0bff44f8192122a0e85cb68caf0a03a447986c84b0df30888"
+    },
+    {
+      "name": "real-proof/packaged/converter-report.json",
+      "bytes": 8162,
+      "sha256": "29aba79e08e25280f501832bb34ab285805d4659f094c237f26e03b706509aff"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/after-converter.json.gz",
+      "bytes": 638980,
+      "sha256": "637e870a9769d361366ea95345acc76770c0ad87c12e486c7de04bf9444932a6"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/before-converter.json.gz",
+      "bytes": 638880,
+      "sha256": "89751255ff5f62cf1399360713f10481272977853e14c271c2d112e55cbbb212"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/binding.json",
+      "bytes": 4775,
+      "sha256": "fae7e87b2741711288b98ccd5c7af4d85951293889cf8f21c79d9e961709fda0"
+    },
+    {
+      "name": "real-proof/packaged/prefix-inventory/steps.json",
+      "bytes": 3685,
+      "sha256": "46999e23c22757648ad79907d6735350c24da71640f2389a1af008a483c0b709"
+    },
+    {
+      "name": "real-proof/report.json",
+      "bytes": 1465,
+      "sha256": "7432e63976072cbad887e71e61125e79f45cd7634e313ed0f1b57b3cd818ccfb"
+    },
+    {
+      "name": "request-verification.json",
+      "bytes": 412,
+      "sha256": "7b41c09c3364a57a2488ec85e7101ab6cbe77aa4e3b8a2c1945df0698671ddb7"
+    },
+    {
+      "name": "runner-frontgate.json",
+      "bytes": 122,
+      "sha256": "dc776180b870b1bf5c86f0c4b4584bf3c45d03ce8b26bd5ff5b22fef746fb9a8"
+    }
+  ]
+}
