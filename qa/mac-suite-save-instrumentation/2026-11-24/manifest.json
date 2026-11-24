@@ -1,0 +1,327 @@
+{
+  "kind": "NON-APPLIED DERIVED TEST INSTRUMENTATION PROPOSAL",
+  "baseCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "baseTree": "e30879fd772871e690847c061ef66e6b81808a05",
+  "baseVersion": "2026.48.1",
+  "derivedVersionLabel": "DERIVED-P5-MAC-SAVE-TRACE-20261124-NOT-SIGNED-RELEASE",
+  "patchSha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+  "patchApplied": false,
+  "sourceBindings": {
+    "src/useTabSneltoetsen.ts": "dde71791c0983ad5269f1174eb3300afb100896059e05b251d3e0dd279aca9cb",
+    "src/OfficeStudio.tsx": "ff08de011fc90c0739b50546b22f215381da9c58a5e7c0f565525ff3740245aa",
+    "src/opslag.ts": "9f500b9b56a5bf4b233f0e9fcd8061758a2dfd3f710593b340460887262cfded",
+    "src/editors.tsx": "8c66552879c727d2d02d9da6f0609ca1f3a10ff94275ba7d802289b3b65f9bce",
+    "src/werkbestand.ts": "292882613921d4a34a6877528973199f98a172b2157aee31882c1bf2b66cb4eb",
+    "src-tauri/Cargo.toml": "bbff333657a85b1fb90ac1fae09c4022274b57ac6cfb3b99ac62dbf623d46651",
+    "src-tauri/src/main.rs": "ca5f06bf20fb923f4c9f5edb083be4238556e99093fc13c43973b030627fb68e",
+    "src-tauri/src/werkbestanden.rs": "1b3fe52e199b234f626fc7f3a89f4f23ff61ce9b966620d2d9183b9f7ed5ca1e"
+  },
+  "derivedPreviewBindings": {
+    "src/useTabSneltoetsen.ts": "1585631699721325182da8fdad28dc96b178f81bd7de92fc30d30d4af68c992a",
+    "src/OfficeStudio.tsx": "a86f1f2be056872edec6ea7647e286cd9aeb8fcc4f22c30b373f87a8b9dad8db",
+    "src/opslag.ts": "02b2b4832d4fd64a7e02a45c7d18132f2571f720070b1bd8f64e51624070975d",
+    "src/editors.tsx": "69be3be65c81070259a3e00e76c490e957696a2e3ab376a290038ed308cfe0bc",
+    "src/werkbestand.ts": "8e080e020f485c6195f760a129a6f913a18e313c58c476ad519ea2308632171f",
+    "src-tauri/Cargo.toml": "b1889f9b0384352fe714e31aaaf647d46a2f3d8c7b5cdd4aa9f3f4a866ba0c05",
+    "src-tauri/src/main.rs": "629445bfbd7c33e72c4b366451ec92a5cb355406dec4f6eab108471ea0668146",
+    "src-tauri/src/werkbestanden.rs": "d9281a2e6bcce328979298f37437b1218f456224938fb234aa6f5d0c29990210",
+    "src/qaMacSaveTrace.ts": "f276f212693875d74f434d9d2a5f332da4188e04d0eda2d548a195e000179539",
+    "src-tauri/src/qa_save_trace.rs": "9f61b422d38bf572b01e56f7f6e3e3eb01971c965ce76b11ec38d710651962f3"
+  },
+  "sites": [
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "listener entry"
+    },
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "original combined guard"
+    },
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "existing routing result"
+    },
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "dialog guard"
+    },
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "visible modal guard"
+    },
+    {
+      "file": "src/useTabSneltoetsen.ts",
+      "site": "repeat guard and dispatch"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "synthetic bind before input only"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "actual save entry"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "no-document/module diversion"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "actual plan"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "actual readiness return"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "actual DocumentOpslag result"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "save finally"
+    },
+    {
+      "file": "src/OfficeStudio.tsx",
+      "site": "shortcut handler/composer diversion"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "storage busy"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "storage entry"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "same prepare call and await"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "same stale pre-serialize return"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "actual final serializer result"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "same stale post-serialize return"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "same persistence callback/result"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "same clean result"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "storage error path no error text"
+    },
+    {
+      "file": "src/opslag.ts",
+      "site": "storage finally"
+    },
+    {
+      "file": "src/editors.tsx",
+      "site": "exact registered DOCX serializer"
+    },
+    {
+      "file": "src/editors.tsx",
+      "site": "only registered save, never useHerladen closure"
+    },
+    {
+      "file": "src/editors.tsx",
+      "site": "unchanged input/fields flush order"
+    },
+    {
+      "file": "src/werkbestand.ts",
+      "site": "actual final IPC bytes no header/body change"
+    },
+    {
+      "file": "src/werkbestand.ts",
+      "site": "actual IPC return"
+    },
+    {
+      "file": "src-tauri/Cargo.toml",
+      "site": "opt-in only Cargo feature"
+    },
+    {
+      "file": "src-tauri/src/main.rs",
+      "site": "derived observer module"
+    },
+    {
+      "file": "src-tauri/src/main.rs",
+      "site": "synthetic-only typed logger commands"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "source anchor only"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "actual Rust-resolved target"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "format return"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same external-change return"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same missing return"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same missing unregistered stamp return"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same readonly guard return"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same atomic write call"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "same atomic readonly result"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "actual native write error no message"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "successful native write result"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "actual native request entered"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "actual decoded request buffer"
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "site": "actual native domain result before unchanged serialization"
+    }
+  ],
+  "builtSignedLaunchedOrDispatched": false,
+  "criteria": {
+    "scope": "One proposed synthetic DERIVED Mac save observer, not applied or executable authorization",
+    "activationAllRequired": [
+      "Explicit frontend VITE_OOS_QA_SAVE_TRACE=DERIVED_P5_SYNTHETIC_ONLY",
+      "Explicit nondefault Cargo feature qa-save-trace; target macOS",
+      "GITHUB_ACTIONS=true and OOS_QA_SAVE_TRACE=DERIVED_P5_SYNTHETIC_ONLY",
+      "OOS_QA_SAVE_TRACE_SESSION is exactly32 lowercase hex; own canonical RUNNER_TEMP/mac-save-trace-<session>",
+      "Actual window-owned workfile token resolves exactly to ownroot/control.docx; original bytes7480/SHA c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d",
+      "Fresh create_new events.jsonl; no overwrite; fresh dedicated profile and only this synthetic document"
+    ],
+    "fixture": {
+      "member": "mac-product-native/field374-current-host-preflight/native-preflight-private-copy.docx",
+      "bytes": 7480,
+      "sha256": "c28b963a6094108cdf6cc412bca58302e731a7810ee81772831a0c621748e52d"
+    },
+    "sourceFixtureArchive": {
+      "run": 45355259350,
+      "artifact": 14902571239,
+      "sha256": "505cdc29339ee220ffb27c86ccff4ea9d177f4731720b368e13b87e2dd9d2308",
+      "unchanged": true
+    },
+    "eventPoints": {
+      "10": "Actual existing window listener entry: keyclass S1/Q2/other0, codeS,ctrl,meta,shift,alt,repeat,defaultPrevented,uit,tabId; never raw typed characters",
+      "11-17": "Actual combined gate, single original tabToets result, dialog/modal/repeat gates and dispatch; no new listener or second route evaluation",
+      "20-29": "Existing shortcut/save handler, no-tab/module/composer diversion, actual route/readiness, DocumentOpslag result/finally",
+      "30-45": "Actual storage busy/entry, same optional prepare call, stale guards, final serializer snapshot36/37/38, same persistence callback and clean/error/finally",
+      "50-58": "Only the registered DOCX serializer: actual raw save snapshot51/52/53, unchanged flushPendingInput then werkDocumentVeldenBij. No useHerladen substitution",
+      "60-64": "Actual prepared IPC snapshot60/61/62 and existing bewaar_document invoke/result; original body/headers unchanged",
+      "69-71": "Actual native command entry, decoded window/token-owned buffer SHA/length, domain outcome before unchanged JSON serialization",
+      "72": "Actual token-resolved native target: canonical-equal,canonical-available,lexical-equal booleans; no real path logged",
+      "73-76": "Actual native format/conflict/missing/readonly outcomes, same atomic call and actual error/success result",
+      "90-91": "Native synthetic scope bound and frontend observer-ready handshake",
+      "98": "Scope unbound; no background/general-document tracing accepted as case coverage",
+      "99": "Logging-only post-operation idle: JS highwater/lost/pending0 and nativeLost; NOT a save-handler acknowledgement or native functional PASS"
+    },
+    "statusCodes": {
+      "0": "unknown",
+      "1": "bezig",
+      "2": "verouderd",
+      "3": "afgerond",
+      "4": "mislukt",
+      "5": "opgeslagen",
+      "6": "opslaan-als",
+      "7": "geannuleerd",
+      "8": "geexporteerd",
+      "9": "download",
+      "10": "extern-gewijzigd",
+      "11": "ontbreekt",
+      "12": "alleen-lezen",
+      "13": "ander-formaat"
+    },
+    "privacy": [
+      "Only fixed event codes, bounded integers/booleans, session/PID/monotonic sequence and64hex digests",
+      "No payload bytes, document names/text, workfile tokens, password fields, paths or error-message contents",
+      "Frontend buffer snapshot limit1MiB; native parsed request hash restricted to actual bound token/window; no raw-byte fallback",
+      "Fresh synthetic-only app/profile mandatory: this is not a production/general-document tracing facility"
+    ],
+    "overheadAndLimits": [
+      "Extra initial binding React effect/native IPC and one fixture read/hash occur before input; not a new post-Q readiness barrier",
+      "Observer calls, snapshot copies, async SHA256/promises/microtasks and extra metadata IPC can perturb timing",
+      "Native mutex, canonical target metadata read, SHA256 and append-only diagnostic writes add CPU/filesystem work; no claim of zero perturbation",
+      "Original guards/returns/await order, serializer invocation count, flush order, actual request headers/body and atomic write_all/sync_all/persist implementation remain unchanged except observer statements",
+      "No diagnostic fsync; partial/crash logs or any loss/overflow/late scope/hash failures make trace incomplete. Require count<1024, contiguous JS records excluding99, no dropped records, matched buffer-start/hash pairs and final coverage through the observed save terminal phase",
+      "SHA changes alone do not prove Q or its absence. Join buffer hashes to independently parsed synthetic source/saved DOCX bytes; if no such join exists, semantic serializer content remains unknown",
+      "JS and native monotonic clocks have different origins; do not invent OS delivery latency from their absolute values",
+      "New DERIVED failure/success describes only that controlled run. A nonrecurrence or later success never explains or repairs historical45355259350"
+    ],
+    "requiredBeforeAnyFutureBuildOrObservation": [
+      "Independent review of this exact patch/digest and future identity overlay; no authorization from artifact preparation",
+      "Separate frozen DERIVED bundle name/identifier/version/profile/CWD/source tree and producer manifest; the current signed P5DMG/MachO bindings cannot be reused",
+      "Full TS typecheck and actual Cargo/Tauri feature-off/feature-on compilation, command registration and diagnostics transport validation; not performed here",
+      "Coordinator allocates any future build/host; no signing/notarization/main/release asset changes, extra VM or app/input/attach run now",
+      "Before actual Q/CmdS: validate new own package/hash/profile and native focus/ownership; verify90/91/zero-loss99 on original synthetic fixture",
+      "Actual one-Q/one-CmdS case uses genuine native controls without retries, extra flush, scripted model changes or an added post-Q wait",
+      "After the original action, join36/37→60/61→70→actual target bytes and independent DOCX Q oracle; preserve error/outcome and normal quit/newPID/cleanup as separately scoped",
+      "Set explicit trace cutoff before cleanup events; read-only logging completion may be checked only after the action. Missing observer records never prove non-delivery/non-execution",
+      "Preserve original failed proof and six successful diagnostics; keep published release assessment unchanged absent a new verified product failure"
+    ],
+    "currentlyAuthorized": {
+      "applyPatch": false,
+      "appBuild": false,
+      "sign": false,
+      "nativeInput": false,
+      "newHost": false,
+      "attach": false,
+      "securityChange": false,
+      "main": false,
+      "release": false
+    }
+  },
+  "validationFile": "validation.json",
+  "actualProductSourceUnchanged": true,
+  "designInputs": {
+    "branch": "codex/qa-mac-suite-save-trace-design-d410-2026-11-24",
+    "commit": "12f0660005addc35d55b659e7ba467845b44c503",
+    "designSha256": "036e4c9fc2be2f3e362a83fb1184c91ea3db92d2872e72e1f08e34baa40f4d5f",
+    "feasibilitySha256": "636ed3ede10289780b1ccbbc10688f755ea7edb921ed49cdc8e2f383d94a6bff"
+  },
+  "capabilityEvidence": {
+    "run": 45390900006,
+    "attempt": 1,
+    "job": 138434009672,
+    "artifact": 14919295938,
+    "zipSha256": "bbc29158f8be86d003ce1964724971e6b9fb7f5c12069d5e87913978c482f91f",
+    "reviewCommit": "e72f47cf9dbe8f5acc6db50de153214587ad3ec3",
+    "reviewSha256": "63e186c739fa055c493f9cdb6fd94d56c4e245398f2f1844180008dd2dc245df",
+    "internalTraceAvailability": "NOT ESTABLISHED on unchanged signed P5",
+    "entitlements": "Observed empty stdout from deprecated codesign :- syntax, not proof get-task-allow=false or universal attach impossibility"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "recordedAtUTC": "2026-11-24T12:55:49.123140+00:00",
+  "patchSha256": "4c5fd6c82e8fa98e85b2e76ed2a8007fa9d2c466bd07854bd2a8f62c17fe1c1c",
+  "gitApplyCheck": "PASS read-only; no apply",
+  "actualProductSourceDelta": "NONE",
+  "typescriptSyntaxAndObserverMocks": {
+    "base": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+    "typescriptSyntax": "PASS six preview files",
+    "originalProductAst": [
+      {
+        "file": "src/useTabSneltoetsen.ts",
+        "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+      },
+      {
+        "file": "src/OfficeStudio.tsx",
+        "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+      },
+      {
+        "file": "src/opslag.ts",
+        "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+      },
+      {
+        "file": "src/editors.tsx",
+        "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+      },
+      {
+        "file": "src/werkbestand.ts",
+        "guardReturnAndAwaitAst": "IDENTICAL after removing explicit observer-only statements"
+      }
+    ],
+    "observerOnlyMockTests": [
+      "default-off performs no IPC or key inspection",
+      "native bind rejection keeps every frontend observation disabled",
+      "actual snapshot digest matches independent SHA256; no body or workfile token in records",
+      "synchronous observer/IPC/metadata exceptions never escape into product calls",
+      "oversize buffer is explicitly incomplete and never hashed or logged",
+      "late digest cannot be attributed to a changed/unbound document scope"
+    ],
+    "mocksAreNotNativeOrTauriExecution": true,
+    "productPatchApplied": false
+  },
+  "rustfmtSyntax": "PASS3previewfiles; no Cargo typecheck/compile",
+  "rustOriginalNonObserverTokens": [
+    {
+      "file": "src-tauri/src/main.rs",
+      "originalNonObserverTokens": "IDENTICAL",
+      "awaitCountOriginal": 5,
+      "awaitCountDerived": 5
+    },
+    {
+      "file": "src-tauri/src/werkbestanden.rs",
+      "originalNonObserverTokens": "IDENTICAL",
+      "awaitCountOriginal": 8,
+      "awaitCountDerived": 8
+    }
+  ],
+  "originalAtomicWriterByteIdenticalSha256": "11525afa763fc120cb2d3ce312a50e7b3079434a59d69961e9801cbf0fc0e403",
+  "cargoOriginalPackageAndDependenciesUnchanged": true,
+  "addedCargoFeatureDefault": [],
+  "newMacOrOtherCIAppBuildSignOrNativeRun": false,
+  "originalCause": "OPEN"
+}
