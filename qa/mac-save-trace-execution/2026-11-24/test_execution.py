@@ -119,6 +119,61 @@ class TraceTests(unittest.TestCase):
 
 
 class SafetyTests(unittest.TestCase):
+    def test_group_drain_precedes_log_hash_and_timeout_remains_failure(self):
+        import ops,subprocess
+        with tempfile.TemporaryDirectory() as td:
+            commands=Commands(Path(td)/'logs',synthetic_test_runtime=True);commands.posix=True
+            captured={}
+            process=types.SimpleNamespace(pid=123,wait=lambda timeout:(_ for _ in ()).throw(subprocess.TimeoutExpired('synthetic',timeout)))
+            def popen(*a,**k):captured.update(k);return process
+            def drain(p):
+                self.assertTrue(captured['start_new_session'])
+                captured['stdout'].write(b'FINAL SYNTHETIC CHILD BYTES BEFORE DRAIN');captured['stdout'].flush()
+                return True,True
+            with patch.object(ops.subprocess,'Popen',side_effect=popen),patch.object(ops,'drain_group',side_effect=drain):
+                row,out,err=commands.run(['SYNTHETIC NOT EXECUTED'],timeout=.01,check=False)
+            self.assertIsNone(row['exitCode']);self.assertTrue(row['processGroupDrained'])
+            self.assertTrue(row['ownGroupDescendantsStopped']);self.assertIn(b'FINAL SYNTHETIC',out)
+            self.assertEqual(row['stdoutSha256'],c.sha(out))
+    def test_group_escalates_only_own_session(self):
+        import ops,signal
+        active={'running':True};signals=[];clock={'value':0}
+        def tick():clock['value']+=1;return clock['value']
+        def kill(pid,sig):
+            signals.append((pid,sig))
+            if sig==9:active['running']=False
+        with patch.object(ops,'active_group',side_effect=lambda pid:active['running']),patch.object(ops.os,'killpg',side_effect=kill,create=True),\
+             patch.object(signal,'SIGKILL',9,create=True),patch.object(ops.time,'monotonic',side_effect=tick),patch.object(ops.time,'sleep'):
+            ok,changed=ops.drain_group(types.SimpleNamespace(pid=123,wait=lambda timeout:0))
+        self.assertTrue(ok and changed);self.assertEqual(signals,[(123,signal.SIGTERM),(123,9)])
+    @unittest.skipUnless(os.name=='posix','Actual POSIX session-drain replay requires POSIX; mocked ordering is tested separately')
+    def test_actual_posix_timeout_has_no_late_child_writer(self):
+        import sys
+        with tempfile.TemporaryDirectory() as td:
+            command=Commands(Path(td)/'logs')
+            child='import time;time.sleep(.5);print("SYNTHETIC_LATE_CHILD",flush=True)'
+            parent='import subprocess,sys,time;subprocess.Popen([sys.executable,"-c",'+repr(child)+']);time.sleep(5)'
+            row,out,err=command.run([sys.executable,'-c',parent],timeout=.1,check=False)
+            self.assertIsNone(row['exitCode']);self.assertTrue(row['processGroupDrained'])
+            time.sleep(.7)
+            self.assertEqual(c.digest(Path(td)/'logs/command-001.stdout'),row['stdoutSha256'])
+            self.assertNotIn(b'SYNTHETIC_LATE_CHILD',(Path(td)/'logs/command-001.stdout').read_bytes())
+    def test_detach_timeout_or_error_retains_mount_and_root(self):
+        import native
+        for code in (None,1,0):
+            errors=[];mount=Path('/synthetic-owned-root/mount')
+            commands=types.SimpleNamespace(run=lambda *a,**k:({'exitCode':code},b'',b''))
+            result=native.detach_after_case(mount,commands,errors)
+            with self.subTest(code=code):
+                self.assertEqual(result,None if code==0 else mount);self.assertEqual(bool(errors),code!=0)
+    def test_cleanup_refuses_known_mounted_child(self):
+        from ops import remove_owned
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owned=root/'own';owned.mkdir();(owned/'mount').mkdir()
+            original=Path.is_mount
+            with patch.object(Path,'is_mount',lambda p: p==owned/'mount'):
+                with self.assertRaises(ValueError):remove_owned(owned,root)
+            self.assertTrue(owned.exists())
     def test_exact_one_q_one_save_and_no_quit_replay(self):
         import native
         with tempfile.TemporaryDirectory() as td:
@@ -165,7 +220,7 @@ class SafetyTests(unittest.TestCase):
     def test_command_receipts_do_not_retain_synthetic_secret(self):
         import sys
         with tempfile.TemporaryDirectory() as td:
-            commands=Commands(Path(td)/'logs');env=dict(os.environ,APPLE_API_KEY_CONTENT='SYNTHETIC_SECRET_NEVER_RETAIN')
+            commands=Commands(Path(td)/'logs',synthetic_test_runtime=True);env=dict(os.environ,APPLE_API_KEY_CONTENT='SYNTHETIC_SECRET_NEVER_RETAIN')
             row,out,err=commands.run([sys.executable,'-c','import os;print(os.environ["APPLE_API_KEY_CONTENT"])'],env=env)
             self.assertNotIn(b'SYNTHETIC_SECRET_NEVER_RETAIN',out)
             self.assertIn('APPLE_API_KEY_CONTENT',row['secretFieldsRedacted'])

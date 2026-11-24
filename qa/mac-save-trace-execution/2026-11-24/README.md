@@ -84,6 +84,14 @@ private storage and not release distribution.
 it never builds or runs an app. Parser checks and independent review cannot
 replace the future actual compiler, signing, package or native gates.
 
+Each real command has a new POSIX session. On timeout or leftover group members,
+the whole own group is stopped and passively drained before log redaction/hashes.
+Timeout remains failure; unsealed output is excluded from artifact uploads.
+Windows preparation runs only explicit synthetic command mocks: the real POSIX
+late-child-write regression is skipped there and required on the later Mac
+build host before app compilation. A detach error or timeout retains the known
+mount/root until the always-run inventory confirms it can be safely removed.
+
 The unchanged observer has session-global native69/71/73-76 events. Only a single
 matching owned70/72 chain can be attributed; early `?`/cancel paths may omit71.
 Missing logs never prove absence of command receipt. Buffer copying, hashing,

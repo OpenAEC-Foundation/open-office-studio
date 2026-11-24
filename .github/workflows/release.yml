@@ -82,7 +82,9 @@ jobs:
         working-directory: application
         run: pnpm install --frozen-lockfile
       - name: Compile default and observer
-        run: python3 "$CODE/build.py" "$RUNNER_TEMP/mac-save-execution-approval.json" "$GITHUB_WORKSPACE/application" "$RUNNER_TEMP/mac-save-build-proof"
+        run: |
+          python3 -m unittest discover -s "$CODE" -p test_execution.py -v
+          python3 "$CODE/build.py" "$RUNNER_TEMP/mac-save-execution-approval.json" "$GITHUB_WORKSPACE/application" "$RUNNER_TEMP/mac-save-build-proof"
       - name: Build signed research Suite
         env:
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
@@ -115,6 +117,7 @@ jobs:
           path: |
             ${{ runner.temp }}/mac-save-build-proof/**
             !${{ runner.temp }}/mac-save-build-proof/package/**
+            !${{ runner.temp }}/mac-save-build-proof/**/*.unsealed
           retention-days: 14
           if-no-files-found: warn
   native:
@@ -158,6 +161,8 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: mac-save-derived-native-evidence
-          path: ${{ runner.temp }}/mac-save-native-proof/**
+          path: |
+            ${{ runner.temp }}/mac-save-native-proof/**
+            !${{ runner.temp }}/mac-save-native-proof/**/*.unsealed
           retention-days: 14
           if-no-files-found: warn

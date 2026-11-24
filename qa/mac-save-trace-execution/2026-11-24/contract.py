@@ -158,8 +158,8 @@ def download_package(a, token, target):
     metadata=validate_package_metadata(run,jobs["jobs"],artifacts["artifacts"],a)
     request=urllib.request.Request("https://api.github.com/repos/"+REPO+"/actions/artifacts/"+str(b["artifactId"])+"/zip",
         headers={"Authorization":"Bearer "+token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2026-03-10"})
-    # urllib strips sensitive headers neither generally nor on redirects: use gh
-    # for the authenticated redirect response, then a separate header-free GET.
+    # Authenticate only the API redirect response, then use a separate header-free
+    # blob GET so the bearer token cannot cross the origin boundary.
     opener=urllib.request.build_opener(NoRedirect)
     try: opener.open(request,timeout=40);raise ValueError("Expected Actions302 archive redirect")
     except urllib.error.HTTPError as error:

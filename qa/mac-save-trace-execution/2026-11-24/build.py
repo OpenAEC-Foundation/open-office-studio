@@ -30,6 +30,7 @@ def package(approval,app,out):
     a=json.loads(Path(approval).read_bytes());root=Path(os.environ['PRODUCER_ROOT']).resolve();p=validate_approval(a,'build',root,os.environ)
     require(sys.platform=='darwin' and platform.machine()=='arm64','Ordinary ARM64 Mac required')
     app=Path(app).resolve();out=Path(out).resolve();commands=Commands(out/'package-commands')
+    validate_source(app,p)
     require(json.loads((out/'compile-success.json').read_bytes())=={'featureOff':True,'featureOn':True,'typescriptNoEmit':True,'appCommit':p['appCommit']},'Actual compiler gates missing')
     env=dict(os.environ,VITE_OOS_QA_SAVE_TRACE='DERIVED_P5_SYNTHETIC_ONLY')
     for key in ('TAURI_SIGNING_PRIVATE_KEY','TAURI_SIGNING_PRIVATE_KEY_PASSWORD'):env.pop(key,None)
@@ -50,11 +51,13 @@ def verify(approval,app,out):
     a=json.loads(Path(approval).read_bytes());root=Path(os.environ['PRODUCER_ROOT']).resolve();p=validate_approval(a,'build',root,os.environ)
     require(sys.platform=='darwin' and platform.machine()=='arm64','Ordinary ARM64 Mac required')
     out=Path(out).resolve();commands=Commands(out/'verify-commands');app=Path(app).resolve()
+    validate_source(app,p)
     dmgs=list((app/'src-tauri/target/release/bundle/dmg').glob('*.dmg'));require(len(dmgs)==1,'Exactly one research DMG required')
     dmg=dmgs[0];temp=Path(os.environ['RUNNER_TEMP']).resolve();own=under(temp/('mac-save-verify-'+a['nonce']),temp);own.mkdir(exist_ok=False);mount=None
     write_json(own/'owner.json',{'nonce':a['nonce'],'scopeSha256':SCOPE_SHA,'producerCommit':a['producerCommit']})
     try:
-        mount=mount_package(dmg,own,commands);apps=list(mount.glob('*.app'));require(len(apps)==1,'Exactly one app in DMG')
+        mount=own/'mount';mount_package(dmg,own,commands)
+        apps=list(mount.glob('*.app'));require(len(apps)==1,'Exactly one app in DMG')
         identity,_=verify_bundle(apps[0],commands)
         packageout=out/'package';packageout.mkdir(exist_ok=False)
         shutil.copyfile(dmg,packageout/'research.dmg')

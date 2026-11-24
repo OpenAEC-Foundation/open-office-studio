@@ -16,6 +16,14 @@ def profiles(home):
         [('Application Support',''),('Caches',''),('WebKit',''),('HTTPStorages',''),('Preferences','.plist'),('Saved Application State','.savedState'),('Containers','')]]
 
 
+def detach_after_case(mount,commands,errors):
+    row,_,_=commands.run(['hdiutil','detach',mount],timeout=90,check=False)
+    if row['exitCode']!=0:
+        errors.append('Own read-only DMG detach failed/timed out; mount and root retained')
+        return mount
+    return None
+
+
 class Native:
     def __init__(self,root,out,app_checkout,a,witness,commands,bundle,exe):
         self.root,self.out,self.checkout=Path(root),Path(out),Path(app_checkout)
@@ -145,7 +153,7 @@ def main():
         write_json(out/'official-package-metadata.json',metadata)
         witness=extract_package(own/'parent.zip',own/'package',a)
         write_json(out/'actual-parent-witness.json',witness)
-        mount=mount_package(own/'package/research.dmg',own,commands)
+        mount=own/'mount';mount_package(own/'package/research.dmg',own,commands)
         apps=list(mount.glob('*.app'));require(len(apps)==1,'One mounted research app required')
         install=own/'installed';install.mkdir();commands.run(['/bin/cp','-R',apps[0],install])
         commands.run(['hdiutil','detach',mount],timeout=90);mount=None
@@ -247,8 +255,7 @@ def main():
                     except subprocess.TimeoutExpired:cleanup.append('Own process did not terminate')
                 elif n.process.poll() is None:cleanup.append('Live process identity changed; no unrelated process terminated')
         if mount:
-            row,_,_=commands.run(['hdiutil','detach',mount],timeout=90,check=False)
-            if row['exitCode']:cleanup.append('Own read-only DMG mount not detached')
+            mount=detach_after_case(mount,commands,cleanup)
         if profile_owned:
             for path in profile_paths:
                 if path.is_symlink():cleanup.append('Unexpected profile symlink retained: '+str(path));continue
@@ -256,7 +263,7 @@ def main():
                     if path.is_dir():shutil.rmtree(path)
                     elif path.is_file():path.unlink()
                 except OSError as error:cleanup.append(str(error))
-        if (n is None or n.process is None or n.process.poll() is not None) and (mount is None or not cleanup):
+        if (n is None or n.process is None or n.process.poll() is not None) and mount is None:
             try:remove_owned(own,temp);remove_owned(documentroot,temp)
             except Exception as error:cleanup.append(str(error))
         report['cleanup']={'normalLifecycle':normal,'errors':cleanup,'allOwnResourcesRemoved':not cleanup,
