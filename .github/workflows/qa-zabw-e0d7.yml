@@ -1,0 +1,57 @@
+name: ZABW bounded native oracle and real Word route
+on:
+  push:
+    branches: [codex/zabw-qa-2026-11-24-e0d7]
+    paths: [scripts/qa-zabw/run-request.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  targeted_linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OOS_ZABW_RUNTIME_BINDING: .local/zabw-qa/runtime-binding.json
+    steps:
+      - uses: actions/checkout@v4
+      - name: Give queued P5 critical Linux jobs priority
+        run: python3 scripts/qa-zabw/capacity.py
+      - run: git fetch --no-tags --depth=1 origin dc3f8d5d6e8fdffaaec82caa4ab93b579e075e6b
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Derive original original gzip bounds CRC and actual XML oracle before conversion oracle before conversion
+        run: python -B scripts/qa-zabw/oracle.py source
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Negative actual production browser-capability boundary
+        run: node scripts/qa-zabw/engine.mjs --route-only
+      - name: Headless runtime dependencies only; no app build
+        run: |
+          sudo python3 scripts/gebruik-ubuntu-hoofdarchief.py /etc/apt
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libcairo2 libcups2 libdbus-1-3 libfontconfig1 libfreetype6 libglib2.0-0 libice6 libnss3 libsm6 libx11-6 libxext6 libxinerama1 libxrandr2 libxrender1 libxslt1.1 libgl1 libglu1-mesa
+      - name: Recheck P5 queue immediately before private runtime consumption
+        run: python -B scripts/qa-zabw/capacity.py
+      - name: Verify only existing shared private runtime-only artifact
+        run: python scripts/qa-zabw/runtime_input.py
+      - name: Actual P2 helper converter and Word edit Undo Redo DOCX save fresh reopen
+        run: node scripts/qa-zabw/engine.mjs
+      - name: Reopen saved DOCX in a separate Node process and inspect independent XML
+        if: always()
+        run: |
+          if test -f .local/zabw-qa/saved.docx; then node scripts/qa-zabw/fresh_reopen.mjs; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: abw-targeted-result
+          path: .local/zabw-qa/
+          include-hidden-files: true
+          if-no-files-found: error
