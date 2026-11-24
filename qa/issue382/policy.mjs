@@ -69,7 +69,7 @@ try {
   if (mode === "browser") {
     assert(process.env.ISSUE382_BROWSER_EXECUTABLE, "Explicit existing CI browser required");
     await server.listen();
-    const { chromium } = await import(pathToFileURL(require.resolve("playwright")).href);
+    const { chromium } = require("playwright");
     browser = await chromium.launch({ executablePath: process.env.ISSUE382_BROWSER_EXECUTABLE, headless: true });
     report.cleanup.browser = "open";
     report.browser = { executable: process.env.ISSUE382_BROWSER_EXECUTABLE, version: browser.version() };
