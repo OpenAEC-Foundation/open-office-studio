@@ -1,0 +1,54 @@
+{
+  "status": "OPEN: static evidence is insufficient to classify driver versus product cause",
+  "reviewedAtUtc": "2026-11-24T14:01:20.384663+00:00",
+  "authorization": "User explicitly resumes existing bookmark investigation; integration confirms no overlap but retains 15:10 execution / 15:25 project cutoff and allows read-only review only in remaining time",
+  "sourceCommit": "b696ab86bd1c128729a079b68c0082e6df3d36a5",
+  "sourceFilesSha256": {
+    "src/tekst/zoeken/ganaar.ts": "8eb84ddb228c74bda2169fcac521127231c83e02a45fc473e9df4a295b8eb5ee",
+    "src/tekst/zoeken/ZoekPaneel.tsx": "cbe9adf3c4532bd6c05a222e8f6d1de40bd1b25be14355c462b09d2e168ec1c0",
+    "src/werkruimte/Dialoog.tsx": "2a17f5ea5d139233d101a1fdfcb3ae66f9921597614addff5412f8b66fb82e8e",
+    "src/tekst/zoeken/bladwijzers-engine.test.ts": "3749709010c03af5f7820d07ccf97b5f3970e1b9af6ed5126f4a03db6f41e67f"
+  },
+  "existingRun": 45406084338,
+  "existingRunStatus": "FAIL",
+  "newNativeRuns": 0,
+  "productEdits": false,
+  "newIssue": null,
+  "independentlyReadExistingXML": {
+    "sourceBody": "BODY target tail",
+    "sourcePrefixRun": {
+      "text": "BODY ",
+      "xml:space": "preserve"
+    },
+    "sourceBookmarkStart": 5,
+    "savedBody": "BODYBODY_ target tail",
+    "savedBookmarkStart": 10,
+    "actualInsertionOffset": 4,
+    "conclusion": "The prefix space is present in the source and preserved in saved text. This rules out a missing source space as the expectation error; it does not prove the live session selection value."
+  },
+  "sourceObservations": [
+    "bladwijzerDoelen reads current session bookmark metadata and passes the stored offset to naarPlek without an explicit minus-one conversion.",
+    "naarPlek sets logical session selection, calls syncYrsInputState(false, [story]), scrolls using yrsLocToDisplayPosition and calls ref.focus().",
+    "The list button has both onClick=ga and onDoubleClick=ga plus close. A normal double click can invoke ga via both click handlers and the double-click handler; event-order causality is not captured by the old report.",
+    "The modal makes the surrounding UI inert and restores the previously focused element on unmount. Interaction with editor focus/synchronization is a hypothesis, not a demonstrated fault.",
+    "The old driver waits for dialog closure and a focused document textarea, then types. It does not record the logical selection or pointer/focus event ordering at that boundary.",
+    "Existing bookmark engine tests use the real Yrs session but mock syncYrsInputState, focus, scroll and display mapping. Their logical offset checks do not cover the actual native focus and input bridge."
+  ],
+  "hypothesesNotEstablished": [
+    "Repeated click / modal-focus ordering",
+    "Logical-to-display-to-input selection mapping",
+    "Live imported bookmark metadata differing from serialized offset"
+  ],
+  "boundedNextProbeNotExecuted": [
+    "Compare independent body and table offsets using double-click, single-click then Escape, and numeric Go To then Enter with the same exact signed installer and private native host.",
+    "Capture read-only focus, pointer and selection observations before typing; use real input and independently inspect saved DOCX after each route, restoring via real Undo.",
+    "Retain failed routes as failed and finish normal exit/new-PID persistence only for actually executed controls; search open and closed issue bodies before registering a confirmed defect."
+  ],
+  "stop": {
+    "executionStopped": true,
+    "noLocalGUIRecordingOrHelpersOpened": true,
+    "existingJobAlreadyCompleted": true,
+    "noAutomaticResume": true,
+    "needsNewUserInstructionAndTimeAllocation": true
+  }
+}
