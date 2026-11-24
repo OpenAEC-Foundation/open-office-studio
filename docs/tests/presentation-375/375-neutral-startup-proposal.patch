@@ -1,0 +1,99 @@
+--- a/xmloff/qa/unit/draw.cxx
++++ b/xmloff/qa/unit/draw.cxx
+@@ -10,6 +10,15 @@
+ #include <test/unoapi_test.hxx>
+ 
+ #include <cmath>
++#include <cstdio>
++#include <cstdlib>
++#include <memory>
++#include <string_view>
++
++#include <svtools/miscopt.hxx>
++#include <com/sun/star/container/XEnumerationAccess.hpp>
++#include <com/sun/star/frame/XDesktop2.hpp>
++#include <com/sun/star/frame/XFrames.hpp>
+ 
+ #include <com/sun/star/beans/XPropertySet.hpp>
+ #include <com/sun/star/chart/XChartDataArray.hpp>
+@@ -284,10 +293,68 @@
+ } // end anonymous ns
+ 
+ 
+-CPPUNIT_TEST_FIXTURE(XmloffDrawTest, testUOFExplicitRectangleFillColors)
+-{
++// Diagnostic fixture owned by #375; shared BootstrapFixture remains unchanged.
++class Uop375StartupTest : public XmloffDrawTest
++{
++    // Keep the ordinary options implementation alive through document disposal
++    // and base teardown; do not rely on ItemHolder2 retaining a temporary.
++    std::unique_ptr<SvtMiscOptions> mpStartupOptions;
++
++public:
++    void prepareStartup375()
++    {
++        const char* pArm = std::getenv("OOS_375_STARTUP_ARM");
++        if (!pArm)
++            pArm = "A";
++        const std::string_view aArm(pArm);
++        CPPUNIT_ASSERT_MESSAGE("OOS_375_STARTUP_ARM must be A or B", aArm == "A" || aArm == "B");
++        CPPUNIT_ASSERT(!mxComponent.is());
++        CPPUNIT_ASSERT(!mxDesktop->getComponents()->hasElements());
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(0), mxDesktop->getFrames()->getCount());
++        std::fprintf(stderr, "UOP375_STARTUP arm=%s phase=before-init documents=0 frames=0\n", pArm);
++        std::fflush(stderr);
++        if (aArm == "B")
++        {
++            mpStartupOptions = std::make_unique<SvtMiscOptions>();
++            // Observe configured defaults after construction; never select a theme.
++            std::fprintf(stderr, "UOP375_STARTUP arm=B phase=options-held theme=%s automatic=%d\n",
++                         SvtMiscOptions::GetIconTheme().toUtf8().getStr(),
++                         int(mpStartupOptions->IconThemeWasSetAutomatically()));
++            std::fflush(stderr);
++        }
++        CPPUNIT_ASSERT(!mxDesktop->getComponents()->hasElements());
++        CPPUNIT_ASSERT_EQUAL(sal_Int32(0), mxDesktop->getFrames()->getCount());
++        std::fprintf(stderr, "UOP375_STARTUP arm=%s phase=before-load\n", pArm);
++        std::fflush(stderr);
++    }
++
++    void tearDown() override
++    {
++        XmloffDrawTest::tearDown();
++        // Base teardown has disposed the test document before this release.
++        mpStartupOptions.reset();
++        std::fprintf(stderr, "UOP375_STARTUP phase=after-base-teardown options-released\n");
++        std::fflush(stderr);
++    }
++};
++
++CPPUNIT_TEST_FIXTURE(Uop375StartupTest, testUOP375BlankImpressStartup)
++{
++    prepareStartup375();
++    loadFromURL(u"private:factory/simpress"_ustr);
++    std::fprintf(stderr, "UOP375_STARTUP route=blank phase=after-load\n");
++    std::fflush(stderr);
++    uno::Reference<drawing::XDrawPagesSupplier> xSupplier(mxComponent, uno::UNO_QUERY_THROW);
++    CPPUNIT_ASSERT_EQUAL(sal_Int32(1), xSupplier->getDrawPages()->getCount());
++}
++
++CPPUNIT_TEST_FIXTURE(Uop375StartupTest, testUOFExplicitRectangleFillColors)
++{
++    prepareStartup375();
+     // Genuine UOF1 input: two distinct RGB fills must not inherit Accent1.
+     loadFromFile(u"uop-explicit-rectangle-fills.uop");
++    std::fprintf(stderr, "UOP375_STARTUP route=uop phase=after-load\n");
++    std::fflush(stderr);
+     auto checkRectangles = [this]() {
+         uno::Reference<drawing::XDrawPagesSupplier> xSupplier(mxComponent, uno::UNO_QUERY_THROW);
+         CPPUNIT_ASSERT_EQUAL(sal_Int32(3), xSupplier->getDrawPages()->getCount());
+--- a/xmloff/CppunitTest_xmloff_draw.mk
++++ b/xmloff/CppunitTest_xmloff_draw.mk
+@@ -34,6 +34,7 @@
+     tl \
+     avmedia \
+     svxcore \
++    svt \
+     vcl \
+ ))
+ 

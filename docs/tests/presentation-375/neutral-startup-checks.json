@@ -1,0 +1,26 @@
+{
+  "issue": 375,
+  "scope": "Offline test-only source proposal controls",
+  "baseQACommit": "9af1844fe9b3aab10efb5349d0c9ac237f923858",
+  "sourceCommit": "9dea406ab7695df6325b11b0e19fdca8db4b7276",
+  "patchSHA256": "1e7134852548e4f37b1073755882ab1a42ed0f63931acca8c62624364b358a84",
+  "command": "python scripts/qa-presentation-375/neutral_startup_checks.py --source .local/375-source",
+  "observedToolChunk": "d6f120",
+  "exitCode": 0,
+  "testsRun": 6,
+  "testsPassed": 6,
+  "results": {
+    "exact_application_and_unchanged_full_color_save_reopen_oracle": "PASS",
+    "changed_recipe_refused": "PASS",
+    "weakened_color_oracle_refused": "PASS",
+    "changed_misc_options_source_refused": "PASS",
+    "already_changed_importer_refused": "PASS",
+    "exactly_two_arms_and_two_routes_with_fresh_profile_labels": "PASS"
+  },
+  "compiled": false,
+  "runtimeExecuted": false,
+  "runtimeAllocated": false,
+  "workflowOrSourceBuildControllerChanged": false,
+  "productFixAccepted": false,
+  "historicalFailuresChanged": false
+}
