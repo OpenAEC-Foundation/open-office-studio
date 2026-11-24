@@ -22,6 +22,8 @@ with zipfile.ZipFile(files['pptx']['file']) as z:
     size=ET.fromstring(z.read('ppt/presentation.xml')).find('p:sldSz',ns)
     slide=ET.fromstring(z.read('ppt/slides/slide1.xml'))
     shape=next(s for s in slide.findall('.//p:sp',ns) if s.find('p:nvSpPr/p:nvPr/p:ph',ns) is not None and s.find('p:nvSpPr/p:nvPr/p:ph',ns).get('type') in ('title','ctrTitle'))
+    files['pptx']['nativeEditableText']=''.join(n.text or '' for n in shape.findall('.//a:t',ns))
+    assert files['pptx']['nativeEditableText']
     xfrm=shape.find('p:spPr/a:xfrm',ns)
     if xfrm is None:
         rel=next(r for r in ET.fromstring(z.read('ppt/slides/_rels/slide1.xml.rels')) if r.get('Type','').endswith('/slideLayout'))

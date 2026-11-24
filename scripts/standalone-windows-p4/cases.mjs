@@ -30,25 +30,29 @@ export async function officeCase(qa, kind, phase) {
     qa.record({phase,actualNativeFormula:'=B1+1',actualComputedCellLabel:await computed.getAttribute('aria-label')});
   } else {
     await page.locator('[data-testid="pptx-slide-canvas"]').waitFor();
+    // Same supported native Outline route already proven by the P5 Mac owner.
+    // The earlier direct-canvas focus failures remain separate evidence.
+    await page.getByRole('tab',{name:/^(View|Beeld)$/i}).click();
+    await page.getByRole('button',{name:/^(Outline|Overzicht)$/i}).click();
+    const paragraphs=page.locator('.dia-overzicht-inhoud textarea');
+    await paragraphs.first().waitFor();
+    const expected=qa.presentationText+(phase==='initial'?'':' STANDALONE23 PRESENTATION EDIT');
+    const matches=[];
+    for(let i=0;i<await paragraphs.count();i++)if(await paragraphs.nth(i).inputValue()===expected)matches.push(i);
+    assert.equal(matches.length,1,'Unique visible outline paragraph must match independent source-title XML and saved edit');
+    const input=paragraphs.nth(matches[0]);assert(await input.isEditable());
+    await qa.focus(input,'presentation-source-title-outline');
     if (phase === 'initial') {
-      // Actual editable text input is required; no engine applyEdits or DOM state mutation.
-      const canvas=page.locator('[data-testid="pptx-slide-canvas"]');
-      const bounds=await canvas.boundingBox(); assert(bounds);
-      assert(qa.presentationPoint&&qa.presentationPoint.x>0&&qa.presentationPoint.y>0);
-      await canvas.dblclick({position:{x:bounds.width*qa.presentationPoint.x,y:bounds.height*qa.presentationPoint.y}});
-      qa.record({phase,nativePresentationHitPoint:qa.presentationPoint,source:'Unchanged original PPTX title/layout XML'});
-      // The SDK may use a portal/zero-size keyboard sink for its visible canvas
-      // caret. Verify actual keyboard focus, not a particular CSS parent/type.
-      await page.waitForFunction(()=>{
-        const el=document.activeElement;
-        return el?.isConnected&&!el.disabled&&!el.readOnly&&(el.isContentEditable||el instanceof HTMLTextAreaElement||(el instanceof HTMLInputElement&&el.type==='text'));
-      });
-      const input=page.locator(':focus');
-      qa.record({phase,actualSlideEditor:await input.evaluate(el=>({tag:el.tagName,id:el.id,className:el.className,role:el.getAttribute('role'),contentEditable:el.isContentEditable}))});
-      await qa.checkFocus(input,'presentation-text'); await page.keyboard.type('STANDALONE23 PRESENTATION EDIT');
-      await page.keyboard.press('Escape');
-      await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
+      await input.press('Control+End');await page.keyboard.type(' STANDALONE23 PRESENTATION EDIT');
     }
+    assert.equal(await input.inputValue(),qa.presentationText+' STANDALONE23 PRESENTATION EDIT');
+    qa.record({phase,nativePresentationEditingRoute:'Ordinary View -> Outline -> visible source-title paragraph -> native keyboard append -> Normal view',actualParagraphLabel:await input.getAttribute('aria-label'),actualText:await input.inputValue(),canvasInputAcceptance:'Not claimed; original direct-canvas focus failures preserved'});
+    await input.press('Tab');
+    await qa.screenshot(`presentation-${phase}-outline.png`);
+    await page.locator('.dia-overzicht').getByRole('button',{name:/^(Normal view|Normale weergave)$/i}).click();
+    await page.locator('.dia-overzicht').waitFor({state:'hidden'});
+    await page.getByRole('tab',{name:/^(Home|Start)$/i}).click();
+    if(phase==='initial')await page.getByRole('button',{name:/^(New slide|Nieuwe dia)$/i}).click();
     const thumbnails=page.locator('.office-presentatie aside > button:has(canvas)');
     await page.waitForFunction(()=>document.querySelectorAll('.office-presentatie aside > button canvas').length>=2);
     await thumbnails.first().click();
