@@ -1,0 +1,3520 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "00045abcb3187c6ef8b5d44def50d6ef8332c8a6",
+  "basis_hoofdbranch": "33a97fda",
+  "besluit": "Selectie-/positieprojectie Dn bepaalt circa 96 procent van At: 1.491/1.460 ms tegenover 55/50 ms voor I/onStateChange en 0 ms voor jn bij deze klokresolutie. Daarnaast circa 1.875/1.871 ms tussen native callback-einde en hervatting van await W; daarna 0 ms meetbare tussenruimte tot Ft. Geen snelheidsfix of volledige oorzaak bewezen.",
+  "aanpak": "Private meetasset op ee89 met dezelfde begrensde numerieke recorder als publicatie-tijdlijn, nu At.Dn, At.jn, At.I en echt nativeAwait-begin/eind plus nativeResume. NativeAwait gebruikt try/finally direct rond de bestaande await W; geen extra await op deze plaats. De al bestaande meetwrapper rond de provider voegt wel een promise-continuatie toe. Geen warm/cache/uitstelvariant, Wasm/overige assets bytegelijk.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 115.1194406771101,
+    "minimum_vrije_bytes": 276801339392,
+    "start_vrije_bytes": 276911038464,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "00045abcb3187c6ef8b5d44def50d6ef8332c8a6",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatie-details/open-office-studio-publicatie-details",
+    "programma_sha256": "668da68a9b94670ed7321985329c9d281ccc5a357b3804a2e2c4e03491a76875",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties35_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "bundel": {
+    "basis": "ee89/projectie-context",
+    "asset": "assets/editors-bODdYQ4o.js",
+    "voor": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "na": "9523ca6b7d46419f0893046ce5e50272f29c7f22956e48ffbe9404c76fdef390",
+    "overige_assets_exact": true
+  },
+  "contract": {
+    "geslaagd": true,
+    "controles": [
+      "inactief-geen-klok-ontvanger-argumenten-resultaat-identiteit",
+      "oorspronkelijke-fouten-en-weigering-behouden",
+      "gepaarde-spans-geen-inhoud-listeners-en-raf-opgeruimd",
+      "laat-antwoord-niet-in-nieuwe-opname",
+      "harde-datagrens-en-overloop",
+      "echte-At-retour-neveneffecten-fouten-vier-routes",
+      "echte-Ft-retour-neveneffecten-fouten-vier-routes",
+      "echte-At-retour-neveneffecten-fouten-vier-routes",
+      "echte-nativeAwait-retour-fout-en-levensduur-zes-routes",
+      "gepaarde-nativeAwait-callback-hervatting-Ft-volgorde"
+    ],
+    "grens": "Werkelijke At/Ft-arrowfuncties uit vastgepinde asset met gecontroleerde afhankelijkheden; geen volledige Reactmontage of bewijs van nul meetoverhead."
+  },
+  "native_analyse": {
+    "een": {
+      "rows": 4624,
+      "venster": {
+        "begin": 22203,
+        "eind": 31132,
+        "duur_ms": 8929,
+        "wall_begin_tot_frame_ms": 8954
+      },
+      "fasen": {
+        "tekst": {
+          "aantal": 62,
+          "som_ms": 4181.000000000004,
+          "mediaan_ms": 56.0,
+          "maximum_ms": 495
+        },
+        "nativeAwait": {
+          "aantal": 62,
+          "som_ms": 6057.000000000033,
+          "mediaan_ms": 85.49999999999636,
+          "maximum_ms": 526
+        },
+        "At.Dn": {
+          "aantal": 64,
+          "som_ms": 1490.999999999971,
+          "mediaan_ms": 23.0,
+          "maximum_ms": 42
+        },
+        "At.jn": {
+          "aantal": 64,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0.0
+        },
+        "At.I": {
+          "aantal": 64,
+          "som_ms": 55.0,
+          "mediaan_ms": 1.0,
+          "maximum_ms": 1.999999999996362
+        },
+        "At": {
+          "aantal": 64,
+          "som_ms": 1546.999999999971,
+          "mediaan_ms": 24.0,
+          "maximum_ms": 44
+        },
+        "Ft": {
+          "aantal": 62,
+          "som_ms": 1546.999999999971,
+          "mediaan_ms": 24.0,
+          "maximum_ms": 44
+        },
+        "layoutInput": {
+          "aantal": 63,
+          "som_ms": 6.999999999992724,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "fontDecode": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "fontConfig": {
+          "aantal": 1,
+          "som_ms": 1,
+          "mediaan_ms": 1,
+          "maximum_ms": 1
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        }
+      },
+      "callback_tot_await_hervatting": {
+        "aantal": 62,
+        "som_ms": 1875.000000000029,
+        "mediaan_ms": 29.0,
+        "maximum_ms": 56.00000000000364
+      },
+      "resume_tot_Ft": {
+        "aantal": 62,
+        "som_ms": 0.0,
+        "mediaan_ms": 0.0,
+        "maximum_ms": 0
+      },
+      "causale_vensters": [
+        {
+          "await_id": 1,
+          "callback_id": 2,
+          "Ft_id": 3,
+          "callback_eind": 22750,
+          "await_eind": 22780,
+          "resume": 22780,
+          "Ft_begin": 22780,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 8,
+          "callback_id": 9,
+          "Ft_id": 11,
+          "callback_eind": 22898,
+          "await_eind": 22931,
+          "resume": 22931,
+          "Ft_begin": 22931,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 16,
+          "callback_id": 17,
+          "Ft_id": 19,
+          "callback_eind": 23121.000000000004,
+          "await_eind": 23159,
+          "resume": 23159,
+          "Ft_begin": 23159,
+          "callback_tot_await_ms": 37.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 24,
+          "callback_id": 25,
+          "Ft_id": 27,
+          "callback_eind": 23283,
+          "await_eind": 23339.000000000004,
+          "resume": 23339.000000000004,
+          "Ft_begin": 23339.000000000004,
+          "callback_tot_await_ms": 56.00000000000364,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 32,
+          "callback_id": 33,
+          "Ft_id": 35,
+          "callback_eind": 23444,
+          "await_eind": 23479,
+          "resume": 23479,
+          "Ft_begin": 23479,
+          "callback_tot_await_ms": 35,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 40,
+          "callback_id": 41,
+          "Ft_id": 43,
+          "callback_eind": 23589.000000000004,
+          "await_eind": 23625,
+          "resume": 23625,
+          "Ft_begin": 23625,
+          "callback_tot_await_ms": 35.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 48,
+          "callback_id": 49,
+          "Ft_id": 51,
+          "callback_eind": 23719,
+          "await_eind": 23759,
+          "resume": 23759,
+          "Ft_begin": 23759,
+          "callback_tot_await_ms": 40,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 56,
+          "callback_id": 57,
+          "Ft_id": 59,
+          "callback_eind": 23850,
+          "await_eind": 23884,
+          "resume": 23884,
+          "Ft_begin": 23884,
+          "callback_tot_await_ms": 34,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 64,
+          "callback_id": 65,
+          "Ft_id": 67,
+          "callback_eind": 23986,
+          "await_eind": 24021,
+          "resume": 24021,
+          "Ft_begin": 24021,
+          "callback_tot_await_ms": 35,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 72,
+          "callback_id": 73,
+          "Ft_id": 75,
+          "callback_eind": 24119,
+          "await_eind": 24149,
+          "resume": 24149,
+          "Ft_begin": 24149,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 80,
+          "callback_id": 81,
+          "Ft_id": 83,
+          "callback_eind": 24232,
+          "await_eind": 24262,
+          "resume": 24262,
+          "Ft_begin": 24262,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 88,
+          "callback_id": 89,
+          "Ft_id": 91,
+          "callback_eind": 24350,
+          "await_eind": 24380,
+          "resume": 24380,
+          "Ft_begin": 24380,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 96,
+          "callback_id": 97,
+          "Ft_id": 99,
+          "callback_eind": 24463,
+          "await_eind": 24491,
+          "resume": 24491,
+          "Ft_begin": 24491,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 104,
+          "callback_id": 105,
+          "Ft_id": 107,
+          "callback_eind": 24574,
+          "await_eind": 24603,
+          "resume": 24603,
+          "Ft_begin": 24603,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 112,
+          "callback_id": 113,
+          "Ft_id": 115,
+          "callback_eind": 24679.000000000004,
+          "await_eind": 24711.000000000004,
+          "resume": 24711.000000000004,
+          "Ft_begin": 24711.000000000004,
+          "callback_tot_await_ms": 32.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 120,
+          "callback_id": 121,
+          "Ft_id": 123,
+          "callback_eind": 24804.000000000004,
+          "await_eind": 24833.000000000004,
+          "resume": 24833.000000000004,
+          "Ft_begin": 24833.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 128,
+          "callback_id": 129,
+          "Ft_id": 131,
+          "callback_eind": 24919,
+          "await_eind": 24947,
+          "resume": 24947,
+          "Ft_begin": 24947,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 136,
+          "callback_id": 137,
+          "Ft_id": 139,
+          "callback_eind": 25031,
+          "await_eind": 25061,
+          "resume": 25061,
+          "Ft_begin": 25061,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 144,
+          "callback_id": 145,
+          "Ft_id": 147,
+          "callback_eind": 25144.000000000004,
+          "await_eind": 25178,
+          "resume": 25178,
+          "Ft_begin": 25178,
+          "callback_tot_await_ms": 33.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 152,
+          "callback_id": 153,
+          "Ft_id": 155,
+          "callback_eind": 25263,
+          "await_eind": 25294,
+          "resume": 25294,
+          "Ft_begin": 25294,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 160,
+          "callback_id": 161,
+          "Ft_id": 163,
+          "callback_eind": 25376,
+          "await_eind": 25405,
+          "resume": 25405,
+          "Ft_begin": 25405,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 168,
+          "callback_id": 169,
+          "Ft_id": 171,
+          "callback_eind": 25483,
+          "await_eind": 25512,
+          "resume": 25512,
+          "Ft_begin": 25512,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 176,
+          "callback_id": 177,
+          "Ft_id": 179,
+          "callback_eind": 25590,
+          "await_eind": 25618.000000000004,
+          "resume": 25618.000000000004,
+          "Ft_begin": 25618.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 184,
+          "callback_id": 185,
+          "Ft_id": 187,
+          "callback_eind": 25697,
+          "await_eind": 25727,
+          "resume": 25727,
+          "Ft_begin": 25727,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 192,
+          "callback_id": 193,
+          "Ft_id": 195,
+          "callback_eind": 25805,
+          "await_eind": 25833.000000000004,
+          "resume": 25833.000000000004,
+          "Ft_begin": 25833.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 200,
+          "callback_id": 201,
+          "Ft_id": 203,
+          "callback_eind": 25913,
+          "await_eind": 25941,
+          "resume": 25941,
+          "Ft_begin": 25941,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 208,
+          "callback_id": 209,
+          "Ft_id": 211,
+          "callback_eind": 26020,
+          "await_eind": 26049,
+          "resume": 26049,
+          "Ft_begin": 26049,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 216,
+          "callback_id": 217,
+          "Ft_id": 219,
+          "callback_eind": 26132,
+          "await_eind": 26160,
+          "resume": 26160,
+          "Ft_begin": 26160,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 224,
+          "callback_id": 225,
+          "Ft_id": 227,
+          "callback_eind": 26242,
+          "await_eind": 26275.000000000004,
+          "resume": 26275.000000000004,
+          "Ft_begin": 26275.000000000004,
+          "callback_tot_await_ms": 33.00000000000364,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 232,
+          "callback_id": 233,
+          "Ft_id": 235,
+          "callback_eind": 26364,
+          "await_eind": 26394.000000000004,
+          "resume": 26394.000000000004,
+          "Ft_begin": 26394.000000000004,
+          "callback_tot_await_ms": 30.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 240,
+          "callback_id": 241,
+          "Ft_id": 243,
+          "callback_eind": 26473,
+          "await_eind": 26501,
+          "resume": 26501,
+          "Ft_begin": 26501,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 248,
+          "callback_id": 249,
+          "Ft_id": 251,
+          "callback_eind": 26583.000000000004,
+          "await_eind": 26611,
+          "resume": 26611,
+          "Ft_begin": 26611,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 256,
+          "callback_id": 257,
+          "Ft_id": 259,
+          "callback_eind": 26689,
+          "await_eind": 26717.000000000004,
+          "resume": 26717.000000000004,
+          "Ft_begin": 26717.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 264,
+          "callback_id": 265,
+          "Ft_id": 267,
+          "callback_eind": 26796,
+          "await_eind": 26824,
+          "resume": 26824,
+          "Ft_begin": 26824,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 272,
+          "callback_id": 273,
+          "Ft_id": 275,
+          "callback_eind": 26905,
+          "await_eind": 26936,
+          "resume": 26936,
+          "Ft_begin": 26936,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 280,
+          "callback_id": 281,
+          "Ft_id": 283,
+          "callback_eind": 27015,
+          "await_eind": 27043,
+          "resume": 27043,
+          "Ft_begin": 27043,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 288,
+          "callback_id": 289,
+          "Ft_id": 291,
+          "callback_eind": 27122,
+          "await_eind": 27151,
+          "resume": 27151,
+          "Ft_begin": 27151,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 296,
+          "callback_id": 297,
+          "Ft_id": 299,
+          "callback_eind": 27229,
+          "await_eind": 27258,
+          "resume": 27258,
+          "Ft_begin": 27258,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 304,
+          "callback_id": 305,
+          "Ft_id": 307,
+          "callback_eind": 27337,
+          "await_eind": 27365.000000000004,
+          "resume": 27365.000000000004,
+          "Ft_begin": 27365.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 312,
+          "callback_id": 313,
+          "Ft_id": 315,
+          "callback_eind": 27444,
+          "await_eind": 27473,
+          "resume": 27473,
+          "Ft_begin": 27473,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 320,
+          "callback_id": 321,
+          "Ft_id": 323,
+          "callback_eind": 27553,
+          "await_eind": 27580.000000000004,
+          "resume": 27580.000000000004,
+          "Ft_begin": 27580.000000000004,
+          "callback_tot_await_ms": 27.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 328,
+          "callback_id": 329,
+          "Ft_id": 331,
+          "callback_eind": 27657,
+          "await_eind": 27685.000000000004,
+          "resume": 27685.000000000004,
+          "Ft_begin": 27685.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 336,
+          "callback_id": 337,
+          "Ft_id": 339,
+          "callback_eind": 27767,
+          "await_eind": 27795,
+          "resume": 27795,
+          "Ft_begin": 27795,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 344,
+          "callback_id": 345,
+          "Ft_id": 347,
+          "callback_eind": 27872,
+          "await_eind": 27900.000000000004,
+          "resume": 27900.000000000004,
+          "Ft_begin": 27900.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 352,
+          "callback_id": 353,
+          "Ft_id": 355,
+          "callback_eind": 27978,
+          "await_eind": 28006,
+          "resume": 28006,
+          "Ft_begin": 28006,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 360,
+          "callback_id": 361,
+          "Ft_id": 363,
+          "callback_eind": 28090,
+          "await_eind": 28118.000000000004,
+          "resume": 28118.000000000004,
+          "Ft_begin": 28118.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 368,
+          "callback_id": 369,
+          "Ft_id": 371,
+          "callback_eind": 28195,
+          "await_eind": 28223,
+          "resume": 28223,
+          "Ft_begin": 28223,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 376,
+          "callback_id": 377,
+          "Ft_id": 379,
+          "callback_eind": 28301.000000000004,
+          "await_eind": 28329,
+          "resume": 28329,
+          "Ft_begin": 28329,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 384,
+          "callback_id": 385,
+          "Ft_id": 387,
+          "callback_eind": 28425,
+          "await_eind": 28457,
+          "resume": 28457,
+          "Ft_begin": 28457,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 392,
+          "callback_id": 393,
+          "Ft_id": 395,
+          "callback_eind": 28541,
+          "await_eind": 28574,
+          "resume": 28574,
+          "Ft_begin": 28574,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 400,
+          "callback_id": 401,
+          "Ft_id": 403,
+          "callback_eind": 28662,
+          "await_eind": 28690,
+          "resume": 28690,
+          "Ft_begin": 28690,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 408,
+          "callback_id": 409,
+          "Ft_id": 411,
+          "callback_eind": 28768,
+          "await_eind": 28799,
+          "resume": 28799,
+          "Ft_begin": 28799,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 416,
+          "callback_id": 417,
+          "Ft_id": 419,
+          "callback_eind": 28878,
+          "await_eind": 28906.000000000004,
+          "resume": 28906.000000000004,
+          "Ft_begin": 28906.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 424,
+          "callback_id": 425,
+          "Ft_id": 427,
+          "callback_eind": 28982,
+          "await_eind": 29010,
+          "resume": 29010,
+          "Ft_begin": 29010,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 432,
+          "callback_id": 433,
+          "Ft_id": 435,
+          "callback_eind": 29090,
+          "await_eind": 29119,
+          "resume": 29119,
+          "Ft_begin": 29119,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 440,
+          "callback_id": 441,
+          "Ft_id": 443,
+          "callback_eind": 29198,
+          "await_eind": 29226,
+          "resume": 29226,
+          "Ft_begin": 29226,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 448,
+          "callback_id": 449,
+          "Ft_id": 451,
+          "callback_eind": 29306,
+          "await_eind": 29336.000000000004,
+          "resume": 29336.000000000004,
+          "Ft_begin": 29336.000000000004,
+          "callback_tot_await_ms": 30.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 456,
+          "callback_id": 457,
+          "Ft_id": 459,
+          "callback_eind": 29417,
+          "await_eind": 29445,
+          "resume": 29445,
+          "Ft_begin": 29445,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 464,
+          "callback_id": 465,
+          "Ft_id": 467,
+          "callback_eind": 29523,
+          "await_eind": 29551.000000000004,
+          "resume": 29551.000000000004,
+          "Ft_begin": 29551.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 472,
+          "callback_id": 473,
+          "Ft_id": 475,
+          "callback_eind": 29631,
+          "await_eind": 29659,
+          "resume": 29659,
+          "Ft_begin": 29659,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 480,
+          "callback_id": 481,
+          "Ft_id": 483,
+          "callback_eind": 29743.000000000004,
+          "await_eind": 29770,
+          "resume": 29770,
+          "Ft_begin": 29770,
+          "callback_tot_await_ms": 26.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 488,
+          "callback_id": 489,
+          "Ft_id": 491,
+          "callback_eind": 29838,
+          "await_eind": 29866,
+          "resume": 29866,
+          "Ft_begin": 29866,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        }
+      ],
+      "At_delen": [
+        {
+          "At_id": 4,
+          "duur_ms": 28,
+          "delen": {
+            "At.Dn": 26.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 1.999999999996362
+          },
+          "deel_ids": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "At_id": 12,
+          "duur_ms": 44,
+          "delen": {
+            "At.Dn": 42,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "At_id": 20,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "At_id": 28,
+          "duur_ms": 27.999999999996362,
+          "delen": {
+            "At.Dn": 26.0,
+            "At.jn": 0.0,
+            "At.I": 1.999999999996362
+          },
+          "deel_ids": [
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "At_id": 36,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            37,
+            38,
+            39
+          ]
+        },
+        {
+          "At_id": 44,
+          "duur_ms": 28.000000000003638,
+          "delen": {
+            "At.Dn": 27,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            45,
+            46,
+            47
+          ]
+        },
+        {
+          "At_id": 52,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            53,
+            54,
+            55
+          ]
+        },
+        {
+          "At_id": 60,
+          "duur_ms": 28,
+          "delen": {
+            "At.Dn": 27,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            61,
+            62,
+            63
+          ]
+        },
+        {
+          "At_id": 68,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            69,
+            70,
+            71
+          ]
+        },
+        {
+          "At_id": 76,
+          "duur_ms": 27.000000000003638,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            77,
+            78,
+            79
+          ]
+        },
+        {
+          "At_id": 84,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            85,
+            86,
+            87
+          ]
+        },
+        {
+          "At_id": 92,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            93,
+            94,
+            95
+          ]
+        },
+        {
+          "At_id": 100,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            101,
+            102,
+            103
+          ]
+        },
+        {
+          "At_id": 108,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            109,
+            110,
+            111
+          ]
+        },
+        {
+          "At_id": 116,
+          "duur_ms": 26.999999999996362,
+          "delen": {
+            "At.Dn": 26.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            117,
+            118,
+            119
+          ]
+        },
+        {
+          "At_id": 124,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            125,
+            126,
+            127
+          ]
+        },
+        {
+          "At_id": 132,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            133,
+            134,
+            135
+          ]
+        },
+        {
+          "At_id": 140,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            141,
+            142,
+            143
+          ]
+        },
+        {
+          "At_id": 148,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            149,
+            150,
+            151
+          ]
+        },
+        {
+          "At_id": 156,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            157,
+            158,
+            159
+          ]
+        },
+        {
+          "At_id": 164,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            165,
+            166,
+            167
+          ]
+        },
+        {
+          "At_id": 172,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            173,
+            174,
+            175
+          ]
+        },
+        {
+          "At_id": 180,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            181,
+            182,
+            183
+          ]
+        },
+        {
+          "At_id": 188,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            189,
+            190,
+            191
+          ]
+        },
+        {
+          "At_id": 196,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            197,
+            198,
+            199
+          ]
+        },
+        {
+          "At_id": 204,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            205,
+            206,
+            207
+          ]
+        },
+        {
+          "At_id": 212,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            213,
+            214,
+            215
+          ]
+        },
+        {
+          "At_id": 220,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            221,
+            222,
+            223
+          ]
+        },
+        {
+          "At_id": 228,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            229,
+            230,
+            231
+          ]
+        },
+        {
+          "At_id": 236,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            237,
+            238,
+            239
+          ]
+        },
+        {
+          "At_id": 244,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            245,
+            246,
+            247
+          ]
+        },
+        {
+          "At_id": 252,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            253,
+            254,
+            255
+          ]
+        },
+        {
+          "At_id": 260,
+          "duur_ms": 23.0,
+          "delen": {
+            "At.Dn": 23.0,
+            "At.jn": 0.0,
+            "At.I": 0.0
+          },
+          "deel_ids": [
+            261,
+            262,
+            263
+          ]
+        },
+        {
+          "At_id": 268,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            269,
+            270,
+            271
+          ]
+        },
+        {
+          "At_id": 276,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            277,
+            278,
+            279
+          ]
+        },
+        {
+          "At_id": 284,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            285,
+            286,
+            287
+          ]
+        },
+        {
+          "At_id": 292,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            293,
+            294,
+            295
+          ]
+        },
+        {
+          "At_id": 300,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            301,
+            302,
+            303
+          ]
+        },
+        {
+          "At_id": 308,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            309,
+            310,
+            311
+          ]
+        },
+        {
+          "At_id": 316,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            317,
+            318,
+            319
+          ]
+        },
+        {
+          "At_id": 324,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 21.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            325,
+            326,
+            327
+          ]
+        },
+        {
+          "At_id": 332,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 24.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            333,
+            334,
+            335
+          ]
+        },
+        {
+          "At_id": 340,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            341,
+            342,
+            343
+          ]
+        },
+        {
+          "At_id": 348,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            349,
+            350,
+            351
+          ]
+        },
+        {
+          "At_id": 356,
+          "duur_ms": 25.000000000003638,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            357,
+            358,
+            359
+          ]
+        },
+        {
+          "At_id": 364,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 21.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            365,
+            366,
+            367
+          ]
+        },
+        {
+          "At_id": 372,
+          "duur_ms": 23.000000000003638,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            373,
+            374,
+            375
+          ]
+        },
+        {
+          "At_id": 380,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            381,
+            382,
+            383
+          ]
+        },
+        {
+          "At_id": 388,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            389,
+            390,
+            391
+          ]
+        },
+        {
+          "At_id": 396,
+          "duur_ms": 27,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            397,
+            398,
+            399
+          ]
+        },
+        {
+          "At_id": 404,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            405,
+            406,
+            407
+          ]
+        },
+        {
+          "At_id": 412,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            413,
+            414,
+            415
+          ]
+        },
+        {
+          "At_id": 420,
+          "duur_ms": 23.0,
+          "delen": {
+            "At.Dn": 21.999999999996362,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            421,
+            422,
+            423
+          ]
+        },
+        {
+          "At_id": 428,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            429,
+            430,
+            431
+          ]
+        },
+        {
+          "At_id": 436,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            437,
+            438,
+            439
+          ]
+        },
+        {
+          "At_id": 444,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            445,
+            446,
+            447
+          ]
+        },
+        {
+          "At_id": 452,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            453,
+            454,
+            455
+          ]
+        },
+        {
+          "At_id": 460,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            461,
+            462,
+            463
+          ]
+        },
+        {
+          "At_id": 468,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            469,
+            470,
+            471
+          ]
+        },
+        {
+          "At_id": 476,
+          "duur_ms": 23.000000000003638,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.0
+          },
+          "deel_ids": [
+            477,
+            478,
+            479
+          ]
+        },
+        {
+          "At_id": 484,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            485,
+            486,
+            487
+          ]
+        },
+        {
+          "At_id": 492,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            493,
+            494,
+            495
+          ]
+        },
+        {
+          "At_id": 496,
+          "duur_ms": 1,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            497,
+            498,
+            499
+          ]
+        },
+        {
+          "At_id": 505,
+          "duur_ms": 1,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            506,
+            507,
+            508
+          ]
+        }
+      ],
+      "grenzen": "Echte nativeAwait-spans bevatten elk één tekstcallback; nativeResume en Ft op sessie/tijdvolgorde. Eén main-klok, geen exclusieve CPU-meting. At-delen en callbacks genest, niet optellen. Meetoverhead niet afgetrokken; andere microtaken/React/GC niet oorzakelijk toegewezen. Twee vaste rijke Linux-ronden; geen prestatiewinst of fysieke paintmeting."
+    },
+    "twee": {
+      "rows": 4595,
+      "venster": {
+        "begin": 21774,
+        "eind": 31009,
+        "duur_ms": 9235,
+        "wall_begin_tot_frame_ms": 8917
+      },
+      "fasen": {
+        "tekst": {
+          "aantal": 61,
+          "som_ms": 4166.000000000004,
+          "mediaan_ms": 57,
+          "maximum_ms": 518
+        },
+        "nativeAwait": {
+          "aantal": 61,
+          "som_ms": 6037.0,
+          "mediaan_ms": 86,
+          "maximum_ms": 549.0000000000036
+        },
+        "At.Dn": {
+          "aantal": 63,
+          "som_ms": 1459.9999999999964,
+          "mediaan_ms": 23,
+          "maximum_ms": 37
+        },
+        "At.jn": {
+          "aantal": 63,
+          "som_ms": 0.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "At.I": {
+          "aantal": 63,
+          "som_ms": 50.000000000007276,
+          "mediaan_ms": 1,
+          "maximum_ms": 2
+        },
+        "At": {
+          "aantal": 63,
+          "som_ms": 1511.0000000000036,
+          "mediaan_ms": 24,
+          "maximum_ms": 38
+        },
+        "Ft": {
+          "aantal": 61,
+          "som_ms": 1514.0000000000036,
+          "mediaan_ms": 24,
+          "maximum_ms": 38
+        },
+        "layoutInput": {
+          "aantal": 62,
+          "som_ms": 5.999999999996362,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1
+        },
+        "fontDecode": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "fontConfig": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        }
+      },
+      "callback_tot_await_hervatting": {
+        "aantal": 61,
+        "som_ms": 1870.9999999999964,
+        "mediaan_ms": 29.0,
+        "maximum_ms": 49
+      },
+      "resume_tot_Ft": {
+        "aantal": 61,
+        "som_ms": 0.0,
+        "mediaan_ms": 0,
+        "maximum_ms": 0.0
+      },
+      "causale_vensters": [
+        {
+          "await_id": 1,
+          "callback_id": 2,
+          "Ft_id": 3,
+          "callback_eind": 22706,
+          "await_eind": 22737.000000000004,
+          "resume": 22737.000000000004,
+          "Ft_begin": 22737.000000000004,
+          "callback_tot_await_ms": 31.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 8,
+          "callback_id": 9,
+          "Ft_id": 11,
+          "callback_eind": 22939,
+          "await_eind": 22982,
+          "resume": 22982,
+          "Ft_begin": 22982,
+          "callback_tot_await_ms": 43,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 16,
+          "callback_id": 17,
+          "Ft_id": 19,
+          "callback_eind": 23136,
+          "await_eind": 23174,
+          "resume": 23174,
+          "Ft_begin": 23174,
+          "callback_tot_await_ms": 38,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 24,
+          "callback_id": 25,
+          "Ft_id": 27,
+          "callback_eind": 23275.000000000004,
+          "await_eind": 23319,
+          "resume": 23319,
+          "Ft_begin": 23319,
+          "callback_tot_await_ms": 43.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 32,
+          "callback_id": 33,
+          "Ft_id": 35,
+          "callback_eind": 23435,
+          "await_eind": 23484,
+          "resume": 23484,
+          "Ft_begin": 23484,
+          "callback_tot_await_ms": 49,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 40,
+          "callback_id": 41,
+          "Ft_id": 43,
+          "callback_eind": 23582,
+          "await_eind": 23620,
+          "resume": 23620,
+          "Ft_begin": 23620,
+          "callback_tot_await_ms": 38,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 48,
+          "callback_id": 49,
+          "Ft_id": 51,
+          "callback_eind": 23719,
+          "await_eind": 23756,
+          "resume": 23756,
+          "Ft_begin": 23756,
+          "callback_tot_await_ms": 37,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 56,
+          "callback_id": 57,
+          "Ft_id": 59,
+          "callback_eind": 23842,
+          "await_eind": 23886,
+          "resume": 23886,
+          "Ft_begin": 23886,
+          "callback_tot_await_ms": 44,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 64,
+          "callback_id": 65,
+          "Ft_id": 67,
+          "callback_eind": 23981,
+          "await_eind": 24012,
+          "resume": 24012,
+          "Ft_begin": 24012,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 72,
+          "callback_id": 73,
+          "Ft_id": 75,
+          "callback_eind": 24101,
+          "await_eind": 24130,
+          "resume": 24130,
+          "Ft_begin": 24130,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 80,
+          "callback_id": 81,
+          "Ft_id": 83,
+          "callback_eind": 24211.000000000004,
+          "await_eind": 24240.000000000004,
+          "resume": 24240.000000000004,
+          "Ft_begin": 24240.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 88,
+          "callback_id": 89,
+          "Ft_id": 91,
+          "callback_eind": 24320,
+          "await_eind": 24349,
+          "resume": 24349,
+          "Ft_begin": 24349,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 96,
+          "callback_id": 97,
+          "Ft_id": 99,
+          "callback_eind": 24428,
+          "await_eind": 24457,
+          "resume": 24457,
+          "Ft_begin": 24457,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 104,
+          "callback_id": 105,
+          "Ft_id": 107,
+          "callback_eind": 24532,
+          "await_eind": 24561,
+          "resume": 24561,
+          "Ft_begin": 24561,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 112,
+          "callback_id": 113,
+          "Ft_id": 115,
+          "callback_eind": 24643,
+          "await_eind": 24672,
+          "resume": 24672,
+          "Ft_begin": 24672,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 120,
+          "callback_id": 121,
+          "Ft_id": 123,
+          "callback_eind": 24758,
+          "await_eind": 24786,
+          "resume": 24786,
+          "Ft_begin": 24786,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 128,
+          "callback_id": 129,
+          "Ft_id": 131,
+          "callback_eind": 24865.000000000004,
+          "await_eind": 24894.000000000004,
+          "resume": 24894.000000000004,
+          "Ft_begin": 24894.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 136,
+          "callback_id": 137,
+          "Ft_id": 139,
+          "callback_eind": 24975,
+          "await_eind": 25003,
+          "resume": 25003,
+          "Ft_begin": 25003,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 144,
+          "callback_id": 145,
+          "Ft_id": 147,
+          "callback_eind": 25084,
+          "await_eind": 25113,
+          "resume": 25113,
+          "Ft_begin": 25113,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 152,
+          "callback_id": 153,
+          "Ft_id": 155,
+          "callback_eind": 25193,
+          "await_eind": 25222,
+          "resume": 25222,
+          "Ft_begin": 25222,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 160,
+          "callback_id": 161,
+          "Ft_id": 163,
+          "callback_eind": 25303,
+          "await_eind": 25331,
+          "resume": 25331,
+          "Ft_begin": 25331,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 168,
+          "callback_id": 169,
+          "Ft_id": 171,
+          "callback_eind": 25413,
+          "await_eind": 25445,
+          "resume": 25445,
+          "Ft_begin": 25445,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 176,
+          "callback_id": 177,
+          "Ft_id": 179,
+          "callback_eind": 25525.000000000004,
+          "await_eind": 25554.000000000004,
+          "resume": 25554.000000000004,
+          "Ft_begin": 25554.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 184,
+          "callback_id": 185,
+          "Ft_id": 187,
+          "callback_eind": 25642,
+          "await_eind": 25671,
+          "resume": 25671,
+          "Ft_begin": 25671,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 192,
+          "callback_id": 193,
+          "Ft_id": 195,
+          "callback_eind": 25748,
+          "await_eind": 25776,
+          "resume": 25776,
+          "Ft_begin": 25776,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 200,
+          "callback_id": 201,
+          "Ft_id": 203,
+          "callback_eind": 25857,
+          "await_eind": 25885,
+          "resume": 25885,
+          "Ft_begin": 25885,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 208,
+          "callback_id": 209,
+          "Ft_id": 211,
+          "callback_eind": 25962,
+          "await_eind": 25991,
+          "resume": 25991,
+          "Ft_begin": 25991,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 216,
+          "callback_id": 217,
+          "Ft_id": 219,
+          "callback_eind": 26076,
+          "await_eind": 26113,
+          "resume": 26113,
+          "Ft_begin": 26113,
+          "callback_tot_await_ms": 37,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 224,
+          "callback_id": 225,
+          "Ft_id": 227,
+          "callback_eind": 26192,
+          "await_eind": 26224,
+          "resume": 26224,
+          "Ft_begin": 26224,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 232,
+          "callback_id": 233,
+          "Ft_id": 235,
+          "callback_eind": 26310.000000000004,
+          "await_eind": 26340,
+          "resume": 26340,
+          "Ft_begin": 26340,
+          "callback_tot_await_ms": 29.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 240,
+          "callback_id": 241,
+          "Ft_id": 243,
+          "callback_eind": 26418,
+          "await_eind": 26446,
+          "resume": 26446,
+          "Ft_begin": 26446,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 248,
+          "callback_id": 249,
+          "Ft_id": 251,
+          "callback_eind": 26524,
+          "await_eind": 26552,
+          "resume": 26552,
+          "Ft_begin": 26552,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 256,
+          "callback_id": 257,
+          "Ft_id": 259,
+          "callback_eind": 26632,
+          "await_eind": 26661,
+          "resume": 26661,
+          "Ft_begin": 26661,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 264,
+          "callback_id": 265,
+          "Ft_id": 267,
+          "callback_eind": 26744,
+          "await_eind": 26772.000000000004,
+          "resume": 26772.000000000004,
+          "Ft_begin": 26772.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 272,
+          "callback_id": 273,
+          "Ft_id": 275,
+          "callback_eind": 26854,
+          "await_eind": 26882,
+          "resume": 26882,
+          "Ft_begin": 26882,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 280,
+          "callback_id": 281,
+          "Ft_id": 283,
+          "callback_eind": 26963,
+          "await_eind": 26993.000000000004,
+          "resume": 26993.000000000004,
+          "Ft_begin": 26993.000000000004,
+          "callback_tot_await_ms": 30.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 288,
+          "callback_id": 289,
+          "Ft_id": 291,
+          "callback_eind": 27074,
+          "await_eind": 27103,
+          "resume": 27103,
+          "Ft_begin": 27103,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 296,
+          "callback_id": 297,
+          "Ft_id": 299,
+          "callback_eind": 27188,
+          "await_eind": 27225,
+          "resume": 27225,
+          "Ft_begin": 27225,
+          "callback_tot_await_ms": 37,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 304,
+          "callback_id": 305,
+          "Ft_id": 307,
+          "callback_eind": 27303,
+          "await_eind": 27331,
+          "resume": 27331,
+          "Ft_begin": 27331,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 312,
+          "callback_id": 313,
+          "Ft_id": 315,
+          "callback_eind": 27413,
+          "await_eind": 27441,
+          "resume": 27441,
+          "Ft_begin": 27441,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 320,
+          "callback_id": 321,
+          "Ft_id": 323,
+          "callback_eind": 27515,
+          "await_eind": 27542,
+          "resume": 27542,
+          "Ft_begin": 27542,
+          "callback_tot_await_ms": 27,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 328,
+          "callback_id": 329,
+          "Ft_id": 331,
+          "callback_eind": 27618.000000000004,
+          "await_eind": 27646,
+          "resume": 27646,
+          "Ft_begin": 27646,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 336,
+          "callback_id": 337,
+          "Ft_id": 339,
+          "callback_eind": 27723,
+          "await_eind": 27750,
+          "resume": 27750,
+          "Ft_begin": 27750,
+          "callback_tot_await_ms": 27,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 344,
+          "callback_id": 345,
+          "Ft_id": 347,
+          "callback_eind": 27827,
+          "await_eind": 27855,
+          "resume": 27855,
+          "Ft_begin": 27855,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 352,
+          "callback_id": 353,
+          "Ft_id": 355,
+          "callback_eind": 27937,
+          "await_eind": 27966,
+          "resume": 27966,
+          "Ft_begin": 27966,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 360,
+          "callback_id": 361,
+          "Ft_id": 363,
+          "callback_eind": 28046,
+          "await_eind": 28074,
+          "resume": 28074,
+          "Ft_begin": 28074,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 368,
+          "callback_id": 369,
+          "Ft_id": 371,
+          "callback_eind": 28153.000000000004,
+          "await_eind": 28181,
+          "resume": 28181,
+          "Ft_begin": 28181,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 376,
+          "callback_id": 377,
+          "Ft_id": 379,
+          "callback_eind": 28272.000000000004,
+          "await_eind": 28306,
+          "resume": 28306,
+          "Ft_begin": 28306,
+          "callback_tot_await_ms": 33.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 384,
+          "callback_id": 385,
+          "Ft_id": 387,
+          "callback_eind": 28408,
+          "await_eind": 28440,
+          "resume": 28440,
+          "Ft_begin": 28440,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 392,
+          "callback_id": 393,
+          "Ft_id": 395,
+          "callback_eind": 28518,
+          "await_eind": 28546,
+          "resume": 28546,
+          "Ft_begin": 28546,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 400,
+          "callback_id": 401,
+          "Ft_id": 403,
+          "callback_eind": 28628,
+          "await_eind": 28658,
+          "resume": 28658,
+          "Ft_begin": 28658,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 408,
+          "callback_id": 409,
+          "Ft_id": 411,
+          "callback_eind": 28741,
+          "await_eind": 28773,
+          "resume": 28773,
+          "Ft_begin": 28773,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 416,
+          "callback_id": 417,
+          "Ft_id": 419,
+          "callback_eind": 28853,
+          "await_eind": 28881,
+          "resume": 28881,
+          "Ft_begin": 28881,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 424,
+          "callback_id": 425,
+          "Ft_id": 427,
+          "callback_eind": 28960,
+          "await_eind": 28989,
+          "resume": 28989,
+          "Ft_begin": 28989,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 432,
+          "callback_id": 433,
+          "Ft_id": 435,
+          "callback_eind": 29069,
+          "await_eind": 29097,
+          "resume": 29097,
+          "Ft_begin": 29097,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 440,
+          "callback_id": 441,
+          "Ft_id": 443,
+          "callback_eind": 29176.000000000004,
+          "await_eind": 29205.000000000004,
+          "resume": 29205.000000000004,
+          "Ft_begin": 29205.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 448,
+          "callback_id": 449,
+          "Ft_id": 451,
+          "callback_eind": 29293,
+          "await_eind": 29321,
+          "resume": 29321,
+          "Ft_begin": 29321,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 456,
+          "callback_id": 457,
+          "Ft_id": 459,
+          "callback_eind": 29405,
+          "await_eind": 29432.000000000004,
+          "resume": 29432.000000000004,
+          "Ft_begin": 29432.000000000004,
+          "callback_tot_await_ms": 27.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 464,
+          "callback_id": 465,
+          "Ft_id": 467,
+          "callback_eind": 29514,
+          "await_eind": 29541,
+          "resume": 29541,
+          "Ft_begin": 29541,
+          "callback_tot_await_ms": 27,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 472,
+          "callback_id": 473,
+          "Ft_id": 475,
+          "callback_eind": 29614,
+          "await_eind": 29642,
+          "resume": 29642,
+          "Ft_begin": 29642,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 480,
+          "callback_id": 481,
+          "Ft_id": 483,
+          "callback_eind": 29716,
+          "await_eind": 29745,
+          "resume": 29745,
+          "Ft_begin": 29745,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        }
+      ],
+      "At_delen": [
+        {
+          "At_id": 4,
+          "duur_ms": 30,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 2
+          },
+          "deel_ids": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "At_id": 12,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "At_id": 20,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 31.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "At_id": 28,
+          "duur_ms": 38,
+          "delen": {
+            "At.Dn": 37,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "At_id": 36,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 31,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            37,
+            38,
+            39
+          ]
+        },
+        {
+          "At_id": 44,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            45,
+            46,
+            47
+          ]
+        },
+        {
+          "At_id": 52,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            53,
+            54,
+            55
+          ]
+        },
+        {
+          "At_id": 60,
+          "duur_ms": 28,
+          "delen": {
+            "At.Dn": 27,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            61,
+            62,
+            63
+          ]
+        },
+        {
+          "At_id": 68,
+          "duur_ms": 28,
+          "delen": {
+            "At.Dn": 27,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            69,
+            70,
+            71
+          ]
+        },
+        {
+          "At_id": 76,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            77,
+            78,
+            79
+          ]
+        },
+        {
+          "At_id": 84,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 21.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            85,
+            86,
+            87
+          ]
+        },
+        {
+          "At_id": 92,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            93,
+            94,
+            95
+          ]
+        },
+        {
+          "At_id": 100,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            101,
+            102,
+            103
+          ]
+        },
+        {
+          "At_id": 108,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            109,
+            110,
+            111
+          ]
+        },
+        {
+          "At_id": 116,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            117,
+            118,
+            119
+          ]
+        },
+        {
+          "At_id": 124,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            125,
+            126,
+            127
+          ]
+        },
+        {
+          "At_id": 132,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            133,
+            134,
+            135
+          ]
+        },
+        {
+          "At_id": 140,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            141,
+            142,
+            143
+          ]
+        },
+        {
+          "At_id": 148,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            149,
+            150,
+            151
+          ]
+        },
+        {
+          "At_id": 156,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            157,
+            158,
+            159
+          ]
+        },
+        {
+          "At_id": 164,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            165,
+            166,
+            167
+          ]
+        },
+        {
+          "At_id": 172,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            173,
+            174,
+            175
+          ]
+        },
+        {
+          "At_id": 180,
+          "duur_ms": 26.999999999996362,
+          "delen": {
+            "At.Dn": 26.0,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            181,
+            182,
+            183
+          ]
+        },
+        {
+          "At_id": 188,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            189,
+            190,
+            191
+          ]
+        },
+        {
+          "At_id": 196,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            197,
+            198,
+            199
+          ]
+        },
+        {
+          "At_id": 204,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            205,
+            206,
+            207
+          ]
+        },
+        {
+          "At_id": 212,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            213,
+            214,
+            215
+          ]
+        },
+        {
+          "At_id": 220,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            221,
+            222,
+            223
+          ]
+        },
+        {
+          "At_id": 228,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            229,
+            230,
+            231
+          ]
+        },
+        {
+          "At_id": 236,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            237,
+            238,
+            239
+          ]
+        },
+        {
+          "At_id": 244,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            245,
+            246,
+            247
+          ]
+        },
+        {
+          "At_id": 252,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            253,
+            254,
+            255
+          ]
+        },
+        {
+          "At_id": 260,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            261,
+            262,
+            263
+          ]
+        },
+        {
+          "At_id": 268,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            269,
+            270,
+            271
+          ]
+        },
+        {
+          "At_id": 276,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            277,
+            278,
+            279
+          ]
+        },
+        {
+          "At_id": 284,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            285,
+            286,
+            287
+          ]
+        },
+        {
+          "At_id": 292,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            293,
+            294,
+            295
+          ]
+        },
+        {
+          "At_id": 300,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            301,
+            302,
+            303
+          ]
+        },
+        {
+          "At_id": 308,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            309,
+            310,
+            311
+          ]
+        },
+        {
+          "At_id": 316,
+          "duur_ms": 22,
+          "delen": {
+            "At.Dn": 21,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            317,
+            318,
+            319
+          ]
+        },
+        {
+          "At_id": 324,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            325,
+            326,
+            327
+          ]
+        },
+        {
+          "At_id": 332,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            333,
+            334,
+            335
+          ]
+        },
+        {
+          "At_id": 340,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            341,
+            342,
+            343
+          ]
+        },
+        {
+          "At_id": 348,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            349,
+            350,
+            351
+          ]
+        },
+        {
+          "At_id": 356,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            357,
+            358,
+            359
+          ]
+        },
+        {
+          "At_id": 364,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            365,
+            366,
+            367
+          ]
+        },
+        {
+          "At_id": 372,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            373,
+            374,
+            375
+          ]
+        },
+        {
+          "At_id": 380,
+          "duur_ms": 26.0,
+          "delen": {
+            "At.Dn": 24.999999999996362,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            381,
+            382,
+            383
+          ]
+        },
+        {
+          "At_id": 388,
+          "duur_ms": 27.000000000003638,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            389,
+            390,
+            391
+          ]
+        },
+        {
+          "At_id": 396,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            397,
+            398,
+            399
+          ]
+        },
+        {
+          "At_id": 404,
+          "duur_ms": 27.000000000003638,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            405,
+            406,
+            407
+          ]
+        },
+        {
+          "At_id": 412,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            413,
+            414,
+            415
+          ]
+        },
+        {
+          "At_id": 420,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            421,
+            422,
+            423
+          ]
+        },
+        {
+          "At_id": 428,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            429,
+            430,
+            431
+          ]
+        },
+        {
+          "At_id": 436,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            437,
+            438,
+            439
+          ]
+        },
+        {
+          "At_id": 444,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            445,
+            446,
+            447
+          ]
+        },
+        {
+          "At_id": 452,
+          "duur_ms": 22,
+          "delen": {
+            "At.Dn": 21.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            453,
+            454,
+            455
+          ]
+        },
+        {
+          "At_id": 460,
+          "duur_ms": 23.0,
+          "delen": {
+            "At.Dn": 23.0,
+            "At.jn": 0.0,
+            "At.I": 0.0
+          },
+          "deel_ids": [
+            461,
+            462,
+            463
+          ]
+        },
+        {
+          "At_id": 468,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            469,
+            470,
+            471
+          ]
+        },
+        {
+          "At_id": 476,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            477,
+            478,
+            479
+          ]
+        },
+        {
+          "At_id": 484,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            485,
+            486,
+            487
+          ]
+        },
+        {
+          "At_id": 488,
+          "duur_ms": 0,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            489,
+            490,
+            491
+          ]
+        },
+        {
+          "At_id": 497,
+          "duur_ms": 1,
+          "delen": {
+            "At.Dn": 1,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            498,
+            499,
+            500
+          ]
+        }
+      ],
+      "grenzen": "Echte nativeAwait-spans bevatten elk één tekstcallback; nativeResume en Ft op sessie/tijdvolgorde. Eén main-klok, geen exclusieve CPU-meting. At-delen en callbacks genest, niet optellen. Meetoverhead niet afgetrokken; andere microtaken/React/GC niet oorzakelijk toegewezen. Twee vaste rijke Linux-ronden; geen prestatiewinst of fysieke paintmeting."
+    }
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "diagnose-een": {
+        "sha256": "1c4a0c06baf4341154870306b7818985b51efcf8d6bc493c1271d0434bb56cc0",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "f014ca0a97b60e230fa7d22840de0cbbf4115d99a520fe2b0decc993cbe4ef72",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "diagnose-twee": {
+        "sha256": "4feab5973a867990e1d812963e5382b0e72aee350c43885c63344e5661a62566",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "6771b77d060fab23f4b6279171f42e8bfa0cbc67d40125019895788f1ac7c7c8",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "beelden": [
+      {
+        "referentie": "diagnose-een/invoer-redo.png",
+        "vergeleken": "diagnose-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "diagnose-een/snel-getypt-bewaard.png",
+        "vergeleken": "diagnose-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "diagnose-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "diagnose-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "gehele_beelden_exact": 3,
+    "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+  },
+  "visueel_bekeken": [
+    "diagnose-een/snel-getypt-bewaard.png"
+  ],
+  "behoud": {
+    "vorige_elf35_exact": true,
+    "elfreferenties": 36,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets": [
+      "assets/editors-bODdYQ4o.js"
+    ],
+    "patchreplay_exact": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "vervolgbron": {
+    "basis_asset_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "routes": {
+      "Dn=u.useCallback": "Dn=u.useCallback(()=>{if(n)return null;let ne=Pt();if(!ne)return null;let pe=b(ne.anchor),Te=b(ne.head);return pe==null||Te==null?null:{anchor:pe,head:Te}},[n,b,Pt]),",
+      "At=u.useCallback": "At=u.useCallback((ne,pe=!1,Te=!1,Je=!1,Ke=!1)=>{if(xe.current)return xe.current.selectionChanged=!0,!1;let ft=Dn();return ft?(jn(kt=>kt+1),Ke?I(ft,ne,pe,Te,\"local\",Je,!0):Je?I(ft,ne,pe,Te,\"local\",!0):I(ft,ne,pe,Te),!0):!1},[Dn,I]),",
+      "re=u.useCallback": "re=u.useCallback((ne,pe=G.current)=>O.current.mounted&&O.current.enabled&&O.current.session===ne&&G.current===pe,[]),",
+      "const Rn=await W(c,": "const Rn=await W(c,Mt.head,kt,en(),()=>re(c),Yt);if(!re(c))return;if(Rn){Ft();return}}",
+      "selectievalidatie_n6": "function n6(e,t,n){if(!e)return null;const r=e.selection();if(!r||r.anchor.story!==r.head.story||!t(r.anchor.story)||!e.hasStory(r.anchor.story))return null;const o=a=>a?.some(s=>s.paraId===r.anchor.paraId)&&a.some(s=>s.paraId===r.head.paraId);return o(n(r.anchor.story)?.paragraphs)||o(e.paragraphSpans(r.anchor.story))?r:null}"
+    },
+    "grens": "Dit is bronbinding van de werkelijke SDK-route, geen volledige semantische of visuele acceptatie."
+  },
+  "interpretatie": "Twee rijke native functieronden zonder GUI/engine/consolefouten; 4.624/4.595 rijen, nul overflow en alle begin/eindspans gepaard. Elke 62/61 nativeAwait omvat precies één tekstcallback, gekoppeld op sessie en daadwerkelijke rijeninsluiting. Tijd van callback-einde tot await-einde samen 1.875/1.871 ms, mediaan 29/29 ms. NativeResume tot eerstvolgende Ft 0 ms bij deze resolutie. Dat lokaliseert de eerdere tussenruimte vóór de hervatting, maar identificeert niet welke andere microtaken, React-rendering, GC of wachttijd haar veroorzaken. NativeAwait 6.057/6.037 ms bevat tekstcallback 4.181/4.166 ms: niet optellen. At 1.547/1.511 ms bevat Dn 1.491/1.460 ms en I 55/50 ms. At-delen met begin/eindrijen aan hun echte At-venster gebonden. Geen exclusieve CPU-kosten of prestatiewinst afgeleid.",
+  "vervolg": "Splits vastgepinde Dn in Pt/n6-selectievalidatie en b(anchor)/b(head)-positieprojectie, inclusief eventuele paragraphSpans-terugval. Onderzoek afzonderlijk het hoofdthreadwerk tussen provider-callback-einde en nativeAwait-hervatting; geen extra timer-/rij-/cachevariant zonder bewijs. Kies pas daarna de kleinste kandidaat; behoud bronversie, metadata/voorstellen, tabellen/noten, selectie/caret, Undo, documenten en automatisch herstel. Reeds afgewezen compacte alineakaarten en contextcaches blijven regressiegrenzen. Database laatst.",
+  "niet_getoetst": "Geen gewone ABBA of snelheidswinst, volledige Reactmontage in contracttests, volledige suites/CI, andere platforms/edities/releasevarianten/schema3/installers of volledige visuele/formaat/glyphdekking. Alleen huidige Linux app-release met writer-bronjournaal-feature, schema2 en vaste rijke bron. Tien contractgroepen omvatten echte At/Ft-functies met gecontroleerde afhankelijkheden en zes nativeAwait-retour/fout/levensduurroutes; meetoverhead niet afgetrokken. Eerdere geheugenfouten niet opgelost verklaard.",
+  "archief": {
+    "bestand": "2026-11-27-writer-publicatie-details.tar.gz",
+    "sha256": "af09a33a3c26dc3c931cc58d22bdcf5b2242fbb54525595c2ed018b28077993e",
+    "leden": {
+      "actief.json": "82d3210522936d4858cebf7a1ddd663e953110abe778280aa1d1436ee256ebb6",
+      "analyse.json": "a0abe7b5eecb6789a772eb2421912f86de40de280ac7da682291c0ef9ae2a2de",
+      "analyse.log": "9d79a2b17b83d5673a1b12be5bcdd27abf772e2af080b83c76c3b111542f2580",
+      "analyse.py": "ab0b1469c5c012f979d3b82674c687af0db031b46380c84e5630104612975442",
+      "behoud.json": "80eb2ea33e51a9765c5946df29e6208d399bcc69de0fdb52133d2d7c3566eea7",
+      "behoud.py": "1f8b74d81643238f6a623b0fecc6d3af588c42f11be962b635a037b003dd0ef7",
+      "bouwen.py": "f729affb8ada89f72581eb2b82297a7c98b0ba44fa76369ac71c102b10e57259",
+      "bundel.json": "7dd6dd82792b2350f8834dbd2119e83bc1203f4626fd0db6726781365a118f70",
+      "bundel.py": "ff247169335a8ebe213d72215c8cdd90ebccff2b8f60223c30dc4ff2238df388",
+      "bundelwijzigingen.json": "1a70d91105f7531789a7e6f612565e299ddcee6c8324ce345e2ab74440c1f360",
+      "contract.json": "56e55a02c8359522754ee0c7e006e0102a0f2d83b0507b04be5134ae4976408c",
+      "contract.mjs": "31e5faf3b5fb5ad43ef14a4325207704ab4fb74cebffda026e939ca2e99823db",
+      "desktop.json": "e98e64894f18f674c11a0a99bff6a7180a96f0f3b4f47644a7c9ea16bd8489a3",
+      "desktop.log": "3d0ab2d6f07ee5daa546af195dfe15908bbcdfc0d2a84762caef318d49c8a445",
+      "diagnose-een.log": "b52af9784267e450e7c63b7cce36b5dab07d80d7cb1e2478db30847f6cfb9af8",
+      "diagnose-een/Ontwerpnotitie.docx": "1c4a0c06baf4341154870306b7818985b51efcf8d6bc493c1271d0434bb56cc0",
+      "diagnose-een/invoer-redo.png": "76923d417e6c3ea03c3b69e489753d72fcd6fda2b8eef8efd058f0724883173f",
+      "diagnose-een/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-een/rapport.json": "03473f2cfd44e6ef0e27206eae1eb88045af3dd8a422cf274cbf2ddfdb429325",
+      "diagnose-een/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose-twee.log": "70de14ffdd765ba755da193585ad822ca30fa54e1bc7e4173e9f104b1917a7d7",
+      "diagnose-twee/Ontwerpnotitie.docx": "4feab5973a867990e1d812963e5382b0e72aee350c43885c63344e5661a62566",
+      "diagnose-twee/invoer-redo.png": "76923d417e6c3ea03c3b69e489753d72fcd6fda2b8eef8efd058f0724883173f",
+      "diagnose-twee/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-twee/rapport.json": "6e551b84ebb3f7eac353b9011c6d535736eda5f670dd3e6e5e699c444aec4891",
+      "diagnose-twee/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose.py": "baefaa8f4b096bbac8302d4cb5ab1f3ef9fb5e757d89c34718ff21e919656712",
+      "diagnoseronden.json": "ae2bcacd37db418b0ba378ee644fdb0f498c6859031664c8ae275706f670d9df",
+      "diagnoseronden.log": "eb5c6932b3a72b6ec71af9e0a3363858276251d1b91e4f115f89409eb72531bd",
+      "documenten-beelden.json": "fb793ef6cc53579050b34d0dca013a7e6f0617238dbbe417613e4d69d5bf3ef6",
+      "documenten-beelden.py": "98cf72cc92b5c9c5dc0f61d5e4ceeb675a680aae13749ba6bd4f1ac8dc4fb1fc",
+      "gewijzigde-editors.js": "9523ca6b7d46419f0893046ce5e50272f29c7f22956e48ffbe9404c76fdef390",
+      "meter.js": "fb3be30c44f9a45bd0cf83e9d7549b0cf10c9ae8002247b478783d1e1b50dbf9",
+      "referenties-nacontrole.json": "c5541999e76369eaa76f1f0238054a464221772c3b365e52d25dae6adeff90ff",
+      "referenties-voor.json": "20ddcbc8aea265c28fea4ee9331dc9046c2c99a1f1d94e731ad2df503a7b8dfe",
+      "ronden.py": "e6ec333cfd0216d76156dc2d18e09cceb8172971933490a041c2ca7ec0235260",
+      "vastleggen.py": "139547b63cf204d4d313603e313d451c67182331b52c1eb220a4037292cc4026",
+      "vervolgbron.json": "c5e279466f6a0a0b0bc08aee148c95cb161d762e71eecd6ca0725937844204dd"
+    },
+    "uitsluitingen": "ELF/dist lokaal behouden; gewijzigde editorsasset en exact replaybare wijzigingen ingesloten."
+  }
+}
