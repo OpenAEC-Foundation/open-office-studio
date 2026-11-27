@@ -1,0 +1,1238 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "d00fda5499571feeca03ee7dcc98d9889c057c3d",
+  "basis_hoofdbranch": "0cdab914",
+  "besluit": "De werkelijke blokvoorbereiding is afzonderlijk gemeten. Alle 13/17 bodyaanvragen via adapter r treffen een cache met gelijke document-epoch maar ongelijke RenderEnv en nemen de missroute. Resident voorbereiden telt 1.290/1.387 ms (circa 73 procent van het blokvenster), serde 162/179 ms, JS-decodering 218/240 ms. Geen productfix of prestatiewinst bewezen.",
+  "kern": {
+    "opdracht": "Eigen kopie van replica-fasekosten/bron met gekopieerde target-wasm; uitsluitend engine.rs/wasm.rs instrumentatie.",
+    "gecompileerde_crates": [
+      "betteroffice-docx-edit"
+    ],
+    "kern": {
+      "sha256": "571ad0165ff09fcd67bf3ce525e0c003ff413c900205b676c209cf35588df35b",
+      "bytes": 24431332,
+      "interface_exact": true,
+      "doel": "Uitsluitend blokfasen en effectieve cacheomgeving, geen productievariant"
+    },
+    "bron_voor": {
+      "engine.rs": "b5839274b3f1ec8ea48eefcf28d819fd6a563d427cfba7f7c5c78cb1d7d88877",
+      "wasm.rs": "82d86b7df9a4138f0d91bf70a52f51735497c5f62b0dd63b99ff2acd4876f2e5"
+    },
+    "bron_na": {
+      "engine.rs": "5891b5c694cd2c764abf4bbee8f5fac51685d64b147a4ab77f1792c6622b3c27",
+      "wasm.rs": "39df584ae0ba62c22b353df282abcdf25f98871f67d17e60d732126eb68ca279"
+    },
+    "named_interface": "Gesorteerde import-/exportnamen en soorten gelijk; geen volledige functietypesgarantie."
+  },
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 154.1438358889427,
+    "minimum_vrije_bytes": 278048960512,
+    "start_vrije_bytes": 278155390976,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "d00fda5499571feeca03ee7dcc98d9889c057c3d",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/blok-fasen/open-office-studio-blok-fasen",
+    "programma_sha256": "5cbce60eaf4c6ba256db88351548947a241421e543d13b753ac6be3768f019ed",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties31_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "bundel": {
+    "basis": "sync-contract",
+    "wijzigingen": [
+      {
+        "voor": "__wfSync=[],__wfOver=0",
+        "na": "__wfSync=[],__wfBlokken=[],__wfOver=0"
+      },
+      {
+        "voor": "__wfSync=[];__wfOver=0",
+        "na": "__wfSync=[];__wfBlokken=[];__wfOver=0"
+      },
+      {
+        "voor": "sync:__wfSync,overgeslagen",
+        "na": "sync:__wfSync,blokken:__wfBlokken,overgeslagen"
+      },
+      {
+        "voor": "yrsBlocksForStory:(_,P={})=>{let z=e.yrs_blocks_for_story(_,JSON.stringify(P)),le=JSON.parse(z);return m.set(_,structuredClone(P)),le}",
+        "na": "yrsBlocksForStory:(_,P={})=>{let envJson=JSON.stringify(P),begin=performance.now(),z=e.yrs_blocks_for_story(_,envJson),coreEnd=performance.now(),le=JSON.parse(z),parseEnd=performance.now();if(__wfActief){if(__wfBlokken.length<512)__wfBlokken.push({id:Mo,adapter:\"e\",story:_,envJson,begin,coreEnd,parseEnd,jsonChars:z.length,profile:JSON.parse(e.apply_input_profile_json())});else __wfOver++}return m.set(_,structuredClone(P)),le}"
+      },
+      {
+        "voor": "yrsBlocksForStory:(w,x={})=>JSON.parse(r.yrs_blocks_for_story(w,JSON.stringify(x)))",
+        "na": "yrsBlocksForStory:(w,x={})=>{let envJson=JSON.stringify(x),begin=performance.now(),z=r.yrs_blocks_for_story(w,envJson),coreEnd=performance.now(),le=JSON.parse(z),parseEnd=performance.now();if(__wfActief){if(__wfBlokken.length<512)__wfBlokken.push({id:Mo,adapter:\"r\",story:w,envJson,begin,coreEnd,parseEnd,jsonChars:z.length,profile:JSON.parse(r.apply_input_profile_json())});else __wfOver++}return le}"
+      }
+    ],
+    "doel": "Alleen kernblokprofiel en afzonderlijke JS-decodering vastleggen; geen warm-/validatie-/sync-call overslaan."
+  },
+  "component": {
+    "geslaagd": true,
+    "corpusgevallen": 30,
+    "updates": 43,
+    "bloklezing_bewaart_staat": true,
+    "apiproeven": 9,
+    "apifouten": 2,
+    "api_uitvoer_en_fouten_exact": true,
+    "herhaalde_lezing_cachehit_zonder_serde": true,
+    "grens": "Componentproef in Node; vaste corpusasserties voor inference/errors/staat/vector/body/marges/metadata/fonts/blokken behouden, plus staat na bloklezing. API-cases behouden staat/vector en sessiegebonden versie. Geen native snelheid/visuele dekking."
+  },
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "5cbce60eaf4c6ba256db88351548947a241421e543d13b753ac6be3768f019ed",
+      "rapport_sha256": "2a12004e51526911812470479879e930e00a22c8dde124d61d288140c4b930f9",
+      "worker_disable": {
+        "result": {},
+        "id": 179
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "5cbce60eaf4c6ba256db88351548947a241421e543d13b753ac6be3768f019ed",
+      "rapport_sha256": "5119677d74a80274de08de52e678daf1d744386bc91c9c7cf177d76dd613a757",
+      "worker_disable": {
+        "result": {},
+        "id": 392
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    }
+  },
+  "analyse": {
+    "native": {
+      "blokaantal": 13,
+      "adapters": {
+        "r": 13
+      },
+      "routes": {
+        "miss": 13
+      },
+      "env_gelijk_voor": 0,
+      "env_ongelijk_voor": 13,
+      "cached_epoch_gelijk": 13,
+      "envverschillen": {
+        "compatibilityFlags": 13,
+        "defaultParagraphStyleId": 13,
+        "defaultTabStopTwips": 13,
+        "mediaTokens": 13,
+        "themeColors": 13
+      },
+      "serde_uitgevoerd": 13,
+      "serialized_cached_voor": 0,
+      "ms_sommen": {
+        "resident": 1289.9999999999982,
+        "serde": 162.00000000000364,
+        "clone": 5.999999999998181,
+        "js_parse": 217.99999999999272,
+        "ffi_venster": 1542.000000000009,
+        "rust_marks_venster": 1458.0,
+        "hele_blokfase": 1762.0,
+        "na_parse": 0.999999999998181
+      },
+      "bytes_per_resultaat": [
+        1615731,
+        1615763,
+        1615813,
+        1615866,
+        1615924,
+        1615975,
+        1616056,
+        1616148,
+        1616218,
+        1616254,
+        1616341,
+        1616384,
+        1616782
+      ],
+      "ruwe_blokken": [
+        {
+          "id": 14,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615731,
+          "jsonChars": 1599059,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 144,
+            "serde": 15,
+            "clone": 0,
+            "js_parse": 16.00000000000182,
+            "ffi_venster": 165,
+            "rust_marks_venster": 159,
+            "hele_blokfase": 182.00000000000182,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 21,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615763,
+          "jsonChars": 1599091,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 144,
+            "serde": 18,
+            "clone": 2.000000000001819,
+            "js_parse": 26,
+            "ffi_venster": 176,
+            "rust_marks_venster": 164.00000000000182,
+            "hele_blokfase": 202,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 30,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615813,
+          "jsonChars": 1599141,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 94,
+            "serde": 12.000000000001819,
+            "clone": 0.0,
+            "js_parse": 15,
+            "ffi_venster": 111,
+            "rust_marks_venster": 106.00000000000182,
+            "hele_blokfase": 126,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 39,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615866,
+          "jsonChars": 1599194,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 77,
+            "serde": 8,
+            "clone": 0,
+            "js_parse": 13,
+            "ffi_venster": 90,
+            "rust_marks_venster": 85,
+            "hele_blokfase": 103,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 48,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615924,
+          "jsonChars": 1599252,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 134,
+            "serde": 19,
+            "clone": 0,
+            "js_parse": 22,
+            "ffi_venster": 163,
+            "rust_marks_venster": 153,
+            "hele_blokfase": 185,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 57,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615975,
+          "jsonChars": 1599303,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 83.00000000000182,
+            "serde": 8.999999999998181,
+            "clone": 0,
+            "js_parse": 19.0,
+            "ffi_venster": 99.00000000000182,
+            "rust_marks_venster": 92,
+            "hele_blokfase": 119,
+            "na_parse": 0.999999999998181
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 66,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616056,
+          "jsonChars": 1599384,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 76,
+            "serde": 9.000000000001819,
+            "clone": 0.0,
+            "js_parse": 13,
+            "ffi_venster": 90,
+            "rust_marks_venster": 85.00000000000182,
+            "hele_blokfase": 103,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 75,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616148,
+          "jsonChars": 1599476,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 97,
+            "serde": 17,
+            "clone": 1,
+            "js_parse": 26.0,
+            "ffi_venster": 123.00000000000182,
+            "rust_marks_venster": 115,
+            "hele_blokfase": 149.00000000000182,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 84,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616218,
+          "jsonChars": 1599546,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 105,
+            "serde": 12.000000000001819,
+            "clone": 0.999999999996362,
+            "js_parse": 13.999999999998181,
+            "ffi_venster": 123.00000000000182,
+            "rust_marks_venster": 117.99999999999818,
+            "hele_blokfase": 137,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 91,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616254,
+          "jsonChars": 1599582,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 96,
+            "serde": 13,
+            "clone": 0,
+            "js_parse": 16,
+            "ffi_venster": 115,
+            "rust_marks_venster": 109,
+            "hele_blokfase": 131,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 100,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616341,
+          "jsonChars": 1599669,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 78,
+            "serde": 11,
+            "clone": 0,
+            "js_parse": 14,
+            "ffi_venster": 95,
+            "rust_marks_venster": 89,
+            "hele_blokfase": 109,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 105,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616384,
+          "jsonChars": 1599712,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 82,
+            "serde": 10,
+            "clone": 1,
+            "js_parse": 12.999999999996362,
+            "ffi_venster": 99.00000000000364,
+            "rust_marks_venster": 93,
+            "hele_blokfase": 112,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 146,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616782,
+          "jsonChars": 1600110,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 79.99999999999636,
+            "serde": 9,
+            "clone": 1,
+            "js_parse": 10.999999999996362,
+            "ffi_venster": 93.0,
+            "rust_marks_venster": 89.99999999999636,
+            "hele_blokfase": 103.99999999999636,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        }
+      ],
+      "grens": "Geïnstrumenteerde verstreken vensters, geen CPU-tijd of gewone snelheidsacceptatie. FFI/hele blokfase bevatten ook profielvorming; resident omvat cachecontrole en eventueel lageren, niet aantoonbaar ieder intern blok opnieuw opgebouwd."
+    },
+    "herhaling": {
+      "blokaantal": 17,
+      "adapters": {
+        "r": 17
+      },
+      "routes": {
+        "miss": 17
+      },
+      "env_gelijk_voor": 0,
+      "env_ongelijk_voor": 17,
+      "cached_epoch_gelijk": 17,
+      "envverschillen": {
+        "compatibilityFlags": 17,
+        "defaultParagraphStyleId": 17,
+        "defaultTabStopTwips": 17,
+        "mediaTokens": 17,
+        "themeColors": 17
+      },
+      "serde_uitgevoerd": 17,
+      "serialized_cached_voor": 0,
+      "ms_sommen": {
+        "resident": 1387.0000000000036,
+        "serde": 178.99999999999272,
+        "clone": 6.000000000001819,
+        "js_parse": 240.00000000000364,
+        "ffi_venster": 1661.0,
+        "rust_marks_venster": 1572.9999999999982,
+        "hele_blokfase": 1901.0000000000036,
+        "na_parse": 0.0
+      },
+      "bytes_per_resultaat": [
+        1615731,
+        1615785,
+        1615834,
+        1615894,
+        1615956,
+        1616021,
+        1616074,
+        1616145,
+        1616188,
+        1616281,
+        1616371,
+        1616454,
+        1616537,
+        1616617,
+        1616699,
+        1616756,
+        1616782
+      ],
+      "ruwe_blokken": [
+        {
+          "id": 14,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615731,
+          "jsonChars": 1599059,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 98.00000000000182,
+            "serde": 19.99999999999818,
+            "clone": 0,
+            "js_parse": 21.00000000000182,
+            "ffi_venster": 125,
+            "rust_marks_venster": 119,
+            "hele_blokfase": 146.00000000000182,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 23,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615785,
+          "jsonChars": 1599113,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 106.0,
+            "serde": 16.0,
+            "clone": 0.0,
+            "js_parse": 25.00000000000182,
+            "ffi_venster": 131.99999999999818,
+            "rust_marks_venster": 122.0,
+            "hele_blokfase": 157.0,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 32,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615834,
+          "jsonChars": 1599162,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 88,
+            "serde": 9,
+            "clone": 1,
+            "js_parse": 13,
+            "ffi_venster": 102,
+            "rust_marks_venster": 98,
+            "hele_blokfase": 115,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 41,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615894,
+          "jsonChars": 1599222,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 79.00000000000182,
+            "serde": 8.999999999998181,
+            "clone": 1,
+            "js_parse": 13.999999999998181,
+            "ffi_venster": 92.00000000000182,
+            "rust_marks_venster": 89,
+            "hele_blokfase": 106,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 50,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1615956,
+          "jsonChars": 1599284,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 90.99999999999818,
+            "serde": 11,
+            "clone": 0,
+            "js_parse": 11.999999999998181,
+            "ffi_venster": 109.0,
+            "rust_marks_venster": 101.99999999999818,
+            "hele_blokfase": 120.99999999999818,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 59,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616021,
+          "jsonChars": 1599349,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 74,
+            "serde": 8,
+            "clone": 0,
+            "js_parse": 13,
+            "ffi_venster": 88,
+            "rust_marks_venster": 82,
+            "hele_blokfase": 101,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 66,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616074,
+          "jsonChars": 1599402,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 73,
+            "serde": 10,
+            "clone": 0,
+            "js_parse": 15,
+            "ffi_venster": 90,
+            "rust_marks_venster": 83,
+            "hele_blokfase": 105,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 75,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616145,
+          "jsonChars": 1599473,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 74.0,
+            "serde": 10.999999999998181,
+            "clone": 0,
+            "js_parse": 13,
+            "ffi_venster": 91.99999999999818,
+            "rust_marks_venster": 84.99999999999818,
+            "hele_blokfase": 104.99999999999818,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 82,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616188,
+          "jsonChars": 1599516,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 72.00000000000182,
+            "serde": 10.999999999998181,
+            "clone": 1,
+            "js_parse": 14,
+            "ffi_venster": 86,
+            "rust_marks_venster": 84,
+            "hele_blokfase": 100,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 91,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616281,
+          "jsonChars": 1599609,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 74,
+            "serde": 10,
+            "clone": 0,
+            "js_parse": 12,
+            "ffi_venster": 90,
+            "rust_marks_venster": 84,
+            "hele_blokfase": 102,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 100,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616371,
+          "jsonChars": 1599699,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 78,
+            "serde": 10,
+            "clone": 1,
+            "js_parse": 11.999999999998181,
+            "ffi_venster": 92.00000000000182,
+            "rust_marks_venster": 89,
+            "hele_blokfase": 104,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 109,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616454,
+          "jsonChars": 1599782,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 79,
+            "serde": 9,
+            "clone": 0,
+            "js_parse": 15.000000000001819,
+            "ffi_venster": 95,
+            "rust_marks_venster": 88,
+            "hele_blokfase": 110.00000000000182,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 118,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616537,
+          "jsonChars": 1599865,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 84,
+            "serde": 9,
+            "clone": 0,
+            "js_parse": 13,
+            "ffi_venster": 96,
+            "rust_marks_venster": 93,
+            "hele_blokfase": 109,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 127,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616617,
+          "jsonChars": 1599945,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 75,
+            "serde": 9,
+            "clone": 1.000000000001819,
+            "js_parse": 12,
+            "ffi_venster": 87,
+            "rust_marks_venster": 85.00000000000182,
+            "hele_blokfase": 99,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 136,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616699,
+          "jsonChars": 1600027,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 76,
+            "serde": 9,
+            "clone": 0,
+            "js_parse": 14,
+            "ffi_venster": 91,
+            "rust_marks_venster": 85,
+            "hele_blokfase": 105,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 143,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616756,
+          "jsonChars": 1600084,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 97,
+            "serde": 9,
+            "clone": 1,
+            "js_parse": 11,
+            "ffi_venster": 111,
+            "rust_marks_venster": 107,
+            "hele_blokfase": 122,
+            "na_parse": 0
+          },
+          "serde_uitgevoerd": true
+        },
+        {
+          "id": 148,
+          "adapter": "r",
+          "envJson": "{}",
+          "bytes": 1616782,
+          "jsonChars": 1600110,
+          "epoch_gelijk": true,
+          "env_gelijk": false,
+          "serialized_cached_voor": false,
+          "route": "miss",
+          "verschillende_envvelden": [
+            "compatibilityFlags",
+            "defaultParagraphStyleId",
+            "defaultTabStopTwips",
+            "mediaTokens",
+            "themeColors"
+          ],
+          "ms": {
+            "resident": 69,
+            "serde": 9,
+            "clone": 0,
+            "js_parse": 11.000000000003638,
+            "ffi_venster": 83,
+            "rust_marks_venster": 78,
+            "hele_blokfase": 94.00000000000364,
+            "na_parse": 0.0
+          },
+          "serde_uitgevoerd": true
+        }
+      ],
+      "grens": "Geïnstrumenteerde verstreken vensters, geen CPU-tijd of gewone snelheidsacceptatie. FFI/hele blokfase bevatten ook profielvorming; resident omvat cachecontrole en eventueel lageren, niet aantoonbaar ieder intern blok opnieuw opgebouwd."
+    }
+  },
+  "bestaande_requestvoorbereiding": {
+    "file": ".local/integratiecontrole/sync-contract/dist/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+    "sha256": "ade21419928ed2aa3309d7428be010adff6f3e8c2abbe9a079c751a39bc57e83",
+    "source": "R=w=>{if(!s&&!l&&!d&&r.part_metadata_json()===\"{}\"&&r.document_properties_json()===\"{}\"&&r.section_margins_json()===\"{}\")return w;let x=k(),C=JSON.parse(w),U=x.package.document.sections?.map(_=>({sectionId:_.id??_.properties.sectionId,properties:_.properties}))??[];d||U.push({sectionId:U.at(-1)?.sectionId,properties:x.package.document.finalSectionProperties??{}});let fe=U.flatMap((_,P)=>[\"header\",\"footer\"].flatMap(z=>(_.properties[z===\"header\"?\"headerReferences\":\"footerReferences\"]??[]).map(le=>({kind:z,type:le.type,rId:le.rId,sectionIndex:P})))),he=[...(x.package.footnotes??[]).map(_=>({id:_.id,noteKind:\"footnote\",height:0})),...(x.package.endnotes??[]).map(_=>({id:_.id,noteKind:\"endnote\",height:0}))],we=wh(x);return JSON.stringify({...C,regions:{...C.regions,sections:U,watermark:we,headersFooters:C.regions?.headersFooters?{...C.regions.headersFooters,watermark:we}:void 0},notes:{...C.notes,contents:he},...C.workerOwned?{workerHeadersFooters:{...C.workerHeadersFooters,variants:fe}}:{}})}",
+    "bestaande_layoutdelegaties": [
+      "layoutDocumentWithRegionsRetainedJson:w=>r.layout_document_with_regions_retained_json(R(w))",
+      "layoutDocumentWithRegionsRetainedMeta:w=>Bc(r.layout_document_with_regions_retained_meta(R(w)))"
+    ],
+    "eerder_afgewezen_warmadapter": "warmStoryForRegionLayout:(w,x,k)=>{typeof r.supports_region_layout_warm===\"function\"&&r.supports_region_layout_warm()?r.warm_story_for_region_layout(w,k):JSON.parse(r.yrs_blocks_for_story(w,JSON.stringify(x)))},yrsBlocksForStory:(w,x={})=>JSON.parse(r.yrs_blocks_for_story(w,JSON.stringify(x)))",
+    "vervolggrens": "De eerdere warmadapter gebruikt k rechtstreeks, bestaande layoutdelegaties bereiden met R(w) voor. Eventuele nieuwe kandidaat moet dezelfde voorbereiding aantoonbaar delen, met behoud van legacyvoorwaarden, fouten en fallback. Dit is nog geen bewezen fix; voorbereiding tweemaal uitvoeren kan extra projectiewerk toevoegen."
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "309286dd0a8db0e2fadc3f84900d8bd125b1c60428b652bc6537cfb63263ca8e",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "ffe414ec7df6ec4bbc8bf5d2d49aa3247a779f690714f8700c0a764d4e834f5c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "herhaling": {
+        "sha256": "f65fb570606a252e189f10a917e53c6a1c32ce99a2230e9a13f2841b97cd4955",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "ceb2c0717b1771c7230180e01844adb4a6de8b1509f1aa8ffe044291bd097bf3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 28,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 24,
+        "bbox": [
+          4,
+          159,
+          220,
+          161
+        ]
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "herhaling/snel-getypt-bewaard.png",
+    "waarneming": "Eigen tabelrijen en lange invoer zichtbaar. Bewaarbeeld pixelgelijk aan de eerste ronde; overige paren 28/24 pixels verschillend. Geen volledige visuele/formaatacceptatie."
+  },
+  "behoud": {
+    "oude_referenties31_exact": true,
+    "aanwezige_referenties": 32,
+    "nieuwe_elf_sha256": "5cbce60eaf4c6ba256db88351548947a241421e543d13b753ac6be3768f019ed",
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets_tegen_sync_contract": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+      "assets/docx_edit_bg-ONvZFP_n.wasm"
+    ],
+    "python_ast_groen": true,
+    "alleen_app_crate_herbouwd": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "transportcontract": "5 transparantie-/opruim-/grenscontroles voor werkermeting geslaagd",
+  "waarnemingen": [
+    "Bestaande getter in een eigen klok-Wasm hergebruikt voor blokprofielen; native manifest bindt de API-aanroep, bron-epoch, RenderEnv, hit/miss/previewtellers, Rust-resident/serde/clone-vensters en losse JS JSON.parse. Geen nieuwe publieke export, geen guard of normalisatie veranderd.",
+    "Alle native blokcalls zijn één op één gekoppeld aan passende sync.blocks-spannen. Rust-marken monotoon binnen de JS-kerncall, parsevenster binnen de hele blokfase; geen overflow. Harnas eist vóór invoer de geladen transportprobe-tag blok-fasen-v1.",
+    "Bij alle 30 gemeten calls is cached_epoch gelijk aan de huidige engine-epoch, maar env_equal=false en neemt misses met één toe. De vijf zichtbare verschillen zijn compatibilityFlags, defaultParagraphStyleId, defaultTabStopTwips, mediaTokens en themeColors. Dit zijn niet alle mogelijke niet-geserialiseerde guards.",
+    "Voorbeeld: gecachte omgeving heeft compatibiliteitsmodus 14, stijl Normal, tabstop 720, mediatokens en themakleuren; lege legacy-env decodeert onder meer modus 12, geen expliciete stijl/tabstop, geen mediatokens en lege themakleuren. Bestaande Env-eis niet versoepeld.",
+    "Iedere native call serialiseert opnieuw; vooraf is geen geserialiseerde blokstring gecachet. De ongebruikte resultaten zijn per call 1.615.731–1.616.782 UTF8-bytes. Geen heap- of GC-conclusie uit stringlengte.",
+    "Rust-clonen telt slechts 6/6 ms. FFI-vensters tellen 1.542/1.661 ms en hele blokfasen 1.762/1.901 ms; dit zijn geneste vensters en bevatten meetoverhead. Niet bij resident/serde/decode optellen.",
+    "De daadwerkelijk gebruikte adapter is r uit Ci. Zijn gewone regio-layoutdelegaties roepen R(w) aan; de eerder afgewezen request-warmadapter geeft k rechtstreeks door. R bereidt onder meer actuele secties, watermerk, header/footer-varianten en noten voor. Voorbereiding delen is een concreet volgend prototype, geen bewezen fix."
+  ],
+  "grenzen": [
+    "Alleen Linux x86_64 release2026.45.52, writer-bronjournaal, schema2; eigen geïsoleerde X11/DBus/XDG-profielen en eigen bron. Geen andere platform-/editie-/schema-/release-/installeracceptatie.",
+    "Twee primaire functieronden afzonderlijk uitgevoerd, beide groen. Aantallen 13/17 verschillen door het diagnostische verloop; geen gewone afwisselende ABBA en geen netto snelheidsclaim. Geen algemene profiler of hoofdthread-Debugger.",
+    "Residentvenster omvat cachecontrole en het uitvoeren van lagere routes; een cachemiss bewijst niet dat elk intern blok zonder preview-/unit-hergebruik opnieuw is opgebouwd. Env-ongelijkheid is een vastgestelde mislukte guard, niet bewezen de enige mogelijke ongeldigheidsgrond.",
+    "De profielcontext serialiseert voor/na omgevingen en tellerstanden. Dit voegt overhead toe buiten en binnen de FFI/hele blokvensters. Alle klokken meten verstreken tijd met afronding en preëmptie, geen CPU-cycli.",
+    "73 procent betreft alleen deze geïnstrumenteerde blokfase. Serde en JS-parse tellen circa 9 en 12–13 procent; resterend werk en overhead zijn niet afzonderlijk als zuivere CPU-tijd geïdentificeerd.",
+    "Componentcontrole: 30 vaste gevallen/43 updates met bestaande inference/errors/staat/vector/body/marges/metadata/fonts/blokkenasserties; staat ook na bloklezing exact. Negen directe API-cases behouden uitvoer of dezelfde fout en laten staat/vector/sessieversie ongemoeid. Twee verwachte API-fouten. Herhaalde gelijke lezing geeft een echte cachehit zonder serde-events.",
+    "Alle waargenomen native calls gebruiken adapter r; de andere JS-adapter e is in deze route niet afzonderlijk native bereikt. Geen volledige IME/accessibility/alle mutaties/previews/formaten of stabiliteitsdekking.",
+    "Beide documenten onafhankelijk SHA/ZIP/CRC/paden/XML: 128 tabellen/91.423 UTF16, alleen core.xml verschillend. Beeldparen 28/0/24 pixels, één bewaarbeeld bekeken; geen volledige visuele/formaatacceptatie.",
+    "Alle 31 eerdere aanwezige ELF’s, 15 bronpinnen en 529 standaardbestanden byte/mode/mtime exact; meet-ELF 5cbce60e als 32e referentie. Canonieke bron, oorspronkelijke replica-fasekosten-bron en hun targets niet bewerkt.",
+    "Geen productbronwijziging, volledige productsuites/CI of issue-/migratievoltooiing. Eerdere afwijzingen blijven gelden. Sync-mutaties, vectoren/fontrevisies, selectie/caret/frame-antwoord en automatisch herstel behouden; Database laatst."
+  ],
+  "vervolg": "Maak een afzonderlijke private kandidaat die de bestaande partLayoutInput/R-voorbereiding aantoonbaar deelt tussen requestbewuste body-warmroute en gewone regio-layout. Gebruik de vastgepinde oudere warm-/request-API en negative/default/metadata/sectie/header/noot/watermark-proeven als basis; niet dezelfde oude ongeprepareerde variant blind herhalen. Voorbereiding niet tweemaal uitvoeren of enkel op ruwe input cachen: begrens hergebruik tot dezelfde aanvraag en geldige bron-/levensduur-/omgeving. Behoud oude-kernfallback, niet-body/nonemptyenv/plainlayout/layoutfalse-routes, oorspronkelijke JS-envregistratie, legacyvalidatie en foutvolgorde. Eerst volledige contract-/kernpariteit; daarna echte native korte/rijke ABBA en functie/DOCX/beelden vóór productovername. Hele sync nooit als alleen renderwerk weggooien.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-27-writer-sync-contract.json",
+      "sha256": "a099ab0a8289728e0702fce8e39ddafda0bab932f3735c9681c5d7a08f1dffdc"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-aanvraagomgeving.json",
+      "sha256": "70e618d5fa641084655960e3ba1d95b3c905e2a2169cbf335789fe92d7b78254"
+    }
+  ],
+  "archief": {
+    "pad": "2026-11-27-writer-blokfasen.tar.gz",
+    "sha256": "f3b7979afc709261d894da4e4542e3a93b0f9a2f8483f63f744bfcb3fa33d696",
+    "bytes": 2151837,
+    "leden": 60,
+    "alle_bewijshashes_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/bronboom/target/hele dist. Wel bronvoor/na gecomprimeerd, diffs, eigen scripts/probes, metadata, component/API-proeven, ruwe native ronden, documenten en PNG."
+  }
+}
