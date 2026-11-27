@@ -1,0 +1,1550 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "7311ee0283ae75cf262fc7d58e261d278d36fc05",
+  "basis_hoofdbranch": "10bdd994",
+  "besluit": "De SDK-publicatieroute At is opnieuw een concreet meetdoel: circa 1,56/1,59 seconde binnen Ft; daarnaast circa 1,98/1,95 seconde temporele tussenruimte tussen native callback-einde en eerstvolgende Ft. Geen oorzaak of snelheidsfix bewezen.",
+  "aanpak": "Alleen private editorsasset op ee89 geïnstrumenteerd; geen eerdere warm/cache/uitstelvariant, Wasm en overige assets bytegelijk. Begrensde numerieke recorder met één main performance-klok, tekst/plakcallback, echte At/Ft, layoutInput/fontDecode/fontConfig/framePublicatie en DOM-event/rAF-tijdstippen. Geen documentinhoud in recorder. Callbackwrap voegt een promise-continuatie toe: meetoverhead niet afgetrokken en nul overhead niet bewezen.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 114.12632497190498,
+    "minimum_vrije_bytes": 276978720768,
+    "start_vrije_bytes": 277186125824,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "7311ee0283ae75cf262fc7d58e261d278d36fc05",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/publicatie-tijdlijn/open-office-studio-publicatie-tijdlijn",
+    "programma_sha256": "8c88347aa3b587508617245fb6e6b4b2bf08cb22e606c2f102684b0e626dbe5c",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties34_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "bundel": {
+    "asset": "assets/editors-bODdYQ4o.js",
+    "voor": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "na": "5020ee1780336858e22e06e6a66bcf6448562ff5aa85be4f25fa4e012f6d9b85",
+    "overige_assets_exact": true
+  },
+  "contract": {
+    "geslaagd": true,
+    "controles": [
+      "inactief-geen-klok-ontvanger-argumenten-resultaat-identiteit",
+      "oorspronkelijke-fouten-en-weigering-behouden",
+      "gepaarde-spans-geen-inhoud-listeners-en-raf-opgeruimd",
+      "laat-antwoord-niet-in-nieuwe-opname",
+      "harde-datagrens-en-overloop",
+      "echte-At-retour-neveneffecten-fouten-vier-routes",
+      "echte-Ft-retour-neveneffecten-fouten-vier-routes"
+    ],
+    "grens": "Werkelijke At/Ft-arrowfuncties uit vastgepinde asset met gecontroleerde afhankelijkheden; geen volledige Reactmontage of bewijs van nul meetoverhead."
+  },
+  "native_analyse": {
+    "een": {
+      "rows": 4046,
+      "venster": {
+        "begin": 21965,
+        "eind": 31103,
+        "duur_ms": 9138,
+        "laatste_keyup": 29668,
+        "laatste_callback_eind": 29797,
+        "laatste_callback_tot_frame_ms": 1306
+      },
+      "fasen": {
+        "At": {
+          "aantal": 67,
+          "som_ms": 1563.0000000000036,
+          "mediaan_ms": 24,
+          "maximum_ms": 42
+        },
+        "tekst": {
+          "aantal": 63,
+          "som_ms": 4162.999999999996,
+          "mediaan_ms": 57,
+          "maximum_ms": 361
+        },
+        "Ft": {
+          "aantal": 63,
+          "som_ms": 1567.0000000000073,
+          "mediaan_ms": 24,
+          "maximum_ms": 42
+        },
+        "layoutInput": {
+          "aantal": 64,
+          "som_ms": 4.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1
+        },
+        "fontDecode": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "fontConfig": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0.0
+        }
+      },
+      "dekking": {
+        "unie_alle_spans_ms": 5733.0,
+        "niet_door_spans_gedekt_ms": 3405.0,
+        "unie_tekst_ms": 4162.999999999996,
+        "unie_Ft_ms": 1567.0000000000073
+      },
+      "tussen_callbacks_inclusief_laatste_staart": {
+        "aantal": 63,
+        "som_ms": 4839.000000000004,
+        "mediaan_ms": 54,
+        "maximum_ms": 1306
+      },
+      "tussen_callback_en_Ft": {
+        "aantal": 63,
+        "som_ms": 1980.000000000011,
+        "mediaan_ms": 29,
+        "maximum_ms": 55
+      },
+      "publicaties": [
+        {
+          "callback": 3,
+          "eind": 22462,
+          "volgende_callback_of_venstereind": 22543,
+          "Ft_ids": [
+            4
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 6,
+          "eind": 22614,
+          "volgende_callback_of_venstereind": 22698,
+          "Ft_ids": [
+            8
+          ],
+          "tot_eerste_Ft_ms": 41
+        },
+        {
+          "callback": 10,
+          "eind": 22827,
+          "volgende_callback_of_venstereind": 22900.000000000004,
+          "Ft_ids": [
+            12
+          ],
+          "tot_eerste_Ft_ms": 39
+        },
+        {
+          "callback": 14,
+          "eind": 23016,
+          "volgende_callback_of_venstereind": 23097,
+          "Ft_ids": [
+            16
+          ],
+          "tot_eerste_Ft_ms": 52
+        },
+        {
+          "callback": 18,
+          "eind": 23192,
+          "volgende_callback_of_venstereind": 23273,
+          "Ft_ids": [
+            20
+          ],
+          "tot_eerste_Ft_ms": 55
+        },
+        {
+          "callback": 22,
+          "eind": 23341,
+          "volgende_callback_of_venstereind": 23411,
+          "Ft_ids": [
+            24
+          ],
+          "tot_eerste_Ft_ms": 38
+        },
+        {
+          "callback": 26,
+          "eind": 23469,
+          "volgende_callback_of_venstereind": 23528.000000000004,
+          "Ft_ids": [
+            28
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 30,
+          "eind": 23616,
+          "volgende_callback_of_venstereind": 23695,
+          "Ft_ids": [
+            32
+          ],
+          "tot_eerste_Ft_ms": 52
+        },
+        {
+          "callback": 34,
+          "eind": 23770,
+          "volgende_callback_of_venstereind": 23827,
+          "Ft_ids": [
+            36
+          ],
+          "tot_eerste_Ft_ms": 31.000000000003638
+        },
+        {
+          "callback": 38,
+          "eind": 23894.000000000004,
+          "volgende_callback_of_venstereind": 23958.000000000004,
+          "Ft_ids": [
+            40
+          ],
+          "tot_eerste_Ft_ms": 39.99999999999636
+        },
+        {
+          "callback": 42,
+          "eind": 24018,
+          "volgende_callback_of_venstereind": 24074,
+          "Ft_ids": [
+            44
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 46,
+          "eind": 24129,
+          "volgende_callback_of_venstereind": 24185.000000000004,
+          "Ft_ids": [
+            48
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 50,
+          "eind": 24240.000000000004,
+          "volgende_callback_of_venstereind": 24294,
+          "Ft_ids": [
+            52
+          ],
+          "tot_eerste_Ft_ms": 30.999999999996362
+        },
+        {
+          "callback": 54,
+          "eind": 24360,
+          "volgende_callback_of_venstereind": 24419,
+          "Ft_ids": [
+            56
+          ],
+          "tot_eerste_Ft_ms": 36
+        },
+        {
+          "callback": 58,
+          "eind": 24472,
+          "volgende_callback_of_venstereind": 24525.000000000004,
+          "Ft_ids": [
+            60
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 62,
+          "eind": 24584,
+          "volgende_callback_of_venstereind": 24637,
+          "Ft_ids": [
+            64
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 66,
+          "eind": 24694,
+          "volgende_callback_of_venstereind": 24751,
+          "Ft_ids": [
+            68
+          ],
+          "tot_eerste_Ft_ms": 34
+        },
+        {
+          "callback": 70,
+          "eind": 24808,
+          "volgende_callback_of_venstereind": 24859,
+          "Ft_ids": [
+            72
+          ],
+          "tot_eerste_Ft_ms": 28.000000000003638
+        },
+        {
+          "callback": 74,
+          "eind": 24915,
+          "volgende_callback_of_venstereind": 24967,
+          "Ft_ids": [
+            76
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 78,
+          "eind": 25024,
+          "volgende_callback_of_venstereind": 25076,
+          "Ft_ids": [
+            80
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 82,
+          "eind": 25132,
+          "volgende_callback_of_venstereind": 25184,
+          "Ft_ids": [
+            84
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 86,
+          "eind": 25238,
+          "volgende_callback_of_venstereind": 25289,
+          "Ft_ids": [
+            88
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 90,
+          "eind": 25343,
+          "volgende_callback_of_venstereind": 25395,
+          "Ft_ids": [
+            92
+          ],
+          "tot_eerste_Ft_ms": 28.000000000003638
+        },
+        {
+          "callback": 94,
+          "eind": 25449,
+          "volgende_callback_of_venstereind": 25500,
+          "Ft_ids": [
+            96
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 98,
+          "eind": 25554.000000000004,
+          "volgende_callback_of_venstereind": 25606,
+          "Ft_ids": [
+            100
+          ],
+          "tot_eerste_Ft_ms": 26.999999999996362
+        },
+        {
+          "callback": 102,
+          "eind": 25661,
+          "volgende_callback_of_venstereind": 25712,
+          "Ft_ids": [
+            104
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 106,
+          "eind": 25776,
+          "volgende_callback_of_venstereind": 25826,
+          "Ft_ids": [
+            108
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 110,
+          "eind": 25895,
+          "volgende_callback_of_venstereind": 25947,
+          "Ft_ids": [
+            112
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 114,
+          "eind": 26003,
+          "volgende_callback_of_venstereind": 26056,
+          "Ft_ids": [
+            116
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 118,
+          "eind": 26112.000000000004,
+          "volgende_callback_of_venstereind": 26163,
+          "Ft_ids": [
+            120
+          ],
+          "tot_eerste_Ft_ms": 27.999999999996362
+        },
+        {
+          "callback": 122,
+          "eind": 26227,
+          "volgende_callback_of_venstereind": 26279,
+          "Ft_ids": [
+            124
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 126,
+          "eind": 26335,
+          "volgende_callback_of_venstereind": 26386,
+          "Ft_ids": [
+            128
+          ],
+          "tot_eerste_Ft_ms": 27.000000000003638
+        },
+        {
+          "callback": 130,
+          "eind": 26441,
+          "volgende_callback_of_venstereind": 26497,
+          "Ft_ids": [
+            132
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 134,
+          "eind": 26555,
+          "volgende_callback_of_venstereind": 26611,
+          "Ft_ids": [
+            136
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 138,
+          "eind": 26663,
+          "volgende_callback_of_venstereind": 26717.000000000004,
+          "Ft_ids": [
+            140
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 142,
+          "eind": 26773,
+          "volgende_callback_of_venstereind": 26828,
+          "Ft_ids": [
+            144
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 146,
+          "eind": 26882,
+          "volgende_callback_of_venstereind": 26936,
+          "Ft_ids": [
+            148
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 150,
+          "eind": 26993.000000000004,
+          "volgende_callback_of_venstereind": 27048,
+          "Ft_ids": [
+            152
+          ],
+          "tot_eerste_Ft_ms": 30.999999999996362
+        },
+        {
+          "callback": 154,
+          "eind": 27104,
+          "volgende_callback_of_venstereind": 27170,
+          "Ft_ids": [
+            156
+          ],
+          "tot_eerste_Ft_ms": 40.00000000000364
+        },
+        {
+          "callback": 158,
+          "eind": 27225,
+          "volgende_callback_of_venstereind": 27280,
+          "Ft_ids": [
+            160
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 162,
+          "eind": 27335,
+          "volgende_callback_of_venstereind": 27392,
+          "Ft_ids": [
+            164
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 166,
+          "eind": 27448,
+          "volgende_callback_of_venstereind": 27502,
+          "Ft_ids": [
+            168
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 170,
+          "eind": 27556,
+          "volgende_callback_of_venstereind": 27609,
+          "Ft_ids": [
+            172
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 174,
+          "eind": 27667,
+          "volgende_callback_of_venstereind": 27721,
+          "Ft_ids": [
+            176
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 178,
+          "eind": 27774,
+          "volgende_callback_of_venstereind": 27828,
+          "Ft_ids": [
+            180
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 182,
+          "eind": 27882,
+          "volgende_callback_of_venstereind": 27936,
+          "Ft_ids": [
+            184
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 186,
+          "eind": 27991,
+          "volgende_callback_of_venstereind": 28045,
+          "Ft_ids": [
+            188
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 190,
+          "eind": 28099,
+          "volgende_callback_of_venstereind": 28160,
+          "Ft_ids": [
+            192
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 194,
+          "eind": 28238,
+          "volgende_callback_of_venstereind": 28298,
+          "Ft_ids": [
+            196
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 198,
+          "eind": 28357,
+          "volgende_callback_of_venstereind": 28425,
+          "Ft_ids": [
+            200
+          ],
+          "tot_eerste_Ft_ms": 45
+        },
+        {
+          "callback": 202,
+          "eind": 28481,
+          "volgende_callback_of_venstereind": 28533,
+          "Ft_ids": [
+            204
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 206,
+          "eind": 28594,
+          "volgende_callback_of_venstereind": 28647.000000000004,
+          "Ft_ids": [
+            208
+          ],
+          "tot_eerste_Ft_ms": 30.000000000003638
+        },
+        {
+          "callback": 210,
+          "eind": 28710,
+          "volgende_callback_of_venstereind": 28767,
+          "Ft_ids": [
+            212
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 214,
+          "eind": 28827,
+          "volgende_callback_of_venstereind": 28879,
+          "Ft_ids": [
+            216
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 218,
+          "eind": 28940,
+          "volgende_callback_of_venstereind": 28991,
+          "Ft_ids": [
+            220
+          ],
+          "tot_eerste_Ft_ms": 27.000000000003638
+        },
+        {
+          "callback": 222,
+          "eind": 29045,
+          "volgende_callback_of_venstereind": 29096,
+          "Ft_ids": [
+            224
+          ],
+          "tot_eerste_Ft_ms": 26
+        },
+        {
+          "callback": 226,
+          "eind": 29151,
+          "volgende_callback_of_venstereind": 29201,
+          "Ft_ids": [
+            228
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 230,
+          "eind": 29258,
+          "volgende_callback_of_venstereind": 29308,
+          "Ft_ids": [
+            232
+          ],
+          "tot_eerste_Ft_ms": 26
+        },
+        {
+          "callback": 234,
+          "eind": 29368.000000000004,
+          "volgende_callback_of_venstereind": 29420,
+          "Ft_ids": [
+            236
+          ],
+          "tot_eerste_Ft_ms": 29.0
+        },
+        {
+          "callback": 238,
+          "eind": 29478,
+          "volgende_callback_of_venstereind": 29529,
+          "Ft_ids": [
+            240
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 242,
+          "eind": 29590,
+          "volgende_callback_of_venstereind": 29641,
+          "Ft_ids": [
+            244
+          ],
+          "tot_eerste_Ft_ms": 28.000000000003638
+        },
+        {
+          "callback": 246,
+          "eind": 29695,
+          "volgende_callback_of_venstereind": 29748,
+          "Ft_ids": [
+            248
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 250,
+          "eind": 29797,
+          "volgende_callback_of_venstereind": 31103,
+          "Ft_ids": [
+            252
+          ],
+          "tot_eerste_Ft_ms": 27
+        }
+      ],
+      "events": {
+        "raf": {
+          "aantal": 307,
+          "eerste": 21968,
+          "laatste": 31103,
+          "tussenpozen": {
+            "aantal": 306,
+            "som_ms": 9135.0,
+            "mediaan_ms": 15.0,
+            "maximum_ms": 319
+          }
+        },
+        "keydown": {
+          "aantal": 1083,
+          "eerste": 22083.000000000004,
+          "laatste": 29669,
+          "tussenpozen": {
+            "aantal": 1082,
+            "som_ms": 7585.999999999996,
+            "mediaan_ms": 2.0,
+            "maximum_ms": 296.99999999999636
+          }
+        },
+        "beforeinput": {
+          "aantal": 1052,
+          "eerste": 22084,
+          "laatste": 29667,
+          "tussenpozen": {
+            "aantal": 1051,
+            "som_ms": 7583.0,
+            "mediaan_ms": 2,
+            "maximum_ms": 304
+          }
+        },
+        "keyup": {
+          "aantal": 1083,
+          "eerste": 22251,
+          "laatste": 29670,
+          "tussenpozen": {
+            "aantal": 1082,
+            "som_ms": 7419.0,
+            "mediaan_ms": 2.0,
+            "maximum_ms": 195
+          }
+        }
+      },
+      "grenzen": "Eén main performance-klok. Vensters kunnen wachten bevatten; At zit vaak in Ft, fasen niet optellen. Onbedekte tijd is geen bewezen idle- of CPU-tijd. Callback→Ft-koppeling op sessie en tijdvolgorde, geen oorzakelijk parenttoken. Eén vaste rijke bron; meetoverhead niet afgetrokken. Laatste frame = renderlijst plus twee rAFs, geen fysieke paint."
+    },
+    "twee": {
+      "rows": 4035,
+      "venster": {
+        "begin": 22076,
+        "eind": 31136,
+        "duur_ms": 9060,
+        "laatste_keyup": 29654,
+        "laatste_callback_eind": 29766,
+        "laatste_callback_tot_frame_ms": 1370
+      },
+      "fasen": {
+        "tekst": {
+          "aantal": 61,
+          "som_ms": 4134.999999999978,
+          "mediaan_ms": 57.00000000000364,
+          "maximum_ms": 344.99999999999636
+        },
+        "At": {
+          "aantal": 63,
+          "som_ms": 1588.0000000000218,
+          "mediaan_ms": 25,
+          "maximum_ms": 38.00000000000364
+        },
+        "Ft": {
+          "aantal": 61,
+          "som_ms": 1591.0000000000218,
+          "mediaan_ms": 25,
+          "maximum_ms": 38.00000000000364
+        },
+        "layoutInput": {
+          "aantal": 62,
+          "som_ms": 8.000000000003638,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "fontDecode": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "fontConfig": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        }
+      },
+      "dekking": {
+        "unie_alle_spans_ms": 5727.0,
+        "niet_door_spans_gedekt_ms": 3333.0,
+        "unie_tekst_ms": 4134.999999999978,
+        "unie_Ft_ms": 1591.0000000000218
+      },
+      "tussen_callbacks_inclusief_laatste_staart": {
+        "aantal": 61,
+        "som_ms": 4889.000000000018,
+        "mediaan_ms": 57,
+        "maximum_ms": 1370
+      },
+      "tussen_callback_en_Ft": {
+        "aantal": 61,
+        "som_ms": 1947.0,
+        "mediaan_ms": 31,
+        "maximum_ms": 52
+      },
+      "publicaties": [
+        {
+          "callback": 1,
+          "eind": 22457,
+          "volgende_callback_of_venstereind": 22538,
+          "Ft_ids": [
+            2
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 4,
+          "eind": 22671,
+          "volgende_callback_of_venstereind": 22737.000000000004,
+          "Ft_ids": [
+            6
+          ],
+          "tot_eerste_Ft_ms": 38
+        },
+        {
+          "callback": 8,
+          "eind": 22928,
+          "volgende_callback_of_venstereind": 23004,
+          "Ft_ids": [
+            10
+          ],
+          "tot_eerste_Ft_ms": 41
+        },
+        {
+          "callback": 12,
+          "eind": 23126,
+          "volgende_callback_of_venstereind": 23208.000000000004,
+          "Ft_ids": [
+            14
+          ],
+          "tot_eerste_Ft_ms": 52
+        },
+        {
+          "callback": 16,
+          "eind": 23289,
+          "volgende_callback_of_venstereind": 23365.000000000004,
+          "Ft_ids": [
+            18
+          ],
+          "tot_eerste_Ft_ms": 38
+        },
+        {
+          "callback": 20,
+          "eind": 23432.000000000004,
+          "volgende_callback_of_venstereind": 23495,
+          "Ft_ids": [
+            22
+          ],
+          "tot_eerste_Ft_ms": 32.99999999999636
+        },
+        {
+          "callback": 24,
+          "eind": 23562,
+          "volgende_callback_of_venstereind": 23624,
+          "Ft_ids": [
+            26
+          ],
+          "tot_eerste_Ft_ms": 34
+        },
+        {
+          "callback": 28,
+          "eind": 23690,
+          "volgende_callback_of_venstereind": 23754,
+          "Ft_ids": [
+            30
+          ],
+          "tot_eerste_Ft_ms": 37
+        },
+        {
+          "callback": 32,
+          "eind": 23823,
+          "volgende_callback_of_venstereind": 23882,
+          "Ft_ids": [
+            34
+          ],
+          "tot_eerste_Ft_ms": 34
+        },
+        {
+          "callback": 36,
+          "eind": 23950,
+          "volgende_callback_of_venstereind": 24005,
+          "Ft_ids": [
+            38
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 40,
+          "eind": 24063,
+          "volgende_callback_of_venstereind": 24115.000000000004,
+          "Ft_ids": [
+            42
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 44,
+          "eind": 24169,
+          "volgende_callback_of_venstereind": 24224,
+          "Ft_ids": [
+            46
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 48,
+          "eind": 24280,
+          "volgende_callback_of_venstereind": 24334,
+          "Ft_ids": [
+            50
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 52,
+          "eind": 24389,
+          "volgende_callback_of_venstereind": 24445,
+          "Ft_ids": [
+            54
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 56,
+          "eind": 24499,
+          "volgende_callback_of_venstereind": 24555,
+          "Ft_ids": [
+            58
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 60,
+          "eind": 24617,
+          "volgende_callback_of_venstereind": 24676.000000000004,
+          "Ft_ids": [
+            62
+          ],
+          "tot_eerste_Ft_ms": 33.00000000000364
+        },
+        {
+          "callback": 64,
+          "eind": 24733,
+          "volgende_callback_of_venstereind": 24792,
+          "Ft_ids": [
+            66
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 68,
+          "eind": 24850,
+          "volgende_callback_of_venstereind": 24911,
+          "Ft_ids": [
+            70
+          ],
+          "tot_eerste_Ft_ms": 35
+        },
+        {
+          "callback": 72,
+          "eind": 24965,
+          "volgende_callback_of_venstereind": 25022.000000000004,
+          "Ft_ids": [
+            74
+          ],
+          "tot_eerste_Ft_ms": 31.000000000003638
+        },
+        {
+          "callback": 76,
+          "eind": 25078,
+          "volgende_callback_of_venstereind": 25134,
+          "Ft_ids": [
+            78
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 80,
+          "eind": 25190,
+          "volgende_callback_of_venstereind": 25247,
+          "Ft_ids": [
+            82
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 84,
+          "eind": 25307.000000000004,
+          "volgende_callback_of_venstereind": 25374,
+          "Ft_ids": [
+            86
+          ],
+          "tot_eerste_Ft_ms": 35.99999999999636
+        },
+        {
+          "callback": 88,
+          "eind": 25436,
+          "volgende_callback_of_venstereind": 25497,
+          "Ft_ids": [
+            90
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 92,
+          "eind": 25567,
+          "volgende_callback_of_venstereind": 25622,
+          "Ft_ids": [
+            94
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 96,
+          "eind": 25686,
+          "volgende_callback_of_venstereind": 25745,
+          "Ft_ids": [
+            98
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 100,
+          "eind": 25801.000000000004,
+          "volgende_callback_of_venstereind": 25861,
+          "Ft_ids": [
+            102
+          ],
+          "tot_eerste_Ft_ms": 32.0
+        },
+        {
+          "callback": 104,
+          "eind": 25918,
+          "volgende_callback_of_venstereind": 25982,
+          "Ft_ids": [
+            106
+          ],
+          "tot_eerste_Ft_ms": 34
+        },
+        {
+          "callback": 108,
+          "eind": 26041,
+          "volgende_callback_of_venstereind": 26099,
+          "Ft_ids": [
+            110
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 112,
+          "eind": 26154,
+          "volgende_callback_of_venstereind": 26212,
+          "Ft_ids": [
+            114
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 116,
+          "eind": 26269.000000000004,
+          "volgende_callback_of_venstereind": 26330.000000000004,
+          "Ft_ids": [
+            118
+          ],
+          "tot_eerste_Ft_ms": 35.99999999999636
+        },
+        {
+          "callback": 120,
+          "eind": 26384,
+          "volgende_callback_of_venstereind": 26443,
+          "Ft_ids": [
+            122
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 124,
+          "eind": 26498,
+          "volgende_callback_of_venstereind": 26555,
+          "Ft_ids": [
+            126
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 128,
+          "eind": 26611,
+          "volgende_callback_of_venstereind": 26667,
+          "Ft_ids": [
+            130
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 132,
+          "eind": 26730,
+          "volgende_callback_of_venstereind": 26786,
+          "Ft_ids": [
+            134
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 136,
+          "eind": 26848,
+          "volgende_callback_of_venstereind": 26905,
+          "Ft_ids": [
+            138
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 140,
+          "eind": 26963,
+          "volgende_callback_of_venstereind": 27026,
+          "Ft_ids": [
+            142
+          ],
+          "tot_eerste_Ft_ms": 37
+        },
+        {
+          "callback": 144,
+          "eind": 27082,
+          "volgende_callback_of_venstereind": 27138,
+          "Ft_ids": [
+            146
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 148,
+          "eind": 27196,
+          "volgende_callback_of_venstereind": 27253,
+          "Ft_ids": [
+            150
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 152,
+          "eind": 27306,
+          "volgende_callback_of_venstereind": 27362.000000000004,
+          "Ft_ids": [
+            154
+          ],
+          "tot_eerste_Ft_ms": 30.000000000003638
+        },
+        {
+          "callback": 156,
+          "eind": 27416,
+          "volgende_callback_of_venstereind": 27471,
+          "Ft_ids": [
+            158
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 160,
+          "eind": 27527,
+          "volgende_callback_of_venstereind": 27582,
+          "Ft_ids": [
+            162
+          ],
+          "tot_eerste_Ft_ms": 30.000000000003638
+        },
+        {
+          "callback": 164,
+          "eind": 27646,
+          "volgende_callback_of_venstereind": 27702,
+          "Ft_ids": [
+            166
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 168,
+          "eind": 27756,
+          "volgende_callback_of_venstereind": 27811,
+          "Ft_ids": [
+            170
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 172,
+          "eind": 27866,
+          "volgende_callback_of_venstereind": 27929.000000000004,
+          "Ft_ids": [
+            174
+          ],
+          "tot_eerste_Ft_ms": 38
+        },
+        {
+          "callback": 176,
+          "eind": 27985,
+          "volgende_callback_of_venstereind": 28045,
+          "Ft_ids": [
+            178
+          ],
+          "tot_eerste_Ft_ms": 32
+        },
+        {
+          "callback": 180,
+          "eind": 28100,
+          "volgende_callback_of_venstereind": 28168,
+          "Ft_ids": [
+            182
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 184,
+          "eind": 28226,
+          "volgende_callback_of_venstereind": 28277,
+          "Ft_ids": [
+            186
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 188,
+          "eind": 28335,
+          "volgende_callback_of_venstereind": 28389,
+          "Ft_ids": [
+            190
+          ],
+          "tot_eerste_Ft_ms": 29
+        },
+        {
+          "callback": 192,
+          "eind": 28462,
+          "volgende_callback_of_venstereind": 28522.000000000004,
+          "Ft_ids": [
+            194
+          ],
+          "tot_eerste_Ft_ms": 33
+        },
+        {
+          "callback": 196,
+          "eind": 28582,
+          "volgende_callback_of_venstereind": 28634,
+          "Ft_ids": [
+            198
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 200,
+          "eind": 28692,
+          "volgende_callback_of_venstereind": 28753,
+          "Ft_ids": [
+            202
+          ],
+          "tot_eerste_Ft_ms": 31
+        },
+        {
+          "callback": 204,
+          "eind": 28810.000000000004,
+          "volgende_callback_of_venstereind": 28865.000000000004,
+          "Ft_ids": [
+            206
+          ],
+          "tot_eerste_Ft_ms": 29.999999999996362
+        },
+        {
+          "callback": 208,
+          "eind": 28920,
+          "volgende_callback_of_venstereind": 28970,
+          "Ft_ids": [
+            210
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 212,
+          "eind": 29022.000000000004,
+          "volgende_callback_of_venstereind": 29073,
+          "Ft_ids": [
+            214
+          ],
+          "tot_eerste_Ft_ms": 26.999999999996362
+        },
+        {
+          "callback": 216,
+          "eind": 29131,
+          "volgende_callback_of_venstereind": 29181,
+          "Ft_ids": [
+            218
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 220,
+          "eind": 29234,
+          "volgende_callback_of_venstereind": 29289,
+          "Ft_ids": [
+            222
+          ],
+          "tot_eerste_Ft_ms": 30
+        },
+        {
+          "callback": 224,
+          "eind": 29348,
+          "volgende_callback_of_venstereind": 29399,
+          "Ft_ids": [
+            226
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 228,
+          "eind": 29454,
+          "volgende_callback_of_venstereind": 29505,
+          "Ft_ids": [
+            230
+          ],
+          "tot_eerste_Ft_ms": 28
+        },
+        {
+          "callback": 232,
+          "eind": 29559,
+          "volgende_callback_of_venstereind": 29609,
+          "Ft_ids": [
+            234
+          ],
+          "tot_eerste_Ft_ms": 27.000000000003638
+        },
+        {
+          "callback": 236,
+          "eind": 29665,
+          "volgende_callback_of_venstereind": 29715,
+          "Ft_ids": [
+            238
+          ],
+          "tot_eerste_Ft_ms": 27
+        },
+        {
+          "callback": 240,
+          "eind": 29766,
+          "volgende_callback_of_venstereind": 31136,
+          "Ft_ids": [
+            242
+          ],
+          "tot_eerste_Ft_ms": 27
+        }
+      ],
+      "events": {
+        "raf": {
+          "aantal": 315,
+          "eerste": 22077,
+          "laatste": 31136,
+          "tussenpozen": {
+            "aantal": 314,
+            "som_ms": 9059.0,
+            "mediaan_ms": 15.0,
+            "maximum_ms": 322
+          }
+        },
+        "keydown": {
+          "aantal": 1083,
+          "eerste": 22093,
+          "laatste": 29655,
+          "tussenpozen": {
+            "aantal": 1082,
+            "som_ms": 7562.0,
+            "mediaan_ms": 2.0,
+            "maximum_ms": 277
+          }
+        },
+        "beforeinput": {
+          "aantal": 1052,
+          "eerste": 22094,
+          "laatste": 29653.000000000004,
+          "tussenpozen": {
+            "aantal": 1051,
+            "som_ms": 7559.000000000004,
+            "mediaan_ms": 2,
+            "maximum_ms": 293
+          }
+        },
+        "keyup": {
+          "aantal": 1083,
+          "eerste": 22268,
+          "laatste": 29656.000000000004,
+          "tussenpozen": {
+            "aantal": 1082,
+            "som_ms": 7388.000000000004,
+            "mediaan_ms": 2.0,
+            "maximum_ms": 167
+          }
+        }
+      },
+      "grenzen": "Eén main performance-klok. Vensters kunnen wachten bevatten; At zit vaak in Ft, fasen niet optellen. Onbedekte tijd is geen bewezen idle- of CPU-tijd. Callback→Ft-koppeling op sessie en tijdvolgorde, geen oorzakelijk parenttoken. Eén vaste rijke bron; meetoverhead niet afgetrokken. Laatste frame = renderlijst plus twee rAFs, geen fysieke paint."
+    }
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "diagnose-een": {
+        "sha256": "ad9026c8e7b5e1afee1fb24ffc11b8b1673762d8f7be60d3c8fff30e764d3cfd",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "b040b490d1ccdd6ac5f4aafdc3c12c34069808697c40c5105112b7b994685b1c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "diagnose-twee": {
+        "sha256": "2b4c896a7602b81528681b43f326ee51593925ac4d9501eae8f1870e1d4cfa89",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "1a52cd4b03b7143c3bac79cf15222cd517ab4592292e1c338aa8a4fa9ebd8f05",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "beelden": [
+      {
+        "referentie": "diagnose-een/invoer-redo.png",
+        "vergeleken": "diagnose-twee/invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          743,
+          799,
+          1132,
+          999
+        ]
+      },
+      {
+        "referentie": "diagnose-een/snel-getypt-bewaard.png",
+        "vergeleken": "diagnose-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "diagnose-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "diagnose-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "gehele_beelden_exact": 2,
+    "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+  },
+  "visueel_bekeken": [
+    "diagnose-een/snel-getypt-bewaard.png"
+  ],
+  "behoud": {
+    "vorige_elf34_exact": true,
+    "elfreferenties": 35,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets": [
+      "assets/editors-bODdYQ4o.js"
+    ],
+    "patchreplay_exact": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "interpretatie": "Twee native functieronden zonder GUI/engine/consolefouten; recorder 4.046/4.035 rijen, nul overflow en alle begin/eindspans gepaard. Tekstcallbackvensters 4.163/4.135 ms; Ft 1.567/1.591 ms; At 1.563/1.588 ms en meestal genest in Ft. LayoutInput slechts 4/8 ms. Eén fontDecode, fontConfig en framePublicatie per ronde meet 0 ms bij deze klokresolutie; framePublicatie is alleen R(on)/setState, niet de daadwerkelijke React-/canvas-/schermpaint. Vensters 9.138/9.060 ms; unie van geregistreerde spans 5.733/5.727 ms, rest 3.405/3.333 ms zonder bewezen idle-/CPU-toewijzing. Laatste native callback tot frame 1.306/1.370 ms. Tijden genest/overlappend en kunnen wachten bevatten; niet ongecontroleerd optellen.",
+  "vervolg": "Splits de vastgepinde echte At-route in Dn/positieprojectie, jn en I/onStateChange. Voeg een tijdstip direct na await W toe om callback-einde→hervatting→Ft afzonderlijk te binden; huidige koppeling is uitsluitend op sessie/tijdvolgorde. Daarna pas kiezen of positieprojectie, SDK-publicatie of ander werk een nieuwe kandidaat rechtvaardigt. Bron-/vector-/selectie-/Undo-/herstelcontract behouden. Eerdere hostfasen van 12 november en afgewezen projectie-, rij-, warm- en uitstelvarianten hergebruiken; geen blinde herhaling. Database laatst.",
+  "niet_getoetst": "Geen gewone native ABBA of prestatiewinst, volledige Reactmontage in contractproeven, volledige suites/CI, andere platforms/edities/releasevarianten/schema3/installers of volledige visuele/formaat/glyphdekking. Alleen huidige Linux app-release met writer-bronjournaal-feature en vaste rijke schema2-bron. Zeven contractgroepen omvatten acht concrete At/Ft-routes met gecontroleerde afhankelijkheden. Build bewijst geen volledige functievoltooiing; eerdere geheugenfouten niet opgelost verklaard.",
+  "archief": {
+    "bestand": "2026-11-27-writer-publicatie-tijdlijn.tar.gz",
+    "sha256": "0c4e29609c8236a37aba1fc6b9cb12e1d03b9d5d25422b99f30973d8b2ab0422",
+    "leden": {
+      "actief.json": "34396bce9665f91b5350b1f2f103f34acd40b3573a42fbe4ce867806882f4dcb",
+      "analyse.json": "32e540affcbe774c301cbf7599509ee74480998318f8bbe98526422e7c5d09d0",
+      "analyse.log": "075d11acb397ac760da6f473f8ff598e48b44908abd35e306a2fac36abd4d6f7",
+      "analyse.py": "7dbce471497a5af95fa106540befddac9d8162607b0b8deafda4192e78623e83",
+      "behoud.json": "e1c35988dd9011313c4768a2fe0e7da30f38db998b867c40fbecd35ab8b65dbe",
+      "behoud.py": "6fa4326d87ca4918d4194836f14f2849212091008dffae8094c5c887bf836b69",
+      "bouwen.py": "880333c21ab3811f3c8f9c2219bb12b519bcde9c0dd0ec3c1315235587c3ff17",
+      "bundel.json": "c5acc2039b4f187b2b64210765f943a66bf31c911d63729fea47bc197465de4a",
+      "bundel.py": "50d5dcbeaeeb46bcb16797f838325c7fcaa5331990c2dccdeccea84ac5460698",
+      "bundelwijzigingen.json": "f8c42654d2a2e6a62b2083f30ca87e37ad87ad227209c242861e19201913bce1",
+      "contract.json": "0f0f52e399a7782f33b4d2c7230306824d0fd0168f6e01697911d09b4bf1a4fc",
+      "contract.mjs": "62c9f731472637d5b52d90152e18b4dbe78122a109a691a07b6f71619f63fd83",
+      "desktop.json": "67963cb1447336bcf1aec3e684718259b4887ab4a4b23c6edf4e22a3623f4250",
+      "desktop.log": "4f47f9199088b6d9fe23c253894d7f4d16770a7961a27d77967fb3ea6aeeb7e4",
+      "diagnose-een.log": "380523a6062e9062fa95d175ad661195dc829314c9b4d878f5b9959cfa6e980b",
+      "diagnose-een/Ontwerpnotitie.docx": "ad9026c8e7b5e1afee1fb24ffc11b8b1673762d8f7be60d3c8fff30e764d3cfd",
+      "diagnose-een/invoer-redo.png": "96a44af27394b4d1ac3f9cd89355fda38bb7c53a27c8918d4968bc1961aa87e8",
+      "diagnose-een/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-een/rapport.json": "23d86c9aa0356036468f596d045cc7160cd470075b2892c9fa03f5a247647a35",
+      "diagnose-een/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose-twee.log": "adc7c7b58534b449c706eb091872e7ad87a801d728c074fb6e7007bcd1191dd9",
+      "diagnose-twee/Ontwerpnotitie.docx": "2b4c896a7602b81528681b43f326ee51593925ac4d9501eae8f1870e1d4cfa89",
+      "diagnose-twee/invoer-redo.png": "6a194f759c453c7730b150c7153b6484f9ee3f6518d64d709639618616092d40",
+      "diagnose-twee/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-twee/rapport.json": "20f2c1f646d2eecb765a355c64fa3ae9c53f5694a90f40330f37453db770c635",
+      "diagnose-twee/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose.py": "390d3afd053a7cbeaedb254e88b6f7da9795c4e3da47dcc97332b5c85d4fe66c",
+      "diagnoseronden.json": "9341eaab53e376bfd9431652708f89fb8e468ddd7ca577d9984da1e5fd1003f6",
+      "diagnoseronden.log": "3037355cb6047a4d2db490a874b08b6a06ef58d7792ed8ddfa2479ff46730864",
+      "documenten-beelden.json": "9618d8c6c90f6100112bd6a634d343f7c54d2934553735e5af70046e051e73ec",
+      "documenten-beelden.py": "98cf72cc92b5c9c5dc0f61d5e4ceeb675a680aae13749ba6bd4f1ac8dc4fb1fc",
+      "gewijzigde-editors.js": "5020ee1780336858e22e06e6a66bcf6448562ff5aa85be4f25fa4e012f6d9b85",
+      "meter.js": "6fdc9212613558184104a784bc516e0b9ad0d4828e6992b5bc2a8cdfde1dd579",
+      "referenties-nacontrole.json": "20ddcbc8aea265c28fea4ee9331dc9046c2c99a1f1d94e731ad2df503a7b8dfe",
+      "referenties-voor.json": "3c49aecca524caa2324ed25dbc1f75e8b8c3aa96eebc42b88a91137a964b8eb0",
+      "ronden.py": "763483a0c737fad4ff0ab84617c243c91e419bcd8d831f937fdbbc56baa76955",
+      "vastleggen.py": "5d95b922ee209bc59fbeaedb0b2a9e819790e3f877b2a7f20d627f1c34fe1982"
+    },
+    "uitsluitingen": "ELF/dist lokaal behouden; gewijzigde editorsasset en exact replaybare wijzigingen ingesloten."
+  }
+}
