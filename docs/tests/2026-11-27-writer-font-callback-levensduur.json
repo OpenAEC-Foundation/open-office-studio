@@ -1,0 +1,1406 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "902140cf",
+  "basis_hoofdbranch": "d795aa23",
+  "besluit": "Actuele native fontRequirementsInWorker-ref met levensduurvaste accessor gevolgd. Twee volledige diagnostische functieronden groen. De basis heeft 61 en de kandidaat 60 callbackaanroepen die echt op de Worker wachten en zijn per opname uniek aan evenveel fontberichten te koppelen. Callbackoverlap 4 tegenover 1, maar nauwelijks minder bronversiegebonden werk. Eerdere native afwijzing blijft gelden; geen productfix.",
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "schema": 2,
+      "probe_begin": {
+        "installed": true,
+        "bindings": 1,
+        "callbackProperties": 1
+      },
+      "restored": true,
+      "overflow": 0,
+      "errors": [],
+      "pending_callbacks_na": [],
+      "bindings": 1,
+      "native_rapport_sha256": "25be0fc2637ce22bbdfaa4da1c81f1e3dbe6d60639bfd4a33cfadd90b658c573"
+    },
+    "native-kandidaat": {
+      "geslaagd": true,
+      "programma_sha256": "864c1aa654125c03ce655add2edc319d8d4c62b3ce19a84270b97f054cf3266c",
+      "schema": 2,
+      "probe_begin": {
+        "installed": true,
+        "bindings": 1,
+        "callbackProperties": 1
+      },
+      "restored": true,
+      "overflow": 0,
+      "errors": [],
+      "pending_callbacks_na": [],
+      "bindings": 1,
+      "native_rapport_sha256": "5edd8e1a834c7233c000401ef7ae374afdc6a710659796c39bff12ceba9ab348"
+    }
+  },
+  "contract": {
+    "geslaagd": true,
+    "controles": [
+      "this/argumenten",
+      "Promise-identiteit",
+      "null",
+      "sync-throw-identiteit",
+      "refwijziging tijdens opname",
+      "laatste refwaarde herstellen",
+      "transportargumenten/transferidentiteit/retour",
+      "luisteraars/prototype hersteld"
+    ],
+    "events": [
+      {
+        "kind": "callback-start",
+        "id": 1,
+        "ref": 0,
+        "functionId": 0,
+        "sourceVersion": "v0",
+        "input": 1,
+        "stack": 2,
+        "time": 1795780801309
+      },
+      {
+        "kind": "callback-return",
+        "id": 1,
+        "promise": true,
+        "valueType": "object",
+        "time": 1795780801309
+      },
+      {
+        "kind": "send",
+        "worker": 1,
+        "id": 1,
+        "type": "fontRequirements",
+        "sourceVersion": "v0",
+        "pendingCallbacks": [
+          1
+        ],
+        "input": 1,
+        "stack": 3,
+        "time": 1795780801309
+      },
+      {
+        "kind": "ref-set",
+        "ref": 0,
+        "valueType": "function",
+        "time": 1795780801309
+      },
+      {
+        "kind": "callback-start",
+        "id": 2,
+        "ref": 0,
+        "functionId": 1,
+        "sourceVersion": "v0",
+        "input": null,
+        "stack": 5,
+        "time": 1795780801310
+      },
+      {
+        "kind": "callback-return",
+        "id": 2,
+        "promise": false,
+        "valueType": "null",
+        "time": 1795780801310
+      },
+      {
+        "kind": "ref-set",
+        "ref": 0,
+        "valueType": "function",
+        "time": 1795780801310
+      },
+      {
+        "kind": "callback-start",
+        "id": 3,
+        "ref": 0,
+        "functionId": 2,
+        "sourceVersion": "v0",
+        "input": null,
+        "stack": 7,
+        "time": 1795780801310
+      },
+      {
+        "kind": "callback-throw",
+        "id": 3,
+        "name": "Error",
+        "time": 1795780801310
+      }
+    ]
+  },
+  "analyse": {
+    "geslaagd": true,
+    "paren": {
+      "native": {
+        "geslaagd": true,
+        "callbackaanvragen": 61,
+        "fontberichten": 61,
+        "fontantwoorden": 61,
+        "bronversies": 61,
+        "max_callback_inflight": 4,
+        "max_geobserveerd_transport_open": 4,
+        "callback_ms_bereik": [
+          94,
+          536
+        ],
+        "wire_ms_bereik": [
+          97,
+          535
+        ],
+        "reply_tot_settle_ms_bereik": [
+          -3,
+          0
+        ],
+        "ref_setters": 84,
+        "stacks": [
+          {
+            "aantal": 61,
+            "stack": "observed@\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:63668\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:68726\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:61406"
+          }
+        ],
+        "sendtypen": {
+          "applyUpdate": 61,
+          "fontRequirements": 61,
+          "sync": 2,
+          "save": 1
+        },
+        "rijstand": {
+          "fiberAantal": 2252,
+          "standen": []
+        },
+        "koppelingen": [
+          {
+            "callback": 1,
+            "request": 13,
+            "worker": 1,
+            "callback_ms": 183,
+            "wire_ms": 186,
+            "reply_tot_settle_ms": -3
+          },
+          {
+            "callback": 2,
+            "request": 16,
+            "worker": 1,
+            "callback_ms": 536,
+            "wire_ms": 535,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 3,
+            "request": 18,
+            "worker": 1,
+            "callback_ms": 526.0,
+            "wire_ms": 524.0000000000036,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 4,
+            "request": 20,
+            "worker": 1,
+            "callback_ms": 419.99999999999636,
+            "wire_ms": 419.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 5,
+            "request": 22,
+            "worker": 1,
+            "callback_ms": 329.99999999999636,
+            "wire_ms": 329.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 6,
+            "request": 24,
+            "worker": 1,
+            "callback_ms": 315.00000000000364,
+            "wire_ms": 315.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 7,
+            "request": 26,
+            "worker": 1,
+            "callback_ms": 208,
+            "wire_ms": 207,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 8,
+            "request": 28,
+            "worker": 1,
+            "callback_ms": 138,
+            "wire_ms": 136.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 9,
+            "request": 30,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 10,
+            "request": 32,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 11,
+            "request": 34,
+            "worker": 1,
+            "callback_ms": 112,
+            "wire_ms": 112,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 12,
+            "request": 36,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 112,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 13,
+            "request": 38,
+            "worker": 1,
+            "callback_ms": 110.99999999999636,
+            "wire_ms": 110.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 14,
+            "request": 40,
+            "worker": 1,
+            "callback_ms": 118,
+            "wire_ms": 119,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 15,
+            "request": 42,
+            "worker": 1,
+            "callback_ms": 119,
+            "wire_ms": 119,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 16,
+            "request": 44,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 17,
+            "request": 46,
+            "worker": 1,
+            "callback_ms": 110,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 18,
+            "request": 48,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 19,
+            "request": 50,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 20,
+            "request": 52,
+            "worker": 1,
+            "callback_ms": 107.00000000000364,
+            "wire_ms": 106.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 21,
+            "request": 54,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 103,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 22,
+            "request": 56,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 23,
+            "request": 58,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 24,
+            "request": 60,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 25,
+            "request": 62,
+            "worker": 1,
+            "callback_ms": 101,
+            "wire_ms": 101,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 26,
+            "request": 64,
+            "worker": 1,
+            "callback_ms": 117,
+            "wire_ms": 116,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 27,
+            "request": 66,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 28,
+            "request": 68,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 29,
+            "request": 70,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 30,
+            "request": 72,
+            "worker": 1,
+            "callback_ms": 103,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 31,
+            "request": 74,
+            "worker": 1,
+            "callback_ms": 110,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 32,
+            "request": 76,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 33,
+            "request": 78,
+            "worker": 1,
+            "callback_ms": 117,
+            "wire_ms": 117,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 34,
+            "request": 80,
+            "worker": 1,
+            "callback_ms": 111,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 35,
+            "request": 82,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 36,
+            "request": 84,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 37,
+            "request": 86,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 38,
+            "request": 88,
+            "worker": 1,
+            "callback_ms": 106.99999999999636,
+            "wire_ms": 106.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 39,
+            "request": 90,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 40,
+            "request": 92,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 41,
+            "request": 94,
+            "worker": 1,
+            "callback_ms": 116,
+            "wire_ms": 116,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 42,
+            "request": 96,
+            "worker": 1,
+            "callback_ms": 106.99999999999636,
+            "wire_ms": 106.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 43,
+            "request": 98,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 44,
+            "request": 100,
+            "worker": 1,
+            "callback_ms": 110,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 45,
+            "request": 102,
+            "worker": 1,
+            "callback_ms": 114,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 46,
+            "request": 104,
+            "worker": 1,
+            "callback_ms": 110,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 47,
+            "request": 106,
+            "worker": 1,
+            "callback_ms": 120,
+            "wire_ms": 120,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 48,
+            "request": 108,
+            "worker": 1,
+            "callback_ms": 123,
+            "wire_ms": 123,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 49,
+            "request": 110,
+            "worker": 1,
+            "callback_ms": 134.00000000000364,
+            "wire_ms": 134.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 50,
+            "request": 112,
+            "worker": 1,
+            "callback_ms": 109.99999999999636,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 51,
+            "request": 114,
+            "worker": 1,
+            "callback_ms": 109.00000000000364,
+            "wire_ms": 109.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 52,
+            "request": 116,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 53,
+            "request": 118,
+            "worker": 1,
+            "callback_ms": 106.00000000000364,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": -0.999999999996362
+          },
+          {
+            "callback": 54,
+            "request": 120,
+            "worker": 1,
+            "callback_ms": 106.99999999999636,
+            "wire_ms": 106.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 55,
+            "request": 122,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 56,
+            "request": 124,
+            "worker": 1,
+            "callback_ms": 102.99999999999636,
+            "wire_ms": 102.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 57,
+            "request": 126,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 58,
+            "request": 128,
+            "worker": 1,
+            "callback_ms": 112.99999999999636,
+            "wire_ms": 112,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 59,
+            "request": 130,
+            "worker": 1,
+            "callback_ms": 102,
+            "wire_ms": 102,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 60,
+            "request": 132,
+            "worker": 1,
+            "callback_ms": 187.00000000000364,
+            "wire_ms": 187.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 61,
+            "request": 134,
+            "worker": 1,
+            "callback_ms": 94,
+            "wire_ms": 97,
+            "reply_tot_settle_ms": -3
+          }
+        ]
+      },
+      "native-kandidaat": {
+        "geslaagd": true,
+        "callbackaanvragen": 60,
+        "fontberichten": 60,
+        "fontantwoorden": 60,
+        "bronversies": 60,
+        "max_callback_inflight": 1,
+        "max_geobserveerd_transport_open": 2,
+        "callback_ms_bereik": [
+          92.00000000000364,
+          270
+        ],
+        "wire_ms_bereik": [
+          95.00000000000364,
+          271
+        ],
+        "reply_tot_settle_ms_bereik": [
+          -3.0,
+          0
+        ],
+        "ref_setters": 82,
+        "stacks": [
+          {
+            "aantal": 50,
+            "stack": "observed@\nvraag@tauri://localhost/assets/editors-bODdYQ4o.js:29:33\npn@tauri://localhost/assets/editors-bODdYQ4o.js:64:64045\n@tauri://localhost/assets/editors-bODdYQ4o.js:64:69099\n@tauri://localhost/assets/editors-bODdYQ4o.js:64:61669"
+          },
+          {
+            "aantal": 10,
+            "stack": "observed@\nstart@tauri://localhost/assets/editors-bODdYQ4o.js:17:34\nvoltooi@tauri://localhost/assets/editors-bODdYQ4o.js:9:24"
+          }
+        ],
+        "sendtypen": {
+          "applyUpdate": 60,
+          "fontRequirements": 60,
+          "sync": 1
+        },
+        "rijstand": {
+          "fiberAantal": 2308,
+          "standen": [
+            {
+              "gestart": 63,
+              "vervangen": 1,
+              "terugval": 0,
+              "actief": false,
+              "wachtend": false,
+              "gestopt": false
+            }
+          ]
+        },
+        "koppelingen": [
+          {
+            "callback": 1,
+            "request": 14,
+            "worker": 1,
+            "callback_ms": 148,
+            "wire_ms": 147,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 2,
+            "request": 16,
+            "worker": 1,
+            "callback_ms": 196,
+            "wire_ms": 195,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 3,
+            "request": 18,
+            "worker": 1,
+            "callback_ms": 270,
+            "wire_ms": 271,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 4,
+            "request": 20,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 5,
+            "request": 22,
+            "worker": 1,
+            "callback_ms": 159.00000000000364,
+            "wire_ms": 160,
+            "reply_tot_settle_ms": -0.999999999996362
+          },
+          {
+            "callback": 6,
+            "request": 24,
+            "worker": 1,
+            "callback_ms": 130.00000000000364,
+            "wire_ms": 131,
+            "reply_tot_settle_ms": -0.999999999996362
+          },
+          {
+            "callback": 7,
+            "request": 26,
+            "worker": 1,
+            "callback_ms": 130,
+            "wire_ms": 131,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 8,
+            "request": 28,
+            "worker": 1,
+            "callback_ms": 120,
+            "wire_ms": 119,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 9,
+            "request": 30,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 10,
+            "request": 32,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 11,
+            "request": 34,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 12,
+            "request": 36,
+            "worker": 1,
+            "callback_ms": 108.99999999999636,
+            "wire_ms": 108.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 13,
+            "request": 38,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 14,
+            "request": 40,
+            "worker": 1,
+            "callback_ms": 108.99999999999636,
+            "wire_ms": 108.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 15,
+            "request": 42,
+            "worker": 1,
+            "callback_ms": 115.00000000000364,
+            "wire_ms": 115.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 16,
+            "request": 44,
+            "worker": 1,
+            "callback_ms": 110,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 17,
+            "request": 46,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 18,
+            "request": 48,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 19,
+            "request": 50,
+            "worker": 1,
+            "callback_ms": 113,
+            "wire_ms": 113,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 20,
+            "request": 52,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 21,
+            "request": 54,
+            "worker": 1,
+            "callback_ms": 106.99999999999636,
+            "wire_ms": 106.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 22,
+            "request": 56,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 23,
+            "request": 58,
+            "worker": 1,
+            "callback_ms": 104.99999999999636,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 24,
+            "request": 60,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 25,
+            "request": 62,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": -1
+          },
+          {
+            "callback": 26,
+            "request": 64,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 27,
+            "request": 66,
+            "worker": 1,
+            "callback_ms": 120,
+            "wire_ms": 120,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 28,
+            "request": 68,
+            "worker": 1,
+            "callback_ms": 109.00000000000364,
+            "wire_ms": 109.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 29,
+            "request": 70,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 30,
+            "request": 72,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 31,
+            "request": 74,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 32,
+            "request": 76,
+            "worker": 1,
+            "callback_ms": 108.00000000000364,
+            "wire_ms": 107.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 33,
+            "request": 78,
+            "worker": 1,
+            "callback_ms": 108.99999999999636,
+            "wire_ms": 108.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 34,
+            "request": 80,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 35,
+            "request": 82,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 36,
+            "request": 84,
+            "worker": 1,
+            "callback_ms": 108.00000000000364,
+            "wire_ms": 108.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 37,
+            "request": 86,
+            "worker": 1,
+            "callback_ms": 106.99999999999636,
+            "wire_ms": 106.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 38,
+            "request": 88,
+            "worker": 1,
+            "callback_ms": 109.00000000000364,
+            "wire_ms": 110,
+            "reply_tot_settle_ms": -0.999999999996362
+          },
+          {
+            "callback": 39,
+            "request": 90,
+            "worker": 1,
+            "callback_ms": 108,
+            "wire_ms": 108,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 40,
+            "request": 92,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 41,
+            "request": 94,
+            "worker": 1,
+            "callback_ms": 119.00000000000364,
+            "wire_ms": 120,
+            "reply_tot_settle_ms": -0.999999999996362
+          },
+          {
+            "callback": 42,
+            "request": 96,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 43,
+            "request": 98,
+            "worker": 1,
+            "callback_ms": 109,
+            "wire_ms": 109,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 44,
+            "request": 100,
+            "worker": 1,
+            "callback_ms": 111.00000000000364,
+            "wire_ms": 111.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 45,
+            "request": 102,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 102.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 46,
+            "request": 104,
+            "worker": 1,
+            "callback_ms": 112.00000000000364,
+            "wire_ms": 112.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 47,
+            "request": 106,
+            "worker": 1,
+            "callback_ms": 116.99999999999636,
+            "wire_ms": 116.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 48,
+            "request": 108,
+            "worker": 1,
+            "callback_ms": 134,
+            "wire_ms": 134,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 49,
+            "request": 110,
+            "worker": 1,
+            "callback_ms": 132,
+            "wire_ms": 132,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 50,
+            "request": 112,
+            "worker": 1,
+            "callback_ms": 111.00000000000364,
+            "wire_ms": 111.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 51,
+            "request": 114,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 52,
+            "request": 116,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 53,
+            "request": 118,
+            "worker": 1,
+            "callback_ms": 106.00000000000364,
+            "wire_ms": 106.00000000000364,
+            "reply_tot_settle_ms": 0.0
+          },
+          {
+            "callback": 54,
+            "request": 120,
+            "worker": 1,
+            "callback_ms": 106,
+            "wire_ms": 106,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 55,
+            "request": 122,
+            "worker": 1,
+            "callback_ms": 105,
+            "wire_ms": 105,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 56,
+            "request": 124,
+            "worker": 1,
+            "callback_ms": 104,
+            "wire_ms": 104,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 57,
+            "request": 126,
+            "worker": 1,
+            "callback_ms": 107,
+            "wire_ms": 107,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 58,
+            "request": 128,
+            "worker": 1,
+            "callback_ms": 101.99999999999636,
+            "wire_ms": 101.99999999999636,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 59,
+            "request": 130,
+            "worker": 1,
+            "callback_ms": 189,
+            "wire_ms": 189,
+            "reply_tot_settle_ms": 0
+          },
+          {
+            "callback": 60,
+            "request": 132,
+            "worker": 1,
+            "callback_ms": 92.00000000000364,
+            "wire_ms": 95.00000000000364,
+            "reply_tot_settle_ms": -3.0
+          }
+        ]
+      }
+    },
+    "zelfde_callbackbody": true,
+    "callback_body_sha256": "04ba88aeb0ccf2d5adfd5754e9d531d00787a0a28debce96f81d252ad2b0e211",
+    "conclusie": "De echte callback wacht wel degelijk op de Worker en wordt in deze vensters vanuit de layoutvoorvlucht aangeroepen. Kandidaat begrenst geobserveerde callbackoverlap tot één, maar voert nog zestig bronversiegebonden fontaanvragen uit tegenover eenenzestig in de basis. Weinig vervangen werk verklaart waarom de eerdere gecontroleerde burstwinst geen native prestatiewinst bewijst. Dit wijst de kosten van die zestig berekeningen nog niet toe.",
+    "grenzen": [
+      "Geen gewone ABBA of snelheidsmeting: diagnostische wrappers en Promise-observers zijn actief. De gewone acht ronden blijven de afwijzingsgrond.",
+      "Unieke tijdkoppeling per zendmoment via actieve, nog niet gekoppelde callback en exact gelijke input; geen toegevoegd protocol-id en geen garantie voor andere interleavings.",
+      "Transportlistener kan een antwoord later registreren dan de bestaande client de Promise oplost. Daardoor zijn één actieve callback en twee geobserveerd open transportvragen verenigbaar; gebruik die transportpiek niet als exacte client-/Workerconcurrency.",
+      "Bij de basis wordt aan het einde van de opname één save verstuurd wanneer geen callback meer wacht; kandidaat nul saves binnen het probevenster. Niet toeschrijven aan een andere bewaarstrategie; hoogste async-save-aanvrager nog onbekend.",
+      "Deze vensters tonen geen losse readLayoutRequest-caller; niet afleiden dat die route elders niet bestaat. Ruwe input bytegelijk, maar bronversies verschillend: geen cache op input alleen gerechtvaardigd.",
+      "Nu concreet: bepaal bij de werkelijk gebruikte Worker het synchrone fontberekeningsvenster naast wachten op taakstart, updates en hoofdthread-publicatie voordat weer een cache of wachtrij wordt gewijzigd. Geen algemene profiler of hoofdthread-Debugger nodig."
+    ]
+  },
+  "bronmap": {
+    "asset": ".local/integratiecontrole/projectie-context/dist/assets/editors-bODdYQ4o.js",
+    "sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "callback_start": 344749,
+    "callback_body": "(F,je)=>{if(Dt(F))return Rt.current.get(F)??null;let Et=U.current,ut=!f(F)&&Rn(F)&&Ce.current.has(F)&&Et!==null&&De(F,Et)&&!Et.client.hasFailed()&&Et.client.bootstrapSent()&&Et.client.layoutRevision()>0;if(!f(F)&&!yo(F)&&(!mn.current||!to(F))&&!ut)return null;if(!Ce.current.has(F)&&!yo(F))return f(F)?To(Ln(F,new Error(\"The worker document source is unavailable\"),void 0,\"layout\")):(nr(F),null);let Ot={current:U.current},Tt,A=vn(F,async H=>(Tt=await(H.proposalFontRequirements&&LH(H.proposalFontRequirements.layoutInput,je)?Promise.resolve(H.proposalFontRequirements.requirementsJson):H.client.fontRequirements(je)),f(F)&&JSON.parse(Tt),Tt),H=>{Ot.current=H},\"layout\").then(H=>(f(F)||JSON.parse(H),H)).catch(H=>{let ee=Ve.current.get(F);if(ee)throw ee;if(H instanceof $o)throw H;if(H instanceof Kn){if(zn.current===F)return null;if(Tt!==void 0&&Dt(F))return Tt;throw H}if(f(F))throw Ln(F,H,void 0,\"layout\");if(Ot.current&&De(F,Ot.current)&&!bn(F,H))throw Ve.current.get(F);return null});return Ze.current.has(F)&&Rt.current.set(F,A),A}",
+    "sites": [
+      {
+        "pos": 211196,
+        "line": 12,
+        "column": 63668,
+        "fragment": ".current&&(dt.cachedPageTotals=!0);let Nt=JSON.stringify(dt),Zt=!Ve&&(Rt(n)||V.current||cr(n)?.holdsWorkerState()||N.current?.canSyncHostUpdates?.(n)===!0)&&En===void 0?W.current?.(n,Nt):null;if(Zt){let on=N.current?.canSyncHostUpdates?.(n)===!0?Dn():void 0;Zt.then(Bt=>{if(!(en!==X.current||le.current!==n)){if(on!=null&&Dn()!==on){He.curr",
+        "chain": [
+          {
+            "kind": "FunctionDeclaration",
+            "name": "TW",
+            "start": 207046,
+            "end": 218922,
+            "begin": "function TW(e){let{document:t,session:n,renderEnv:r,pageGap:o,zoom:a,residentMeasurementConfig:s,deferLayoutPass:l,displayListQueries:c,interactionPag"
+          },
+          {
+            "kind": "ArrowFunction",
+            "name": null,
+            "start": 210113,
+            "end": 216257,
+            "begin": "De=>{let ke=n!==null&&(Rt(n)||cr(n)?.holdsWorkerState()===!0||V.current&&De?.onHost!==!0&&to(n)),Fe=()=>{q.current?.session===n&&(q.current.final=!1)}"
+          },
+          {
+            "kind": "ArrowFunction",
+            "name": "pn",
+            "start": 210955,
+            "end": 216251,
+            "begin": "En=>{let Ft=null;try{Ve&&V.current&&Av(n);let dt=Du(t,o,At);V.current&&(dt.cachedPageTotals=!0);let Nt=JSON.stringify(dt),Zt=!Ve&&(Rt(n)||V.current||c"
+          }
+        ]
+      },
+      {
+        "pos": 216254,
+        "line": 12,
+        "column": 68726,
+        "fragment": "edEditor] Layout pipeline error:\",dt),Dt(n,dt)}}).finally(()=>{en===X.current&&b.onLayoutComplete(ct),Pe.current?.pass===en&&(Pe.current=null,Q.current&&le.current===n&&Ce())})};pn()},[o,a,b,t,n,r,s,v,h,d,f,p,ue,Ce,fe,Qt,mn,Rt,Dt]);u.useLayoutEffect(()=>{let De=ue.peek();if(!De)return;let ke=f.current,Fe=v()??(ke?sa(ke):null);Fe?.isConnec",
+        "chain": [
+          {
+            "kind": "FunctionDeclaration",
+            "name": "TW",
+            "start": 207046,
+            "end": 218922,
+            "begin": "function TW(e){let{document:t,session:n,renderEnv:r,pageGap:o,zoom:a,residentMeasurementConfig:s,deferLayoutPass:l,displayListQueries:c,interactionPag"
+          },
+          {
+            "kind": "ArrowFunction",
+            "name": null,
+            "start": 210113,
+            "end": 216257,
+            "begin": "De=>{let ke=n!==null&&(Rt(n)||cr(n)?.holdsWorkerState()===!0||V.current&&De?.onHost!==!0&&to(n)),Fe=()=>{q.current?.session===n&&(q.current.final=!1)}"
+          }
+        ]
+      },
+      {
+        "pos": 208934,
+        "line": 12,
+        "column": 61406,
+        "fragment": "rent=null);let He=u.useRef(null),be=u.useRef(\"remote\"),Ce=u.useCallback(()=>{O.current!=null||re.current||(O.current=requestAnimationFrame(()=>{O.current=null,He.current&&G.current()}))},[]),Ze=u.useCallback(De=>{let ke=D.current?.(De);if(!n||!ke||B.current?.(ke)!==De)return null;try{return n.encodeStickyPosition(ke)}catch{return null}},[",
+        "chain": [
+          {
+            "kind": "FunctionDeclaration",
+            "name": "TW",
+            "start": 207046,
+            "end": 218922,
+            "begin": "function TW(e){let{document:t,session:n,renderEnv:r,pageGap:o,zoom:a,residentMeasurementConfig:s,deferLayoutPass:l,displayListQueries:c,interactionPag"
+          },
+          {
+            "kind": "ArrowFunction",
+            "name": null,
+            "start": 208826,
+            "end": 208940,
+            "begin": "()=>{O.current!=null||re.current||(O.current=requestAnimationFrame(()=>{O.current=null,He.current&&G.current()}))}"
+          },
+          {
+            "kind": "ArrowFunction",
+            "name": null,
+            "start": 208893,
+            "end": 208937,
+            "begin": "()=>{O.current=null,He.current&&G.current()}"
+          }
+        ]
+      }
+    ]
+  },
+  "clientbron": {
+    "asset": ".local/integratiecontrole/projectie-context/dist/assets/index-DtZ2IWH9.js",
+    "asset_sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c",
+    "start": 2169748,
+    "end": 2170171,
+    "method": "fontRequirements(t){let n=this.fontRead;if(n&&n.layoutInput===t&&n.id===this.nextId-1)return n.reply;let r=this.request({type:\"fontRequirements\",layoutInput:t}).then(i=>{if(i.requirementsJson===void 0)throw new dn(\"Document worker omitted the font requirements\");return i.requirementsJson}),a={layoutInput:t,id:this.nextId-1,reply:r};this.fontRead=a;let o=()=>{this.fontRead===a&&(this.fontRead=null)};return r.then(o,o),r}",
+    "conclusie": "Werkelijke clientmethode retourneert de Promise van request(...).then(requirementsJson), met bestaande identieke-laatste-aanvraagdeduplicatie; geen directe cached-resultaatroute naast nieuw fontbericht."
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "1a960997ccba37ff661876b9208deda84ff09115e4cc35e3b04a2dd2e363e4af",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "e0b9303f97127ffd5c16fbdd297c952c2ce98e63ad635bc46b1cd66f9c1a0fa4",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-kandidaat": {
+        "sha256": "360430c9e9fc594aaa4ec6b665d60d8ca64d6e98119c50838564c8564bc981f0",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "bdacd3bec305d382483889c4a40e4ff5d39e5f68897b999b6b6dc18d35692c55",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 28,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "native-kandidaat/snel-getypt-bewaard.png",
+    "waarneming": "Eigen rijke bron met tabelrijen en lange invoer zichtbaar; pixelgelijk aan diagnostische basis. Geen volledige pagina-/glyph-/formaatacceptatie."
+  },
+  "behoud": {
+    "referenties27_exact": true,
+    "standaardbestanden529_byte_mode_mtime_exact": true,
+    "bronpinnen15_exact": true,
+    "historische_ontbrekende_referentie": "Eerder ontbrekende autocorrectiereferentie ongewijzigd; niet in de27aanwezige referenties opgenomen.",
+    "basis_asset_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "kandidaat_asset_sha256": "94ca9346123340271332da186a5597e4b19beefec7a9a0dca26adb61681dd6ca",
+    "callback_uniek_in_beide_assets": true
+  },
+  "archief": {
+    "pad": "2026-11-27-writer-font-callback-levensduur.tar.gz",
+    "sha256": "3fe2d38615c1360c158e6ba684fb6109be12456bb6a6413278d8428410a61de1"
+  },
+  "grenzen": [
+    "Diagnostiek op twee bestaande ELF’s, geen nieuwe bouw of productbronwijziging. Geen nieuwe gewone ABBA: prestatieresultaten uit de vorige acht ronden blijven afzonderlijk gelden.",
+    "Refwaarde tijdens opname omhuld; functie-identiteit in die ref is dus tijdelijk anders. this/argumenten, oorspronkelijke Promise-/retour-/sync-throw-identiteit behouden; laatste ongewikkelde refwaarde en Worker.prototype na afloop exact hersteld.",
+    "Opnieuw schrijven van de ref wordt via setter gevolgd:84 keer in de basis en 82 keer in kandidaat. Eén daadwerkelijk gebruikte functie per arm, bytegelijke functiebody uniek in beide gepinde assets. Positieve native callbackcontrole voorkomt de eerdere stale-API-probefout.",
+    "Alle 61/60 callbacks leveren strings en worden afgehandeld; alle 61/60 fontantwoorden zijn succesvol. Geen overflow/probefouten of achterblijvende callback in deze vensters.",
+    "Kandidaat: 50 uitvoeringen via de directe vraagroute en 10 via start/voltooi; teller na het meetvenster: 63 gestart, 1 vervangen, 0 terugval, inclusief opstart. Geen algemene concurrency- of bronvolumegarantie buiten deze opnamen.",
+    "Alle ruwe layoutinput is 1634 tekens en bytegelijk (aff9e766…); alle 61/60 hoofdthread-bronversies verschillen. Niet cachen op layoutinput alleen.",
+    "Callbackbron via stack en AST gekoppeld aan TW.pn, de layoutvoorvlucht. Geen afzonderlijke readLayoutRequest-caller bij de waargenomen callbacks; dit telt niet alle API-aanroepen of andere sessies.",
+    "Verstreken callback-/berichtrondreisvensters zijn geen font-CPU-tijd. Listener-/microtaskvolgorde kan twee geobserveerd open berichten naast één actieve callback tonen; geen exacte Workerconcurrency afleiden.",
+    "Basis verstuurt één save aan het eind, wanneer geen callback meer wacht; kandidaat geen save binnen probevenster. Hoogste async-save-aanvrager onbekend; automatisch herstel ongewijzigd.",
+    "Twee DOCX-bestanden onafhankelijk SHA/ZIP/CRC/paden/XML: beide 128 tabellen/91.423 UTF16, alleen core.xml verschilt. Drie beeldparen: 28/0/0 verschillende pixels; één bewaarbeeld bekeken. Geen volledige visuele/formaatacceptatie.",
+    "Geen volledige suites/CI, andere platforms/edities/releases of issue-/migratievoltooiing. Alle 27 aanwezige ELF’s, 15 bronpinnen en 529 standaardbestanden exact behouden."
+  ],
+  "vervolg": "Meet nu bij de daadwerkelijk gebruikte Worker het synchrone fontberekeningsvenster afzonderlijk van taakstart/wachten, updates en hoofdthread-publicatie. Gebruik de gepinde concrete Worker-bron en begrensde fasemeting; geen nieuwe algemene profiler of hoofdthread-Debugger. Pas bij aantoonbaar vermijdbaar werk een nieuwe optimalisatie proberen. Bewaar-aanvrager apart volgen; automatisch herstel behouden; Database laatst."
+}
