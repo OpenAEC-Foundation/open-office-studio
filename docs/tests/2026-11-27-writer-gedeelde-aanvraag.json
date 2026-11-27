@@ -1,0 +1,860 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "347c5138c77f9da4e48fad1c2fb332abe4efcf02",
+  "basis_hoofdbranch": "699e5c68",
+  "besluit": "Afgewezen als snelheidsfix. Aanvraagvoorbereiding wordt werkelijk eenmaal gedeeld, maar rijke native invoer is duidelijk trager. Geen productwijziging of issuevoltooiing.",
+  "aanpak": "Private ee89-bundel met aanvraaglokale scope op adapter r/Ci. Canonieke R-uitvoer gedeeld tussen requestbewuste body-warmroute en vier regiolayoutroutes. Bronversie, drie metadataflags en modelidentiteit begrenzen hergebruik; onstabiele voorbereiding niet hergebruikt. Oude kern en niet-body/nonemptyenv/plain/layoutfalse behouden legacyroute. Gewone voorbereidingsfout valt terug met bestaande foutvolgorde; terminale en kernfouten doorgegeven. Geen cross-request cache of geschrapte sync.",
+  "kern": "Hergebruik eerder afgewezen warm-layout-request-Wasm 5a705ce9e4f29b29619868049f29bb93a045887257e7a547464a9d636c09f00d; geen nieuwe Rust-kernwijziging. Bevat eerdere replicacache en diagnostische klokken/profielgetter; geen productiezuivere kern. Herkomst: 2026-11-13-writer-aanvraagomgeving.json en lokaal warm-layout-request/kern.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 155.14156844094396,
+    "minimum_vrije_bytes": 277737644032,
+    "start_vrije_bytes": 277843312640,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "347c5138c77f9da4e48fad1c2fb332abe4efcf02",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/gedeelde-aanvraag/open-office-studio-gedeelde-aanvraag",
+    "programma_sha256": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties32_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "contract": {
+    "geslaagd": true,
+    "scope": [
+      "version",
+      "s",
+      "l",
+      "d",
+      "model",
+      "wijziging-tijdens-prepare",
+      "begrensde-numerieke-probe"
+    ],
+    "adapter": [
+      "prefix",
+      "retained",
+      "meta",
+      "json",
+      "oude-kern-false",
+      "oude-kern-null",
+      "kernfout-identiek",
+      "terminale-preparefout",
+      "terminale-preparefout"
+    ],
+    "keuze": [
+      "basis",
+      "story",
+      "env",
+      "uit",
+      "plain",
+      "null-env",
+      "array-env",
+      "prototype",
+      "kapot",
+      "null",
+      "array",
+      "geen-env"
+    ],
+    "lus": [
+      "gemengde-routes",
+      "preparefout-legacy-eerst-layout-later",
+      "gelijktijdige-fouten-legacy-eerst",
+      "zonder-adapter",
+      "oude-kern",
+      "layout-uit"
+    ],
+    "echte_voorbereider": [
+      "metadata",
+      "secties",
+      "header",
+      "noot",
+      "watermerk",
+      "worker-headers"
+    ]
+  },
+  "kernpariteit": {
+    "gevallen": 32,
+    "grensinvoer": 12,
+    "geslaagd": true,
+    "grens": "Kerngevallen gebruiken identiteit als preparecallback. Zes afzonderlijke echte R-projectiegevallen gebruiken gecontroleerde modellen/helpers. Componentbewijzen zijn samengesteld; geen volledige end-to-end dekking van alle media/metadata/previews/foutcombinaties."
+  },
+  "corpus": {
+    "gevallen": 30,
+    "updates": 43,
+    "geslaagd": true
+  },
+  "native": {
+    "ronden": [
+      {
+        "naam": "native-klein-a-een",
+        "elf": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "metingen": {
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16104,
+          "begin_tot_bron_ms": 1179.9999999999982,
+          "laatste_keyup_tot_bron_ms": 29,
+          "laatste_keyup_tot_frame_ms": 297,
+          "begin_tot_frame_ms": 1447.9999999999982,
+          "wall_begin_tot_frame_ms": 1584,
+          "wall_verzonden_tot_frame_ms": 438
+        }
+      },
+      {
+        "naam": "native-klein-b-een",
+        "elf": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+        "metingen": {
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16492,
+          "begin_tot_bron_ms": 1674,
+          "laatste_keyup_tot_bron_ms": 121,
+          "laatste_keyup_tot_frame_ms": 428,
+          "begin_tot_frame_ms": 1981,
+          "wall_begin_tot_frame_ms": 2125,
+          "wall_verzonden_tot_frame_ms": 964
+        }
+      },
+      {
+        "naam": "native-klein-b-twee",
+        "elf": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+        "metingen": {
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16286.000000000002,
+          "begin_tot_bron_ms": 1407,
+          "laatste_keyup_tot_bron_ms": 71.99999999999818,
+          "laatste_keyup_tot_frame_ms": 286.9999999999982,
+          "begin_tot_frame_ms": 1622,
+          "wall_begin_tot_frame_ms": 1758,
+          "wall_verzonden_tot_frame_ms": 614
+        }
+      },
+      {
+        "naam": "native-klein-a-twee",
+        "elf": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "metingen": {
+          "interval_ms": 80,
+          "laatste_keyup_ms": 16344.000000000002,
+          "begin_tot_bron_ms": 1385,
+          "laatste_keyup_tot_bron_ms": 41.99999999999818,
+          "laatste_keyup_tot_frame_ms": 289.9999999999982,
+          "begin_tot_frame_ms": 1633,
+          "wall_begin_tot_frame_ms": 1679,
+          "wall_verzonden_tot_frame_ms": 521
+        }
+      },
+      {
+        "naam": "native-rijk-a-een",
+        "elf": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "metingen": {
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29500,
+          "begin_tot_bron_ms": 7731,
+          "laatste_keyup_tot_bron_ms": 210,
+          "laatste_keyup_tot_frame_ms": 1597,
+          "begin_tot_frame_ms": 9118,
+          "wall_begin_tot_frame_ms": 9233,
+          "wall_verzonden_tot_frame_ms": 7433
+        }
+      },
+      {
+        "naam": "native-rijk-b-een",
+        "elf": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+        "metingen": {
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30863,
+          "begin_tot_bron_ms": 9172,
+          "laatste_keyup_tot_bron_ms": 454,
+          "laatste_keyup_tot_frame_ms": 4727,
+          "begin_tot_frame_ms": 13445,
+          "wall_begin_tot_frame_ms": 13456,
+          "wall_verzonden_tot_frame_ms": 11569
+        }
+      },
+      {
+        "naam": "native-rijk-b-twee",
+        "elf": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+        "metingen": {
+          "interval_ms": 2,
+          "laatste_keyup_ms": 31615.000000000004,
+          "begin_tot_bron_ms": 9581,
+          "laatste_keyup_tot_bron_ms": 268.99999999999636,
+          "laatste_keyup_tot_frame_ms": 3731.9999999999964,
+          "begin_tot_frame_ms": 13044,
+          "wall_begin_tot_frame_ms": 13244,
+          "wall_verzonden_tot_frame_ms": 11252
+        }
+      },
+      {
+        "naam": "native-rijk-a-twee",
+        "elf": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "metingen": {
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29540,
+          "begin_tot_bron_ms": 7662.000000000004,
+          "laatste_keyup_tot_bron_ms": 235.00000000000364,
+          "laatste_keyup_tot_frame_ms": 1510,
+          "begin_tot_frame_ms": 8937,
+          "wall_begin_tot_frame_ms": 9043,
+          "wall_verzonden_tot_frame_ms": 7290
+        }
+      }
+    ],
+    "voorbereidingen": 34,
+    "hergebruik": 34,
+    "syncs": 34,
+    "syncs_tijdens_native_transport": 32,
+    "overlap": [
+      {
+        "id": 14,
+        "tijd": 22825,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 19,
+        "tijd": 23173,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 24,
+        "tijd": 23548,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 29,
+        "tijd": 23834,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 34,
+        "tijd": 24155,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 39,
+        "tijd": 24418,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 44,
+        "tijd": 24649,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 49,
+        "tijd": 24879,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 54,
+        "tijd": 25104,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 59,
+        "tijd": 25363,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 64,
+        "tijd": 25590,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 69,
+        "tijd": 25837,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 74,
+        "tijd": 26164,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 79,
+        "tijd": 26393,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 84,
+        "tijd": 26620,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 89,
+        "tijd": 26939,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 94,
+        "tijd": 27175,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 99,
+        "tijd": 27403.000000000004,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 104,
+        "tijd": 27633,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 109,
+        "tijd": 27887,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 114,
+        "tijd": 28150.000000000004,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 119,
+        "tijd": 28412,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 124,
+        "tijd": 28668,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 129,
+        "tijd": 28894.000000000004,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 134,
+        "tijd": 29161,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 139,
+        "tijd": 29393,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 144,
+        "tijd": 29617,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 149,
+        "tijd": 29838,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 153,
+        "tijd": 30078,
+        "pending_native_transport": 0
+      },
+      {
+        "id": 160,
+        "tijd": 30377,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 165,
+        "tijd": 30598,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 170,
+        "tijd": 30826,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 173,
+        "tijd": 31084,
+        "pending_native_transport": 1
+      },
+      {
+        "id": 179,
+        "tijd": 34810,
+        "pending_native_transport": 0
+      }
+    ],
+    "grenzen": "Overlap gebruikt uitsluitend dezelfde main-klok, fetch tot antwoord; geen CPU-tijd, volledige mutatielevensduur of bewezen oorzaak. Diagnoseronde uitgesloten van ABBA. Renderlijst plus twee rAF is geen fysieke schermpaint."
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "native-klein-a-een": {
+        "sha256": "bb9e172279c387a6e98d0e863db44af33639f38d55a4daf45e5025e23ac7b54c",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "527d9be0168ad0318e06b1e0b2ae471a63abf5bbedd9a552b6516c963f1fd8fe",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-a-twee": {
+        "sha256": "b35af8514f719fbd5cf0ba794c43f2044e09d2cd33beef845df392683de5c657",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "4cacd7a55fe865c3ed513b5c956cba6728ddfc5429c7407a2965ea728e0f9dde",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-b-een": {
+        "sha256": "bff08e3238b4b098c05fec9f2205d56c8d2c0e1c94d1bc46c6772d41b92ad1ba",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "8af88cf66cf4ce45d7020b5d2f00b4d6ca1d312bd2082d81e217a223dd95b909",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-klein-b-twee": {
+        "sha256": "3c6480444c933bf06e844e2aea615d584faae9c73a9b511e93ca992e24582707",
+        "tabellen": 1,
+        "utf16": 736,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "78682b62ab5e7be46bbd1064d901ca8352e0549114c3250d61c2708aa0960af6",
+          "docProps/app.xml": "45983f980cf287d5933f4dac9bfc6d5ca3275bde4d2b0d9ea9d1db1bc65ccf0d",
+          "word/document.xml": "1ecb40f182a45d587cc3885166846dc008da32be7248efe0b6b0e8df8c43099c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-a-een": {
+        "sha256": "c71bd0ad2f56193698421664fbe112b591370b53001957c8351c4a7785823d7c",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "130260161c12b82505cabd52e62f324a306d5d7f678de9207d073f815fc39a37",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-a-twee": {
+        "sha256": "e42a9c5eb6af4a727a87f54f98b2ccae3ec2f83d33c1cecd5f431277ebdeb48c",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "ee15d43e71fd85beab88e9c5f55e8ec611cd3b5b69ccadb0ca1c8d05b6caf695",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-b-een": {
+        "sha256": "12ce622f066d1bb2305a359a2181be731a91d4be4d98894bba1c007b03bb6a78",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "b2db5ab87b152fce6c96e1542e448864c77155d1574acddd4c0e7355c86955a5",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-rijk-b-twee": {
+        "sha256": "9599a4d47e974997d4d5b06f4d32de0678cd36c44c3bc56fc010772921460bf2",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "a9a1932070f60bc7f28f305ba79ef5630a3d612d03758cfe30e01d2cace78ca0",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "diagnose": {
+        "sha256": "9b517293f88d876751b5a016dd7e366b48b0e9d87f7be23432f7fae2a9214a09",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "3120bdb2f289d74e2a0cbdf7e4bd471868d70a2c4d7461f91391eea860bdd11f",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "beelden": [
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-b-een/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-b-een/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-b-een/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-b-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-b-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-b-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/invoer-redo.png",
+        "vergeleken": "native-klein-a-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-klein-a-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-klein-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-klein-a-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-b-een/invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-b-een/snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-b-een/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-b-twee/invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-b-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-b-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/invoer-redo.png",
+        "vergeleken": "native-rijk-a-twee/invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "referentie": "native-rijk-a-een/snel-getypt-bewaard.png",
+        "vergeleken": "native-rijk-a-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "native-rijk-a-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "native-rijk-a-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "gehele_beelden_exact": 12,
+    "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+  },
+  "visueel_bekeken": [
+    "native-rijk-b-een/snel-getypt-bewaard.png",
+    "native-rijk-b-een/nieuw-na-laat-antwoord.png"
+  ],
+  "behoud": {
+    "oude_referenties32_exact": true,
+    "aanwezige_referenties": 33,
+    "nieuwe_elf_sha256": "4fb856605237f7375501294c506d0f8a50d5f890eb554cabc186707e8e484c6e",
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets_tegen_projectie_context": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+      "assets/docx_edit_bg-ONvZFP_n.wasm"
+    ],
+    "python_ast_groen": true,
+    "alleen_app_crate_herbouwd": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "vervolg": "Onderzoek sessiegebonden uitstel van layout zolang native invoer nog loopt, met betrouwbare herplanning na voltooide bronmutatie, fouten en documentwisseling. 32/34 syncs tijdens lopend native transport is een aanknopingspunt, geen bewezen oorzaak of oplossing. Eerst levensduur-/bron-/ack-/font-/selectie-/caretcontract toetsen; geen hele sync weggooien. Stop blinde warm/cachevarianten.",
+  "niet_getoetst": "Volledige suites/CI, overige platforms/edities/releasevarianten/installers, volledige formaat-/glyph-/visuele dekking. Alleen huidige Linux app-release met writer-bronjournaal en vaste korte/rijke fixtures. Build alleen bewijst geen functievoltooiing.",
+  "archief": {
+    "bestand": "2026-11-27-writer-gedeelde-aanvraag.tar.gz",
+    "sha256": "0de4e916f89ad7af0b2beaddea8c7b0847e4bd4e8fa139efa50210a2880fb16c",
+    "leden": {
+      "actief.json": "58f05d599e7fed5b439add5276d43663a1faa017764b1107a0b7f22e608d8c33",
+      "adapter.js": "bdf8ff86eb62236c39c62b9fbeec523177f4d54ea98625060201ab68c11c08b9",
+      "analyse.json": "7b4604ed07ca628a7c955f117d5c4aba72db6478c94c5cc05705c5c0db5f285b",
+      "analyse.py": "e10f575da8ee9400399390b07abb022e94594b1028ebeeea2ade34bfaa21737e",
+      "behoud.json": "f7f5e23e06026f17bb5043f470a74f22a9381ef205c265652aef1c0380255239",
+      "behoud.py": "62d08916d466e9fdcaaf764249c5a0c6e0de138bc1860f5a8a1285d99b5db76f",
+      "bouwen.py": "f59e34816272715eafcd03083e382920cc8fba1ed6bbb93d01aa2c3038713be3",
+      "bundel.json": "ab3a809df0d503bf91ec102f0910b82ef71dd74bc33764c634472e338b8afc32",
+      "bundelwijzigingen.json": "2742cb09f41ff182e3b31282a30ad3e17b97c45c32d24e220782804c614ca2ee",
+      "contract.json": "cb577dcd2182c4a66d09b17797f108a1dca3553da9fe61e80e3968658541cc48",
+      "contract.log": "eecdcf6014ced4bc6ab777438896f3c047ba86674463a6f47d04d4b7a4a33446",
+      "contract.mjs": "7aa358013f4f4eda872fff71691962bbf11496a9c4f084f612782f32313c3944",
+      "corpus-definitief.json": "0529293c1a4c7bd47317502f95a30c8bd49e9977ef918e4dc4c6fe425003a216",
+      "corpus-definitief.log": "d3c1a42faeadea7eb02c60025b469e6614657ff87d1837534391a6af2404483a",
+      "corpus.json": "6221f0bd0449c482a2b6cf2192bce167e168b76265854c4c392033e91850c575",
+      "corpus.log": "d3c1a42faeadea7eb02c60025b469e6614657ff87d1837534391a6af2404483a",
+      "corpus.mjs": "5970b099ab32d8a9dccfb5dddb07faeb70d5894f81b1b45c35e7f6019712e7ae",
+      "desktop.json": "7df0c6fd96449400c559bff9527fdd6967c40a46eb7fd640790dc9111e882bc7",
+      "desktop.log": "55b8d5720e6ce3097e83311d7d03c3bdb03e6b76f7aed9ec9be42a2cec56e4dc",
+      "diagnose-worker.js": "d847d78cf554edfd84b8fd1c9414aefb15df1498bd491284f2f6fb763a66a65c",
+      "diagnose.log": "b78862c1b951b564280e5b50c6fb7a2c310441871aaaf98afc2dcdce48928061",
+      "diagnose.py": "794c83b0cfe1c68fe8482511ad6de3e4f4f83c6fee55af6a9ac103aa827ec4a1",
+      "diagnose/Ontwerpnotitie.docx": "9b517293f88d876751b5a016dd7e366b48b0e9d87f7be23432f7fae2a9214a09",
+      "diagnose/invoer-redo.png": "e58d91469d1aa5084062c984e6a81eeddf833aa7ae0f7adb2267f7b2b10b0835",
+      "diagnose/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose/rapport.json": "472acc2ec7383841d254d47cc324f96d4510c73f1b9096ec5e9ec375b3177cfc",
+      "diagnose/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "documenten-beelden.json": "49f99ac51c102a9cdbac316cfe4e4c7d20964ae761f3a7ee1b1c497bc7294ecb",
+      "documenten-beelden.py": "533708c7bd26940ba81567ea770340dd2a273581636d9a68ff0446640ad12eb0",
+      "gewijzigde-worker.js": "6e7765c3104b6e22af6aa5f9f6382a4c657ab0c7789213d2921d67dc063c49bc",
+      "harnas.json": "e4170d410ee1f824b455dde0d19a346eaf106ed17e311c918fcf2994a94603ca",
+      "kern-pariteit-definitief.json": "3a49dfaac97dae6aef9e4954a55ebbab33131097e42c41d815dc70400c7bd356",
+      "kern-pariteit-definitief.log": "1fa5dde3ea758ed1f557f5a32731159f5fc49a880227617196215fc969e0ae21",
+      "kern-pariteit-definitief.mjs": "57dee57e62415998c52c7c712f8f1828ccf601d28e8254def2aea9c4e2c8159a",
+      "kern-pariteit-eerste.json": "3a49dfaac97dae6aef9e4954a55ebbab33131097e42c41d815dc70400c7bd356",
+      "kern-pariteit.log": "1fa5dde3ea758ed1f557f5a32731159f5fc49a880227617196215fc969e0ae21",
+      "kern-pariteit.mjs": "0f951402c10278cb8698a8943bd23c5999249a41f70b7975b7c290c8e618922a",
+      "keuze.js": "4767eee5b40384e0f0d5a1c739e3036ed6533d2ddde1b18b3bd8abe43af80aed",
+      "native-klein-a-een.log": "60a2f8f1ec6099e85a88daf0a7133b6ae9298609fa5ee9645b7605e78d7c3679",
+      "native-klein-a-een/Ontwerpnotitie.docx": "bb9e172279c387a6e98d0e863db44af33639f38d55a4daf45e5025e23ac7b54c",
+      "native-klein-a-een/invoer-redo.png": "6f565ef33f7609d129c46417f36158cdcee36eff6593c258829adfcac6fa5323",
+      "native-klein-a-een/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "native-klein-a-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-klein-a-een/rapport.json": "96549ec902be98e3eedf6ae49db99e6116c89b5dd3b259465256493bc4d47791",
+      "native-klein-a-een/snel-getypt-bewaard.png": "8738926359e5d2d8b5d4def646c652f599491061f34997c4714083b0ffa487a9",
+      "native-klein-a-twee.log": "b8955d54e62e3cb82c9e0ff0ac3cc623d191402e8005791b123fdac80d9716c3",
+      "native-klein-a-twee/Ontwerpnotitie.docx": "b35af8514f719fbd5cf0ba794c43f2044e09d2cd33beef845df392683de5c657",
+      "native-klein-a-twee/invoer-redo.png": "6f565ef33f7609d129c46417f36158cdcee36eff6593c258829adfcac6fa5323",
+      "native-klein-a-twee/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "native-klein-a-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-klein-a-twee/rapport.json": "f6d7cf5fa28e5984da8ead12188954bb7ca920c1041d9139e7e2a5aec5c2a025",
+      "native-klein-a-twee/snel-getypt-bewaard.png": "8738926359e5d2d8b5d4def646c652f599491061f34997c4714083b0ffa487a9",
+      "native-klein-b-een.log": "7f0136409cedea7a91a51caa503936cc3d28d84dcdf17b0a5ebf9ce01c2b7a3a",
+      "native-klein-b-een/Ontwerpnotitie.docx": "bff08e3238b4b098c05fec9f2205d56c8d2c0e1c94d1bc46c6772d41b92ad1ba",
+      "native-klein-b-een/invoer-redo.png": "6f565ef33f7609d129c46417f36158cdcee36eff6593c258829adfcac6fa5323",
+      "native-klein-b-een/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "native-klein-b-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-klein-b-een/rapport.json": "b9744299544c88a4ceac36516a0ec0aa5562e426dea8749e298772eb0cb8ab98",
+      "native-klein-b-een/snel-getypt-bewaard.png": "8738926359e5d2d8b5d4def646c652f599491061f34997c4714083b0ffa487a9",
+      "native-klein-b-twee.log": "5e7d2c1444360c09d396a77a95477b16eb98ce3f2bd723ed8311f0421311c0a1",
+      "native-klein-b-twee/Ontwerpnotitie.docx": "3c6480444c933bf06e844e2aea615d584faae9c73a9b511e93ca992e24582707",
+      "native-klein-b-twee/invoer-redo.png": "6f565ef33f7609d129c46417f36158cdcee36eff6593c258829adfcac6fa5323",
+      "native-klein-b-twee/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "native-klein-b-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-klein-b-twee/rapport.json": "0b406ae8fda3ee73deefa3ac41b0eeb9cd5431d40b2fee1a91190ab2c1259dfe",
+      "native-klein-b-twee/snel-getypt-bewaard.png": "8738926359e5d2d8b5d4def646c652f599491061f34997c4714083b0ffa487a9",
+      "native-rijk-a-een.log": "560f0f0dc0b62d4af425eb44d0edafe44208860eba1a57ed0f0c77555792cd5b",
+      "native-rijk-a-een/Ontwerpnotitie.docx": "c71bd0ad2f56193698421664fbe112b591370b53001957c8351c4a7785823d7c",
+      "native-rijk-a-een/invoer-redo.png": "96a44af27394b4d1ac3f9cd89355fda38bb7c53a27c8918d4968bc1961aa87e8",
+      "native-rijk-a-een/nieuw-na-laat-antwoord.png": "954b2da7b024c24181f311be679938e660ac7e9d86608c980bc50d9b55bb95ef",
+      "native-rijk-a-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-rijk-a-een/rapport.json": "1488844615dc05e1d7668b764c0187b2d2487cafbd312654e75b8ba02e4da59d",
+      "native-rijk-a-een/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "native-rijk-a-twee.log": "4a460196897a0774cf56947cb375f30e5db83b7bd0c2f6a5156236e120026369",
+      "native-rijk-a-twee/Ontwerpnotitie.docx": "e42a9c5eb6af4a727a87f54f98b2ccae3ec2f83d33c1cecd5f431277ebdeb48c",
+      "native-rijk-a-twee/invoer-redo.png": "219d56cd8d301b56122b6729a6752d550b03ce1a4f612ecb3af6da83b7153266",
+      "native-rijk-a-twee/nieuw-na-laat-antwoord.png": "954b2da7b024c24181f311be679938e660ac7e9d86608c980bc50d9b55bb95ef",
+      "native-rijk-a-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-rijk-a-twee/rapport.json": "acb119e65f66d74690fa09750de3fd6e779f1a919e762c28c9526745a62d03e7",
+      "native-rijk-a-twee/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "native-rijk-b-een.log": "96f5938c67b1295f519a1570b315f756fed4f99f6ad2f094237daeb4d47a8bad",
+      "native-rijk-b-een/Ontwerpnotitie.docx": "12ce622f066d1bb2305a359a2181be731a91d4be4d98894bba1c007b03bb6a78",
+      "native-rijk-b-een/invoer-redo.png": "e58d91469d1aa5084062c984e6a81eeddf833aa7ae0f7adb2267f7b2b10b0835",
+      "native-rijk-b-een/nieuw-na-laat-antwoord.png": "ade7e4b84002ec453e15fafcfff0489c362496fa9812518917b77f3efdb71356",
+      "native-rijk-b-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-rijk-b-een/rapport.json": "906d98be41c1c70f6843efca2a1e02c57c3089a4ca380cf35dc5e16f3942605a",
+      "native-rijk-b-een/snel-getypt-bewaard.png": "3660080704f97f5465744f9f7bae247691cceb1d98cfa8472ac9548605242934",
+      "native-rijk-b-twee.log": "bf3f2229a678d3722150ab54afa3325d508b8f906e439ae960b2695f79006cdf",
+      "native-rijk-b-twee/Ontwerpnotitie.docx": "9599a4d47e974997d4d5b06f4d32de0678cd36c44c3bc56fc010772921460bf2",
+      "native-rijk-b-twee/invoer-redo.png": "e58d91469d1aa5084062c984e6a81eeddf833aa7ae0f7adb2267f7b2b10b0835",
+      "native-rijk-b-twee/nieuw-na-laat-antwoord.png": "954b2da7b024c24181f311be679938e660ac7e9d86608c980bc50d9b55bb95ef",
+      "native-rijk-b-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "native-rijk-b-twee/rapport.json": "2d4c0d42c6e49c6bd94942f62fb9f18bc0a1a7e667d004a8d31d26857bf8899e",
+      "native-rijk-b-twee/snel-getypt-bewaard.png": "3660080704f97f5465744f9f7bae247691cceb1d98cfa8472ac9548605242934",
+      "native-ronden.json": "a63f933f98f5b7aa4e403265fb80e99e1af7607129647aabdc2087d45ac004ee",
+      "native-ronden.log": "b5845e8b8845204ea161ee5340f56fcae8dc48db1f07236ce7723e62d3dffab2",
+      "overlap-transport.json": "d49241151ae5ab9c73797250e64a4dc2a660d4702cfb41185985ee6b00ccaa3d",
+      "proef-klein.py": "1400fb0e5bc927756f1bc20d39357181220b37de24e3cc9eb19a6a49894c7b16",
+      "proef-rijk.py": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+      "proef.json": "3a49dfaac97dae6aef9e4954a55ebbab33131097e42c41d815dc70400c7bd356",
+      "referenties-nacontrole.json": "4f4f308c3f3a90ea5dc75a1bcdda8b330a42f77d925380c0f298ef2e059fe32b",
+      "referenties-voor.json": "54e527ae91591e31fda6676559cf2be350b1ed9b8d9c2048350a775d2a007107",
+      "ronden.py": "879656c7a791ffd00188378572d04edb8cc925a390eb4ba775b55ebaeb3fd03d",
+      "scope.js": "d6501bbfcf2d15cca75ed1d69512ba725fb01fb1a5091e76a3e515e122ac2eae",
+      "vastleggen.py": "3398829958fb352b63168e76fadf0ae3574e7046dcc1415a4358b94c7813b958",
+      "werker.js": "31fc698bb312ddd3f796d6987e4e93d2ea5bb8ed8ca778f73bc9dc26855b6a4d"
+    },
+    "uitsluitingen": "ELF, dist en kernbinaries/glue/buildcache blijven als lokale referenties behouden; patchreplay en gewijzigde Worker exact gecontroleerd."
+  }
+}
