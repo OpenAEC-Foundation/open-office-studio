@@ -1,0 +1,6948 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "d9e8f2cf",
+  "basis_hoofdbranch": "5bbeece4",
+  "besluit": "De synchrone Worker-fontaanroep is nu afzonderlijk van ontvangst/taakstart en transport gemeten. In twee volledige diagnostische ronden nemen 57/56 aanroepen samen 5.535/5.388 ms. Interne wachttijd na Worker.onmessage tot taakstart telt per ronde slechts 3 ms. Dit zijn synchrone verstreken vensters, geen zuivere CPU-tijd of bewezen prestatiewinst. Geen productfix.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 114.12726463098079,
+    "minimum_vrije_bytes": 281304203264,
+    "start_vrije_bytes": 281414488064,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "d9e8f2cf5ae472c02925c5d13e4ddf08c3932982",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-werkfase/open-office-studio-font-werkfase",
+    "programma_sha256": "68ea222189f315313cb24d7bf0f907a8018b51879be4653bfbe1627eb573f0e5",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties27_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "gecompileerde_crates": [
+    "open-office-studio"
+  ],
+  "bundel": {
+    "basis_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+    "wijzigingen": [
+      {
+        "bestand": "chunk-Q7OC7M5Q-BzppsI5m.js",
+        "voor": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834",
+        "na": "1c3bca5a4eb5104a07ea2b0698269e1e6c4940cb248ed42699bfc1352207dd67",
+        "vervangingen": 5
+      },
+      {
+        "bestand": "chunk-YTGFUEEE-BR8wyl1E.js",
+        "voor": "1fe089a1f9a34edb7f707f95711c0071439608946b60af93e56e548051651c71",
+        "na": "af4eff25a93ca2159582f0149b5755d100259df202f5a1fb0f07a65b40f02ffd",
+        "vervangingen": 4
+      }
+    ],
+    "bestaande_logger_bytegelijk_hergebruikt": true,
+    "geen_hoofdthread_Debbugger": true
+  },
+  "bron": {
+    "asset": ".local/integratiecontrole/projectie-context/dist/assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+    "sha256": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834",
+    "functions": {
+      "Cc": {
+        "start": 642482,
+        "end": 642935,
+        "source": "async function Cc(e){ao.add(e.id),_l=performance.now();try{if(ct||Un)throw ct??Un;if(Mo=e.id,(qe||ei)&&HS(e))throw new Error(\"Legacy mutations are unavailable in a worker command session\");qe&&e.type!==\"edit\"&&e.type!==\"checkpoint\"&&e.type!==\"commandInit\"&&e.type!==\"requestFullFrame\"&&e.type!==\"commandUpdate\"&&e.type!==\"buildPages\"&&e.type!==\"commandViewport\"?await qe.withFrameWork(()=>Fc(e)):await Fc(e)}catch(t){Hr(e.id,t)}finally{ao.delete(e.id)}}"
+      },
+      "Ro": {
+        "start": 665627,
+        "end": 666134,
+        "source": "function Ro(e,t,r=!1){if(!t.includes('\"reservationSets\"'))return r&&ma.delete(e),t;let n=JSON.parse(t),i=n.renderEnv?.reservationSets;if(i===void 0)return r&&ma.delete(e),t;let a=e.proposalEngine.version(),o=ma.get(e),s=JSON.stringify(i),l=o?.reservations??{};return uf(i)&&i.version===a&&(l=o?.version===a&&o.key===s?o.reservations:cf(e.geometryReader,i,a,o?.reservations??null),r&&ma.set(e,{version:a,key:s,reservations:l})),delete n.renderEnv.reservationSets,n.renderEnv.reservations=l,JSON.stringify(n)}"
+      },
+      "gg": {
+        "start": 668430,
+        "end": 668773,
+        "source": "function gg(e,t){let r=e.proposalEngine.version();(pr?.owner!==e||pr.version!==r)&&(oo(),pr={owner:e,version:r,byInput:new Map,release:e.onUpdate(oo)});let n=pr.byInput.get(t);if(n!==void 0)return n;let i=e.layoutFontRequirementsJson(Ro(e,t));return pr.byInput.size>=DS&&pr.byInput.delete(pr.byInput.keys().next().value),pr.byInput.set(t,i),i}"
+      }
+    },
+    "resident_delegate": "layoutFontRequirementsJson:_=>e.layout_font_requirements_json(_)",
+    "grens": "De fontspan omvat de residentmethode, FFI/stringmarshalling en Ro(...). Gecontroleerde input zonder reservationSets neemt alleen de stringtest/terugkeerroute van Ro, geen reserveringsprojectie. Geen zuivere CPU-cycli of losse Wasm-exportmeting."
+  },
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "68ea222189f315313cb24d7bf0f907a8018b51879be4653bfbe1627eb573f0e5",
+      "worker_disable": {
+        "result": {},
+        "id": 163
+      },
+      "binnen_hersteld": true,
+      "fasen_overgeslagen": 0,
+      "rapport_sha256": "a39fc88c31fb7428ef88a908ddea0e3203e6d370d94048720f1d379a22d2ac1d"
+    },
+    "native-met-transport": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "68ea222189f315313cb24d7bf0f907a8018b51879be4653bfbe1627eb573f0e5",
+      "worker_disable": {
+        "result": {},
+        "id": 156
+      },
+      "binnen_hersteld": true,
+      "fasen_overgeslagen": 0,
+      "rapport_sha256": "96b347e8607baaf76b6d607511b957ddba78b6246959241285d06460e2e36485"
+    }
+  },
+  "analyse": {
+    "native": {
+      "geslaagd": true,
+      "fontaantal": 57,
+      "font_synchroon_ms": {
+        "som": 5535.000000000004,
+        "mediaan": 92,
+        "min": 84,
+        "max": 149.99999999999818
+      },
+      "fonttaak_ms_som": 5549.000000000004,
+      "interne_wacht_ms_som": 3.0,
+      "taaktypen": {
+        "applyUpdate": 57,
+        "fontRequirements": 57,
+        "sync": 1,
+        "buildPages": 1
+      },
+      "alle_taken": {
+        "12": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9707
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9707
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9721
+          }
+        },
+        "13": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9804
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9804
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9943
+          }
+        },
+        "14": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9943
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9943
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9955
+          }
+        },
+        "15": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 9966.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 9966.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10116
+          }
+        },
+        "16": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10116
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10116
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10129
+          }
+        },
+        "17": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10178
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10178
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10304
+          }
+        },
+        "18": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10304
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10304
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10314
+          }
+        },
+        "19": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10326
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10326
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10437
+          }
+        },
+        "20": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10438
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10438
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10447.000000000002
+          }
+        },
+        "21": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10454
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10454
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10570
+          }
+        },
+        "22": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10570
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10570
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10579
+          }
+        },
+        "23": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10585
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10585
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10688
+          }
+        },
+        "24": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10688
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10688
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10697.000000000002
+          }
+        },
+        "25": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10716.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10716.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10822.000000000002
+          }
+        },
+        "26": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10823
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10823
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10832
+          }
+        },
+        "27": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10848
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10848
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10982.000000000002
+          }
+        },
+        "28": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10982.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10982.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10992
+          }
+        },
+        "29": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 10992
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 10993
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11096
+          }
+        },
+        "30": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11096
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11096
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11105
+          }
+        },
+        "31": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11108
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11108
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11201
+          }
+        },
+        "32": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11201
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11201
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11209
+          }
+        },
+        "33": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11220
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11220
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11310
+          }
+        },
+        "34": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11310
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11310
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11318
+          }
+        },
+        "35": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11332
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11332
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11424
+          }
+        },
+        "36": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11424
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11424
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11432
+          }
+        },
+        "37": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11441
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11441
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11534
+          }
+        },
+        "38": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11534
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11534
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11541
+          }
+        },
+        "39": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11549
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11549
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11640
+          }
+        },
+        "40": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11640
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11640
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11647
+          }
+        },
+        "41": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11672
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11672
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11766
+          }
+        },
+        "42": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11766
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11766
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11774
+          }
+        },
+        "43": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11777.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11777.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11868
+          }
+        },
+        "44": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11869
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11869
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11876
+          }
+        },
+        "45": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11883
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11883
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11972
+          }
+        },
+        "46": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11972
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11972
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11979.000000000002
+          }
+        },
+        "47": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 11999
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 11999
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12100
+          }
+        },
+        "48": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12100
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12100
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12108
+          }
+        },
+        "49": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12116
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12117
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12207
+          }
+        },
+        "50": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12207
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12207
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12215
+          }
+        },
+        "51": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12225
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12225
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12316
+          }
+        },
+        "52": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12316
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12316
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12323
+          }
+        },
+        "53": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12337
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12337
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12432
+          }
+        },
+        "54": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12432
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12432
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12440
+          }
+        },
+        "55": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12451
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12451
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12544
+          }
+        },
+        "56": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12544
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12544
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12551
+          }
+        },
+        "57": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12570
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12570
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12663
+          }
+        },
+        "58": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12663
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12663
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12671.000000000002
+          }
+        },
+        "59": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12676
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12676
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12765
+          }
+        },
+        "60": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12765
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12765
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12773
+          }
+        },
+        "61": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12784
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12784
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12874
+          }
+        },
+        "62": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12874
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12875
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12883
+          }
+        },
+        "63": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12895
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12895
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12991
+          }
+        },
+        "64": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12991
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12991
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12998.000000000002
+          }
+        },
+        "65": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13014.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13014.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13106
+          }
+        },
+        "66": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13106
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13106
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13114
+          }
+        },
+        "67": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13129
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13129
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13224
+          }
+        },
+        "68": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13224
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13224
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13231
+          }
+        },
+        "69": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13239
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13239
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13330
+          }
+        },
+        "70": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13330
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13330
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13338.000000000002
+          }
+        },
+        "71": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13349
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13349
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13439
+          }
+        },
+        "72": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13439
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13439
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13446
+          }
+        },
+        "73": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13462
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13462
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13552
+          }
+        },
+        "74": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13552
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13552
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13560
+          }
+        },
+        "75": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13572.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13572.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13664
+          }
+        },
+        "76": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13664
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13664
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13671.000000000002
+          }
+        },
+        "77": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13685
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13685
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13777.000000000002
+          }
+        },
+        "78": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13777.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13777.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13784
+          }
+        },
+        "79": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13791
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13792
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13881
+          }
+        },
+        "80": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13882
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13882
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13889.000000000002
+          }
+        },
+        "81": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 13904
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 13904
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 13994
+          }
+        },
+        "82": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 13995.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 13995.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14002
+          }
+        },
+        "83": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14015
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14015
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14105
+          }
+        },
+        "84": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14105
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14105
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14112
+          }
+        },
+        "85": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14126
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14126
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14217
+          }
+        },
+        "86": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14218
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14218
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14225
+          }
+        },
+        "87": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14233
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14233
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14324
+          }
+        },
+        "88": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14324
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14324
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14331
+          }
+        },
+        "89": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14345
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14345
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14435
+          }
+        },
+        "90": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14435
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14435
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14442
+          }
+        },
+        "91": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14454
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14454
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14549
+          }
+        },
+        "92": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14549
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14549
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14557
+          }
+        },
+        "93": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14567
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14567
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14656
+          }
+        },
+        "94": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14656
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14656
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14663
+          }
+        },
+        "95": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14679
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14679
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14770
+          }
+        },
+        "96": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14770
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14770
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14777.000000000002
+          }
+        },
+        "97": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14789
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14789
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14886.000000000002
+          }
+        },
+        "98": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14886.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14886.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14894
+          }
+        },
+        "99": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 14922
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 14922
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 15015
+          }
+        },
+        "100": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15015
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15015
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 15022
+          }
+        },
+        "101": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15035
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15035
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15138
+          }
+        },
+        "102": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15138
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15138
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15145
+          }
+        },
+        "103": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15156
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15156
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15248.000000000002
+          }
+        },
+        "104": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15248.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15248.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15255
+          }
+        },
+        "105": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15274
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15274
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15380
+          }
+        },
+        "106": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15380
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15380
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15389.000000000002
+          }
+        },
+        "107": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15394
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15394
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15495.000000000002
+          }
+        },
+        "108": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15495.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15495.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15503
+          }
+        },
+        "109": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15525
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15525
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15624
+          }
+        },
+        "110": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15624
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15624
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15636.000000000002
+          }
+        },
+        "111": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15641
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15641
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15744
+          }
+        },
+        "112": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15744
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15744
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15754
+          }
+        },
+        "113": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15757
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15757
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15847
+          }
+        },
+        "114": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15847
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15847
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15855
+          }
+        },
+        "115": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15865
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15865
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15953.000000000002
+          }
+        },
+        "116": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15953.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15953.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15961
+          }
+        },
+        "117": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 15973
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 15973
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 16068.999999999998
+          }
+        },
+        "118": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 16068.999999999998
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 16068.999999999998
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 16076
+          }
+        },
+        "119": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16086.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16086.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16174
+          }
+        },
+        "120": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16174
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16174
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16181.000000000002
+          }
+        },
+        "121": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16193.999999999998
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16193.999999999998
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16282
+          }
+        },
+        "122": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16282
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16282
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16290
+          }
+        },
+        "123": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16297
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16297
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16382.000000000002
+          }
+        },
+        "124": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 16382.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 16382.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 124,
+            "type": "applyUpdate",
+            "tijd": 16389
+          }
+        },
+        "125": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 16568
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 16568
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 125,
+            "type": "fontRequirements",
+            "tijd": 16671
+          }
+        },
+        "126": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 126,
+            "type": "sync",
+            "tijd": 16675
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 126,
+            "type": "sync",
+            "tijd": 16675
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 126,
+            "type": "sync",
+            "tijd": 16997
+          }
+        },
+        "127": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 127,
+            "type": "buildPages",
+            "tijd": 17459
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 127,
+            "type": "buildPages",
+            "tijd": 17459
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 127,
+            "type": "buildPages",
+            "tijd": 17548
+          }
+        }
+      },
+      "fontvensters": [
+        {
+          "id": 13,
+          "begin": 9804,
+          "eind": 9942,
+          "ms": 138,
+          "worker_ontvangst": 9804,
+          "taak_begin": 9804,
+          "taak_eind": 9943,
+          "antwoord_verzonden": 9943,
+          "interne_wacht_ms": 0,
+          "taak_ms": 139
+        },
+        {
+          "id": 15,
+          "begin": 9966.000000000002,
+          "eind": 10116,
+          "ms": 149.99999999999818,
+          "worker_ontvangst": 9966.000000000002,
+          "taak_begin": 9966.000000000002,
+          "taak_eind": 10116,
+          "antwoord_verzonden": 10116,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 149.99999999999818
+        },
+        {
+          "id": 17,
+          "begin": 10178,
+          "eind": 10304,
+          "ms": 126,
+          "worker_ontvangst": 10178,
+          "taak_begin": 10178,
+          "taak_eind": 10304,
+          "antwoord_verzonden": 10304,
+          "interne_wacht_ms": 0,
+          "taak_ms": 126
+        },
+        {
+          "id": 19,
+          "begin": 10326,
+          "eind": 10437,
+          "ms": 111,
+          "worker_ontvangst": 10326,
+          "taak_begin": 10326,
+          "taak_eind": 10437,
+          "antwoord_verzonden": 10437,
+          "interne_wacht_ms": 0,
+          "taak_ms": 111
+        },
+        {
+          "id": 21,
+          "begin": 10455,
+          "eind": 10570,
+          "ms": 115,
+          "worker_ontvangst": 10454,
+          "taak_begin": 10454,
+          "taak_eind": 10570,
+          "antwoord_verzonden": 10570,
+          "interne_wacht_ms": 0,
+          "taak_ms": 116
+        },
+        {
+          "id": 23,
+          "begin": 10585,
+          "eind": 10688,
+          "ms": 103,
+          "worker_ontvangst": 10585,
+          "taak_begin": 10585,
+          "taak_eind": 10688,
+          "antwoord_verzonden": 10688,
+          "interne_wacht_ms": 0,
+          "taak_ms": 103
+        },
+        {
+          "id": 25,
+          "begin": 10716.000000000002,
+          "eind": 10822.000000000002,
+          "ms": 106.0,
+          "worker_ontvangst": 10716.000000000002,
+          "taak_begin": 10716.000000000002,
+          "taak_eind": 10822.000000000002,
+          "antwoord_verzonden": 10822.000000000002,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 106.0
+        },
+        {
+          "id": 27,
+          "begin": 10848,
+          "eind": 10982.000000000002,
+          "ms": 134.00000000000182,
+          "worker_ontvangst": 10848,
+          "taak_begin": 10848,
+          "taak_eind": 10982.000000000002,
+          "antwoord_verzonden": 10982.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 134.00000000000182
+        },
+        {
+          "id": 29,
+          "begin": 10993,
+          "eind": 11096,
+          "ms": 103,
+          "worker_ontvangst": 10992,
+          "taak_begin": 10993,
+          "taak_eind": 11096,
+          "antwoord_verzonden": 11096,
+          "interne_wacht_ms": 1,
+          "taak_ms": 103
+        },
+        {
+          "id": 31,
+          "begin": 11108,
+          "eind": 11201,
+          "ms": 93,
+          "worker_ontvangst": 11108,
+          "taak_begin": 11108,
+          "taak_eind": 11201,
+          "antwoord_verzonden": 11201,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93
+        },
+        {
+          "id": 33,
+          "begin": 11220,
+          "eind": 11310,
+          "ms": 90,
+          "worker_ontvangst": 11220,
+          "taak_begin": 11220,
+          "taak_eind": 11310,
+          "antwoord_verzonden": 11310,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 35,
+          "begin": 11332,
+          "eind": 11424,
+          "ms": 92,
+          "worker_ontvangst": 11332,
+          "taak_begin": 11332,
+          "taak_eind": 11424,
+          "antwoord_verzonden": 11424,
+          "interne_wacht_ms": 0,
+          "taak_ms": 92
+        },
+        {
+          "id": 37,
+          "begin": 11441,
+          "eind": 11534,
+          "ms": 93,
+          "worker_ontvangst": 11441,
+          "taak_begin": 11441,
+          "taak_eind": 11534,
+          "antwoord_verzonden": 11534,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93
+        },
+        {
+          "id": 39,
+          "begin": 11549,
+          "eind": 11639.000000000002,
+          "ms": 90.00000000000182,
+          "worker_ontvangst": 11549,
+          "taak_begin": 11549,
+          "taak_eind": 11640,
+          "antwoord_verzonden": 11639.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 41,
+          "begin": 11672,
+          "eind": 11766,
+          "ms": 94,
+          "worker_ontvangst": 11672,
+          "taak_begin": 11672,
+          "taak_eind": 11766,
+          "antwoord_verzonden": 11766,
+          "interne_wacht_ms": 0,
+          "taak_ms": 94
+        },
+        {
+          "id": 43,
+          "begin": 11777.000000000002,
+          "eind": 11868,
+          "ms": 90.99999999999818,
+          "worker_ontvangst": 11777.000000000002,
+          "taak_begin": 11777.000000000002,
+          "taak_eind": 11868,
+          "antwoord_verzonden": 11868,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 90.99999999999818
+        },
+        {
+          "id": 45,
+          "begin": 11883,
+          "eind": 11971,
+          "ms": 88,
+          "worker_ontvangst": 11883,
+          "taak_begin": 11883,
+          "taak_eind": 11972,
+          "antwoord_verzonden": 11972,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89
+        },
+        {
+          "id": 47,
+          "begin": 11999,
+          "eind": 12100,
+          "ms": 101,
+          "worker_ontvangst": 11999,
+          "taak_begin": 11999,
+          "taak_eind": 12100,
+          "antwoord_verzonden": 12100,
+          "interne_wacht_ms": 0,
+          "taak_ms": 101
+        },
+        {
+          "id": 49,
+          "begin": 12117,
+          "eind": 12207,
+          "ms": 90,
+          "worker_ontvangst": 12116,
+          "taak_begin": 12117,
+          "taak_eind": 12207,
+          "antwoord_verzonden": 12207,
+          "interne_wacht_ms": 1,
+          "taak_ms": 90
+        },
+        {
+          "id": 51,
+          "begin": 12225,
+          "eind": 12316,
+          "ms": 91,
+          "worker_ontvangst": 12225,
+          "taak_begin": 12225,
+          "taak_eind": 12316,
+          "antwoord_verzonden": 12316,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 53,
+          "begin": 12337,
+          "eind": 12432,
+          "ms": 95,
+          "worker_ontvangst": 12337,
+          "taak_begin": 12337,
+          "taak_eind": 12432,
+          "antwoord_verzonden": 12432,
+          "interne_wacht_ms": 0,
+          "taak_ms": 95
+        },
+        {
+          "id": 55,
+          "begin": 12452,
+          "eind": 12544,
+          "ms": 92,
+          "worker_ontvangst": 12451,
+          "taak_begin": 12451,
+          "taak_eind": 12544,
+          "antwoord_verzonden": 12544,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93
+        },
+        {
+          "id": 57,
+          "begin": 12570,
+          "eind": 12663,
+          "ms": 93,
+          "worker_ontvangst": 12570,
+          "taak_begin": 12570,
+          "taak_eind": 12663,
+          "antwoord_verzonden": 12663,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93
+        },
+        {
+          "id": 59,
+          "begin": 12676,
+          "eind": 12765,
+          "ms": 89,
+          "worker_ontvangst": 12676,
+          "taak_begin": 12676,
+          "taak_eind": 12765,
+          "antwoord_verzonden": 12765,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89
+        },
+        {
+          "id": 61,
+          "begin": 12784,
+          "eind": 12874,
+          "ms": 90,
+          "worker_ontvangst": 12784,
+          "taak_begin": 12784,
+          "taak_eind": 12874,
+          "antwoord_verzonden": 12874,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 63,
+          "begin": 12895,
+          "eind": 12991,
+          "ms": 96,
+          "worker_ontvangst": 12895,
+          "taak_begin": 12895,
+          "taak_eind": 12991,
+          "antwoord_verzonden": 12991,
+          "interne_wacht_ms": 0,
+          "taak_ms": 96
+        },
+        {
+          "id": 65,
+          "begin": 13014.000000000002,
+          "eind": 13106,
+          "ms": 91.99999999999818,
+          "worker_ontvangst": 13014.000000000002,
+          "taak_begin": 13014.000000000002,
+          "taak_eind": 13106,
+          "antwoord_verzonden": 13106,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 91.99999999999818
+        },
+        {
+          "id": 67,
+          "begin": 13129,
+          "eind": 13224,
+          "ms": 95,
+          "worker_ontvangst": 13129,
+          "taak_begin": 13129,
+          "taak_eind": 13224,
+          "antwoord_verzonden": 13224,
+          "interne_wacht_ms": 0,
+          "taak_ms": 95
+        },
+        {
+          "id": 69,
+          "begin": 13239,
+          "eind": 13330,
+          "ms": 91,
+          "worker_ontvangst": 13239,
+          "taak_begin": 13239,
+          "taak_eind": 13330,
+          "antwoord_verzonden": 13330,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 71,
+          "begin": 13349,
+          "eind": 13438,
+          "ms": 89,
+          "worker_ontvangst": 13349,
+          "taak_begin": 13349,
+          "taak_eind": 13439,
+          "antwoord_verzonden": 13438,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 73,
+          "begin": 13462,
+          "eind": 13552,
+          "ms": 90,
+          "worker_ontvangst": 13462,
+          "taak_begin": 13462,
+          "taak_eind": 13552,
+          "antwoord_verzonden": 13552,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 75,
+          "begin": 13572.000000000002,
+          "eind": 13664,
+          "ms": 91.99999999999818,
+          "worker_ontvangst": 13572.000000000002,
+          "taak_begin": 13572.000000000002,
+          "taak_eind": 13664,
+          "antwoord_verzonden": 13664,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 91.99999999999818
+        },
+        {
+          "id": 77,
+          "begin": 13685,
+          "eind": 13776,
+          "ms": 91,
+          "worker_ontvangst": 13685,
+          "taak_begin": 13685,
+          "taak_eind": 13777.000000000002,
+          "antwoord_verzonden": 13777.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 92.00000000000182
+        },
+        {
+          "id": 79,
+          "begin": 13792,
+          "eind": 13881,
+          "ms": 89,
+          "worker_ontvangst": 13791,
+          "taak_begin": 13792,
+          "taak_eind": 13881,
+          "antwoord_verzonden": 13881,
+          "interne_wacht_ms": 1,
+          "taak_ms": 89
+        },
+        {
+          "id": 81,
+          "begin": 13905.000000000002,
+          "eind": 13994,
+          "ms": 88.99999999999818,
+          "worker_ontvangst": 13904,
+          "taak_begin": 13904,
+          "taak_eind": 13994,
+          "antwoord_verzonden": 13994,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 83,
+          "begin": 14015,
+          "eind": 14105,
+          "ms": 90,
+          "worker_ontvangst": 14015,
+          "taak_begin": 14015,
+          "taak_eind": 14105,
+          "antwoord_verzonden": 14105,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 85,
+          "begin": 14126,
+          "eind": 14217,
+          "ms": 91,
+          "worker_ontvangst": 14126,
+          "taak_begin": 14126,
+          "taak_eind": 14217,
+          "antwoord_verzonden": 14217,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 87,
+          "begin": 14233,
+          "eind": 14324,
+          "ms": 91,
+          "worker_ontvangst": 14233,
+          "taak_begin": 14233,
+          "taak_eind": 14324,
+          "antwoord_verzonden": 14324,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 89,
+          "begin": 14345,
+          "eind": 14434.000000000002,
+          "ms": 89.00000000000182,
+          "worker_ontvangst": 14345,
+          "taak_begin": 14345,
+          "taak_eind": 14435,
+          "antwoord_verzonden": 14435,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 91,
+          "begin": 14454,
+          "eind": 14549,
+          "ms": 95,
+          "worker_ontvangst": 14454,
+          "taak_begin": 14454,
+          "taak_eind": 14549,
+          "antwoord_verzonden": 14549,
+          "interne_wacht_ms": 0,
+          "taak_ms": 95
+        },
+        {
+          "id": 93,
+          "begin": 14567,
+          "eind": 14656,
+          "ms": 89,
+          "worker_ontvangst": 14567,
+          "taak_begin": 14567,
+          "taak_eind": 14656,
+          "antwoord_verzonden": 14656,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89
+        },
+        {
+          "id": 95,
+          "begin": 14679,
+          "eind": 14770,
+          "ms": 91,
+          "worker_ontvangst": 14679,
+          "taak_begin": 14679,
+          "taak_eind": 14770,
+          "antwoord_verzonden": 14770,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91
+        },
+        {
+          "id": 97,
+          "begin": 14789,
+          "eind": 14886.000000000002,
+          "ms": 97.00000000000182,
+          "worker_ontvangst": 14789,
+          "taak_begin": 14789,
+          "taak_eind": 14886.000000000002,
+          "antwoord_verzonden": 14886.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 97.00000000000182
+        },
+        {
+          "id": 99,
+          "begin": 14922,
+          "eind": 15015,
+          "ms": 93,
+          "worker_ontvangst": 14922,
+          "taak_begin": 14922,
+          "taak_eind": 15015,
+          "antwoord_verzonden": 15015,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93
+        },
+        {
+          "id": 101,
+          "begin": 15035,
+          "eind": 15137,
+          "ms": 102,
+          "worker_ontvangst": 15035,
+          "taak_begin": 15035,
+          "taak_eind": 15138,
+          "antwoord_verzonden": 15137,
+          "interne_wacht_ms": 0,
+          "taak_ms": 103
+        },
+        {
+          "id": 103,
+          "begin": 15156,
+          "eind": 15248.000000000002,
+          "ms": 92.00000000000182,
+          "worker_ontvangst": 15156,
+          "taak_begin": 15156,
+          "taak_eind": 15248.000000000002,
+          "antwoord_verzonden": 15248.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 92.00000000000182
+        },
+        {
+          "id": 105,
+          "begin": 15274,
+          "eind": 15380,
+          "ms": 106,
+          "worker_ontvangst": 15274,
+          "taak_begin": 15274,
+          "taak_eind": 15380,
+          "antwoord_verzonden": 15380,
+          "interne_wacht_ms": 0,
+          "taak_ms": 106
+        },
+        {
+          "id": 107,
+          "begin": 15394,
+          "eind": 15495.000000000002,
+          "ms": 101.00000000000182,
+          "worker_ontvangst": 15394,
+          "taak_begin": 15394,
+          "taak_eind": 15495.000000000002,
+          "antwoord_verzonden": 15495.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 101.00000000000182
+        },
+        {
+          "id": 109,
+          "begin": 15525,
+          "eind": 15624,
+          "ms": 99,
+          "worker_ontvangst": 15525,
+          "taak_begin": 15525,
+          "taak_eind": 15624,
+          "antwoord_verzonden": 15624,
+          "interne_wacht_ms": 0,
+          "taak_ms": 99
+        },
+        {
+          "id": 111,
+          "begin": 15641,
+          "eind": 15744,
+          "ms": 103,
+          "worker_ontvangst": 15641,
+          "taak_begin": 15641,
+          "taak_eind": 15744,
+          "antwoord_verzonden": 15744,
+          "interne_wacht_ms": 0,
+          "taak_ms": 103
+        },
+        {
+          "id": 113,
+          "begin": 15757,
+          "eind": 15847,
+          "ms": 90,
+          "worker_ontvangst": 15757,
+          "taak_begin": 15757,
+          "taak_eind": 15847,
+          "antwoord_verzonden": 15847,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90
+        },
+        {
+          "id": 115,
+          "begin": 15865,
+          "eind": 15953.000000000002,
+          "ms": 88.00000000000182,
+          "worker_ontvangst": 15865,
+          "taak_begin": 15865,
+          "taak_eind": 15953.000000000002,
+          "antwoord_verzonden": 15953.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 88.00000000000182
+        },
+        {
+          "id": 117,
+          "begin": 15973,
+          "eind": 16068.000000000002,
+          "ms": 95.00000000000182,
+          "worker_ontvangst": 15973,
+          "taak_begin": 15973,
+          "taak_eind": 16068.999999999998,
+          "antwoord_verzonden": 16068.999999999998,
+          "interne_wacht_ms": 0,
+          "taak_ms": 95.99999999999818
+        },
+        {
+          "id": 119,
+          "begin": 16086.000000000002,
+          "eind": 16174,
+          "ms": 87.99999999999818,
+          "worker_ontvangst": 16086.000000000002,
+          "taak_begin": 16086.000000000002,
+          "taak_eind": 16174,
+          "antwoord_verzonden": 16174,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 87.99999999999818
+        },
+        {
+          "id": 121,
+          "begin": 16195,
+          "eind": 16282,
+          "ms": 87,
+          "worker_ontvangst": 16193.999999999998,
+          "taak_begin": 16193.999999999998,
+          "taak_eind": 16282,
+          "antwoord_verzonden": 16282,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 88.00000000000182
+        },
+        {
+          "id": 123,
+          "begin": 16297,
+          "eind": 16381,
+          "ms": 84,
+          "worker_ontvangst": 16297,
+          "taak_begin": 16297,
+          "taak_eind": 16382.000000000002,
+          "antwoord_verzonden": 16382.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 85.00000000000182
+        },
+        {
+          "id": 125,
+          "begin": 16569,
+          "eind": 16671,
+          "ms": 102,
+          "worker_ontvangst": 16568,
+          "taak_begin": 16568,
+          "taak_eind": 16671,
+          "antwoord_verzonden": 16671,
+          "interne_wacht_ms": 0,
+          "taak_ms": 103
+        }
+      ],
+      "klokinterval": {
+        "offset_min_ms": 13069,
+        "offset_max_ms": 13176.000000000004,
+        "breedte_ms": 107.00000000000364,
+        "samples": [
+          {
+            "offset_min_ms": 13069,
+            "offset_max_ms": 13176.000000000004,
+            "origin_delta_ms": 13070
+          },
+          {
+            "offset_min_ms": 11102.000000000004,
+            "offset_max_ms": 13182,
+            "origin_delta_ms": 13070
+          }
+        ]
+      },
+      "lange_invoer_diagnostisch": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 29294,
+        "begin_tot_bron_ms": 7142,
+        "laatste_keyup_tot_bron_ms": 220,
+        "laatste_keyup_tot_frame_ms": 1411.0000000000036,
+        "begin_tot_frame_ms": 8333.000000000004,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8399,
+        "wall_verzonden_tot_frame_ms": 6633,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    "native-met-transport": {
+      "geslaagd": true,
+      "fontaantal": 56,
+      "font_synchroon_ms": {
+        "som": 5388.000000000016,
+        "mediaan": 92.5,
+        "min": 86,
+        "max": 144
+      },
+      "fonttaak_ms_som": 5399.000000000018,
+      "interne_wacht_ms_som": 3.0,
+      "taaktypen": {
+        "applyUpdate": 56,
+        "fontRequirements": 56,
+        "sync": 1,
+        "buildPages": 1
+      },
+      "alle_taken": {
+        "12": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9721
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9721
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 12,
+            "type": "applyUpdate",
+            "tijd": 9735
+          }
+        },
+        "13": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9828
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9828
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 13,
+            "type": "fontRequirements",
+            "tijd": 9972
+          }
+        },
+        "14": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9972
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9972
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 14,
+            "type": "applyUpdate",
+            "tijd": 9991
+          }
+        },
+        "15": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 9991
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 9991
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 15,
+            "type": "fontRequirements",
+            "tijd": 10096
+          }
+        },
+        "16": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10096
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10096
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 16,
+            "type": "applyUpdate",
+            "tijd": 10107.000000000002
+          }
+        },
+        "17": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10190
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10190
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 17,
+            "type": "fontRequirements",
+            "tijd": 10321
+          }
+        },
+        "18": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10321
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10321
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 18,
+            "type": "applyUpdate",
+            "tijd": 10334
+          }
+        },
+        "19": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10334
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10334
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 19,
+            "type": "fontRequirements",
+            "tijd": 10446
+          }
+        },
+        "20": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10446
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10446
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 20,
+            "type": "applyUpdate",
+            "tijd": 10458
+          }
+        },
+        "21": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10458
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10458
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 21,
+            "type": "fontRequirements",
+            "tijd": 10558
+          }
+        },
+        "22": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10558
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10559.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 22,
+            "type": "applyUpdate",
+            "tijd": 10568
+          }
+        },
+        "23": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10577
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10577
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 23,
+            "type": "fontRequirements",
+            "tijd": 10680
+          }
+        },
+        "24": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10681.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10681.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 24,
+            "type": "applyUpdate",
+            "tijd": 10689
+          }
+        },
+        "25": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10701
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10702
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 25,
+            "type": "fontRequirements",
+            "tijd": 10818
+          }
+        },
+        "26": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10818
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10818
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 26,
+            "type": "applyUpdate",
+            "tijd": 10828
+          }
+        },
+        "27": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10831
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10831
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 27,
+            "type": "fontRequirements",
+            "tijd": 10945
+          }
+        },
+        "28": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10945
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10945
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 28,
+            "type": "applyUpdate",
+            "tijd": 10954
+          }
+        },
+        "29": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 10959
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 10959
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 29,
+            "type": "fontRequirements",
+            "tijd": 11075.000000000002
+          }
+        },
+        "30": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11076
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11076
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 30,
+            "type": "applyUpdate",
+            "tijd": 11085
+          }
+        },
+        "31": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11092
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11092
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 31,
+            "type": "fontRequirements",
+            "tijd": 11197.000000000002
+          }
+        },
+        "32": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11197.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11197.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 32,
+            "type": "applyUpdate",
+            "tijd": 11205
+          }
+        },
+        "33": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11210
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11210
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 33,
+            "type": "fontRequirements",
+            "tijd": 11309.000000000002
+          }
+        },
+        "34": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11309.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11309.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 34,
+            "type": "applyUpdate",
+            "tijd": 11317
+          }
+        },
+        "35": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11323
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11323
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 35,
+            "type": "fontRequirements",
+            "tijd": 11416
+          }
+        },
+        "36": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11416
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11416
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 36,
+            "type": "applyUpdate",
+            "tijd": 11424
+          }
+        },
+        "37": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11431.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11431.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 37,
+            "type": "fontRequirements",
+            "tijd": 11520
+          }
+        },
+        "38": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11520
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11520
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 38,
+            "type": "applyUpdate",
+            "tijd": 11528
+          }
+        },
+        "39": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11540.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11540.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 39,
+            "type": "fontRequirements",
+            "tijd": 11635
+          }
+        },
+        "40": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11635
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11635
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 40,
+            "type": "applyUpdate",
+            "tijd": 11646
+          }
+        },
+        "41": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11649
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11649
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 41,
+            "type": "fontRequirements",
+            "tijd": 11742
+          }
+        },
+        "42": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11742
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11742
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 42,
+            "type": "applyUpdate",
+            "tijd": 11750
+          }
+        },
+        "43": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11756
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11756
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 43,
+            "type": "fontRequirements",
+            "tijd": 11844
+          }
+        },
+        "44": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11844
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11844
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 44,
+            "type": "applyUpdate",
+            "tijd": 11851
+          }
+        },
+        "45": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11866
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11866
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 45,
+            "type": "fontRequirements",
+            "tijd": 11953
+          }
+        },
+        "46": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11953
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11953
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 46,
+            "type": "applyUpdate",
+            "tijd": 11960
+          }
+        },
+        "47": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 11971
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 11971
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 47,
+            "type": "fontRequirements",
+            "tijd": 12060
+          }
+        },
+        "48": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12061
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12061
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 48,
+            "type": "applyUpdate",
+            "tijd": 12068
+          }
+        },
+        "49": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12084
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12084
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 49,
+            "type": "fontRequirements",
+            "tijd": 12178
+          }
+        },
+        "50": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12178
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12178
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 50,
+            "type": "applyUpdate",
+            "tijd": 12185
+          }
+        },
+        "51": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12198
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12198
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 51,
+            "type": "fontRequirements",
+            "tijd": 12287
+          }
+        },
+        "52": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12288
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12288
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 52,
+            "type": "applyUpdate",
+            "tijd": 12295
+          }
+        },
+        "53": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12308
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12308
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 53,
+            "type": "fontRequirements",
+            "tijd": 12397
+          }
+        },
+        "54": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12397
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12397
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 54,
+            "type": "applyUpdate",
+            "tijd": 12404
+          }
+        },
+        "55": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12419
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12419
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 55,
+            "type": "fontRequirements",
+            "tijd": 12512
+          }
+        },
+        "56": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12512
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12512
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 56,
+            "type": "applyUpdate",
+            "tijd": 12519
+          }
+        },
+        "57": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12535
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12535
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 57,
+            "type": "fontRequirements",
+            "tijd": 12623.000000000002
+          }
+        },
+        "58": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12623.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12623.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 58,
+            "type": "applyUpdate",
+            "tijd": 12631
+          }
+        },
+        "59": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12647
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12648
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 59,
+            "type": "fontRequirements",
+            "tijd": 12743
+          }
+        },
+        "60": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12743
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12743
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 60,
+            "type": "applyUpdate",
+            "tijd": 12750
+          }
+        },
+        "61": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12759
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12759
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 61,
+            "type": "fontRequirements",
+            "tijd": 12851
+          }
+        },
+        "62": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12851
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12851
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 62,
+            "type": "applyUpdate",
+            "tijd": 12858
+          }
+        },
+        "63": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12875
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12875
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 63,
+            "type": "fontRequirements",
+            "tijd": 12966.000000000002
+          }
+        },
+        "64": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12966.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12966.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 64,
+            "type": "applyUpdate",
+            "tijd": 12976
+          }
+        },
+        "65": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 12991
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 12991
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 65,
+            "type": "fontRequirements",
+            "tijd": 13096
+          }
+        },
+        "66": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13096
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13096
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 66,
+            "type": "applyUpdate",
+            "tijd": 13104.000000000002
+          }
+        },
+        "67": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13115
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13115
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 67,
+            "type": "fontRequirements",
+            "tijd": 13217
+          }
+        },
+        "68": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13217
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13217
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 68,
+            "type": "applyUpdate",
+            "tijd": 13225
+          }
+        },
+        "69": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13227
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13227
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 69,
+            "type": "fontRequirements",
+            "tijd": 13318
+          }
+        },
+        "70": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13318
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13318
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 70,
+            "type": "applyUpdate",
+            "tijd": 13325.000000000002
+          }
+        },
+        "71": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13337
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13337
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 71,
+            "type": "fontRequirements",
+            "tijd": 13427
+          }
+        },
+        "72": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13427
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13427
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 72,
+            "type": "applyUpdate",
+            "tijd": 13434.000000000002
+          }
+        },
+        "73": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13451
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13451
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 73,
+            "type": "fontRequirements",
+            "tijd": 13541
+          }
+        },
+        "74": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13542
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13542
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 74,
+            "type": "applyUpdate",
+            "tijd": 13549
+          }
+        },
+        "75": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13563
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13563
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 75,
+            "type": "fontRequirements",
+            "tijd": 13652.000000000002
+          }
+        },
+        "76": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13652.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13652.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 76,
+            "type": "applyUpdate",
+            "tijd": 13659
+          }
+        },
+        "77": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13673
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13673
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 77,
+            "type": "fontRequirements",
+            "tijd": 13762
+          }
+        },
+        "78": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13762
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13762
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 78,
+            "type": "applyUpdate",
+            "tijd": 13770
+          }
+        },
+        "79": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13785
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13785
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 79,
+            "type": "fontRequirements",
+            "tijd": 13880
+          }
+        },
+        "80": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13880
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13880
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 80,
+            "type": "applyUpdate",
+            "tijd": 13888
+          }
+        },
+        "81": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 13909
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 13909
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 81,
+            "type": "fontRequirements",
+            "tijd": 14000
+          }
+        },
+        "82": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14000
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14000
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 82,
+            "type": "applyUpdate",
+            "tijd": 14008
+          }
+        },
+        "83": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14017
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14017
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 83,
+            "type": "fontRequirements",
+            "tijd": 14104.000000000002
+          }
+        },
+        "84": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14104.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14104.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 84,
+            "type": "applyUpdate",
+            "tijd": 14112
+          }
+        },
+        "85": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14123.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14123.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 85,
+            "type": "fontRequirements",
+            "tijd": 14213.000000000002
+          }
+        },
+        "86": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14213.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14213.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 86,
+            "type": "applyUpdate",
+            "tijd": 14221
+          }
+        },
+        "87": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14233
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14233
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 87,
+            "type": "fontRequirements",
+            "tijd": 14321
+          }
+        },
+        "88": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14321
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14321
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 88,
+            "type": "applyUpdate",
+            "tijd": 14329
+          }
+        },
+        "89": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14336
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14336
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 89,
+            "type": "fontRequirements",
+            "tijd": 14425
+          }
+        },
+        "90": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14425
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14425
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 90,
+            "type": "applyUpdate",
+            "tijd": 14432
+          }
+        },
+        "91": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14442
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14442
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 91,
+            "type": "fontRequirements",
+            "tijd": 14533
+          }
+        },
+        "92": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14533
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14533
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 92,
+            "type": "applyUpdate",
+            "tijd": 14540.000000000002
+          }
+        },
+        "93": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14549
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14549
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 93,
+            "type": "fontRequirements",
+            "tijd": 14639.000000000002
+          }
+        },
+        "94": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14639.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14639.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 94,
+            "type": "applyUpdate",
+            "tijd": 14646
+          }
+        },
+        "95": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14659
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14659
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 95,
+            "type": "fontRequirements",
+            "tijd": 14759
+          }
+        },
+        "96": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14759
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14760
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 96,
+            "type": "applyUpdate",
+            "tijd": 14768
+          }
+        },
+        "97": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14782
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14782
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 97,
+            "type": "fontRequirements",
+            "tijd": 14876
+          }
+        },
+        "98": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14876
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14876
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 98,
+            "type": "applyUpdate",
+            "tijd": 14883
+          }
+        },
+        "99": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 14894
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 14894
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 99,
+            "type": "fontRequirements",
+            "tijd": 14985
+          }
+        },
+        "100": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 14985
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 14985
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 100,
+            "type": "applyUpdate",
+            "tijd": 14992
+          }
+        },
+        "101": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15001
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15001
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 101,
+            "type": "fontRequirements",
+            "tijd": 15090
+          }
+        },
+        "102": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15091.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15091.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 102,
+            "type": "applyUpdate",
+            "tijd": 15098
+          }
+        },
+        "103": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15110
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15110
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 103,
+            "type": "fontRequirements",
+            "tijd": 15199
+          }
+        },
+        "104": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15199
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15199
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 104,
+            "type": "applyUpdate",
+            "tijd": 15206
+          }
+        },
+        "105": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15217
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15217
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 105,
+            "type": "fontRequirements",
+            "tijd": 15309.000000000002
+          }
+        },
+        "106": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15309.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15309.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 106,
+            "type": "applyUpdate",
+            "tijd": 15317
+          }
+        },
+        "107": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15340
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15340
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 107,
+            "type": "fontRequirements",
+            "tijd": 15438
+          }
+        },
+        "108": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15438
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15438
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 108,
+            "type": "applyUpdate",
+            "tijd": 15446
+          }
+        },
+        "109": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15459
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15459
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 109,
+            "type": "fontRequirements",
+            "tijd": 15564
+          }
+        },
+        "110": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15564
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15564
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 110,
+            "type": "applyUpdate",
+            "tijd": 15571
+          }
+        },
+        "111": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15578.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15578.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 111,
+            "type": "fontRequirements",
+            "tijd": 15668.000000000002
+          }
+        },
+        "112": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15668.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15668.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 112,
+            "type": "applyUpdate",
+            "tijd": 15676
+          }
+        },
+        "113": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15686
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15686
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 113,
+            "type": "fontRequirements",
+            "tijd": 15786
+          }
+        },
+        "114": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15786
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15786
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 114,
+            "type": "applyUpdate",
+            "tijd": 15794
+          }
+        },
+        "115": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15794
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15795
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 115,
+            "type": "fontRequirements",
+            "tijd": 15886.000000000002
+          }
+        },
+        "116": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15886.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15886.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 116,
+            "type": "applyUpdate",
+            "tijd": 15893
+          }
+        },
+        "117": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 15899
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 15899
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 117,
+            "type": "fontRequirements",
+            "tijd": 15992
+          }
+        },
+        "118": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 15992
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 15992
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 118,
+            "type": "applyUpdate",
+            "tijd": 15999
+          }
+        },
+        "119": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16013.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16013.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 119,
+            "type": "fontRequirements",
+            "tijd": 16106.000000000002
+          }
+        },
+        "120": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16106.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16106.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 120,
+            "type": "applyUpdate",
+            "tijd": 16113
+          }
+        },
+        "121": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16120.999999999998
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16120.999999999998
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 121,
+            "type": "fontRequirements",
+            "tijd": 16208.000000000002
+          }
+        },
+        "122": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16208.000000000002
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16208.000000000002
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 122,
+            "type": "applyUpdate",
+            "tijd": 16215
+          }
+        },
+        "123": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16384
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16384
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 123,
+            "type": "fontRequirements",
+            "tijd": 16484
+          }
+        },
+        "124": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 124,
+            "type": "sync",
+            "tijd": 16489
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 124,
+            "type": "sync",
+            "tijd": 16489
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 124,
+            "type": "sync",
+            "tijd": 16833.000000000004
+          }
+        },
+        "125": {
+          "ontvangst": {
+            "soort": "ontvangst",
+            "id": 125,
+            "type": "buildPages",
+            "tijd": 17300
+          },
+          "begin": {
+            "soort": "taak.begin",
+            "id": 125,
+            "type": "buildPages",
+            "tijd": 17301.000000000004
+          },
+          "eind": {
+            "soort": "taak.einde",
+            "id": 125,
+            "type": "buildPages",
+            "tijd": 17398
+          }
+        }
+      },
+      "fontvensters": [
+        {
+          "id": 13,
+          "begin": 9828,
+          "eind": 9972,
+          "ms": 144,
+          "worker_ontvangst": 9828,
+          "taak_begin": 9828,
+          "taak_eind": 9972,
+          "antwoord_verzonden": 9972,
+          "interne_wacht_ms": 0,
+          "taak_ms": 144,
+          "main_send": 22612.000000000004,
+          "main_antwoord": 22772.000000000004,
+          "rondreis_ms": 160.0,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            8.000000000005457,
+            16.000000000003638
+          ]
+        },
+        {
+          "id": 15,
+          "begin": 9991,
+          "eind": 10095,
+          "ms": 104,
+          "worker_ontvangst": 9991,
+          "taak_begin": 9991,
+          "taak_eind": 10096,
+          "antwoord_verzonden": 10096,
+          "interne_wacht_ms": 0,
+          "taak_ms": 105,
+          "main_send": 22756,
+          "main_antwoord": 22972,
+          "rondreis_ms": 216,
+          "voor_worker_ontvangst_interval_ms": [
+            19,
+            27.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            84.00000000000182,
+            92
+          ]
+        },
+        {
+          "id": 17,
+          "begin": 10190,
+          "eind": 10320,
+          "ms": 130,
+          "worker_ontvangst": 10190,
+          "taak_begin": 10190,
+          "taak_eind": 10321,
+          "antwoord_verzonden": 10320,
+          "interne_wacht_ms": 0,
+          "taak_ms": 131,
+          "main_send": 22975,
+          "main_antwoord": 23108,
+          "rondreis_ms": 133,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            -3.999999999998181,
+            4
+          ]
+        },
+        {
+          "id": 19,
+          "begin": 10334,
+          "eind": 10446,
+          "ms": 112,
+          "worker_ontvangst": 10334,
+          "taak_begin": 10334,
+          "taak_eind": 10446,
+          "antwoord_verzonden": 10446,
+          "interne_wacht_ms": 0,
+          "taak_ms": 112,
+          "main_send": 23097,
+          "main_antwoord": 23232,
+          "rondreis_ms": 135,
+          "voor_worker_ontvangst_interval_ms": [
+            21,
+            29.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            -5.999999999998181,
+            2
+          ]
+        },
+        {
+          "id": 21,
+          "begin": 10458,
+          "eind": 10558,
+          "ms": 100,
+          "worker_ontvangst": 10458,
+          "taak_begin": 10458,
+          "taak_eind": 10558,
+          "antwoord_verzonden": 10558,
+          "interne_wacht_ms": 0,
+          "taak_ms": 100,
+          "main_send": 23236,
+          "main_antwoord": 23360,
+          "rondreis_ms": 124,
+          "voor_worker_ontvangst_interval_ms": [
+            6,
+            14.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 23,
+          "begin": 10577,
+          "eind": 10680,
+          "ms": 103,
+          "worker_ontvangst": 10577,
+          "taak_begin": 10577,
+          "taak_eind": 10680,
+          "antwoord_verzonden": 10680,
+          "interne_wacht_ms": 0,
+          "taak_ms": 103,
+          "main_send": 23361,
+          "main_antwoord": 23484,
+          "rondreis_ms": 123,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            12.000000000001819,
+            20
+          ]
+        },
+        {
+          "id": 25,
+          "begin": 10702,
+          "eind": 10817,
+          "ms": 115,
+          "worker_ontvangst": 10701,
+          "taak_begin": 10702,
+          "taak_eind": 10818,
+          "antwoord_verzonden": 10817,
+          "interne_wacht_ms": 1,
+          "taak_ms": 116,
+          "main_send": 23486,
+          "main_antwoord": 23612.000000000004,
+          "rondreis_ms": 126.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            3.000000000005457,
+            11.000000000003638
+          ]
+        },
+        {
+          "id": 27,
+          "begin": 10831,
+          "eind": 10945,
+          "ms": 114,
+          "worker_ontvangst": 10831,
+          "taak_begin": 10831,
+          "taak_eind": 10945,
+          "antwoord_verzonden": 10945,
+          "interne_wacht_ms": 0,
+          "taak_ms": 114,
+          "main_send": 23615.000000000004,
+          "main_antwoord": 23745,
+          "rondreis_ms": 129.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            8.000000000001819,
+            16
+          ]
+        },
+        {
+          "id": 29,
+          "begin": 10960,
+          "eind": 11075.000000000002,
+          "ms": 115.00000000000182,
+          "worker_ontvangst": 10959,
+          "taak_begin": 10959,
+          "taak_eind": 11075.000000000002,
+          "antwoord_verzonden": 11075.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 116.00000000000182,
+          "main_send": 23744,
+          "main_antwoord": 23876,
+          "rondreis_ms": 132,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.0,
+            16.99999999999818
+          ]
+        },
+        {
+          "id": 31,
+          "begin": 11092,
+          "eind": 11197.000000000002,
+          "ms": 105.00000000000182,
+          "worker_ontvangst": 11092,
+          "taak_begin": 11092,
+          "taak_eind": 11197.000000000002,
+          "antwoord_verzonden": 11197.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 105.00000000000182,
+          "main_send": 23877,
+          "main_antwoord": 23993.000000000004,
+          "rondreis_ms": 116.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            4.000000000003638,
+            12.000000000001819
+          ]
+        },
+        {
+          "id": 33,
+          "begin": 11210,
+          "eind": 11309.000000000002,
+          "ms": 99.00000000000182,
+          "worker_ontvangst": 11210,
+          "taak_begin": 11210,
+          "taak_eind": 11309.000000000002,
+          "antwoord_verzonden": 11309.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 99.00000000000182,
+          "main_send": 23995,
+          "main_antwoord": 24104,
+          "rondreis_ms": 109,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            3.0,
+            10.999999999998181
+          ]
+        },
+        {
+          "id": 35,
+          "begin": 11323,
+          "eind": 11416,
+          "ms": 93,
+          "worker_ontvangst": 11323,
+          "taak_begin": 11323,
+          "taak_eind": 11416,
+          "antwoord_verzonden": 11416,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93,
+          "main_send": 24107,
+          "main_antwoord": 24213,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            5.000000000001819,
+            13
+          ]
+        },
+        {
+          "id": 37,
+          "begin": 11431.000000000002,
+          "eind": 11520,
+          "ms": 88.99999999999818,
+          "worker_ontvangst": 11431.000000000002,
+          "taak_begin": 11431.000000000002,
+          "taak_eind": 11520,
+          "antwoord_verzonden": 11520,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 88.99999999999818,
+          "main_send": 24215,
+          "main_antwoord": 24322,
+          "rondreis_ms": 107,
+          "voor_worker_ontvangst_interval_ms": [
+            0.0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 39,
+          "begin": 11540.000000000002,
+          "eind": 11635,
+          "ms": 94.99999999999818,
+          "worker_ontvangst": 11540.000000000002,
+          "taak_begin": 11540.000000000002,
+          "taak_eind": 11635,
+          "antwoord_verzonden": 11635,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 94.99999999999818,
+          "main_send": 24324,
+          "main_antwoord": 24431,
+          "rondreis_ms": 107,
+          "voor_worker_ontvangst_interval_ms": [
+            0.0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            4.000000000001819,
+            12
+          ]
+        },
+        {
+          "id": 41,
+          "begin": 11649,
+          "eind": 11742,
+          "ms": 93,
+          "worker_ontvangst": 11649,
+          "taak_begin": 11649,
+          "taak_eind": 11742,
+          "antwoord_verzonden": 11742,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93,
+          "main_send": 24434,
+          "main_antwoord": 24539,
+          "rondreis_ms": 105,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            5.000000000001819,
+            13
+          ]
+        },
+        {
+          "id": 43,
+          "begin": 11756,
+          "eind": 11843,
+          "ms": 87,
+          "worker_ontvangst": 11756,
+          "taak_begin": 11756,
+          "taak_eind": 11844,
+          "antwoord_verzonden": 11843,
+          "interne_wacht_ms": 0,
+          "taak_ms": 88,
+          "main_send": 24540,
+          "main_antwoord": 24647.000000000004,
+          "rondreis_ms": 107.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            12.000000000005457,
+            20.000000000003638
+          ]
+        },
+        {
+          "id": 45,
+          "begin": 11866,
+          "eind": 11952,
+          "ms": 86,
+          "worker_ontvangst": 11866,
+          "taak_begin": 11866,
+          "taak_eind": 11953,
+          "antwoord_verzonden": 11953,
+          "interne_wacht_ms": 0,
+          "taak_ms": 87,
+          "main_send": 24650.000000000004,
+          "main_antwoord": 24752,
+          "rondreis_ms": 101.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            7.000000000001819,
+            15
+          ]
+        },
+        {
+          "id": 47,
+          "begin": 11971,
+          "eind": 12060,
+          "ms": 89,
+          "worker_ontvangst": 11971,
+          "taak_begin": 11971,
+          "taak_eind": 12060,
+          "antwoord_verzonden": 12060,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 24755,
+          "main_antwoord": 24865.000000000004,
+          "rondreis_ms": 110.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            13.000000000005457,
+            21.000000000003638
+          ]
+        },
+        {
+          "id": 49,
+          "begin": 12084,
+          "eind": 12178,
+          "ms": 94,
+          "worker_ontvangst": 12084,
+          "taak_begin": 12084,
+          "taak_eind": 12178,
+          "antwoord_verzonden": 12178,
+          "interne_wacht_ms": 0,
+          "taak_ms": 94,
+          "main_send": 24868.000000000004,
+          "main_antwoord": 24980,
+          "rondreis_ms": 111.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 51,
+          "begin": 12198,
+          "eind": 12287,
+          "ms": 89,
+          "worker_ontvangst": 12198,
+          "taak_begin": 12198,
+          "taak_eind": 12287,
+          "antwoord_verzonden": 12287,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 24982,
+          "main_antwoord": 25091,
+          "rondreis_ms": 109,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            12.000000000001819,
+            20
+          ]
+        },
+        {
+          "id": 53,
+          "begin": 12308,
+          "eind": 12397,
+          "ms": 89,
+          "worker_ontvangst": 12308,
+          "taak_begin": 12308,
+          "taak_eind": 12397,
+          "antwoord_verzonden": 12397,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 25092,
+          "main_antwoord": 25202,
+          "rondreis_ms": 110,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            13.000000000001819,
+            21
+          ]
+        },
+        {
+          "id": 55,
+          "begin": 12419,
+          "eind": 12512,
+          "ms": 93,
+          "worker_ontvangst": 12419,
+          "taak_begin": 12419,
+          "taak_eind": 12512,
+          "antwoord_verzonden": 12512,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93,
+          "main_send": 25204,
+          "main_antwoord": 25318,
+          "rondreis_ms": 114,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            14.000000000001819,
+            22
+          ]
+        },
+        {
+          "id": 57,
+          "begin": 12535,
+          "eind": 12623.000000000002,
+          "ms": 88.00000000000182,
+          "worker_ontvangst": 12535,
+          "taak_begin": 12535,
+          "taak_eind": 12623.000000000002,
+          "antwoord_verzonden": 12623.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 88.00000000000182,
+          "main_send": 25319,
+          "main_antwoord": 25429.000000000004,
+          "rondreis_ms": 110.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            14.000000000003638,
+            22.00000000000182
+          ]
+        },
+        {
+          "id": 59,
+          "begin": 12648,
+          "eind": 12743,
+          "ms": 95,
+          "worker_ontvangst": 12647,
+          "taak_begin": 12648,
+          "taak_eind": 12743,
+          "antwoord_verzonden": 12743,
+          "interne_wacht_ms": 1,
+          "taak_ms": 95,
+          "main_send": 25432.000000000004,
+          "main_antwoord": 25541,
+          "rondreis_ms": 108.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -1.000000000003638,
+            6.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            6.000000000001819,
+            14
+          ]
+        },
+        {
+          "id": 61,
+          "begin": 12759,
+          "eind": 12851,
+          "ms": 92,
+          "worker_ontvangst": 12759,
+          "taak_begin": 12759,
+          "taak_eind": 12851,
+          "antwoord_verzonden": 12851,
+          "interne_wacht_ms": 0,
+          "taak_ms": 92,
+          "main_send": 25543,
+          "main_antwoord": 25656,
+          "rondreis_ms": 113,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            13.000000000001819,
+            21
+          ]
+        },
+        {
+          "id": 63,
+          "begin": 12875,
+          "eind": 12966.000000000002,
+          "ms": 91.00000000000182,
+          "worker_ontvangst": 12875,
+          "taak_begin": 12875,
+          "taak_eind": 12966.000000000002,
+          "antwoord_verzonden": 12966.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91.00000000000182,
+          "main_send": 25659,
+          "main_antwoord": 25776,
+          "rondreis_ms": 117,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            18.0,
+            25.99999999999818
+          ]
+        },
+        {
+          "id": 65,
+          "begin": 12991,
+          "eind": 13096,
+          "ms": 105,
+          "worker_ontvangst": 12991,
+          "taak_begin": 12991,
+          "taak_eind": 13096,
+          "antwoord_verzonden": 13096,
+          "interne_wacht_ms": 0,
+          "taak_ms": 105,
+          "main_send": 25775.000000000004,
+          "main_antwoord": 25897.000000000004,
+          "rondreis_ms": 122.0,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.000000000005457,
+            17.000000000003638
+          ]
+        },
+        {
+          "id": 67,
+          "begin": 13116,
+          "eind": 13217,
+          "ms": 101,
+          "worker_ontvangst": 13115,
+          "taak_begin": 13115,
+          "taak_eind": 13217,
+          "antwoord_verzonden": 13217,
+          "interne_wacht_ms": 0,
+          "taak_ms": 102,
+          "main_send": 25900.000000000004,
+          "main_antwoord": 26009,
+          "rondreis_ms": 108.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -1.000000000003638,
+            6.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            1.8189894035458565e-12,
+            8
+          ]
+        },
+        {
+          "id": 69,
+          "begin": 13227,
+          "eind": 13318,
+          "ms": 91,
+          "worker_ontvangst": 13227,
+          "taak_begin": 13227,
+          "taak_eind": 13318,
+          "antwoord_verzonden": 13318,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91,
+          "main_send": 26012,
+          "main_antwoord": 26120,
+          "rondreis_ms": 108,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 71,
+          "begin": 13337,
+          "eind": 13427,
+          "ms": 90,
+          "worker_ontvangst": 13337,
+          "taak_begin": 13337,
+          "taak_eind": 13427,
+          "antwoord_verzonden": 13427,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90,
+          "main_send": 26121.000000000004,
+          "main_antwoord": 26233,
+          "rondreis_ms": 111.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            14.000000000001819,
+            22
+          ]
+        },
+        {
+          "id": 73,
+          "begin": 13451,
+          "eind": 13541,
+          "ms": 90,
+          "worker_ontvangst": 13451,
+          "taak_begin": 13451,
+          "taak_eind": 13541,
+          "antwoord_verzonden": 13541,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90,
+          "main_send": 26235,
+          "main_antwoord": 26345,
+          "rondreis_ms": 110,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            12.000000000001819,
+            20
+          ]
+        },
+        {
+          "id": 75,
+          "begin": 13563,
+          "eind": 13652.000000000002,
+          "ms": 89.00000000000182,
+          "worker_ontvangst": 13563,
+          "taak_begin": 13563,
+          "taak_eind": 13652.000000000002,
+          "antwoord_verzonden": 13652.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89.00000000000182,
+          "main_send": 26347,
+          "main_antwoord": 26455.000000000004,
+          "rondreis_ms": 108.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            11.000000000003638,
+            19.00000000000182
+          ]
+        },
+        {
+          "id": 77,
+          "begin": 13673,
+          "eind": 13762,
+          "ms": 89,
+          "worker_ontvangst": 13673,
+          "taak_begin": 13673,
+          "taak_eind": 13762,
+          "antwoord_verzonden": 13762,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 26457,
+          "main_antwoord": 26566,
+          "rondreis_ms": 109,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            12.000000000001819,
+            20
+          ]
+        },
+        {
+          "id": 79,
+          "begin": 13785,
+          "eind": 13880,
+          "ms": 95,
+          "worker_ontvangst": 13785,
+          "taak_begin": 13785,
+          "taak_eind": 13880,
+          "antwoord_verzonden": 13880,
+          "interne_wacht_ms": 0,
+          "taak_ms": 95,
+          "main_send": 26569,
+          "main_antwoord": 26691,
+          "rondreis_ms": 122,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            19.00000000000182,
+            27
+          ]
+        },
+        {
+          "id": 81,
+          "begin": 13909,
+          "eind": 14000,
+          "ms": 91,
+          "worker_ontvangst": 13909,
+          "taak_begin": 13909,
+          "taak_eind": 14000,
+          "antwoord_verzonden": 14000,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91,
+          "main_send": 26694,
+          "main_antwoord": 26801.000000000004,
+          "rondreis_ms": 107.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.000000000005457,
+            17.000000000003638
+          ]
+        },
+        {
+          "id": 83,
+          "begin": 14017,
+          "eind": 14104.000000000002,
+          "ms": 87.00000000000182,
+          "worker_ontvangst": 14017,
+          "taak_begin": 14017,
+          "taak_eind": 14104.000000000002,
+          "antwoord_verzonden": 14104.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 87.00000000000182,
+          "main_send": 26802,
+          "main_antwoord": 26905,
+          "rondreis_ms": 103,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.0,
+            16.99999999999818
+          ]
+        },
+        {
+          "id": 85,
+          "begin": 14123.000000000002,
+          "eind": 14213.000000000002,
+          "ms": 90.0,
+          "worker_ontvangst": 14123.000000000002,
+          "taak_begin": 14123.000000000002,
+          "taak_eind": 14213.000000000002,
+          "antwoord_verzonden": 14213.000000000002,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 90.0,
+          "main_send": 26907,
+          "main_antwoord": 27015,
+          "rondreis_ms": 108,
+          "voor_worker_ontvangst_interval_ms": [
+            0.0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.0,
+            17.99999999999818
+          ]
+        },
+        {
+          "id": 87,
+          "begin": 14233,
+          "eind": 14321,
+          "ms": 88,
+          "worker_ontvangst": 14233,
+          "taak_begin": 14233,
+          "taak_eind": 14321,
+          "antwoord_verzonden": 14321,
+          "interne_wacht_ms": 0,
+          "taak_ms": 88,
+          "main_send": 27017,
+          "main_antwoord": 27119,
+          "rondreis_ms": 102,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            6.000000000001819,
+            14
+          ]
+        },
+        {
+          "id": 89,
+          "begin": 14336,
+          "eind": 14425,
+          "ms": 89,
+          "worker_ontvangst": 14336,
+          "taak_begin": 14336,
+          "taak_eind": 14425,
+          "antwoord_verzonden": 14425,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 27120,
+          "main_antwoord": 27226,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.000000000001819,
+            17
+          ]
+        },
+        {
+          "id": 91,
+          "begin": 14442,
+          "eind": 14533,
+          "ms": 91,
+          "worker_ontvangst": 14442,
+          "taak_begin": 14442,
+          "taak_eind": 14533,
+          "antwoord_verzonden": 14533,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91,
+          "main_send": 27227,
+          "main_antwoord": 27332,
+          "rondreis_ms": 105,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            7.000000000001819,
+            15
+          ]
+        },
+        {
+          "id": 93,
+          "begin": 14549,
+          "eind": 14639.000000000002,
+          "ms": 90.00000000000182,
+          "worker_ontvangst": 14549,
+          "taak_begin": 14549,
+          "taak_eind": 14639.000000000002,
+          "antwoord_verzonden": 14639.000000000002,
+          "interne_wacht_ms": 0,
+          "taak_ms": 90.00000000000182,
+          "main_send": 27333.000000000004,
+          "main_antwoord": 27440,
+          "rondreis_ms": 106.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            9.0,
+            16.99999999999818
+          ]
+        },
+        {
+          "id": 95,
+          "begin": 14659,
+          "eind": 14759,
+          "ms": 100,
+          "worker_ontvangst": 14659,
+          "taak_begin": 14659,
+          "taak_eind": 14759,
+          "antwoord_verzonden": 14759,
+          "interne_wacht_ms": 0,
+          "taak_ms": 100,
+          "main_send": 27443,
+          "main_antwoord": 27564,
+          "rondreis_ms": 121,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            13.000000000001819,
+            21
+          ]
+        },
+        {
+          "id": 97,
+          "begin": 14782,
+          "eind": 14875,
+          "ms": 93,
+          "worker_ontvangst": 14782,
+          "taak_begin": 14782,
+          "taak_eind": 14876,
+          "antwoord_verzonden": 14875,
+          "interne_wacht_ms": 0,
+          "taak_ms": 94,
+          "main_send": 27567,
+          "main_antwoord": 27677,
+          "rondreis_ms": 110,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 99,
+          "begin": 14894,
+          "eind": 14985,
+          "ms": 91,
+          "worker_ontvangst": 14894,
+          "taak_begin": 14894,
+          "taak_eind": 14985,
+          "antwoord_verzonden": 14985,
+          "interne_wacht_ms": 0,
+          "taak_ms": 91,
+          "main_send": 27678,
+          "main_antwoord": 27784,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            7.000000000001819,
+            15
+          ]
+        },
+        {
+          "id": 101,
+          "begin": 15001,
+          "eind": 15090,
+          "ms": 89,
+          "worker_ontvangst": 15001,
+          "taak_begin": 15001,
+          "taak_eind": 15090,
+          "antwoord_verzonden": 15090,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 27786,
+          "main_antwoord": 27892,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000001819,
+            18
+          ]
+        },
+        {
+          "id": 103,
+          "begin": 15110,
+          "eind": 15199,
+          "ms": 89,
+          "worker_ontvangst": 15110,
+          "taak_begin": 15110,
+          "taak_eind": 15199,
+          "antwoord_verzonden": 15199,
+          "interne_wacht_ms": 0,
+          "taak_ms": 89,
+          "main_send": 27894.000000000004,
+          "main_antwoord": 27999.000000000004,
+          "rondreis_ms": 105.0,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            8.000000000005457,
+            16.000000000003638
+          ]
+        },
+        {
+          "id": 105,
+          "begin": 15217,
+          "eind": 15308,
+          "ms": 91,
+          "worker_ontvangst": 15217,
+          "taak_begin": 15217,
+          "taak_eind": 15309.000000000002,
+          "antwoord_verzonden": 15308,
+          "interne_wacht_ms": 0,
+          "taak_ms": 92.00000000000182,
+          "main_send": 28002,
+          "main_antwoord": 28123,
+          "rondreis_ms": 121,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            23.00000000000182,
+            31
+          ]
+        },
+        {
+          "id": 107,
+          "begin": 15340,
+          "eind": 15437.000000000002,
+          "ms": 97.00000000000182,
+          "worker_ontvangst": 15340,
+          "taak_begin": 15340,
+          "taak_eind": 15438,
+          "antwoord_verzonden": 15438,
+          "interne_wacht_ms": 0,
+          "taak_ms": 98,
+          "main_send": 28124.000000000004,
+          "main_antwoord": 28240.000000000004,
+          "rondreis_ms": 116.0,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.000000000005457,
+            18.000000000003638
+          ]
+        },
+        {
+          "id": 109,
+          "begin": 15459,
+          "eind": 15564,
+          "ms": 105,
+          "worker_ontvangst": 15459,
+          "taak_begin": 15459,
+          "taak_eind": 15564,
+          "antwoord_verzonden": 15564,
+          "interne_wacht_ms": 0,
+          "taak_ms": 105,
+          "main_send": 28243.000000000004,
+          "main_antwoord": 28359,
+          "rondreis_ms": 115.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            3.000000000001819,
+            11
+          ]
+        },
+        {
+          "id": 111,
+          "begin": 15578.000000000002,
+          "eind": 15668.000000000002,
+          "ms": 90.0,
+          "worker_ontvangst": 15578.000000000002,
+          "taak_begin": 15578.000000000002,
+          "taak_eind": 15668.000000000002,
+          "antwoord_verzonden": 15668.000000000002,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 90.0,
+          "main_send": 28362.000000000004,
+          "main_antwoord": 28470,
+          "rondreis_ms": 107.99999999999636,
+          "voor_worker_ontvangst_interval_ms": [
+            -3.637978807091713e-12,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            10.0,
+            17.99999999999818
+          ]
+        },
+        {
+          "id": 113,
+          "begin": 15686,
+          "eind": 15786,
+          "ms": 100,
+          "worker_ontvangst": 15686,
+          "taak_begin": 15686,
+          "taak_eind": 15786,
+          "antwoord_verzonden": 15786,
+          "interne_wacht_ms": 0,
+          "taak_ms": 100,
+          "main_send": 28471,
+          "main_antwoord": 28577,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            -1,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            -0.999999999998181,
+            7
+          ]
+        },
+        {
+          "id": 115,
+          "begin": 15795,
+          "eind": 15886.000000000002,
+          "ms": 91.00000000000182,
+          "worker_ontvangst": 15794,
+          "taak_begin": 15795,
+          "taak_eind": 15886.000000000002,
+          "antwoord_verzonden": 15886.000000000002,
+          "interne_wacht_ms": 1,
+          "taak_ms": 91.00000000000182,
+          "main_send": 28575,
+          "main_antwoord": 28681,
+          "rondreis_ms": 106,
+          "voor_worker_ontvangst_interval_ms": [
+            3,
+            11.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            3.0,
+            10.999999999998181
+          ]
+        },
+        {
+          "id": 117,
+          "begin": 15899,
+          "eind": 15992,
+          "ms": 93,
+          "worker_ontvangst": 15899,
+          "taak_begin": 15899,
+          "taak_eind": 15992,
+          "antwoord_verzonden": 15992,
+          "interne_wacht_ms": 0,
+          "taak_ms": 93,
+          "main_send": 28683,
+          "main_antwoord": 28795,
+          "rondreis_ms": 112,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            11.000000000001819,
+            19
+          ]
+        },
+        {
+          "id": 119,
+          "begin": 16013.000000000002,
+          "eind": 16106.000000000002,
+          "ms": 93.0,
+          "worker_ontvangst": 16013.000000000002,
+          "taak_begin": 16013.000000000002,
+          "taak_eind": 16106.000000000002,
+          "antwoord_verzonden": 16106.000000000002,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 93.0,
+          "main_send": 28798,
+          "main_antwoord": 28903.000000000004,
+          "rondreis_ms": 105.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            -1.0,
+            7.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            5.000000000003638,
+            13.000000000001819
+          ]
+        },
+        {
+          "id": 121,
+          "begin": 16120.999999999998,
+          "eind": 16207,
+          "ms": 86.00000000000182,
+          "worker_ontvangst": 16120.999999999998,
+          "taak_begin": 16120.999999999998,
+          "taak_eind": 16208.000000000002,
+          "antwoord_verzonden": 16207,
+          "interne_wacht_ms": 0.0,
+          "taak_ms": 87.00000000000364,
+          "main_send": 28905,
+          "main_antwoord": 29094,
+          "rondreis_ms": 189,
+          "voor_worker_ontvangst_interval_ms": [
+            0.0,
+            7.999999999996362
+          ],
+          "na_worker_antwoord_interval_ms": [
+            95.00000000000182,
+            103
+          ]
+        },
+        {
+          "id": 123,
+          "begin": 16384,
+          "eind": 16484,
+          "ms": 100,
+          "worker_ontvangst": 16384,
+          "taak_begin": 16384,
+          "taak_eind": 16484,
+          "antwoord_verzonden": 16484,
+          "interne_wacht_ms": 0,
+          "taak_ms": 100,
+          "main_send": 29168,
+          "main_antwoord": 29269.000000000004,
+          "rondreis_ms": 101.00000000000364,
+          "voor_worker_ontvangst_interval_ms": [
+            0,
+            8.0
+          ],
+          "na_worker_antwoord_interval_ms": [
+            -6.999999999994543,
+            1.000000000003638
+          ]
+        }
+      ],
+      "klokinterval": {
+        "offset_min_ms": 12784,
+        "offset_max_ms": 12791.999999999998,
+        "breedte_ms": 7.999999999998181,
+        "samples": [
+          {
+            "offset_min_ms": 12782,
+            "offset_max_ms": 12819,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12782,
+            "offset_max_ms": 12798,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12780,
+            "offset_max_ms": 12794,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12783,
+            "offset_max_ms": 12792,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12783.000000000004,
+            "offset_max_ms": 12793,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12782.999999999998,
+            "offset_max_ms": 12791.999999999998,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12783,
+            "offset_max_ms": 12792,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12784,
+            "offset_max_ms": 12794,
+            "origin_delta_ms": 12785.000244140625
+          },
+          {
+            "offset_min_ms": 12735,
+            "offset_max_ms": 12873,
+            "origin_delta_ms": 12785.000244140625
+          }
+        ]
+      },
+      "lange_invoer_diagnostisch": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 28903.000000000004,
+        "begin_tot_bron_ms": 6966,
+        "laatste_keyup_tot_bron_ms": 144.99999999999636,
+        "laatste_keyup_tot_frame_ms": 1359.9999999999964,
+        "begin_tot_frame_ms": 8181,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8240,
+        "wall_verzonden_tot_frame_ms": 6502,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "input": {
+        "tekens": 1634,
+        "sha256": "aff9e766488771c00d86362106a19f4f7ccc35e9970c03e48ec9f7ebca6c3968",
+        "reservationSets_aanwezig": false
+      },
+      "rondreis_ms_som": 6508.0,
+      "voor_worker_ontvangst_ms_som_interval": [
+        30.999999999952706,
+        478.99999999994907
+      ],
+      "na_worker_antwoord_ms_som_interval": [
+        633.0000000001273,
+        1081.0000000000255
+      ],
+      "laatste_font_tot_renderdetectie_ms_interval": [
+        987.0000000000018,
+        995
+      ]
+    }
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "840a982c7c7d80dc714b056aef4da89e15b47cb913b7b86c730610db8ea6e2f7",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "40d1bbfff8ba52dbc3042c7695f69c3dbd0eda2a4e200dcc461abdbf96cb8ad8",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "native-met-transport": {
+        "sha256": "3b7814bf92e1035ac789f18e352f0f229e28f414d6bd30f07fcf71c50a99763e",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "76a10a39584f6fb0c374574f7a41b2f8abb24e277e4a4a0a81c75ac8b23d0af3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "native-met-transport/snel-getypt-bewaard.png",
+    "waarneming": "Eigen tabelrijen en lange invoer zichtbaar, pixelgelijk aan de eerste opname; geen volledige visuele of formaatacceptatie."
+  },
+  "behoud": {
+    "oude_referenties27_exact": true,
+    "nieuwe_referentie_sha256": "68ea222189f315313cb24d7bf0f907a8018b51879be4653bfbe1627eb573f0e5",
+    "aanwezige_referenties": 28,
+    "standaardbestanden529_byte_mode_mtime_exact": true,
+    "bronpinnen15_exact": true,
+    "gewijzigde_private_assets": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+      "assets/chunk-YTGFUEEE-BR8wyl1E.js"
+    ],
+    "historische_ontbrekende_referentie": "Eerder ontbrekende autocorrectiereferentie blijft ontbreken."
+  },
+  "contracten": {
+    "logger": "4 loggercontroles groen: uitgeschakeld, stop, begrenzing en klokfout",
+    "worker_binnen": "3 transparantie-/opruim-/grenscontroles voor binnenmeting geslaagd",
+    "hoofdthread_transport": "4 transparantie-/opruim-/grenscontroles voor werkermeting geslaagd"
+  },
+  "archief": {
+    "pad": "2026-11-27-writer-synchrone-fontfasen.tar.gz",
+    "sha256": "1112042612c875279e2b489a564c6fce218f4d1dad9f6241f7e534f3cbae27cf"
+  },
+  "grenzen": [
+    "Bestaande begrensde logger bytegelijk hergebruikt: oorspronkelijke Worker- en bewaarhelperbron is identiek aan de huidige ee89c80e-basis. Alleen twee private JS-assets gewijzigd, overige bundel bytegelijk. Geen algemene profiler of hoofdthread-Debugger; alleen Worker-runtime-evaluatie om de lokale logger te starten/stoppen.",
+    "Nieuwe afzonderlijke ELF 68ea2221, met bestaande eigen cache en uitsluitend open-office-studio herbouwd; standaardbundel na bouw hersteld. Zelfde geaccepteerde Wasm 737ee8c9. Geen nieuwe SDK/canonieke/productbron.",
+    "Fontspan omvat layoutFontRequirementsJson met FFI/stringmarshalling en Ro(...). De gecontroleerde input bevat geen reservationSets, zodat Ro alleen de stringtest/terugkeerroute uitvoert, zonder reserveringsprojectie. Geen losse Wasm-export- of CPU-cyclimeting.",
+    "Performance.now-spannen kunnen preëmptie en meetoverhead bevatten. Geen nulwaarden geïmputeerd. Alle fontspannen gepaard en binnen de juiste fontRequirements-taak; geen ontbrekende ontvangst/start/einde of overgeslagen events.",
+    "Eerste opname meet geen hoofdthread-verzending. De tweede voegt transport en acht kloksamples vóór invoer toe, zodat wachten vóór Worker.onmessage niet als nul wordt geteld. Offsetinterval uit causale links/Worker/rechts-samples, geen exact midden. Ruwe waarden en origin-delta’s bewaard; kleine grenzen blijven timerafrondingsgevoelig.",
+    "Tweede opname: som van pre-ontvangstintervallen 31–479 ms en van antwoord-tot-hoofdthreadlistener 633–1081 ms, over 56 aanvragen. Dit zijn geaggregeerde, mogelijk overlappende rondreisvensters; niet optellen bij totale invoertijd als onafhankelijke vertragingen.",
+    "Laatste fontfase eindigt 987–995 ms vóór detectie van de juiste renderlijst plus twee rAFs. Dat resterende venster bevat ander werk; niet volledig aan hoofdthread-publicatie of fysieke schermpaint toe te schrijven.",
+    "Alle 56 fonttaken hebben een gemeten fontspan: 5.388 ms tegenover 5.399 ms totale fonttaakvensters. Werk vóór binnenkomst van onmessage en op de hoofdthread blijft afzonderlijk zichtbaar; 3 ms interne taakqueue bewijst geen nul transport-/eventloopwachttijd.",
+    "Eerdere native gewone A/B/B/A-afwijzing van de rij blijft gelden. Deze twee ronden zijn diagnostisch en geen nieuwe normale snelheidsacceptatie. Geen wijzigingen in automatisch herstel of bewaarbeleid.",
+    "Twee DOCX-bestanden onafhankelijk SHA/ZIP/CRC/paden/XML, 128 tabellen/91.423 UTF16; alleen core.xml verschillend. Beeldparen 30/0/0 pixels verschil, één bewaarbeeld bekeken; geen volledige visuele/formaatacceptatie.",
+    "Alle 27 oude aanwezige ELF’s behouden, nieuwe meetkopie als 28e aanwezig. 15 bronpinnen en 529 standaardbestanden exact. Historische ontbrekende autocorrectiereferentie ongewijzigd. Geen volledige suites/CI, andere platforms/edities/releases of issue-/migratievoltooiing."
+  ],
+  "vervolg": "Onderzoek binnen de concreet gebonden synchrone fontinventarisatie waarom elke nieuwe bronversie opnieuw dit werk doet en welke bestaande incrementele/inferentie- en invalidatiepaden de Worker gebruikt. Lees eerdere font-/R(k)-afkeuringen vóór een nieuwe variant. Alleen een aantoonbaar veilige besparing met Unicode/stijl/preview/story-/bron-/bewaargrenzen toetsen; niet cachen op ruwe input alleen. Ook het circa 1 seconde resterende renderdetectievenster apart houden. Automatisch herstel behouden; Database laatst."
+}
