@@ -1,0 +1,1610 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "b6152fb33ac026d1822eafa14fef6b7060285a1f",
+  "basis_hoofdbranch": "249c2c3a",
+  "besluit": "Werkelijke native fontvoorvlucht met bestaande private routeklok-Wasm gemeten: alle 62/57 fontaanvragen nemen de cachemiss/lower_story_into_cache-route. Resident bodyvoorbereiding telt 5.048/4.883 ms, 85,8/86,4 procent van de Rust-vensters; collector 819/761 ms. Twee volledige diagnostische functieronden groen. Geen nieuwe optimalisatie of productovername.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 147.13643947406672,
+    "minimum_vrije_bytes": 281015906304,
+    "start_vrije_bytes": 281134055424,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "b6152fb33ac026d1822eafa14fef6b7060285a1f",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-native-kernroute/open-office-studio-font-native-kernroute",
+    "programma_sha256": "d7359d2092e85594731e35d3bf11dabdbe7d74a3f8cc98f9284d38015b8e31ee",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties28_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "interface": {
+    "importnamen_en_soorten_exact": true,
+    "exportnamen_en_soorten_exact": true,
+    "importvolgorde_exact": false,
+    "exportvolgorde_exact": true,
+    "eerste_assertie": "Afgekeurd op verschillende importvolgorde; namen/soorten daarna apart vergeleken. Native instantiatie wordt afzonderlijk getoetst.",
+    "exports": 298,
+    "grens": "Interfacevergelijking; semantische pariteit volgt niet uit gelijke exports."
+  },
+  "bundel": {
+    "basis": "font-werkfase",
+    "wasm_sha256": "e756d948781b27c75aaf2cbf3c839b3c0fe9b39534e4a783673da305a6fc82ba",
+    "doel": "Alleen bestaande private routeklok-Wasm en begrensde uitlezing via bestaande getter; geen productfix of ongestoorde snelheidsmeting.",
+    "wijzigingen": [
+      {
+        "voor": "layoutFontRequirementsJson:_=>e.layout_font_requirements_json(_)",
+        "na": "layoutFontRequirementsJson:_=>{const uit=e.layout_font_requirements_json(_);if(__wfActief){if(__wfKern.length<8192)__wfKern.push({id:Mo,marks:JSON.parse(e.apply_input_profile_json())});else __wfOver++}return uit}"
+      },
+      {
+        "voor": "layoutFontRequirementsJson:w=>r.layout_font_requirements_json(w)",
+        "na": "layoutFontRequirementsJson:w=>{const uit=r.layout_font_requirements_json(w);if(__wfActief){if(__wfKern.length<8192)__wfKern.push({id:Mo,marks:JSON.parse(r.apply_input_profile_json())});else __wfOver++}return uit}"
+      }
+    ]
+  },
+  "bronbinding": {
+    "runtime_wasm": "e756d948781b27c75aaf2cbf3c839b3c0fe9b39534e4a783673da305a6fc82ba",
+    "historische_wasm_wrapper_sha256": "db15c0f694a9d7e547cab39e47579363b916add06e163ec6696c22ba4c71693e",
+    "historische_engine_sha256": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+    "apply_update_with_inference": "pub fn apply_update_with_inference(&self, update: &[u8]) -> Result<String, JsValue> {\n        let inference =\n            apply_update_with_typing_inference(self.engine.doc(), update).map_err(js_err)?;\n        serde_json::to_string(&inference.map(|inference| {\n            json!({\n                \"clientId\": inference.client_id,\n                \"story\": inference.story,\n                \"paraId\": inference.para_id,\n                \"endOffset\": inference.end_offset,\n            })\n        }))\n        .map_err(js_err)\n    }\n\n",
+    "bronwaarschuwing": "De nu aanwezige canonieke private wasm.rs bevat later toegevoegde UpdateWatch-proeven; die horen niet bij deze historische routeklokmodule. Alleen vastgepinde historische bron bij runtime-uitleg gebruikt.",
+    "route_volledig_loweren": "cache_misses neemt toe tijdens with_resident_story; geen bewijs dat ieder afzonderlijk blok intern opnieuw wordt opgebouwd.",
+    "afgekeurde_varianten_gelezen": [
+      "2026-11-13-writer-replicacache",
+      "2026-11-13-writer-warm-story",
+      "2026-11-13-writer-renderomgeving",
+      "2026-11-13-writer-aanvraagomgeving",
+      "2026-11-27-writer-native-font-rij"
+    ],
+    "engine_fragmenten": {
+      "fn story_is_resident": "fn story_is_resident(&self, story: &str, epoch: u64, env: &RenderEnv) -> bool {\n        self.render\n            .borrow()\n            .stories\n            .get(story)\n            .is_some_and(|cached| {\n                cached.doc_epoch == epoch\n                    && cached.env == *env\n                    && cached.media == self.doc.media_sources()\n                    && cached.local.matches_source(&self.doc)\n            })\n    }\n\n    ",
+      "fn with_shared_lowered_story_mapped": "fn with_shared_lowered_story_mapped<T>(\n        &self,\n        story: &str,\n        env: &RenderEnv,\n        after_lower: &mut dyn FnMut(),\n        read: impl FnOnce(&SharedBlocks, (u64, Rc<LoweringMap>)) -> T,\n    ) -> Result<T, BridgeError> {\n        let epoch = self.doc_epoch();\n        if self.story_is_resident(story, epoch, env) {\n            let mut render = self.render.borrow_mut();\n            render.cache_hits = render.cache_hits.wrapping_add(1);\n        } else if story != \"body\"\n            || (self.patch_preview_body(epoch, env).is_none()\n                && self.patch_lowered_body(epoch, env).is_none())\n        {\n            self.lower_story_into_cache(story, epoch, env)?;\n        }\n        let (blocks, map) = {\n            let render = self.render.borrow();\n            let lowered = render\n                .stories\n                .get(story)\n                .expect(\"resident story exists after lowering\");\n            (Rc::clone(&lowered.blocks), Rc::clone(&lowered.map))\n        };\n        after_lower();\n        Ok(read(&blocks, (epoch, map)))\n    }\n\n    ",
+      "fn patch_lowered_body": "fn patch_lowered_body(&self, epoch: u64, env: &RenderEnv) -> Option<()> {\n        let mut render = self.render.borrow_mut();\n        let generation = render.generation.wrapping_add(1);\n        let lowered = render.stories.get_mut(\"body\")?;\n        let edit = lowered.local.edit.as_ref()?;\n        if edit.epochs != (lowered.doc_epoch, epoch)\n            || epoch != lowered.doc_epoch.wrapping_add(1)\n            || lowered.env != *env\n            || lowered.media != self.doc.media_sources()\n            || !lowered.local.matches_source(&self.doc)\n        {\n            return None;\n        }\n        if !lowered.local.can_patch(edit) {\n            return None;\n        }\n        "
+    },
+    "gevolg_van_bronlezing": "De historische inference-wrapper werkt de EditingDoc bij en retourneert een caret-hint, zonder de lokale tekstbewerkingsroute te doorlopen. De lokale patch vereist onder meer een concrete edit met opeenvolgende epochs en gelijke omgeving/media/bron. Niet voldoende om uit een caret-hint een geldige patch af te leiden. Geen guard versoepeld."
+  },
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "d7359d2092e85594731e35d3bf11dabdbe7d74a3f8cc98f9284d38015b8e31ee",
+      "rapport_sha256": "6d0c971fbd29bba5f8639caca926062abe1e32ef5c1bc657083f7e0724be8237",
+      "worker_disable": {
+        "result": {},
+        "id": 426
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "d7359d2092e85594731e35d3bf11dabdbe7d74a3f8cc98f9284d38015b8e31ee",
+      "rapport_sha256": "8e859bd82a17951a1de4670454fa66fe94908fcc9a61358760675917a9af833d",
+      "worker_disable": {
+        "result": {},
+        "id": 388
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    }
+  },
+  "analyse": {
+    "native": {
+      "fontaantal": 62,
+      "routes": {
+        "route_volledig_loweren": 62
+      },
+      "sommen_ms": {
+        "resident_ms": 5047.999999999993,
+        "collector_ms": 819.0000000000018,
+        "rust_ms": 5880.999999999996,
+        "adapter_ms": 5889.999999999998,
+        "overig_rust_ms": 14.000000000001819
+      },
+      "mediaan_resident_ms": 77.0,
+      "mediaan_collector_ms": 12.000000000001819,
+      "resident_aandeel_rust": 0.858357422207107,
+      "vensters": [
+        {
+          "id": 13,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 106,
+          "collector_ms": 22,
+          "rust_ms": 129,
+          "adapter_ms": 129,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 15,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 105,
+          "collector_ms": 17,
+          "rust_ms": 122,
+          "adapter_ms": 123,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 17,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 101,
+          "collector_ms": 16,
+          "rust_ms": 119,
+          "adapter_ms": 119,
+          "overig_rust_ms": 2
+        },
+        {
+          "id": 19,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 99,
+          "collector_ms": 17,
+          "rust_ms": 116,
+          "adapter_ms": 116,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 21,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 106,
+          "collector_ms": 13.000000000001819,
+          "rust_ms": 120.00000000000182,
+          "adapter_ms": 120.00000000000182,
+          "overig_rust_ms": 1.0
+        },
+        {
+          "id": 23,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 100.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 113.99999999999818,
+          "adapter_ms": 113.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 25,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 99,
+          "collector_ms": 14,
+          "rust_ms": 113,
+          "adapter_ms": 113,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 27,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 91,
+          "collector_ms": 14,
+          "rust_ms": 105,
+          "adapter_ms": 105,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 29,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 85,
+          "collector_ms": 12,
+          "rust_ms": 97,
+          "adapter_ms": 97,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 31,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 13,
+          "rust_ms": 88,
+          "adapter_ms": 88,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 33,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 13,
+          "rust_ms": 89,
+          "adapter_ms": 89,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 35,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 14.000000000001819,
+          "rust_ms": 93.00000000000182,
+          "adapter_ms": 93.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 37,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 13.000000000001819,
+          "rust_ms": 90.00000000000182,
+          "adapter_ms": 90.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 39,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 13,
+          "rust_ms": 90,
+          "adapter_ms": 90,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 41,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 13,
+          "rust_ms": 90,
+          "adapter_ms": 91,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 43,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74,
+          "collector_ms": 13,
+          "rust_ms": 87,
+          "adapter_ms": 87,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 45,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 12,
+          "rust_ms": 87,
+          "adapter_ms": 87,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 47,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 13,
+          "rust_ms": 90,
+          "adapter_ms": 90,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 49,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 93,
+          "collector_ms": 13,
+          "rust_ms": 107,
+          "adapter_ms": 107,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 51,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 88.99999999999818,
+          "adapter_ms": 88.99999999999818,
+          "overig_rust_ms": 0.999999999998181
+        },
+        {
+          "id": 53,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 12,
+          "rust_ms": 87,
+          "adapter_ms": 87,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 55,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 73.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 86.99999999999818,
+          "adapter_ms": 86.99999999999818,
+          "overig_rust_ms": 1.0
+        },
+        {
+          "id": 57,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 16,
+          "rust_ms": 93,
+          "adapter_ms": 94,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 59,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 72.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 87,
+          "adapter_ms": 87,
+          "overig_rust_ms": 1.000000000001819
+        },
+        {
+          "id": 61,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 81.00000000000182,
+          "collector_ms": 18.99999999999818,
+          "rust_ms": 100,
+          "adapter_ms": 100,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 63,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 85,
+          "collector_ms": 12,
+          "rust_ms": 97,
+          "adapter_ms": 97,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 65,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 86,
+          "adapter_ms": 87.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 67,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 12,
+          "rust_ms": 92,
+          "adapter_ms": 92,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 69,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 12,
+          "rust_ms": 87,
+          "adapter_ms": 87,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 71,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 13,
+          "rust_ms": 90,
+          "adapter_ms": 90,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 73,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 82,
+          "collector_ms": 12,
+          "rust_ms": 94,
+          "adapter_ms": 94,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 75,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 12.000000000001819,
+          "rust_ms": 87.00000000000182,
+          "adapter_ms": 87.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 77,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 12,
+          "rust_ms": 89,
+          "adapter_ms": 90,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 79,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 88,
+          "adapter_ms": 88,
+          "overig_rust_ms": 1.000000000001819
+        },
+        {
+          "id": 81,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74,
+          "collector_ms": 12.000000000001819,
+          "rust_ms": 86.00000000000182,
+          "adapter_ms": 86.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 83,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 78.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 91.99999999999818,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 85,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74,
+          "collector_ms": 12,
+          "rust_ms": 86,
+          "adapter_ms": 86,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 87,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 78,
+          "collector_ms": 12,
+          "rust_ms": 90,
+          "adapter_ms": 90,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 89,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84,
+          "collector_ms": 13,
+          "rust_ms": 97,
+          "adapter_ms": 97,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 91,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 16,
+          "rust_ms": 91,
+          "adapter_ms": 91,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 93,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80.99999999999818,
+          "collector_ms": 11,
+          "rust_ms": 91.99999999999818,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 95,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 86.99999999999818,
+          "adapter_ms": 86.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 97,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 13,
+          "rust_ms": 93,
+          "adapter_ms": 93,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 99,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 12,
+          "rust_ms": 88,
+          "adapter_ms": 88,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 101,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74,
+          "collector_ms": 12,
+          "rust_ms": 86,
+          "adapter_ms": 86,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 103,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 128,
+          "collector_ms": 23,
+          "rust_ms": 151.99999999999818,
+          "adapter_ms": 151.99999999999818,
+          "overig_rust_ms": 0.999999999998181
+        },
+        {
+          "id": 105,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 73,
+          "collector_ms": 11,
+          "rust_ms": 84,
+          "adapter_ms": 85,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 107,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 85.00000000000182,
+          "collector_ms": 13.0,
+          "rust_ms": 98.00000000000182,
+          "adapter_ms": 99,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 109,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 96,
+          "collector_ms": 13,
+          "rust_ms": 109,
+          "adapter_ms": 109,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 111,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 78,
+          "collector_ms": 16,
+          "rust_ms": 94,
+          "adapter_ms": 94,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 113,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 12,
+          "rust_ms": 88,
+          "adapter_ms": 88,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 115,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76.99999999999818,
+          "collector_ms": 12.000000000001819,
+          "rust_ms": 89,
+          "adapter_ms": 89,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 117,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 82,
+          "collector_ms": 12.000000000001819,
+          "rust_ms": 94.00000000000182,
+          "adapter_ms": 95.00000000000364,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 119,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 88.99999999999818,
+          "adapter_ms": 88.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 121,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74.00000000000182,
+          "collector_ms": 12.999999999998181,
+          "rust_ms": 88.00000000000182,
+          "adapter_ms": 88.00000000000182,
+          "overig_rust_ms": 1.000000000001819
+        },
+        {
+          "id": 123,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74.99999999999636,
+          "collector_ms": 12,
+          "rust_ms": 86.99999999999636,
+          "adapter_ms": 86.99999999999636,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 125,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 12,
+          "rust_ms": 89,
+          "adapter_ms": 89,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 127,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77.00000000000364,
+          "collector_ms": 11.999999999996362,
+          "rust_ms": 89,
+          "adapter_ms": 89,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 129,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 81,
+          "collector_ms": 11,
+          "rust_ms": 92,
+          "adapter_ms": 93,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 131,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 74,
+          "collector_ms": 12,
+          "rust_ms": 86,
+          "adapter_ms": 86,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 133,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 72,
+          "collector_ms": 12,
+          "rust_ms": 84,
+          "adapter_ms": 84,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 135,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 70,
+          "collector_ms": 12,
+          "rust_ms": 82,
+          "adapter_ms": 82,
+          "overig_rust_ms": 0
+        }
+      ],
+      "grens": "Verstreken geïnstrumenteerde tijd; geen CPU-cycli, gewone ABBA of fix. Cachemiss-route bewijst niet dat ieder blok intern volledig opnieuw wordt opgebouwd."
+    },
+    "herhaling": {
+      "fontaantal": 57,
+      "routes": {
+        "route_volledig_loweren": 57
+      },
+      "sommen_ms": {
+        "resident_ms": 4883.0,
+        "collector_ms": 760.9999999999909,
+        "rust_ms": 5650.999999999987,
+        "adapter_ms": 5657.999999999985,
+        "overig_rust_ms": 6.999999999996362
+      },
+      "mediaan_resident_ms": 83,
+      "mediaan_collector_ms": 13,
+      "resident_aandeel_rust": 0.8640948504689455,
+      "vensters": [
+        {
+          "id": 13,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 113,
+          "collector_ms": 21,
+          "rust_ms": 134,
+          "adapter_ms": 134,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 15,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 112,
+          "collector_ms": 15,
+          "rust_ms": 128,
+          "adapter_ms": 128,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 17,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 100.99999999999818,
+          "collector_ms": 21.00000000000182,
+          "rust_ms": 122.0,
+          "adapter_ms": 122.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 19,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 94.00000000000182,
+          "collector_ms": 14.999999999998181,
+          "rust_ms": 109,
+          "adapter_ms": 109,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 21,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 95,
+          "collector_ms": 15,
+          "rust_ms": 110,
+          "adapter_ms": 110,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 23,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 103.00000000000182,
+          "collector_ms": 13.999999999998181,
+          "rust_ms": 117,
+          "adapter_ms": 117,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 25,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 94,
+          "collector_ms": 13,
+          "rust_ms": 107,
+          "adapter_ms": 107,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 27,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 92,
+          "collector_ms": 17,
+          "rust_ms": 109,
+          "adapter_ms": 109,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 29,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 98,
+          "collector_ms": 13,
+          "rust_ms": 112,
+          "adapter_ms": 112,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 31,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 13,
+          "rust_ms": 92,
+          "adapter_ms": 92,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 33,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 91,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 35,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 13,
+          "rust_ms": 92,
+          "adapter_ms": 93,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 37,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84,
+          "collector_ms": 12,
+          "rust_ms": 96,
+          "adapter_ms": 96,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 39,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 82,
+          "collector_ms": 13,
+          "rust_ms": 95,
+          "adapter_ms": 95,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 41,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 82,
+          "collector_ms": 13.000000000001819,
+          "rust_ms": 95.00000000000182,
+          "adapter_ms": 95.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 43,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84,
+          "collector_ms": 13,
+          "rust_ms": 97,
+          "adapter_ms": 97,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 45,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 81,
+          "collector_ms": 17,
+          "rust_ms": 98,
+          "adapter_ms": 98,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 47,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 90.99999999999818,
+          "adapter_ms": 90.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 49,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 91.99999999999818,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 51,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 13,
+          "rust_ms": 93,
+          "adapter_ms": 93,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 53,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84,
+          "collector_ms": 12,
+          "rust_ms": 96,
+          "adapter_ms": 96,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 55,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 12,
+          "rust_ms": 91,
+          "adapter_ms": 91,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 57,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 81.00000000000182,
+          "collector_ms": 13.999999999998181,
+          "rust_ms": 95,
+          "adapter_ms": 96,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 59,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 102.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 117,
+          "adapter_ms": 117,
+          "overig_rust_ms": 1.000000000001819
+        },
+        {
+          "id": 61,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 86.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 98.99999999999818,
+          "adapter_ms": 99.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 63,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 88.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 101.99999999999818,
+          "adapter_ms": 101.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 65,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 82,
+          "collector_ms": 13,
+          "rust_ms": 95,
+          "adapter_ms": 95,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 67,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 83,
+          "collector_ms": 12,
+          "rust_ms": 95,
+          "adapter_ms": 95,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 69,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84,
+          "collector_ms": 14.000000000001819,
+          "rust_ms": 98.00000000000182,
+          "adapter_ms": 98.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 71,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 83,
+          "collector_ms": 14,
+          "rust_ms": 97,
+          "adapter_ms": 97,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 73,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 81.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 93.99999999999818,
+          "adapter_ms": 93.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 75,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 13,
+          "rust_ms": 93,
+          "adapter_ms": 93,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 77,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 13,
+          "rust_ms": 94,
+          "adapter_ms": 94,
+          "overig_rust_ms": 1
+        },
+        {
+          "id": 79,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 91.99999999999818,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.999999999998181
+        },
+        {
+          "id": 81,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 92.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 104,
+          "adapter_ms": 104,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 83,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 87.0,
+          "collector_ms": 12.999999999998181,
+          "rust_ms": 99.99999999999818,
+          "adapter_ms": 99.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 85,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76.00000000000182,
+          "collector_ms": 13.0,
+          "rust_ms": 89.00000000000182,
+          "adapter_ms": 89.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 87,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 83,
+          "collector_ms": 13,
+          "rust_ms": 96,
+          "adapter_ms": 96,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 89,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 12,
+          "rust_ms": 92,
+          "adapter_ms": 92,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 91,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 12.000000000001819,
+          "rust_ms": 89.00000000000182,
+          "adapter_ms": 89.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 93,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77,
+          "collector_ms": 14,
+          "rust_ms": 91,
+          "adapter_ms": 91,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 95,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 77.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 90.99999999999818,
+          "adapter_ms": 90.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 97,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80,
+          "collector_ms": 13,
+          "rust_ms": 93,
+          "adapter_ms": 93,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 99,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76.99999999999818,
+          "collector_ms": 12,
+          "rust_ms": 88.99999999999818,
+          "adapter_ms": 89.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 101,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 76,
+          "collector_ms": 13,
+          "rust_ms": 89,
+          "adapter_ms": 89,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 103,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 90,
+          "collector_ms": 16,
+          "rust_ms": 106,
+          "adapter_ms": 106,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 105,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 102,
+          "collector_ms": 13,
+          "rust_ms": 115,
+          "adapter_ms": 115,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 107,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 88,
+          "collector_ms": 13,
+          "rust_ms": 101,
+          "adapter_ms": 101,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 109,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 84.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 96,
+          "adapter_ms": 96,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 111,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 87.99999999999818,
+          "collector_ms": 13,
+          "rust_ms": 100.99999999999818,
+          "adapter_ms": 100.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 113,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 75,
+          "collector_ms": 13,
+          "rust_ms": 88,
+          "adapter_ms": 88,
+          "overig_rust_ms": 0
+        },
+        {
+          "id": 115,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 89.00000000000182,
+          "collector_ms": 11.999999999998181,
+          "rust_ms": 101,
+          "adapter_ms": 102.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 117,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 80.00000000000182,
+          "collector_ms": 12.0,
+          "rust_ms": 93.0,
+          "adapter_ms": 93.0,
+          "overig_rust_ms": 0.999999999998181
+        },
+        {
+          "id": 119,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 93.0,
+          "collector_ms": 13.000000000001819,
+          "rust_ms": 106.00000000000182,
+          "adapter_ms": 106.00000000000182,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 121,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 79,
+          "collector_ms": 12.999999999998181,
+          "rust_ms": 91.99999999999818,
+          "adapter_ms": 91.99999999999818,
+          "overig_rust_ms": 0.0
+        },
+        {
+          "id": 123,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 73,
+          "collector_ms": 12,
+          "rust_ms": 85.99999999999818,
+          "adapter_ms": 85.99999999999818,
+          "overig_rust_ms": 0.999999999998181
+        },
+        {
+          "id": 125,
+          "routes": [
+            "route_volledig_loweren"
+          ],
+          "resident_ms": 93,
+          "collector_ms": 12,
+          "rust_ms": 105,
+          "adapter_ms": 105,
+          "overig_rust_ms": 0
+        }
+      ],
+      "grens": "Verstreken geïnstrumenteerde tijd; geen CPU-cycli, gewone ABBA of fix. Cachemiss-route bewijst niet dat ieder blok intern volledig opnieuw wordt opgebouwd."
+    }
+  },
+  "taakvolgorde": {
+    "native": {
+      "voorgaande_taken_per_font": {
+        "applyUpdate": 62
+      },
+      "overige_taken_na_laatste_font": [
+        "sync",
+        "save"
+      ],
+      "observatie": "Sinds vorige fonttaak staat vóór iedere fonttaak precies één applyUpdate en geen sync/warmtaak in de taakstartlog. Geen bewijs van afzonderlijke mutatieinhoud uit alleen het taaktype."
+    },
+    "herhaling": {
+      "voorgaande_taken_per_font": {
+        "applyUpdate": 57
+      },
+      "overige_taken_na_laatste_font": [
+        "sync",
+        "buildPages",
+        "save"
+      ],
+      "observatie": "Sinds vorige fonttaak staat vóór iedere fonttaak precies één applyUpdate en geen sync/warmtaak in de taakstartlog. Geen bewijs van afzonderlijke mutatieinhoud uit alleen het taaktype."
+    }
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "cace8fbdd34ed918fb626ee9944beb8625680d814ff3d00e56334d5f01425f3a",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "575ba1998029c7aae70b4258a8c474600335ecac946623e46d9aea0bd72625f6",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "herhaling": {
+        "sha256": "b2c83565c4bedcbbdfa21d97b571e60b1b91afded30ffde515447a22d0b54e3e",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "cea45e965912001adaebb53c5d932523b5b2821123a18cc813f57cd7eec7b206",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 42,
+        "bbox": [
+          1011,
+          940,
+          1132,
+          999
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "herhaling/snel-getypt-bewaard.png",
+    "waarneming": "Eigen bron, tabelrijen en lange invoer zichtbaar; dit beeld is pixelgelijk aan de eerste ronde. Twee andere paren verschillen 42/36 pixels. Geen volledige visuele of formaatacceptatie."
+  },
+  "behoud": {
+    "oude_referenties28_exact": true,
+    "aanwezige_referenties": 29,
+    "nieuwe_elf_sha256": "d7359d2092e85594731e35d3bf11dabdbe7d74a3f8cc98f9284d38015b8e31ee",
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets_tegen_font_werkfase": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+      "assets/docx_edit_bg-ONvZFP_n.wasm"
+    ],
+    "python_ast_groen": true,
+    "alleen_app_crate_herbouwd": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "afkeuringen": [
+    "Eerste start afgebroken omdat het harnas ten onrechte kernroute als verwachte applicatieversie kreeg; vóór invoer gefaald. Rapport/log bewaard, daarna twee verse ronden met de echte versie 2026.45.52.",
+    "Eerste ABI-assertie vergeleek importvolgorde; die verschilt. Importnamen/soorten en exportnamen/soorten daarna afzonderlijk exact gecontroleerd. Geen ontbrekende import/export; werkelijke native instantiatie en beide functieronden groen."
+  ],
+  "controles": [
+    "Vier oorspronkelijke private Python-scripts en behoud/vastleggen syntactisch geparseerd. Node --check op geïnstrumenteerde Workerasset groen.",
+    "Alle profiel-ID’s uniek en exact één op één gekoppeld aan gepaarde fontspannen; Rust-klokken monotoon en binnen de JS-adapterspan. Geen overflow.",
+    "Historische routeklok-Wasm SHA e756d948 en historische bronfragmenten vastgezet; huidige canonieke private wasm.rs bevat latere UpdateWatch-proeven en is bewust niet als runtimebron aangewezen.",
+    "Alle 28 eerdere aanwezige ELF’s, 15 bronpinnen en 529 standaardbestanden byte/mode/mtime behouden; afzonderlijke meet-ELF als 29e referentie."
+  ],
+  "grenzen": [
+    "Alleen Linux x86_64 release2026.45.52, writer-bronjournaal, schema2, eigen geïsoleerde X11/DBus/XDG-profielen en eigen fixture. Geen andere platform-/release-/editieacceptatie.",
+    "Bestaande private meet-Wasm met gelijke benoemde interface vervangt de geaccepteerde Wasm uitsluitend in de private meetbundel. Geen productbron, SDK of canonieke private bron gewijzigd.",
+    "Klokken meten verstreken geïnstrumenteerde tijd met timerafronding en preëmptie; geen zuivere CPU-cycli of ongestoorde ABBA. Aantallen aanvragen verschillen tussen ronden en bewijzen geen snelheidswinst.",
+    "route_volledig_loweren betekent dat cache_misses tijdens with_resident_story toenam. Intern preview-/unit-hergebruik blijft mogelijk; niet ieder blok is aantoonbaar opnieuw opgebouwd.",
+    "Taakstartlog: tussen fonttaken telkens precies één applyUpdate, geen sync/warm. De log bewijst niet dat die updates uitsluitend tekst bevatten. Caret-inference is geen mutatiecertificaat.",
+    "Historische inference-wrapper werkt EditingDoc bij; lokale paragraafpatch vereist concrete edit/epoch/env/media/bronvoorwaarden. Die guards intact gelaten. Eerdere replicacache/warm/request/rij-afkeuringen blijven gelden.",
+    "Twee DOCX-bestanden onafhankelijk SHA/ZIP/CRC/paden/XML, 128 tabellen/91.423 UTF16; alleen core.xml verschillend. Drie beeldparen 42/0/36 pixels, één bewaarbeeld bekeken. Geen volledige visuele/formaatacceptatie.",
+    "Geen volledige frontend/Python/TypeScript-productsuite of CI, geen nieuwe functiedekking van IME/accessibility/previews/alle mutaties. Ernstige vertraging/stabiliteitsproblemen en overige issues/migratie blijven open. Automatisch herstel behouden, Database laatst."
+  ],
+  "vervolg": "Onderzoek een besparing op de nu native gebonden bodyvoorbereiding na applyUpdate. Vergelijk eerst de kosten van prepare/certificaat/patch in de reeds afgewezen replicacachevarianten met deze route; voorkom dat bespaarde fontlowering als extra werk vóór update terugkomt. Alleen veilig bewezen delta-/cachehergebruik met volledige inhoud/attributen/bron/epoch/env/media/preview-invalidation en conservatieve terugval. Geen nieuwe blinde rij- of warmvariant. Pas een afzonderlijke kandidaat met native korte/rijke ABBA en functie/DOCX/beelden kan als fix worden overgenomen.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-font-routes.json",
+      "sha256": "47eef863e3644674ec519199aa706626816a4ff7608396692c3965614c3b22c2"
+    },
+    {
+      "pad": "docs/tests/2026-11-27-writer-synchrone-fontfasen.json",
+      "sha256": "9c43fe577a851829551e2a71eba8a1f246501e7f22fc485fe7be310b922c5be8"
+    }
+  ],
+  "archief": {
+    "pad": "2026-11-27-writer-native-fontkern.tar.gz",
+    "sha256": "15fa4454fc5ac1025d27741abb79658b0bd1c118bab74ee2c5e2740af4d31db8",
+    "bytes": 2329166,
+    "leden": 53,
+    "alle_bestandshashes_gecontroleerd": true,
+    "uitsluiting": "Geen ELF, Wasm, volledige dist of bouwcache; historische bronnen gecomprimeerd, diffs, meetasset, scripts, ruwe ronden/afkeuringen, documenten en PNG behouden."
+  }
+}
