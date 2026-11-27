@@ -1,0 +1,3726 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "ea852772d2c9a16f41de428dda950da5a38e27ec",
+  "basis_hoofdbranch": "2192ce55",
+  "besluit": "Binnen At.Dn kosten de inputpositiekaart 482/496 ms en de eerste ankeromzetting 1.029/1.068 ms. Hoofdomzetting slechts 2/3 ms, geen paragraphSpans-terugval binnen deze vensters. Een dubbele-omzettingsfix wordt door deze meting niet gerechtvaardigd. Geen productfix of prestatiewinst bewezen.",
+  "aanpak": "Private meetasset op ee89: bestaande detailrecorder uitgebreid met Dn.Pt, Dn.anchor/head en echte n6-selectie, verhaalvalidatie, kaartopvraag, scans en paragraphSpans-terugval. Alleen numerieke fasen en sessie-id’s; geen inhoud. At.Dn-kindfasen via echte begin/eindrijen gekoppeld, zodat globale n6-calls buiten At niet als At-kosten worden geteld. Wasm en overige assets bytegelijk.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 113.10577261191793,
+    "minimum_vrije_bytes": 276535861248,
+    "start_vrije_bytes": 276635103232,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "ea852772d2c9a16f41de428dda950da5a38e27ec",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectie-projectie-fasen/open-office-studio-selectie-projectie-fasen",
+    "programma_sha256": "a3cf21c249722a8c111a9e997d375ef5a67102f89407a0c15b182b7442a5da94",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties36_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "bundel": {
+    "basis": "ee89/projectie-context",
+    "asset": "assets/editors-bODdYQ4o.js",
+    "voor": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "na": "20a47599b16fb64362053a5beaa5ec6ad31cd9e08543be9d29d276e0cc1d3b68",
+    "overige_assets_exact": true
+  },
+  "contract": {
+    "geslaagd": true,
+    "controles": [
+      "inactief-geen-klok-ontvanger-argumenten-resultaat-identiteit",
+      "oorspronkelijke-fouten-en-weigering-behouden",
+      "gepaarde-spans-geen-inhoud-listeners-en-raf-opgeruimd",
+      "laat-antwoord-niet-in-nieuwe-opname",
+      "harde-datagrens-en-overloop",
+      "echte-At-retour-neveneffecten-fouten-vier-routes",
+      "echte-Ft-retour-neveneffecten-fouten-vier-routes",
+      "echte-At-retour-neveneffecten-fouten-vier-routes",
+      "echte-nativeAwait-retour-fout-en-levensduur-zes-routes",
+      "gepaarde-nativeAwait-callback-hervatting-Ft-volgorde",
+      "echte-Dn-drie-deelfasen-acht-retour-en-foutroutes",
+      "echte-n6-validatie-map-fallback-dertien-routes-en-ontvangers"
+    ],
+    "grens": "Werkelijke At/Ft-arrowfuncties uit vastgepinde asset met gecontroleerde afhankelijkheden; geen volledige Reactmontage of bewijs van nul meetoverhead."
+  },
+  "native_analyse": {
+    "een": {
+      "rows": 20910,
+      "venster": {
+        "begin": 22132,
+        "eind": 30910,
+        "duur_ms": 8778,
+        "wall_begin_tot_frame_ms": 9070
+      },
+      "fasen": {
+        "n6.selection": {
+          "aantal": 1080,
+          "som_ms": 1.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1
+        },
+        "n6.hasStory": {
+          "aantal": 1080,
+          "som_ms": 9.000000000007276,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "n6.map": {
+          "aantal": 1080,
+          "som_ms": 487.00000000000364,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 15
+        },
+        "n6.scan": {
+          "aantal": 1080,
+          "som_ms": 30.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "n6": {
+          "aantal": 1080,
+          "som_ms": 533.0000000000182,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 15
+        },
+        "Dn.Pt": {
+          "aantal": 890,
+          "som_ms": 529.0000000000182,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 15
+        },
+        "Dn.anchor": {
+          "aantal": 890,
+          "som_ms": 1040.0000000000146,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 28
+        },
+        "Dn.head": {
+          "aantal": 890,
+          "som_ms": 3.999999999992724,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1
+        },
+        "tekst": {
+          "aantal": 61,
+          "som_ms": 4137.000000000011,
+          "mediaan_ms": 57.00000000000364,
+          "maximum_ms": 344
+        },
+        "nativeAwait": {
+          "aantal": 61,
+          "som_ms": 6044.999999999996,
+          "mediaan_ms": 87,
+          "maximum_ms": 375
+        },
+        "At.Dn": {
+          "aantal": 63,
+          "som_ms": 1516.0000000000036,
+          "mediaan_ms": 24,
+          "maximum_ms": 43
+        },
+        "At.jn": {
+          "aantal": 63,
+          "som_ms": 1.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 1
+        },
+        "At.I": {
+          "aantal": 63,
+          "som_ms": 52.0,
+          "mediaan_ms": 1,
+          "maximum_ms": 2.999999999996362
+        },
+        "At": {
+          "aantal": 63,
+          "som_ms": 1569.0000000000036,
+          "mediaan_ms": 24.000000000003638,
+          "maximum_ms": 44
+        },
+        "Ft": {
+          "aantal": 61,
+          "som_ms": 1572.0000000000036,
+          "mediaan_ms": 24.999999999996362,
+          "maximum_ms": 44
+        },
+        "layoutInput": {
+          "aantal": 63,
+          "som_ms": 6.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 1
+        },
+        "fontDecode": {
+          "aantal": 2,
+          "som_ms": 1.000000000003638,
+          "mediaan_ms": 0.500000000001819,
+          "maximum_ms": 1.000000000003638
+        },
+        "fontConfig": {
+          "aantal": 2,
+          "som_ms": 1.0,
+          "mediaan_ms": 0.5,
+          "maximum_ms": 1
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        }
+      },
+      "callback_tot_await_hervatting": {
+        "aantal": 61,
+        "som_ms": 1907.9999999999854,
+        "mediaan_ms": 29,
+        "maximum_ms": 61
+      },
+      "resume_tot_Ft": {
+        "aantal": 61,
+        "som_ms": 0.0,
+        "mediaan_ms": 0,
+        "maximum_ms": 0
+      },
+      "causale_vensters": [
+        {
+          "await_id": 22,
+          "callback_id": 23,
+          "Ft_id": 88,
+          "callback_eind": 22513,
+          "await_eind": 22544,
+          "resume": 22544,
+          "Ft_begin": 22544,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 172,
+          "callback_id": 173,
+          "Ft_id": 215,
+          "callback_eind": 22676.000000000004,
+          "await_eind": 22720,
+          "resume": 22720,
+          "Ft_begin": 22720,
+          "callback_tot_await_ms": 43.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 246,
+          "callback_id": 247,
+          "Ft_id": 318,
+          "callback_eind": 22897.000000000004,
+          "await_eind": 22941,
+          "resume": 22941,
+          "Ft_begin": 22941,
+          "callback_tot_await_ms": 43.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 349,
+          "callback_id": 350,
+          "Ft_id": 429,
+          "callback_eind": 23090,
+          "await_eind": 23125,
+          "resume": 23125,
+          "Ft_begin": 23125,
+          "callback_tot_await_ms": 35,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 460,
+          "callback_id": 461,
+          "Ft_id": 543,
+          "callback_eind": 23272.000000000004,
+          "await_eind": 23307.000000000004,
+          "resume": 23307.000000000004,
+          "Ft_begin": 23307.000000000004,
+          "callback_tot_await_ms": 35.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 574,
+          "callback_id": 575,
+          "Ft_id": 654,
+          "callback_eind": 23430,
+          "await_eind": 23491,
+          "resume": 23491,
+          "Ft_begin": 23491,
+          "callback_tot_await_ms": 61,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 685,
+          "callback_id": 686,
+          "Ft_id": 765,
+          "callback_eind": 23604,
+          "await_eind": 23640,
+          "resume": 23640,
+          "Ft_begin": 23640,
+          "callback_tot_await_ms": 36,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 796,
+          "callback_id": 797,
+          "Ft_id": 876,
+          "callback_eind": 23755,
+          "await_eind": 23796,
+          "resume": 23796,
+          "Ft_begin": 23796,
+          "callback_tot_await_ms": 41,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 907,
+          "callback_id": 908,
+          "Ft_id": 987,
+          "callback_eind": 23910,
+          "await_eind": 23950,
+          "resume": 23950,
+          "Ft_begin": 23950,
+          "callback_tot_await_ms": 40,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1018,
+          "callback_id": 1019,
+          "Ft_id": 1098,
+          "callback_eind": 24049,
+          "await_eind": 24081,
+          "resume": 24081,
+          "Ft_begin": 24081,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1129,
+          "callback_id": 1130,
+          "Ft_id": 1209,
+          "callback_eind": 24166,
+          "await_eind": 24194,
+          "resume": 24194,
+          "Ft_begin": 24194,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1240,
+          "callback_id": 1241,
+          "Ft_id": 1320,
+          "callback_eind": 24275.000000000004,
+          "await_eind": 24304.000000000004,
+          "resume": 24304.000000000004,
+          "Ft_begin": 24304.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 1351,
+          "callback_id": 1352,
+          "Ft_id": 1431,
+          "callback_eind": 24394.000000000004,
+          "await_eind": 24423,
+          "resume": 24423,
+          "Ft_begin": 24423,
+          "callback_tot_await_ms": 28.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1462,
+          "callback_id": 1463,
+          "Ft_id": 1542,
+          "callback_eind": 24506,
+          "await_eind": 24537,
+          "resume": 24537,
+          "Ft_begin": 24537,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1573,
+          "callback_id": 1574,
+          "Ft_id": 1653,
+          "callback_eind": 24621.000000000004,
+          "await_eind": 24651,
+          "resume": 24651,
+          "Ft_begin": 24651,
+          "callback_tot_await_ms": 29.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1684,
+          "callback_id": 1685,
+          "Ft_id": 1764,
+          "callback_eind": 24742,
+          "await_eind": 24775.000000000004,
+          "resume": 24775.000000000004,
+          "Ft_begin": 24775.000000000004,
+          "callback_tot_await_ms": 33.00000000000364,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 1795,
+          "callback_id": 1796,
+          "Ft_id": 1875,
+          "callback_eind": 24864,
+          "await_eind": 24892,
+          "resume": 24892,
+          "Ft_begin": 24892,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1927,
+          "callback_id": 1928,
+          "Ft_id": 1978,
+          "callback_eind": 24974,
+          "await_eind": 25003,
+          "resume": 25003,
+          "Ft_begin": 25003,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2009,
+          "callback_id": 2010,
+          "Ft_id": 2089,
+          "callback_eind": 25085,
+          "await_eind": 25113,
+          "resume": 25113,
+          "Ft_begin": 25113,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2120,
+          "callback_id": 2121,
+          "Ft_id": 2200,
+          "callback_eind": 25193,
+          "await_eind": 25224,
+          "resume": 25224,
+          "Ft_begin": 25224,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2231,
+          "callback_id": 2232,
+          "Ft_id": 2311,
+          "callback_eind": 25304.000000000004,
+          "await_eind": 25332,
+          "resume": 25332,
+          "Ft_begin": 25332,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2342,
+          "callback_id": 2343,
+          "Ft_id": 2422,
+          "callback_eind": 25413,
+          "await_eind": 25441,
+          "resume": 25441,
+          "Ft_begin": 25441,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2453,
+          "callback_id": 2454,
+          "Ft_id": 2533,
+          "callback_eind": 25520,
+          "await_eind": 25549,
+          "resume": 25549,
+          "Ft_begin": 25549,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2564,
+          "callback_id": 2565,
+          "Ft_id": 2644,
+          "callback_eind": 25636,
+          "await_eind": 25670,
+          "resume": 25670,
+          "Ft_begin": 25670,
+          "callback_tot_await_ms": 34,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2675,
+          "callback_id": 2676,
+          "Ft_id": 2755,
+          "callback_eind": 25752,
+          "await_eind": 25782,
+          "resume": 25782,
+          "Ft_begin": 25782,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2786,
+          "callback_id": 2787,
+          "Ft_id": 2866,
+          "callback_eind": 25861,
+          "await_eind": 25890,
+          "resume": 25890,
+          "Ft_begin": 25890,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2897,
+          "callback_id": 2898,
+          "Ft_id": 2977,
+          "callback_eind": 25971,
+          "await_eind": 26000,
+          "resume": 26000,
+          "Ft_begin": 26000,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3008,
+          "callback_id": 3009,
+          "Ft_id": 3088,
+          "callback_eind": 26088,
+          "await_eind": 26120,
+          "resume": 26120,
+          "Ft_begin": 26120,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3119,
+          "callback_id": 3120,
+          "Ft_id": 3199,
+          "callback_eind": 26202,
+          "await_eind": 26232,
+          "resume": 26232,
+          "Ft_begin": 26232,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3230,
+          "callback_id": 3231,
+          "Ft_id": 3310,
+          "callback_eind": 26312,
+          "await_eind": 26341,
+          "resume": 26341,
+          "Ft_begin": 26341,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3341,
+          "callback_id": 3342,
+          "Ft_id": 3421,
+          "callback_eind": 26423,
+          "await_eind": 26452,
+          "resume": 26452,
+          "Ft_begin": 26452,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3452,
+          "callback_id": 3453,
+          "Ft_id": 3532,
+          "callback_eind": 26534,
+          "await_eind": 26567,
+          "resume": 26567,
+          "Ft_begin": 26567,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3563,
+          "callback_id": 3564,
+          "Ft_id": 3643,
+          "callback_eind": 26650.000000000004,
+          "await_eind": 26679.000000000004,
+          "resume": 26679.000000000004,
+          "Ft_begin": 26679.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 3674,
+          "callback_id": 3675,
+          "Ft_id": 3754,
+          "callback_eind": 26759,
+          "await_eind": 26788,
+          "resume": 26788,
+          "Ft_begin": 26788,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3785,
+          "callback_id": 3786,
+          "Ft_id": 3865,
+          "callback_eind": 26874.000000000004,
+          "await_eind": 26905,
+          "resume": 26905,
+          "Ft_begin": 26905,
+          "callback_tot_await_ms": 30.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3896,
+          "callback_id": 3897,
+          "Ft_id": 3976,
+          "callback_eind": 26988,
+          "await_eind": 27017,
+          "resume": 27017,
+          "Ft_begin": 27017,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4007,
+          "callback_id": 4008,
+          "Ft_id": 4087,
+          "callback_eind": 27097,
+          "await_eind": 27128,
+          "resume": 27128,
+          "Ft_begin": 27128,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4118,
+          "callback_id": 4119,
+          "Ft_id": 4198,
+          "callback_eind": 27208.000000000004,
+          "await_eind": 27236,
+          "resume": 27236,
+          "Ft_begin": 27236,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4229,
+          "callback_id": 4230,
+          "Ft_id": 4309,
+          "callback_eind": 27315,
+          "await_eind": 27345,
+          "resume": 27345,
+          "Ft_begin": 27345,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4340,
+          "callback_id": 4341,
+          "Ft_id": 4420,
+          "callback_eind": 27423,
+          "await_eind": 27451,
+          "resume": 27451,
+          "Ft_begin": 27451,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4451,
+          "callback_id": 4452,
+          "Ft_id": 4531,
+          "callback_eind": 27530,
+          "await_eind": 27558,
+          "resume": 27558,
+          "Ft_begin": 27558,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4562,
+          "callback_id": 4563,
+          "Ft_id": 4642,
+          "callback_eind": 27636,
+          "await_eind": 27665,
+          "resume": 27665,
+          "Ft_begin": 27665,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4673,
+          "callback_id": 4674,
+          "Ft_id": 4753,
+          "callback_eind": 27747,
+          "await_eind": 27775.000000000004,
+          "resume": 27775.000000000004,
+          "Ft_begin": 27775.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 4784,
+          "callback_id": 4785,
+          "Ft_id": 4864,
+          "callback_eind": 27852,
+          "await_eind": 27883,
+          "resume": 27883,
+          "Ft_begin": 27883,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4895,
+          "callback_id": 4896,
+          "Ft_id": 4975,
+          "callback_eind": 27964.000000000004,
+          "await_eind": 27993.000000000004,
+          "resume": 27993.000000000004,
+          "Ft_begin": 27993.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 5006,
+          "callback_id": 5007,
+          "Ft_id": 5086,
+          "callback_eind": 28075,
+          "await_eind": 28105,
+          "resume": 28105,
+          "Ft_begin": 28105,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5117,
+          "callback_id": 5118,
+          "Ft_id": 5197,
+          "callback_eind": 28196,
+          "await_eind": 28224,
+          "resume": 28224,
+          "Ft_begin": 28224,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5228,
+          "callback_id": 5229,
+          "Ft_id": 5308,
+          "callback_eind": 28302,
+          "await_eind": 28330.000000000004,
+          "resume": 28330.000000000004,
+          "Ft_begin": 28330.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 5339,
+          "callback_id": 5340,
+          "Ft_id": 5419,
+          "callback_eind": 28411,
+          "await_eind": 28445,
+          "resume": 28445,
+          "Ft_begin": 28445,
+          "callback_tot_await_ms": 34,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5450,
+          "callback_id": 5451,
+          "Ft_id": 5530,
+          "callback_eind": 28539,
+          "await_eind": 28568,
+          "resume": 28568,
+          "Ft_begin": 28568,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5561,
+          "callback_id": 5562,
+          "Ft_id": 5641,
+          "callback_eind": 28657,
+          "await_eind": 28691,
+          "resume": 28691,
+          "Ft_begin": 28691,
+          "callback_tot_await_ms": 34,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5672,
+          "callback_id": 5673,
+          "Ft_id": 5752,
+          "callback_eind": 28774,
+          "await_eind": 28806,
+          "resume": 28806,
+          "Ft_begin": 28806,
+          "callback_tot_await_ms": 32,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5783,
+          "callback_id": 5784,
+          "Ft_id": 5863,
+          "callback_eind": 28887,
+          "await_eind": 28916,
+          "resume": 28916,
+          "Ft_begin": 28916,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5894,
+          "callback_id": 5895,
+          "Ft_id": 5974,
+          "callback_eind": 29002,
+          "await_eind": 29030,
+          "resume": 29030,
+          "Ft_begin": 29030,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6026,
+          "callback_id": 6027,
+          "Ft_id": 6077,
+          "callback_eind": 29111,
+          "await_eind": 29140,
+          "resume": 29140,
+          "Ft_begin": 29140,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6108,
+          "callback_id": 6109,
+          "Ft_id": 6188,
+          "callback_eind": 29221,
+          "await_eind": 29249.000000000004,
+          "resume": 29249.000000000004,
+          "Ft_begin": 29249.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 6219,
+          "callback_id": 6220,
+          "Ft_id": 6299,
+          "callback_eind": 29333.000000000004,
+          "await_eind": 29360,
+          "resume": 29360,
+          "Ft_begin": 29360,
+          "callback_tot_await_ms": 26.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6330,
+          "callback_id": 6331,
+          "Ft_id": 6410,
+          "callback_eind": 29439,
+          "await_eind": 29466,
+          "resume": 29466,
+          "Ft_begin": 29466,
+          "callback_tot_await_ms": 27,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6441,
+          "callback_id": 6442,
+          "Ft_id": 6521,
+          "callback_eind": 29547,
+          "await_eind": 29577,
+          "resume": 29577,
+          "Ft_begin": 29577,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6552,
+          "callback_id": 6553,
+          "Ft_id": 6632,
+          "callback_eind": 29658,
+          "await_eind": 29687,
+          "resume": 29687,
+          "Ft_begin": 29687,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6663,
+          "callback_id": 6664,
+          "Ft_id": 6743,
+          "callback_eind": 29760,
+          "await_eind": 29791,
+          "resume": 29791,
+          "Ft_begin": 29791,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        }
+      ],
+      "Dn_deelfasen_binnen_At": {
+        "n6.selection": {
+          "aantal": 63,
+          "som_ms": 0.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "n6.hasStory": {
+          "aantal": 63,
+          "som_ms": 0.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        },
+        "n6.map": {
+          "aantal": 63,
+          "som_ms": 482.00000000000364,
+          "mediaan_ms": 7.999999999996362,
+          "maximum_ms": 15
+        },
+        "n6.scan": {
+          "aantal": 63,
+          "som_ms": 2.999999999992724,
+          "mediaan_ms": 0,
+          "maximum_ms": 1
+        },
+        "n6": {
+          "aantal": 63,
+          "som_ms": 484.99999999999636,
+          "mediaan_ms": 7.999999999996362,
+          "maximum_ms": 15
+        },
+        "Dn.Pt": {
+          "aantal": 63,
+          "som_ms": 484.99999999999636,
+          "mediaan_ms": 7.999999999996362,
+          "maximum_ms": 15
+        },
+        "Dn.anchor": {
+          "aantal": 63,
+          "som_ms": 1029.000000000011,
+          "mediaan_ms": 16,
+          "maximum_ms": 28
+        },
+        "Dn.head": {
+          "aantal": 63,
+          "som_ms": 1.999999999996362,
+          "mediaan_ms": 0,
+          "maximum_ms": 1
+        }
+      },
+      "At_delen": [
+        {
+          "At_id": 89,
+          "duur_ms": 28,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 2
+          },
+          "deel_ids": [
+            90,
+            99,
+            100
+          ]
+        },
+        {
+          "At_id": 216,
+          "duur_ms": 44,
+          "delen": {
+            "At.Dn": 43,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            217,
+            226,
+            227
+          ]
+        },
+        {
+          "At_id": 319,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 31,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            320,
+            329,
+            330
+          ]
+        },
+        {
+          "At_id": 430,
+          "duur_ms": 27,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            431,
+            440,
+            441
+          ]
+        },
+        {
+          "At_id": 544,
+          "duur_ms": 27.999999999996362,
+          "delen": {
+            "At.Dn": 26.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            545,
+            554,
+            555
+          ]
+        },
+        {
+          "At_id": 655,
+          "duur_ms": 40,
+          "delen": {
+            "At.Dn": 37.00000000000364,
+            "At.jn": 0.0,
+            "At.I": 2.999999999996362
+          },
+          "deel_ids": [
+            656,
+            665,
+            666
+          ]
+        },
+        {
+          "At_id": 766,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 30,
+            "At.jn": 0,
+            "At.I": 2
+          },
+          "deel_ids": [
+            767,
+            776,
+            777
+          ]
+        },
+        {
+          "At_id": 877,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 31,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            878,
+            887,
+            888
+          ]
+        },
+        {
+          "At_id": 988,
+          "duur_ms": 31,
+          "delen": {
+            "At.Dn": 30,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            989,
+            998,
+            999
+          ]
+        },
+        {
+          "At_id": 1099,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1100,
+            1109,
+            1110
+          ]
+        },
+        {
+          "At_id": 1210,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1211,
+            1220,
+            1221
+          ]
+        },
+        {
+          "At_id": 1321,
+          "duur_ms": 26.0,
+          "delen": {
+            "At.Dn": 26.0,
+            "At.jn": 0.0,
+            "At.I": 0.0
+          },
+          "deel_ids": [
+            1322,
+            1331,
+            1332
+          ]
+        },
+        {
+          "At_id": 1432,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1433,
+            1442,
+            1443
+          ]
+        },
+        {
+          "At_id": 1543,
+          "duur_ms": 27,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1544,
+            1553,
+            1554
+          ]
+        },
+        {
+          "At_id": 1654,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            1655,
+            1664,
+            1665
+          ]
+        },
+        {
+          "At_id": 1765,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1766,
+            1775,
+            1776
+          ]
+        },
+        {
+          "At_id": 1876,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1877,
+            1886,
+            1887
+          ]
+        },
+        {
+          "At_id": 1979,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1980,
+            1989,
+            1990
+          ]
+        },
+        {
+          "At_id": 2090,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2091,
+            2100,
+            2101
+          ]
+        },
+        {
+          "At_id": 2201,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2202,
+            2211,
+            2212
+          ]
+        },
+        {
+          "At_id": 2312,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2313,
+            2322,
+            2323
+          ]
+        },
+        {
+          "At_id": 2423,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            2424,
+            2433,
+            2434
+          ]
+        },
+        {
+          "At_id": 2534,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2535,
+            2544,
+            2545
+          ]
+        },
+        {
+          "At_id": 2645,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2646,
+            2655,
+            2656
+          ]
+        },
+        {
+          "At_id": 2756,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            2757,
+            2766,
+            2767
+          ]
+        },
+        {
+          "At_id": 2867,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2868,
+            2877,
+            2878
+          ]
+        },
+        {
+          "At_id": 2978,
+          "duur_ms": 25.000000000003638,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            2979,
+            2988,
+            2989
+          ]
+        },
+        {
+          "At_id": 3089,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            3090,
+            3099,
+            3100
+          ]
+        },
+        {
+          "At_id": 3200,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            3201,
+            3210,
+            3211
+          ]
+        },
+        {
+          "At_id": 3311,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            3312,
+            3321,
+            3322
+          ]
+        },
+        {
+          "At_id": 3422,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3423,
+            3432,
+            3433
+          ]
+        },
+        {
+          "At_id": 3533,
+          "duur_ms": 25.000000000003638,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            3534,
+            3543,
+            3544
+          ]
+        },
+        {
+          "At_id": 3644,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3645,
+            3654,
+            3655
+          ]
+        },
+        {
+          "At_id": 3755,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            3756,
+            3765,
+            3766
+          ]
+        },
+        {
+          "At_id": 3866,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            3867,
+            3876,
+            3877
+          ]
+        },
+        {
+          "At_id": 3977,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3978,
+            3987,
+            3988
+          ]
+        },
+        {
+          "At_id": 4088,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4089,
+            4098,
+            4099
+          ]
+        },
+        {
+          "At_id": 4199,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4200,
+            4209,
+            4210
+          ]
+        },
+        {
+          "At_id": 4310,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            4311,
+            4320,
+            4321
+          ]
+        },
+        {
+          "At_id": 4421,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4422,
+            4431,
+            4432
+          ]
+        },
+        {
+          "At_id": 4532,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4533,
+            4542,
+            4543
+          ]
+        },
+        {
+          "At_id": 4643,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4644,
+            4653,
+            4654
+          ]
+        },
+        {
+          "At_id": 4754,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4755,
+            4764,
+            4765
+          ]
+        },
+        {
+          "At_id": 4865,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4866,
+            4875,
+            4876
+          ]
+        },
+        {
+          "At_id": 4976,
+          "duur_ms": 26.999999999996362,
+          "delen": {
+            "At.Dn": 26.0,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            4977,
+            4986,
+            4987
+          ]
+        },
+        {
+          "At_id": 5087,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 29,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            5088,
+            5097,
+            5098
+          ]
+        },
+        {
+          "At_id": 5198,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            5199,
+            5208,
+            5209
+          ]
+        },
+        {
+          "At_id": 5309,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 22.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5310,
+            5319,
+            5320
+          ]
+        },
+        {
+          "At_id": 5420,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5421,
+            5430,
+            5431
+          ]
+        },
+        {
+          "At_id": 5531,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            5532,
+            5541,
+            5542
+          ]
+        },
+        {
+          "At_id": 5642,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5643,
+            5652,
+            5653
+          ]
+        },
+        {
+          "At_id": 5753,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            5754,
+            5763,
+            5764
+          ]
+        },
+        {
+          "At_id": 5864,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5865,
+            5874,
+            5875
+          ]
+        },
+        {
+          "At_id": 5975,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            5976,
+            5985,
+            5986
+          ]
+        },
+        {
+          "At_id": 6078,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6079,
+            6088,
+            6089
+          ]
+        },
+        {
+          "At_id": 6189,
+          "duur_ms": 23.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6190,
+            6199,
+            6200
+          ]
+        },
+        {
+          "At_id": 6300,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 1,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6301,
+            6310,
+            6311
+          ]
+        },
+        {
+          "At_id": 6411,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            6412,
+            6421,
+            6422
+          ]
+        },
+        {
+          "At_id": 6522,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6523,
+            6532,
+            6533
+          ]
+        },
+        {
+          "At_id": 6633,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            6634,
+            6643,
+            6644
+          ]
+        },
+        {
+          "At_id": 6744,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            6745,
+            6754,
+            6755
+          ]
+        },
+        {
+          "At_id": 6774,
+          "duur_ms": 0,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6775,
+            6784,
+            6785
+          ]
+        },
+        {
+          "At_id": 8435,
+          "duur_ms": 0,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            8436,
+            8445,
+            8446
+          ]
+        }
+      ],
+      "grenzen": "Echte nativeAwait-spans bevatten elk één tekstcallback; nativeResume en Ft op sessie/tijdvolgorde. Eén main-klok, geen exclusieve CPU-meting. At-delen en callbacks genest, niet optellen. Meetoverhead niet afgetrokken; andere microtaken/React/GC niet oorzakelijk toegewezen. Twee vaste rijke Linux-ronden; geen prestatiewinst of fysieke paintmeting."
+    },
+    "twee": {
+      "rows": 21230,
+      "venster": {
+        "begin": 22271,
+        "eind": 31585,
+        "duur_ms": 9314,
+        "wall_begin_tot_frame_ms": 9576
+      },
+      "fasen": {
+        "n6.selection": {
+          "aantal": 1094,
+          "som_ms": 0.999999999996362,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0.999999999996362
+        },
+        "n6.hasStory": {
+          "aantal": 1094,
+          "som_ms": 11.000000000003638,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "n6.map": {
+          "aantal": 1094,
+          "som_ms": 498.00000000000364,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 13
+        },
+        "n6.scan": {
+          "aantal": 1094,
+          "som_ms": 36.99999999999636,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        },
+        "n6": {
+          "aantal": 1094,
+          "som_ms": 550.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 13
+        },
+        "Dn.Pt": {
+          "aantal": 901,
+          "som_ms": 545.0000000000036,
+          "mediaan_ms": 0,
+          "maximum_ms": 13
+        },
+        "Dn.anchor": {
+          "aantal": 901,
+          "som_ms": 1072.999999999989,
+          "mediaan_ms": 0,
+          "maximum_ms": 28
+        },
+        "Dn.head": {
+          "aantal": 901,
+          "som_ms": 4.0,
+          "mediaan_ms": 0,
+          "maximum_ms": 1.000000000003638
+        },
+        "tekst": {
+          "aantal": 62,
+          "som_ms": 4357.000000000011,
+          "mediaan_ms": 57.50000000000182,
+          "maximum_ms": 371.00000000000364
+        },
+        "nativeAwait": {
+          "aantal": 62,
+          "som_ms": 6297.999999999993,
+          "mediaan_ms": 87.0,
+          "maximum_ms": 402
+        },
+        "At.Dn": {
+          "aantal": 64,
+          "som_ms": 1566.9999999999964,
+          "mediaan_ms": 23.00000000000182,
+          "maximum_ms": 38.99999999999636
+        },
+        "At.jn": {
+          "aantal": 64,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0
+        },
+        "At.I": {
+          "aantal": 64,
+          "som_ms": 55.00000000001819,
+          "mediaan_ms": 1.0,
+          "maximum_ms": 2.000000000003638
+        },
+        "At": {
+          "aantal": 64,
+          "som_ms": 1622.0000000000146,
+          "mediaan_ms": 24.0,
+          "maximum_ms": 39.99999999999636
+        },
+        "Ft": {
+          "aantal": 62,
+          "som_ms": 1623.000000000011,
+          "mediaan_ms": 24.000000000003638,
+          "maximum_ms": 39.99999999999636
+        },
+        "layoutInput": {
+          "aantal": 64,
+          "som_ms": 4.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1
+        },
+        "fontDecode": {
+          "aantal": 2,
+          "som_ms": 0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0
+        },
+        "fontConfig": {
+          "aantal": 2,
+          "som_ms": 0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0
+        },
+        "framePublicatie": {
+          "aantal": 1,
+          "som_ms": 0,
+          "mediaan_ms": 0,
+          "maximum_ms": 0
+        }
+      },
+      "callback_tot_await_hervatting": {
+        "aantal": 62,
+        "som_ms": 1940.9999999999818,
+        "mediaan_ms": 29.0,
+        "maximum_ms": 53
+      },
+      "resume_tot_Ft": {
+        "aantal": 62,
+        "som_ms": 0.0,
+        "mediaan_ms": 0.0,
+        "maximum_ms": 0
+      },
+      "causale_vensters": [
+        {
+          "await_id": 62,
+          "callback_id": 63,
+          "Ft_id": 128,
+          "callback_eind": 22676.000000000004,
+          "await_eind": 22707,
+          "resume": 22707,
+          "Ft_begin": 22707,
+          "callback_tot_await_ms": 30.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 212,
+          "callback_id": 213,
+          "Ft_id": 255,
+          "callback_eind": 22906,
+          "await_eind": 22946,
+          "resume": 22946,
+          "Ft_begin": 22946,
+          "callback_tot_await_ms": 40,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 286,
+          "callback_id": 287,
+          "Ft_id": 358,
+          "callback_eind": 23078,
+          "await_eind": 23120,
+          "resume": 23120,
+          "Ft_begin": 23120,
+          "callback_tot_await_ms": 42,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 389,
+          "callback_id": 390,
+          "Ft_id": 472,
+          "callback_eind": 23315,
+          "await_eind": 23348,
+          "resume": 23348,
+          "Ft_begin": 23348,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 503,
+          "callback_id": 504,
+          "Ft_id": 583,
+          "callback_eind": 23450,
+          "await_eind": 23493.000000000004,
+          "resume": 23493.000000000004,
+          "Ft_begin": 23493.000000000004,
+          "callback_tot_await_ms": 43.00000000000364,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 614,
+          "callback_id": 615,
+          "Ft_id": 694,
+          "callback_eind": 23618.000000000004,
+          "await_eind": 23659,
+          "resume": 23659,
+          "Ft_begin": 23659,
+          "callback_tot_await_ms": 40.99999999999636,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 725,
+          "callback_id": 726,
+          "Ft_id": 805,
+          "callback_eind": 23771,
+          "await_eind": 23810,
+          "resume": 23810,
+          "Ft_begin": 23810,
+          "callback_tot_await_ms": 39,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 836,
+          "callback_id": 837,
+          "Ft_id": 908,
+          "callback_eind": 23939,
+          "await_eind": 23992,
+          "resume": 23992,
+          "Ft_begin": 23992,
+          "callback_tot_await_ms": 53,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 939,
+          "callback_id": 940,
+          "Ft_id": 1019,
+          "callback_eind": 24097,
+          "await_eind": 24128,
+          "resume": 24128,
+          "Ft_begin": 24128,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1050,
+          "callback_id": 1051,
+          "Ft_id": 1130,
+          "callback_eind": 24217,
+          "await_eind": 24248,
+          "resume": 24248,
+          "Ft_begin": 24248,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1161,
+          "callback_id": 1162,
+          "Ft_id": 1241,
+          "callback_eind": 24341,
+          "await_eind": 24378,
+          "resume": 24378,
+          "Ft_begin": 24378,
+          "callback_tot_await_ms": 37,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1272,
+          "callback_id": 1273,
+          "Ft_id": 1352,
+          "callback_eind": 24480,
+          "await_eind": 24511,
+          "resume": 24511,
+          "Ft_begin": 24511,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1383,
+          "callback_id": 1384,
+          "Ft_id": 1463,
+          "callback_eind": 24610,
+          "await_eind": 24643,
+          "resume": 24643,
+          "Ft_begin": 24643,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1494,
+          "callback_id": 1495,
+          "Ft_id": 1574,
+          "callback_eind": 24735,
+          "await_eind": 24764,
+          "resume": 24764,
+          "Ft_begin": 24764,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1605,
+          "callback_id": 1606,
+          "Ft_id": 1685,
+          "callback_eind": 24846,
+          "await_eind": 24875,
+          "resume": 24875,
+          "Ft_begin": 24875,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1716,
+          "callback_id": 1717,
+          "Ft_id": 1796,
+          "callback_eind": 24955.000000000004,
+          "await_eind": 24985,
+          "resume": 24985,
+          "Ft_begin": 24985,
+          "callback_tot_await_ms": 29.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 1827,
+          "callback_id": 1828,
+          "Ft_id": 1907,
+          "callback_eind": 25079,
+          "await_eind": 25115.000000000004,
+          "resume": 25115.000000000004,
+          "Ft_begin": 25115.000000000004,
+          "callback_tot_await_ms": 36.00000000000364,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 1938,
+          "callback_id": 1939,
+          "Ft_id": 2018,
+          "callback_eind": 25202,
+          "await_eind": 25230,
+          "resume": 25230,
+          "Ft_begin": 25230,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2049,
+          "callback_id": 2050,
+          "Ft_id": 2129,
+          "callback_eind": 25313,
+          "await_eind": 25346,
+          "resume": 25346,
+          "Ft_begin": 25346,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2160,
+          "callback_id": 2161,
+          "Ft_id": 2240,
+          "callback_eind": 25428,
+          "await_eind": 25457,
+          "resume": 25457,
+          "Ft_begin": 25457,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2271,
+          "callback_id": 2272,
+          "Ft_id": 2351,
+          "callback_eind": 25538,
+          "await_eind": 25566,
+          "resume": 25566,
+          "Ft_begin": 25566,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2382,
+          "callback_id": 2383,
+          "Ft_id": 2462,
+          "callback_eind": 25646,
+          "await_eind": 25675,
+          "resume": 25675,
+          "Ft_begin": 25675,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2493,
+          "callback_id": 2494,
+          "Ft_id": 2573,
+          "callback_eind": 25753,
+          "await_eind": 25782,
+          "resume": 25782,
+          "Ft_begin": 25782,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2604,
+          "callback_id": 2605,
+          "Ft_id": 2684,
+          "callback_eind": 25862.000000000004,
+          "await_eind": 25891,
+          "resume": 25891,
+          "Ft_begin": 25891,
+          "callback_tot_await_ms": 28.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2715,
+          "callback_id": 2716,
+          "Ft_id": 2795,
+          "callback_eind": 25975,
+          "await_eind": 26005,
+          "resume": 26005,
+          "Ft_begin": 26005,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 2826,
+          "callback_id": 2827,
+          "Ft_id": 2906,
+          "callback_eind": 26087,
+          "await_eind": 26115.000000000004,
+          "resume": 26115.000000000004,
+          "Ft_begin": 26115.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 2937,
+          "callback_id": 2938,
+          "Ft_id": 3017,
+          "callback_eind": 26194,
+          "await_eind": 26222,
+          "resume": 26222,
+          "Ft_begin": 26222,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3048,
+          "callback_id": 3049,
+          "Ft_id": 3128,
+          "callback_eind": 26315,
+          "await_eind": 26344,
+          "resume": 26344,
+          "Ft_begin": 26344,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3159,
+          "callback_id": 3160,
+          "Ft_id": 3239,
+          "callback_eind": 26426.000000000004,
+          "await_eind": 26457,
+          "resume": 26457,
+          "Ft_begin": 26457,
+          "callback_tot_await_ms": 30.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3270,
+          "callback_id": 3271,
+          "Ft_id": 3350,
+          "callback_eind": 26543,
+          "await_eind": 26573,
+          "resume": 26573,
+          "Ft_begin": 26573,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3381,
+          "callback_id": 3382,
+          "Ft_id": 3461,
+          "callback_eind": 26653.000000000004,
+          "await_eind": 26683,
+          "resume": 26683,
+          "Ft_begin": 26683,
+          "callback_tot_await_ms": 29.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3492,
+          "callback_id": 3493,
+          "Ft_id": 3572,
+          "callback_eind": 26763,
+          "await_eind": 26793,
+          "resume": 26793,
+          "Ft_begin": 26793,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3603,
+          "callback_id": 3604,
+          "Ft_id": 3683,
+          "callback_eind": 26872,
+          "await_eind": 26902,
+          "resume": 26902,
+          "Ft_begin": 26902,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3714,
+          "callback_id": 3715,
+          "Ft_id": 3794,
+          "callback_eind": 26983,
+          "await_eind": 27011,
+          "resume": 27011,
+          "Ft_begin": 27011,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3825,
+          "callback_id": 3826,
+          "Ft_id": 3905,
+          "callback_eind": 27089.000000000004,
+          "await_eind": 27117,
+          "resume": 27117,
+          "Ft_begin": 27117,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 3936,
+          "callback_id": 3937,
+          "Ft_id": 4016,
+          "callback_eind": 27199,
+          "await_eind": 27228,
+          "resume": 27228,
+          "Ft_begin": 27228,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4047,
+          "callback_id": 4048,
+          "Ft_id": 4127,
+          "callback_eind": 27306,
+          "await_eind": 27334,
+          "resume": 27334,
+          "Ft_begin": 27334,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4158,
+          "callback_id": 4159,
+          "Ft_id": 4238,
+          "callback_eind": 27414,
+          "await_eind": 27442,
+          "resume": 27442,
+          "Ft_begin": 27442,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4269,
+          "callback_id": 4270,
+          "Ft_id": 4349,
+          "callback_eind": 27521,
+          "await_eind": 27550,
+          "resume": 27550,
+          "Ft_begin": 27550,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4380,
+          "callback_id": 4381,
+          "Ft_id": 4460,
+          "callback_eind": 27627,
+          "await_eind": 27655,
+          "resume": 27655,
+          "Ft_begin": 27655,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4491,
+          "callback_id": 4492,
+          "Ft_id": 4571,
+          "callback_eind": 27735,
+          "await_eind": 27764,
+          "resume": 27764,
+          "Ft_begin": 27764,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4602,
+          "callback_id": 4603,
+          "Ft_id": 4682,
+          "callback_eind": 27840,
+          "await_eind": 27868.000000000004,
+          "resume": 27868.000000000004,
+          "Ft_begin": 27868.000000000004,
+          "callback_tot_await_ms": 28.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 4713,
+          "callback_id": 4714,
+          "Ft_id": 4793,
+          "callback_eind": 27950,
+          "await_eind": 27978,
+          "resume": 27978,
+          "Ft_begin": 27978,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 4824,
+          "callback_id": 4825,
+          "Ft_id": 4904,
+          "callback_eind": 28057.000000000004,
+          "await_eind": 28086.000000000004,
+          "resume": 28086.000000000004,
+          "Ft_begin": 28086.000000000004,
+          "callback_tot_await_ms": 29.0,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 4935,
+          "callback_id": 4936,
+          "Ft_id": 5007,
+          "callback_eind": 28166,
+          "await_eind": 28194,
+          "resume": 28194,
+          "Ft_begin": 28194,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5038,
+          "callback_id": 5039,
+          "Ft_id": 5118,
+          "callback_eind": 28276,
+          "await_eind": 28309,
+          "resume": 28309,
+          "Ft_begin": 28309,
+          "callback_tot_await_ms": 33,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5149,
+          "callback_id": 5150,
+          "Ft_id": 5229,
+          "callback_eind": 28409,
+          "await_eind": 28438,
+          "resume": 28438,
+          "Ft_begin": 28438,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5260,
+          "callback_id": 5261,
+          "Ft_id": 5340,
+          "callback_eind": 28515,
+          "await_eind": 28543,
+          "resume": 28543,
+          "Ft_begin": 28543,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5371,
+          "callback_id": 5372,
+          "Ft_id": 5451,
+          "callback_eind": 28638,
+          "await_eind": 28691,
+          "resume": 28691,
+          "Ft_begin": 28691,
+          "callback_tot_await_ms": 53,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5482,
+          "callback_id": 5483,
+          "Ft_id": 5562,
+          "callback_eind": 28788,
+          "await_eind": 28816,
+          "resume": 28816,
+          "Ft_begin": 28816,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5593,
+          "callback_id": 5594,
+          "Ft_id": 5673,
+          "callback_eind": 28899,
+          "await_eind": 28929.000000000004,
+          "resume": 28929.000000000004,
+          "Ft_begin": 28929.000000000004,
+          "callback_tot_await_ms": 30.000000000003638,
+          "resume_tot_Ft_ms": 0.0
+        },
+        {
+          "await_id": 5704,
+          "callback_id": 5705,
+          "Ft_id": 5784,
+          "callback_eind": 29011,
+          "await_eind": 29041,
+          "resume": 29041,
+          "Ft_begin": 29041,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5815,
+          "callback_id": 5816,
+          "Ft_id": 5895,
+          "callback_eind": 29120,
+          "await_eind": 29148,
+          "resume": 29148,
+          "Ft_begin": 29148,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 5926,
+          "callback_id": 5927,
+          "Ft_id": 6006,
+          "callback_eind": 29228,
+          "await_eind": 29259,
+          "resume": 29259,
+          "Ft_begin": 29259,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6037,
+          "callback_id": 6038,
+          "Ft_id": 6117,
+          "callback_eind": 29347,
+          "await_eind": 29375,
+          "resume": 29375,
+          "Ft_begin": 29375,
+          "callback_tot_await_ms": 28,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6148,
+          "callback_id": 6149,
+          "Ft_id": 6228,
+          "callback_eind": 29455.000000000004,
+          "await_eind": 29483,
+          "resume": 29483,
+          "Ft_begin": 29483,
+          "callback_tot_await_ms": 27.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6259,
+          "callback_id": 6260,
+          "Ft_id": 6339,
+          "callback_eind": 29564,
+          "await_eind": 29593,
+          "resume": 29593,
+          "Ft_begin": 29593,
+          "callback_tot_await_ms": 29,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6370,
+          "callback_id": 6371,
+          "Ft_id": 6450,
+          "callback_eind": 29672,
+          "await_eind": 29703,
+          "resume": 29703,
+          "Ft_begin": 29703,
+          "callback_tot_await_ms": 31,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6481,
+          "callback_id": 6482,
+          "Ft_id": 6561,
+          "callback_eind": 29785,
+          "await_eind": 29815,
+          "resume": 29815,
+          "Ft_begin": 29815,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6592,
+          "callback_id": 6593,
+          "Ft_id": 6672,
+          "callback_eind": 29987.000000000004,
+          "await_eind": 30013,
+          "resume": 30013,
+          "Ft_begin": 30013,
+          "callback_tot_await_ms": 25.999999999996362,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6703,
+          "callback_id": 6704,
+          "Ft_id": 6783,
+          "callback_eind": 30093,
+          "await_eind": 30123,
+          "resume": 30123,
+          "Ft_begin": 30123,
+          "callback_tot_await_ms": 30,
+          "resume_tot_Ft_ms": 0
+        },
+        {
+          "await_id": 6814,
+          "callback_id": 6815,
+          "Ft_id": 6894,
+          "callback_eind": 30205.000000000004,
+          "await_eind": 30234,
+          "resume": 30234,
+          "Ft_begin": 30234,
+          "callback_tot_await_ms": 28.999999999996362,
+          "resume_tot_Ft_ms": 0
+        }
+      ],
+      "Dn_deelfasen_binnen_At": {
+        "n6.selection": {
+          "aantal": 64,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0.0
+        },
+        "n6.hasStory": {
+          "aantal": 64,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0.0
+        },
+        "n6.map": {
+          "aantal": 64,
+          "som_ms": 496.0000000000073,
+          "mediaan_ms": 7.000000000003638,
+          "maximum_ms": 13
+        },
+        "n6.scan": {
+          "aantal": 64,
+          "som_ms": 0.0,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 0
+        },
+        "n6": {
+          "aantal": 64,
+          "som_ms": 496.0000000000073,
+          "mediaan_ms": 7.000000000003638,
+          "maximum_ms": 13
+        },
+        "Dn.Pt": {
+          "aantal": 64,
+          "som_ms": 496.0000000000073,
+          "mediaan_ms": 7.000000000003638,
+          "maximum_ms": 13
+        },
+        "Dn.anchor": {
+          "aantal": 64,
+          "som_ms": 1067.9999999999854,
+          "mediaan_ms": 16.0,
+          "maximum_ms": 28
+        },
+        "Dn.head": {
+          "aantal": 64,
+          "som_ms": 3.000000000003638,
+          "mediaan_ms": 0.0,
+          "maximum_ms": 1.000000000003638
+        }
+      },
+      "At_delen": [
+        {
+          "At_id": 129,
+          "duur_ms": 29.0,
+          "delen": {
+            "At.Dn": 26.999999999996362,
+            "At.jn": 0,
+            "At.I": 2.000000000003638
+          },
+          "deel_ids": [
+            130,
+            139,
+            140
+          ]
+        },
+        {
+          "At_id": 256,
+          "duur_ms": 35,
+          "delen": {
+            "At.Dn": 34,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            257,
+            266,
+            267
+          ]
+        },
+        {
+          "At_id": 359,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 26,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            360,
+            369,
+            370
+          ]
+        },
+        {
+          "At_id": 473,
+          "duur_ms": 34,
+          "delen": {
+            "At.Dn": 33,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            474,
+            483,
+            484
+          ]
+        },
+        {
+          "At_id": 584,
+          "duur_ms": 39.99999999999636,
+          "delen": {
+            "At.Dn": 38.99999999999636,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            585,
+            594,
+            595
+          ]
+        },
+        {
+          "At_id": 695,
+          "duur_ms": 32,
+          "delen": {
+            "At.Dn": 31,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            696,
+            705,
+            706
+          ]
+        },
+        {
+          "At_id": 806,
+          "duur_ms": 34,
+          "delen": {
+            "At.Dn": 32,
+            "At.jn": 0,
+            "At.I": 2
+          },
+          "deel_ids": [
+            807,
+            816,
+            817
+          ]
+        },
+        {
+          "At_id": 909,
+          "duur_ms": 30.000000000003638,
+          "delen": {
+            "At.Dn": 29,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            910,
+            919,
+            920
+          ]
+        },
+        {
+          "At_id": 1020,
+          "duur_ms": 30,
+          "delen": {
+            "At.Dn": 29,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1021,
+            1030,
+            1031
+          ]
+        },
+        {
+          "At_id": 1131,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            1132,
+            1141,
+            1142
+          ]
+        },
+        {
+          "At_id": 1242,
+          "duur_ms": 29,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1243,
+            1252,
+            1253
+          ]
+        },
+        {
+          "At_id": 1353,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1354,
+            1363,
+            1364
+          ]
+        },
+        {
+          "At_id": 1464,
+          "duur_ms": 30,
+          "delen": {
+            "At.Dn": 29,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1465,
+            1474,
+            1475
+          ]
+        },
+        {
+          "At_id": 1575,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1576,
+            1585,
+            1586
+          ]
+        },
+        {
+          "At_id": 1686,
+          "duur_ms": 25.000000000003638,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            1687,
+            1696,
+            1697
+          ]
+        },
+        {
+          "At_id": 1797,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1798,
+            1807,
+            1808
+          ]
+        },
+        {
+          "At_id": 1908,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            1909,
+            1918,
+            1919
+          ]
+        },
+        {
+          "At_id": 2019,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2020,
+            2029,
+            2030
+          ]
+        },
+        {
+          "At_id": 2130,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2131,
+            2140,
+            2141
+          ]
+        },
+        {
+          "At_id": 2241,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2242,
+            2251,
+            2252
+          ]
+        },
+        {
+          "At_id": 2352,
+          "duur_ms": 23.000000000003638,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            2353,
+            2362,
+            2363
+          ]
+        },
+        {
+          "At_id": 2463,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2464,
+            2473,
+            2474
+          ]
+        },
+        {
+          "At_id": 2574,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2575,
+            2584,
+            2585
+          ]
+        },
+        {
+          "At_id": 2685,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2686,
+            2695,
+            2696
+          ]
+        },
+        {
+          "At_id": 2796,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2797,
+            2806,
+            2807
+          ]
+        },
+        {
+          "At_id": 2907,
+          "duur_ms": 22.999999999996362,
+          "delen": {
+            "At.Dn": 21.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            2908,
+            2917,
+            2918
+          ]
+        },
+        {
+          "At_id": 3018,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            3019,
+            3028,
+            3029
+          ]
+        },
+        {
+          "At_id": 3129,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            3130,
+            3139,
+            3140
+          ]
+        },
+        {
+          "At_id": 3240,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            3241,
+            3250,
+            3251
+          ]
+        },
+        {
+          "At_id": 3351,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3352,
+            3361,
+            3362
+          ]
+        },
+        {
+          "At_id": 3462,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3463,
+            3472,
+            3473
+          ]
+        },
+        {
+          "At_id": 3573,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3574,
+            3583,
+            3584
+          ]
+        },
+        {
+          "At_id": 3684,
+          "duur_ms": 24.000000000003638,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            3685,
+            3694,
+            3695
+          ]
+        },
+        {
+          "At_id": 3795,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3796,
+            3805,
+            3806
+          ]
+        },
+        {
+          "At_id": 3906,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            3907,
+            3916,
+            3917
+          ]
+        },
+        {
+          "At_id": 4017,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4018,
+            4027,
+            4028
+          ]
+        },
+        {
+          "At_id": 4128,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4129,
+            4138,
+            4139
+          ]
+        },
+        {
+          "At_id": 4239,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4240,
+            4249,
+            4250
+          ]
+        },
+        {
+          "At_id": 4350,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4351,
+            4360,
+            4361
+          ]
+        },
+        {
+          "At_id": 4461,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4462,
+            4471,
+            4472
+          ]
+        },
+        {
+          "At_id": 4572,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4573,
+            4582,
+            4583
+          ]
+        },
+        {
+          "At_id": 4683,
+          "duur_ms": 26.999999999996362,
+          "delen": {
+            "At.Dn": 26.0,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            4684,
+            4693,
+            4694
+          ]
+        },
+        {
+          "At_id": 4794,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            4795,
+            4804,
+            4805
+          ]
+        },
+        {
+          "At_id": 4905,
+          "duur_ms": 24.999999999996362,
+          "delen": {
+            "At.Dn": 23.999999999996362,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            4906,
+            4915,
+            4916
+          ]
+        },
+        {
+          "At_id": 5008,
+          "duur_ms": 23.000000000003638,
+          "delen": {
+            "At.Dn": 23.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.0
+          },
+          "deel_ids": [
+            5009,
+            5018,
+            5019
+          ]
+        },
+        {
+          "At_id": 5119,
+          "duur_ms": 34,
+          "delen": {
+            "At.Dn": 33.00000000000364,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            5120,
+            5129,
+            5130
+          ]
+        },
+        {
+          "At_id": 5230,
+          "duur_ms": 23.000000000003638,
+          "delen": {
+            "At.Dn": 22,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            5231,
+            5240,
+            5241
+          ]
+        },
+        {
+          "At_id": 5341,
+          "duur_ms": 30,
+          "delen": {
+            "At.Dn": 28,
+            "At.jn": 0,
+            "At.I": 2
+          },
+          "deel_ids": [
+            5342,
+            5351,
+            5352
+          ]
+        },
+        {
+          "At_id": 5452,
+          "duur_ms": 36,
+          "delen": {
+            "At.Dn": 35,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5453,
+            5462,
+            5463
+          ]
+        },
+        {
+          "At_id": 5563,
+          "duur_ms": 30,
+          "delen": {
+            "At.Dn": 29,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5564,
+            5573,
+            5574
+          ]
+        },
+        {
+          "At_id": 5674,
+          "duur_ms": 29.0,
+          "delen": {
+            "At.Dn": 27.999999999996362,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            5675,
+            5684,
+            5685
+          ]
+        },
+        {
+          "At_id": 5785,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5786,
+            5795,
+            5796
+          ]
+        },
+        {
+          "At_id": 5896,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            5897,
+            5906,
+            5907
+          ]
+        },
+        {
+          "At_id": 6007,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            6008,
+            6017,
+            6018
+          ]
+        },
+        {
+          "At_id": 6118,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 22.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            6119,
+            6128,
+            6129
+          ]
+        },
+        {
+          "At_id": 6229,
+          "duur_ms": 25,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6230,
+            6239,
+            6240
+          ]
+        },
+        {
+          "At_id": 6340,
+          "duur_ms": 23,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6341,
+            6350,
+            6351
+          ]
+        },
+        {
+          "At_id": 6451,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            6452,
+            6461,
+            6462
+          ]
+        },
+        {
+          "At_id": 6562,
+          "duur_ms": 26,
+          "delen": {
+            "At.Dn": 25,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            6563,
+            6572,
+            6573
+          ]
+        },
+        {
+          "At_id": 6673,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 24,
+            "At.jn": 0,
+            "At.I": 0
+          },
+          "deel_ids": [
+            6674,
+            6683,
+            6684
+          ]
+        },
+        {
+          "At_id": 6784,
+          "duur_ms": 31,
+          "delen": {
+            "At.Dn": 30.000000000003638,
+            "At.jn": 0.0,
+            "At.I": 0.999999999996362
+          },
+          "deel_ids": [
+            6785,
+            6794,
+            6795
+          ]
+        },
+        {
+          "At_id": 6895,
+          "duur_ms": 24,
+          "delen": {
+            "At.Dn": 23,
+            "At.jn": 0,
+            "At.I": 1
+          },
+          "deel_ids": [
+            6896,
+            6905,
+            6906
+          ]
+        },
+        {
+          "At_id": 6925,
+          "duur_ms": 1.000000000003638,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            6926,
+            6935,
+            6936
+          ]
+        },
+        {
+          "At_id": 8586,
+          "duur_ms": 1.000000000003638,
+          "delen": {
+            "At.Dn": 0,
+            "At.jn": 0,
+            "At.I": 1.000000000003638
+          },
+          "deel_ids": [
+            8587,
+            8596,
+            8597
+          ]
+        }
+      ],
+      "grenzen": "Echte nativeAwait-spans bevatten elk één tekstcallback; nativeResume en Ft op sessie/tijdvolgorde. Eén main-klok, geen exclusieve CPU-meting. At-delen en callbacks genest, niet optellen. Meetoverhead niet afgetrokken; andere microtaken/React/GC niet oorzakelijk toegewezen. Twee vaste rijke Linux-ronden; geen prestatiewinst of fysieke paintmeting."
+    }
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "diagnose-een": {
+        "sha256": "1aac3fcf7e2e307fe3d8306558cf5f284bca99c2cbd43769a1c4fd12673fc9f3",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "b663acbe59488192f380c47af106e768dd74db63abb46db0ea26c5d6e7a49710",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "diagnose-twee": {
+        "sha256": "3fecc9ee937e3585ccbe19b8e39cd24a9b4f44e5103cf6f43a060dc2121fceb8",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "8e6eb29af545d8ea6dd2775075c47837f57936429aae8882e783565c3d90ce26",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "beelden": [
+      {
+        "referentie": "diagnose-een/invoer-redo.png",
+        "vergeleken": "diagnose-twee/invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "diagnose-een/snel-getypt-bewaard.png",
+        "vergeleken": "diagnose-twee/snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "referentie": "diagnose-een/nieuw-na-laat-antwoord.png",
+        "vergeleken": "diagnose-twee/nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "gehele_beelden_exact": 3,
+    "grenzen": "Alleen drie vaste screenshots per functieronde. Bbox/pixels zonder wegmaskeren; geen algemene visual-/glyph-/platformacceptatie."
+  },
+  "visueel_bekeken": [
+    "diagnose-een/snel-getypt-bewaard.png"
+  ],
+  "behoud": {
+    "vorige_elf36_exact": true,
+    "elfreferenties": 37,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets": [
+      "assets/editors-bODdYQ4o.js"
+    ],
+    "patchreplay_exact": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "vervolgbron": {
+    "asset_sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+    "routes": {
+      "Pt=u.useCallback": "Pt=u.useCallback(()=>n6(c,jt,h),[jt,h,c]),ct=u.useCallback(()=>{if(!c)return null;let ne=Pt();if(ne)return ne;let pe=h(d)?.paragraphs[0];if(!pe)return null;let Te={story:d,paraId:pe.paraId,offset:0};return c.setSelection(Te),{anchor:Te,head:Te}},[h,Pt,c,d]),Dn=u.useCallback(()=>{if(n)return null;let ne=Pt();if(!ne)return null;let pe=b(ne.anchor),Te=b(ne.head);return pe==null||Te==null?null:{anchor:pe,head:Te}},[n,b,Pt]),",
+      "Dn=u.useCallback": "Dn=u.useCallback(()=>{if(n)return null;let ne=Pt();if(!ne)return null;let pe=b(ne.anchor),Te=b(ne.head);return pe==null||Te==null?null:{anchor:pe,head:Te}},[n,b,Pt]),",
+      "n6": "function n6(e,t,n){if(!e)return null;const r=e.selection();if(!r||r.anchor.story!==r.head.story||!t(r.anchor.story)||!e.hasStory(r.anchor.story))return null;const o=a=>a?.some(s=>s.paraId===r.anchor.paraId)&&a.some(s=>s.paraId===r.head.paraId);return o(n(r.anchor.story)?.paragraphs)||o(e.paragraphSpans(r.anchor.story))?r:null}",
+      "locToDisplayPosition_bindings": [
+        "tifyFramePresented:St,failOpening:Rt,storyBlocks:mn,bodyBlocks:rn,inputPositionMap:jn,displayPositionToLoc:zn,locToDisplayPosition:tn,documentFromYrs:Vn,publishDirectInput:De,scheduleCompatibilityWarm:Dt,cancelCompatibilityWarm:Qt}}function sB(e,t,n,r,o){let a=u.useRef({session:null",
+        "y:d=\"body\",isSuggesting:f=!1,author:p=\"User\",inputPositionMap:h,displayPositionToLoc:m,resolveDisplayTarget:g,locToDisplayPosition:b,nextParagraphStyleId:v,displayListQueries:y,resolveDisplayListQueries:w,displayListFrameEpoch:x=null,residentCaret:j=null,residentCaretAuthoritative:",
+        "et n=t(e.anchor),r=t(e.head);return n==null||r==null?null:{anchor:n,head:r}}function sW({presence:e,session:t,locToDisplayPosition:n,overlayTarget:r,canvasHostRef:o,displayListQueries:a,displayListIdentity:s,displayListFrameEpoch:l,sidebarOpen:c,zoom:d}){let[f,p]=u.useState(e.peers",
+        "ession,story:pn,isSuggesting:He,author:be,inputPositionMap:En,displayPositionToLoc:Ft,resolveDisplayTarget:ee,locToDisplayPosition:se,nextParagraphStyleId:oe=>zt?.getNextStyleId(oe)??null,displayListQueries:pn===\"body\"?Ee:null,resolveDisplayListQueries:pn===\"body\"?St:void 0,displayL",
+        "rn,sidebarOpen:Z,zoom:k}),ke&&Dt&&Ee&&l?.presence&&r.session&&i.jsx(sW,{presence:l.presence,session:r.session,locToDisplayPosition:se,overlayTarget:ke,canvasHostRef:Cr,displayListQueries:Ee,displayListIdentity:Dt,displayListFrameEpoch:Qt,sidebarOpen:Z,zoom:k}),ke&&Ee&&!W&&i.jsx(kP,{"
+      ],
+      "native_input_map_hooks": "jn=u.useCallback((ke=\"body\")=>{let Fe=p.current,Ve=h.current;if(!S.current||!Fe||!Ve||!Fe.hasStory(ke))return null;let zt=j.current.get(ke);if(zt)return zt;let me=Ve.createYrsInputPositionMap(ke,Fe.paragraphSpans(ke));return j.current.set(ke,me),me},[]),zn=u.useCallback((ke,Fe=\"body\")=>{let Ve=h.current,zt=jn(Fe);return Ve&&zt?Ve.displayPositionToYrsLoc(zt,ke):null},[jn]),tn=u.useCallback(ke=>{let Fe=h.current,Ve=jn(ke.story);return Fe&&Ve?Fe.yrsLocToDisplayPosition(Ve,ke):null},[jn]),",
+      "root_projectie_binding": "se=u.useCallback(oe=>{let z=r.session;return z?rO(z,In.current,oe,pn,r.inputPositionMap):null},[pn,r.session,r.inputPositionMap]),Le=u.useCallback(oe=>{let z=In.current(\"body\")?.targetAt(oe);return z?r.displayPositionToLoc(z.displayPosition,z.story):r.displayPositionToLoc(oe,\"body\")},[r.displayPositionToLoc]),We=u.useCallback(oe=>In.current(\"body\")?.positionForLoc(oe)??(oe.story===\"body\"?se(oe):null),[se]),Xe=u.useRef(T),ze=u.useRef(M),lt=u.useRef(P),gt=u.useRef(E),Ht=u.useRef(I),_t=u.useRef(R),dt=u.useRef($);Xe.current=T,ze.current=M,lt.current=P,gt.current=E,Ht.current=I,_t.current=R,dt.current=$,u.useEffect(()=>{let oe=r.session;_t.current?.(oe?.canUndo()??!1,oe?.canRedo()??!1)},[r.session]);let[Nt,Zt]=u.useState(!1);u.useEffect(()=>{W&&Zt(!1)},[W]),u.useEffect(()=>{Nt||Vn?.()},[Nt,Vn]),u.useEffect(()=>{Vn?.()},[g,He,W,Vn]);let Ue=u.useRef(!1),on=u.useMemo(()=>new oO,[]),Bt=u.useCallback(()=>ct.current?.displaySelection()?.head??0,[]),{deferLayoutPass:qt,residentMeasurementConfig:cn,runLayoutPipelineRef:Vt}=LW({onError:ge,document:n,fontProvider:Ce,fontChainsProviderRef:Ze,textEngine:r.session}),un=u.useCallback(oe=>O?.(oe,r.session),[O,r.session]),{layout:Fn,layoutUpdateOrigin:Sr,runLayoutPipeline:Mr,scheduleLayout:Tn,cancelPendingScrollRestore:it,navigationEpoch:sr,getLayoutRequest:io,readLayoutRequest:wr}=TW({onError:ge,document:n,session:r.session,renderEnv:At,pageGap:C,zoom:k,deferLayoutPass:qt,residentMeasurementConfig:cn,displayListQueries:Ee,interactionPageHostRef:De,pagesContainerRef:jt,viewportLayoutRef:Pt,getSelectionHead:Bt,displayPositionToYrsLoc:Le,yrsLocTo",
+      "werkelijke_rO_export_fL": "function lY(e,t,n,r=\"body\",a){let o=a?a(n.story):e.hasStory(n.story)?yR(n.story,e.paragraphSpans(n.story)):null;if(!o)return null;let i=n.story===\"body\"||n.story.startsWith(\"body:\")?\"body\":r;return t(i)?.positionForLoc(n)??(n.story===i?Vw(o,n):null)}var u5=new WeakMap;"
+    },
+    "index_asset_sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c"
+  },
+  "interpretatie": "Twee rijke native functieronden zonder GUI/engine/consolefouten; 20.910/21.230 rijen, nul overflow en alle begin/eindspans gepaard. Binnen At.Dn 63/64 selectievalidaties; kaartopvraag 482/496 ms, scans 3/0 ms, selection en hasStory 0 ms bij deze resolutie. Pt totaal 485/496 ms. Ankeromzetting 1.029/1.068 ms, hoofdomzetting 2/3 ms. ParagraphSpans-terugval ontbreekt uitsluitend binnen de gemeten At.Dn-vensters; geen algemene fallbackclaim. Echte bronbinding toont se→rO/import fL→lY, met inputmap en In.current(i).positionForLoc; de eenvoudige Vw alleen is niet de hele eerste omzetting. Dit bewijst nog geen cachemiss, reconstructieaantal of kostenverdeling binnen die callee. Native callback→await-hervatting blijft 1.908/1.941 ms; oorzaak afzonderlijk open.",
+  "vervolg": "Hergebruik bestaande projectie-context-telling/herbouw- en afwijzingsgegevens. Splits de werkelijk gebonden lY in inputmap, In.current(i)-projectiecontext en positionForLoc. Bind inputmap-opbouw aan Fe.paragraphSpans tegenover createYrsInputPositionMap. Toon constructie/hergebruik en geldige bronversie/metadata/context aan voordat een nieuwe cache of compacte mapping wordt overwogen. Tweede b(head)-call en fallback zijn hier niet de grote kosten. Behoud bron/vector, context, tabellen/noten, voorstellen, selectie/caret, Undo en herstel; Database laatst.",
+  "niet_getoetst": "Geen gewone ABBA of snelheidswinst, volledige Reactmontage, volledige suites/CI, andere platforms/edities/releasevarianten/schema3/installers of volledige visuele/formaat/glyphdekking. Alleen huidige Linux app-release met writer-bronjournaal-feature, schema2 en vaste rijke bron. Twaalf contractgroepen omvatten onder meer acht Dn-routes en dertien n6-validatie/map/fallback/foutroutes met gecontroleerde afhankelijkheden. Bestaande recorderwrapper voegt een promise-continuatie toe; meetoverhead niet afgetrokken, klokresolutie begrenst nulmetingen. Geen oplossing van eerdere geheugenfouten verklaard.",
+  "archief": {
+    "bestand": "2026-11-27-writer-selectie-projectie-fasen.tar.gz",
+    "sha256": "613999df2ead454b541dd8bc90ea9e9f22fecd22257d723db3d060a606d30a66",
+    "leden": {
+      "actief.json": "aba8108f36532775e44eef148e8ce9ff2cadbef3b4221d16382d21f9f74621c1",
+      "analyse.json": "6bcf6193d0da78937832be6d20587dbd1c1e43f9e3918f09e764661d87f9b400",
+      "analyse.log": "880146fe1a317452f520c5d3f7f7e565d16eee42ad1ddce02ebb5134c78582d8",
+      "analyse.py": "76facda578954786f6e25934428176d09ca720cb9f84b3dd1ab1ffb9d398b930",
+      "behoud.json": "4cf42b6bf61312a8e8e2cfcc16e2b205cc6becb567e41967d39c534c7e95e0c3",
+      "behoud.py": "603baea50b0421db86b4ae7d3ff5a19ac60771668cf993f982564502cb160c4f",
+      "bouwen.py": "862ce718feaa1548204d2fa574617b57ed703328ab58318278effe9f20bfb860",
+      "bundel.json": "74d5cb7c54ecade6d6c24a2815998cb6b2975f27f225eb4e0d8947e4ff23fca7",
+      "bundel.py": "1b9952736cb8f71c983eeeaa77d630e9fb13003330c68464fbd8c8897ec4c7e3",
+      "bundelwijzigingen.json": "1e10ba52a3120388503cb8dd03000d8158906ba7cd2d6c71779f73781cc28c57",
+      "contract.json": "5f82e02f0d538f724db04563b62c6efdc0d9e497f48b38d3ac02cd89f881a99e",
+      "contract.mjs": "061c89271c6a95bca6d89e2847e6a467ebbf1c2775323fbf16d04edcce8f239c",
+      "desktop.json": "48bf265e32818c0cff759e89cf138882b50b5a95a242e84fa6dcfee3111869eb",
+      "desktop.log": "a7d2ad350a38964fd3f45b286a7c27e9810c6ecc4e51db8cd0bb0868eb6daf1f",
+      "diagnose-een.log": "3f4a75ad7370b2e742a063af3abe4799e75f784567f25d2702b02f425d18d2e4",
+      "diagnose-een/Ontwerpnotitie.docx": "1aac3fcf7e2e307fe3d8306558cf5f284bca99c2cbd43769a1c4fd12673fc9f3",
+      "diagnose-een/invoer-redo.png": "76923d417e6c3ea03c3b69e489753d72fcd6fda2b8eef8efd058f0724883173f",
+      "diagnose-een/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-een/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-een/rapport.json": "3c435773407a9218e9c49462bc0d4de005f6e04a9cce8ccaf9249cbaba39c969",
+      "diagnose-een/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose-twee.log": "ecf9a09a3fd8564f82f31eec0a491e02272fd60441230eaa9656b815d86a55c8",
+      "diagnose-twee/Ontwerpnotitie.docx": "3fecc9ee937e3585ccbe19b8e39cd24a9b4f44e5103cf6f43a060dc2121fceb8",
+      "diagnose-twee/invoer-redo.png": "76923d417e6c3ea03c3b69e489753d72fcd6fda2b8eef8efd058f0724883173f",
+      "diagnose-twee/nieuw-na-laat-antwoord.png": "12017204e92ce54a73c450258661e528c1a51f0f547de63c33c275864f50394d",
+      "diagnose-twee/programma.log": "76050053c4b02071888d4c96a42008c20783652c7d6b1762457f640578a0d413",
+      "diagnose-twee/rapport.json": "d49b94ee5bea7ff1246a7c116b8e95c28d1fbd8ff90fd0b521ea63e01ed0af95",
+      "diagnose-twee/snel-getypt-bewaard.png": "70517f257a3acf95d2189aaa41fa994c4febd64351939e3bc0e1f8789c477829",
+      "diagnose.py": "4cd470cb7cee7a9e294bf2b718c59b2d4c295c23945f0d7b80119b8e63d8197e",
+      "diagnoseronden.json": "f27d2b05336eff26c0c0061265c397f1a70df94c3353d7fb479a49709873bd6c",
+      "diagnoseronden.log": "b5889bc4a9dae71749ed9995f93bc073f21e982ab36f0ad3cbea41ab66cd35a0",
+      "documenten-beelden.json": "de8fd60559d55cc89812477f34816b82b16d83f9cf6636a2d1ae2fb9f8fbf5bc",
+      "documenten-beelden.py": "98cf72cc92b5c9c5dc0f61d5e4ceeb675a680aae13749ba6bd4f1ac8dc4fb1fc",
+      "gewijzigde-editors.js": "20a47599b16fb64362053a5beaa5ec6ad31cd9e08543be9d29d276e0cc1d3b68",
+      "meter.js": "7cccee39c4c3227ee3e354835b162271d9e4bd4ad5192f3ece2097e2f7c09c70",
+      "referenties-nacontrole.json": "5a32921dc67849156c327484c09ae92264c1e5717805a4f79c8a7f568c57d5b2",
+      "referenties-voor.json": "c5541999e76369eaa76f1f0238054a464221772c3b365e52d25dae6adeff90ff",
+      "ronden.py": "0cf5ff5c0dde0d82f5dd708dd6741efcccf1bc75798520b173ae9a612ac45d36",
+      "vastleggen.py": "4eb647b7e1ff853bec2d2bf7ed798a5c4e89e5884598e907e343ca6d9287b8b3",
+      "vervolgbron.json": "4658e61242ff32aeebb29852c198e22f59c61fd9bfb282efe03540179f03d14a"
+    },
+    "uitsluitingen": "ELF/dist lokaal behouden; gewijzigde editorsasset en exact replaybare wijzigingen ingesloten."
+  }
+}
