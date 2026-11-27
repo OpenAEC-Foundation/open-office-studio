@@ -1,0 +1,2221 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "2cb83bc612a884d34cba098832f54dc967f5c353",
+  "basis_hoofdbranch": "08cac45e",
+  "besluit": "Eerder afgewezen replicacache B met uitsluitend extra klokken op de huidige private ee89-bundel onderzocht. Twee native functieronden en componentpariteit groen. 61/59 mutaties geaccepteerd en geregistreerd; 60/59 Rust-fontqueries nemen de patchroute. Prepare/certificaat/registratie zijn in deze opnamen klein. Er verschijnen echter 17/16 sync-taken met 6.131/5.774 ms totale taakvensters. Geen productovername of nieuwe gewone snelheidsacceptatie.",
+  "variant": {
+    "basis_wasm_sha256": "7f7877f16757c93b41889b69468fd3589b07e3a6d64871b5899a510b2062b995",
+    "nieuwe_wasm": {
+      "sha256": "d96d6f12518a0b45e4f0de6b19ce9298c44d417f7eaf1d9c86871ecc1ddb1c5f",
+      "bytes": 24369836,
+      "interface_exact": true,
+      "doel": "Uitsluitend fasekosten van eerder afgewezen replicacache, geen productievariant"
+    },
+    "bouw_pogingen": {
+      "eerste": "Offline afgekeurd: arc-swap 1.9.2 ontbreekt in cache.",
+      "tweede": "Na fetch --locked --target wasm32-unknown-unknown nog offline afgekeurd op libc 0.2.186 als hostafhankelijkheid.",
+      "herstel": "Ook fetch --locked --target x86_64-unknown-linux-gnu uitgevoerd, daarna nieuwe offline bouw met dezelfde lockfile.",
+      "lockfile_sha256": "1f7cac695f7fbe22cf4f8b66224fd520b5395416569c8df5fc4aed4150d5879e",
+      "canonieke_bron_niet_gewijzigd": true,
+      "bronkopie": "Afzonderlijke kopie inclusief eigen gekopieerde target-wasm; canonieke bron en haar target-wasm ongewijzigd. Cargo-downloadcache aangevuld."
+    },
+    "desktop": {
+      "code": 0,
+      "reden": null,
+      "seconden": 154.14977617189288,
+      "minimum_vrije_bytes": 279566176256,
+      "start_vrije_bytes": 279779311616,
+      "opdracht": [
+        "/home/aia01/.cargo/bin/cargo",
+        "build",
+        "--manifest-path",
+        "src-tauri/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "--features",
+        "tauri/custom-protocol,writer-bronjournaal"
+      ],
+      "basis_head": "2cb83bc612a884d34cba098832f54dc967f5c353",
+      "bestaande_eigen_bouwcache": true,
+      "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+      "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fasekosten/open-office-studio-replica-fasekosten",
+      "programma_sha256": "a41c33a8176d5b4ae0ea4e3bde1741f5a22f028557136f137b570bf07977e5fa",
+      "standaarddist529_byte_mode_mtime_hersteld": true,
+      "referenties29_exact": true,
+      "bronpinnen15_exact": true
+    },
+    "wijziging": "Alleen klokpunten rond prepare, watch, apply, finish, record en proof-value plus begrensde getteruitlezing in twee bestaande JS-adapters. Geen mutatieguard, attribuut-/bron-/epoch-/preview-/media-/omgevingseis of lokale/replicahint veranderd.",
+    "bronpinnen_basis_b": {
+      "engine.rs": "b5839274b3f1ec8ea48eefcf28d819fd6a563d427cfba7f7c5c78cb1d7d88877",
+      "wasm.rs": "28f4e4b9911f1645dc5ae7c575bf868454e7976d53af332e543d7b47f776ff21",
+      "mutation_proof.rs": "ce5eb863024327dd9d4409b3ed89c5c55e8f32c43bc132865738d68c2d615602",
+      "lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    }
+  },
+  "bronlezing": {
+    "fragmenten": {
+      "prepare_record_cancel": "    pub(crate) fn prepare_remote_text_update(&self) -> Option<RemoteTextPreparation> {\n        if !self.local_lowering.get() || self.doc.holds_pending_update() {\n            return None;\n        }\n        let before = self.doc_epoch();\n        let (generation, env) = {\n            let render = self.render.borrow();\n            let lowered = render.stories.get(\"body\")?;\n            if lowered.doc_epoch != before || lowered.media != self.doc.media_sources()\n                || !lowered.local.matches_source(&self.doc) {\n                return None;\n            }\n            (lowered.generation, lowered.env.clone())\n        };\n        Some(RemoteTextPreparation {\n            before, doc_before: self.doc.committed_epoch(), generation, env,\n            length: self.doc.story_len(\"body\").ok()?,\n            measurement_patch: self.measurement_patch().take(),\n        })\n    }\n\n    #[cfg(feature = \"wasm\")]\n    pub(crate) fn cancel_remote_text_update(&self) {\n        self.typing_epoch.set(None);\n        self.typing_preserves_seeds.set(false);\n        if let Some(lowered) = self.render.borrow_mut().stories.get_mut(\"body\") {\n            lowered.local.edit = None;\n            lowered.preview_edit = None;\n            lowered.preview_paragraph_edits.clear();\n        }\n    }\n\n    #[cfg(feature = \"wasm\")]\n    pub(crate) fn record_remote_text_update(&self, prepared: Option<RemoteTextPreparation>,\n        proof: &crate::mutation_proof::Proof) -> bool {\n        let Some((prepared, candidate)) = prepared.zip(proof.insertion()) else {\n            self.cancel_remote_text_update();\n            return false;\n        };\n        let units = candidate.text.encode_utf16().count() as u32;\n        let valid = candidate.before_epoch == prepared.doc_before\n            && candidate.after_epoch == self.doc.committed_epoch()\n            && self.doc_epoch() == prepared.before.wrapping_add(1)\n            && prepared.length.checked_add(units) == self.doc.story_len(\"body\").ok()\n            && self.render.borrow().stories.get(\"body\").is_some_and(|lowered| {\n                lowered.doc_epoch == prepared.before && lowered.generation == prepared.generation\n                    && lowered.env == prepared.env && lowered.media == self.doc.media_sources()\n                    && lowered.local.matches_source(&self.doc)\n            });\n        if !valid {\n            self.cancel_remote_text_update();\n            return false;\n        }\n        let range = crate::StoryRange::new(\"body\", candidate.start, candidate.start);\n        let receipt = crate::Receipt {\n            new_para_ids: Vec::new(), revision_ids: Vec::new(),\n            range: Some(crate::LocRange {\n                start: crate::Loc::new(\"body\", &candidate.paragraph, candidate.offset),\n                end: crate::Loc::new(\"body\", &candidate.paragraph, candidate.offset + units),\n            }),\n        };\n        self.record_resident_text_edit(&range, Some(&candidate.text), true, prepared.before,\n            true, true, prepared.length, Some(candidate.attributes.clone()), false,\n            prepared.measurement_patch, &receipt);\n        self.typing_epoch.set(None);\n        self.typing_preserves_seeds.set(false);\n        self.render.borrow().stories.get(\"body\").is_some_and(|lowered| lowered.local.edit.is_some())\n    }\n\n",
+      "watch_before_index": "            before_index: doc.paragraph_index(\"body\").ok(),\n            pending_before: doc.holds_pending_update(),\n            subscription,\n            hook,\n        }\n    }\n\n    pub(crate) fn finish(self, doc: &EditingDoc) -> Proof {\n   ",
+      "watch_after_index": "        let (paragraph, offset) = (|| {\n            let start = observed.start?;\n            let before = before_index.as_ref()?.para_at(start)?;\n            let after_index = doc.paragraph_index(\"body\").ok()?;\n            let after = after_index.para_at(start)?;\n            if before.para_id != after.para_id\n                || before.start != after.start\n                || start < before.node_start\n                || before\n                    .pilcrow\n                    .checked_add(observed.text.as_ref()?.encode_utf16().count() as u32)\n                    != Some(after.pilcrow)\n            {\n                return None;\n            }\n            Some((Some(before.para_id.to_string()), Some(start - before.start)))\n        })()\n        .unwrap_or_else(|| {\n            observed.reasons.insert(\"paragraph_boundary\");\n            (None, None)\n        });\n        let candidate = observed.reasons.is_empty().then(|| Insertion {\n            before_epoch,\n            after_epoch,\n            "
+    },
+    "constatering": "prepare_remote_text_update bouwt zelf geen bodylowering: controleert bestaande residentie/media/bron, bewaart lengte/epoch/generatie/omgeving en neemt een meetpatch over. UpdateWatch leest vóór en na integratie een paragraafindex. Hoeveel dit werkelijk kost wordt afzonderlijk gemeten; geen kosten uit bronregels afgeleid.",
+    "variant": "Exacte eerder afgewezen replica-fontcache B; uitsluitend klokpunten en profieluitlezing toegevoegd, geen guard of hint veranderd."
+  },
+  "corpus": {
+    "geslaagd": true,
+    "gevallen": 30,
+    "updates": 43,
+    "getimede_geslaagde_updates": 42,
+    "fases_ms_som": {
+      "prepare": 0.5764799999999468,
+      "watch": 77.58112900000879,
+      "apply": 188.76593099998513,
+      "finish": 11.600394000004599,
+      "record": 0.9538619999941602,
+      "proof_value": 1.2556289999906767
+    },
+    "pariteit": "Vaste updatebytes, verwachte inference/errors, staat/vector/body, marges/metadata, fontvereisten en volledige blokken in beide modules tegen hetzelfde bestaande corpus getoetst. Accepted/cache_recorded gelijk.",
+    "grens": "Componentproef in Node, geen native tijdvergelijking of volledige opmaak-/visuele dekking."
+  },
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "a41c33a8176d5b4ae0ea4e3bde1741f5a22f028557136f137b570bf07977e5fa",
+      "rapport_sha256": "a1c06d767143434f97fe965608e2a86b86dfe0ba24c8da7e49dcf8db99262f9d",
+      "worker_disable": {
+        "result": {},
+        "id": 177
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "schema": 2,
+      "programma_sha256": "a41c33a8176d5b4ae0ea4e3bde1741f5a22f028557136f137b570bf07977e5fa",
+      "rapport_sha256": "924ba0e895f24858eee896e31193637c55cdd224eee4dfc5f1de05f8d4b020e7",
+      "worker_disable": {
+        "result": {},
+        "id": 175
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    }
+  },
+  "analyse": {
+    "native": {
+      "taken_ms_som": {
+        "applyUpdate": 645.0000000000018,
+        "fontRequirements": 1124.9999999999927,
+        "sync": 6131.000000000002,
+        "save": 2829,
+        "buildPages": 84.00000000000364
+      },
+      "taakaantallen": {
+        "applyUpdate": 62,
+        "fontRequirements": 61,
+        "sync": 17,
+        "save": 1,
+        "buildPages": 1
+      },
+      "updates": 62,
+      "accepted": 61,
+      "cache_recorded": 61,
+      "redenen": {
+        "commit_boundary": 1,
+        "not_one_insertion": 1,
+        "not_one_root": 1,
+        "paragraph_boundary": 1
+      },
+      "fases_ms_som": {
+        "prepare": 0.0,
+        "watch": 11.999999999998181,
+        "apply": 575.0,
+        "finish": 11.000000000001819,
+        "record": 3.0,
+        "proof_value": 3.0
+      },
+      "hele_update_taken_ms_som": 645.0000000000018,
+      "fontaantal": 61,
+      "font_routes": {
+        "route_overige_patch": 60,
+        "route_volledig_loweren": 1
+      },
+      "font_rust_ms_som": 1094.9999999999982,
+      "font_resident_ms_som": 109.00000000000182,
+      "ruwe_updates": [
+        {
+          "id": 12,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 10,
+            "apply": 20,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 1
+          },
+          "hele_taak_ms": 34
+        },
+        {
+          "id": 15,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 17,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 1
+          },
+          "hele_taak_ms": 18
+        },
+        {
+          "id": 17,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 15,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 16
+        },
+        {
+          "id": 19,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 14,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 15
+        },
+        {
+          "id": 22,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 16,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 29
+        },
+        {
+          "id": 24,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 14
+        },
+        {
+          "id": 26,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 11
+        },
+        {
+          "id": 28,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 31,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 33,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 35,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 9.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.999999999998181
+        },
+        {
+          "id": 37,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 40,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 14
+        },
+        {
+          "id": 42,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 17.00000000000182,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 18.00000000000182
+        },
+        {
+          "id": 44,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 46,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 49,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 51,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 53,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 55,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 58,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 1,
+            "apply": 8.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 9.000000000001819
+        },
+        {
+          "id": 60,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 8.999999999998181,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.999999999998181
+        },
+        {
+          "id": 62,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 64,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 11.000000000001819
+        },
+        {
+          "id": 67,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 69,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 71,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 73,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 76,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13
+        },
+        {
+          "id": 78,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 8.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8.999999999998181
+        },
+        {
+          "id": 80,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 83,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 11.999999999998181,
+            "finish": 1.000000000001819,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 13.0
+        },
+        {
+          "id": 85,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 5.999999999998181,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 6.999999999998181
+        },
+        {
+          "id": 87,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 89,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 6,
+            "finish": 1.000000000001819,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 8.000000000001819
+        },
+        {
+          "id": 92,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.999999999998181,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8.999999999998181
+        },
+        {
+          "id": 94,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 96,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.000000000001819,
+            "finish": 0.999999999998181,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 98,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 1
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 101,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 103,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 7.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.0
+        },
+        {
+          "id": 105,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 9.000000000001819,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.000000000001819
+        },
+        {
+          "id": 107,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.999999999998181,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 7.999999999998181
+        },
+        {
+          "id": 110,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 11
+        },
+        {
+          "id": 112,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 114,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 116,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 119,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 121,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 6,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 123,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 126,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 128,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 130,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 132,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 135,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 137,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13
+        },
+        {
+          "id": 140,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 142,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 143,
+          "accepted": false,
+          "cache_recorded": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 0,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 1
+        },
+        {
+          "id": 146,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 148,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 150,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8.000000000003638,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 8.000000000003638
+        }
+      ],
+      "grens": "Geïnstrumenteerde verstreken tijd op eerder afgewezen variant; geen nieuwe snelheidsacceptatie. Finish omvat het observercertificaat en indexlezingen, geen losse subfasen daarvan."
+    },
+    "herhaling": {
+      "taken_ms_som": {
+        "applyUpdate": 585.0000000000164,
+        "fontRequirements": 1084.9999999999854,
+        "sync": 5774.0,
+        "save": 2731.9999999999964,
+        "buildPages": 78.99999999999636
+      },
+      "taakaantallen": {
+        "applyUpdate": 60,
+        "fontRequirements": 59,
+        "sync": 16,
+        "save": 1,
+        "buildPages": 1
+      },
+      "updates": 60,
+      "accepted": 59,
+      "cache_recorded": 59,
+      "redenen": {
+        "commit_boundary": 1,
+        "not_one_insertion": 1,
+        "not_one_root": 1,
+        "paragraph_boundary": 1
+      },
+      "fases_ms_som": {
+        "prepare": 2.0,
+        "watch": 9.999999999998181,
+        "apply": 530.0000000000164,
+        "finish": 17.00000000000182,
+        "record": 4.0,
+        "proof_value": 2.0
+      },
+      "hele_update_taken_ms_som": 585.0000000000164,
+      "fontaantal": 59,
+      "font_routes": {
+        "route_overige_patch": 59
+      },
+      "font_rust_ms_som": 1058.9999999999873,
+      "font_resident_ms_som": 12.999999999996362,
+      "ruwe_updates": [
+        {
+          "id": 12,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 8,
+            "apply": 16,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 26
+        },
+        {
+          "id": 15,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.999999999998181,
+            "apply": 11,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12.999999999998181
+        },
+        {
+          "id": 17,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 19,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13
+        },
+        {
+          "id": 22,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 13.000000000001819,
+            "finish": 0.999999999998181,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 14
+        },
+        {
+          "id": 24,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 12,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13
+        },
+        {
+          "id": 26,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 11.999999999998181,
+            "finish": 1.000000000001819,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 13.0
+        },
+        {
+          "id": 28,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10.000000000001819,
+            "finish": 0.999999999998181,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 11
+        },
+        {
+          "id": 30,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.999999999998181,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10.999999999998181
+        },
+        {
+          "id": 33,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 35,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 37,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 6.999999999998181,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7.999999999998181
+        },
+        {
+          "id": 39,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 42,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 14,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 18
+        },
+        {
+          "id": 44,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 1.000000000001819,
+            "watch": 0.0,
+            "apply": 11.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13
+        },
+        {
+          "id": 46,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 11
+        },
+        {
+          "id": 48,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 11.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 51,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 1,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 53,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9.000000000001819,
+            "finish": 0.999999999998181,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 55,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 7.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7.999999999998181
+        },
+        {
+          "id": 57,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 7.000000000001819
+        },
+        {
+          "id": 60,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 9.000000000001819
+        },
+        {
+          "id": 62,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0.0,
+            "watch": 0.0,
+            "apply": 8.999999999998181,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8.999999999998181
+        },
+        {
+          "id": 64,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 7.000000000001819
+        },
+        {
+          "id": 66,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 6,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 6
+        },
+        {
+          "id": 69,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 1.000000000001819,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 10.000000000001819
+        },
+        {
+          "id": 71,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.999999999998181
+        },
+        {
+          "id": 73,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 76,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 78,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 80,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 9.000000000001819
+        },
+        {
+          "id": 82,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 85,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 13.000000000001819
+        },
+        {
+          "id": 87,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 89,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.000000000001819,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.999999999998181
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 91,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 6,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 94,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 1.000000000001819
+          },
+          "hele_taak_ms": 8.000000000001819
+        },
+        {
+          "id": 96,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 98,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 6,
+            "finish": 1.000000000001819,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 7.000000000001819
+        },
+        {
+          "id": 100,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 103,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 12
+        },
+        {
+          "id": 105,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 107,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9.000000000001819
+        },
+        {
+          "id": 109,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 112,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 114,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 116,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 118,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9.000000000001819,
+            "finish": 0.999999999998181,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 121,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7.000000000003638,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 7.000000000003638
+        },
+        {
+          "id": 123,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 10,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 10
+        },
+        {
+          "id": 125,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 1,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 127,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 130,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 7,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 7
+        },
+        {
+          "id": 132,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 1.000000000003638,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 9.000000000003638
+        },
+        {
+          "id": 134,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 9,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 137,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 14,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 14
+        },
+        {
+          "id": 139,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 8
+        },
+        {
+          "id": 141,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8.000000000003638,
+            "finish": 0.0,
+            "record": 0.0,
+            "proof_value": 0.0
+          },
+          "hele_taak_ms": 8.000000000003638
+        },
+        {
+          "id": 143,
+          "accepted": true,
+          "cache_recorded": true,
+          "redenen": [],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 8,
+            "finish": 1,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 9
+        },
+        {
+          "id": 145,
+          "accepted": false,
+          "cache_recorded": false,
+          "redenen": [
+            "commit_boundary",
+            "not_one_insertion",
+            "not_one_root",
+            "paragraph_boundary"
+          ],
+          "fases_ms": {
+            "prepare": 0,
+            "watch": 0,
+            "apply": 0,
+            "finish": 0,
+            "record": 0,
+            "proof_value": 0
+          },
+          "hele_taak_ms": 0
+        }
+      ],
+      "grens": "Geïnstrumenteerde verstreken tijd op eerder afgewezen variant; geen nieuwe snelheidsacceptatie. Finish omvat het observercertificaat en indexlezingen, geen losse subfasen daarvan."
+    }
+  },
+  "eerdere_referentie": {
+    "basis": {
+      "native": {
+        "taakstarts": {
+          "applyUpdate": 62,
+          "fontRequirements": 62,
+          "sync": 1,
+          "save": 1
+        },
+        "afgesloten_taken_ms_som": {
+          "applyUpdate": 506.0000000000091,
+          "fontRequirements": 5907.0,
+          "sync": 335
+        },
+        "open_bij_loggerstop": [
+          {
+            "id": 137,
+            "type": "save",
+            "begin": 18274
+          }
+        ],
+        "script_sha256": "ba6becdd77dec9914d520106f57293e7d8dfb6d442ec98ded668ef21c6648888",
+        "bronrapport_sha256": "6d0c971fbd29bba5f8639caca926062abe1e32ef5c1bc657083f7e0724be8237"
+      },
+      "herhaling": {
+        "taakstarts": {
+          "applyUpdate": 57,
+          "fontRequirements": 57,
+          "sync": 1,
+          "buildPages": 1,
+          "save": 1
+        },
+        "afgesloten_taken_ms_som": {
+          "applyUpdate": 491.00000000000364,
+          "fontRequirements": 5666.999999999985,
+          "sync": 337,
+          "buildPages": 67
+        },
+        "open_bij_loggerstop": [
+          {
+            "id": 128,
+            "type": "save",
+            "begin": 17856
+          }
+        ],
+        "script_sha256": "ba6becdd77dec9914d520106f57293e7d8dfb6d442ec98ded668ef21c6648888",
+        "bronrapport_sha256": "8e859bd82a17951a1de4670454fa66fe94908fcc9a61358760675917a9af833d"
+      }
+    },
+    "eerste_analyse_afgekeurd": "Een onbegrensde totalisatie trof een taak zonder einde vóór loggerstop. Geen eindtijd of nulwaarde ingevuld; open taak nu expliciet apart en som alleen afgesloten vensters.",
+    "grens": "Eerdere twee diagnostische referentieronden met exact hetzelfde harnas en invoer, geen nieuwe afwisselende gewone ABBA. Verschillende Wasm en aanvullende meetuitlezing bij de variant; geen causaal bewijs of snelheidsacceptatie. Taken kunnen asynchroon wachten en overlappen; sommen niet als CPU-tijd of onafhankelijke invoervertraging optellen."
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "4eb0043d1dd3c8441f284135f4f2710b98413054c1931a033706d946f1b4e970",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "2b355c6b2e75fadf984709f4372f2e3551feacdfb7081de31fe32f79f22b9774",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "herhaling": {
+        "sha256": "cd7d8526d8ed9a86340aa726ea6162e9a21109031fa5c49c023defc1ec61eb06",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "32beaad3591f6fd155c7b86d450dd238022b0eaf199468006151623066f5e099",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 28,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "herhaling/snel-getypt-bewaard.png",
+    "waarneming": "Eigen bron, tabelrijen en lange invoer zichtbaar. Drie beeldparen 28/30/0 pixels verschil; geen volledige visuele/formaatacceptatie."
+  },
+  "behoud": {
+    "oude_referenties29_exact": true,
+    "aanwezige_referenties": 30,
+    "nieuwe_elf_sha256": "a41c33a8176d5b4ae0ea4e3bde1741f5a22f028557136f137b570bf07977e5fa",
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets_tegen_font_native_kernroute": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+      "assets/docx_edit_bg-ONvZFP_n.wasm"
+    ],
+    "python_ast_groen": true,
+    "alleen_app_crate_herbouwd": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "controles": [
+    "30 vaste corpusgevallen, 43 updates, waarvan 42 geslaagde updates met faseklokken. Eén opzettelijk corrupte update houdt de bestaande fout; geen succesklokken ingevuld. Alle verwachte staat/vector/body, inference/errors, marges/metadata, font- en blokuitvoer gelijk. Accepted/cache_recorded tussen oude B en klok-B gelijk.",
+    "Alle 62/60 native applyUpdate-taken uniek aan een profiel gekoppeld; faseklokken monotoon binnen de passende taak. Beide ronden één afgewezen registratie met nul commits/invoegingen en ongewijzigde epoch; geen guard versoepeld.",
+    "Private Rust-kopie met eigen gekopieerde target-wasm; oorspronkelijke canonieke bron en target niet bewerkt. Na ontbrekende Cargo-downloads via locked fetch voor Wasm én host opnieuw offline gebouwd. Nieuwe Wasm behoudt dezelfde gesorteerde import-/exportnamen en soorten, geen volledige ABI-typesgarantie.",
+    "Python AST, Node --check op geïnstrumenteerde Workerasset, volledige eigen native invoer/UndoRedo/selectie/bewaren/verwerpen/nieuw document na laat antwoord groen. Geen algemene profiler of hoofdthread-Debugger.",
+    "Twee DOCX-bestanden onafhankelijk SHA/ZIP/CRC/paden/XML, beide 128 tabellen/91.423 UTF16; alleen core.xml verschillend. Beelden 28/30/0 pixels verschil, één bewaarbeeld bekeken.",
+    "29 eerdere aanwezige ELF’s, 15 bronpinnen en 529 standaardbestanden byte/mode/mtime exact; nieuwe meet-ELF als 30e referentie. Productbron ongewijzigd."
+  ],
+  "grenzen": [
+    "Alleen Linux x86_64 release2026.45.52, writer-bronjournaal, schema2; eigen X11/DBus/XDG-profielen en eigen fixture. Geen volledige suites/CI, Windows/macOS/andere edities/schema’s/releases of installeracceptatie.",
+    "Geïnstrumenteerde verstreken tijd, geen CPU-cycli. Nul afgeronde native preparevensters bewijzen geen kosteloze uitvoering. Apply omvat Yrs-integratie plus inference en callbacks; finish omvat ook indexlezingen, zonder verdere onderverdeling.",
+    "Native prepare sommeert 0/2 ms, watch 12/10 ms, finish 11/17 ms, record 3/4 ms; dit ondersteunt geen hypothese van opnieuw volledige bodylowering vóór iedere update. Andere documenten/mutaties niet volledig gedekt.",
+    "Rust-fontqueries: eerste ronde 60 patch/1 miss, herhaling 59 patch/0 miss. Font-Rustvensters samen 1.095/1.059 ms; bodyvoorbereiding 109/13 ms. Registratie is niet hetzelfde als een uitgevoerde patch; routes afzonderlijk geteld.",
+    "Sync-vensters omvatten de hele asynchrone taak en kunnen wachten/overlappen; niet als CPU-tijd of onafhankelijke extra invoervertraging optellen. Savevensters van 2.829/2.732 ms evenmin aan een specifieke hoogste bewaaraanvrager toegeschreven. Automatisch herstel intact.",
+    "Eerdere diagnostische referentie had per ronde één sync (335/337 ms), maar daar stond de save nog open bij loggerstop. Eerste totalisatie afgekeurd op ontbrekend taakeinde; open save nu expliciet apart, geen tijd of nul geïmputeerd.",
+    "De eerdere referentieronden en deze variant zijn geen afwisselende gewone A/B/B/A. Hetzelfde harnas en invoer bewijzen geen identieke scheduling, belasting of causaliteit. Meer sync-taken naast snelle fontpatches zijn een onderzoekssignaal; geen bewezen oorzaak of netto snelheidswinst.",
+    "Eerdere gewone native afwijzing van replicacache B blijft geldig. Geen productfix, issuevoltooiing, volledige visuele/formaatdekking of algemene stabiliteitsacceptatie. Database laatst."
+  ],
+  "vervolg": "Volg de 17/16 daadwerkelijke sync-aanvragen en hun bron-/layoutversies naar het huidige client-/Workercontract. Onderscheid bronmutatie/ack, renderInputs-voorbereiding, layout en publiceren, met hergebruik van bestaande request-/warmroutekennis. Onderzoek uitsluitend het veilig samenvoegen van aantoonbaar achterhaalde renderverzoeken; behoud alle updates, stateVectors, selectie, font/env/previewgeneraties, antwoorden en bewaren. Geen volledige sync of herstel overslaan, geen nieuwe blinde warm-/cache-/wachtrijvariant. Pas daarna afzonderlijke kandidaat en gewone korte/rijke ABBA plus functie/DOCX/beelden.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-13-writer-replicacache.json",
+      "sha256": "0e4fb7111f342fe4175fa1f6f7cff7f4a5d09378d840bc84cfe3044d563736f2"
+    },
+    {
+      "pad": "docs/tests/2026-11-27-writer-native-fontkern.json",
+      "sha256": "c58ef746d1443dd5f38d6f9e9eb25f609ed3396efd249efbffd1dd824382fac3"
+    }
+  ],
+  "archief": {
+    "pad": "2026-11-27-writer-replica-fasekosten.tar.gz",
+    "sha256": "ed41d8eb1ea3692bc804862b2721241c93830f86446ef1e06be4b372d0c1844e",
+    "bytes": 1968700,
+    "leden": 61,
+    "alle_bewijshashes_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/hele bronboom/target/dist; wel historische vier bronbestanden gecomprimeerd, nieuwe wrapper/diff, scripts, metadata, ruwe ronden en afkeuringen, DOCX en PNG."
+  }
+}
