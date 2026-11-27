@@ -1,0 +1,2366 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "50f7336d",
+  "basis_hoofdbranch": "f5ddf5c2",
+  "besluit": "Echte Chromium-Worker voert ongewijzigde geïnstalleerde SDK-Worker uit met expliciet aangeboden geaccepteerde Wasm. Twee volledige paren groen: fontaanvragen 13 tegenover2 bij twaalf updates; laatste fontresultaat gelijk. Vier DOCX-bestanden behouden tekst/tabellen. Herhaling toetst alle24nietlege herstelupdates byte-exact op bijbehorende bronstaat. Geen native snelheidsacceptatie.",
+  "eerste_paar": {
+    "geslaagd": true,
+    "baseline": {
+      "geslaagd": true,
+      "limited": false,
+      "fontCount": 13,
+      "publishedSha256": "8b54d6eead70c48ab5e03d24a3ea54a55853b80d7590ea4484a28470ad45cae2",
+      "checks": [
+        {
+          "command": {
+            "method": "edit",
+            "text": " eigen"
+          },
+          "expected": {
+            "paragraphs": "63a30cf8812e839524a9cd109cda9cc2851fe266f47c492d7889389a4de82118",
+            "stories": "bfe5fd06b09c71d63dee41ca5f4e0160233c0dbdf845cfbb8ad107d1dccc0cfa",
+            "vector": "ad091f4c523f65d3fb8e1750b500b24464ddc293bd56b6ba8d3219d9e591b5ad",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " Ω"
+          },
+          "expected": {
+            "paragraphs": "bbfa30bfb5e268345c2768b85c85531141504772f0789e6e6cf8041a143bd771",
+            "stories": "265c89328992dbe8ca08a58a77ce2c8d6ac09b6c3bac3061bd9dd228422e8f12",
+            "vector": "271834e4b9cc093d6f375e814739fbbc8037fe7b9349156057ee1c7d687ef45d",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " العربية"
+          },
+          "expected": {
+            "paragraphs": "f75de6dee48475b81e63e17d1870758da54be66fe258d7d0172d24944cb3d68b",
+            "stories": "4bf05bb53be7e25e1097e4b6ec853d3e4867a39923ef3c7310ec68c24744220e",
+            "vector": "efac0dfde65321565175293aeb30d3e6f733698dc54773e6c0393fc982155030",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 漢字"
+          },
+          "expected": {
+            "paragraphs": "b6e6477b6843ee2340b218e5f285cba5967ff20a98cdb5dc6fcc87821de13640",
+            "stories": "9178e35e0d5e14a799ef5098dd51d0fc3a3c8aa02a531ade5768dc5aea9ba8b4",
+            "vector": "ce1f82c7b70d46494033300ee9a6c18258ac08a2bf57766a495a86dc8cffad4b",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 🙂"
+          },
+          "expected": {
+            "paragraphs": "830ab6b2d82b55a9441101df272b6385a485e4239971d4d06bee5464e5d0b33c",
+            "stories": "3cae581a216d167cdd1b641ec3cd85d8b3c8620442fafbfee3ec069ec5e5f18a",
+            "vector": "2ec0269e5b190f5dec6c29aa4f5e5289dfb668b012b1c2d18b26744a60c208e5",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " á"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "4b082448c38ad9be74e54a2a76a48c3ee45d8b17a91291341ba52ecc2a5324ff",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " einde"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "c4b90d3c57fe37608fd34344e31e61962a08007d311d87f831a69a984536c054",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "c4b90d3c57fe37608fd34344e31e61962a08007d311d87f831a69a984536c054",
+            "pending": false
+          },
+          "repairBytes": 2299
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "707c49900dd5a177efea7cc534dbe51bb2e660be53153303d2c9300b665c7b38",
+            "pending": false
+          },
+          "repairBytes": 2299
+        },
+        {
+          "command": {
+            "method": "split"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "26fb727c32af64f7bc610d090c8bb1ebe3ebe44315d416eaf78f1de3d8176ea5",
+            "pending": false
+          },
+          "repairBytes": 2303
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "148bdf810c15f32f1aad1eec651a6e40649d8180c71fa8409de24abaf37e9dcc",
+            "pending": false
+          },
+          "repairBytes": 2307
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "beae84d209f5a5a332005adc8e4b8b5a0b9d7cefdd3bad03c0590f44ed19d3f4",
+            "pending": false
+          },
+          "repairBytes": 2307
+        }
+      ],
+      "beforeSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "beae84d209f5a5a332005adc8e4b8b5a0b9d7cefdd3bad03c0590f44ed19d3f4",
+        "pending": false
+      },
+      "afterSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "258e42082971c739565c700832e2b829bc3ea1771b739ebe6335f333aff6a9d7",
+        "pending": false
+      },
+      "savedSha256": "91c12f60a0eb6ca1935c72a0155040cab446d67d393aa62d55870eb48011e706",
+      "events": [
+        {
+          "type": "warm",
+          "ok": true,
+          "id": 1
+        },
+        {
+          "type": "open",
+          "ok": true,
+          "id": 2
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 3
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 4
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 5
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 6
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 7
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 8
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 9
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 10
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 11
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 12
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 13
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 14
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 15
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 16
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 17
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 18
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 19
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 20
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 21
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 22
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 23
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 24
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 25
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 26
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 27
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 28
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 29
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 30
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 31
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 32
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 33
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 34
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 35
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 36
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 37
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 38
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 39
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 40
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 41
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 42
+        },
+        {
+          "type": "save",
+          "ok": true,
+          "id": 43
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 44
+        }
+      ],
+      "errors": [],
+      "peerMetadataBytes": 762603,
+      "peerMetadataReason": null
+    },
+    "kandidaat": {
+      "geslaagd": true,
+      "limited": true,
+      "fontCount": 2,
+      "publishedSha256": "8b54d6eead70c48ab5e03d24a3ea54a55853b80d7590ea4484a28470ad45cae2",
+      "checks": [
+        {
+          "command": {
+            "method": "edit",
+            "text": " eigen"
+          },
+          "expected": {
+            "paragraphs": "63a30cf8812e839524a9cd109cda9cc2851fe266f47c492d7889389a4de82118",
+            "stories": "bfe5fd06b09c71d63dee41ca5f4e0160233c0dbdf845cfbb8ad107d1dccc0cfa",
+            "vector": "853e18d04e91fa38bdd998d2bd78e69761da3392aceec289931dd584022e521b",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " Ω"
+          },
+          "expected": {
+            "paragraphs": "bbfa30bfb5e268345c2768b85c85531141504772f0789e6e6cf8041a143bd771",
+            "stories": "265c89328992dbe8ca08a58a77ce2c8d6ac09b6c3bac3061bd9dd228422e8f12",
+            "vector": "b47347c721552145521b432a3b903296c67149af888a0321efc87ae6165732e2",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " العربية"
+          },
+          "expected": {
+            "paragraphs": "f75de6dee48475b81e63e17d1870758da54be66fe258d7d0172d24944cb3d68b",
+            "stories": "4bf05bb53be7e25e1097e4b6ec853d3e4867a39923ef3c7310ec68c24744220e",
+            "vector": "45aea37edbc999da3216ca611e07fb6f3a76007ef8abe5f51980e769a89cf11f",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 漢字"
+          },
+          "expected": {
+            "paragraphs": "b6e6477b6843ee2340b218e5f285cba5967ff20a98cdb5dc6fcc87821de13640",
+            "stories": "9178e35e0d5e14a799ef5098dd51d0fc3a3c8aa02a531ade5768dc5aea9ba8b4",
+            "vector": "76c7f4e9b39dd074620fb243625eac74dfcfda8990f9bd0aa0812212446ec87a",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 🙂"
+          },
+          "expected": {
+            "paragraphs": "830ab6b2d82b55a9441101df272b6385a485e4239971d4d06bee5464e5d0b33c",
+            "stories": "3cae581a216d167cdd1b641ec3cd85d8b3c8620442fafbfee3ec069ec5e5f18a",
+            "vector": "ad217f977f3fcdac54fac54557f7c10c06c4fad6755907b4c93bc90c0f5ff53b",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " á"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "1231cda80eccdb12fe5baddf51a237b4f0d9ae542dc5d4f4d3e746334dc351e0",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " einde"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "c1fcf6ac3d62525aa9e7f6e09d7c77ab3eb3ce584f43ee2a68295043a1deafd6",
+            "pending": false
+          },
+          "repairBytes": 2294
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "c1fcf6ac3d62525aa9e7f6e09d7c77ab3eb3ce584f43ee2a68295043a1deafd6",
+            "pending": false
+          },
+          "repairBytes": 2299
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "b0c34341322be8c75cef1bcbecc4c5f9eb73e65183895a76a3534c1fff9be3e8",
+            "pending": false
+          },
+          "repairBytes": 2299
+        },
+        {
+          "command": {
+            "method": "split"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "ae462262970a294f242ce4ccb1496d958157140f6932a84a94baf9fb11a3a9ca",
+            "pending": false
+          },
+          "repairBytes": 2303
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "208c8625114f156e7465ec301c951063497b5c75059ef628bcafa99a84a72ff8",
+            "pending": false
+          },
+          "repairBytes": 2307
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "99438e94f080423dc02fcd1f07642f14095462cfa41e9fc1e4a0786e122fb66e",
+            "pending": false
+          },
+          "repairBytes": 2307
+        }
+      ],
+      "beforeSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "99438e94f080423dc02fcd1f07642f14095462cfa41e9fc1e4a0786e122fb66e",
+        "pending": false
+      },
+      "afterSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "c673a250f601844e19432bf49ff5b4e5615b90863055c62d4b30f0ddaf9f25a8",
+        "pending": false
+      },
+      "savedSha256": "d9bdf3fc7634a8c8a91e0c0147f52adaf475a320e5d3738e55d6064b7f6628ba",
+      "events": [
+        {
+          "type": "warm",
+          "ok": true,
+          "id": 1
+        },
+        {
+          "type": "open",
+          "ok": true,
+          "id": 2
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 3
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 4
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 5
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 6
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 7
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 8
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 9
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 10
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 11
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 12
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 13
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 14
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 15
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 16
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 17
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 18
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 19
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 20
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 21
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 22
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 23
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 24
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 25
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 26
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 27
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 28
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 29
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 30
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 31
+        },
+        {
+          "type": "save",
+          "ok": true,
+          "id": 32
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 33
+        }
+      ],
+      "errors": [],
+      "peerMetadataBytes": 762603,
+      "peerMetadataReason": null
+    },
+    "browser": "151.0.7922.34",
+    "errors": []
+  },
+  "herhaling": {
+    "geslaagd": true,
+    "baseline": {
+      "geslaagd": true,
+      "limited": false,
+      "fontCount": 13,
+      "publishedSha256": "8b54d6eead70c48ab5e03d24a3ea54a55853b80d7590ea4484a28470ad45cae2",
+      "checks": [
+        {
+          "command": {
+            "method": "edit",
+            "text": " eigen"
+          },
+          "expected": {
+            "paragraphs": "63a30cf8812e839524a9cd109cda9cc2851fe266f47c492d7889389a4de82118",
+            "stories": "bfe5fd06b09c71d63dee41ca5f4e0160233c0dbdf845cfbb8ad107d1dccc0cfa",
+            "vector": "6256c37c6ae8e0ff461467ac68b1e5f68cc6a6cb0e5c3cd34d446c804c629590",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " Ω"
+          },
+          "expected": {
+            "paragraphs": "bbfa30bfb5e268345c2768b85c85531141504772f0789e6e6cf8041a143bd771",
+            "stories": "265c89328992dbe8ca08a58a77ce2c8d6ac09b6c3bac3061bd9dd228422e8f12",
+            "vector": "3baefeb6a3b126ab09da690d33841292351d6723d6c3337d6223fd465a76ede5",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " العربية"
+          },
+          "expected": {
+            "paragraphs": "f75de6dee48475b81e63e17d1870758da54be66fe258d7d0172d24944cb3d68b",
+            "stories": "4bf05bb53be7e25e1097e4b6ec853d3e4867a39923ef3c7310ec68c24744220e",
+            "vector": "888d784f74ca6bf674ab1a0c0a693f26fedb885ce8e55fe90837928fece9fb9d",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 漢字"
+          },
+          "expected": {
+            "paragraphs": "b6e6477b6843ee2340b218e5f285cba5967ff20a98cdb5dc6fcc87821de13640",
+            "stories": "9178e35e0d5e14a799ef5098dd51d0fc3a3c8aa02a531ade5768dc5aea9ba8b4",
+            "vector": "d524e8fdb2314cfaf288c7acf5b19859a05272f8b14e77060ee8eed4cc68132c",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 🙂"
+          },
+          "expected": {
+            "paragraphs": "830ab6b2d82b55a9441101df272b6385a485e4239971d4d06bee5464e5d0b33c",
+            "stories": "3cae581a216d167cdd1b641ec3cd85d8b3c8620442fafbfee3ec069ec5e5f18a",
+            "vector": "8883983c6206eb4488b025963ff085f52470fe69e37ed1e4b5541a69d95c2c17",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " á"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "c5614281861ec13d7d88163413e47167eaf32c333e320a6990a744de3ef29153",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " einde"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "6d8101773055c2c2de9b0c0b95370921dd6f5a8820478a04549fc98e82fa1eb4",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "6d8101773055c2c2de9b0c0b95370921dd6f5a8820478a04549fc98e82fa1eb4",
+            "pending": false
+          },
+          "repairBytes": 2299,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2299
+          }
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "0e7d1ebc8c846babf0782d6c9c06566c422fb7a55fd8a30eda8fd7534305dae4",
+            "pending": false
+          },
+          "repairBytes": 2299,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2299
+          }
+        },
+        {
+          "command": {
+            "method": "split"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "d30d6020462f2e6aecee43cc95610ace2074723ac8ff57dad25fd79737809770",
+            "pending": false
+          },
+          "repairBytes": 2303,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2303
+          }
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "993616ad210831752b8acb934b3ff264c1b898f782971f2b1463cd13fae2b648",
+            "pending": false
+          },
+          "repairBytes": 2307,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2307
+          }
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "fe57c47efa695d6c65027404f981a4c77117b5af8684a0415bca37ddf68e25ca",
+            "pending": false
+          },
+          "repairBytes": 2307,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2307
+          }
+        }
+      ],
+      "beforeSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "fe57c47efa695d6c65027404f981a4c77117b5af8684a0415bca37ddf68e25ca",
+        "pending": false
+      },
+      "afterSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "84989d9028aed6a44b3442a4ba850ff67fef3a403b49114cbe75601e15bda22f",
+        "pending": false
+      },
+      "savedSha256": "7aa5c1eaa31b9f941e0d07c874e38057b223a58bc072afa7a564cf5633b694fc",
+      "events": [
+        {
+          "type": "warm",
+          "ok": true,
+          "id": 1
+        },
+        {
+          "type": "open",
+          "ok": true,
+          "id": 2
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 3
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 4
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 5
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 6
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 7
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 8
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 9
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 10
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 11
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 12
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 13
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 14
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 15
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 16
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 17
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 18
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 19
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 20
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 21
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 22
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 23
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 24
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 25
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 26
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 27
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 28
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 29
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 30
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 31
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 32
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 33
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 34
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 35
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 36
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 37
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 38
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 39
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 40
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 41
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 42
+        },
+        {
+          "type": "save",
+          "ok": true,
+          "id": 43
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 44
+        }
+      ],
+      "errors": [],
+      "peerMetadataBytes": 762603,
+      "peerMetadataReason": null
+    },
+    "kandidaat": {
+      "geslaagd": true,
+      "limited": true,
+      "fontCount": 2,
+      "publishedSha256": "8b54d6eead70c48ab5e03d24a3ea54a55853b80d7590ea4484a28470ad45cae2",
+      "checks": [
+        {
+          "command": {
+            "method": "edit",
+            "text": " eigen"
+          },
+          "expected": {
+            "paragraphs": "63a30cf8812e839524a9cd109cda9cc2851fe266f47c492d7889389a4de82118",
+            "stories": "bfe5fd06b09c71d63dee41ca5f4e0160233c0dbdf845cfbb8ad107d1dccc0cfa",
+            "vector": "2814bf8d5d41765b919f054f2371e98b05875656dd77f4102f431f171cb0e2e3",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " Ω"
+          },
+          "expected": {
+            "paragraphs": "bbfa30bfb5e268345c2768b85c85531141504772f0789e6e6cf8041a143bd771",
+            "stories": "265c89328992dbe8ca08a58a77ce2c8d6ac09b6c3bac3061bd9dd228422e8f12",
+            "vector": "e3b02a831971710ee1a74e7c13e13e9c12375886af49f3ebf1825143ab1a4fc4",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " العربية"
+          },
+          "expected": {
+            "paragraphs": "f75de6dee48475b81e63e17d1870758da54be66fe258d7d0172d24944cb3d68b",
+            "stories": "4bf05bb53be7e25e1097e4b6ec853d3e4867a39923ef3c7310ec68c24744220e",
+            "vector": "37d898c55fe1838ebbdfc2b42d1d81c2958558987566b40763c181eeaf80f6e2",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 漢字"
+          },
+          "expected": {
+            "paragraphs": "b6e6477b6843ee2340b218e5f285cba5967ff20a98cdb5dc6fcc87821de13640",
+            "stories": "9178e35e0d5e14a799ef5098dd51d0fc3a3c8aa02a531ade5768dc5aea9ba8b4",
+            "vector": "69164aef57553a1871246cd622bc3858659d72c89bd6d2736faf70c146aacd1c",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " 🙂"
+          },
+          "expected": {
+            "paragraphs": "830ab6b2d82b55a9441101df272b6385a485e4239971d4d06bee5464e5d0b33c",
+            "stories": "3cae581a216d167cdd1b641ec3cd85d8b3c8620442fafbfee3ec069ec5e5f18a",
+            "vector": "63a87cd2baa021cd4a51d6fbe681e3fa8ce49d1f844feecca5bb771503a656e2",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " á"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "8e53d7e1ecf56e6cbc722dc916544327130b0c8835b88c265f5364c73395461c",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "edit",
+            "text": " einde"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "fa7ed7ab0b1a1a059fdf061e883f2aac155fb9828a87113d04adbd99b53b9f6b",
+            "pending": false
+          },
+          "repairBytes": 2294,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2294
+          }
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "63f4e258e6bb1c1fef3f55f4ab7c0cbd5dadea9f08a5d0c6400fe7a1012b7f63",
+            "stories": "fd8d1aa0ac2fb528fb3fd9966d757ccf290111f982539f6dbec9f0ae2e019228",
+            "vector": "fa7ed7ab0b1a1a059fdf061e883f2aac155fb9828a87113d04adbd99b53b9f6b",
+            "pending": false
+          },
+          "repairBytes": 2299,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2299
+          }
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "62612e753f9d1f88da86f4e58b6bd6a756d547239c085cedcbdfef0ed9eb5d19",
+            "pending": false
+          },
+          "repairBytes": 2299,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2299
+          }
+        },
+        {
+          "command": {
+            "method": "split"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "6dcacdcd98bf3d29244cd0c5fdf67638070c7fcd34bd953f24230c39dd83ab95",
+            "pending": false
+          },
+          "repairBytes": 2303,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2303
+          }
+        },
+        {
+          "command": {
+            "method": "undo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "0e5dfdb53826950a2fa771ac8a7d4e9a125a00a41af5f3b343bde1f2836727c6",
+            "vector": "e19b464effdb081e9194d19d73899c96da2cd88afe049ec26d978aee7be6ee96",
+            "pending": false
+          },
+          "repairBytes": 2307,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2307
+          }
+        },
+        {
+          "command": {
+            "method": "redo"
+          },
+          "expected": {
+            "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+            "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+            "vector": "9f61c5ad26258bf0ad0744fd5193d128a5419f2911a056ab9948aade656f1076",
+            "pending": false
+          },
+          "repairBytes": 2307,
+          "retour": {
+            "byteExact": true,
+            "projectieVectorExact": true,
+            "bytes": 2307
+          }
+        }
+      ],
+      "beforeSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "9f61c5ad26258bf0ad0744fd5193d128a5419f2911a056ab9948aade656f1076",
+        "pending": false
+      },
+      "afterSnap": {
+        "paragraphs": "3741e66404465d372f2212c95e5ce1336bb6075232e7f394118f00d5970bb26b",
+        "stories": "a47898999feac9493d37968075b137cb0ea3d8be1710b6299faf48e7c7ee70ad",
+        "vector": "c650e24bd698c643655fbfa9de95dad72b8ea59bec0b0e165d81485eb6e97228",
+        "pending": false
+      },
+      "savedSha256": "0cbc73ed21753b557410463dd2aa1569090470164fc8e5b187f44e4c99e46df2",
+      "events": [
+        {
+          "type": "warm",
+          "ok": true,
+          "id": 1
+        },
+        {
+          "type": "open",
+          "ok": true,
+          "id": 2
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 3
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 4
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 5
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 6
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 7
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 8
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 9
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 10
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 11
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 12
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 13
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 14
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 15
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 16
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 17
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 18
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 19
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 20
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 21
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 22
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 23
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 24
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 25
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 26
+        },
+        {
+          "type": "syncUpdate",
+          "ok": true,
+          "id": 27
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 28
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 29
+        },
+        {
+          "type": "fontRequirements",
+          "ok": true,
+          "id": 30
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 31
+        },
+        {
+          "type": "save",
+          "ok": true,
+          "id": 32
+        },
+        {
+          "type": "encodeState",
+          "ok": true,
+          "id": 33
+        }
+      ],
+      "errors": [],
+      "peerMetadataBytes": 762603,
+      "peerMetadataReason": null
+    },
+    "browser": "151.0.7922.34",
+    "errors": []
+  },
+  "documenten": {
+    "geslaagd": true,
+    "bron": {
+      "sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90368,
+      "tekst_sha256": "2b0046aed753b0503590c1d084f0d1ada3ea1a722e1df2633fb0db5e2ba2dfab",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "e299ce60e68676b94838998741bcdc11fb44e8de90c6a8e8ccf6ea31769d4f9e",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "6dec9e413d135c8077298237165051769ef6ecb6d3daa799b4fa3648ca12686f",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "baseline": {
+      "sha256": "7aa5c1eaa31b9f941e0d07c874e38057b223a58bc072afa7a564cf5633b694fc",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90399,
+      "tekst_sha256": "88fe095745175f494c5adc75023e9da2369c85c899e2eb4814424d69ef9e31ff",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "247e7f9fe0706c431ea2b367fb5f45ec33b42d0d260dc8210841666b495d514f",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "8d2c5e6b799ed70c697641ebb81927f5be28f4f807c64155bfdede5f478f4677",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "kandidaat": {
+      "sha256": "0cbc73ed21753b557410463dd2aa1569090470164fc8e5b187f44e4c99e46df2",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90399,
+      "tekst_sha256": "88fe095745175f494c5adc75023e9da2369c85c899e2eb4814424d69ef9e31ff",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "6c1ad54ab498dd752868acdd478a6e83e5f9fcd6a61dab7163dc956840be0e20",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "8d2c5e6b799ed70c697641ebb81927f5be28f4f807c64155bfdede5f478f4677",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "grens": "ZIP/CRC/paden/XML en gecontroleerde tekst/tabellen; geen visuele of volledige formaatacceptatie."
+  },
+  "eerste_documenten": {
+    "geslaagd": true,
+    "bron": {
+      "sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90368,
+      "tekst_sha256": "2b0046aed753b0503590c1d084f0d1ada3ea1a722e1df2633fb0db5e2ba2dfab",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "e299ce60e68676b94838998741bcdc11fb44e8de90c6a8e8ccf6ea31769d4f9e",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "6dec9e413d135c8077298237165051769ef6ecb6d3daa799b4fa3648ca12686f",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "baseline": {
+      "sha256": "91c12f60a0eb6ca1935c72a0155040cab446d67d393aa62d55870eb48011e706",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90399,
+      "tekst_sha256": "88fe095745175f494c5adc75023e9da2369c85c899e2eb4814424d69ef9e31ff",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "0ba1e4fbc445e91d353f72b8b4a1a1f578bc0b6ce36357c36045bc66f7a435cb",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "8d2c5e6b799ed70c697641ebb81927f5be28f4f807c64155bfdede5f478f4677",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "kandidaat": {
+      "sha256": "d9bdf3fc7634a8c8a91e0c0147f52adaf475a320e5d3738e55d6064b7f6628ba",
+      "leden": 14,
+      "tabellen": 128,
+      "utf16": 90399,
+      "tekst_sha256": "88fe095745175f494c5adc75023e9da2369c85c899e2eb4814424d69ef9e31ff",
+      "delen": {
+        "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+        "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+        "docProps/core.xml": "fe3f3b33f57c9e382505b837f58e51e92d240ca2004cdaeb245e3a08b62b5610",
+        "docProps/app.xml": "dee78b1c1f662b278f0e6d201777a9bf9bbde01820f4824487d62e25269909ea",
+        "word/document.xml": "8d2c5e6b799ed70c697641ebb81927f5be28f4f807c64155bfdede5f478f4677",
+        "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+        "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+        "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+        "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+        "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+        "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+        "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+        "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+        "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+      }
+    },
+    "verschillende_delen": [
+      "docProps/core.xml"
+    ],
+    "grens": "ZIP/CRC/paden/XML en gecontroleerde tekst/tabellen; geen visuele of volledige formaatacceptatie."
+  },
+  "worker_entry_sha256": "6f59a5a727a6d8b9f6a6e767ef125657fefb3605a47ac171de95ef37cb132f1b",
+  "sdk_graaf": {
+    "modules": 45,
+    "bare_imports": [],
+    "manifest_sha256": "aa06031c5b194ea56369ce97d56f5b5db517d59cdbb493b3230c6aec99957510"
+  },
+  "behoud": {
+    "referenties": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio/.local/doorwerk-2026-11-06/autocorrectie-invoer/open-office-studio-45.52-autocorrectie": "ontbreekt",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/invoer-zonder-projectiemelding/open-office-studio-kandidaat-zonder-projectiemelding": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-desktop/open-office-studio-4c13723b-journaal": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/journaal-profiel/open-office-studio-tabelpagina": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/open-office-studio-integratie-56aa1fec": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-telling/open-office-studio-status-telling": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/status-plugin/open-office-studio-status-plugin": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-observatie/open-office-studio-ci-afgekeurd": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaarprojectie-ci/open-office-studio-ci-statusfout": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabelrust/open-office-studio-tabelrust": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectieprojectie/open-office-studio-selectieprojectie": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/selectiecache/open-office-studio-selectiecache": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/waardecache/open-office-studio-waardecache": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/lint-invoer/open-office-studio-lint-invoer": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bewaar-groepen/open-office-studio-bewaar-groepen": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/werker-fasekopie/open-office-studio-werker-fasemeting": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-paragraaf/open-office-studio-replica-paragraaf": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-fontcache/open-office-studio-replica-fontcache": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/replica-kosten/open-office-studio-replica-kosten": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-binnen/open-office-studio-sync-binnen": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/ea-binnen/open-office-studio-ea-binnen": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/warm-story/open-office-studio-warm-story": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/warm-layout-request/open-office-studio-warm-layout-request": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-uitvoering/open-office-studio-projectie-telling": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-hergebruik/open-office-studio-projectie-hergebruik": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context/open-office-studio-projectie-context": "exact",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/projectie-context-telling-herbouw/open-office-studio-projectie-context-telling-herbouw": "exact"
+    },
+    "bronpinnen": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": true,
+      "vendor/tekstengine/docx_edit_bg.wasm": true,
+      "vendor/tekstengine/docx_layout_bg.wasm": true,
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": true,
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": true,
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": true,
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": true,
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": true,
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": true
+    },
+    "standaardbestanden": {
+      "favicon.ico": true,
+      "index.html": true,
+      "studio-icons/writer.png": true,
+      "studio-icons/spreadsheet.png": true,
+      "studio-icons/notition.png": true,
+      "studio-icons/email.png": true,
+      "studio-icons/presentation.png": true,
+      "studio-icons/office.png": true,
+      "assets/common-BYqQqIuG.js": true,
+      "assets/common-q6POmtIG.js": true,
+      "assets/space-grotesk-latin-ext-700-normal-HVCqSBdx.woff": true,
+      "assets/Afdrukvoorbeeld-C0KvlCaI.css": true,
+      "assets/vba-CrrpULnQ.js": true,
+      "assets/common-Cw_TTM_1.js": true,
+      "assets/i18n-zh-CN-TJZIJT1R.js": true,
+      "assets/vba-worker-CJ20eRdn.js": true,
+      "assets/fr-B5SFUYIn.js": true,
+      "assets/index-Bwz7KW2n.css": true,
+      "assets/docx_parse_bg-CrNtYsJD.wasm": true,
+      "assets/rotate-cw-BPOfQ4lA.js": true,
+      "assets/vba-B-Qi6lg9.js": true,
+      "assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": true,
+      "assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": true,
+      "assets/he-CoRiqwKe.js": true,
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js": true,
+      "assets/backend-D5QkHSkq.js": true,
+      "assets/bronRekenblad-D80KkjGB.js": true,
+      "assets/database-BEJhqQUY.js": true,
+      "assets/hi-ChM-0DqL.js": true,
+      "assets/inter-greek-ext-700-normal-BoQ6DsYi.woff": true,
+      "assets/EmailStudio-DfounKcR.css": true,
+      "assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": true,
+      "assets/inter-cyrillic-400-normal-obahsSVq.woff2": true,
+      "assets/webview-D0Lrbor6.js": true,
+      "assets/database-B8YnMOSy.js": true,
+      "assets/database-De63JJmB.js": true,
+      "assets/modules-D2tQjATK.js": true,
+      "assets/database-worker-BcYw3OIe.js": true,
+      "assets/ovba-DF5qU29K.js": true,
+      "assets/vba-CvpUXBVm.js": true,
+      "assets/inter-greek-500-normal-Xzm54t5V.woff": true,
+      "assets/inter-greek-600-normal-BZpKdvQh.woff": true,
+      "assets/inter-latin-ext-700-normal-Ca8adRJv.woff2": true,
+      "assets/chunk-XUXC3ZKS-DxHx28i6.js": true,
+      "assets/underline-DABO3TMs.js": true,
+      "assets/space-grotesk-latin-600-normal-DjKNqYRj.woff2": true,
+      "assets/fr-BnE87-PR.js": true,
+      "assets/i18n-fr-9Z9K11Wr.js": true,
+      "assets/vba-BjAUT_Jg.js": true,
+      "assets/database-P6LziZn8.js": true,
+      "assets/vba-Dn36xZ0e.js": true,
+      "assets/vba-DQbXh4vK.js": true,
+      "assets/database-BBuDZUlX.js": true,
+      "assets/tr-CWznrXLk.js": true,
+      "assets/xlsxSessionWorker-C0gyMdX7.js": true,
+      "assets/inter-latin-ext-700-normal-TidjK2hL.woff": true,
+      "assets/inter-vietnamese-500-normal-DOriooB6.woff2": true,
+      "assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2": true,
+      "assets/zh-CN-BRR8NMEs.js": true,
+      "assets/model-ls8GlRAJ.js": true,
+      "assets/common-Detr89un.js": true,
+      "assets/database-BJmFQ3sa.js": true,
+      "assets/inter-greek-ext-600-normal-DRtmH8MT.woff2": true,
+      "assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": true,
+      "assets/bronTekst-C7IQ2U8n.js": true,
+      "assets/inter-cyrillic-ext-600-normal-Bcila6Z-.woff": true,
+      "assets/id-DD7zrMvg.js": true,
+      "assets/sql-wasm-browser-DfANybxk.wasm": true,
+      "assets/vba-BMS60gh9.js": true,
+      "assets/email-D2I4ia92.css": true,
+      "assets/vba-DrLg1Zpp.js": true,
+      "assets/space-grotesk-vietnamese-600-normal-DUi7WF5p.woff2": true,
+      "assets/docx_edit_bg-ONvZFP_n.wasm": true,
+      "assets/common-CjYOtsS4.js": true,
+      "assets/vba-bdoXixZY.js": true,
+      "assets/bewaren-CE-WSmX_.js": true,
+      "assets/i18n-es-Bd-H9HHW.js": true,
+      "assets/inter-greek-500-normal-BIZE56-Y.woff2": true,
+      "assets/database-btE4whv7.js": true,
+      "assets/docxWorker-B7b8GgQ-.js": true,
+      "assets/index-TN_PiYsC.js": true,
+      "assets/space-grotesk-latin-700-normal-RjhwGPKo.woff2": true,
+      "assets/database-CaqLCWv3.js": true,
+      "assets/inter-latin-700-normal-BLAVimhd.woff": true,
+      "assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": true,
+      "assets/chunk-4ZGDANBA-BOEeem6X.js": true,
+      "assets/common-C_4WKndr.js": true,
+      "assets/inter-latin-ext-600-normal-CIVaiw4L.woff": true,
+      "assets/vba-37UZ7x7f.js": true,
+      "assets/index-XWh6H1lV.js": true,
+      "assets/chunk-YEDZERHF-CwGK9jcY.js": true,
+      "assets/inter-latin-ext-500-normal-BxGbmqWO.woff": true,
+      "assets/DiaSorteerder-Dgn10Ira.js": true,
+      "assets/database-DcbpU26N.js": true,
+      "assets/zoom-out-CzBTiLe_.js": true,
+      "assets/inter-latin-700-normal-Yt3aPRUw.woff2": true,
+      "assets/inter-cyrillic-500-normal-BasfLYem.woff2": true,
+      "assets/index-D866W0pd.js": true,
+      "assets/common-CWcqgpOt.js": true,
+      "assets/ifc-worker-gu4CudsW.js": true,
+      "assets/common-DYr5jgAX.js": true,
+      "assets/he-Bm0FwI1I.js": true,
+      "assets/inter-greek-ext-500-normal-2j5mBUwD.woff": true,
+      "assets/tauriVensters-4uF2Nm6d.js": true,
+      "assets/list-BlQz7R1H.js": true,
+      "assets/inter-vietnamese-400-normal-DMkecbls.woff2": true,
+      "assets/pl-JALdd39-.js": true,
+      "assets/space-grotesk-vietnamese-700-normal-Duxec5Rn.woff": true,
+      "assets/common-CKgKqmJK.js": true,
+      "assets/index-C2w25pdW.js": true,
+      "assets/vba-D-o9-ziY.js": true,
+      "assets/common-C1bNukzU.js": true,
+      "assets/vba-CsMFzm02.js": true,
+      "assets/space-grotesk-vietnamese-600-normal-D6zpsUhD.woff": true,
+      "assets/vba-DLIdw-wG.js": true,
+      "assets/zh-CN-BEObBOTq.js": true,
+      "assets/common-C2l8n80y.js": true,
+      "assets/fr-CUFzaZI-.js": true,
+      "assets/EmailStudio-Dk9BTx89.js": true,
+      "assets/werkkopie-BkLXdREA.js": true,
+      "assets/database-Cnoc30KC.js": true,
+      "assets/inter-greek-ext-400-normal-KugGGMne.woff": true,
+      "assets/common-d5HGAsXy.js": true,
+      "assets/database-5dDLWPGK.js": true,
+      "assets/email-D36OWOra.js": true,
+      "assets/database-Rn2R5uDy.js": true,
+      "assets/inter-cyrillic-500-normal-CxZf_p3X.woff": true,
+      "assets/vba-CBU7oVJu.js": true,
+      "assets/rekenbladInstellingen-CVnNkv3a.js": true,
+      "assets/opname-C_cImmHc.js": true,
+      "assets/inter-latin-400-normal-CyCys3Eg.woff": true,
+      "assets/diabeeld-BckX2VwE.js": true,
+      "assets/pl-CtfzsIIH.js": true,
+      "assets/vba-Dy6IqSIn.js": true,
+      "assets/database-0madRfEZ.js": true,
+      "assets/engine-es-CwutTnrQ.js": true,
+      "assets/vba--9x-9RY0.js": true,
+      "assets/common-BXtsOm5N.js": true,
+      "assets/werkkopie-brug-CqDkV1XG.js": true,
+      "assets/inter-greek-400-normal-B4URO6DV.woff2": true,
+      "assets/database-C_SE_9xH.js": true,
+      "assets/de-DU5FQYka.js": true,
+      "assets/common-BQw7VhbX.js": true,
+      "assets/space-grotesk-latin-ext-600-normal-VcznFIpX.woff": true,
+      "assets/index-DX35Amhc.js": true,
+      "assets/pt-BR-EmHNbjBA.js": true,
+      "assets/editors-BwZL8YVd.css": true,
+      "assets/vba-ClW0LRHA.js": true,
+      "assets/common-3anlyiYw.js": true,
+      "assets/inter-greek-700-normal-BUv2fZ6O.woff": true,
+      "assets/de-CbHTEqZj.js": true,
+      "assets/space-grotesk-latin-ext-700-normal-BQnZhY3m.woff2": true,
+      "assets/vba-CP3oTn4S.js": true,
+      "assets/hi-Cs_NZE5q.js": true,
+      "assets/inter-greek-ext-600-normal-B8X0CLgF.woff": true,
+      "assets/inter-cyrillic-ext-700-normal-BjwYoWNd.woff2": true,
+      "assets/common-Cti_nj7L.js": true,
+      "assets/vba-C6IB5SG8.js": true,
+      "assets/vba-4seUC-PM.js": true,
+      "assets/pt-BR-Bas8APz0.js": true,
+      "assets/i18n-pt-BR-DdTsS0p0.js": true,
+      "assets/vba-k7xeEZ1T.js": true,
+      "assets/text-cursor-input-BR9Yjo1q.js": true,
+      "assets/common-SDy9PCqo.js": true,
+      "assets/inter-latin-400-normal-C38fXH4l.woff2": true,
+      "assets/bronRapport-DkbScuFb.js": true,
+      "assets/window-CkhQcx_D.js": true,
+      "assets/database-B0AQAC1l.js": true,
+      "assets/index-DSY8H33x.js": true,
+      "assets/chunk-37HBONPF-BqqD54DU.js": true,
+      "assets/inter-greek-700-normal-C3JjAnD8.woff2": true,
+      "assets/voorstelling-BXUXZrCV.css": true,
+      "assets/pt-BR-CPjbT5Jj.js": true,
+      "assets/database-ChWksQ9s.js": true,
+      "assets/rekenblad-logica-BDdE84w-.js": true,
+      "assets/pptx_wasm_bg-qh_XpSnz.wasm": true,
+      "assets/inter-vietnamese-500-normal-mJboJaSs.woff": true,
+      "assets/inter-cyrillic-ext-700-normal-LO58E6JB.woff": true,
+      "assets/index-B878Xijo.js": true,
+      "assets/tr-BvJ7wbcu.js": true,
+      "assets/common-o0oRhueD.js": true,
+      "assets/chunk-HEKHBVSH-eIko8GTS.js": true,
+      "assets/common-bGxSuCoj.js": true,
+      "assets/database-D2RFVs9Q.js": true,
+      "assets/chunk-CKSVLZJJ-DWRh2RJ9.js": true,
+      "assets/DiaSorteerder-CSJktAjD.css": true,
+      "assets/chunk-YTGFUEEE-BR8wyl1E.js": true,
+      "assets/inter-vietnamese-600-normal-BuLX-rYi.woff": true,
+      "assets/inter-latin-ext-400-normal-C1nco2VV.woff2": true,
+      "assets/inter-greek-ext-700-normal-qfdV9bQt.woff2": true,
+      "assets/afdrukframe-YtGm97YV.js": true,
+      "assets/vba-BjF3Dp-Y.js": true,
+      "assets/inter-vietnamese-700-normal-DlLaEgI2.woff2": true,
+      "assets/chunk-SBPJ3YLZ-CWA7DkKW.js": true,
+      "assets/inter-latin-600-normal-LgqL8muc.woff2": true,
+      "assets/vba-C2r6Pw1v.js": true,
+      "assets/tekstopname-VKT_6qaU.js": true,
+      "assets/inter-cyrillic-700-normal-CjBOestx.woff2": true,
+      "assets/contract-BeMGiR-b.js": true,
+      "assets/chunk-H7EYGRJO-WK9rW071.js": true,
+      "assets/xlsx_wasm_bg-Bl3DL8it.wasm": true,
+      "assets/database-D9eDjxfl.js": true,
+      "assets/vba-DXTLpNI7.js": true,
+      "assets/common-CGJQ_sXW.js": true,
+      "assets/worker-CBU0dGMn.js": true,
+      "assets/chunk-5FFUQOQU-CWKnPi3j.js": true,
+      "assets/webviewWindow-BOoaJO51.js": true,
+      "assets/folder-plus-DB0Uz8ff.js": true,
+      "assets/common-CnlSCDeB.js": true,
+      "assets/common-Br_i4fBL.js": true,
+      "assets/inter-latin-500-normal-Cerq10X2.woff2": true,
+      "assets/common-DWdXHnvU.js": true,
+      "assets/common-B8nNafGx.js": true,
+      "assets/database-DSH_PqoM.js": true,
+      "assets/common-BnA9mddq.js": true,
+      "assets/he-D8cLiaKh.js": true,
+      "assets/chunk-XUXC3ZKS-CDkIQkWt.js": true,
+      "assets/bronPresentatie-Bin3J_UZ.js": true,
+      "assets/docx_layout_bg-DcsU5iOF.wasm": true,
+      "assets/vba-C7IEkB6c.js": true,
+      "assets/event-Cs6lN1fb.js": true,
+      "assets/hi-BHJC0JNg.js": true,
+      "assets/common-D9mmEBad.js": true,
+      "assets/de-CMXOdHeA.js": true,
+      "assets/database-BXrwxhh9.js": true,
+      "assets/inter-cyrillic-600-normal-4D_pXhcN.woff": true,
+      "assets/inter-greek-400-normal-q2sYcFCs.woff": true,
+      "assets/i18n-de-TbLNQD3K.js": true,
+      "assets/Afdrukvoorbeeld-BUlb7JRC.js": true,
+      "assets/chunk-P4QPIGM3-Ds1T6iWM.js": true,
+      "assets/database-CnDwmZQy.js": true,
+      "assets/zoom-in-B_2EnEPG.js": true,
+      "assets/tekenhulp-B3O242Ui.js": true,
+      "assets/inter-latin-600-normal-CiBQ2DWP.woff": true,
+      "assets/chunk-O76C72EQ-fZqVGNoY.js": true,
+      "assets/database-B1T9r0XU.js": true,
+      "assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2": true,
+      "assets/inter-greek-ext-500-normal-C4iEst2y.woff2": true,
+      "assets/index-BMTbKqLO.js": true,
+      "assets/space-grotesk-vietnamese-700-normal-DMty7AZE.woff2": true,
+      "assets/inter-cyrillic-ext-600-normal-Dfes3d0z.woff2": true,
+      "assets/database-B27nR2Lj.js": true,
+      "assets/vba-Dy8_PvOs.js": true,
+      "assets/inter-greek-600-normal-plRanbMR.woff2": true,
+      "assets/VerzendAlsBijlage-CjMK3fvA.js": true,
+      "assets/id-CsqMFMWw.js": true,
+      "assets/inter-cyrillic-700-normal-DrXBdSj3.woff": true,
+      "assets/panel-left-fJIdo47T.js": true,
+      "assets/NotitiesStudio-Cjhg1n9a.js": true,
+      "assets/space-grotesk-latin-600-normal-BflQw4A9.woff": true,
+      "assets/chunk-GZ5VPNVM-DAuFXyeR.js": true,
+      "assets/rekenbladcontrole-BcNhGQM2.js": true,
+      "assets/inter-cyrillic-400-normal-HOLc17fK.woff": true,
+      "assets/markdown-BzmolylE.js": true,
+      "assets/sqljs-browser-BaZYvxxf.js": true,
+      "assets/database-1BzsRieN.js": true,
+      "assets/space-grotesk-latin-ext-600-normal-DxxdqCpr.woff2": true,
+      "assets/editors-2CdTQbCm.js": true,
+      "assets/chunk-2S2QUCJE-DEVNbv8q.js": true,
+      "assets/database-Bxl6YcfW.js": true,
+      "assets/indeling-BxI5k1FO.js": true,
+      "assets/document-Boj15mjL.js": true,
+      "assets/space-grotesk-latin-700-normal-CwsQ-cCU.woff": true,
+      "assets/index-Dq-k0YQw.js": true,
+      "assets/database-B1pYWT2W.js": true,
+      "assets/id-D544MosF.js": true,
+      "assets/vba-BvOPzN0y.js": true,
+      "assets/pl-uFiseKGT.js": true,
+      "assets/database-CFAN3pb2.js": true,
+      "assets/inter-latin-500-normal-BL9OpVg8.woff": true,
+      "assets/database-worker-CFtQyBnT.js": true,
+      "assets/NotitiesStudio-BKYNGfcp.css": true,
+      "assets/vba-DSH5ziIf.js": true,
+      "assets/inter-cyrillic-600-normal-CWCymEST.woff2": true,
+      "assets/common-BrOe8SGg.js": true,
+      "assets/inter-latin-ext-400-normal-77YHD8bZ.woff": true,
+      "assets/i18n-it-C2T8zTo7.js": true,
+      "assets/common-4eDfYcy2.js": true,
+      "assets/database-C-ek9Co_.js": true,
+      "assets/core-BUhCcD2K.js": true,
+      "assets/inter-vietnamese-700-normal-BZaoP0fm.woff": true,
+      "assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": true,
+      "assets/vba-lQSh_Oip.js": true,
+      "assets/common-Cjg_JyA7.js": true,
+      "assets/zh-CN-D_x8An6n.js": true,
+      "assets/ToeschouwerVenster-Dyr1BDHp.js": true,
+      "assets/voorstelling-DYhDYz-7.js": true,
+      "assets/database-B-eWpy4T.js": true,
+      "assets/ooxml_opc_bg-Bwx9T1Uy.wasm": true,
+      "assets/database-ChK8_85y.js": true,
+      "assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": true,
+      "assets/Voorstelling-L-7hQ6V_.js": true,
+      "assets/tr-BytG3ndw.js": true,
+      "assets/vba-CNiy1bK_.js": true,
+      "assets/common-DATRH3Sm.js": true,
+      "licenses/tekstengine-LICENSE.txt": true,
+      "licenses/Y-app-ERPNext-LICENSE.txt": true,
+      "licenses/rekenbladengine-NOTICE.txt": true,
+      "licenses/Writer-Rust-docx-edit-LICENSE.txt": true,
+      "licenses/Writer-Rust-yrs-LICENSE.txt": true,
+      "licenses/Writer-Rust-docx-edit-WIJZIGINGEN.md": true,
+      "licenses/rekenbladengine-LICENSE.txt": true,
+      "licenses/OpenAEC-style-bron.json": true,
+      "licenses/tekstengine-NOTICE.txt": true,
+      "licenses/OpenAEC-style-LICENSE.txt": true,
+      "licenses/npm.txt": true,
+      "licenses/Writer-Rust-yrs-WIJZIGINGEN.md": true,
+      "voorbeelden/Materiaaloverzicht.xlsx": true,
+      "voorbeelden/Ontwerpvisie.pptx": true,
+      "voorbeelden/Ontwerpnotitie.docx": true,
+      "studios/open-notition-studio-logo-afgerond.png": true,
+      "studios/open-spreadsheet-studio-logo-kalender-snapstore.png": true,
+      "studios/open-presentation-studio-logo-afgerond.png": true,
+      "studios/open-email-studio-logo-afgerond.png": true,
+      "studios/open-office-studio-logo-afgerond.png": true,
+      "studios/open-writer-studio-logo-afgerond.png": true,
+      "woordenboeken/nl.aff": true,
+      "woordenboeken/en-US.dic": true,
+      "woordenboeken/en-US.aff": true,
+      "woordenboeken/nl.dic": true,
+      "woordenboeken/index.json": true,
+      "woordenboeken/en-GB.dic": true,
+      "woordenboeken/en-GB.aff": true,
+      "fonts/LiberationSans-BoldItalic.ttf": true,
+      "fonts/NotoSansSC-Regular.otf": true,
+      "fonts/Caladea-Italic.ttf": true,
+      "fonts/LiberationSerif-Bold.ttf": true,
+      "fonts/DMSans-Italic.ttf": true,
+      "fonts/Montserrat-Bold.ttf": true,
+      "fonts/Roboto-Bold.ttf": true,
+      "fonts/Carlito-Bold.ttf": true,
+      "fonts/Poppins-BoldItalic.ttf": true,
+      "fonts/OpenSans-Bold.ttf": true,
+      "fonts/SourceSans3-Italic.ttf": true,
+      "fonts/ComicRelief-Bold.ttf": true,
+      "fonts/Gelasio-Italic.ttf": true,
+      "fonts/OpenSans-Regular.ttf": true,
+      "fonts/LiberationMono-Bold.ttf": true,
+      "fonts/NotoSansArabic-Regular.ttf": true,
+      "fonts/LiberationMono-Regular.ttf": true,
+      "fonts/LiberationSans-Bold.ttf": true,
+      "fonts/Montserrat-Regular.ttf": true,
+      "fonts/OpenSans-BoldItalic.ttf": true,
+      "fonts/Inter-BoldItalic.ttf": true,
+      "fonts/Montserrat-BoldItalic.ttf": true,
+      "fonts/NotoSansJP-Regular.otf": true,
+      "fonts/ComicRelief-Regular.ttf": true,
+      "fonts/NotoSansArabic-Bold.ttf": true,
+      "fonts/LiberationMono-BoldItalic.ttf": true,
+      "fonts/Caladea-Regular.ttf": true,
+      "fonts/NotoSansHebrew-Bold.ttf": true,
+      "fonts/DMSerifDisplay-Regular.ttf": true,
+      "fonts/Poppins-Italic.ttf": true,
+      "fonts/Oswald-Regular.ttf": true,
+      "fonts/LiberationSerif-Italic.ttf": true,
+      "fonts/LiberationSans-Regular.ttf": true,
+      "fonts/Inter-Regular.ttf": true,
+      "fonts/DMSans-Regular.ttf": true,
+      "fonts/Gelasio-Bold.ttf": true,
+      "fonts/SourceSans3-Bold.ttf": true,
+      "fonts/NotoSerifSC-Regular.otf": true,
+      "fonts/Gelasio-Regular.ttf": true,
+      "fonts/Inter-Italic.ttf": true,
+      "fonts/NotoSansTC-Regular.otf": true,
+      "fonts/Roboto-Regular.ttf": true,
+      "fonts/DMSans-Bold.ttf": true,
+      "fonts/Inter-Bold.ttf": true,
+      "fonts/OpenSans-Italic.ttf": true,
+      "fonts/DMSerifDisplay-Italic.ttf": true,
+      "fonts/SourceSans3-Regular.ttf": true,
+      "fonts/Poppins-Bold.ttf": true,
+      "fonts/LiberationSans-Italic.ttf": true,
+      "fonts/Carlito-BoldItalic.ttf": true,
+      "fonts/SourceSans3-BoldItalic.ttf": true,
+      "fonts/Oswald-Bold.ttf": true,
+      "fonts/Montserrat-Italic.ttf": true,
+      "fonts/NotoSansHebrew-Regular.ttf": true,
+      "fonts/Caladea-Bold.ttf": true,
+      "fonts/NotoSansKR-Regular.otf": true,
+      "fonts/LiberationSerif-BoldItalic.ttf": true,
+      "fonts/Roboto-BoldItalic.ttf": true,
+      "fonts/DMSans-BoldItalic.ttf": true,
+      "fonts/Roboto-Italic.ttf": true,
+      "fonts/Carlito-Italic.ttf": true,
+      "fonts/NotoNaskhArabic-Regular.ttf": true,
+      "fonts/Gelasio-BoldItalic.ttf": true,
+      "fonts/Carlito-Regular.ttf": true,
+      "fonts/Heebo-Bold.ttf": true,
+      "fonts/LiberationMono-Italic.ttf": true,
+      "fonts/Caladea-BoldItalic.ttf": true,
+      "fonts/Poppins-Regular.ttf": true,
+      "fonts/LiberationSerif-Regular.ttf": true,
+      "fonts/Heebo-Regular.ttf": true,
+      "spelling/versie.json": true,
+      "spelling/oos_spelling.wasm": true,
+      "templates/nieuw.xlsx": true,
+      "templates/nieuw.docx": true,
+      "templates/nieuw.pptx": true,
+      "licenses/woordenboeken/nl-LICENSE.txt": true,
+      "licenses/woordenboeken/en-GB-LICENSE.txt": true,
+      "licenses/woordenboeken/en-US-LICENSE.txt": true,
+      "licenses/woordenboeken/BRONNEN.txt": true,
+      "licenses/fonts/LICENSE": true,
+      "licenses/fonts-extra/ComicNeue-OFL-1.1.txt": true,
+      "licenses/fonts-extra/Selawik-OFL-1.1.txt": true,
+      "licenses/fonts-extra/IBMPlexSans-OFL-1.1.txt": true,
+      "licenses/fonts-extra/NotoSans-OFL-1.1.txt": true,
+      "licenses/fonts-extra/AtkinsonHyperlegible-OFL-1.1.txt": true,
+      "licenses/fonts-extra/EBGaramond-OFL-1.1.txt": true,
+      "licenses/fonts-extra/Merriweather-OFL-1.1.txt": true,
+      "licenses/fonts-extra/IBMPlexMono-OFL-1.1.txt": true,
+      "licenses/fonts-extra/FiraCode-OFL-1.1.txt": true,
+      "licenses/fonts-extra/Raleway-OFL-1.1.txt": true,
+      "licenses/fonts-extra/CourierPrime-OFL-1.1.txt": true,
+      "licenses/fonts-extra/JetBrainsMono-OFL-1.1.txt": true,
+      "licenses/fonts-extra/LibreBaskerville-OFL-1.1.txt": true,
+      "licenses/fonts-extra/NotoSerif-OFL-1.1.txt": true,
+      "licenses/fonts-extra/PTSerif-OFL-1.1.txt": true,
+      "licenses/fonts-extra/PlayfairDisplay-OFL-1.1.txt": true,
+      "licenses/fonts-extra/Nunito-OFL-1.1.txt": true,
+      "licenses/fonts-extra/SourceSerif4-OFL-1.1.txt": true,
+      "licenses/fonts-extra/Lato-OFL-1.1.txt": true,
+      "licenses/fonts-extra/BRONNEN.txt": true,
+      "licenses/fonts-extra/FiraSans-OFL-1.1.txt": true,
+      "licenses/spelling/spellbook-0.4.2-LICENSE": true,
+      "licenses/spelling/foldhash-0.2.0-LICENSE": true,
+      "licenses/spelling/hashbrown-0.17.1-LICENSE-MIT": true,
+      "licenses/spelling/BRONNEN.txt": true,
+      "licenses/spelling/hashbrown-0.17.1-LICENSE-APACHE": true,
+      "licenses/fonts-cjk/LICENSE": true,
+      "licenses/fonts/LICENSES/OFL-OpenSans.txt": true,
+      "licenses/fonts/LICENSES/OFL-ComicRelief.txt": true,
+      "licenses/fonts/LICENSES/OFL-Montserrat.txt": true,
+      "licenses/fonts/LICENSES/OFL-Oswald.txt": true,
+      "licenses/fonts/LICENSES/OFL-Heebo.txt": true,
+      "licenses/fonts/LICENSES/OFL-Poppins.txt": true,
+      "licenses/fonts/LICENSES/OFL-NotoSansHebrew.txt": true,
+      "licenses/fonts/LICENSES/OFL-Roboto.txt": true,
+      "licenses/fonts/LICENSES/OFL-DMSans.txt": true,
+      "licenses/fonts/LICENSES/OFL-Gelasio.txt": true,
+      "licenses/fonts/LICENSES/OFL-Caladea.txt": true,
+      "licenses/fonts/LICENSES/OFL-NotoArabic.txt": true,
+      "licenses/fonts/LICENSES/OFL-Liberation.txt": true,
+      "licenses/fonts/LICENSES/OFL-Inter.txt": true,
+      "licenses/fonts/LICENSES/OFL-SourceSans3.txt": true,
+      "licenses/fonts/LICENSES/OFL-DMSerifDisplay.txt": true,
+      "licenses/fonts/LICENSES/OFL-Carlito.txt": true,
+      "licenses/fonts-cjk/LICENSES/OFL-NotoCJK.txt": true,
+      "studios/office/favicon.ico": true,
+      "studios/spreadsheet/favicon.ico": true,
+      "studios/presentation/favicon.ico": true,
+      "studios/email/favicon.ico": true,
+      "studios/notition/favicon.ico": true,
+      "studios/writer/favicon.ico": true,
+      "fonts/extra/Nunito-Regular.ttf": true,
+      "fonts/extra/EBGaramond-BoldItalic.ttf": true,
+      "fonts/extra/Lato-Bold.ttf": true,
+      "fonts/extra/CourierPrime-Italic.ttf": true,
+      "fonts/extra/ComicNeue-BoldItalic.ttf": true,
+      "fonts/extra/FiraSans-BoldItalic.ttf": true,
+      "fonts/extra/CourierPrime-Bold.ttf": true,
+      "fonts/extra/Lato-BoldItalic.ttf": true,
+      "fonts/extra/Selawik-Regular.ttf": true,
+      "fonts/extra/EBGaramond-Italic.ttf": true,
+      "fonts/extra/JetBrainsMono-Italic.ttf": true,
+      "fonts/extra/PT_Serif-Web-Italic.ttf": true,
+      "fonts/extra/AtkinsonHyperlegible-Bold.ttf": true,
+      "fonts/extra/PlayfairDisplay-Regular.ttf": true,
+      "fonts/extra/PlayfairDisplay-BoldItalic.ttf": true,
+      "fonts/extra/JetBrainsMono-Regular.ttf": true,
+      "fonts/extra/PT_Serif-Web-Regular.ttf": true,
+      "fonts/extra/JetBrainsMono-BoldItalic.ttf": true,
+      "fonts/extra/Merriweather-BoldItalic.ttf": true,
+      "fonts/extra/SourceSerif4-Regular.ttf": true,
+      "fonts/extra/Nunito-Bold.ttf": true,
+      "fonts/extra/PlayfairDisplay-Italic.ttf": true,
+      "fonts/extra/AtkinsonHyperlegible-BoldItalic.ttf": true,
+      "fonts/extra/Merriweather-Regular.ttf": true,
+      "fonts/extra/CourierPrime-BoldItalic.ttf": true,
+      "fonts/extra/Raleway-BoldItalic.ttf": true,
+      "fonts/extra/NotoSerif-Regular.ttf": true,
+      "fonts/extra/JetBrainsMono-Bold.ttf": true,
+      "fonts/extra/Nunito-Italic.ttf": true,
+      "fonts/extra/AtkinsonHyperlegible-Regular.ttf": true,
+      "fonts/extra/Lato-Italic.ttf": true,
+      "fonts/extra/IBMPlexSans-BoldItalic.ttf": true,
+      "fonts/extra/NotoSans-Bold.ttf": true,
+      "fonts/extra/SourceSerif4-It.ttf": true,
+      "fonts/extra/Raleway-Regular.ttf": true,
+      "fonts/extra/NotoSerif-Bold.ttf": true,
+      "fonts/extra/IBMPlexMono-Italic.ttf": true,
+      "fonts/extra/ComicNeue-Italic.ttf": true,
+      "fonts/extra/IBMPlexMono-BoldItalic.ttf": true,
+      "fonts/extra/Merriweather-Italic.ttf": true,
+      "fonts/extra/ComicNeue-Regular.ttf": true,
+      "fonts/extra/IBMPlexSans-Italic.ttf": true,
+      "fonts/extra/IBMPlexSans-Bold.ttf": true,
+      "fonts/extra/EBGaramond-Bold.ttf": true,
+      "fonts/extra/AtkinsonHyperlegible-Italic.ttf": true,
+      "fonts/extra/NotoSerif-BoldItalic.ttf": true,
+      "fonts/extra/Nunito-BoldItalic.ttf": true,
+      "fonts/extra/EBGaramond-Regular.ttf": true,
+      "fonts/extra/FiraSans-Bold.ttf": true,
+      "fonts/extra/IBMPlexMono-Bold.ttf": true,
+      "fonts/extra/CourierPrime-Regular.ttf": true,
+      "fonts/extra/Lato-Regular.ttf": true,
+      "fonts/extra/Merriweather-Bold.ttf": true,
+      "fonts/extra/LibreBaskerville-Regular.ttf": true,
+      "fonts/extra/NotoSans-Italic.ttf": true,
+      "fonts/extra/LibreBaskerville-Italic.ttf": true,
+      "fonts/extra/LibreBaskerville-Bold.ttf": true,
+      "fonts/extra/NotoSans-BoldItalic.ttf": true,
+      "fonts/extra/FiraCode-Regular.ttf": true,
+      "fonts/extra/ComicNeue-Bold.ttf": true,
+      "fonts/extra/SourceSerif4-BoldIt.ttf": true,
+      "fonts/extra/NotoSerif-Italic.ttf": true,
+      "fonts/extra/FiraSans-Regular.ttf": true,
+      "fonts/extra/Raleway-Bold.ttf": true,
+      "fonts/extra/NotoSans-Regular.ttf": true,
+      "fonts/extra/FiraSans-Italic.ttf": true,
+      "fonts/extra/IBMPlexSans-Regular.ttf": true,
+      "fonts/extra/IBMPlexMono-Regular.ttf": true,
+      "fonts/extra/FiraCode-Bold.ttf": true,
+      "fonts/extra/PT_Serif-Web-Bold.ttf": true,
+      "fonts/extra/SourceSerif4-Bold.ttf": true,
+      "fonts/extra/PT_Serif-Web-BoldItalic.ttf": true,
+      "fonts/extra/Selawik-Bold.ttf": true,
+      "fonts/extra/Raleway-Italic.ttf": true,
+      "fonts/extra/PlayfairDisplay-Bold.ttf": true
+    }
+  },
+  "archief": {
+    "pad": "2026-11-27-writer-echte-fontwerker.tar.gz",
+    "sha256": "97a5158b4f419a15fe718075b208f59ee2fe539ad6af391f52d53e6611b16470"
+  },
+  "grenzen": [
+    "Echte dedicated Worker, postMessage, compiled-module-overdracht en ArrayBuffer-kopie; eigen minimale protocolclient. Niet de volledige SDK-client, React-hook of editor in deze proef.",
+    "Fontantwoorden bewust tot het einde vastgehouden bij de aanvrager. Reeds uitgevoerde Worker-taak nooit geannuleerd; alleen achterhaalde nog wachtende taak vervangen. Geen native natuurlijke invoerbelasting of CPU-/looptijdmeting.",
+    "Alle twaalf updates per arm via syncUpdate, met vector en genormaliseerde paragraaf/storyvergelijking tegen Wasm-auteur. Niet-lege reparatieantwoorden afzonderlijk exact op de betreffende bronstaat toegepast; geen gewijzigde bronbytes/projecties/vector.",
+    "Peer metadata daadwerkelijk ontvangen (762603 bytes per arm), maar geen volledige bootstrap_peer-rehydratie of overdracht van lokale UndoSession-geschiedenis/selektie getest.",
+    "Vier bewaarbestanden met eigen fixture; finale twee onafhankelijk ZIP/CRC/paden/XML/tekst/tabelgetal gecontroleerd. Beide90399UTF16 en128tabellen, uitsluitend core.xml verschillend. Geen visuele of volledige formaatacceptatie.",
+    "Alle beginstaten, auteurupdates, bijbehorende bronstaten, herstelantwoorden en opgehaalde Worker-staten uit herhaling als binaire artifacts behouden.",
+    "Alle26aanwezige ELF-referenties,15bronpinnen en529standaardbestanden exact; eerdere ontbrekende autocorrectiereferentie niet hersteld of verwijderd.",
+    "Geen productbron-/SDK-/canonieke wijziging, nieuwe ELF/bouw, volledige suites/CI, andere platforms/edities/releases of issuevoltooiing."
+  ],
+  "vervolg": "Getoetste beperkte rij in afzonderlijke private native kandidaat op ee89c80e-basis zetten, positiecontextcorrectie behouden. Eerst actuele bouwcache/bronbinding inventariseren; alle referenties behouden. Dan vaste korte/rijke ABBA en invoer/selectie/UndoRedo/bewaren/verwerpen/laat antwoord/DOCX/beelden. SDK-client en metadata/geschiedenisgrenzen blijven afzonderlijk te dekken. Automatisch herstel behouden; Database laatst."
+}
