@@ -1,0 +1,3522 @@
+{
+  "datum": "2026-11-27",
+  "basis_integratie": "df24d5d208f3db216b0cefb8194586b5d718b42f",
+  "basis_hoofdbranch": "5456b78c",
+  "besluit": "Sync-contract en dominante fasen in de werkelijke native route gebonden. In twee afzonderlijk uitgevoerde primaire opnamen elk 17 syncs: blokvoorbereiding 1.954/1.885 ms, layout 1.900/1.899 ms, framebouw 1.525/1.541 ms, publicatie 596/615 ms. Bronladen slechts 10/14 ms. Eén primaire opname heeft volledige metadata: 16/17 hoofdbronnen veranderen tijdens de rondreis. Geen sync overgeslagen, geen productfix of bewezen achterhaalde frames.",
+  "bouw": {
+    "code": 0,
+    "reden": null,
+    "seconden": 114.11606402788311,
+    "minimum_vrije_bytes": 279404818432,
+    "start_vrije_bytes": 279502848000,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal"
+    ],
+    "basis_head": "df24d5d208f3db216b0cefb8194586b5d718b42f",
+    "bestaande_eigen_bouwcache": true,
+    "target": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target",
+    "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/sync-contract/open-office-studio-sync-contract",
+    "programma_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+    "standaarddist529_byte_mode_mtime_hersteld": true,
+    "referenties30_exact": true,
+    "bronpinnen15_exact": true
+  },
+  "bundel": {
+    "basis": "replica-fasekosten",
+    "wijzigingen": [
+      {
+        "voor": "__wfUpdate=[],__wfOver=0",
+        "na": "__wfUpdate=[],__wfSync=[],__wfOver=0"
+      },
+      {
+        "voor": "__wfUpdate=[];__wfOver=0",
+        "na": "__wfUpdate=[];__wfSync=[];__wfOver=0"
+      },
+      {
+        "voor": "updates:__wfUpdate,overgeslagen",
+        "na": "updates:__wfUpdate,sync:__wfSync,overgeslagen"
+      },
+      {
+        "voor": "if(!N)throw new Error(\"Document worker is not initialized\");",
+        "na": "if(!N)throw new Error(\"Document worker is not initialized\");if(__wfActief){if(__wfSync.length<256)__wfSync.push({id:Mo,tijd:performance.now(),version:N.proposalEngine.version(),layoutRevision:e.layoutRevision,workerAuthoritative:e.workerAuthoritative===true,stateBytes:e.state?.byteLength??null,renderInputs:e.renderInputs.length,measureInputs:e.measureInputs.length,fontsRevision:e.fontsRevision});else __wfOver++}__wf(\"sync.prepare.begin\",Mo,\"sync\");"
+      },
+      {
+        "voor": "N.loadState(e.state)",
+        "na": "(()=>{__wf(\"sync.load.begin\",Mo,\"sync\");try{return N.loadState(e.state)}finally{__wf(\"sync.load.einde\",Mo,\"sync\")}})()"
+      },
+      {
+        "voor": "e.layoutInput=Ro(N,e.layoutInput,!0);",
+        "na": "__wf(\"sync.prepare.einde\",Mo,\"sync\");e.layoutInput=Ro(N,e.layoutInput,!0);"
+      },
+      {
+        "voor": "N.yrsBlocksForStory(f,h)",
+        "na": "(()=>{__wf(\"sync.blocks.begin\",Mo,\"sync\");try{return N.yrsBlocksForStory(f,h)}finally{__wf(\"sync.blocks.einde\",Mo,\"sync\")}})()"
+      },
+      {
+        "voor": "N.measureParagraphJson(f)",
+        "na": "(()=>{__wf(\"sync.measure.begin\",Mo,\"sync\");try{return N.measureParagraphJson(f)}finally{__wf(\"sync.measure.einde\",Mo,\"sync\")}})()"
+      },
+      {
+        "voor": "let l=null,d,u=!1,c=null;",
+        "na": "__wf(\"sync.layout.begin\",Mo,\"sync\");let l=null,d,u=!1,c=null;"
+      },
+      {
+        "voor": "return!e.workerAuthoritative&&e.selection",
+        "na": "__wf(\"sync.layout.einde\",Mo,\"sync\");return!e.workerAuthoritative&&e.selection"
+      },
+      {
+        "voor": "o=N.buildDisplayListFrame(Oa(e.extras,e.layoutExtras,n?Di:void 0),e.expectedFrameEpoch);await xr(e.id,o,performance.now()-a,We,void 0,a,!1,e.paintCaret,e.layoutExtras===void 0?void 0:n??r??void 0,i);return",
+        "na": "o=(()=>{__wf(\"sync.frame.begin\",Mo,\"sync\");try{return N.buildDisplayListFrame(Oa(e.extras,e.layoutExtras,n?Di:void 0),e.expectedFrameEpoch)}finally{__wf(\"sync.frame.einde\",Mo,\"sync\")}})();__wf(\"sync.publish.begin\",Mo,\"sync\");await xr(e.id,o,performance.now()-a,We,void 0,a,!1,e.paintCaret,e.layoutExtras===void 0?void 0:n??r??void 0,i);__wf(\"sync.publish.einde\",e.id,\"sync\");return"
+      }
+    ],
+    "wasm_ongewijzigd": true,
+    "doel": "Alleen sync-metadata en faseklokken; geen overslaan/samenvoegen van aanvragen of mutaties."
+  },
+  "native": {
+    "native": {
+      "geslaagd": true,
+      "programma_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+      "rapport_sha256": "e13e9a17584cd87cca3bc5bff7166967c277be67668a1d6e229aa4fd141cc19a",
+      "schema": 2,
+      "worker_disable": {
+        "result": {},
+        "id": 359
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "programma_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+      "rapport_sha256": "e9aa6179b7d4d925d17cf700102562bde6c6a2a85a0ce9519ec4fbfbe3f1d6a4",
+      "schema": 2,
+      "worker_disable": {
+        "result": {},
+        "id": 187
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "metadata": {
+      "geslaagd": true,
+      "programma_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+      "rapport_sha256": "07cf1294068fade802944324a007cf7b7840e5e39ebe6f3781456e1b420f0af1",
+      "schema": 2,
+      "worker_disable": {
+        "result": {},
+        "id": 181
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    },
+    "metadata-schoon": {
+      "geslaagd": true,
+      "programma_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+      "rapport_sha256": "49f06326075675ade6bf1d2c7cc04aed415cd3c60f323247a8129c8a572e0f72",
+      "schema": 2,
+      "worker_disable": {
+        "result": {},
+        "id": 327
+      },
+      "binnen_hersteld": true,
+      "overgeslagen": 0
+    }
+  },
+  "opnamegrenzen": {
+    "bruikbare_hoofdronden": [
+      "native",
+      "metadata-schoon"
+    ],
+    "native": "Eerste ronde meet Workerfasen. Harnaspad verwees nog naar de oudere transportprobe, dus geen nieuwe main-snapshotmetadata uit deze ronde afgeleid.",
+    "herhaling_en_metadata": "Deze twee aanvullende eigen, geïsoleerde ronden hebben deels gelijktijdig gelopen. Alle ruwe data bewaard, geen tijden of aantallen daarvan gebruikt voor conclusies over werkkosten.",
+    "herstel": "Proef-met-metadata.py bindt expliciet de nieuwe transportprobe. Metadata-schoon pas gestart nadat beide eerdere processen klaar waren; Worker- en mainvelden daarna één op één gecontroleerd.",
+    "grens": "Ook de twee bruikbare ronden zijn diagnostisch met verschillende transportuitlezing, geen gewone afwisselende ABBA of productacceptatie."
+  },
+  "analyse": {
+    "native": {
+      "syncs": 17,
+      "syncs_met_metadata": 0,
+      "fasen_ms_som": {
+        "sync.load": 9.999999999998181,
+        "sync.prepare": 10.999999999998181,
+        "sync.blocks": 1954.0000000000018,
+        "sync.layout": 1900.0,
+        "sync.frame": 1524.9999999999964,
+        "sync.publish": 596.0000000000055
+      },
+      "faseaantallen": {
+        "sync.load": 17,
+        "sync.prepare": 17,
+        "sync.blocks": 17,
+        "sync.layout": 17,
+        "sync.frame": 17,
+        "sync.publish": 17
+      },
+      "workerAuthoritative": {
+        "False": 17
+      },
+      "stateBytes": {
+        "2320": 1,
+        "2354": 1,
+        "2358": 2,
+        "2378": 1,
+        "2384": 1,
+        "2389": 1,
+        "2391": 1,
+        "2388": 1,
+        "2381": 1,
+        "2392": 1,
+        "2400": 2,
+        "2387": 1,
+        "2396": 1,
+        "2413": 1,
+        "2380": 1
+      },
+      "fontrevisies": [
+        8
+      ],
+      "main_source_gewijzigd_tijdens_rondreis": null,
+      "syncs_met_later_updatebericht": 16,
+      "overgeslagen": 0,
+      "ruwe_syncs": [
+        {
+          "id": 14,
+          "layoutRevision": 2,
+          "workerAuthoritative": false,
+          "stateBytes": 2320,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "d1e802dd3fcd6355-6",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 450,
+          "taak_ms": 391,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 9962,
+              "eind": 9965,
+              "ms": 3
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 9962,
+              "eind": 9965,
+              "ms": 3
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 9966.000000000002,
+              "eind": 10099,
+              "ms": 132.99999999999818
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 10099,
+              "eind": 10236,
+              "ms": 137
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 10238,
+              "eind": 10344,
+              "ms": 106
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 10344,
+              "eind": 10353,
+              "ms": 9
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "layoutRevision": 3,
+          "workerAuthoritative": false,
+          "stateBytes": 2354,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "3d7d8fcedf90fd46-9",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 486,
+          "taak_ms": 483.0000000000018,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 10467,
+              "eind": 10468,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 10467,
+              "eind": 10468,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 10468,
+              "eind": 10610,
+              "ms": 142
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 10610,
+              "eind": 10768,
+              "ms": 158
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 10770,
+              "eind": 10894,
+              "ms": 124
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 10894,
+              "eind": 10950.000000000002,
+              "ms": 56.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "layoutRevision": 4,
+          "workerAuthoritative": false,
+          "stateBytes": 2358,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "0009bd4a06c48faa-13",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 395,
+          "taak_ms": 379,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 11117,
+              "eind": 11118,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 11117,
+              "eind": 11118,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 11118,
+              "eind": 11249,
+              "ms": 131
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 11249,
+              "eind": 11376,
+              "ms": 127
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 11377,
+              "eind": 11464,
+              "ms": 87
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 11464,
+              "eind": 11496,
+              "ms": 32
+            }
+          ]
+        },
+        {
+          "id": 39,
+          "layoutRevision": 5,
+          "workerAuthoritative": false,
+          "stateBytes": 2378,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "21c1824d2d63bcc9-17",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 378,
+          "taak_ms": 331,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 11644,
+              "eind": 11644,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 11644,
+              "eind": 11645,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 11645,
+              "eind": 11758,
+              "ms": 113
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 11758,
+              "eind": 11854.000000000002,
+              "ms": 96.00000000000182
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 11855,
+              "eind": 11935,
+              "ms": 80
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 11935,
+              "eind": 11975,
+              "ms": 40
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "layoutRevision": 6,
+          "workerAuthoritative": false,
+          "stateBytes": 2384,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "b5ec87c610e112ef-21",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 4,
+          "rondreis_ms": 468,
+          "taak_ms": 411,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 12170,
+              "eind": 12171,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 12170,
+              "eind": 12171,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 12171,
+              "eind": 12342,
+              "ms": 171
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 12342,
+              "eind": 12473,
+              "ms": 131
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 12475,
+              "eind": 12546,
+              "ms": 71
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 12546,
+              "eind": 12581,
+              "ms": 35
+            }
+          ]
+        },
+        {
+          "id": 57,
+          "layoutRevision": 7,
+          "workerAuthoritative": false,
+          "stateBytes": 2389,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "59f87d63d2a25c58-25",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 336.00000000000364,
+          "taak_ms": 334,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 12679,
+              "eind": 12679,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 12679,
+              "eind": 12679,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 12679,
+              "eind": 12785,
+              "ms": 106
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 12785,
+              "eind": 12890,
+              "ms": 105
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 12891,
+              "eind": 12977,
+              "ms": 86
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 12977,
+              "eind": 13013,
+              "ms": 36
+            }
+          ]
+        },
+        {
+          "id": 66,
+          "layoutRevision": 8,
+          "workerAuthoritative": false,
+          "stateBytes": 2391,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "41ef650719269875-29",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 326,
+          "taak_ms": 316,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 13128,
+              "eind": 13129,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 13128,
+              "eind": 13129,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 13129,
+              "eind": 13230,
+              "ms": 101
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 13230,
+              "eind": 13331,
+              "ms": 101
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 13332,
+              "eind": 13411,
+              "ms": 79
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 13411,
+              "eind": 13444,
+              "ms": 33
+            }
+          ]
+        },
+        {
+          "id": 75,
+          "layoutRevision": 9,
+          "workerAuthoritative": false,
+          "stateBytes": 2388,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "60a0bb36592efcf0-33",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 355,
+          "taak_ms": 327,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 13586,
+              "eind": 13587,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 13586,
+              "eind": 13587,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 13587,
+              "eind": 13690,
+              "ms": 103
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 13690,
+              "eind": 13795,
+              "ms": 105
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 13796.000000000002,
+              "eind": 13876,
+              "ms": 79.99999999999818
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 13876,
+              "eind": 13913,
+              "ms": 37
+            }
+          ]
+        },
+        {
+          "id": 82,
+          "layoutRevision": 10,
+          "workerAuthoritative": false,
+          "stateBytes": 2381,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "28c1a5fa0e36170d-36",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 324,
+          "taak_ms": 320.0000000000018,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 13990,
+              "eind": 13990,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 13990,
+              "eind": 13990,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 13990,
+              "eind": 14095,
+              "ms": 105
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 14095,
+              "eind": 14197.000000000002,
+              "ms": 102.00000000000182
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 14199,
+              "eind": 14283,
+              "ms": 84
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 14283,
+              "eind": 14309.000000000002,
+              "ms": 26.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 91,
+          "layoutRevision": 11,
+          "workerAuthoritative": false,
+          "stateBytes": 2392,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "6d26926696d4f6a8-40",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 317.99999999999636,
+          "taak_ms": 317.0,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 14447.000000000002,
+              "eind": 14448,
+              "ms": 0.999999999998181
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 14447.000000000002,
+              "eind": 14448,
+              "ms": 0.999999999998181
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 14448,
+              "eind": 14546.000000000002,
+              "ms": 98.00000000000182
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 14546.000000000002,
+              "eind": 14646,
+              "ms": 99.99999999999818
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 14648,
+              "eind": 14729.000000000002,
+              "ms": 81.00000000000182
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 14729.000000000002,
+              "eind": 14764.000000000002,
+              "ms": 35.0
+            }
+          ]
+        },
+        {
+          "id": 100,
+          "layoutRevision": 12,
+          "workerAuthoritative": false,
+          "stateBytes": 2400,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "49e965cc0cea56ee-44",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 328,
+          "taak_ms": 325,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 14882,
+              "eind": 14882,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 14882,
+              "eind": 14882,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 14882,
+              "eind": 14981,
+              "ms": 99
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 14981,
+              "eind": 15083,
+              "ms": 102
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 15084,
+              "eind": 15178,
+              "ms": 94
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 15178,
+              "eind": 15207,
+              "ms": 29
+            }
+          ]
+        },
+        {
+          "id": 109,
+          "layoutRevision": 13,
+          "workerAuthoritative": false,
+          "stateBytes": 2400,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "1833dd5a8bfe6ae2-48",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 395.99999999999636,
+          "taak_ms": 383,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 15358,
+              "eind": 15358,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 15358,
+              "eind": 15358,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 15358,
+              "eind": 15490,
+              "ms": 132
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 15490,
+              "eind": 15609,
+              "ms": 119
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 15610.000000000002,
+              "eind": 15702,
+              "ms": 91.99999999999818
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 15702,
+              "eind": 15741,
+              "ms": 39
+            }
+          ]
+        },
+        {
+          "id": 118,
+          "layoutRevision": 14,
+          "workerAuthoritative": false,
+          "stateBytes": 2387,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "23f429bf12f535db-52",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 376.00000000000364,
+          "taak_ms": 374.0000000000018,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 15892,
+              "eind": 15892,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 15892,
+              "eind": 15892,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 15892,
+              "eind": 16007.000000000002,
+              "ms": 115.00000000000182
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 16007.000000000002,
+              "eind": 16125,
+              "ms": 117.99999999999818
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 16126.000000000002,
+              "eind": 16209,
+              "ms": 82.99999999999818
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 16209,
+              "eind": 16266.000000000002,
+              "ms": 57.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 127,
+          "layoutRevision": 15,
+          "workerAuthoritative": false,
+          "stateBytes": 2396,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "e29dd56ca296ffbc-56",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 336,
+          "taak_ms": 334,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 16383,
+              "eind": 16383,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 16383,
+              "eind": 16383,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 16383,
+              "eind": 16489,
+              "ms": 106
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 16489,
+              "eind": 16588,
+              "ms": 99
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 16589,
+              "eind": 16677,
+              "ms": 88
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 16677,
+              "eind": 16717,
+              "ms": 40
+            }
+          ]
+        },
+        {
+          "id": 136,
+          "layoutRevision": 16,
+          "workerAuthoritative": false,
+          "stateBytes": 2413,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "8919914351f068ea-60",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 2,
+          "rondreis_ms": 370,
+          "taak_ms": 369,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 16838,
+              "eind": 16839,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 16838,
+              "eind": 16839,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 16839,
+              "eind": 16939,
+              "ms": 100
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 16939,
+              "eind": 17042,
+              "ms": 103
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 17043,
+              "eind": 17168,
+              "ms": 125
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 17168,
+              "eind": 17207,
+              "ms": 39
+            }
+          ]
+        },
+        {
+          "id": 143,
+          "layoutRevision": 17,
+          "workerAuthoritative": false,
+          "stateBytes": 2380,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "961bb8ff14121b4b-63",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 2,
+          "rondreis_ms": 399,
+          "taak_ms": 319,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 17319,
+              "eind": 17319,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 17319,
+              "eind": 17319,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 17319,
+              "eind": 17430,
+              "ms": 111
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 17430,
+              "eind": 17527,
+              "ms": 97
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 17528,
+              "eind": 17611,
+              "ms": 83
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 17611,
+              "eind": 17638,
+              "ms": 27
+            }
+          ]
+        },
+        {
+          "id": 148,
+          "layoutRevision": 18,
+          "workerAuthoritative": false,
+          "stateBytes": 2358,
+          "renderInputs": null,
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": null,
+          "worker_source_bij_start": "425c16e7a2ad4ec9-65",
+          "reply_documentVersion": null,
+          "main_source_bij_ontvangst": null,
+          "metadata_beschikbaar": false,
+          "main_source_gewijzigd_tijdens_rondreis": null,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 0,
+          "rondreis_ms": 300.99999999999636,
+          "taak_ms": 297,
+          "layoutInput_sha256": null,
+          "layoutInput_tekens": null,
+          "bodyStory": null,
+          "main_stack": null,
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 17730,
+              "eind": 17730,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 17730,
+              "eind": 17730,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 17730,
+              "eind": 17818,
+              "ms": 88
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 17818,
+              "eind": 17918,
+              "ms": 100
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 17919,
+              "eind": 18001,
+              "ms": 82
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 18001,
+              "eind": 18027,
+              "ms": 26
+            }
+          ]
+        }
+      ],
+      "grens": "Voorbereiding bevat load als geneste subfase; niet optellen. Publicatie is asynchroon en kan wachten/overlappen. Versietokens zijn replica-gebonden: main en Worker niet op gelijkheid vergelijken. Verandering binnen de main-rondreis bewijst evenmin dat het frame achterhaald of weggegooid is."
+    },
+    "metadata-schoon": {
+      "syncs": 17,
+      "syncs_met_metadata": 17,
+      "fasen_ms_som": {
+        "sync.load": 14.0,
+        "sync.prepare": 15.000000000001819,
+        "sync.blocks": 1885.0,
+        "sync.layout": 1899.0000000000055,
+        "sync.frame": 1541.0,
+        "sync.publish": 615.0000000000036
+      },
+      "faseaantallen": {
+        "sync.load": 17,
+        "sync.prepare": 17,
+        "sync.blocks": 17,
+        "sync.layout": 17,
+        "sync.frame": 17,
+        "sync.publish": 17
+      },
+      "workerAuthoritative": {
+        "False": 17
+      },
+      "stateBytes": {
+        "2319": 1,
+        "2357": 1,
+        "2360": 1,
+        "2368": 2,
+        "2382": 2,
+        "2366": 1,
+        "2385": 2,
+        "2395": 1,
+        "2404": 1,
+        "2410": 1,
+        "2417": 1,
+        "2396": 1,
+        "2389": 1,
+        "2353": 1
+      },
+      "fontrevisies": [
+        8
+      ],
+      "main_source_gewijzigd_tijdens_rondreis": 16,
+      "syncs_met_later_updatebericht": 16,
+      "overgeslagen": 0,
+      "ruwe_syncs": [
+        {
+          "id": 14,
+          "layoutRevision": 2,
+          "workerAuthoritative": false,
+          "stateBytes": 2319,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-3",
+          "worker_source_bij_start": "632b6cee4df44fc1-6",
+          "reply_documentVersion": "b448b9fdeac6da1a-6",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-6",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 511.99999999999636,
+          "taak_ms": 416,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 9764,
+              "eind": 9770,
+              "ms": 6
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 9764,
+              "eind": 9770,
+              "ms": 6
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 9770,
+              "eind": 9910,
+              "ms": 140
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 9910,
+              "eind": 10053,
+              "ms": 143
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 10056.000000000002,
+              "eind": 10168.000000000002,
+              "ms": 112.0
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 10168.000000000002,
+              "eind": 10179,
+              "ms": 10.999999999998181
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "layoutRevision": 3,
+          "workerAuthoritative": false,
+          "stateBytes": 2357,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-6",
+          "worker_source_bij_start": "b448b9fdeac6da1a-9",
+          "reply_documentVersion": "f25fd938b009001f-9",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-9",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 488,
+          "taak_ms": 478,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 10294,
+              "eind": 10295,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 10294,
+              "eind": 10295,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 10296,
+              "eind": 10447.000000000002,
+              "ms": 151.00000000000182
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 10447.000000000002,
+              "eind": 10605,
+              "ms": 157.99999999999818
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 10606,
+              "eind": 10719,
+              "ms": 113
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 10719,
+              "eind": 10772,
+              "ms": 53
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "layoutRevision": 4,
+          "workerAuthoritative": false,
+          "stateBytes": 2360,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-10",
+          "worker_source_bij_start": "f25fd938b009001f-13",
+          "reply_documentVersion": "071afa99b9503fd0-13",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-13",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 385,
+          "taak_ms": 382.9999999999982,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 10966.000000000002,
+              "eind": 10967,
+              "ms": 0.999999999998181
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 10966.000000000002,
+              "eind": 10967,
+              "ms": 0.999999999998181
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 10967,
+              "eind": 11097,
+              "ms": 130
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 11097,
+              "eind": 11209,
+              "ms": 112
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 11210,
+              "eind": 11310,
+              "ms": 100
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 11310,
+              "eind": 11349,
+              "ms": 39
+            }
+          ]
+        },
+        {
+          "id": 39,
+          "layoutRevision": 5,
+          "workerAuthoritative": false,
+          "stateBytes": 2368,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-14",
+          "worker_source_bij_start": "071afa99b9503fd0-17",
+          "reply_documentVersion": "3046bec55ce5a858-17",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-17",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 344,
+          "taak_ms": 309,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 11469,
+              "eind": 11470,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 11469,
+              "eind": 11470,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 11470,
+              "eind": 11565,
+              "ms": 95
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 11565,
+              "eind": 11662,
+              "ms": 97
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 11663,
+              "eind": 11744,
+              "ms": 81
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 11744,
+              "eind": 11778,
+              "ms": 34
+            }
+          ]
+        },
+        {
+          "id": 46,
+          "layoutRevision": 6,
+          "workerAuthoritative": false,
+          "stateBytes": 2368,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-17",
+          "worker_source_bij_start": "3046bec55ce5a858-20",
+          "reply_documentVersion": "de68e74465a71680-20",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-20",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 396,
+          "taak_ms": 392.0000000000018,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 11869,
+              "eind": 11869,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 11869,
+              "eind": 11869,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 11869,
+              "eind": 11988,
+              "ms": 119
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 11988,
+              "eind": 12126,
+              "ms": 138
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 12128,
+              "eind": 12225,
+              "ms": 97
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 12225,
+              "eind": 12261.000000000002,
+              "ms": 36.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "layoutRevision": 7,
+          "workerAuthoritative": false,
+          "stateBytes": 2382,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-21",
+          "worker_source_bij_start": "de68e74465a71680-24",
+          "reply_documentVersion": "c5cbcf82f55be731-24",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-24",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 342,
+          "taak_ms": 314.0000000000018,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 12367,
+              "eind": 12367,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 12367,
+              "eind": 12367,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 12367,
+              "eind": 12467,
+              "ms": 100
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 12467,
+              "eind": 12566,
+              "ms": 99
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 12567,
+              "eind": 12653,
+              "ms": 86
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 12653,
+              "eind": 12681.000000000002,
+              "ms": 28.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 62,
+          "layoutRevision": 8,
+          "workerAuthoritative": false,
+          "stateBytes": 2366,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-24",
+          "worker_source_bij_start": "c5cbcf82f55be731-27",
+          "reply_documentVersion": "1259c66a36054b7a-27",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-27",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 310,
+          "taak_ms": 303,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 12757,
+              "eind": 12757,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 12757,
+              "eind": 12757,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 12757,
+              "eind": 12853,
+              "ms": 96
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 12853,
+              "eind": 12960,
+              "ms": 107
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 12961,
+              "eind": 13034,
+              "ms": 73
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 13034,
+              "eind": 13060,
+              "ms": 26
+            }
+          ]
+        },
+        {
+          "id": 71,
+          "layoutRevision": 9,
+          "workerAuthoritative": false,
+          "stateBytes": 2385,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-28",
+          "worker_source_bij_start": "1259c66a36054b7a-31",
+          "reply_documentVersion": "58d0585d3fbc4867-31",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-31",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 359,
+          "taak_ms": 322,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 13194,
+              "eind": 13194,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 13194,
+              "eind": 13194,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 13195,
+              "eind": 13304,
+              "ms": 109
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 13304,
+              "eind": 13405.000000000002,
+              "ms": 101.00000000000182
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 13407,
+              "eind": 13485,
+              "ms": 78
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 13485,
+              "eind": 13516,
+              "ms": 31
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "layoutRevision": 10,
+          "workerAuthoritative": false,
+          "stateBytes": 2385,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-32",
+          "worker_source_bij_start": "58d0585d3fbc4867-35",
+          "reply_documentVersion": "cd5582409c57ce3d-35",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-35",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 334,
+          "taak_ms": 334,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 13691,
+              "eind": 13692,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 13691,
+              "eind": 13692,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 13692,
+              "eind": 13795,
+              "ms": 103
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 13795,
+              "eind": 13897,
+              "ms": 102
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 13898,
+              "eind": 13989,
+              "ms": 91
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 13989,
+              "eind": 14025,
+              "ms": 36
+            }
+          ]
+        },
+        {
+          "id": 89,
+          "layoutRevision": 11,
+          "workerAuthoritative": false,
+          "stateBytes": 2382,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-36",
+          "worker_source_bij_start": "cd5582409c57ce3d-39",
+          "reply_documentVersion": "4a8c589bf4b09064-39",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-39",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 312,
+          "taak_ms": 311,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 14147,
+              "eind": 14147,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 14147,
+              "eind": 14147,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 14147,
+              "eind": 14245.000000000002,
+              "ms": 98.00000000000182
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 14245.000000000002,
+              "eind": 14353,
+              "ms": 107.99999999999818
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 14355,
+              "eind": 14433,
+              "ms": 78
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 14433,
+              "eind": 14458,
+              "ms": 25
+            }
+          ]
+        },
+        {
+          "id": 98,
+          "layoutRevision": 12,
+          "workerAuthoritative": false,
+          "stateBytes": 2395,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-40",
+          "worker_source_bij_start": "4a8c589bf4b09064-43",
+          "reply_documentVersion": "7c9e0d5f92cc0793-43",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-43",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 330,
+          "taak_ms": 327.9999999999982,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 14579,
+              "eind": 14579,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 14579,
+              "eind": 14579,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 14579,
+              "eind": 14680,
+              "ms": 101
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 14680,
+              "eind": 14784,
+              "ms": 104
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 14785,
+              "eind": 14869,
+              "ms": 84
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 14869,
+              "eind": 14906,
+              "ms": 37
+            }
+          ]
+        },
+        {
+          "id": 107,
+          "layoutRevision": 13,
+          "workerAuthoritative": false,
+          "stateBytes": 2404,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-44",
+          "worker_source_bij_start": "7c9e0d5f92cc0793-47",
+          "reply_documentVersion": "ce1b6cb1d93a7a97-47",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-47",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 362.00000000000364,
+          "taak_ms": 357.0000000000018,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 15061,
+              "eind": 15062.000000000002,
+              "ms": 1.000000000001819
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 15061,
+              "eind": 15062.000000000002,
+              "ms": 1.000000000001819
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 15062.000000000002,
+              "eind": 15175,
+              "ms": 112.99999999999818
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 15175,
+              "eind": 15290.000000000002,
+              "ms": 115.00000000000182
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 15291,
+              "eind": 15383,
+              "ms": 92
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 15383,
+              "eind": 15418.000000000002,
+              "ms": 35.00000000000182
+            }
+          ]
+        },
+        {
+          "id": 116,
+          "layoutRevision": 14,
+          "workerAuthoritative": false,
+          "stateBytes": 2410,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-48",
+          "worker_source_bij_start": "ce1b6cb1d93a7a97-51",
+          "reply_documentVersion": "8de9281c7f30b6fc-51",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-51",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 351,
+          "taak_ms": 347,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 15579,
+              "eind": 15580,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 15579,
+              "eind": 15580,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 15580,
+              "eind": 15694,
+              "ms": 114
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 15694,
+              "eind": 15809.000000000002,
+              "ms": 115.00000000000182
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 15810,
+              "eind": 15888,
+              "ms": 78
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 15888,
+              "eind": 15926,
+              "ms": 38
+            }
+          ]
+        },
+        {
+          "id": 125,
+          "layoutRevision": 15,
+          "workerAuthoritative": false,
+          "stateBytes": 2417,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-52",
+          "worker_source_bij_start": "8de9281c7f30b6fc-55",
+          "reply_documentVersion": "df112b334ad1124b-55",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-55",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 399,
+          "taak_ms": 379,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 16044,
+              "eind": 16044,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 16044,
+              "eind": 16045.000000000002,
+              "ms": 1.000000000001819
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 16045.000000000002,
+              "eind": 16166,
+              "ms": 120.99999999999818
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 16166,
+              "eind": 16271,
+              "ms": 105
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 16273,
+              "eind": 16367,
+              "ms": 94
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 16367,
+              "eind": 16423,
+              "ms": 56
+            }
+          ]
+        },
+        {
+          "id": 134,
+          "layoutRevision": 16,
+          "workerAuthoritative": false,
+          "stateBytes": 2396,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-56",
+          "worker_source_bij_start": "df112b334ad1124b-59",
+          "reply_documentVersion": "443e7807f9bcbd9d-59",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-59",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 381.00000000000364,
+          "taak_ms": 378,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 16533,
+              "eind": 16533,
+              "ms": 0
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 16533,
+              "eind": 16533,
+              "ms": 0
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 16533,
+              "eind": 16631,
+              "ms": 98
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 16631,
+              "eind": 16731,
+              "ms": 100
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 16732,
+              "eind": 16863,
+              "ms": 131
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 16863,
+              "eind": 16911,
+              "ms": 48
+            }
+          ]
+        },
+        {
+          "id": 143,
+          "layoutRevision": 17,
+          "workerAuthoritative": false,
+          "stateBytes": 2389,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-60",
+          "worker_source_bij_start": "443e7807f9bcbd9d-63",
+          "reply_documentVersion": "ea1fc24fb07abfad-63",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-63",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": true,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 3,
+          "rondreis_ms": 356.99999999999636,
+          "taak_ms": 321,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 17168,
+              "eind": 17169,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 17168,
+              "eind": 17169,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 17169,
+              "eind": 17273,
+              "ms": 104
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 17273,
+              "eind": 17372,
+              "ms": 99
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 17373,
+              "eind": 17451,
+              "ms": 78
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 17451,
+              "eind": 17488,
+              "ms": 37
+            }
+          ]
+        },
+        {
+          "id": 150,
+          "layoutRevision": 18,
+          "workerAuthoritative": false,
+          "stateBytes": 2353,
+          "renderInputs": [
+            {
+              "story": "body",
+              "env": {}
+            }
+          ],
+          "measureInputs": 0,
+          "fontsRevision": 8,
+          "main_source_bij_verzending": "a69b153cfb02dd1d-63",
+          "worker_source_bij_start": "ea1fc24fb07abfad-66",
+          "reply_documentVersion": "8187f1ca6b9bab3b-66",
+          "main_source_bij_ontvangst": "a69b153cfb02dd1d-63",
+          "metadata_beschikbaar": true,
+          "main_source_gewijzigd_tijdens_rondreis": false,
+          "latere_applyUpdate_verzendingen_voor_antwoord": 0,
+          "rondreis_ms": 352.99999999999636,
+          "taak_ms": 312,
+          "layoutInput_sha256": "2e6f0d367c2e7b38139ba88956c4074ea54754ab6681dd22ff21c0664ec614b8",
+          "layoutInput_tekens": 1843,
+          "bodyStory": "body",
+          "main_stack": "meta@\npostMessage@\n@tauri://localhost/assets/index-DtZ2IWH9.js:223:108805\nPromise@[native code]\nrequest@tauri://localhost/assets/index-DtZ2IWH9.js:223:108672\nsync@tauri://localhost/assets/index-DtZ2IWH9.js:223:104470\n@tauri://localhost/assets/editors-bODdYQ4o.js:68:62129\npn@tauri://localhost/assets/editors-bODdYQ4o.js:12:67128\n@tauri://localhost/assets/editors-bODdYQ4o.js:12:63936",
+          "fasen": [
+            {
+              "soort": "sync.load",
+              "begin": 17640,
+              "eind": 17641,
+              "ms": 1
+            },
+            {
+              "soort": "sync.prepare",
+              "begin": 17640,
+              "eind": 17641,
+              "ms": 1
+            },
+            {
+              "soort": "sync.blocks",
+              "begin": 17641,
+              "eind": 17734,
+              "ms": 93
+            },
+            {
+              "soort": "sync.layout",
+              "begin": 17734,
+              "eind": 17830.000000000004,
+              "ms": 96.00000000000364
+            },
+            {
+              "soort": "sync.frame",
+              "begin": 17832,
+              "eind": 17907,
+              "ms": 75
+            },
+            {
+              "soort": "sync.publish",
+              "begin": 17907,
+              "eind": 17952,
+              "ms": 45
+            }
+          ]
+        }
+      ],
+      "grens": "Voorbereiding bevat load als geneste subfase; niet optellen. Publicatie is asynchroon en kan wachten/overlappen. Versietokens zijn replica-gebonden: main en Worker niet op gelijkheid vergelijken. Verandering binnen de main-rondreis bewijst evenmin dat het frame achterhaald of weggegooid is."
+    }
+  },
+  "contractlezing": {
+    "waarnemingen": [
+      "Client.sync zet snapshotbuffers op transfer, roept recordSent al vóór postMessage aan en verwacht daarna via jl een FrameDelta, caret en selection. Een lege succesack voldoet niet aan dat contract.",
+      "recordSent bewaart lastSnapshotId, remoteVector en appliedFontsRevision. recordSync verwerkt de fontrevisie op antwoordvolgorde; client.sync zet ready/revision na decodering.",
+      "Worker Ea kan state laden, media/nootscheidingen en fonts veranderen, renderInputs/meetinputs voorbereiden, layout en selectie bijwerken. De sync-tak bouwt daarna een frame en xr retourneert onder meer updates en een stateVector.",
+      "Gehele sync weggooien of antwoorden als gewone lay-out behandelen is daarom niet aangetoond veilig. Render-supersession vereist eerst een afzonderlijk contract voor mutaties, vectoren/fonts, benodigde frame-/caret-/selectie-ack en stale-afhandeling."
+    ],
+    "grens": "Bronlezing alleen; welke branches de eigen invoer bereikt wordt met metadata en fasen afzonderlijk getoetst. Geen gedrag gewijzigd."
+  },
+  "versiedomein": {
+    "lib_sha256": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+    "batch_sha256": "b16f9aedc6aa16977e139f212bd3561f05daecd35267b90d2524517b661dab73",
+    "lib_fragment": "    /// The optimistic-concurrency token of this replica's committed state.\n    ///\n    /// It changes with every committed change (local, remote, undo and redo) and whenever the\n    /// document or its retained source is replaced. It is scoped to this replica: equal tokens\n    /// from different replicas mean nothing.\n    pub fn version(&self) -> DocumentVersion {\n        batch::version_token(\n            self.version_nonce.load(Ordering::Relaxed),\n            self.epoch.load(Ordering::Relaxed),\n        )\n    }\n\n",
+    "batch_fragment": "pub(crate) fn version_token(nonce: u64, epoch: u64) -> DocumentVersion {\n    DocumentVersion(format!(\"{nonce:016x}-{epoch}\"))\n}",
+    "betekenis": "Tokens zijn replica-gebonden, niet globaal vergelijkbaar. Main-bron bij verzenden/ontvangen is dezelfde sessie tijdens deze vaste proef; tokenverandering daar toont alleen verandering van die bron tijdens de rondreis. Worker-token vóór snapshot en in antwoord apart bewaren."
+  },
+  "omgevingen": {
+    "syncrequests": [
+      {
+        "id": 14,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 21,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 30,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 39,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 46,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 55,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 62,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 71,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 80,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 89,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 98,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 107,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 116,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 125,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 134,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 143,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      },
+      {
+        "id": 150,
+        "renderInputs": [
+          {
+            "story": "body",
+            "env": {}
+          }
+        ],
+        "layout_renderEnv": {
+          "compatibilityFlags": {
+            "compatibilityMode": 14,
+            "noLeading": false,
+            "doNotExpandShiftReturn": false,
+            "useWord97LineBreakRules": false,
+            "balanceSingleByteDoubleByteWidth": false,
+            "doNotUseHTMLParagraphAutoSpacing": false,
+            "suppressSpBfAfterPgBrk": false,
+            "allowSpaceOfSameStyleInTable": false,
+            "adjustLineHeightInTable": false
+          },
+          "themeColors": {
+            "dk1": "000000",
+            "lt1": "FFFFFF",
+            "dk2": "1F497D",
+            "lt2": "EEECE1",
+            "accent1": "4F81BD",
+            "accent2": "C0504D",
+            "accent3": "9BBB59",
+            "accent4": "8064A2",
+            "accent5": "4BACC6",
+            "accent6": "F79646",
+            "hlink": "0000FF",
+            "folHlink": "800080"
+          },
+          "defaultTabStopTwips": 720,
+          "numericIds": {},
+          "showHiddenText": false,
+          "mediaTokens": true,
+          "defaultParagraphStyleId": "Normal",
+          "tocStyleIds": []
+        },
+        "layout_keys": [
+          "bodyStory",
+          "options",
+          "regions",
+          "notes",
+          "renderEnv",
+          "measurement",
+          "cachedPageTotals"
+        ]
+      }
+    ],
+    "grens": "Lege legacy renderInputs.env naast expliciete layoutomgeving is waargenomen; niet automatisch effectief ongelijk. Decode-/default-/sectie-/settingsnormalisatie en fouten bepalen het effectieve contract. Geen velden weggehaald of call overgeslagen."
+  },
+  "bronbinding": {
+    "index-DtZ2IWH9.js": {
+      "sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c",
+      "items": [
+        {
+          "name": "invalidate",
+          "source": "invalidate(){this.ordered=null,this.byIndex=null}"
+        },
+        {
+          "name": "sync",
+          "source": "async sync(t,n,r,a=!1,o={}){let i=t.fontsRevision,s=o.stateVector?.slice(),u=await this.request({type:\"sync\",snapshot:t,extras:n,expectedFrameEpoch:r,paintCaret:a,...o.layoutExtras!==void 0?{layoutExtras:o.layoutExtras}:{},...o.layoutReply?{layoutReply:o.layoutReply}:{},...o.headersFootersEpoch!==void 0?{headersFootersEpoch:o.headersFootersEpoch}:{},...o.provisionalPages!==void 0?{provisionalPages:o.provisionalPages}:{},...o.displayWindow?{displayWindow:o.displayWindow,...this.retainBuiltPages?{retainBuiltPages:!0}:{}}:{}},x_(t),()=>this.recordSent(s,i)),p=jl(u);return this.recordSync(u,i),this.ready=!0,this.revision=p.layoutRevision,p}"
+        },
+        {
+          "name": "invalidate",
+          "source": "invalidate(t,n){if(this.terminalError)return;if(this.documentSequence+=1,this.ready=!1,!this.commandSession&&(!this.bootstrapped||(this._openaecInitialisaties??0)>0)){(this._openaecWachtendeUpdates??=[]).push({update:t.slice(),selection:n});return}let r=t.slice(),a={id:this.nextId++,type:\"applyUpdate\",update:r,selection:n};this.worker.postMessage(a,[r.buffer])}"
+        },
+        {
+          "name": "request",
+          "source": "request(t,n=[],r){if(this.terminalError)return Promise.reject(this.terminalError);if((this._openaecInitialisaties??0)>0&&t.type!==\"bootstrap\"&&t.type!==\"open\"){let o;try{o=structuredClone({bericht:t,overdrachten:n},{transfer:n})}catch(i){return Promise.reject(i)}return Promise.resolve(this._openaecBootstrapKlaar).then(()=>this.request(o.bericht,o.overdrachten,r))}if(this.commandReplacementPending&&(t.type===\"edit\"||t.type===\"checkpoint\"||t.type===\"requestFullFrame\"||t.type===\"commandUpdate\"||t.type===\"buildPages\"||t.type===\"commandViewport\"))return Promise.reject(new ta(\"disposed\",\"Worker command document is being replaced\"));(t.type===\"open\"||(t.type===\"bootstrap\"||t.type===\"sync\")&&!t.snapshot.workerAuthoritative&&t.snapshot.state.byteLength>uCe&&(t.type!==\"bootstrap\"||!t.opened)||t.type===\"applyInput\"||t.type===\"applyDelete\"||t.type===\"proposal\"&&t.operation.kind!==\"snapshot\")&&(this.documentSequence+=1);let a=this.nextId++;return new Promise((o,i)=>{this.pending.size===0&&this.armWatchdog(),this.pending.set(a,{type:t.type,resolve:o,reject:i}),r?.(),this.worker.postMessage({...t,id:a},n)})}"
+        },
+        {
+          "name": "recordSent",
+          "source": "recordSent(t,n){this.terminalError||(this.lastSnapshotId=this.nextId-1,t&&(this.remoteVector=t.slice()),this.appliedFontsRevision=n)}"
+        },
+        {
+          "name": "recordSync",
+          "source": "recordSync(t,n){t.id>=this.lastSnapshotId&&t.id>this.lastFailedFontsSnapshotId&&(this.appliedFontsRevision=n)}"
+        },
+        {
+          "name": "x_",
+          "source": "function x_(e){return[e.state.buffer,...e.fonts.flatMap(t=>t instanceof Uint8Array?[t.buffer]:[])]}"
+        },
+        {
+          "name": "jl",
+          "source": "function jl(e){if(!e.frame)throw new dn(\"Document worker response omitted its FrameDelta\");if(!e.caret)throw new dn(\"Document worker response omitted its caret snapshot\");if(e.selection===void 0)throw new dn(\"Document worker response omitted its selection\");return{frame:new Uint8Array(e.frame),...e.pageFrames?{pageFrames:e.pageFrames.map(t=>new Uint8Array(t))}:{},updates:(e.updates??[]).map(t=>new Uint8Array(t)),engineMs:e.engineMs??0,workerTotalMs:e.workerTotalMs??0,engineProfile:e.engineProfile,caret:e.caret,selection:e.selection,selectionCursor:e.selectionCursor??null,caretPainted:e.caretPainted??!1,replayMs:e.replayMs??0,replayedPages:e.replayedPages??0,layoutRevision:e.layoutRevision??0,...e.documentVersion===void 0?{}:{documentVersion:e.documentVersion},...e.documentPreview===void 0?{}:{documentPreview:e.documentPreview},...e.documentAsOpened===void 0?{}:{documentAsOpened:e.documentAsOpened},deletedUnits:e.deletedUnits??0,...e.layoutJson!==void 0?{layoutJson:e.layoutJson}:{},...e.layoutMeta!==void 0?{layoutMeta:e.layoutMeta}:{},...e.layoutProvisional?{layoutProvisional:!0}:{}}}"
+        },
+        {
+          "name": "xr",
+          "source": "function xr(e,t,{checkForDefaultPrevented:n=!0}={}){return np(function(a){if(e?.(a),n===!1||!a||!a.defaultPrevented)return t?.(a)},\"handleEvent\")}"
+        }
+      ]
+    },
+    "editors-bODdYQ4o.js": {
+      "sha256": "2f737db7822514eac951d680227ef11b1313ca3c738507bc2dc27ce14c2740d1",
+      "items": [
+        {
+          "name": "invalidate",
+          "source": "invalidate(){this.generation+=1,this.completedGeneration=null,this.failedGeneration=null,this.resolvePending()}"
+        },
+        {
+          "name": "invalidate",
+          "source": "invalidate(){this.current=null,this.state=\"pending\"}"
+        },
+        {
+          "name": "x_",
+          "source": "function x_(e,t,n,r,o){if(r<1||o<1)return e;let{anchors:a,totalCols:s}=zP(e),l=a.find(v=>t>=v.row&&t<v.row+v.rowspan&&n>=v.col&&n<v.col+v.colspan);if(!l||r<l.rowspan||o<l.colspan||r===1&&o===1)return e;let c=e.columnWidths&&e.columnWidths.length>0?[...e.columnWidths]:Array.from({length:s},()=>1440),d=A2(c,l.col,l.colspan,o),f=z2(a,l,r,o,e.rows.length,v=>v?{...l.data,formatting:Yg(l.data,1,1)}:{type:\"tableCell\",content:[{type:\"paragraph\",content:[],formatting:{}}],formatting:Yg(l.data,1,1)}),{byStart:p,byCoveredSlot:h}=D2(f.anchors),m=l.row+l.rowspan,g=s+f.deltaCols,b=[];for(let v=0;v<f.newRowCount;v++){let y=v<m?e.rows[v]:v<l.row+r?e.rows[m-1]:e.rows[v-f.deltaRows],w=[];for(let x=0;x<g;){let j=p.get(`${v}-${x}`);if(j){w.push({...j.data,formatting:Yg(j.data,j.colspan,j.rowspan)}),x+=j.colspan;continue}let C=h.get(`${v}-${x}`);if(!C){x+=1;continue}w.push({...C.data,content:[],formatting:y_(C.data,C.colspan)}),x+=C.colspan}b.push({type:\"tableRow\",formatting:y?.formatting?{...y.formatting}:void 0,cells:w})}return{...e,rows:b,columnWidths:d}}"
+        },
+        {
+          "name": "Ea",
+          "source": "function Ea(e){return typeof e==\"string\"&&K_.test(e)}"
+        },
+        {
+          "name": "sync",
+          "source": "sync(){let z=Y.draft,ce=z?.source===\"cell\"?X.current:le.current;z&&ce&&ce.value!==z.value&&Y.setDraft({...z,value:ce.value})}"
+        },
+        {
+          "name": "layoutInWorker callback bo",
+          "source": "(F,je)=>{if(F===h.current&&X(null),Dt(F))return St.current.get(F)??null;let Et={};B.current.set(F,Et);let ut=Ve.current.get(F);if(ut&&f(F))return To(ut);if(f(F)&&Il(F)&&U.current?.engine!==F)return To(Ln(F,new Error(\"The document worker holding this document is gone\"),void 0,\"layout\"));if(!Rn(F)||!F.adoptResidentWorkerLayout){if(f(F))return To(Ln(F,new Error(\"The document worker cannot lay out this viewer document\"),void 0,\"layout\"));if(yo(F))throw Ir(F),Ln(F,new Error(\"The document worker holding proposals cannot lay out the document\"));return mn.current&&nr(F),null}let Ot=ke.current.get(F);if(Ot)return To(Ot);let Tt=(st,$t)=>{let Sn=Ve.current.get(F);if(Sn)return To(Sn);if(st instanceof Kn)return To(st);if(!Ce.current.has(F)&&!yo(F))return To(Ln(F,st,void 0,\"layout\"));let ln=st instanceof Error?st:new Error(String(st)),kn=Ke(F,$t,ln,\"layout\");return kn===\"retry\"?(cr(F)?.restart(),Promise.resolve().then(()=>Qr.current(F,je))):To(kn===\"stale\"?new Kn:Ve.current.get(F)??ln)};if((f(F)||mn.current&&to(F))&&U.current?.engine!==F&&Ce.current.has(F)){let st={current:U.current};return vn(F,async()=>null,$t=>{st.current=$t},\"layout\").then(()=>Qr.current?.(F,je)??null).catch($t=>{let Sn=Ve.current.get(F);if(Sn)throw Sn;if($t instanceof $o)throw $t;if($t instanceof Kn){if(f(F))throw $t;return null}if(f(F))throw Ln(F,$t,void 0,\"layout\");if(st.current&&De(F,st.current)&&!bn(F,$t))throw Ve.current.get(F);return null})}let A;try{A=Ir(F)}catch(st){if(f(F))return Tt(st,null);throw st}let H=A.client,ee=!H.bootstrapSent(),ie=ee?null:mr(F),we,Be;try{we=F.adoptResidentWorkerLayout(je),Be=F.residentWorkerSnapshot(ee?{}:{knownStateVector:H.remoteStateVector(),knownFontsRevision:H.syncedFontsRevision()})}catch(st){if(f(F))return Tt(st,A);throw st}if(!Be){if(f(F))return Tt(new Error(\"Document worker snapshot was not available\"),A);if(yo(F))throw Ln(F,new Error(\"The document worker holding proposals cannot lay out the document\"));return mn.current&&nr(F),null}let Ne=my(je)??\"\";yj(L.current,Be,Ne),$.current!==null&&Ne!==$.current&&(E.current+=1,P.invalidate()),$.current=Ne;let et=E.current,It={layoutExtras:JSON.stringify(Mt()),...!ee&&d?.current?{layoutReply:\"meta\",headersFootersEpoch:Qt.current.get(H)?.epoch??0}:{},stateVector:f(F)||mn.current&&to(F)?A.stateVector:F.encodeStateVector(),...ee&&A.opened?{opened:!0}:{},displayWindow:Ze.current.has(F)?bj:zt.current,...ee?{provisionalPages:AH,heapLimitBytes:v.current,...tn()}:{}},ot=!ee&&Zt.current&&qt.shouldPaint(performance.now()),yt=ee?H.bootstrap(Be,\"\",It):H.sync(Be,\"\",ie?.frameEpoch??0,ot,It),Wt=st=>{let $t=U.current;if(Vn.current||A.load!==K.current||$t&&$t.engine!==F)return Yn(F)?To(new Kn):null;let Sn=Ve.current.get(F);if(Sn)return To(Sn);if(f(F)&&st instanceof Kn)return To(st);if(yo(F)&&st instanceof Kn)return null;let ln=st instanceof $o;if(ln&&ke.current.get(F))return To(st);if(!ln&&f(F))return Tt(st,A);if(!$t)return yo(F)?To(Ln(F,st)):null;if(ln){if(F.residentWorkerProbe()?.layoutRevision!==we)return f(F)?To(new Kn):null;let kn=Ke(F,A,st);return kn===\"failed\"?To(st):kn===\"stale\"?f(F)?To(new Kn):null:Qr.current?.(F,je)??null}return De(F,A)?bn(F,st)?(Dr(F)||console.error(\"[CanvasRenderer] Document worker unavailable; laying out on the main thread\",st),null):To(Ve.current.get(F)):null},Ut=async(st,$t)=>{let Sn,ln=st.layoutMeta,kn=Qt.current.get(H),_=U0(ln)&&ln.layoutRevision===st.layoutRevision?ln.headersFooters??(kn?.epoch===ln.headersFootersEpoch?kn.payload:void 0):void 0;if(ln===void 0){if(st.layoutJson===void 0)throw new cu(\"Document worker omitted its layout\");Sn=zg(st.layoutJson,st.layoutRevision)}else if(_!==void 0&&U0(ln))Qt.current.set(H,{epoch:ln.headersFootersEpoch,payload:_}),Sn=zg(ln,st.layoutRevision,_);else{let J=await H.layoutJson(st.layoutRevision);if(J.status===\"stale\")return p.current?.(),null;if(!De(F,A)||F.residentWorkerProbe()?.layoutRevision!==we)return null;Sn=zg(J.layoutJson,st.layoutRevision)}return De(F,A)&&F.residentWorkerProbe()?.layoutRevision===we&&V0(F,st.layoutProvisional?\"provisional\":\"complete\"),N.current.set(Sn.layout,Et),$t===void 0||Le.current.set(Sn.layout,{result:st,previousFrame:$t,engine:F,owner:A,contentEpoch:et,layoutExtras:It.layoutExtras,provisional:st.layoutProvisional===!0}),Sn},qe=yt.then(async st=>{if(f(F)&&!Yn(F)&&!De(F,A))throw new Kn;if(yo(F)&&(!De(F,A)||F.residentWorkerProbe()?.layoutRevision!==we)){if(f(F))throw new Kn;return null}let $t=await Ut(st,ie);if(!$t){if(f(F))throw new Kn;return null}if(!st.layoutProvisional||F.isDisplayOnly?.())return $t;let Sn=st.caret.frameEpoch,ln=Ii(st.frame).docEpoch,kn=()=>De(F,A)&&F.residentWorkerProbe()?.layoutRevision===we,_={engine:F};mn.current&&Nt(_);let J=new Promise(he=>{We.current=he,setTimeout(he,zH)}).then(async()=>{for(Nt(he=>he===_?null:he);kn();){let he=mr(F),Ie=await H.completeLayout(he?.docEpoch===ln?he.frameEpoch:Sn,!1,DH);if(!kn()){if(f(F))throw new Kn;return null}if(Ie)return Ut(Ie,he?.docEpoch===ln?he:void 0);if(f(F)||!yo(F))return null}if(f(F))throw new Kn;return null}).catch(async he=>{let Ie=await Wt(he);return Ie?.complete??Ie});return J.catch(()=>{}),{...$t,complete:J}}).catch(Wt);return Ze.current.has(F)&&St.current.set(F,qe),qe}"
+        }
+      ]
+    },
+    "chunk-Q7OC7M5Q-BzppsI5m.js": {
+      "sha256": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834",
+      "items": [
+        {
+          "name": "x_",
+          "source": "function x_(e){let t=[{op:\"delete\",index:0,len:1}],r=0,n=\"\",i={},a=Kn(i),o=()=>{n&&(t.push({op:\"insert\",index:r,text:n,attrs:i}),r+=n.length,n=\"\")};for(let s of e)if(s.kind===\"text\"){let l=Kn(s.attrs);n&&l!==a&&o(),i=s.attrs,a=l,n+=s.text}else o(),t.push({op:\"insertEmbed\",index:r,kind:s.embedKind,payload:s.payload,attrs:s.attrs}),r+=1;return o(),t}"
+        },
+        {
+          "name": "Ea",
+          "source": "function Ea(e,t,r=!0,n=!0,i,a,o,s=!0){if(!N)throw new Error(\"Document worker is not initialized\");if(fg(e),Yi=!1,Po(),bt=null,gn(),nr=null,n&&!e.workerAuthoritative&&(Pn(),rt=null,N.loadState(e.state)),N.setPartialDocument(e.partialDocument===!0),Ht=e.partialDocument===!0?0:null,e.workerAuthoritative||(N.loadMediaSources(e.mediaSources??\"\"),N.loadNoteSeparators(e.noteSeparators??new Uint8Array(0))),e.fontsRevision!==dn){if(e.fontsBaseRevision===void 0){N.clearFonts(),tr=null;for(let f of or)_t.add(f);Ur.clear()}if(dn=-1,o){let f=ng(N,e.fonts),h=typeof o.fontRegistrationSlots==\"object\"?o.fontRegistrationSlots.fontChains:void 0;e.layoutInput=f.remap(e.layoutInput,h),o.layoutInput=e.layoutInput,o.extras=f.remap(o.extras,h),o.fontRegistrationSlots=void 0,o.fonts=[]}else for(let f of e.fonts)f instanceof Uint8Array?N.registerFont(f):N.registerSubstituteFont(f.substituteOf,f.family);dn=e.fontsRevision}e.layoutInput=Ro(N,e.layoutInput,!0);for(let{story:f,env:h}of e.renderInputs)N.yrsBlocksForStory(f,h);for(let f of e.measureInputs)N.measureParagraphJson(f);if(!s)return Le=e.layoutRevision,Zi=e.layoutWithRegions,yt=null,We=[],{layoutJson:null,provisional:!1};let l=null,d,u=!1,c=null;if(e.layoutWithRegions&&t!==void 0){l=N.layoutDocumentWithRegionsPrefixRetainedJson(e.layoutInput,t);let f=JSON.parse(l);u=f.provisional===!0,c=f.layout.pages.length}else e.layoutWithRegions&&!r?N.layoutDocumentWithRegionsRetained(e.layoutInput):e.layoutWithRegions&&i===\"meta\"?(d=N.layoutDocumentWithRegionsRetainedMeta(e.layoutInput),u=d.provisional,c=d.pageCount):e.layoutWithRegions?(l=N.layoutDocumentWithRegionsRetainedJson(e.layoutInput),e.partialDocument===!0&&(c=JSON.parse(l).layout.pages.length)):N.layoutDocumentJson(e.layoutInput);return!e.workerAuthoritative&&e.selection&&N.setSelection(e.selection.anchor,e.selection.head),Le=e.layoutRevision,Zi=e.layoutWithRegions,yt=N.proposalEngine.version(),Yi=!0,We=[],Ht=yS(e.partialDocument,u,t,c),ir=u&&e.partialDocument!==!0?t??null:null,{layoutJson:l,...d?{layoutMeta:XS(d,a)}:{},provisional:u}}"
+        },
+        {
+          "name": "xr",
+          "source": "async function xr(e,t,r,n=We,i,a=performance.now(),o=!1,s=!1,l,d=!1,u,c=[],f=null,h){let y=typeof l==\"string\"?l:void 0,g=typeof l==\"object\"?l:void 0,m=N?.proposalEngine.version();l!==void 0&&(yt=m??null);let b=Vt||Io;!Vt&&qr===void 0&&m!==void 0&&(qr=m);let v=!Vt&&m!==void 0&&m===qr;ti(t);let S=ir;if(N&&S!==null&&ie){let ne=ie.displayList.pages.filter(pe=>pe.pageIndex>=S&&!pe.unbuilt).map(pe=>pe.pageIndex);if(ne.length>0){if(N.releaseDisplayPagesFrame(ne,ie.frameEpoch)===null)throw new Error(\"Provisional display pages could not be released\");t=N.buildDisplayPagesFrame([],0),ti(t)}}let k=N?.residentCaretSnapshot();if(!k||!ie||!Zp(k,ie))throw new Error(\"Worker caret snapshot does not match the produced frame\");if(o&&!k.caretRect)throw new Error(\"Worker input frame omitted collapsed caret geometry\");let R=N?.selection()??null;un=s?k.caretRect??null:null;for(let ne of _t){let pe=hr(ie,ne);(!pe||pe.page.unbuilt===!0)&&_t.delete(ne)}for(let ne of new Set([...Kt.keys(),...Fr.keys()])){let pe=hr(ie,ne),ye=pe?pe.page.unbuilt===!0:void 0;if(ye===!1)continue;let q=Kt.get(ne);ye===void 0?Kt.delete(ne):q&&Yl(q),Fr.delete(ne),kd(ne)}let B=performance.now(),{replayedPages:E,caretPainted:I}=await uo(!1),A=performance.now()-B,$=Sh(t,c),{frame:F}=$.value,j=$.value.pageFrames??[],W=n.map(Ft),re=N?Ft(N.encodeStateVector()):void 0;g&&(bd=g.headersFootersEpoch),Ae({id:e,ok:!0,...h,frame:F,...j.length>0?{pageFrames:[...j,F]}:{},updates:W,engineMs:r,workerTotalMs:performance.now()-a,engineProfile:i,caret:k,selection:R,...f?{selectionCursor:f}:{},caretPainted:I,replayMs:A,replayedPages:E,layoutRevision:Le,...m===void 0?{}:{documentVersion:m},...b?{documentPreview:!0}:{},...v?{documentAsOpened:!0}:{},...u===void 0?{}:{deletedUnits:u},...re?{stateVector:re}:{},...y!==void 0?{layoutJson:y}:{},...g?{layoutMeta:g}:{},...d?{layoutProvisional:d}:{}},[...$.transfer,...W,...re?[re]:[],...g?[g.pageSizes.buffer]:[]])}"
+        }
+      ]
+    }
+  },
+  "documenten": {
+    "geslaagd": true,
+    "documenten": {
+      "native": {
+        "sha256": "9083bc06d2b77750df679f2584f407d1bf6e875f90dab673ec7463f369058222",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "3d2772ba7f5394e6a7ad83b4c40a11e1ff7ed8a3e6c291383899f17aeae231bb",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "herhaling": {
+        "sha256": "1bc087cd890fad297918b9d2b3f0eeb454ea0fa0414c072d78f387202272ef23",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "170307e22c2c520fcf924938f7393628cc9e5c98b9725fe9214042f069e932cf",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "metadata": {
+        "sha256": "9e81b2c860156b63d98a9d9ab41dee3050e51bc92591ffda89cf355fe865b273",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "08caa7339cc7cd90c75080888d0bd979157f0cb53acd2fe8ac83b0b35c0bd202",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "metadata-schoon": {
+        "sha256": "48ef7eafce300cca0bbd9ab2bc8115f7da6ed73eaf505ab0c5dfdd1082a48596",
+        "tabellen": 128,
+        "utf16": 91423,
+        "delen": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "e00474e290cba0f4b6248859566b73976e2258142ccf0f45060a40c1d06527f3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_delen": {
+      "herhaling": [
+        "docProps/core.xml"
+      ],
+      "metadata": [
+        "docProps/core.xml"
+      ],
+      "metadata-schoon": [
+        "docProps/core.xml"
+      ]
+    },
+    "beelden": [
+      {
+        "bestand": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "bestand": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "bestand": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "grens": "ZIP/CRC/paden/XML/tekstgetal en drie vaste beelden; geen volledige visuele/formaatacceptatie."
+  },
+  "beeldbeoordeling": {
+    "bekeken": "metadata-schoon/snel-getypt-bewaard.png",
+    "waarneming": "Eigen tabelrijen en lange invoer zichtbaar. Primaire beeldparen 0/30/0 pixels verschil; geen volledige visuele/formaatacceptatie."
+  },
+  "behoud": {
+    "oude_referenties30_exact": true,
+    "aanwezige_referenties": 31,
+    "nieuwe_elf_sha256": "3d9c766823afdef83a35c3ea426c528c2456c9c6a6e1014b808ddfdc85aa16a1",
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "verschillende_assets_tegen_replica_fasekosten": [
+      "assets/chunk-Q7OC7M5Q-BzppsI5m.js"
+    ],
+    "python_ast_groen": true,
+    "alleen_app_crate_herbouwd": true,
+    "historisch_ontbrekende_autocorrectiereferentie": "Blijft reeds ontbreken; niet verwijderd."
+  },
+  "contractcontroles": "5 transparantie-/opruim-/grenscontroles voor werkermeting geslaagd",
+  "waarnemingen": [
+    "Werkelijke main-stack: WorkerClient.request/sync in index-DtZ2IWH9, layoutcallback bo en TW.pn in editors-bODdYQ4o. Client.sync, request, recordSent/recordSync, jl, callback, Ea en xr via AST en bestandshash vastgezet.",
+    "Client.recordSent bewaart vector/fontrevisie vóór verzenden. jl vereist frame, caret en selection; sync retourneert ook updates/stateVector. Hele sync weggooien of een lege succesack geven is geen bewezen veilige renderoptimalisatie.",
+    "Alle 17 complete metadataberichten één op één aan Worker-Ea-metadata, passende sync-taak, gepaarde fasevensters en geslaagd antwoord gekoppeld. Layoutrevisies 2–18; geen overflow. Werkelijk workerAuthoritative=false, statebuffers circa 2,3–2,4 kB, fontsRevision=8 en nul meetinputs.",
+    "Alle 17 snapshots bevatten renderInputs=[{story:body,env:{}}], naast expliciete renderEnv in layoutInput. Effectieve gelijkheid volgt niet uit ruwe JSON: legacydecoder, defaults, settings, secties en previewvoorwaarden blijven te respecteren.",
+    "Blokfase omvat de bestaande yrsBlocksForStory-call met FFI, blokmaterialisatie/serialisatie en JS-decodering. Retourwaarde wordt in de Ea-lus niet gebruikt. Niet afzonderlijk bewezen hoeveel tijd elk onderdeel kost; geen call of validatiefout overgeslagen.",
+    "Versietokens zijn expliciet replica-gebonden. Main- en Worker-versies niet op gelijkheid vergeleken. Alleen verandering binnen dezelfde main-rondreis geregistreerd; dit bewijst geen weggegooid of overbodig frame. Ook 16/17 rondreizen hebben een later applyUpdate-bericht vóór antwoord."
+  ],
+  "grenzen": [
+    "Alleen Linux x86_64 release2026.45.52, writer-bronjournaal, schema2; eigen X11/DBus/XDG-profielen en eigen fixture. Geen volledige suites/CI/platform-/editie-/schema-/release- of installeracceptatie.",
+    "Alleen één private Workerasset gewijzigd; Wasm d96d6f12 en alle overige assets bytegelijk aan replica-fasekosten. Die eerder afgewezen private replicacache blijft afgewezen. Geen productovername, issuevoltooiing of algemene stabiliteitsacceptatie.",
+    "Vier functieronden groen; kostenconclusies uitsluitend uit native en metadata-schoon. Eerste harnaspad laadde de oude transportprobe, daarom geen nieuwe main-snapshotmetadata aan native toegeschreven. De twee aanvullende ronden overlapten deels en zijn uitgesloten van timing-/werkkostenconclusies; ruwe data intact.",
+    "De primaire transportuitlezing verschilt: volledige metadata alleen in metadata-schoon, fasen in beide. Geen gewone afwisselende A/B/B/A of causaal bewijs van een snelheidswinst. Geen algemene profiler of hoofdthread-Debugger.",
+    "Prepare bevat load als geneste fase: niet optellen. Publicatie bevat bestaand asynchroon xr/tekenwerk en wachten; vensters kunnen overlappen en zijn geen CPU-tijd of onafhankelijke invoervertraging. Nul of kleine afgeronde intervallen bewijzen geen kosteloze uitvoering.",
+    "Een bronverandering tijdens een rondreis bewijst niet dat een frame veilig kan worden weggegooid. Mutaties, vectoren, fontrevisies, selectie, reparaties en verplichte antwoordvorm eerst zelfstandig behouden. Automatisch herstel intact; hoogste bewaaraanvrager blijft afzonderlijk onbekend.",
+    "Vier DOCX-bestanden onafhankelijk SHA/ZIP/CRC/paden/XML: 128 tabellen/91.423 UTF16, tegenover eerste bestand alleen core.xml verschillend. Primaire beelden 0/30/0 pixels, één bewaarbeeld bekeken; geen volledige visuele/formaatdekking.",
+    "Alle 30 eerdere aanwezige ELF’s, 15 bronpinnen en 529 standaardbestanden byte/mode/mtime behouden; meet-ELF 3d9c7668 als 31e referentie. Eerder ontbrekende autocorrectiereferentie ongewijzigd."
+  ],
+  "vervolg": "Onderzoek eerst de circa 1,9 seconde blokvoorbereiding: bind de werkelijke yrsBlocksForStory-adapter aan materialisatie, Rust-serde en JS-decodering, plus de lege legacyomgeving tegenover effectieve layoutomgeving. Gebruik eerdere afgewezen warm-/renderomgeving-/requestvarianten en hun fout-/normalisatieproeven als grenzen; geen blinde herhaling of overslaan. Een getoetste besparing binnen voorbereiding behoudt het bestaande sync-antwoordcontract. Render-supersession pas met expliciet contract voor alle bronmutaties, vectoren/fonts, selectie/caret/frame en stale-afhandeling. Daarna gewone korte/rijke ABBA plus functie/DOCX/beelden vóór productovername. Database laatst.",
+  "afhankelijkheden": [
+    {
+      "pad": "docs/tests/2026-11-27-writer-replica-fasekosten.json",
+      "sha256": "17ebd1788642e36227a2ad91d646e41641b3931dce6a877e25f495b045ad410d"
+    },
+    {
+      "pad": "docs/tests/2026-11-13-writer-aanvraagomgeving.json",
+      "sha256": "70e618d5fa641084655960e3ba1d95b3c905e2a2169cbf335789fe92d7b78254"
+    }
+  ],
+  "archief": {
+    "pad": "2026-11-27-writer-sync-contract.tar.gz",
+    "sha256": "61ff12b481d11d890a2c4a52209f3478eb62ed204bbd6a9ffaa6cbef889b53d5",
+    "bytes": 2891084,
+    "leden": 59,
+    "alle_bewijshashes_gecontroleerd": true,
+    "uitsluiting": "Geen ELF/Wasm/hele dist of bouwcache. Wel originele en gecorrigeerde harnassen, probes/contracttests, bundeldiff, concrete bronfragmenten, ruwe vier ronden en grenzen, DOCX en PNG."
+  }
+}
