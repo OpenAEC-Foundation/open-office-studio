@@ -4,6 +4,8 @@ import type { Werkbestand } from "./werkbestand";
 /** Verwerk reeds wachtende invoer vóór het vastleggen van de opslagrevisie. */
 export type Serialiseerder = (() => Promise<Uint8Array>) & {
   bereidVoor?: () => Promise<void>;
+  /** Herstelkopie, zonder een handmatige opslag af te ronden. */
+  herstel?: () => Promise<Uint8Array>;
 };
 
 export type BewaarUitkomst = (

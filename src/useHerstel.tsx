@@ -99,7 +99,7 @@ export function useHerstel({ tabs, bezig, opslaanAls }: Opties) {
           )
             continue;
           try {
-            const inhoud = await serialiseer();
+            const inhoud = await (serialiseer.herstel ?? serialiseer)();
             const bytes =
               tabblad.exportFormaat === "ifcx"
                 ? (

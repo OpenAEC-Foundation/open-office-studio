@@ -1,0 +1,263 @@
+{
+  "datum": "2026-11-28",
+  "status": "Geteste deelstap in integratiebron; ernstige Writer-vertraging blijft open.",
+  "basis": {
+    "elf": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385",
+    "kandidaat": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+    "versie": "2026.45.52",
+    "platform": "Linux Tauri/WebKitGTK, eigen Xvfb/XDG/dbus; gebruikersvensters niet gebruikt"
+  },
+  "wijziging": [
+    "Serialiseerder heeft optionele herstelroute; andere modules houden de bestaande fallback.",
+    "DOCX-herstel gebruikt dezelfde sessiecontrole, interne wachtrij, inputflush en save. Alleen de nabewerking van docProps verschilt.",
+    "Herstel bewaart wachtende Info-eigenschappen en voorlopige afgeronde bewerkingstijd, zonder live activiteit te verbruiken. Geen wijziging revisie/datum/auteur en geen volledige alinea-/paginastatistieklezing.",
+    "Zonder wachtende eigenschappen of afgeronde minuten blijven de enginebytes identiek. Afgeleide statistieken blijven uit dat pakket; normale opslag berekent ze opnieuw.",
+    "Herstelfrequentie, dirty-/versie-/levensduurcontroles, normale opslag en Rust/Wasm-bron ongewijzigd. Eventloopgroeperingsprototype niet geïntegreerd."
+  ],
+  "oorzaakonderzoek": {
+    "exacte_eventlooppoort": {
+      "resultaat": "Vier definitieve gevallen groen op apart diagnostisch prototype, niet op productkandidaat.",
+      "gevallen": [
+        "Selectie: B achter echte MessagePort-post, Left en C: ACB exact.",
+        "Flush/Ctrl+S blijft wachten; na vrijgave DOCX AB en 128 tabellen exact.",
+        "Verwerpen/nieuw document: oude B veroorzaakt geen nieuw verzoek of mutatie.",
+        "Alleen wachtrij-identiteit verwisseld met delegerende Proxy: oude B verworpen; nieuwe C-buffer behouden, ACD exact na herstel."
+      ],
+      "methode": "Eerst native A-antwoord vasthouden, daadwerkelijke WebKit-keyup B afwachten, dan het nieuwe bericht vasthouden. Originele MessagePort-descriptor hersteld."
+    },
+    "rustige_invoer": {
+      "uit_ms": [
+        1422,
+        849,
+        871,
+        794,
+        788,
+        754,
+        878,
+        4043
+      ],
+      "aan_ms": [
+        1794,
+        921,
+        875,
+        840,
+        814,
+        742,
+        915,
+        3890
+      ],
+      "maat": "Eerste passende canonieke laatste-pagina-displaylist, waarnemer vóór toets actief; aanvullende twee rAF. Geen fysieke paint/FPS. Circa 248 ms totale waarnemerskosten per acht toetsen.",
+      "extra_eventloopovergangen": 0,
+      "mutaties": "Meestal 110–254 ms, eerste 437/457 ms; publicatie volgt later."
+    },
+    "stroom": {
+      "tekens": 1053,
+      "groepen_uit_aan": [
+        71,
+        61
+      ],
+      "oudste_input_tot_mutatie_mediaan_ms": [
+        149,
+        159
+      ],
+      "maximum_ms": [
+        555,
+        490
+      ],
+      "canonieke_lijst_eerste_laatste_uit_ms": [
+        8963,
+        8964
+      ],
+      "aan_ms": [
+        8885,
+        8885
+      ],
+      "twee_rAF_uit_aan_ms": [
+        9520,
+        9419
+      ],
+      "beperking": "Geen bewijs dat pixels gedurende de stroom stilstaan; voorlopige invoer kan verschillen."
+    },
+    "verborgen": "Eigen venster werkelijk unmapped, document.hidden=true. Vastgehouden B voltooit bron AB na vrijgave in circa 140 ms terwijl verborgen. Geen hidden-paint of volledige verborgen-bewaaracceptatie.",
+    "profiel": {
+      "samples": 1418,
+      "tijdstempels": "alle nul",
+      "ijking": "Afzonderlijke 100 ms leaf-first ijking met 89 voorbeelden geslaagd.",
+      "inclusief": {
+        "readParagraphs": 443,
+        "read_paragraphs_json": 442,
+        "wasm_stub": 665,
+        "React_circa": 300,
+        "TabelGrepen": 169,
+        "metadata_SI": 153
+      },
+      "beperking": "Geen CPUmilliseconden, callcounts of optelbare fasepercentages. 438 readParagraphs-ouders ontbreken over async-grens; vijf cursor/spelling. SI betreft volledige metadata/statistieknabewerking; geen bewijs van enige oorzaak."
+    },
+    "herstel_faseproef": {
+      "basis": "Dezelfde ongewijzigde 0e-kandidaat, herstel blijft actief; alleen fase van eigen 30 s-effecttimer eenmaal verschoven.",
+      "normaal_laatste_frame_ms": 3522,
+      "verschoven_laatste_frame_ms": 761,
+      "normaal_herstel_start_einde_ms": [
+        30895,
+        34645
+      ],
+      "verschoven_start_einde_ms": [
+        51959,
+        55526
+      ],
+      "conclusie": "Periodieke herstelserialisatie draagt bij aan piek; verklaart gewone warme circa 0,8 s niet volledig. Beide echte herstelbestanden bevatten 128 tabellen en exacte bevestigde bronprefix."
+    }
+  },
+  "validatie": {
+    "gericht": "27 tests in drie bestanden groen.",
+    "volledig": "2396 geslaagd, vier overgeslagen; 233 bestanden geslaagd, één overgeslagen; procescode 0. Vitest --maxWorkers=2, 188,76 s testduur.",
+    "bouw": "TypeScript en Vite naar eigen outDir groen; geoptimaliseerde offline native release met tauri/custom-protocol,writer-bronjournaal groen. Build is geen volledige functieacceptatie.",
+    "unit": "Echte ZIP/docProps: korte backup bytegelijk; 29 s gevolgd door 31 s behoudt ongeronde activiteit; twee backups houden titel/trefwoorden, oorspronkelijke wijzigingsdatum/revisie, 7+2=9 minuten en live twee minuten; normale opslag verhoogt revisie en verbruikt activiteit. Herstel doet geen volledige editor-/paginastatistieklezing.",
+    "native_ABBA": {
+      "a_ms": [
+        1221,
+        892,
+        843,
+        773,
+        748,
+        787,
+        866,
+        4022
+      ],
+      "b_ms": [
+        1274,
+        923,
+        943,
+        759,
+        758,
+        768,
+        837,
+        3091
+      ],
+      "b2_ms": [
+        1203,
+        902,
+        915,
+        760,
+        808,
+        747,
+        868,
+        3451
+      ],
+      "a2_ms": [
+        1449,
+        918,
+        837,
+        852,
+        808,
+        802,
+        771,
+        3845
+      ],
+      "laatste_mediaan_basis_kandidaat_ms": [
+        3933.5,
+        3271
+      ],
+      "reductie_procent": 16.8,
+      "herstel_start_tot_bestand_medianen_circa_ms": [
+        4043,
+        3213
+      ],
+      "reductie_herstel_procent_circa": 20.5,
+      "acceptatie": "Vier runs groen met echte gewone herstelbestanden, exacte bevestigde bronprefix en 128 tabellen. Snapshot kan vóór laatste toets liggen; geen dataverlies. Geen absolute maximumlatentie of fysieke paintmeting."
+    },
+    "metadata": "Echte File/Info-bediening met titel Eigen herstelproef; wachtende titel + actuele tekst in echte herstelkopie; origineel intact, 128 tabellen exact, revisie blijft 1. Fysiek Ctrl+S daarna: titel/tekst/tabellen exact, revisie 2, onafhankelijke XML-telling 13826 woorden en 90381 tekens gelijk aan docProps. Herstelkopie opgeruimd. Native bewerkingstijd 0 minuten; niet-nultijd apart door unit bewezen.",
+    "rijk": "Ongewijzigd oorspronkelijk rijke harnas: 1052 fysieke tekens, selectie/vervangen, bronexact Undo/Redo, Save vóór laat antwoord, onafhankelijke DOCX-teruglezing, verwerpen/nieuw document, 128 tabellen; foutlijsten leeg. Eén run 8090 ms is geen gepaarde snelheidsclaim.",
+    "heropenen": "Nieuw eigen profiel en proces: fysiek opgeslagen DOCX heropend; body en 128 tabellen/768 celstories exact tegenover onafhankelijke XML; bronversie onveranderd tijdens lezen; Info toont titel en revisie 2; foutlijsten leeg.",
+    "visueel": "Drie hele kandidaatbeelden bekeken: wachtende titel, document na opslag, Info na heropenen. Titel, revisie en getoonde tellingen zichtbaar; geen volledige pixel-/glyph-/greepacceptatie.",
+    "eerste_mislukkingen": "Bewust behouden: vier eerste poortharnasfouten (te smalle refscan en vrijgave vóór WebKit B ontvangst); één herzien Enter/Return-keymapfout, later gecorrigeerd met alineatelling; twee herstelmeetpogingen geweigerd door read-only invoke vóór invoer (niet omzeild, vervangen door echte bestandobservatie); eerste testfixture gebruikte ongeldig revisieveld, waardoor gericht/TypeScript/eerste suite faalden; fixture gecorrigeerd en finale checks groen. Eerste heropen-generator had SyntaxError vóór GUI-start."
+  },
+  "behoud": {
+    "bestaande_ELF_sha_exact": 58,
+    "nieuwe_referentie": 59,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "basisdist_sha_exact": 529,
+    "wasm_sha256": [
+      "e6188f8e0e4d03ce4b67ef5bcbcf23e6203419fe4a145a60e1e60f26a96b558b",
+      "38c14f6e379210bc942bdc4ebca44e7bfdb4318ecc1c72ca666a28fdce96670a",
+      "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+      "54c1f84be0d2f95298edd3df1240fa44b9305daf4f9ae9d1627b3dfdff854c60",
+      "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+      "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "7a9f857e21f4e79682b1ab494f409545656acf2e77e7b7d42e357cd0d501dba9",
+      "c421e391f163da9ffaf21ffc4eb20d2e112228dd4f71a03650455c075af5d108"
+    ],
+    "ingebed": [
+      {
+        "asset": "dist/assets/index-D3gC7_jv.js",
+        "sha256": "0e9c841403de31673a392ba56c864d471340846e0c0dd0aa8962018bbd5e9b3e",
+        "brotli_bytes": 51655
+      },
+      {
+        "asset": "dist/assets/index-Bu1M6kpr.js",
+        "sha256": "26b7c732b99af7ad8993f9d1d9038f68b3d4c19883bd457b19cd95340a5bbf30",
+        "brotli_bytes": 780570
+      },
+      {
+        "asset": "dist/assets/index-CbSdAVP0.js",
+        "sha256": "e2a4c46eb9e796b5f186069338edf3095969b7cfcb154d5622766c1271e52c39",
+        "brotli_bytes": 16425
+      },
+      {
+        "asset": "dist/assets/index-TN_PiYsC.js",
+        "sha256": "c7ba9f6b75d7763a9801417498c0dcb685454e11e906b93b3383df9b6c7664e7",
+        "brotli_bytes": 12936
+      },
+      {
+        "asset": "dist/assets/index-XWh6H1lV.js",
+        "sha256": "0c2fbb83c461fbe8edb271679ff59bc0f031bd7d52115578b0604453d4ef1878",
+        "brotli_bytes": 108
+      },
+      {
+        "asset": "dist/assets/index-D866W0pd.js",
+        "sha256": "3c6a51768aa515b0dd3654d3fa33f0dd2f88899cc76e0672b5c4d446643e622f",
+        "brotli_bytes": 40172
+      },
+      {
+        "asset": "dist/assets/index-C2w25pdW.js",
+        "sha256": "774fd78e1ea35b016309446aeb4fecbb2753cba78e18181df1a1b85c51e92ea3",
+        "brotli_bytes": 72494
+      },
+      {
+        "asset": "dist/assets/editors-BmjE6Shq.js",
+        "sha256": "e732fee3868e50d12afe8d7fba4c409bf0ea3f31afbff74f3aaed3c4c55effe7",
+        "brotli_bytes": 462995
+      },
+      {
+        "asset": "dist/assets/index-Dj6E3JPu.js",
+        "sha256": "dd1a7ceb99c3c7f882cced728371c23813dfef9e257502b0211c15309c44b746",
+        "brotli_bytes": 19597
+      },
+      {
+        "asset": "dist/assets/index-BMTbKqLO.js",
+        "sha256": "1924bb7e171da5ba527c25c7c3608e05b442d6a4cc336962d69c5bbb344a96ee",
+        "brotli_bytes": 161
+      }
+    ],
+    "beelden_bekeken": [
+      "metadata/wachtende-titel.png",
+      "metadata/eigenschappen-bewaard.png",
+      "heropend/eigenschappen-heropend.png"
+    ]
+  },
+  "niet_gecontroleerd": [
+    "Nieuwe volledige Rust- of SDK-suite",
+    "CI na push",
+    "Windows/macOS/andere edities/installers/hosted/releases",
+    "Volledige metadata- en herstelfunctiedekking",
+    "Fysieke paint/FPS en absolute eerste/maximale invoerlatentie"
+  ],
+  "vervolg": "Resterende circa 3 s herstelserialisatie en warme circa 0,8 s render onderzoeken: kosten getDocument/flush/raw save afzonderlijk meten en bronexacte snapshot-/pakroute toetsen. Herstelfrequentie, inputflush, wachtende metadata, bewerkingstijd, oorspronkelijke pakketdelen en sessieguards behouden. Database laatst.",
+  "archief": {
+    "bestand": "2026-11-28-writer-herstel-serialisatie.tar.gz",
+    "sha256": "76e4f4843c74f829504c9069079b61fc43fce1bd6f7e98e6fae4fd057f64f86d",
+    "bestanden": 228,
+    "bytes": 7626479
+  },
+  "levering": "Productwijzigingen alleen integratiebranch; hoofdontwikkelbranch ontvangt uitsluitend verslag/archief/voortgang. Geen issue of migratiegebied afgesloten; standaarddist en startkoppeling behouden."
+}

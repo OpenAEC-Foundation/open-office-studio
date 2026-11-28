@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { strToU8, zipSync } from "fflate";
 import type { Document } from "@betteroffice/docx/types/document";
-import { leesEigenschappen } from "./docprops";
+import { leesEigenschappen, schrijfEigenschappen } from "./docprops";
+import type { DocxEditorRef } from "@betteroffice/docx-react";
 import { noteerActiviteit, sessieMinuten, wachtendeEigenschappen, werkEigenschappenBij, zetEigenschappen } from "./opslaan";
 import { taalNaam, taalOpCursor } from "./taal";
 import { leesBlokken } from "./Leesmodus";
@@ -37,6 +38,46 @@ describe("eigenschappen bij opslaan", () => {
     // Geen geldig pakket: opslaan gaat toch door.
     const kapot = new Uint8Array([1, 2, 3]);
     expect(await werkEigenschappenBij({}, null, kapot, true)).toBe(kapot);
+  });
+
+  it("laat een korte herstelkopie bytegelijk en bewaart ook ongeronde activiteit", async () => {
+    const handle = {}, bytes = leeg();
+    const getEditorRef = vi.fn(() => { throw Error("Herstel vraagt geen alineastatistieken"); });
+    const getTotalPages = vi.fn(() => { throw Error("Herstel vraagt geen paginatelling"); });
+    const ref = { getEditorRef, getTotalPages } as unknown as DocxEditorRef;
+    noteerActiviteit(handle, 0);
+    noteerActiviteit(handle, 29_000);
+    expect(await werkEigenschappenBij(handle, ref, bytes, "herstel")).toBe(bytes);
+    noteerActiviteit(handle, 31_000);
+    // 31.000 / 60.000 rondt af naar één minuut; de eerdere 29 s blijven meetellen.
+    expect(sessieMinuten(handle)).toBe(1);
+    expect(getEditorRef).not.toHaveBeenCalled();
+    expect(getTotalPages).not.toHaveBeenCalled();
+  });
+
+  it("herstelt wachtende eigenschappen en voorlopige tijd zonder een gewone opslag te verbruiken", async () => {
+    const handle = {};
+    const bytes = schrijfEigenschappen(leeg(), { titel: "Basis", revisieOphogen: true, bewerkingstijd: 7, gewijzigd: "2025-01-02T03:04:05Z" });
+    const ongewijzigd = bytes.slice();
+    const getEditorRef = vi.fn(() => { throw Error("Geen volledige statistieklezing bij herstel"); });
+    const getTotalPages = vi.fn(() => { throw Error("Geen paginatelling bij herstel"); });
+    const ref = { getEditorRef, getTotalPages } as unknown as DocxEditorRef;
+    zetEigenschappen(handle, { titel: "Gewijzigd", trefwoorden: "herstel" });
+    noteerActiviteit(handle, 0);
+    noteerActiviteit(handle, 120_000);
+    for (let i = 0; i < 2; i++) {
+      const kopie = await werkEigenschappenBij(handle, ref, bytes, "herstel");
+      // Bestaande zeven minuten plus 120.000 / 60.000 = twee voorlopige minuten.
+      expect(leesEigenschappen(kopie)).toMatchObject({ titel: "Gewijzigd", trefwoorden: "herstel", revisie: 1, bewerkingstijd: 9, gewijzigd: "2025-01-02T03:04:05Z" });
+      expect(sessieMinuten(handle)).toBe(2);
+      expect(bytes).toEqual(ongewijzigd);
+    }
+    expect(getEditorRef).not.toHaveBeenCalled();
+    expect(getTotalPages).not.toHaveBeenCalled();
+    expect(wachtendeEigenschappen(handle)).toEqual({ titel: "Gewijzigd", trefwoorden: "herstel" });
+    const opgeslagen = await werkEigenschappenBij(handle, null, bytes, true);
+    expect(leesEigenschappen(opgeslagen)).toMatchObject({ titel: "Gewijzigd", revisie: 2, bewerkingstijd: 9 });
+    expect(sessieMinuten(handle)).toBe(0);
   });
 });
 

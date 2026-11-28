@@ -64,19 +64,26 @@ function auteur() {
  * Werkt de eigenschappen in de opgeslagen bytes bij. `volledig` bij echt
  * opslaan (statistieken, revisie, bewerkingstijd); anders (herladen na een
  * pakketbewerking) alleen de wachtende wijzigingen uit Bestand › Info.
+ * Een herstelkopie bewaart ook de voorlopige bewerkingstijd, zonder die in
+ * de levende editor te verbruiken of alle opslagstatistieken te herlezen.
  * Een fout hier mag opslaan nooit tegenhouden.
  */
 export async function werkEigenschappenBij(
   handle: object,
   ref: DocxEditorRef | null,
   bytes: Uint8Array,
-  volledig: boolean,
+  volledig: boolean | "herstel",
 ): Promise<Uint8Array> {
   const s = staten.get(handle);
-  if (!volledig && (!s || !Object.keys(s.kern).length)) return bytes;
+  const echtOpslaan = volledig === true;
+  const herstelMinuten = volledig === "herstel" ? Math.round((s?.actief ?? 0) / 60000) : 0;
+  if (!echtOpslaan && !herstelMinuten && (!s || !Object.keys(s.kern).length)) return bytes;
   try {
     const wijziging: Parameters<typeof schrijfEigenschappen>[1] = { ...(s?.kern ?? {}) };
-    if (volledig) {
+    if (herstelMinuten) {
+      wijziging.bewerkingstijd = (leesEigenschappen(bytes).bewerkingstijd ?? 0) + herstelMinuten;
+    }
+    if (echtOpslaan) {
       const naam = auteur();
       if (naam) wijziging.laatstGewijzigdDoor = naam;
       wijziging.gewijzigd = new Date().toISOString();
@@ -98,7 +105,7 @@ export async function werkEigenschappenBij(
       }
     }
     const uit = schrijfEigenschappen(bytes, wijziging);
-    if (volledig && s) s.actief = 0;
+    if (echtOpslaan && s) s.actief = 0;
     return uit;
   } catch (fout) {
     console.warn("Documenteigenschappen niet bijgewerkt:", fout);

@@ -262,7 +262,7 @@ export default function OfficeEditor(props: EditorProps) {
   }, [documentGereed, herladen.sleutel, props.soort]);
   useEffect(() => {
     if (props.soort !== "docx" || !documentGereed) return;
-    props.registreer(Object.assign(async () => {
+    const serialiseer = async (bijwerken: true | "herstel") => {
       const ref = docx.current;
       if (!ref?.getDocument())
         throw new Error(i18next.t("shell:errors.documentNotReady"));
@@ -273,12 +273,14 @@ export default function OfficeEditor(props: EditorProps) {
           const bytes = await ref.save();
           if (!bytes) throw new Error(i18next.t("shell:errors.documentSaveFailed"));
           // docProps (Bestand › Info, statistieken, bewerkingstijd) bijwerken.
-          return await werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), true);
+          return await werkEigenschappenBij(herladen.api, ref, new Uint8Array(bytes), bijwerken);
         } finally {
           exporteren.current = false;
         }
       });
-    }, {
+    };
+    props.registreer(Object.assign(() => serialiseer(true), {
+      herstel: () => serialiseer("herstel"),
       bereidVoor: async () => {
         const ref = docx.current;
         if (!ref) throw new Error(i18next.t("shell:errors.documentNotReady"));
