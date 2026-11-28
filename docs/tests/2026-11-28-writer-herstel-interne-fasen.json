@@ -1,0 +1,1896 @@
+{
+  "datum": "2026-11-28",
+  "status": "Interne opslagfasen afgebakend op eigen diagnostische binaries; ernstige Writer-vertraging blijft open. Geen productwijziging of prestatiepromotie.",
+  "basis": "Integratie 71ce75a4, gewone native basis 1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1; versie 2026.45.52, schema 2, eigen Linux Tauri/WebKitGTK/Xvfb/XDG/dbus.",
+  "methode": [
+    "Twee oplopende eigen bundelkopieën. Eerste instrumenteert save-handler, saveDocument/yrsToDocument, alinea-identiteiten/-opslagplan en pakketroute; tweede voegt de daadwerkelijk gebruikte N.save/saveResidentDocument-route met materializeDocx, hostmetadata en bronprojectie toe. Exacte brontekstvervangingen geteld en SHA-vastgelegd. Originele bestanden, vorige eigen bundel en binaries behouden.",
+    "Tijdstempels via performance.now binnen dezelfde worker; faseparen geven wandklokduur. Geneste inclusieve fasen niet optellen. Hoofdthread- en workerklokken hebben verschillende origins: uitsluitend gekoppeld via worker/request-id; geen cross-origin absolute aftrekking.",
+    "Tijdmeting en extra async-wrappers kunnen overhead en extra microtaken geven; geen ongeïnstrumenteerde prestatieacceptatie. Eerste bewijsgenerator eindigde met SIGTERM/procescode 143 vóór resultaat; streaming-hash/mmap-herhaling gebruikt, oorzaak niet vastgesteld. Native runs waren toen al voltooid.",
+    "Aan bestaand opslagantwoord volgt uitsluitend diagnostisch id-0-bericht met profiel, aanvraagvector en faseparen. Geen nieuwe eigen snapshot-/saveopdracht in de gewone herstelronde; geen gewijzigde werkerwachtrij-/prioriteitsregels, herstelfrequentie, bron-/vector-/levensduurguard of actieve Wasm.",
+    "Vier afzonderlijke native processen, ieder acht fysieke toetsen mnopqrst en één echte gewone herstelkopie. Daarna twee expliciete SDK-exports in hetzelfde proces; die zijn diagnostische SDK-opdrachten, geen fysieke handmatige Save of bewijs van de shell-metadataroute. Eerste herhaalde export bevat de recentere toetsen na het eerdere herstel-snapshot.",
+    "Waarnemingen omvatten tijdelijke levende-refmethoden en Worker-berichten; alles opgeruimd met behoud van actuele refwaarden. Geen gelijktijdige compilatie/hashing tijdens de native proeven."
+  ],
+  "metingen": [
+    {
+      "map": "herstel-intern",
+      "label": "intern-1",
+      "programma_sha256": "6db94c74840a680b5065a4a490e620c42cd7ada79937806695c455c6fff0322c",
+      "schema": 2,
+      "profielen": [
+        {
+          "request_id": 39,
+          "route": "herstel",
+          "vector": [
+            2,
+            164,
+            142,
+            133,
+            231,
+            12,
+            149,
+            232,
+            7,
+            244,
+            226,
+            146,
+            183,
+            12,
+            7
+          ],
+          "werkerhandler_ms": 2792,
+          "hoofdthread_verzoek_antwoord_ms": 2809,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 2788,
+              "start_werker_ms": 17725,
+              "eind_werker_ms": 20513
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 1804,
+              "start_werker_ms": 18709,
+              "eind_werker_ms": 20513
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 929,
+              "start_werker_ms": 18710,
+              "eind_werker_ms": 19639
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 41,
+              "start_werker_ms": 18710,
+              "eind_werker_ms": 18751
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 888,
+              "start_werker_ms": 18751,
+              "eind_werker_ms": 19639
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 19639,
+              "eind_werker_ms": 19639
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 873,
+              "start_werker_ms": 19640,
+              "eind_werker_ms": 20513
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 873,
+              "start_werker_ms": 19640,
+              "eind_werker_ms": 20513
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 780,
+              "start_werker_ms": 19664,
+              "eind_werker_ms": 20444
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 146,
+              "start_werker_ms": 19664,
+              "eind_werker_ms": 19810
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 11,
+              "start_werker_ms": 19810,
+              "eind_werker_ms": 19821
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 25,
+              "start_werker_ms": 19821,
+              "eind_werker_ms": 19846
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 33,
+              "start_werker_ms": 19846,
+              "eind_werker_ms": 19879
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 564,
+              "start_werker_ms": 19879,
+              "eind_werker_ms": 20443
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 1,
+              "start_werker_ms": 20443,
+              "eind_werker_ms": 20444
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 28,
+              "start_werker_ms": 20448,
+              "eind_werker_ms": 20476
+            }
+          ]
+        },
+        {
+          "request_id": 46,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            164,
+            142,
+            133,
+            231,
+            12,
+            149,
+            232,
+            7,
+            244,
+            226,
+            146,
+            183,
+            12,
+            8
+          ],
+          "werkerhandler_ms": 850,
+          "hoofdthread_verzoek_antwoord_ms": 863,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 849,
+              "start_werker_ms": 23066,
+              "eind_werker_ms": 23915
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 650,
+              "start_werker_ms": 23265,
+              "eind_werker_ms": 23915
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 222.00000000000364,
+              "start_werker_ms": 23265,
+              "eind_werker_ms": 23487.000000000004
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 40,
+              "start_werker_ms": 23265,
+              "eind_werker_ms": 23305
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 182.00000000000364,
+              "start_werker_ms": 23305,
+              "eind_werker_ms": 23487.000000000004
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0.0,
+              "start_werker_ms": 23487.000000000004,
+              "eind_werker_ms": 23487.000000000004
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 427.99999999999636,
+              "start_werker_ms": 23487.000000000004,
+              "eind_werker_ms": 23915
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 427.99999999999636,
+              "start_werker_ms": 23487.000000000004,
+              "eind_werker_ms": 23915
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 368,
+              "start_werker_ms": 23504,
+              "eind_werker_ms": 23872
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 23504,
+              "eind_werker_ms": 23504
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 1,
+              "start_werker_ms": 23504,
+              "eind_werker_ms": 23505
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 31,
+              "start_werker_ms": 23505,
+              "eind_werker_ms": 23536
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 32,
+              "start_werker_ms": 23536,
+              "eind_werker_ms": 23568
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 304,
+              "start_werker_ms": 23568,
+              "eind_werker_ms": 23872
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 23872,
+              "eind_werker_ms": 23872
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 23,
+              "start_werker_ms": 23876,
+              "eind_werker_ms": 23899
+            }
+          ]
+        },
+        {
+          "request_id": 47,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            164,
+            142,
+            133,
+            231,
+            12,
+            149,
+            232,
+            7,
+            244,
+            226,
+            146,
+            183,
+            12,
+            8
+          ],
+          "werkerhandler_ms": 743,
+          "hoofdthread_verzoek_antwoord_ms": 755,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 742,
+              "start_werker_ms": 24377,
+              "eind_werker_ms": 25119
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 595,
+              "start_werker_ms": 24524,
+              "eind_werker_ms": 25119
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 189,
+              "start_werker_ms": 24524,
+              "eind_werker_ms": 24713
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 4.000000000003638,
+              "start_werker_ms": 24524,
+              "eind_werker_ms": 24528.000000000004
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 184.99999999999636,
+              "start_werker_ms": 24528.000000000004,
+              "eind_werker_ms": 24713
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 24713,
+              "eind_werker_ms": 24713
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 404.99999999999636,
+              "start_werker_ms": 24714.000000000004,
+              "eind_werker_ms": 25119
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 404.99999999999636,
+              "start_werker_ms": 24714.000000000004,
+              "eind_werker_ms": 25119
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 345,
+              "start_werker_ms": 24728,
+              "eind_werker_ms": 25073
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 24728,
+              "eind_werker_ms": 24728
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 1,
+              "start_werker_ms": 24728,
+              "eind_werker_ms": 24729
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 20,
+              "start_werker_ms": 24729,
+              "eind_werker_ms": 24749
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 35,
+              "start_werker_ms": 24749,
+              "eind_werker_ms": 24784
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 289,
+              "start_werker_ms": 24784,
+              "eind_werker_ms": 25073
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 25073,
+              "eind_werker_ms": 25073
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 26,
+              "start_werker_ms": 25074,
+              "eind_werker_ms": 25100
+            }
+          ]
+        }
+      ],
+      "herstel": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "595a193264c598907bb0b7f53477885ea3fa86ec04526da02a75ce9ca0b16bc0"
+      },
+      "sdk_exports": [
+        {
+          "begin": 36377,
+          "einde": 37247,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "8de427078ed6ce644fc3fb6e2f9d9fe9e0b43339de68f06fae9b5049373c4df7"
+        },
+        {
+          "begin": 37688,
+          "einde": 38453,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "e345494bce3740bc6873366af7e62c7fe64f5b413ec08fd011ae1e60a293292a"
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "bronexacte_toetsen": 8
+    },
+    {
+      "map": "herstel-intern",
+      "label": "intern-2",
+      "programma_sha256": "6db94c74840a680b5065a4a490e620c42cd7ada79937806695c455c6fff0322c",
+      "schema": 2,
+      "profielen": [
+        {
+          "request_id": 39,
+          "route": "herstel",
+          "vector": [
+            2,
+            224,
+            156,
+            171,
+            233,
+            3,
+            7,
+            130,
+            212,
+            217,
+            250,
+            14,
+            149,
+            232,
+            7
+          ],
+          "werkerhandler_ms": 2774,
+          "hoofdthread_verzoek_antwoord_ms": 2794.0000000000073,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 2771,
+              "start_werker_ms": 17920,
+              "eind_werker_ms": 20691
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 1788,
+              "start_werker_ms": 18903,
+              "eind_werker_ms": 20691
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 918,
+              "start_werker_ms": 18903,
+              "eind_werker_ms": 19821
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 40,
+              "start_werker_ms": 18903,
+              "eind_werker_ms": 18943
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 878,
+              "start_werker_ms": 18943,
+              "eind_werker_ms": 19821
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 1,
+              "start_werker_ms": 19821,
+              "eind_werker_ms": 19822
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 869,
+              "start_werker_ms": 19822,
+              "eind_werker_ms": 20691
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 868,
+              "start_werker_ms": 19823,
+              "eind_werker_ms": 20691
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 782,
+              "start_werker_ms": 19846,
+              "eind_werker_ms": 20628
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 148,
+              "start_werker_ms": 19847,
+              "eind_werker_ms": 19995
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 1,
+              "start_werker_ms": 19995,
+              "eind_werker_ms": 19996
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 32,
+              "start_werker_ms": 19997,
+              "eind_werker_ms": 20029
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 31,
+              "start_werker_ms": 20029,
+              "eind_werker_ms": 20060
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 568,
+              "start_werker_ms": 20060,
+              "eind_werker_ms": 20628
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 20628,
+              "eind_werker_ms": 20628
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 28,
+              "start_werker_ms": 20634,
+              "eind_werker_ms": 20662
+            }
+          ]
+        },
+        {
+          "request_id": 46,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            224,
+            156,
+            171,
+            233,
+            3,
+            8,
+            130,
+            212,
+            217,
+            250,
+            14,
+            149,
+            232,
+            7
+          ],
+          "werkerhandler_ms": 871.9999999999964,
+          "hoofdthread_verzoek_antwoord_ms": 885,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 870.9999999999964,
+              "start_werker_ms": 23080.000000000004,
+              "eind_werker_ms": 23951
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 659,
+              "start_werker_ms": 23291,
+              "eind_werker_ms": 23950
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 227,
+              "start_werker_ms": 23291,
+              "eind_werker_ms": 23518
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 39.00000000000364,
+              "start_werker_ms": 23291,
+              "eind_werker_ms": 23330.000000000004
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 187.99999999999636,
+              "start_werker_ms": 23330.000000000004,
+              "eind_werker_ms": 23518
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 1.000000000003638,
+              "start_werker_ms": 23518,
+              "eind_werker_ms": 23519.000000000004
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 430.99999999999636,
+              "start_werker_ms": 23519.000000000004,
+              "eind_werker_ms": 23950
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 430.99999999999636,
+              "start_werker_ms": 23519.000000000004,
+              "eind_werker_ms": 23950
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 366,
+              "start_werker_ms": 23536,
+              "eind_werker_ms": 23902
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 23536,
+              "eind_werker_ms": 23536
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 1,
+              "start_werker_ms": 23536,
+              "eind_werker_ms": 23537
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 24,
+              "start_werker_ms": 23537,
+              "eind_werker_ms": 23561
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 33,
+              "start_werker_ms": 23561,
+              "eind_werker_ms": 23594
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 308,
+              "start_werker_ms": 23594,
+              "eind_werker_ms": 23902
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 23902,
+              "eind_werker_ms": 23902
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 25.000000000003638,
+              "start_werker_ms": 23907,
+              "eind_werker_ms": 23932.000000000004
+            }
+          ]
+        },
+        {
+          "request_id": 47,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            224,
+            156,
+            171,
+            233,
+            3,
+            8,
+            130,
+            212,
+            217,
+            250,
+            14,
+            149,
+            232,
+            7
+          ],
+          "werkerhandler_ms": 709.9999999999964,
+          "hoofdthread_verzoek_antwoord_ms": 720,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 708.9999999999964,
+              "start_werker_ms": 24400.000000000004,
+              "eind_werker_ms": 25109
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 557,
+              "start_werker_ms": 24552,
+              "eind_werker_ms": 25109
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 178,
+              "start_werker_ms": 24552,
+              "eind_werker_ms": 24730
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 4,
+              "start_werker_ms": 24552,
+              "eind_werker_ms": 24556
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 174,
+              "start_werker_ms": 24556,
+              "eind_werker_ms": 24730
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 24730,
+              "eind_werker_ms": 24730
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 379,
+              "start_werker_ms": 24730,
+              "eind_werker_ms": 25109
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 379,
+              "start_werker_ms": 24730,
+              "eind_werker_ms": 25109
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 324,
+              "start_werker_ms": 24745,
+              "eind_werker_ms": 25069
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 24745,
+              "eind_werker_ms": 24745
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 0,
+              "start_werker_ms": 24745,
+              "eind_werker_ms": 24745
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 19,
+              "start_werker_ms": 24745,
+              "eind_werker_ms": 24764
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 30,
+              "start_werker_ms": 24764,
+              "eind_werker_ms": 24794
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 275,
+              "start_werker_ms": 24794,
+              "eind_werker_ms": 25069
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 25069,
+              "eind_werker_ms": 25069
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 22,
+              "start_werker_ms": 25071,
+              "eind_werker_ms": 25093
+            }
+          ]
+        }
+      ],
+      "herstel": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "3527c07503b065dcb5432a20664e403ff8e95498762c5b7357bddafd4db059e0"
+      },
+      "sdk_exports": [
+        {
+          "begin": 36158,
+          "einde": 37061,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "38434ba983f23988c5c91dcdd4df37d11eddf225e8480d196adab07d299bbc7e"
+        },
+        {
+          "begin": 37480.00000000001,
+          "einde": 38222,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "a807d1aab89c83cfea44aa01454d46d2cfa772fdac7512e4d51c6ee8f914abef"
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "bronexacte_toetsen": 8
+    },
+    {
+      "map": "herstel-intern-verdiept",
+      "label": "verdiept-1",
+      "programma_sha256": "55ecb54fc4fcafa176642022ef21c2604f18a72eca668b19769c10533e6fe6ae",
+      "schema": 2,
+      "profielen": [
+        {
+          "request_id": 40,
+          "route": "herstel",
+          "vector": [
+            2,
+            216,
+            176,
+            214,
+            251,
+            2,
+            149,
+            232,
+            7,
+            154,
+            222,
+            167,
+            130,
+            5,
+            7
+          ],
+          "werkerhandler_ms": 3079,
+          "hoofdthread_verzoek_antwoord_ms": 3100,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 3075.9999999999964,
+              "start_werker_ms": 17929.000000000004,
+              "eind_werker_ms": 21005
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 17.999999999996362,
+              "start_werker_ms": 17929.000000000004,
+              "eind_werker_ms": 17947
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 27,
+              "start_werker_ms": 17948,
+              "eind_werker_ms": 17975
+            },
+            {
+              "naam": "materializeDocx",
+              "duur_ms": 367,
+              "start_werker_ms": 17975,
+              "eind_werker_ms": 18342
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 0,
+              "start_werker_ms": 18342,
+              "eind_werker_ms": 18342
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 691,
+              "start_werker_ms": 18342,
+              "eind_werker_ms": 19033
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0,
+              "start_werker_ms": 18343,
+              "eind_werker_ms": 18343
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 1972,
+              "start_werker_ms": 19033,
+              "eind_werker_ms": 21005
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 1972,
+              "start_werker_ms": 19033,
+              "eind_werker_ms": 21005
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 1023,
+              "start_werker_ms": 19033,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 65,
+              "start_werker_ms": 19034,
+              "eind_werker_ms": 19099
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 957,
+              "start_werker_ms": 19099,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 20056,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 947.9999999999964,
+              "start_werker_ms": 20057.000000000004,
+              "eind_werker_ms": 21005
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 947.9999999999964,
+              "start_werker_ms": 20057.000000000004,
+              "eind_werker_ms": 21005
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 847.9999999999964,
+              "start_werker_ms": 20083.000000000004,
+              "eind_werker_ms": 20931
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 162.99999999999636,
+              "start_werker_ms": 20083.000000000004,
+              "eind_werker_ms": 20246
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 2,
+              "start_werker_ms": 20246,
+              "eind_werker_ms": 20248
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 35,
+              "start_werker_ms": 20249,
+              "eind_werker_ms": 20284
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 34,
+              "start_werker_ms": 20284,
+              "eind_werker_ms": 20318
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 613,
+              "start_werker_ms": 20318,
+              "eind_werker_ms": 20931
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 20931,
+              "eind_werker_ms": 20931
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 33,
+              "start_werker_ms": 20936,
+              "eind_werker_ms": 20969
+            }
+          ]
+        },
+        {
+          "request_id": 45,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            216,
+            176,
+            214,
+            251,
+            2,
+            149,
+            232,
+            7,
+            154,
+            222,
+            167,
+            130,
+            5,
+            8
+          ],
+          "werkerhandler_ms": 862,
+          "hoofdthread_verzoek_antwoord_ms": 875,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 861,
+              "start_werker_ms": 22342,
+              "eind_werker_ms": 23203
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 0,
+              "start_werker_ms": 22342,
+              "eind_werker_ms": 22342
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 16,
+              "start_werker_ms": 22342,
+              "eind_werker_ms": 22358
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 0,
+              "start_werker_ms": 22358,
+              "eind_werker_ms": 22358
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 196,
+              "start_werker_ms": 22359,
+              "eind_werker_ms": 22555
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0,
+              "start_werker_ms": 22359,
+              "eind_werker_ms": 22359
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 648,
+              "start_werker_ms": 22555,
+              "eind_werker_ms": 23203
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 648,
+              "start_werker_ms": 22555,
+              "eind_werker_ms": 23203
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 218,
+              "start_werker_ms": 22555,
+              "eind_werker_ms": 22773
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 39,
+              "start_werker_ms": 22555,
+              "eind_werker_ms": 22594
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 179,
+              "start_werker_ms": 22594,
+              "eind_werker_ms": 22773
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 22773,
+              "eind_werker_ms": 22773
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 430,
+              "start_werker_ms": 22773,
+              "eind_werker_ms": 23203
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 429,
+              "start_werker_ms": 22774,
+              "eind_werker_ms": 23203
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 366,
+              "start_werker_ms": 22790,
+              "eind_werker_ms": 23156
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 22790,
+              "eind_werker_ms": 22790
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 4,
+              "start_werker_ms": 22790,
+              "eind_werker_ms": 22794
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 23,
+              "start_werker_ms": 22794,
+              "eind_werker_ms": 22817
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 31,
+              "start_werker_ms": 22817,
+              "eind_werker_ms": 22848
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 308,
+              "start_werker_ms": 22848,
+              "eind_werker_ms": 23156
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 23156,
+              "eind_werker_ms": 23156
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 26,
+              "start_werker_ms": 23160,
+              "eind_werker_ms": 23186
+            }
+          ]
+        },
+        {
+          "request_id": 46,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            216,
+            176,
+            214,
+            251,
+            2,
+            149,
+            232,
+            7,
+            154,
+            222,
+            167,
+            130,
+            5,
+            8
+          ],
+          "werkerhandler_ms": 728.9999999999964,
+          "hoofdthread_verzoek_antwoord_ms": 741,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 727.9999999999964,
+              "start_werker_ms": 23682.000000000004,
+              "eind_werker_ms": 24410
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 0.0,
+              "start_werker_ms": 23682.000000000004,
+              "eind_werker_ms": 23682.000000000004
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 5.999999999996362,
+              "start_werker_ms": 23682.000000000004,
+              "eind_werker_ms": 23688
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 0,
+              "start_werker_ms": 23688,
+              "eind_werker_ms": 23688
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 151.00000000000364,
+              "start_werker_ms": 23688,
+              "eind_werker_ms": 23839.000000000004
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0,
+              "start_werker_ms": 23688,
+              "eind_werker_ms": 23688
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 570.9999999999964,
+              "start_werker_ms": 23839.000000000004,
+              "eind_werker_ms": 24410
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 570.9999999999964,
+              "start_werker_ms": 23839.000000000004,
+              "eind_werker_ms": 24410
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 181.99999999999636,
+              "start_werker_ms": 23839.000000000004,
+              "eind_werker_ms": 24021
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 3.999999999996362,
+              "start_werker_ms": 23839.000000000004,
+              "eind_werker_ms": 23843
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 178,
+              "start_werker_ms": 23843,
+              "eind_werker_ms": 24021
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 24021,
+              "eind_werker_ms": 24021
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 389,
+              "start_werker_ms": 24021,
+              "eind_werker_ms": 24410
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 389,
+              "start_werker_ms": 24021,
+              "eind_werker_ms": 24410
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 334,
+              "start_werker_ms": 24035,
+              "eind_werker_ms": 24369
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 24035,
+              "eind_werker_ms": 24035
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 1,
+              "start_werker_ms": 24035,
+              "eind_werker_ms": 24036
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 28,
+              "start_werker_ms": 24036,
+              "eind_werker_ms": 24064
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 36,
+              "start_werker_ms": 24064,
+              "eind_werker_ms": 24100
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 269,
+              "start_werker_ms": 24100,
+              "eind_werker_ms": 24369
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 24369,
+              "eind_werker_ms": 24369
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 23.0,
+              "start_werker_ms": 24371.000000000004,
+              "eind_werker_ms": 24394.000000000004
+            }
+          ]
+        }
+      ],
+      "herstel": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "f7550e3956ce040bfb389a6da78aa0bb0dd5b312e1ca02034ebc3597981ba09d"
+      },
+      "sdk_exports": [
+        {
+          "begin": 35406,
+          "einde": 36293,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "c34ee4d838d00923f58ccd2acc0daad7d38bc8ea3933061a45eda045b8008df7"
+        },
+        {
+          "begin": 36747,
+          "einde": 37495,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "13b403da5868718f66e8197c87e0eb96fe555782cd0fe59d64bbcd31e8e72ff4"
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "bronexacte_toetsen": 8
+    },
+    {
+      "map": "herstel-intern-verdiept",
+      "label": "verdiept-2",
+      "programma_sha256": "55ecb54fc4fcafa176642022ef21c2604f18a72eca668b19769c10533e6fe6ae",
+      "schema": 2,
+      "profielen": [
+        {
+          "request_id": 39,
+          "route": "herstel",
+          "vector": [
+            2,
+            240,
+            200,
+            187,
+            11,
+            149,
+            232,
+            7,
+            136,
+            234,
+            212,
+            161,
+            5,
+            7
+          ],
+          "werkerhandler_ms": 3214,
+          "hoofdthread_verzoek_antwoord_ms": 3233,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 3213,
+              "start_werker_ms": 17752,
+              "eind_werker_ms": 20965
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 217,
+              "start_werker_ms": 17753,
+              "eind_werker_ms": 17970
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 14,
+              "start_werker_ms": 17971,
+              "eind_werker_ms": 17985
+            },
+            {
+              "naam": "materializeDocx",
+              "duur_ms": 347,
+              "start_werker_ms": 17985,
+              "eind_werker_ms": 18332
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 1.000000000003638,
+              "start_werker_ms": 18332,
+              "eind_werker_ms": 18333.000000000004
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 675.9999999999964,
+              "start_werker_ms": 18333.000000000004,
+              "eind_werker_ms": 19009
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0.0,
+              "start_werker_ms": 18333.000000000004,
+              "eind_werker_ms": 18333.000000000004
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 1954.0000000000036,
+              "start_werker_ms": 19010,
+              "eind_werker_ms": 20964.000000000004
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 1954.0000000000036,
+              "start_werker_ms": 19010,
+              "eind_werker_ms": 20964.000000000004
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 1046,
+              "start_werker_ms": 19010,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 53,
+              "start_werker_ms": 19010,
+              "eind_werker_ms": 19063
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 993,
+              "start_werker_ms": 19063,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 20056,
+              "eind_werker_ms": 20056
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 908.0000000000036,
+              "start_werker_ms": 20056,
+              "eind_werker_ms": 20964.000000000004
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 907.0,
+              "start_werker_ms": 20057.000000000004,
+              "eind_werker_ms": 20964.000000000004
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 812.9999999999964,
+              "start_werker_ms": 20086.000000000004,
+              "eind_werker_ms": 20899
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 160,
+              "start_werker_ms": 20087,
+              "eind_werker_ms": 20247
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 2,
+              "start_werker_ms": 20247,
+              "eind_werker_ms": 20249
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 35,
+              "start_werker_ms": 20250,
+              "eind_werker_ms": 20285
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 31,
+              "start_werker_ms": 20285,
+              "eind_werker_ms": 20316
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 583,
+              "start_werker_ms": 20316,
+              "eind_werker_ms": 20899
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 20899,
+              "eind_werker_ms": 20899
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 30,
+              "start_werker_ms": 20905,
+              "eind_werker_ms": 20935
+            }
+          ]
+        },
+        {
+          "request_id": 45,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            240,
+            200,
+            187,
+            11,
+            149,
+            232,
+            7,
+            136,
+            234,
+            212,
+            161,
+            5,
+            8
+          ],
+          "werkerhandler_ms": 918,
+          "hoofdthread_verzoek_antwoord_ms": 930.0000000000073,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 917.0000000000036,
+              "start_werker_ms": 22515,
+              "eind_werker_ms": 23432.000000000004
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 0,
+              "start_werker_ms": 22515,
+              "eind_werker_ms": 22515
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 14,
+              "start_werker_ms": 22515,
+              "eind_werker_ms": 22529
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 0,
+              "start_werker_ms": 22529,
+              "eind_werker_ms": 22529
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 240.00000000000364,
+              "start_werker_ms": 22529,
+              "eind_werker_ms": 22769.000000000004
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0,
+              "start_werker_ms": 22529,
+              "eind_werker_ms": 22529
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 663.0,
+              "start_werker_ms": 22769.000000000004,
+              "eind_werker_ms": 23432.000000000004
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 663.0,
+              "start_werker_ms": 22769.000000000004,
+              "eind_werker_ms": 23432.000000000004
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 236.99999999999636,
+              "start_werker_ms": 22769.000000000004,
+              "eind_werker_ms": 23006
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 42.99999999999636,
+              "start_werker_ms": 22769.000000000004,
+              "eind_werker_ms": 22812
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 194,
+              "start_werker_ms": 22812,
+              "eind_werker_ms": 23006
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0,
+              "start_werker_ms": 23006,
+              "eind_werker_ms": 23006
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 426.00000000000364,
+              "start_werker_ms": 23006,
+              "eind_werker_ms": 23432.000000000004
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 426.00000000000364,
+              "start_werker_ms": 23006,
+              "eind_werker_ms": 23432.000000000004
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 363.99999999999636,
+              "start_werker_ms": 23022.000000000004,
+              "eind_werker_ms": 23386
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0.0,
+              "start_werker_ms": 23022.000000000004,
+              "eind_werker_ms": 23022.000000000004
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 3.0,
+              "start_werker_ms": 23022.000000000004,
+              "eind_werker_ms": 23025.000000000004
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 23.999999999996362,
+              "start_werker_ms": 23025.000000000004,
+              "eind_werker_ms": 23049
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 32,
+              "start_werker_ms": 23049,
+              "eind_werker_ms": 23081
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 304,
+              "start_werker_ms": 23081,
+              "eind_werker_ms": 23385
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 1,
+              "start_werker_ms": 23385,
+              "eind_werker_ms": 23386
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 24,
+              "start_werker_ms": 23389,
+              "eind_werker_ms": 23413
+            }
+          ]
+        },
+        {
+          "request_id": 46,
+          "route": "herhaalde SDK-export",
+          "vector": [
+            2,
+            240,
+            200,
+            187,
+            11,
+            149,
+            232,
+            7,
+            136,
+            234,
+            212,
+            161,
+            5,
+            8
+          ],
+          "werkerhandler_ms": 743.0000000000036,
+          "hoofdthread_verzoek_antwoord_ms": 755.0000000000073,
+          "fasen": [
+            {
+              "naam": "N.save",
+              "duur_ms": 742,
+              "start_werker_ms": 23878,
+              "eind_werker_ms": 24620
+            },
+            {
+              "naam": "residentImport",
+              "duur_ms": 0,
+              "start_werker_ms": 23878,
+              "eind_werker_ms": 23878
+            },
+            {
+              "naam": "residentSession",
+              "duur_ms": 7,
+              "start_werker_ms": 23878,
+              "eind_werker_ms": 23885
+            },
+            {
+              "naam": "residentDirtyCapture",
+              "duur_ms": 0,
+              "start_werker_ms": 23885,
+              "eind_werker_ms": 23885
+            },
+            {
+              "naam": "residentYrsToDocument",
+              "duur_ms": 157,
+              "start_werker_ms": 23885,
+              "eind_werker_ms": 24042
+            },
+            {
+              "naam": "residentHostMetadata",
+              "duur_ms": 0,
+              "start_werker_ms": 23885,
+              "eind_werker_ms": 23885
+            },
+            {
+              "naam": "residentSaveEditorDocument",
+              "duur_ms": 578,
+              "start_werker_ms": 24042,
+              "eind_werker_ms": 24620
+            },
+            {
+              "naam": "pakket.Xt",
+              "duur_ms": 578,
+              "start_werker_ms": 24042,
+              "eind_werker_ms": 24620
+            },
+            {
+              "naam": "pakket.Dt",
+              "duur_ms": 195.00000000000364,
+              "start_werker_ms": 24042,
+              "eind_werker_ms": 24237.000000000004
+            },
+            {
+              "naam": "paragraphIdentities",
+              "duur_ms": 4,
+              "start_werker_ms": 24042,
+              "eind_werker_ms": 24046
+            },
+            {
+              "naam": "paragraphSavePlan",
+              "duur_ms": 191.00000000000364,
+              "start_werker_ms": 24046,
+              "eind_werker_ms": 24237.000000000004
+            },
+            {
+              "naam": "pakket.Vt",
+              "duur_ms": 0.0,
+              "start_werker_ms": 24237.000000000004,
+              "eind_werker_ms": 24237.000000000004
+            },
+            {
+              "naam": "pakket.Nt",
+              "duur_ms": 382.99999999999636,
+              "start_werker_ms": 24237.000000000004,
+              "eind_werker_ms": 24620
+            },
+            {
+              "naam": "pakket.Te",
+              "duur_ms": 382.99999999999636,
+              "start_werker_ms": 24237.000000000004,
+              "eind_werker_ms": 24620
+            },
+            {
+              "naam": "pakket.Le",
+              "duur_ms": 327,
+              "start_werker_ms": 24255,
+              "eind_werker_ms": 24582
+            },
+            {
+              "naam": "wasmReady",
+              "duur_ms": 0,
+              "start_werker_ms": 24255,
+              "eind_werker_ms": 24255
+            },
+            {
+              "naam": "determinismHash",
+              "duur_ms": 0,
+              "start_werker_ms": 24255,
+              "eind_werker_ms": 24255
+            },
+            {
+              "naam": "validateSave",
+              "duur_ms": 20.000000000003638,
+              "start_werker_ms": 24255,
+              "eind_werker_ms": 24275.000000000004
+            },
+            {
+              "naam": "saveJSON",
+              "duur_ms": 33.99999999999636,
+              "start_werker_ms": 24275.000000000004,
+              "eind_werker_ms": 24309
+            },
+            {
+              "naam": "wasmRepack",
+              "duur_ms": 273,
+              "start_werker_ms": 24309,
+              "eind_werker_ms": 24582
+            },
+            {
+              "naam": "copyBuffer",
+              "duur_ms": 0,
+              "start_werker_ms": 24582,
+              "eind_werker_ms": 24582
+            },
+            {
+              "naam": "writtenParagraphIds",
+              "duur_ms": 21,
+              "start_werker_ms": 24584,
+              "eind_werker_ms": 24605
+            }
+          ]
+        }
+      ],
+      "herstel": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "f52d6b5bb9b6870828cff17993964ef6411e9686300f8245c6012907a43ea1f9"
+      },
+      "sdk_exports": [
+        {
+          "begin": 35805,
+          "einde": 36749,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "843476ecf3fce1ef59c50adb008172e5fb89bdeecafda72852fa682c9b45ef94"
+        },
+        {
+          "begin": 37169.00000000001,
+          "einde": 37944,
+          "bronExact": true,
+          "tabellen": 128,
+          "sha256": "9881056ef4f80d131bca797194477c4442c02605b0d7b2da241c29c3b71da3db"
+        }
+      ],
+      "fouten": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "bronexacte_toetsen": 8
+    }
+  ],
+  "bevindingen": [
+    "Eerste variant, twee processen: eerste handler 2792/2774 ms. Alineaopslagplan 888/878 ms, Wasm-pakketbewerking 564/568 ms, eerste wasmReady 146/148 ms. Twee herhaalde exports per proces: circa 710–872 ms; planner circa 174–188 ms en Wasm-pakketbewerking circa 275–308 ms.",
+    "Verdiepte variant maakt de eerder onverklaarde residentfase zichtbaar: eerste handler bevat materializeDocx, residentYrsToDocument en residentSaveEditorDocument. Bekijk de exacte twee profielen hieronder; dit zijn afzonderlijke eerste-opslagmetingen, geen snelheidvergelijking tussen de diagnostische binaries.",
+    "Alleen vooraf importeren van de opslagmodule verklaart of verhelpt het meersecondenvenster niet. Modelopbouw, bronprojectie, opslagplanning en pakketbewerking zijn afzonderlijke meetbare kosten. Aanwezigheid van een warme basiskopie en interne caches kan verschil maken; geen brede claim dat alle volgende herstelrondes altijd snel zijn.",
+    "De huidige route gebruikt N.save/saveResidentDocument. De instrumenteerde N.saveDocument-route is in deze runs niet gebruikt en daarmee niet functioneel geaccepteerd. Ook de afzonderlijke volledige/repack-fallbackroutes zijn niet volledig gedekt."
+  ],
+  "functioneel": "Alle vier processen geslaagd met lege foutlijsten. Acht fysieke toetsen elk bronexact na canonieke renderlijst; originele rijke DOCX niet overschreven. Vier echte herstel-DOCX-bestanden met bevestigde bronprefix en 128 tabellen exact. Acht herhaalde SDK-exportbestanden volledig actuele tekst en 128 tabellen exact tegenover onafhankelijke XML; bronstand vóór/na export gelijk. Herstelkopie is een snapshot en bevat niet noodzakelijk de laatste toets.",
+  "visueel": "Eén heel eindbeeld uit de verdiepte tweede proef bekeken; rijke pagina en eindtekst mnopqrst zichtbaar. Geen fysieke paint/FPS, gehele pixel-/glyph-/greepdekking of issuevoltooiing.",
+  "checks": "Twee geoptimaliseerde offline native builds geslaagd; definitieve betrokken ESM-bestanden syntactisch gecontroleerd. Gewijzigde frontend via Brotli bytegelijk aan Tauri-cache en dezelfde bytes in eigen ELF bewezen. Productbron en standaarddist ongewijzigd. Geen nieuwe volledige TypeScript/Vite/frontend/Rust-/SDK-suite, CI, andere platforms/edities/installers/hosted/releases; eerdere 2396 tests niet herhaald bij uitsluitend private diagnostiek en bewijsdocs.",
+  "behoud": {
+    "bestaande_ELFs_SHA_exact": 59,
+    "nieuwe_aparte_ELFs": 2,
+    "referenties_totaal": 61,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "basisdist_SHA_exact": 529,
+    "wasm_SHA_exact": {
+      "assets/docx_parse_bg-CrNtYsJD.wasm": "e6188f8e0e4d03ce4b67ef5bcbcf23e6203419fe4a145a60e1e60f26a96b558b",
+      "assets/sql-wasm-browser-DfANybxk.wasm": "38c14f6e379210bc942bdc4ebca44e7bfdb4318ecc1c72ca666a28fdce96670a",
+      "assets/docx_edit_bg-Cu7hnSEw.wasm": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+      "assets/pptx_wasm_bg-qh_XpSnz.wasm": "54c1f84be0d2f95298edd3df1240fa44b9305daf4f9ae9d1627b3dfdff854c60",
+      "assets/xlsx_wasm_bg-Bl3DL8it.wasm": "3c6bcf0d11f3f66ce4410ae7ba5d55c042477949e9975f3977b4e421079781de",
+      "assets/docx_layout_bg-DcsU5iOF.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "assets/ooxml_opc_bg-Bwx9T1Uy.wasm": "7a9f857e21f4e79682b1ab494f409545656acf2e77e7b7d42e357cd0d501dba9",
+      "spelling/oos_spelling.wasm": "c421e391f163da9ffaf21ffc4eb20d2e112228dd4f71a03650455c075af5d108"
+    },
+    "inbedding": [
+      {
+        "variant": "herstel-intern",
+        "bestand": "assets/chunk-Q7OC7M5Q-CYo4lz-m.js",
+        "sha256": "7ab0db0671b7027a6ab58beac9247a2d124dd29fa4e7ada234b2348363e6ba5a",
+        "brotli_bytes": 180091
+      },
+      {
+        "variant": "herstel-intern",
+        "bestand": "assets/chunk-YEDZERHF-pQnI8XH_.js",
+        "sha256": "e8e3a73f8465e3b3a9a2eeb6886f734e7715a5483233858c6a2a0c207883a2a7",
+        "brotli_bytes": 10936
+      },
+      {
+        "variant": "herstel-intern-verdiept",
+        "bestand": "assets/chunk-Q7OC7M5Q-CYo4lz-m.js",
+        "sha256": "0d595811167a587c41ec3f6401212e41ef8294ee702476b2fab09a50399140d6",
+        "brotli_bytes": 180108
+      },
+      {
+        "variant": "herstel-intern-verdiept",
+        "bestand": "assets/chunk-YTGFUEEE-CWz7SArg.js",
+        "sha256": "d7114b8639b40a4ff38e7885d755d3e8d0eab963f9cab8afd9fe72c2fcf29099",
+        "brotli_bytes": 562
+      }
+    ],
+    "productbron": "Ongewijzigd; uitsluitend eigen gebundelde diagnostiek."
+  },
+  "archief": {
+    "bestand": "2026-11-28-writer-herstel-interne-fasen.tar.gz",
+    "sha256": "46f42e21a736cec5d5d32cfa4334c749839b13ed399dec046cc70199349818d1",
+    "bestanden": 59,
+    "bytes": 2117857
+  },
+  "vervolg": "Neem de ongewijzigde productkandidaat als basis. Meet en toets veilige verkorting van eerste source/materialize- en plannerkosten, met name committed_scan/story_states/seed_states in paragraph_save_plan en bronprojectie. Bewaak geldigheid met bronvector, dirty stories, pakketidentiteit en sessie. Overweeg pas daarna een onveranderlijk snapshot voor aparte opslagwerker. Geen mutaties door live save mengen, broncontroles schrappen, herstel uitzetten of alleen piek naar opstart verplaatsen. Database laatst."
+}
