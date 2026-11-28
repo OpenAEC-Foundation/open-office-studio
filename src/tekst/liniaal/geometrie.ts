@@ -420,7 +420,11 @@ export function tabelBeelden(
           return cel;
         });
       });
-      const vakken = deriveDisplayListSelectedCellRects(lijstVoorTabelPagina(lijst, f.pageIndex), cellen, sleutelVan).filter((c) => c.pageIndex === f.pageIndex);
+      // Lokale regio-uitbreiding via de bewaakte enginecompatibiliteit.
+      // De lijst behoudt eerdere pagina’s voor het tabelanker; alleen de
+      // celvakken worden meteen tot deze pagina beperkt.
+      const regio: NonNullable<Parameters<typeof deriveDisplayListSelectedCellRects>[3]> & { pageIndex: number } = { kind: "body", pageIndex: f.pageIndex };
+      const vakken = deriveDisplayListSelectedCellRects(lijstVoorTabelPagina(lijst, f.pageIndex), cellen, sleutelVan, regio).filter((c) => c.pageIndex === f.pageIndex);
       const { raster, lijnen } = getekendRaster(rasterVan(info.payload), f.originX, vakken);
       const banden = [...f.rowBands].sort((a, b) => a.rowIndex - b.rowIndex);
       const rijen = banden.map((b, i) => {

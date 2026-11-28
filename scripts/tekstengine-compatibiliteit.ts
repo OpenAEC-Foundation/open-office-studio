@@ -198,6 +198,19 @@ export function herstelKolommenWeergave(bron: string): string {
     + bron.replace(oud, 'regions:{sections:oosKolomSecties(p(e$1)),settings:');
 }
 
+/** Beperk celvakken tot één pagina, met ankers uit alle vervolgpagina’s. */
+export function herstelTabelPaginaVakken(bron: string): string {
+  const anker = 'let l=n(s.docStart);if(l==null)continue;let u=r.get(s.table.tableId);(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});';
+  const pagina = 'let o=[],a=we(e,t,i);for(let s of e.pages){let l=Ze(s,i);';
+  if (bron.split(anker).length !== 2 || bron.split(pagina).length !== 2)
+    throw new Error("De tekstengine is gewijzigd; controleer eerst de aansluiting voor tabelpaginavakken.");
+  // pageIndex is een optionele lokale uitbreiding op de bestaande regio.
+  // De standaardroute behoudt haar uitlezingen. Bij een paginafilter mogen
+  // reeds overtroffen geldige ankers worden overgeslagen; null blijft zoeken.
+  return bron.replace(anker, 'let u=r.get(s.table.tableId);if(t.pageIndex!==undefined&&u&&s.docStart>=u.docStartSample)continue;let l=n(s.docStart);if(l==null)continue;(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});')
+    .replace(pagina, 'let o=[],a=we(e,t,i);for(let s of e.pages){if(i.pageIndex!==undefined&&s.pageIndex!==i.pageIndex)continue;let l=Ze(s,i);');
+}
+
 /** Aansluiting voor de synchrone editorroute van de vastgezette engine. */
 export function tekstengineCompatibiliteit(): Plugin {
   return {
@@ -221,6 +234,8 @@ export function tekstengineCompatibiliteit(): Plugin {
         return fileURLToPath(new URL("../src/tekst/tabel/klik.ts", import.meta.url));
     },
     transform(bron, id) {
+      if (/\/@betteroffice\/docx\/dist\/chunk-EOFVNRML\.mjs(?:\?.*)?$/.test(id))
+        return { code: herstelTabelPaginaVakken(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/utils\/index\.mjs(?:\?.*)?$/.test(id))
         return { code: herstelCelSplitsMinimum(bron), map: null };
       if (/\/@betteroffice\/docx\/dist\/chunk-WCH3MOFU\.mjs(?:\?.*)?$/.test(id))

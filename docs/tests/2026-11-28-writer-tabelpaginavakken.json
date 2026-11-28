@@ -1,0 +1,282 @@
+{
+  "datum": "2026-11-28",
+  "status": "Geteste paginafilter in integratiebron opgenomen; hoofdontwikkelbranch ontvangt bewijs. Geen nieuwe geïnstalleerde of gepubliceerde uitgave.",
+  "basis": {
+    "integratie": "23b9886c",
+    "hoofd": "870c0590",
+    "native_basis_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+    "native_kandidaat_sha256": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385",
+    "versie": "2026.45.52"
+  },
+  "wijziging": [
+    "De bewaakte SDK-transformatie biedt een optionele pageIndex binnen de bestaande regio. TabelBeelden vraagt alleen celvakken op de eigen pagina.",
+    "Ankers blijven uit alle benodigde vervolgpagina’s komen. Geldige reeds overtroffen posities worden alleen bij de opt-in overgeslagen; null blijft zoeken.",
+    "Bestaande cache-/bron-/vector-/voorstelguards, sessielevensduur en Rust-/Wasm-code niet veranderd. Geen timer toegevoegd."
+  ],
+  "vaste_regressies": {
+    "bestanden": [
+      "src/tekst/liniaal/tabelpaginavakken.test.ts"
+    ],
+    "gevallen": [
+      "Ontbrekende, dubbele en al gewijzigde engineankers worden geweigerd; alleen de juiste module met optionele query krijgt de transformatie.",
+      "Echte Wasm met 128 tabellen/65 pagina’s op pagina’s 0,32,64: standaardroute inclusief bronleesgetal gelijk; scope geeft identieke fragmenten/celvakken met minder unieke bronlezingen. Bron/vector blijven exact."
+    ],
+    "eerder_breed_prototype": "docs/tests/2026-11-28-writer-groep-publicatie.json"
+  },
+  "controles": {
+    "gericht_eerste": "12 tests in drie bestanden geslaagd.",
+    "typescript": {
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "code": 0
+    },
+    "gericht_definitief": {
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/tekst/liniaal/tabelpaginavakken.test.ts",
+        "--maxWorkers=2"
+      ],
+      "code": 0,
+      "seconden": 20.0334311358165
+    },
+    "volledige_frontend": {
+      "code": 0,
+      "bestanden_geslaagd": 233,
+      "bestanden_overgeslagen": 1,
+      "tests_geslaagd": 2394,
+      "tests_overgeslagen": 4
+    },
+    "frontend": "Vite-productiebouw geslaagd, eigen outDir met 529 bestanden; paginafilter aanwezig in hoofd- en workerchunk. Geen meetprobes/proefvlaggen. Bestaande bundelwaarschuwingen bewaard.",
+    "native": [
+      {
+        "label": "proef",
+        "code": 0,
+        "seconden": 171.0244697839953,
+        "opdracht": [
+          "cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabel-paginavakken-productie/open-office-studio-paginavakken-proef",
+        "sha256": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385"
+      }
+    ],
+    "proefcorrectie": "Eerste TypeScript-controle wees de nieuwe proefresolver af voor ontbrekende docStart. Type en null-terugval gecorrigeerd; definitieve TypeScript-procescode 0 en beide vaste regressies opnieuw groen. Volledige suite begon vóór deze uitsluitend proefcodecorrectie; productbron bleef gedurende de suite gelijk."
+  },
+  "native_ABBA": {
+    "ronden": [
+      {
+        "label": "a-een",
+        "variant": "basis",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29608,
+          "begin_tot_bron_ms": 7148.000000000004,
+          "laatste_keyup_tot_bron_ms": 228.00000000000364,
+          "laatste_keyup_tot_frame_ms": 1574.0000000000036,
+          "begin_tot_frame_ms": 8494.000000000004,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8523,
+          "wall_verzonden_tot_frame_ms": 6719,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 62.62480993405916
+      },
+      {
+        "label": "b-een",
+        "variant": "kandidaat",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 28978,
+          "begin_tot_bron_ms": 6904,
+          "laatste_keyup_tot_bron_ms": 212,
+          "laatste_keyup_tot_frame_ms": 1408,
+          "begin_tot_frame_ms": 8100,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8153,
+          "wall_verzonden_tot_frame_ms": 6394,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 61.131685805972666
+      },
+      {
+        "label": "b-twee",
+        "variant": "kandidaat",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29403.000000000004,
+          "begin_tot_bron_ms": 7133,
+          "laatste_keyup_tot_bron_ms": 207.99999999999636,
+          "laatste_keyup_tot_frame_ms": 1391.9999999999964,
+          "begin_tot_frame_ms": 8317,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8367,
+          "wall_verzonden_tot_frame_ms": 6628,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 61.35979693592526
+      },
+      {
+        "label": "a-twee",
+        "variant": "basis",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29606,
+          "begin_tot_bron_ms": 7342,
+          "laatste_keyup_tot_bron_ms": 221,
+          "laatste_keyup_tot_frame_ms": 1433,
+          "begin_tot_frame_ms": 8554,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8583,
+          "wall_verzonden_tot_frame_ms": 6804,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 62.36629509786144
+      }
+    ],
+    "mediaan_basis_ms": 8553.0,
+    "mediaan_kandidaat_ms": 8260.0,
+    "verschil_procent": -3.4256985852917143,
+    "grenzen": [
+      "Zelfde ongewijzigde rijke harnasbytes, gewone niet-geïnstrumenteerde ELF’s, één Linux-configuratie; geen gelijktijdige bouw/test tijdens metingen.",
+      "Twee ronden per variant; lokale mediaanwinst circa 3,4% is geen brede snelheidsgarantie. Absolute invoer-/selectievertraging blijft prioritair open.",
+      "Renderlijst plus twee rAFs is geen fysieke schermpaint/FPS; geen exclusieve CPUtijd gemeten."
+    ]
+  },
+  "functie": {
+    "rijke_ronden": 4,
+    "inhoud": "1.052 fysieke tekens, selectie/vervangen, bronexacte Undo/Redo, fysiek bewaren vóór laat antwoord, onafhankelijke DOCX-teruglezing, niet-opslaan/documentwissel; alle 128 tabellen behouden en GUI/engine/consolefoutlijsten leeg.",
+    "kolomgreep_kandidaat": {
+      "opdracht": [
+        "/usr/bin/python3",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-tabelgrepen-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabel-paginavakken-productie/open-office-studio-paginavakken-proef",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabel-paginavakken-productie/grepen"
+      ],
+      "code": 0,
+      "geslaagd": true,
+      "programma_sha256": "0e1dc8435cb83cde3e65aa7b696838f013dd0d919e51489bea0ff3d3c9289385",
+      "seconden": 29.835142803145573
+    },
+    "kolomgreep_basis": {
+      "opdracht": [
+        "/usr/bin/python3",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/test-writer-tabelgrepen-native.py",
+        "--programma",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/open-office-studio-spans-veilig",
+        "--versie",
+        "2026.45.52",
+        "--uitvoer",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabel-paginavakken-productie/grepen-basis"
+      ],
+      "code": 0,
+      "geslaagd": true,
+      "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+      "seconden": 29.766287198057398
+    },
+    "kolomgrenzen": "Fysiek slepen, aangrenzende breedtes/totaal en alle verhalen exact; fysieke Undo/Redo, Ctrl+S met onafhankelijke XML-gridlezing en nieuw proces met alle breedtes/teksten exact. Geen afzonderlijke rijgreep-GUI-proef."
+  },
+  "visueel": {
+    "hele_beelden_bekeken": [
+      "b-een/snel-getypt-bewaard.png",
+      "grepen/voor-slepen.png",
+      "grepen/na-slepen.png",
+      "grepen/heropend.png",
+      "grepen-basis/heropend.png"
+    ],
+    "vergelijking": [
+      {
+        "beeld": "voor-slepen",
+        "basis_kandidaat_pixelgelijk": false,
+        "afwijkende_pixels": 30,
+        "bbox": [
+          397,
+          292,
+          399,
+          307
+        ]
+      },
+      {
+        "beeld": "na-slepen",
+        "basis_kandidaat_pixelgelijk": false,
+        "afwijkende_pixels": 3460,
+        "bbox": [
+          446,
+          214,
+          1438,
+          786
+        ]
+      },
+      {
+        "beeld": "heropend",
+        "basis_kandidaat_pixelgelijk": false,
+        "afwijkende_pixels": 30,
+        "bbox": [
+          397,
+          292,
+          399,
+          307
+        ]
+      }
+    ],
+    "grens": "Voor-slepen en heropend verschillen ieder op 30 cursorpixels tussen basis/kandidaat. Na-slepen 3.460 pixels verschillend, waaronder greeplijn/scrollbalk; geen volledige pixel-/glyph- of alle tabelvariantenacceptatie."
+  },
+  "behoud": {
+    "oudere_ELF_paden": 54,
+    "alle_ELF_paden": 55,
+    "SHA_exact": true,
+    "standaardbestanden": 529,
+    "byte_mode_mtime_exact": true
+  },
+  "niet_gecontroleerd": [
+    "Geen nieuwe volledige Rust-werkruimte-/SDK-suite: uitsluitend frontendroute gewijzigd; native bouw en echte GUI apart getoetst.",
+    "Geen nieuwe Windows/macOS/andere editie/installers/hosted-/release-/CI-goedkeuring.",
+    "Geen standaarddist of startkoppeling vervangen; lopende vensters en gebruikerswerk behouden. Kernbouwprerequisieten voor hoofdbranch blijven afzonderlijk nodig.",
+    "Geen issue of migratiegebied voltooid, geen volledige Writer-functie-/selectie-/glyphacceptatie."
+  ],
+  "vervolg": "Gebruik de geteste kandidaat als aanvullende vergelijkingsbasis. Meet de resterende SDK-publicatie en vaste native verzoekkosten op de kortere tabelroute; toets daarna begrensde groepering met behoud van invoerlatentie, selectie, Undo/Redo, opslaan en levensduur. Geen blinde wachttijd of zwakkere bron-/vectorguards. Database laatst.",
+  "archief": {
+    "pad": "docs/tests/2026-11-28-writer-tabelpaginavakken.tar.gz",
+    "sha256": "ccff8cc7194090a872ce9941d313b99f78f3dfc5cfa836498dbe552b3d318894",
+    "inhoud": "Bronkopieën, proefscripts/logs, ruwe desktoprapporten, DOCX, beelden, referentie-/bundelhashes en geverifieerd SHA-manifest; grote binaries/targets/bundel afzonderlijk lokaal behouden."
+  }
+}
