@@ -1,0 +1,158 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "3d777665",
+  "basis_hoofdbranch": "5f197dc2",
+  "besluit": "Bewijsgestuurd digesthergebruik op eigen native wrapper kansrijk; geen productacceptatie, Wasm-bouw of desktopwinst. Onopgeloste byteverschillen tussen zelfstandige instanties bij Undo/Redo expliciet behouden.",
+  "aanpak": "Echte apply_local_update_v1 met lokale origin; aparte controle met twee baseline-instanties. Eén bodytekstinsert, exact één commit/epochstap, onveranderde roots, geen pendingbuffer, geen metadata/embed/delete/formatwijziging, begrensde eenheid/attributen/tekst en alle paragraphgrenzen na materialisatie controleren. Anders volledige digestberekening. Documentidentiteit vastgehouden met Doc::ptr_eq; geen epochoverschrijdende Arc-/unitpointercache. Hashadapter alleen voor vergelijking met voorraad-Wasm32.",
+  "analyse": {
+    "toestanden": 80,
+    "reeksen": 31,
+    "bodydigests_wasm32": 71761,
+    "promoties": 25,
+    "undo_redo_paren": 43,
+    "documentwissels_en_ongeldige_update": 3,
+    "replica_bytevergelijkingen": [
+      {
+        "fase": "invoer",
+        "kandidaat": true,
+        "twee_referenties": true,
+        "aantal": 80
+      },
+      {
+        "fase": "undo",
+        "kandidaat": true,
+        "twee_referenties": true,
+        "aantal": 42
+      },
+      {
+        "fase": "redo",
+        "kandidaat": true,
+        "twee_referenties": true,
+        "aantal": 28
+      },
+      {
+        "fase": "redo",
+        "kandidaat": false,
+        "twee_referenties": false,
+        "aantal": 11
+      },
+      {
+        "fase": "redo",
+        "kandidaat": false,
+        "twee_referenties": true,
+        "aantal": 3
+      },
+      {
+        "fase": "undo",
+        "kandidaat": false,
+        "twee_referenties": false,
+        "aantal": 1
+      },
+      {
+        "fase": "redo",
+        "kandidaat": true,
+        "twee_referenties": false,
+        "aantal": 1
+      }
+    ],
+    "afwijzingen": {
+      "embed": 2,
+      "not_one_insert": 11,
+      "unit_boundary": 9,
+      "commits": 6,
+      "format": 4,
+      "non_text": 3,
+      "delete": 2,
+      "other_root": 4,
+      "other_story": 1,
+      "text_boundary": 1,
+      "attributes": 1
+    },
+    "met_undo_manager_ABBA": [
+      {
+        "frame": 1,
+        "A_ms": 13.161506,
+        "B_ms": 7.208874,
+        "B_A": 0.5477240978350046
+      },
+      {
+        "frame": 2,
+        "A_ms": 13.023705,
+        "B_ms": 7.1415485,
+        "B_A": 0.5483499894999158
+      },
+      {
+        "frame": 3,
+        "A_ms": 13.048329500000001,
+        "B_ms": 7.0643435,
+        "B_A": 0.5413983069633549
+      },
+      {
+        "frame": 4,
+        "A_ms": 13.041941,
+        "B_ms": 7.0951935,
+        "B_A": 0.5440289524389046
+      },
+      {
+        "frame": 5,
+        "A_ms": 13.1440555,
+        "B_ms": 7.146479,
+        "B_A": 0.5437042623564698
+      },
+      {
+        "frame": 6,
+        "A_ms": 19.463609499999997,
+        "B_ms": 19.819007,
+        "B_A": 1.0182595884899972
+      }
+    ],
+    "zonder_undo_benchmark_alleen_verkennend": true,
+    "niet_bewezen": [
+      "oorzaak van bronbyteverschillen tussen onafhankelijke instanties na Undo/Redo",
+      "Wasm-integratie en JS-grens",
+      "desktopinvoerwinst",
+      "visuele acceptatie",
+      "pending buffer nog aanwezig tijdens aanvraag",
+      "overige platforms en releasevarianten"
+    ],
+    "bronnen": {
+      "orakel": "691cfe7358167b7241e74e6173b93b8e43c2d8681e1ba7732da5734f79b174b8",
+      "vorig_archief": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60"
+    }
+  },
+  "behoud": {
+    "referenties38_exact": true,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "native_bibliotheken_exact": true,
+    "orakelframes80_sha_exact": true,
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "drivers": {
+      "proef": "60151cc9dfb51a16579be9af7d55d0d05012cffae641c2cab68e1c2272ab8f13",
+      "proef-undo": "4518d6d30861858036733f130563b958fac4d8355759041066e7ecbcca41ee8b"
+    },
+    "nieuwe_desktop_of_wasm_bouw": false
+  },
+  "controle": "Twee definitieve Rustbuilds opt-level3 -D warnings groen. 31 reeksen/80 toestanden, 25 promoties; zelfde-documentdigest en bronbyte-invarianten op alle aanvragen. Actieve UndoManager in correctheidsreeks en afzonderlijke rijke ABBA-meetreeks met vier groepen per invoerstap. Drie documentwissel-/ongeldige-updateproeven. Bytepariteit vóór Undo/Redo 80/80 exact; daarna afwijkingen ook tussen baseline-instanties, oorzaak niet vastgesteld.",
+  "niet_gedaan": [
+    "Productcode wijzigen",
+    "Wasm/JS/SDK-integratie",
+    "echte desktopinvoer en visueel bewijs",
+    "volledige suites en CI",
+    "bewijs voor bestaande pendingbuffer",
+    "alle stories vergelijken na Undo/Redo",
+    "andere platforms, edities en releases",
+    "issue of migratiegebied sluiten"
+  ],
+  "vervolg": "Eerst bronbyteverschillen bij Undo/Redo verklaren met geïsoleerde referentieproef en alle story-/metadata-uitkomsten vergelijken. Daarna in eigen kernkopie minimale unit-digestcache met dezelfde conservatieve bewijzen integreren; pending/identiteits-/commentaar-/grens-/foutroutes expliciet toetsen. Pas na exacte Wasm-pariteit echte native ABBA, documenten en beelden. Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-28-writer-lokaal-digestbewijs.tar.gz",
+    "sha256": "cb22abdc8c70122e7e533dbe8447367bd79e87a22f4ab526f2c12e79153ecc90",
+    "bestanden": 19,
+    "rondreis_byte_exact": true
+  },
+  "afhankelijk_bewijsarchief": {
+    "pad": "docs/tests/2026-11-28-writer-rust-digestfasen.tar.gz",
+    "sha256": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60"
+  }
+}
