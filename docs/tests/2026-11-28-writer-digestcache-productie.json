@@ -1,0 +1,631 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "a0fa5d1c",
+  "basis_hoofdbranch": "63ed5f2a",
+  "besluit": "Schone cachepatch en optioneel bouwpad getest en vastgelegd; standaardproductkern blijft 737ee8c. Writer-vertraging niet opgelost en geen issue gesloten.",
+  "wijziging": "Nieuwe drie-bestandenpatch zonder oude meetinstrumentatie, begrensde bodydigestcache rond echte apply_local_update; alleen bewezen enkele tekstinvoeging promoveert. Alle units worden bij dirty lezing nog gematerialiseerd; onzekere mutaties vallen volledig terug. Geen Arc-/unitpointercache over epochs. Optionele --digestcache, --alleen-voorbereiden en strikte bron-/patch-/uitvoerchecksumcontroles in bestaand bouwscript.",
+  "bron": {
+    "bronarchief": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+    "nootpatch": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "gewijzigd_in_proefbron": [
+      "crates/docx-edit/src/engine.rs",
+      "crates/docx-edit/src/lib.rs",
+      "crates/docx-edit/src/wasm.rs"
+    ],
+    "extra_in_proefbron": [
+      "crates/docx-edit/src/mutation_proof.rs"
+    ],
+    "vaste_bronbestanden": 4417,
+    "Cargo_lock_gelijk": true
+  },
+  "exacte_voorraadherbouw": {
+    "vaste_bron_reproduceert_voorraad_exact": true,
+    "herbouw_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "voorraad_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "bytes": 24549413
+  },
+  "bouwrecept": {
+    "geslaagd": true,
+    "bronvoorbereiding": [
+      {
+        "variant": "standaard",
+        "procescode": 0,
+        "bronbestanden_exact": 4417,
+        "hergebruik_bestaande_bron_geweigerd": true,
+        "voorbereid": {
+          "alleenVoorbereid": true,
+          "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+          "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+          "digestcachePatchSha256": null
+        }
+      },
+      {
+        "variant": "cache",
+        "procescode": 0,
+        "bronbestanden_exact": 4418,
+        "hergebruik_bestaande_bron_geweigerd": true,
+        "voorbereid": {
+          "alleenVoorbereid": true,
+          "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+          "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+          "digestcachePatchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49"
+        }
+      }
+    ],
+    "conflicterende_vlaggen_geweigerd": true,
+    "verkeerde_cachebasis_geweigerd": true,
+    "grens": "Werkelijke CLI-bronvoorbereiding vergeleken met werkelijk gecompileerde bron; geen tweede volledige Cargo/bindgen/opt-aanroep via gewijzigde CLI. Die opdrachten zijn in bestaande en schone bouwlogs vastgelegd."
+  },
+  "volledige_optiebuild": {
+    "code": 0,
+    "seconden": 705.2059613848105,
+    "offline": true,
+    "opdracht": [
+      "python3",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/scripts/bouw-tekstkern.py",
+      "--bronmap",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/cli-volledig-bron",
+      "--uitvoer",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/cli-volledig-uit",
+      "--bronarchief",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bron.tar.gz",
+      "--wasm-bindgen",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/bindgen/wasm-bindgen",
+      "--wasm-opt",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/binaryen/bin/wasm-opt",
+      "--digestcache"
+    ]
+  },
+  "cli_broncontrole": {
+    "bronbestanden_exact": 4418,
+    "edit_sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+    "layout_sha256": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+    "procescode": 0
+  },
+  "metadata": {
+    "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+    "nootpatchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "basisWasmSha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "patch": "tekstengine-digestcache.patch",
+    "patchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49",
+    "wasmSha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+    "wasmBytes": 24608798,
+    "actiefInProduct": false,
+    "bewijs": "docs/tests/2026-11-28-writer-digestcache-productie.json"
+  },
+  "wasm": {
+    "pariteit_toestanden": 166,
+    "storyvergelijkingen": 127660,
+    "digestvergelijkingen": 276398,
+    "cases": 31,
+    "bron_en_vectoren_per_leesstap_exact": true,
+    "grens": "7 historische orakeltoestanden zonder lokale Undo verschillen in bronhistorie van de lokale Undo-proef; geen cacheafwijking, zie afzonderlijk Undo-bronbewijs. Baseline/kandidaat en echte voorraad sluiten aan op de bestaande pariteitrapporten. Geen brede reentrantie tijdens actieve Yrs-transactie getest.",
+    "randen": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "ongeldige_update": true,
+          "onbekende_story": true,
+          "echte_pending": true,
+          "bron_exact": true,
+          "load_merge_na_warme_cache": true,
+          "echte_remote_update_na_warme_cache": true,
+          "seeden_na_ontbrekende_body": true
+        },
+        {
+          "variant": "kandidaat",
+          "ongeldige_update": true,
+          "onbekende_story": true,
+          "echte_pending": true,
+          "bron_exact": true,
+          "load_merge_na_warme_cache": true,
+          "echte_remote_update_na_warme_cache": true,
+          "seeden_na_ontbrekende_body": true
+        }
+      ]
+    },
+    "callback": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "calls": 1,
+          "werpende_callback_genegeerd": true,
+          "veilige_clientid_lezer_in_callback": true,
+          "bron_voor_na_exact": true,
+          "undo_redo_na_callback": true
+        },
+        {
+          "variant": "kandidaat",
+          "calls": 1,
+          "werpende_callback_genegeerd": true,
+          "veilige_clientid_lezer_in_callback": true,
+          "bron_voor_na_exact": true,
+          "undo_redo_na_callback": true
+        }
+      ],
+      "grens": "Bestaand callbackcontract: kopie van update, origin, client-id lezen en callbackfout negeren. Geen algemene synchrone documentlezing of mutatie vanuit een lopende Yrs-transactie getest."
+    },
+    "component_ABBA_96_metingen": [
+      {
+        "frame": 1,
+        "A_ms": 14.16600799999992,
+        "B_ms": 8.568183499999577,
+        "B_A": 0.6048410744932253
+      },
+      {
+        "frame": 2,
+        "A_ms": 14.201348500000222,
+        "B_ms": 7.882916500000192,
+        "B_A": 0.5550822515199926
+      },
+      {
+        "frame": 3,
+        "A_ms": 13.92430000000013,
+        "B_ms": 8.014271000000008,
+        "B_A": 0.5755600640606661
+      },
+      {
+        "frame": 4,
+        "A_ms": 13.788765499999727,
+        "B_ms": 8.429112500000201,
+        "B_A": 0.6113029117799101
+      },
+      {
+        "frame": 5,
+        "A_ms": 13.616746999999577,
+        "B_ms": 7.9283165000001645,
+        "B_A": 0.5822474707065065
+      },
+      {
+        "frame": 6,
+        "A_ms": 22.182203500000014,
+        "B_ms": 23.027759000000515,
+        "B_A": 1.0381186431726903
+      }
+    ]
+  },
+  "native": {
+    "bouw": [
+      {
+        "variant": "basis",
+        "code": 0,
+        "seconden": 119.02357612992637,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "gewijzigde_assets": [],
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/open-office-studio-digest-basis",
+        "sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd"
+      },
+      {
+        "variant": "kandidaat",
+        "code": 0,
+        "seconden": 149.03834665799513,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "gewijzigde_assets": [
+          "assets/docx_edit_bg-ONvZFP_n.wasm"
+        ],
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/open-office-studio-digest-kandidaat",
+        "sha256": "ec569643c75976392433b352ad0184218f630cb55b87ea598d78ab3da0be2e98"
+      }
+    ],
+    "volgorde": "ABBA",
+    "A_ms": [
+      8734,
+      8987
+    ],
+    "B_ms": [
+      8470,
+      8926
+    ],
+    "A_mediaan_ms": 8860.5,
+    "B_mediaan_ms": 8698.0,
+    "verschil_ms": -162.5,
+    "verschil_procent": -1.8339822809096518,
+    "grens": "Eén groep met twee per variant; bereiken overlappen. Geen algemene snelheidsclaim. XTest tot renderlijst plus twee rAFs, geen fysieke schermpaint. Zelfde bestaande private projectie-contextfrontend als ee89, niet een nieuwe standaardfrontend-/releaseacceptatie. Linux x86_64 release, writer-bronjournaal/schema2; andere edities/schema3/platforms niet getoetst.",
+    "gerichte_route": {
+      "A": {
+        "geslaagd": true,
+        "proces_code": 0,
+        "seconden": 61.08339561196044,
+        "helper_sha256": "59d8ed82eff4d9407e7116e8aa86f2e634a924b80878a30c8f01eeb9ba5294f7",
+        "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "venster_afgeleid": {
+          "begin": 21879,
+          "eind": 30641
+        },
+        "in_invoervenster": {
+          "applyLocalUpdate": {
+            "aantal": 60,
+            "som_ms": 122.00000000001819,
+            "synchrone_fouten": 0
+          },
+          "paragraphSpans:body": {
+            "aantal": 61,
+            "som_ms": 473.0000000000109,
+            "synchrone_fouten": 0
+          },
+          "storySegmentUnitDigests:body": {
+            "aantal": 60,
+            "som_ms": 760.0000000000073,
+            "synchrone_fouten": 0
+          },
+          "storySegmentUnits:body": {
+            "aantal": 61,
+            "som_ms": 27.999999999989086,
+            "synchrone_fouten": 0
+          },
+          "paragraphSpans": {
+            "aantal": 1560,
+            "som_ms": 37.000000000007276,
+            "synchrone_fouten": 0
+          },
+          "storySegments:body": {
+            "aantal": 2,
+            "som_ms": 64.00000000000364,
+            "synchrone_fouten": 0
+          },
+          "storySegments": {
+            "aantal": 768,
+            "som_ms": 37.99999999998545,
+            "synchrone_fouten": 0
+          }
+        },
+        "hersteld": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "overflow": 0,
+        "grens": "Afgeleid invoervenster, facade-wrappers en functieproef op eigen X11; geen gewone ABBA, exclusieve Rust-CPU, raw delta-inhoud of cachepromotietelling."
+      },
+      "B": {
+        "geslaagd": true,
+        "proces_code": 0,
+        "seconden": 60.54484668793157,
+        "helper_sha256": "59d8ed82eff4d9407e7116e8aa86f2e634a924b80878a30c8f01eeb9ba5294f7",
+        "programma_sha256": "ec569643c75976392433b352ad0184218f630cb55b87ea598d78ab3da0be2e98",
+        "venster_afgeleid": {
+          "begin": 21679.000000000004,
+          "eind": 30144.000000000004
+        },
+        "in_invoervenster": {
+          "applyLocalUpdate": {
+            "aantal": 60,
+            "som_ms": 130.9999999999709,
+            "synchrone_fouten": 0
+          },
+          "paragraphSpans:body": {
+            "aantal": 61,
+            "som_ms": 480.99999999999636,
+            "synchrone_fouten": 0
+          },
+          "storySegmentUnitDigests:body": {
+            "aantal": 60,
+            "som_ms": 441.9999999999927,
+            "synchrone_fouten": 0
+          },
+          "storySegmentUnits:body": {
+            "aantal": 61,
+            "som_ms": 30.00000000001819,
+            "synchrone_fouten": 0
+          },
+          "paragraphSpans": {
+            "aantal": 1560,
+            "som_ms": 36.00000000000364,
+            "synchrone_fouten": 0
+          },
+          "storySegments:body": {
+            "aantal": 2,
+            "som_ms": 68.99999999999636,
+            "synchrone_fouten": 0
+          },
+          "storySegments": {
+            "aantal": 768,
+            "som_ms": 30.000000000021828,
+            "synchrone_fouten": 0
+          }
+        },
+        "hersteld": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "overflow": 0,
+        "grens": "Afgeleid invoervenster, facade-wrappers en functieproef op eigen X11; geen gewone ABBA, exclusieve Rust-CPU, raw delta-inhoud of cachepromotietelling."
+      },
+      "grens": "Extra diagnostische rondes, niet poolen met gewone ABBA. Vensters omvatten JS/Wasm/serialisatie, geen exclusieve Rust-CPU of gemeten promotietelling."
+    }
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "a-een": {
+        "sha256": "62222898a9e17c4c9d8484305fd01fce6c2dd9eb42b2b31c121face7e18d6ab4",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "ffa6fe790a2820a9ce3f8c79d228edd9f5e30c5a619c0c5b60f5f097aa33605f",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-een": {
+        "sha256": "31a5210f261d4f875d02922b716da476011af0f3f5065369a06cce151b919069",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "52691239d3490c3fd55813d6e88572a69af9d890663ff03bbb75cd87250506e2",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-twee": {
+        "sha256": "2990159870abe0a4c6b55b33ef4b73ce8bca1fb6da4535724691673be9245574",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "f335ca4f65579cb8ccdcabad621cce03e05351ef7e2924ee3f9d330c3e43a57c",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "a-twee": {
+        "sha256": "5d5bbeb3dc3712151e1a7405ebadc830484f6d9744fae36431f708931fef509b",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "848a39e4f498baad9f8d7da768d29729a911e9ff9e9133c70a5152113ab60af7",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_onderdelen": {
+      "a-een": [],
+      "b-een": [
+        "docProps/core.xml"
+      ],
+      "b-twee": [
+        "docProps/core.xml"
+      ],
+      "a-twee": [
+        "docProps/core.xml"
+      ]
+    },
+    "beelden": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      }
+    ],
+    "exacte_beeldparen": 8,
+    "grens": "Drie vaste screenshots per functieronde, hele pixels zonder masker; geen volledige document-/glyph-/platformvisualisatie.",
+    "core_verschillen": {
+      "b-een": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "b-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "a-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "historische_voorraad_export": {
+      "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/native-rijk-a-een/Ontwerpnotitie.docx",
+      "sha256": "b47bb6462f00ef7f25bf397f9015dabfdf4dc548f266b35752487550f071d2d5",
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "verschillende_onderdelen": [
+        "docProps/core.xml"
+      ],
+      "grens": "Bestaande voorraadexport met dezelfde rijke helper; geen nieuwe voorraadprestatiemeting."
+    }
+  },
+  "behoud": {
+    "referentiepaden42_exact": true,
+    "bronpinnen15_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "kernbron": {
+      "gewijzigd": [
+        "crates/docx-edit/src/wasm.rs",
+        "crates/docx-edit/src/lib.rs"
+      ],
+      "nieuw": [
+        "crates/docx-edit/src/digest_cache.rs"
+      ]
+    },
+    "sdk_vendor_canonieke_bron_exact": {
+      "node_modules/@betteroffice/docx-react/dist/index.mjs": "85a8d0fd2c1f45b1a1fc5b9b7e9fa0065ffee4dd6ad423939798f421fe9bffbb",
+      "vendor/tekstengine/docx_edit_bg.wasm": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "vendor/tekstengine/docx_layout_bg.wasm": "e339c612f7a027965aaa990239818c7c556d30877f018f6a3efaf6425a86e8fc",
+      "node_modules/@betteroffice/docx/dist/generated/edit/docx_edit_bg.wasm": "ff775228796835f0007a20742c67b5926e1e3f1f12d23e69fc295f7ff9511431",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/engine.rs": "8deab21686ae769e44862e447a9b406a2e4bf24eb995e7e290ee85ae5504e17d",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/mutation_proof.rs": "84b82493cd1cd1c78b9160d76aa0d34fdc902f95c4c41f4047d50ebff1679c58",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit.d.ts": "7ec2f01d80a70d507da6fc190f30e54dbed168c60dc1c7f88883df5e1b1cfa84",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/wasm/generated/edit/docx_edit_bg.wasm.d.ts": "2fd9b0021303500daefe8282ca8bd71390016bd3603ecbe81749a145a2e14356",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/sessionInternals.ts": "ee65c9c05046c1f95daafd9b3fd06d512e3d80b9141bd1e77281c36f0b5367a5",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/inputPositionMap.ts": "fd6c82c0b6417e135a2fa10451d92e1aab8fc0e48d9fd68d389eff178772f8c3",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsPositionProjection.ts": "8140ee7998d9b1c2b25560349245787e66f88a47628af07cb7c89e4ad8c4e6ba",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/internals/yrsStorySegmentCache.ts": "94c25338a19d3418397807e1c3acc0850c8ed1e7cc5c462806f6c092d1ec9574",
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx-react/src/components/DocxEditor/PagedEditor.tsx": "50d5f659a1df1704248b99a98ebf711f894278a13a1d39fb1df03b90157d4c32"
+    },
+    "visueel_bekeken": [
+      "native-b-een/snel-getypt-bewaard.png",
+      "native-a-twee/nieuw-na-laat-antwoord.png",
+      "native-a-een/nieuw-na-laat-antwoord.png"
+    ],
+    "visuele_bevinding": "Bewaarbeeld en beide nieuw-documentbeelden bekeken; de 36 verschillende pixels zijn de knipperende caret. Geen brede visuele acceptatie."
+  },
+  "suites": {
+    "office": {
+      "procescode": 0,
+      "bestanden_geslaagd": 231,
+      "bestanden_overgeslagen": 1,
+      "tests_geslaagd": 2388,
+      "tests_overgeslagen": 4,
+      "kandidaat_via": "OOS_NOOT_WASM",
+      "opdracht": "node node_modules/vitest/vitest.mjs run --maxWorkers=2"
+    },
+    "typescript": {
+      "procescode": 0,
+      "opdracht": "node node_modules/typescript/bin/tsc --noEmit"
+    },
+    "py_compile": {
+      "procescode": 0,
+      "bestand": "scripts/bouw-tekstkern.py"
+    },
+    "grens": "Geen CI, volledige SDK-testset, installer of andere platformvariant."
+  },
+  "correcties": [
+    "Pariteitsproces na gecontroleerd stoppen supervisor zelfstandig voltooid; exitcode niet beschikbaar, finale JSON plus alle 166 eindresultaten en terminalmarker gecontroleerd (vervolg.json).",
+    "Eerste behoudhelper nam target-wasm ten onrechte mee als bron; filter gecorrigeerd, uiteindelijke broncontrole groen."
+  ],
+  "niet_gecontroleerd": [
+    "Geen productactivatie of volledige productiefrontend/native heracceptatie.",
+    "Geen complete SDK-suite, CI, Windows/macOS, installers, andere edities/releases of schema3.",
+    "Geen volledige document-/glyph-/platformvisualisatie of volledige Writer-functiedekking."
+  ],
+  "vervolg": "Integreer kandidaat eerst in een eigen actuele standaardfrontend/native proef met dezelfde bron- en verliesloosheidscontracten. Blijf totale invoer-/selectievertraging onderzoeken; paragraphSpans-body is nog circa 480 ms in de gerichte route. Geen Databasewerk vóór de hogere prioriteiten.",
+  "archief": {
+    "pad": "2026-11-28-writer-digestcache-productie.tar.gz",
+    "sha256": "e199699b2552478acde8c5ab2e83a854a114b216466eb6e27a04034ca927590c",
+    "bytes": 4235351,
+    "bestanden": 123,
+    "inhoud": "Scripts, bronpatch, schone kernbestanden, manifests, logs, 4 native rapporten/documenten/beelden, 2 diagnostische routerapporten en CLI-bouwbewijzen; geen grote ELF-/Wasm-/targetkopieën.",
+    "afhankelijkheden": "Vastgepind bronarchief en gereedschap uit bestaand nootbouwrecept; eerdere digestfasen/orakels en native helpers uit voorgaande bewijsarchieven. Lokale absolute paden zijn provenance, geen draagbare uitvoeropdrachten."
+  }
+}
