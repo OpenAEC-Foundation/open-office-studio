@@ -27,12 +27,27 @@ def main():
     parser.add_argument('--wasm-bindgen', default='wasm-bindgen')
     parser.add_argument('--wasm-opt', default='wasm-opt')
     parser.add_argument('--controle', action='store_true', help='Draai ook de gerichte native kernproeven.')
+    parser.add_argument('--digestcache', action='store_true', help='Pas ook de gecontroleerde bodydigestcache toe.')
+    parser.add_argument('--alleen-voorbereiden', action='store_true', help='Verifieer en patch de bron zonder te compileren.')
     args = parser.parse_args()
+    if args.controle and args.alleen_voorbereiden:
+        parser.error('--controle en --alleen-voorbereiden zijn niet samen te gebruiken')
     repo = Path(__file__).resolve().parents[1]
     metadata = json.loads((repo / 'patches/tekstengine-nootnummering.json').read_text())
     patch = repo / 'patches' / metadata['patch']
     if sha256(patch) != metadata['patchSha256']:
         raise SystemExit('De nootpatch wijkt af van de vastgelegde checksum.')
+    cache = None
+    cachepatch = None
+    if args.digestcache:
+        cache = json.loads((repo / 'patches/tekstengine-digestcache.json').read_text())
+        if (cache['bronCommit'] != metadata['commit']
+                or cache['bronarchiefSha256'] != metadata['bronarchiefSha256']
+                or cache['nootpatchSha256'] != metadata['patchSha256']):
+            raise SystemExit('De digestcache hoort bij een andere basisbron of nootpatch.')
+        cachepatch = repo / 'patches' / cache['patch']
+        if sha256(cachepatch) != cache['patchSha256']:
+            raise SystemExit('De digestcachepatch wijkt af van de vastgelegde checksum.')
     rustc = subprocess.check_output(['rustc', '--version'], text=True).strip()
     if not rustc.startswith('rustc ' + metadata['rustc'] + ' '):
         raise SystemExit('Gebruik de vastgelegde Rust-versie: ' + metadata['rustc'])
@@ -75,6 +90,17 @@ def main():
                     while blok := bron.read(1024 * 1024):
                         bestand.write(blok)
     subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(patch)], cwd=bronmap, check=True)
+    if cachepatch is not None:
+        subprocess.run(['patch', '-p1', '--fuzz=0', '--batch', '--forward', '-i', str(cachepatch)], cwd=bronmap, check=True)
+    if args.alleen_voorbereiden:
+        uitvoer = args.uitvoer.resolve()
+        uitvoer.mkdir(parents=True, exist_ok=True)
+        resultaat = {'alleenVoorbereid': True, 'bronCommit': metadata['commit'],
+                     'patchSha256': metadata['patchSha256'],
+                     'digestcachePatchSha256': cache['patchSha256'] if cache else None}
+        (uitvoer / 'voorbereid.json').write_text(json.dumps(resultaat, indent=2) + '\n')
+        print(json.dumps(resultaat, indent=2))
+        return
     if args.controle:
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'chicago', '--', '--test-threads=1'], cwd=bronmap, check=True)
         subprocess.run(['cargo', 'test', '-p', 'betteroffice-docx-layout', '--locked', '--lib', 'noot', '--', '--test-threads=1'], cwd=bronmap, check=True)
@@ -96,6 +122,8 @@ def main():
         tijdelijk = uitvoer / f'{naam}_bg-geoptimaliseerd.wasm'
         subprocess.run([args.wasm_opt, '-O3', str(kern), '-o', str(tijdelijk)], check=True)
         tijdelijk.replace(kern)
+        if cache is not None and naam == 'docx_edit' and sha256(kern) != cache['wasmSha256']:
+            raise SystemExit('De digestcachekern wijkt af van de gecontroleerde herbouw.')
         origineel = repo / f'node_modules/@betteroffice/docx/dist/generated/{soort}/{naam}_bg.wasm'
         if sha256(origineel) != metadata[sleutel]:
             raise SystemExit('De oorspronkelijke npm-kern wijkt af van de vastgezette versie: ' + soort)
@@ -114,6 +142,8 @@ if (contract(process.argv[1]) !== contract(process.argv[2]))
 ''', str(kern), str(origineel)], check=True)
         kernen[naam] = {'sha256': sha256(kern), 'bytes': kern.stat().st_size}
     resultaat = {'bronCommit': metadata['commit'], 'patchSha256': metadata['patchSha256'], 'rustc': rustc, 'wasmBindgen': bindgen, 'wasmOpt': optimizer, 'kernen': kernen}
+    if cache is not None:
+        resultaat['digestcachePatchSha256'] = cache['patchSha256']
     (uitvoer / 'bouw.json').write_text(json.dumps(resultaat, indent=2) + '\n')
     print(json.dumps(resultaat, indent=2))
 

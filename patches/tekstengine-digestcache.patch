@@ -1,0 +1,321 @@
+--- a/crates/docx-edit/src/lib.rs
++++ b/crates/docx-edit/src/lib.rs
+@@ -3465,3 +3465,6 @@
+ }
+ 
+ pub mod bridge;
++
++#[cfg(feature = "wasm")]
++mod digest_cache;
+--- a/crates/docx-edit/src/wasm.rs
++++ b/crates/docx-edit/src/wasm.rs
+@@ -1150,6 +1150,7 @@
+     selection: RefCell<Option<LocalSelection>>,
+     cell_selection: RefCell<Option<LocalCellSelection>>,
+     last_apply_profile_json: RefCell<String>,
++    unit_digest_cache: RefCell<crate::digest_cache::Cache>,
+     resident_deleted_units: Cell<u32>,
+     /// The story and resulting doc epoch of the last
+     /// [`EditSession::edit_text_resident`], until a relayout takes it.
+@@ -1670,6 +1671,7 @@
+             selection: RefCell::new(None),
+             cell_selection: RefCell::new(None),
+             last_apply_profile_json: RefCell::new("{}".to_owned()),
++            unit_digest_cache: RefCell::new(crate::digest_cache::Cache::new(crate::segments_digest)),
+             resident_deleted_units: Cell::new(0),
+             resident_text_edit: RefCell::new(None),
+             compared: RefCell::new(None),
+@@ -2843,9 +2845,9 @@
+     /// The local origin lets the main replica's UndoManager retain ownership of
+     /// the edit; remote/collaboration updates must use `apply_update` instead.
+     pub fn apply_local_update(&self, update: &[u8]) -> Result<(), JsValue> {
+-        self.engine
+-            .doc()
+-            .apply_local_update_v1(update)
++        self.unit_digest_cache
++            .borrow_mut()
++            .apply(self.engine.doc(), update)
+             .map_err(js_err)
+     }
+ 
+@@ -5313,15 +5315,13 @@
+     /// `story_segments` split after each pilcrow into units, as one hex digest
+     /// per unit: `["digest", …]`. Equal digests mean equal segments.
+     pub fn story_segment_unit_digests(&self, story: &str) -> Result<String, JsValue> {
+-        let units = self
+-            .engine
+-            .doc()
+-            .story_segment_units(story)
+-            .map_err(js_err)?;
+-        let digests: Vec<String> = units
+-            .iter()
+-            .map(|unit| format!("{:032x}", crate::segments_digest(unit)))
+-            .collect();
++        let values = if story == "body" {
++            self.unit_digest_cache.borrow_mut().get(self.engine.doc()).map_err(js_err)?
++        } else {
++            self.engine.doc().story_segment_units(story).map_err(js_err)?
++                .iter().map(|unit| crate::segments_digest(unit)).collect()
++        };
++        let digests: Vec<String> = values.iter().map(|value| format!("{value:032x}")).collect();
+         serde_json::to_string(&digests).map_err(js_err)
+     }
+ 
+--- /dev/null
++++ b/crates/docx-edit/src/digest_cache.rs
+@@ -0,0 +1,255 @@
++use crate::{EditingDoc, SegmentContent, StorySegment};
++use std::{
++    collections::BTreeSet,
++    sync::{Arc, Mutex},
++};
++use yrs::{
++    Any, BranchID, Out, ReadTxn, Transact,
++    types::{DeepObservable, Delta, Event, PathSegment},
++};
++#[derive(Default)]
++struct Observed {
++    commits: usize,
++    events: usize,
++    inserts: usize,
++    start: Option<u32>,
++    len: u32,
++    reasons: BTreeSet<&'static str>,
++}
++fn roots(doc: &EditingDoc) -> Option<Vec<String>> {
++    let txn = doc.yrs_doc().transact();
++    let mut names: Vec<_> = txn
++        .root_refs()
++        .take(33)
++        .map(|(n, _)| n.to_string())
++        .collect();
++    if names.len() > 32 || names.iter().any(|x| x.len() > 256) {
++        return None;
++    }
++    names.sort();
++    Some(names)
++}
++#[derive(Clone)]
++struct Bound {
++    start: u32,
++    end: u32,
++    para: Option<String>,
++}
++struct Entry {
++    epoch: u64,
++    digests: Vec<u128>,
++    bounds: Vec<Bound>,
++    dirty: Option<(usize, u32)>,
++}
++pub struct Cache {
++    doc: Option<yrs::Doc>,
++    entry: Option<Entry>,
++    hash: fn(&[StorySegment]) -> u128,
++}
++fn bounds(units: &[Vec<StorySegment>]) -> Option<Vec<Bound>> {
++    if units.len() > 4096 {
++        return None;
++    }
++    let mut result = Vec::new();
++    let mut end = 0u32;
++    for unit in units {
++        let start = end;
++        for s in unit {
++            end = end.checked_add(match &s.content {
++                SegmentContent::Text(t) => u32::try_from(t.encode_utf16().count()).ok()?,
++                _ => 1,
++            })?
++        }
++        let para = match unit.last().map(|s| &s.content) {
++            Some(SegmentContent::Pilcrow(p)) if p.para_id.len() <= 128 => {
++                Some(p.para_id.to_string())
++            }
++            _ => None,
++        };
++        result.push(Bound { start, end, para })
++    }
++    Some(result)
++}
++impl Cache {
++    pub fn new(hash: fn(&[StorySegment]) -> u128) -> Self {
++        Self {
++            doc: None,
++            entry: None,
++            hash,
++        }
++    }
++    fn bind(&mut self, doc: &EditingDoc) {
++        if !self
++            .doc
++            .as_ref()
++            .is_some_and(|d| yrs::Doc::ptr_eq(d, doc.yrs_doc()))
++        {
++            self.entry = None;
++            self.doc = Some(doc.yrs_doc().clone());
++        }
++    }
++    pub fn get(&mut self, doc: &EditingDoc) -> Result<Vec<u128>, String> {
++        self.bind(doc);
++        let _pin = doc.yrs_doc().transact();
++        let epoch = doc.committed_epoch();
++        let old = self.entry.take().filter(|x| x.epoch == epoch);
++        if let Some(entry) = old.as_ref() {
++            if entry.dirty.is_none() {
++                let result = entry.digests.clone();
++                self.entry = old;
++                return Ok(result);
++            }
++        }
++        let units = doc.story_segment_units("body").map_err(|e| e.to_string())?;
++        let new_bounds = bounds(&units);
++        let digests = if let (Some(mut entry), Some(b)) = (old, new_bounds.as_ref()) {
++            if let Some((slot, len)) = entry.dirty {
++                let valid = entry.bounds.len() == b.len()
++                    && entry.bounds.iter().zip(b).enumerate().all(|(i, (a, n))| {
++                        a.para == n.para
++                            && Some(n.start) == a.start.checked_add(if i > slot { len } else { 0 })
++                            && Some(n.end) == a.end.checked_add(if i >= slot { len } else { 0 })
++                    });
++                if valid && slot < units.len() {
++                    entry.digests[slot] = (self.hash)(&units[slot]);
++                    entry.digests
++                } else {
++                    units.iter().map(|u| (self.hash)(u)).collect()
++                }
++            } else {
++                unreachable!()
++            }
++        } else {
++            units.iter().map(|u| (self.hash)(u)).collect()
++        };
++        if let Some(b) = new_bounds {
++            self.entry = Some(Entry {
++                epoch,
++                digests: digests.clone(),
++                bounds: b,
++                dirty: None,
++            })
++        }
++        Ok(digests)
++    }
++    pub fn apply(&mut self, doc: &EditingDoc, bytes: &[u8]) -> Result<(), String> {
++        self.bind(doc);
++        let before = doc.committed_epoch();
++        let old = self
++            .entry
++            .take()
++            .filter(|e| e.epoch == before && e.dirty.is_none());
++        if old.is_none() {
++            return doc.apply_local_update_v1(bytes).map_err(|e| e.to_string());
++        }
++        let old = old.unwrap();
++        let root_before = roots(doc);
++        let pending = doc.holds_pending_update();
++        let state = Arc::new(Mutex::new(Observed::default()));
++        let recorded = state.clone();
++        let deep = {
++            let txn = doc.yrs_doc().transact();
++            txn.get_map("stories").map(|map| {
++                map.observe_deep(move |txn, events| {
++                    let mut state = recorded.lock().unwrap();
++                    for event in events.iter() {
++                        let Event::Text(event) = event else {
++                            state.reasons.insert("non_text");
++                            continue;
++                        };
++                        state.events = state.events.saturating_add(1);
++                        let path = event.path();
++                        if path.len() != 1 || !matches!(path.front(), Some(PathSegment::Key(key)) if key.as_ref() == "body") {
++                            state.reasons.insert("other_story");
++                        }
++                        let mut index = 0u32;
++                        for delta in event.delta(txn) {
++                            match delta {
++                                Delta::Retain(len, attrs) => {
++                                    if attrs.is_some() { state.reasons.insert("format"); }
++                                    index = index.saturating_add(*len);
++                                }
++                                Delta::Deleted(_) => { state.reasons.insert("delete"); }
++                                Delta::Inserted(Out::Any(Any::String(text)), attrs) => {
++                                    state.inserts = state.inserts.saturating_add(1);
++                                    let len = text.encode_utf16().count();
++                                    if len == 0 || len > 4096 || text.chars().any(|c| matches!(c, '\r' | '\n')) {
++                                        state.reasons.insert("text_boundary");
++                                    }
++                                    if state.inserts == 1 { state.start = Some(index); state.len = len as u32; }
++                                    if let Some(attrs) = attrs {
++                                        if attrs.len() > 32 || attrs.keys().any(|key| key.len() > 128 || matches!(key.as_ref(), "ins" | "del" | "rPrIns" | "rPrDel" | "moveFrom" | "moveTo")) {
++                                            state.reasons.insert("attributes");
++                                        }
++                                    }
++                                    index = index.saturating_add(len as u32);
++                                }
++                                Delta::Inserted(_, _) => { state.reasons.insert("embed"); }
++                            }
++                        }
++                    }
++                })
++            })
++        };
++        let recorded = state.clone();
++        let commit = doc
++            .yrs_doc()
++            .observe_after_transaction(move |txn| {
++                if txn.before_state() == txn.after_state() && txn.delete_set().is_empty() {
++                    return;
++                }
++                let mut s = recorded.lock().unwrap();
++                s.commits = s.commits.saturating_add(1);
++                let mut found = false;
++                for branch in txn.changed_parent_types() {
++                    if let BranchID::Root(n) = branch.id() {
++                        found = true;
++                        if n.as_ref() != "stories" {
++                            s.reasons.insert("other_root");
++                        }
++                    }
++                }
++                if !found {
++                    s.reasons.insert("no_root");
++                }
++            })
++            .map_err(|e| e.to_string())?;
++        let result = doc.apply_local_update_v1(bytes).map_err(|e| e.to_string());
++        drop(deep);
++        drop(commit);
++        let after = doc.committed_epoch();
++        let mut state = std::mem::take(&mut *state.lock().unwrap());
++        if pending || doc.holds_pending_update() {
++            state.reasons.insert("pending");
++        }
++        if root_before.is_none() || root_before != roots(doc) {
++            state.reasons.insert("root_set");
++        }
++        if state.commits != 1 || before.checked_add(1) != Some(after) {
++            state.reasons.insert("commits");
++        }
++        if state.events != 1 || state.inserts != 1 {
++            state.reasons.insert("not_one_insert");
++        }
++        let slot = state.start.and_then(|start| {
++            old.bounds
++                .iter()
++                .position(|b| b.start <= start && start < b.end && b.para.is_some())
++        });
++        if slot.is_none() {
++            state.reasons.insert("unit_boundary");
++        }
++        if result.is_ok() && state.reasons.is_empty() {
++            self.entry = Some(Entry {
++                epoch: after,
++                dirty: Some((slot.unwrap(), state.len)),
++                ..old
++            });
++        } else {
++            if before == after {
++                self.entry = Some(old);
++            }
++        }
++        result
++    }
++}

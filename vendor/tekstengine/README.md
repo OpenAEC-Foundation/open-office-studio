@@ -33,6 +33,12 @@ beschrijven de wijzigingen. De gewone licentiebundeling neemt beide mee.
 
 ## Opnieuw bouwen
 
+Met `--digestcache` wordt ook de afzonderlijk gecontroleerde
+[bodydigestcache](../../patches/tekstengine-digestcache.json) toegepast. De
+standaardopdracht blijft de meegeleverde kern bouwen. Met
+`--alleen-voorbereiden` verifieert en patcht het script de bron zonder
+compilatie; de uitvoermap krijgt dan `voorbereid.json`.
+
 Installeer de vastgelegde Rust-versie met doel `wasm32-unknown-unknown`,
 wasm-bindgen 0.2.129 en Binaryen 132. Gebruik vervolgens een nieuwe bronmap:
 
