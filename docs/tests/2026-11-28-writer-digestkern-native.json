@@ -1,0 +1,467 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "2a363d82",
+  "basis_hoofdbranch": "e8c04d03",
+  "besluit": "Kansrijke private kernkandidaat, door naar productie-reproduceerbaarheid en onafhankelijke native bevestiging. Ernstige Writer-vertraging blijft bestaan; geen productwijziging, globale acceptatie of issuevoltooiing.",
+  "wijziging": "Private SDK-kernkopie: drie bronbestanden, alleen body-unitdigests cachen en bewijsgestuurd promoveren rond echte apply_local_update. Andere stories, onzekere grenzen, metadata/opmaak/embed/delete/extra commits/pending vallen terug. Geen Arc-/unitpointercache over epochs; documentidentiteit met vastgehouden Doc::ptr_eq. Alle units nog gematerialiseerd na invoer. Bestaande proefcounters/rejectielijst zijn intern en begrensd; opschonen/reviewen vóór productiepatch.",
+  "analyse": {
+    "Wasm_pariteit_toestanden": 166,
+    "stories": 127660,
+    "digests": 276398,
+    "orakel_bronbytes_met_undo_exact": 73,
+    "orakel_bronbytes_zonder_undo_exact": 79,
+    "zonder_undo_afwijkend": [
+      {
+        "case": "pending",
+        "frame": 1,
+        "orakel_exact": false,
+        "pending": false,
+        "bron_sha256": "8533dda3b316ef9016a1e2cab50bfda9e7314b831899b0e5cb1d94232f78c8b5",
+        "orakel_sha256": "e7ea26957da94fa35a97bf79f49646d193469879e8835288c921319ca7f2f158"
+      }
+    ],
+    "bron_en_vectoren_per_leesstap_exact": true,
+    "voorraad_bouw_sha_verschillend": true,
+    "wasm_component_met_bestaande_glue": [
+      {
+        "frame": 1,
+        "A_ms": 14.158603500000027,
+        "B_ms": 8.436866500000178,
+        "B_A": 0.5958826730334077
+      },
+      {
+        "frame": 2,
+        "A_ms": 14.05532200000016,
+        "B_ms": 7.989301499999783,
+        "B_A": 0.5684182475506212
+      },
+      {
+        "frame": 3,
+        "A_ms": 13.682712999999694,
+        "B_ms": 8.453371500000003,
+        "B_A": 0.6178139890824423
+      },
+      {
+        "frame": 4,
+        "A_ms": 13.875515000000178,
+        "B_ms": 8.423361000000341,
+        "B_A": 0.6070665485209186
+      },
+      {
+        "frame": 5,
+        "A_ms": 13.586891999999807,
+        "B_ms": 8.026166999999987,
+        "B_A": 0.5907286964524411
+      },
+      {
+        "frame": 6,
+        "A_ms": 22.39312749999999,
+        "B_ms": 22.788222000000133,
+        "B_A": 1.0176435605075773
+      }
+    ],
+    "native_ABBA": {
+      "tijden_ms": {
+        "basis": [
+          8896,
+          9143
+        ],
+        "kandidaat": [
+          8714,
+          8577
+        ]
+      },
+      "A_mediaan_ms": 9019.5,
+      "B_mediaan_ms": 8645.5,
+      "verschil_ms": -374.0,
+      "B_A": 0.9585342868229946,
+      "grens": "Eén ABBA-groep, twee rijke ronden per variant, eigen virtueel X11. Renderlijst plus twee rAFs; geen fysieke schermpaint, algemene prestatieclaim of nieuwe voorraadtiming."
+    },
+    "native_fouten": {
+      "a-een": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "b-een": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "b-twee": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      },
+      "a-twee": {
+        "gui": [],
+        "engine": [],
+        "console": []
+      }
+    },
+    "schema_getest": 2,
+    "bronpatch_sha256": "57157699d91925963293417ecf17384896bc3ba028e64423de58da8e29811fe8",
+    "beelden_en_documenten": {
+      "documenten": {
+        "a-een": {
+          "sha256": "acfb3e7cfcc36896988a1f651f0a2f32a5a00e4cd062768f2e5bb49ef0e1bd7f",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "754ed999e55567cb1cd86acaf580c88cdfbdebb3e4f2c3e953656656248ae322",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "b-een": {
+          "sha256": "3ccba9c4b1a84f233b65c792b47deab62b6352d0a14512d82884e4b0c2bdcf33",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "818fc0d4aee113c455b1a2c3d4e3a43925562615ea645f77f5534686ae3d15bc",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "b-twee": {
+          "sha256": "0970406cf1128b1883036625c2612a9e38ff27ec9a26bedf0a77558c0016f49d",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "fb301760220ca63f0b0dba0aedda0ed06fbe37b9604c6254d21b4609a249e9f2",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "a-twee": {
+          "sha256": "7558e53f8941978f6da220608699ac6e6e8dc31988dcff49d4998454bb6146e4",
+          "tabellen": 128,
+          "utf16": 91423,
+          "part_hashes": {
+            "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "56200550dfdc96fdcefd1bb4575e8dce9eabc8ba53c2f09c566e8f7a4b1b40bf",
+            "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+            "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+            "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+            "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+            "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+            "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        }
+      },
+      "verschillende_onderdelen": {
+        "a-een": [],
+        "b-een": [
+          "docProps/core.xml"
+        ],
+        "b-twee": [
+          "docProps/core.xml"
+        ],
+        "a-twee": [
+          "docProps/core.xml"
+        ]
+      },
+      "beelden": [
+        {
+          "label": "b-een",
+          "beeld": "invoer-redo.png",
+          "verschillende_pixels": 58,
+          "bbox": [
+            11,
+            4,
+            1120,
+            997
+          ]
+        },
+        {
+          "label": "b-een",
+          "beeld": "snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "label": "b-een",
+          "beeld": "nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        },
+        {
+          "label": "b-twee",
+          "beeld": "invoer-redo.png",
+          "verschillende_pixels": 28,
+          "bbox": [
+            11,
+            4,
+            1120,
+            997
+          ]
+        },
+        {
+          "label": "b-twee",
+          "beeld": "snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "label": "b-twee",
+          "beeld": "nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        },
+        {
+          "label": "a-twee",
+          "beeld": "invoer-redo.png",
+          "verschillende_pixels": 28,
+          "bbox": [
+            11,
+            4,
+            1120,
+            997
+          ]
+        },
+        {
+          "label": "a-twee",
+          "beeld": "snel-getypt-bewaard.png",
+          "verschillende_pixels": 0,
+          "bbox": null
+        },
+        {
+          "label": "a-twee",
+          "beeld": "nieuw-na-laat-antwoord.png",
+          "verschillende_pixels": 36,
+          "bbox": [
+            555,
+            327,
+            557,
+            345
+          ]
+        }
+      ],
+      "exacte_beeldparen": 3,
+      "grens": "Drie vaste screenshots per functieronde, hele pixels zonder masker; geen volledige document-/glyph-/platformvisualisatie.",
+      "core_verschillen": {
+        "b-een": [
+          "{http://purl.org/dc/terms/}modified"
+        ],
+        "b-twee": [
+          "{http://purl.org/dc/terms/}modified"
+        ],
+        "a-twee": [
+          "{http://purl.org/dc/terms/}modified"
+        ]
+      },
+      "historische_voorraad_export": {
+        "pad": ".local/integratiecontrole/font-rij-native/native-rijk-a-een/Ontwerpnotitie.docx",
+        "sha256": "b47bb6462f00ef7f25bf397f9015dabfdf4dc548f266b35752487550f071d2d5",
+        "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+        "verschillende_onderdelen": [
+          "docProps/core.xml"
+        ],
+        "grens": "Bestaande voorraadexport met dezelfde rijke helper; geen nieuwe voorraadprestatiemeting."
+      }
+    },
+    "behoud": {
+      "oude_desktopreferenties38_exact": true,
+      "nieuwe_eigen_desktopreferenties2": true,
+      "bronpinnen15_exact": true,
+      "standaardbundel529_byte_mode_mtime_exact": true,
+      "gekopieerde_canonieke_kernbestanden_exact": 1365,
+      "eigen_sdk_delta": [
+        "crates/docx-edit/src/wasm.rs",
+        "crates/docx-edit/src/lib.rs",
+        "crates/docx-edit/src/digest_cache.rs"
+      ],
+      "wasm_en_glue": {
+        "basis": {
+          "docx_edit_bg-ongeoptimaliseerd.wasm": "302dbbf7c7dc8d47636ce50db3789a2a676acbde9169b94f2881599f58671903",
+          "docx_edit.js": "f73d11d35c7d4647b06e59e4301b1499e9783c6d9671c4bd850a5c48ba8a90bd",
+          "docx_edit_bg.wasm": "b8bcb59831833f510da9e4d5e9546c5ed1026cb4e71508ed0d15868ec52fe5c7",
+          "docx_edit_bg.wasm.d.ts": "489143f8a19ca48810ccacac92e941a675de3e93c37628de1f5d8cdb580766a7",
+          "docx_edit.d.ts": "45104b11c24b79ab0826a8e0be343dd2bb509faabfd182dad25fe5cd06532d2c"
+        },
+        "kandidaat": {
+          "docx_edit_bg-ongeoptimaliseerd.wasm": "acf7ffd3b4a026c10c647128783811165e90ebf95b5682e439c2f7f12372c9a1",
+          "docx_edit.js": "f73d11d35c7d4647b06e59e4301b1499e9783c6d9671c4bd850a5c48ba8a90bd",
+          "docx_edit_bg.wasm": "4287857a49df32f73cdba176db36b6f24b39c496ebbb6fb5d782e8dcd640f4e2",
+          "docx_edit_bg.wasm.d.ts": "489143f8a19ca48810ccacac92e941a675de3e93c37628de1f5d8cdb580766a7",
+          "docx_edit.d.ts": "45104b11c24b79ab0826a8e0be343dd2bb509faabfd182dad25fe5cd06532d2c"
+        }
+      },
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+      "desktopreferenties40": true
+    },
+    "besluit": "Kansrijke private kernkandidaat, door naar productie-reproduceerbaarheid en onafhankelijke native bevestiging. Ernstige Writer-vertraging blijft bestaan; geen productwijziging, globale acceptatie of issuevoltooiing."
+  },
+  "API": "Voorraad, herbouwde basis en kandidaat hebben exact gelijke JS/Wasm-imports/exports. Nieuwe basis/kandidaat glue en beide .d.ts bytegelijk. Bestaande voorraadglue ook gebruikt in de 96 Wasm-metingen.",
+  "testcorrecties": [
+    "Pendingpayload kan gecodeerde bron veranderen zonder live bodywijziging. Definitieve proef behoudt de huidige pendingbron exact vóór/na digestlezen en controleert exact opgeloste eindbron.",
+    "load is samenvoegen, geen reset. Heropenen van een bestaande body is geen ondersteunde vervangroute; initiële foutaanname verwijderd en met nieuwe lege sessie getest. Echte remote derde wijziging controleert epochinvalidatie.",
+    "Orakel kwam van remote inference zonder Undo-tracking. Met lokale Undo zijn 73/80 bronhashes exact aan dat orakel, zeven bij alle drie varianten gelijk afwijkend. Live digests blijven orakelexact. Voorraadcontrole bevestigt gewijzigde verwijderde-historiebewaring door Undo bij lettertypeproef. Zonder Undo 79/80 orakelbronhashes exact; pending wijkt ook in voorraad af. Geen volledige historische bytegelijkheid tussen verschillende werkpaden claimen.",
+    "Per lezing blijft de eigen gecodeerde bron strikt exact; lokale fase bronbytes gelijk tussen voorraad/basis/kandidaat. Onafhankelijke Undo/Redo kan van interne geschiedenis verschillen zoals eerder causaal bewezen. Eerste foutlogs behouden."
+  ],
+  "visueel": {
+    "bekeken": [
+      "native-b-een/snel-getypt-bewaard.png",
+      "verschil-invoer-redo.png",
+      "verschil-nieuw-na-laat-antwoord.png"
+    ],
+    "bevinding": "Bewaarbeeld toont laatste twee testpagina’s en ingevoerde tekst zonder nieuwe zichtbare afwijking. Montage: caret-fase en zeer kleine antialiasverschillen in venstericoon/zoomknop. Ook referentie a-twee heeft zulke verschillen. Ruwe pixelverschillen behouden; geen algemene visuele acceptatie.",
+    "ruwe_pixelparen": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 28,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 28,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      }
+    ]
+  },
+  "productiegrens": "Herbouwde basis b8bcb598 is niet bytegelijk aan bestaande 737ee8c. A/B zijn uit dezelfde gekopieerde proefbron met exact drie bronbestandsverschillen; functionele voorraadpariteit op geteste routes bewezen, geen volledige voorraadhervouw. Eerst vaste productiebron/bouwrecept en eerdere proefinstrumentatie reconciliëren, patch daarop reproduceren en onafhankelijke native bevestiging; daarna pas productkern vervangen.",
+  "niet_gedaan": [
+    "Gewone vendor-/appkern vervangen",
+    "Volledige SDK-/app-/CI-suites",
+    "Algemene synchrone documentlezing/mutatie tijdens Yrs-observercallback",
+    "Volledige visuele document-/glyphdekking",
+    "Schema3, andere edities/releasevarianten, Windows/macOS",
+    "Nieuwe prestatiemeting van oorspronkelijke ee89-voorraad",
+    "Issue of migratiegebied sluiten"
+  ],
+  "vervolg": "Productie-reproduceerbaarheid van vaste kernbron afronden, private proefcounters uit definitieve patch halen en nog een onafhankelijke native bevestiging met dezelfde behouds-/visuele grenzen. Daarna pas geteste productie-integratie. Ernstige input/selectievertraging verder ontleden; deze circa 374 ms is geen oplossing voor resterende 8,6 s. Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-28-writer-digestkern-native.tar.gz",
+    "sha256": "2f62dd1aaf376d8df1f88bb1d67e6e14bfcbb6934d1db5933edc70e3e49b4a7c",
+    "bytes": 19833017,
+    "bestanden": 107,
+    "rondreis_byte_exact": true
+  },
+  "orakelarchief": {
+    "pad": "docs/tests/2026-11-28-writer-rust-digestfasen.tar.gz",
+    "sha256": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60"
+  }
+}
