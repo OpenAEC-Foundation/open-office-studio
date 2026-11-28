@@ -1,0 +1,134 @@
+{
+  "datum": "2026-11-28",
+  "broncommit": "9d013ea4",
+  "productwijziging": false,
+  "doel": "Werkelijke native bronvoorbereiding per fase meten en bronexact alternatief onderzoeken.",
+  "diagnostische_native_bouw": {
+    "code": 0,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/cargo",
+      "build",
+      "--manifest-path",
+      "src-tauri/Cargo.toml",
+      "--release",
+      "--locked",
+      "--offline",
+      "--features",
+      "tauri/custom-protocol,writer-bronjournaal",
+      "--config",
+      "patch.crates-io.betteroffice-docx-edit.path=\"/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/bronfasen/docx-edit\""
+    ],
+    "config": {
+      "build": {
+        "frontendDist": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/dist-kandidaat"
+      }
+    },
+    "seconden": 288.40962369390763,
+    "sha256": "d53eda4af4a8062e81d1b087957aaa476346973dd9cf08344f24cf4210f45efd"
+  },
+  "native_bronkopie_afwijkingen": [
+    "src/clipboard_batch.rs"
+  ],
+  "desktop": [
+    {
+      "ronde": "een",
+      "gewone_verzoeken": 60,
+      "warme_voorstelhergebruiken": 59,
+      "fasen_totaal_ms": {
+        "validatie": 0.688415,
+        "cachebinding": 213.881212,
+        "import": 77.210791,
+        "vector": 0.4439,
+        "snapshot": 1723.710554,
+        "mutatie": 697.121263,
+        "replicahash": 125.088948
+      },
+      "rust_voorbereiding_totaal_ms": 2943,
+      "wall_begin_tot_frame_ms": 8536,
+      "functieproef_geslaagd": true,
+      "ruwe_aanvragen": {
+        "bytes": 4246624,
+        "overloop": 0
+      },
+      "programma_sha256": "d53eda4af4a8062e81d1b087957aaa476346973dd9cf08344f24cf4210f45efd",
+      "bewaring_sha256": "6606793de8b850f234385b12d3e48d4a847c1fd98ce0f2f63165470203a32bbd"
+    },
+    {
+      "ronde": "twee",
+      "gewone_verzoeken": 61,
+      "warme_voorstelhergebruiken": 60,
+      "fasen_totaal_ms": {
+        "validatie": 0.750983,
+        "cachebinding": 219.206608,
+        "import": 84.684097,
+        "vector": 0.475694,
+        "snapshot": 1719.426338,
+        "mutatie": 681.193366,
+        "replicahash": 126.063282
+      },
+      "rust_voorbereiding_totaal_ms": 2939,
+      "wall_begin_tot_frame_ms": 8639,
+      "functieproef_geslaagd": true,
+      "ruwe_aanvragen": {
+        "bytes": 4250685,
+        "overloop": 0
+      },
+      "programma_sha256": "d53eda4af4a8062e81d1b087957aaa476346973dd9cf08344f24cf4210f45efd",
+      "bewaring_sha256": "a259f5e153f7829cb1c85eaf42de5132befc898c3c319fab67155a19473e0f53"
+    }
+  ],
+  "fasegrenzen": [
+    "Monotone wandklokpunten op een eigen kernkopie. Alleen prepare_confirmed_clipboard_fragment_cached; voorafgaande requestvalidatie en latere BronSpiegel-hash/antwoordserialisatie ontbreken.",
+    "Cachebinding omvat vergelijken, basis-SHA en eventueel vrijgeven van een onbruikbare cache. Import omvat aanmaak/import alleen bij cachemisser.",
+    "Mutatiefase omvat bronlimietcontrole, locatie, voorbereiding, revisies, cursor en delta; dit is geen exclusieve tekstinsertmeting.",
+    "Logging gebeurt na de laatste fase, maar binnen de bestaande buitenste Rusttijd; geen exclusieve CPUtijd en geen timingacceptatie van deze geïnstrumenteerde desktop.",
+    "Opname van uitsluitend eigen testdocumentaanvragen, begrensd op 16 MiB, nul overloop. Beide native functieproeven en twee bekeken bewaarbeelden gelden voor de fasebuild, niet voor de geleende encoder."
+  ],
+  "samenvoegen": {
+    "voorstellen": 23,
+    "byte_exact": 0,
+    "mediaan_merge_ms": 71.46934,
+    "mediaan_bestaand_warm_ms": 33.190315,
+    "besluit": "Verworpen: geen bytepariteit en in deze proef trager. Geen semantisch verlies aangetoond; byteverschil niet als dataverlies benoemen."
+  },
+  "geleende_json_proef": {
+    "wijziging": "In eigen gekopieerde deterministische encoder schrijft een serde-wrapper direct uit geleende Any-waarden. Mapkeys blijven gesorteerd, oorspronkelijke getal-/buffer-/nullsemantiek behouden. Geen broncache of versoepelde bron-/voorstelguards.",
+    "toestanden_echte_invoer": 59,
+    "abba_metingen": 236,
+    "aanvullende_orakelframes": 80,
+    "pending_toestanden": 2,
+    "json_randgevallen": 166,
+    "bron_vector_byte_exact": true,
+    "mediaan_ms": {
+      "basis": 19.693604,
+      "geleend": 15.2973445
+    },
+    "verschil_procent": -22.3232857733912,
+    "bouw": "Zelfstandige geoptimaliseerde Rust-driver met -D warnings, procescode 0. Eerste scriptselectie van serde was ambigu; expliciete native library gekozen.",
+    "grens": "Alleen native componentbron. Geen gewijzigde Wasm of desktop met deze encoder gebouwd; geen end-to-end, allocatie-/geheugen- of algemene functiedekkingsclaim. Compilerinlining kan verschillen van een gekoppelde desktop."
+  },
+  "behoud": {
+    "oude_elf_paden": 48,
+    "nieuwe_diagnose_elf": 1,
+    "libraries": 3,
+    "standaardbundel_byte_mode_mtime_exact": 529
+  },
+  "visueel": "Twee volledige snel-getypt-bewaardbeelden bekeken: lint, opmaak, tabellen en ingevoegde tekst zichtbaar. Cursor/windowicoon kunnen verschillen; geen volledige pixel-/glyphacceptatie.",
+  "niet_getoetst": [
+    "Native desktop met geleende encoder",
+    "Volledige frontend-/Rust-/SDK-suites en CI",
+    "Windows/macOS, installers, andere edities/releases",
+    "Volledige Writer-functie-/historie-/opmaakacceptatie en overige issues"
+  ],
+  "vervolg": "Minimale geleende JSON-encoder op eigen native kernkopie bouwen. Eerst bestaande deterministische encoder-/forklengteproeven en brede bron-/fout-/Undo-routes, dan ongeïnstrumenteerde native ABBA en dezelfde rijke selectie-/bewaar-/levensduurproeven met beelden. Pas na bewijs productintegratie; Wasm apart. SDK-publicatie en invoergroepering blijven daarna open.",
+  "archief": {
+    "bestand": "2026-11-28-writer-bronfasen-json.tar.gz",
+    "sha256": "9f2fa33a83c663ebfc24616d1337c3430fde4e9b10f518cc663615cc1a67c729",
+    "bestanden": 99,
+    "rondreis_exact": true
+  },
+  "orakelarchief": {
+    "bestand": "docs/tests/2026-11-28-writer-rust-digestfasen.tar.gz",
+    "sha256": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60"
+  }
+}
