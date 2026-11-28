@@ -1,0 +1,634 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "d5e1e8e5",
+  "basis_hoofdbranch": "316ff858",
+  "besluit": "Waargenomen bronbyteverschillen bij onafhankelijke Undo/Redo verklaard door herstelvolgorde van meerdere CRDT-items. Getypeerde live bron en toestandvectoren blijven gelijk. Geen normalisering van gebruikersbron of productdependencywijziging. Digestkandidaat blijft native componentproef, gereed voor volgende integratieproef binnen dezelfde conservatieve grenzen.",
+  "bewijs": {
+    "proef": {
+      "vergelijkingen": 166,
+      "alle_wortels_en_vectoren_gelijk": true,
+      "fasen": [
+        {
+          "fase": "basis",
+          "bytes_gelijk": true,
+          "aantal": 31
+        },
+        {
+          "fase": "lokaal",
+          "bytes_gelijk": true,
+          "aantal": 49
+        },
+        {
+          "fase": "undo",
+          "bytes_gelijk": true,
+          "aantal": 42
+        },
+        {
+          "fase": "redo",
+          "bytes_gelijk": true,
+          "aantal": 33
+        },
+        {
+          "fase": "redo",
+          "bytes_gelijk": false,
+          "aantal": 10
+        },
+        {
+          "fase": "undo",
+          "bytes_gelijk": false,
+          "aantal": 1
+        }
+      ]
+    },
+    "proef-cache": {
+      "vergelijkingen": 166,
+      "alle_wortels_en_vectoren_gelijk": true,
+      "fasen": [
+        {
+          "fase": "basis",
+          "bytes_gelijk": true,
+          "aantal": 31
+        },
+        {
+          "fase": "lokaal",
+          "bytes_gelijk": true,
+          "aantal": 49
+        },
+        {
+          "fase": "undo",
+          "bytes_gelijk": true,
+          "aantal": 42
+        },
+        {
+          "fase": "redo",
+          "bytes_gelijk": true,
+          "aantal": 32
+        },
+        {
+          "fase": "redo",
+          "bytes_gelijk": false,
+          "aantal": 11
+        },
+        {
+          "fase": "undo",
+          "bytes_gelijk": false,
+          "aantal": 1
+        }
+      ]
+    },
+    "klein": {
+      "vergelijkingen": 96,
+      "alle_wortels_en_vectoren_gelijk": true,
+      "fasen": [
+        {
+          "fase": "basis",
+          "bytes_gelijk": true,
+          "aantal": 24
+        },
+        {
+          "fase": "lokaal",
+          "bytes_gelijk": true,
+          "aantal": 24
+        },
+        {
+          "fase": "undo",
+          "bytes_gelijk": false,
+          "aantal": 24
+        },
+        {
+          "fase": "redo",
+          "bytes_gelijk": false,
+          "aantal": 24
+        }
+      ]
+    },
+    "causaal": {
+      "paren_per_variant": 64,
+      "undo_redo_per_paar": 2,
+      "byteverschillen_basis": 128,
+      "byteverschillen_alleen_gesorteerde_herstelloop": 0,
+      "live_waarden_en_vectoren_gelijk_in_beide": true,
+      "dependencywaarschuwingen_per_variant": {
+        "basis": 58,
+        "gesorteerd": 58
+      },
+      "diagnosekopie_geen_productpatch": true
+    },
+    "pending": {
+      "afwijzingen": [
+        [
+          "commits",
+          "not_one_insert",
+          "pending",
+          "unit_boundary"
+        ],
+        [
+          "pending"
+        ]
+      ],
+      "eindbron_exact": true,
+      "geslaagd": true,
+      "hits": 1,
+      "pending_na_eerste_erna": false,
+      "pending_na_tweede_eerst": true,
+      "promoties": 0,
+      "volledig": 2
+    },
+    "corpus_idbewijs": {
+      "A": [
+        {
+          "client": 99405,
+          "clock": 0,
+          "len": 1,
+          "origin_left": [
+            901,
+            84370
+          ],
+          "origin_right": [
+            901,
+            82576
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 1,
+          "len": 1,
+          "origin_left": [
+            901,
+            4615
+          ],
+          "origin_right": [
+            901,
+            128022
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 2,
+          "len": 6,
+          "origin_left": [
+            901,
+            71300
+          ],
+          "origin_right": [
+            901,
+            128023
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 8,
+          "len": 1,
+          "origin_left": [
+            901,
+            1
+          ],
+          "origin_right": [
+            901,
+            128021
+          ]
+        }
+      ],
+      "B": [
+        {
+          "client": 99405,
+          "clock": 0,
+          "len": 1,
+          "origin_left": [
+            901,
+            84370
+          ],
+          "origin_right": [
+            901,
+            82576
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 1,
+          "len": 6,
+          "origin_left": [
+            901,
+            71300
+          ],
+          "origin_right": [
+            901,
+            128023
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 7,
+          "len": 1,
+          "origin_left": [
+            901,
+            4615
+          ],
+          "origin_right": [
+            901,
+            128022
+          ]
+        },
+        {
+          "client": 99405,
+          "clock": 8,
+          "len": 1,
+          "origin_left": [
+            901,
+            1
+          ],
+          "origin_right": [
+            901,
+            128021
+          ]
+        }
+      ],
+      "verschillend": true,
+      "bronbestanden_sha256": {
+        "a": "0163f9863a767bb460172df6dcd626c15b12d56c9d59f5a16fbc3282a4fa3292",
+        "b": "e4a71880bce097af00f6e2e82a51136180e03078075add8b31d5548c306ccd31"
+      }
+    },
+    "klein_idbewijs": {
+      "A": [
+        {
+          "client": 777,
+          "clock": 8,
+          "len": 1,
+          "origin_left": [
+            777,
+            0
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 9,
+          "len": 1,
+          "origin_left": [
+            777,
+            1
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 10,
+          "len": 1,
+          "origin_left": [
+            777,
+            2
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 11,
+          "len": 1,
+          "origin_left": [
+            777,
+            3
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 12,
+          "len": 1,
+          "origin_left": [
+            777,
+            4
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 13,
+          "len": 1,
+          "origin_left": [
+            777,
+            5
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 14,
+          "len": 1,
+          "origin_left": [
+            777,
+            6
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 15,
+          "len": 1,
+          "origin_left": [
+            777,
+            7
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 16,
+          "len": 1,
+          "origin_left": [
+            777,
+            8
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 17,
+          "len": 1,
+          "origin_left": [
+            777,
+            10
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 18,
+          "len": 1,
+          "origin_left": [
+            777,
+            14
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 19,
+          "len": 1,
+          "origin_left": [
+            777,
+            12
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 20,
+          "len": 1,
+          "origin_left": [
+            777,
+            15
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 21,
+          "len": 1,
+          "origin_left": [
+            777,
+            9
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 22,
+          "len": 1,
+          "origin_left": [
+            777,
+            13
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 23,
+          "len": 1,
+          "origin_left": [
+            777,
+            11
+          ],
+          "origin_right": null
+        }
+      ],
+      "B": [
+        {
+          "client": 777,
+          "clock": 8,
+          "len": 1,
+          "origin_left": [
+            777,
+            0
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 9,
+          "len": 1,
+          "origin_left": [
+            777,
+            1
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 10,
+          "len": 1,
+          "origin_left": [
+            777,
+            2
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 11,
+          "len": 1,
+          "origin_left": [
+            777,
+            3
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 12,
+          "len": 1,
+          "origin_left": [
+            777,
+            4
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 13,
+          "len": 1,
+          "origin_left": [
+            777,
+            5
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 14,
+          "len": 1,
+          "origin_left": [
+            777,
+            6
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 15,
+          "len": 1,
+          "origin_left": [
+            777,
+            7
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 16,
+          "len": 1,
+          "origin_left": [
+            777,
+            10
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 17,
+          "len": 1,
+          "origin_left": [
+            777,
+            15
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 18,
+          "len": 1,
+          "origin_left": [
+            777,
+            8
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 19,
+          "len": 1,
+          "origin_left": [
+            777,
+            9
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 20,
+          "len": 1,
+          "origin_left": [
+            777,
+            12
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 21,
+          "len": 1,
+          "origin_left": [
+            777,
+            14
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 22,
+          "len": 1,
+          "origin_left": [
+            777,
+            13
+          ],
+          "origin_right": null
+        },
+        {
+          "client": 777,
+          "clock": 23,
+          "len": 1,
+          "origin_left": [
+            777,
+            11
+          ],
+          "origin_right": null
+        }
+      ],
+      "verschillend": true,
+      "bronbestanden_sha256": {
+        "a": "158882c46603347f3fe86a10095576f5e2862d90194e657913bf64408690e488",
+        "b": "7ec0ef7a49d20050ece6cf62a6c62540cbecec96b6eb73eb733cf5d5dd0d3d0a"
+      }
+    },
+    "grenzen": [
+      "Live bronstructuren/tekst-diffs/attributen getypeerd vergeleken; geen gelijkheid van verwijderde historie of CRDT-identiteiten aangenomen.",
+      "Zelfde-documentbronbytes blijven vóór/na alle lezingen exact; geen canonisering, terugschrijven of verzwakken van behoudscontract.",
+      "Alleen native componentproeven. Geen Wasm-/desktop-/GUI-/visuele-/platformacceptatie of nieuwe prestatiemeting."
+    ]
+  },
+  "aanpak": "31 bestaande reeksen: 80 basis/lokale staten plus 43 Undo/Redo-paren, tweemaal 166 vergelijkingen: twee ongewijzigde baselines en baseline tegen eerdere digestcachewrapper. Iedere wortel recursief getypeerd vergeleken, inclusief alle stories, tekst-diffs, attributen, metadata en comments. Per document bronbytes voor/na lezingen exact; bodycache tevens tegen volledige berekening van dezelfde bron.",
+  "causale_duiding": "Yrs UndoManager verzamelt te herstellen items in een HashSet en itereert ongesorteerd. Nieuwe lokale klok-ids krijgen daardoor een andere koppeling aan herstelde items. Native kleine acht-waardenproef reproduceert dit zonder cache in alle 24 Undo/Redo-paren; gedecodeerde 355-byte updates ingesloten. Zelfstandige dependencyproef met 64 paren per variant: 128 byteverschillen in basis, nul na uitsluitend sorteren van die loop; waarden en vectoren gelijk. Dit verklaart het waargenomen type verschil en is geen algemene acceptatie van gewijzigde herstelvolgorde of alle mogelijke geschiedenissen.",
+  "pending": "Echt onopgeloste dependencybuffer opgebouwd door tweede update vóór eerste te leveren. Cache weigert promotie zowel bij pending-na als pending-vóór; na voorganger verdwijnt buffer en eindbron is bytegelijk aan referentie. Niet alleen een corpuslabel pending hergebruikt.",
+  "bouwen": "Vier eigen drivers met -D warnings groen. Twee causale dependencybuilds succesvol, ieder 58 bestaande librarywaarschuwingen; logs ingesloten. Geen warningvrije dependencybuildclaim.",
+  "behoud": {
+    "yrs_bronbestanden61_exact": true,
+    "diagnose_alleen_undo_rs": true,
+    "causale_drivers": {
+      "basis": "6602874642e87f1e0ee30dd6c8e378afc5de830728f0f06fd2028d326ea57f3f",
+      "gesorteerd": "c1f4e5c1b21eee8248e733caa37d67aba81f7b468a68ca7171db64225287ff39"
+    },
+    "referenties38_exact": true,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "native_bibliotheken_exact": true,
+    "orakelframes80_sha_exact": true,
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "drivers": {
+      "proef": "31766aea1476f88c5295df1d64b7c2bfbe65699e8894fd15ec2a081f74808b89",
+      "klein": "c76ac3c93e843be632990a04b82d8af95f9a1db208f9a21effd05de22c177f6b",
+      "proef-cache": "3d5b86c91a47dede7bd9e0e69ebd3bfdfdeb4a782fb313fcdd77d0d83905cc9b",
+      "pending": "93f2cb7697a4a6f300a49ed45fc8604b4a2b6bca7b79bf5110ae765ec8b4d0af"
+    },
+    "nieuwe_desktop_of_wasm_bouw": false
+  },
+  "niet_gedaan": [
+    "Productcode of productdependency wijzigen",
+    "Nieuwe prestatiemeting",
+    "Wasm/SDK/JS-integratie",
+    "Desktop-, documentexport- of visuele acceptatie",
+    "Volledige suites en CI",
+    "Andere platforms/edities/releases",
+    "Issue of migratiegebied sluiten"
+  ],
+  "vervolg": "Minimale digestcache op eigen kernkopie integreren. Behoud strict same-document bytecontract en volledige fallback bij metadata/opmaak/embed/delete/andere stories/extra commits/pending/grensonzekerheid; eigen identiteits-/commentaar-/foutproeven. Eerst exacte voorraad-Wasm32-digests en lokale Undo/Redo inclusief alle stories/metadata, daarna gewone native ABBA met documenten en beelden. Gesorteerde dependencyloop niet meenemen. Database laatst.",
+  "bewijsarchief": {
+    "pad": "docs/tests/2026-11-28-writer-undo-bronbewijs.tar.gz",
+    "sha256": "19fc2725c4b153dca99c6d1f76431f4f1ef99093c707433cf0a069fe161d4271",
+    "bestanden": 48,
+    "rondreis_byte_exact": true
+  },
+  "afhankelijk_bewijs": {
+    "2026-11-28-writer-rust-digestfasen.tar.gz": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60",
+    "2026-11-28-writer-lokaal-digestbewijs.tar.gz": "cb22abdc8c70122e7e533dbe8447367bd79e87a22f4ab526f2c12e79153ecc90"
+  }
+}
