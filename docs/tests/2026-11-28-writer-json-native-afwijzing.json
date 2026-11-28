@@ -1,0 +1,448 @@
+{
+  "datum": "2026-11-28",
+  "broncommit": "e29d280930115cd4d5f8328a4c60029c23da4b3a",
+  "besluit": "Niet promoveren: functioneel bronexacte native encoderkandidaat geeft slechtere totale invoertijd in beide gepaarde proeven. Productbron en startkoppeling ongewijzigd.",
+  "productwijziging": false,
+  "kandidaat": {
+    "programma_sha256": "025754997ec7697c62ac472ffee0fd7ab4fee7d5d951d04061104288a3d1055c",
+    "encoder_sha256": "72e6dc76b8fc03dd597b94a1e3fc04551b140ecbc56956d4b6df41514e2b9dce",
+    "patch_sha256": "9124c5a1095dc3d58b1bebd9b25a6322c301f70966f13ad4ea31b4daa30c31b1",
+    "wijziging": "Canonieke JSON direct uit geleende Any-waarden; oorspronkelijke boomencoder als testorakel. Geen cache-, vector-, bron-, historie- of voorstelguard gewijzigd. Alleen native Rust, geen gewijzigde Wasm.",
+    "bouw": [
+      {
+        "fase": "baseline-unit",
+        "code": 101,
+        "seconden": 80.01090894802473,
+        "opdracht": [
+          "cargo",
+          "test",
+          "--manifest-path",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/json-native/docx-edit-basis/Cargo.toml",
+          "--lib",
+          "--release",
+          "--offline",
+          "--features",
+          "writer-bronjournaal",
+          "--config",
+          "patch.crates-io.yrs.path=\"/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/vendor/yrs\"",
+          "--config",
+          "patch.crates-io.betteroffice-docx-parse.path=\"/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/vendor/docx-parse\""
+        ]
+      },
+      {
+        "fase": "native",
+        "code": 0,
+        "seconden": 750.0175286971498,
+        "opdracht": [
+          "cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal",
+          "--config",
+          "patch.crates-io.betteroffice-docx-edit.path=\"/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/json-native/docx-edit\""
+        ]
+      }
+    ],
+    "native_bouwgrens": "Eigen Cargo-target; alle Rust-bronnen uit een eigen kernkopie, uitsluitend deterministic.rs gewijzigd; dezelfde frontendbundel en app-lock via --locked. Geen product-, distributie- of installatiebouwacceptatie."
+  },
+  "eenheid": {
+    "volledige_kandidaat": "test result: FAILED. 974 passed; 9 failed; 2 ignored; 0 measured; 0 filtered out; finished in 62.86s",
+    "baseline": "test result: FAILED. 975 passed; 7 failed; 2 ignored; 0 measured; 0 filtered out; finished in 71.73s",
+    "overblijvende_baseline_afkeuringen": [
+      "batch::direct_tests::admission_requires_paragraph_bounds_and_rejects_companions",
+      "batch::direct_tests::direct_executor_reuses_revisions_and_removes_owned_insertions",
+      "batch::direct_tests::direct_text_batches_preserve_document_properties",
+      "batch::direct_tests::exact_staging_bound_preserves_refusals_and_admits_at_limit",
+      "batch::direct_tests::kept_deleted_content_takes_the_direct_path",
+      "batch::direct_tests::retained_deleted_text_takes_the_direct_path",
+      "batch::direct_tests::second_removal_in_a_story_uses_replica_path"
+    ],
+    "oorspronkelijke_kandidaat_afkeuringen": [
+      "batch::direct_tests::admission_requires_paragraph_bounds_and_rejects_companions",
+      "batch::direct_tests::direct_executor_reuses_revisions_and_removes_owned_insertions",
+      "batch::direct_tests::direct_text_batches_preserve_document_properties",
+      "batch::direct_tests::exact_staging_bound_preserves_refusals_and_admits_at_limit",
+      "batch::direct_tests::kept_deleted_content_takes_the_direct_path",
+      "batch::direct_tests::retained_deleted_text_takes_the_direct_path",
+      "batch::direct_tests::second_removal_in_a_story_uses_replica_path",
+      "peer_bootstrap::tests::peer_bootstrap_full_corpus_installation_matches_replica_source",
+      "peer_bootstrap::tests::peer_metadata_full_corpus_round_trip"
+    ],
+    "corpus_hertest": {
+      "code": 0,
+      "opdracht": [
+        ".local/integratiecontrole/json-native/native-target/release/deps/docx_edit-5fa15f1f4e6c0814",
+        "peer_bootstrap::tests::peer_",
+        "--nocapture"
+      ]
+    },
+    "bron": {
+      "bron_vector_exact": true,
+      "geslaagd": true,
+      "schrijven": false,
+      "toestanden": 141,
+      "werkelijke_geschiedenisstappen": 12
+    }
+  },
+  "eenheid_duiding": [
+    "De volledige kandidaatronde is niet groen: 974 geslaagd, negen afgekeurd, twee expliciete optionele perfproeven overgeslagen.",
+    "Alle dertien encoderproeven slagen: bestaande forkgroottes, instabiele JSON, pending, deleted content en vaste controlesom van 704 Any-/JSON-gevallen, plus geleende/boomvergelijking op 57 randgevalvormen.",
+    "Twee corpusproeven faalden doordat oorspronkelijke corpusmappen ontbreken in de gepubliceerde pakketlayout. Na aanvullen uit exact gepinde oorspronkelijke SDK-bron slagen alle 30 geselecteerde peerproeven, inclusief beide eerdere corpusafkeuringen.",
+    "Zeven directe batchproeven falen ook na gedwongen volledige herbouw met de ongewijzigde encoder: baseline 975 geslaagd, zeven afgekeurd, twee optionele perfproeven overgeslagen, 984 totaal. Geen nieuwe kandidaatfout uit die zeven afgeleid. De native revisiewortel is niet opgenomen in de bestaande directe-routewhitelist; die terugvalguard is bewust niet verruimd.",
+    "Eerste losse moduleharnas compileerde niet wegens private crate-onderdelen. Twee ongeschikte Cargo-aanroepen voor een pakket buiten de workspace zijn bewaard. Een build op oudere pakketlock is gestopt en vervangen door de desktop-lock met lokale Yrs 0.27.4.",
+    "De eerste baseline-uitvoering op gekopieerd target hergebruikte de kandidaat-testbinary en is verworpen. Bronmtime geforceerd, echte herbouw en 984 tests zonder nieuwe encoderproef gecontroleerd. Die tweede baseline geldt als bewijs.",
+    "Eerste aanvullende geschiedenisdriver probeerde een alineagrens via gewone insert_text en kreeg TextContainsBreak; vervangen door gewone tekst. Geen productfout geclaimd."
+  ],
+  "bronbehoud": {
+    "werkelijk_gebouwde_kandidaat_tegen_bewaarde_baseline": 141,
+    "bron_vector_en_herhaalde_serialisatie_exact": true,
+    "zelfde_levende_instantie_tegen_oorspronkelijke_encoder": 141,
+    "extra_werkelijke_invoer_undo_redo_stappen": 12,
+    "geschiedenisgrens": "Vier invoerstappen, vier Undo en vier Redo; oude/nieuwe volledige encoding op dezelfde levende instantie bytegelijk. Geen onafhankelijke Undo-identiteiten gelijk verondersteld.",
+    "bewijs": {
+      "code": 0,
+      "opdracht": [
+        "/home/aia01/.cargo/bin/rustc",
+        "--edition=2024",
+        "-C",
+        "opt-level=3",
+        "-D",
+        "warnings",
+        "-L",
+        "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/json-native/bronproef-kandidaat.rs",
+        "-o",
+        "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/json-native/bronproef-kandidaat",
+        "--extern",
+        "docx_edit=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/json-native/native-target/release/deps/libdocx_edit.rlib",
+        "--extern",
+        "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+        "--extern",
+        "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libserde_json-2b291618093ba6bc.rlib"
+      ],
+      "library_sha256": "76ad93512cb6e3c5b43c8db5688d30b048d815b55755dbfdda2a306683761714",
+      "uitkomst": {
+        "bron_vector_exact": true,
+        "geslaagd": true,
+        "schrijven": false,
+        "toestanden": 141,
+        "werkelijke_geschiedenisstappen": 12
+      }
+    }
+  },
+  "native": {
+    "volgorde": [
+      "A",
+      "B",
+      "B",
+      "A"
+    ],
+    "ronden": [
+      {
+        "label": "a-een",
+        "variant": "basis",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29550,
+          "begin_tot_bron_ms": 6759.999999999996,
+          "laatste_keyup_tot_bron_ms": 203,
+          "laatste_keyup_tot_frame_ms": 1138.0000000000036,
+          "begin_tot_frame_ms": 7695,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8043,
+          "wall_verzonden_tot_frame_ms": 6321,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 62.2209330520127
+      },
+      {
+        "label": "b-een",
+        "variant": "kandidaat",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "025754997ec7697c62ac472ffee0fd7ab4fee7d5d951d04061104288a3d1055c",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29242,
+          "begin_tot_bron_ms": 7046,
+          "laatste_keyup_tot_bron_ms": 212,
+          "laatste_keyup_tot_frame_ms": 1456,
+          "begin_tot_frame_ms": 8290,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8360,
+          "wall_verzonden_tot_frame_ms": 6598,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 61.71441649296321
+      },
+      {
+        "label": "b-twee",
+        "variant": "kandidaat",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "025754997ec7697c62ac472ffee0fd7ab4fee7d5d951d04061104288a3d1055c",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 30050,
+          "begin_tot_bron_ms": 7990.000000000004,
+          "laatste_keyup_tot_bron_ms": 228.00000000000364,
+          "laatste_keyup_tot_frame_ms": 1265,
+          "begin_tot_frame_ms": 9027,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 9245,
+          "wall_verzonden_tot_frame_ms": 7466,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 62.21975447004661
+      },
+      {
+        "label": "a-twee",
+        "variant": "basis",
+        "code": 0,
+        "geslaagd": true,
+        "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+        "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29305,
+          "begin_tot_bron_ms": 6962,
+          "laatste_keyup_tot_bron_ms": 222,
+          "laatste_keyup_tot_frame_ms": 1376,
+          "begin_tot_frame_ms": 8116,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8175,
+          "wall_verzonden_tot_frame_ms": 6445,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        },
+        "seconden": 61.61141775897704
+      }
+    ],
+    "mediaan_ms": {
+      "basis": 8109.0,
+      "kandidaat": 8802.5
+    },
+    "verschil_procent": 8.55222592181526,
+    "grens": "Vier eigen geïsoleerde Linux-X11-proeven; dezelfde 1.052 fysiek verzonden tekens. Renderlijst plus twee rAFs, geen fysieke paint/FPS. Geen exclusieve CPUtijden of platformbrede snelheidsclaim. Beide kandidaatrondes trager dan bijbehorende basisronde.",
+    "functie": "Alle vier slagen op lange invoer/bronexacte Undo-Redo, Shift-selectie/vervangen, opslaan vóór laat antwoord, onafhankelijk DOCX teruglezen en niet-opslaan/documentwissel met laat antwoord. Beide kandidaatrondes: GUI-, engine- en consolelijsten leeg, 128 tabellen behouden."
+  },
+  "groepering": [
+    {
+      "label": "a-een",
+      "verzoeken": 58,
+      "tekens": 1052,
+      "gemiddeld_tekens": 18.137931034482758,
+      "rust_totaal_ms": 2813,
+      "gemiddeld_rust_ms": 48.5,
+      "provider_totaal_ms": 3870.9999999999964,
+      "mutatie_totaal_ms": 124.00000000000364,
+      "overgeslagen": 0
+    },
+    {
+      "label": "b-een",
+      "verzoeken": 61,
+      "tekens": 1052,
+      "gemiddeld_tekens": 17.24590163934426,
+      "rust_totaal_ms": 2785,
+      "gemiddeld_rust_ms": 45.65573770491803,
+      "provider_totaal_ms": 3968.0000000000255,
+      "mutatie_totaal_ms": 130.9999999999891,
+      "overgeslagen": 0
+    },
+    {
+      "label": "b-twee",
+      "verzoeken": 70,
+      "tekens": 1052,
+      "gemiddeld_tekens": 15.028571428571428,
+      "rust_totaal_ms": 3075,
+      "gemiddeld_rust_ms": 43.92857142857143,
+      "provider_totaal_ms": 4430.999999999989,
+      "mutatie_totaal_ms": 152.99999999995998,
+      "overgeslagen": 0
+    },
+    {
+      "label": "a-twee",
+      "verzoeken": 60,
+      "tekens": 1052,
+      "gemiddeld_tekens": 17.533333333333335,
+      "rust_totaal_ms": 2937,
+      "gemiddeld_rust_ms": 48.95,
+      "provider_totaal_ms": 3972.9999999999964,
+      "mutatie_totaal_ms": 120.00000000001455,
+      "overgeslagen": 0
+    }
+  ],
+  "groepering_duiding": "Basis 58/60 gewone verzoeken; kandidaat 61/70 voor dezelfde tekst. Gemiddelde Rustvoorbereiding per verzoek is lager, maar meer groepen nemen de winst weg. Dit is waargenomen samenhang; geen exclusieve oorzaak van de totale regressie of veilige batchoplossing bewezen.",
+  "documenten_en_beelden": {
+    "documentvergelijkingen": [
+      {
+        "document": "Ontwerpnotitie.docx",
+        "ronde": "b-een",
+        "verschillen": [
+          "docProps/core.xml"
+        ],
+        "alleen_wijzigingstijd": true
+      },
+      {
+        "document": "Ontwerpnotitie.docx",
+        "ronde": "b-twee",
+        "verschillen": [
+          "docProps/core.xml"
+        ],
+        "alleen_wijzigingstijd": true
+      },
+      {
+        "document": "Ontwerpnotitie.docx",
+        "ronde": "a-twee",
+        "verschillen": [
+          "docProps/core.xml"
+        ],
+        "alleen_wijzigingstijd": true
+      }
+    ],
+    "beeldparen": [
+      {
+        "basis": "a-een",
+        "kandidaat": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "bytegelijk": false,
+        "pixelgelijk": false,
+        "verschilvak": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "restverschil_buiten_icoon_cursor_zoom": null
+      },
+      {
+        "basis": "a-een",
+        "kandidaat": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "bytegelijk": true,
+        "pixelgelijk": true,
+        "verschilvak": null,
+        "restverschil_buiten_icoon_cursor_zoom": null
+      },
+      {
+        "basis": "a-een",
+        "kandidaat": "b-een",
+        "beeld": "invoer-redo.png",
+        "bytegelijk": false,
+        "pixelgelijk": false,
+        "verschilvak": [
+          11,
+          4,
+          1120,
+          997
+        ],
+        "restverschil_buiten_icoon_cursor_zoom": null
+      },
+      {
+        "basis": "a-twee",
+        "kandidaat": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "bytegelijk": true,
+        "pixelgelijk": true,
+        "verschilvak": null,
+        "restverschil_buiten_icoon_cursor_zoom": null
+      },
+      {
+        "basis": "a-twee",
+        "kandidaat": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "bytegelijk": false,
+        "pixelgelijk": false,
+        "verschilvak": [
+          4,
+          159,
+          557,
+          345
+        ],
+        "restverschil_buiten_icoon_cursor_zoom": [
+          4,
+          159,
+          557,
+          345
+        ]
+      },
+      {
+        "basis": "a-twee",
+        "kandidaat": "b-twee",
+        "beeld": "invoer-redo.png",
+        "bytegelijk": false,
+        "pixelgelijk": false,
+        "verschilvak": [
+          11,
+          4,
+          1120,
+          997
+        ],
+        "restverschil_buiten_icoon_cursor_zoom": null
+      }
+    ],
+    "controle_regios": {
+      "venstericoon": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "eindcursor": [
+        1020,
+        930,
+        1070,
+        970
+      ],
+      "zoomregel": [
+        1040,
+        975,
+        1200,
+        1000
+      ]
+    }
+  },
+  "visuele_grens": "Zeven volledige beelden bekeken, waaronder bewaren, Redo en nieuw document na laat antwoord. Twee van zes ruwe beeldparen pixelgelijk. Overige verschillen liggen bij venstericoon, cursors, zoomregel en bij één nieuw-documentpaar de tabbediening. Vijf paren zijn buiten de drie vastgelegde icoon/eindcursor/zoomregios exact; resterende nieuw-documentverschillen niet volledig per pixel geclassificeerd. Geen volledige glyph-/functie-/pixelacceptatie.",
+  "behoud": {
+    "bestaande_elf_paden_exact": 49,
+    "nieuwe_kandidaat": 1,
+    "standaardbundel_byte_mode_mtime_exact": 529
+  },
+  "niet_uitgevoerd": [
+    "Promotie van de kandidaat, nieuwe actieve productkern of startkoppeling",
+    "Nieuwe Wasm-/frontendbuild en volledige frontend-/SDK-/Rust-werkruimtesuites",
+    "Geheugen-/allocatieprofiel of fysieke paintmeting",
+    "Windows/macOS, installers, andere edities/releases en CI",
+    "Issue- of migratiegebiedvoltooiing"
+  ],
+  "vervolg": "Kandidaat behouden als gecontroleerd snellere component. Profileer op beide referenties SDK-werk vóór de provider en publicatie na applyLocalUpdate/selectie tot de volgende groep. Vergelijk groepsgrootte en vaste kosten bij dezelfde invoer; toets daarna een begrensde groeperingsvariant. Geen blinde wachttijd toevoegen, geen bron-/vector-/voorstelguards versoepelen en geen native-revisiewortel automatisch aan directe-routewhitelist toevoegen. Behoud Undo/Redo, bewaren en levensduur. Database laatst.",
+  "archief": {
+    "bestand": "2026-11-28-writer-json-native-afwijzing.tar.gz",
+    "sha256": "b740e21faf99277ba1dce3ae093fa090d9ef184142c6fedb2b39743fedea19a8",
+    "bestanden": 78,
+    "rondreis_exact": true
+  },
+  "bestaande_invoerarchieven": [
+    "2026-11-28-writer-rust-digestfasen.tar.gz",
+    "2026-11-28-writer-gedeelde-bodypassage.tar.gz",
+    "2026-11-28-writer-bronfasen-json.tar.gz"
+  ]
+}
