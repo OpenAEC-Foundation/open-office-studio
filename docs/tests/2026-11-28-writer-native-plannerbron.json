@@ -1,0 +1,152 @@
+{
+  "datum": "2026-11-28",
+  "status": "Losse native bronmeting afgerond, geen productwijziging, desktopoptimalisatie of issuevoltooiing.",
+  "basis": "Integratie 7d1bb34a; eigen kopie van native/vendor/docx-edit, alleen timingregels in paragraph_save_plan. Afzonderlijke controle rechtstreeks tegen ongewijzigde vendorbron. Eigen Cargo-project/target, offline release, twee bouwjobs; exacte Cargo.lock-bestanden en opdrachten in archief.",
+  "gevallen": "Zes gevallen, drie verse sessies elk: geen invoer, één x, twee x; elk ook met voorafgaande paragraph_identities-uitlezing zoals vóór de SDK-planner. Identieke client-id 71 en vaste bewerkingsdatum. Per sessie drie plannen zonder tussentijdse mutatie; bronbytes en vector na iedere lezing exact.",
+  "vergelijking": "Alle 18 volledige plannen (alle velden als Debug-representatie vastgelegd) gelijk aan ongewijzigde controle. Binnen elke sessie ook rechtstreekse Rust Eq-vergelijking tussen drie volledige plannen. 108 bron-/vector-exacte planlezingen in beide binaries samen. Dit is plannerbewijs, geen nieuw DOCX-opslag-/rendererbewijs.",
+  "metingen": {
+    "volledige_plannen_gelijk": 18,
+    "bron_vector_exacte_planlezingen": 108,
+    "faseparen": 54,
+    "gevallen": [
+      {
+        "geval": "ongewijzigd",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.00173,
+          "committed_scan": 8.635847,
+          "story_states": 71.12301,
+          "seed_states": 431.61184,
+          "units": 5.798068,
+          "parts": 3.696104
+        },
+        "eerste_totaal_mediaan_ms": 530.665354,
+        "controle_eerste_mediaan_ms": 535.697525,
+        "tweede_totaal_mediaan_ms": 99.254935,
+        "derde_totaal_mediaan_ms": 98.676481,
+        "identiteiten_mediaan_ms": 0.0,
+        "openen_mediaan_ms": 309.374382
+      },
+      {
+        "geval": "eerste-invoer",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.00162,
+          "committed_scan": 8.461446,
+          "story_states": 70.393996,
+          "seed_states": 429.938543,
+          "units": 5.608537,
+          "parts": 3.580654
+        },
+        "eerste_totaal_mediaan_ms": 529.663881,
+        "controle_eerste_mediaan_ms": 533.74463,
+        "tweede_totaal_mediaan_ms": 98.853875,
+        "derde_totaal_mediaan_ms": 98.617332,
+        "identiteiten_mediaan_ms": 0.0,
+        "openen_mediaan_ms": 307.556854
+      },
+      {
+        "geval": "twee-invoeren",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.00142,
+          "committed_scan": 8.485627,
+          "story_states": 71.063611,
+          "seed_states": 427.399935,
+          "units": 5.625108,
+          "parts": 3.567303
+        },
+        "eerste_totaal_mediaan_ms": 526.113406,
+        "controle_eerste_mediaan_ms": 527.257119,
+        "tweede_totaal_mediaan_ms": 98.992558,
+        "derde_totaal_mediaan_ms": 98.873296,
+        "identiteiten_mediaan_ms": 0.0,
+        "openen_mediaan_ms": 306.766972
+      },
+      {
+        "geval": "identiteiten-ongewijzigd",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.00167,
+          "committed_scan": 0.0006,
+          "story_states": 70.69707,
+          "seed_states": 430.354219,
+          "units": 5.663317,
+          "parts": 3.695535
+        },
+        "eerste_totaal_mediaan_ms": 520.239706,
+        "controle_eerste_mediaan_ms": 521.4587,
+        "tweede_totaal_mediaan_ms": 99.588593,
+        "derde_totaal_mediaan_ms": 98.859508,
+        "identiteiten_mediaan_ms": 10.829203,
+        "openen_mediaan_ms": 307.613015
+      },
+      {
+        "geval": "identiteiten-eerste-invoer",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.00147,
+          "committed_scan": 0.00067,
+          "story_states": 70.438519,
+          "seed_states": 428.996572,
+          "units": 5.825759,
+          "parts": 3.556124
+        },
+        "eerste_totaal_mediaan_ms": 519.139513,
+        "controle_eerste_mediaan_ms": 520.545637,
+        "tweede_totaal_mediaan_ms": 98.750859,
+        "derde_totaal_mediaan_ms": 99.02141,
+        "identiteiten_mediaan_ms": 10.693201,
+        "openen_mediaan_ms": 323.85058
+      },
+      {
+        "geval": "identiteiten-twee-invoeren",
+        "eerste_fasen_mediaan_ms": {
+          "assignments": 0.001709,
+          "committed_scan": 0.000531,
+          "story_states": 70.42176,
+          "seed_states": 429.274122,
+          "units": 5.742408,
+          "parts": 3.554934
+        },
+        "eerste_totaal_mediaan_ms": 518.893301,
+        "controle_eerste_mediaan_ms": 521.17189,
+        "tweede_totaal_mediaan_ms": 98.890741,
+        "derde_totaal_mediaan_ms": 98.569669,
+        "identiteiten_mediaan_ms": 10.745972,
+        "openen_mediaan_ms": 308.632882
+      }
+    ],
+    "fasen_betekenis": {
+      "assignments": "Transactie en source_assignments samen.",
+      "committed_scan": "committed_scan, in geval identiteiten vooraf doorgaans gedeeld.",
+      "story_states": "story_states_in; omvat eigen scanlookup, commentankers en vingerafdrukken.",
+      "seed_states": "Voorbereiding plan/metadata plus seed_states; niet als exclusieve reseeding-CPUtijd interpreteren.",
+      "units": "Beide units_by_key-tabellen samen.",
+      "parts": "Onderdeelvergelijking en patches na voorgaande meetgrens.",
+      "totaal": "Buitenste tijd bevat ook source_index vóór eerste interne meetgrens."
+    }
+  },
+  "duiding": [
+    "Eerste native planner circa 519–531 ms; herhalingen circa 99 ms. Met identiteiten vooraf is committed_scan al gedeeld: nagenoeg nul tegenover circa 8,5 ms zonder die vooraflezing. Actuele story_states blijven circa 70–71 ms. Voorbereiding/metadata plus seed_states circa 427–432 ms is de grootste gemeten fase.",
+    "De seed_states-meetgrens omvat ook planinitialisatie en source_metadata; niet als exclusieve reseeding-CPUtijd of exacte subfase verdelen. Units omvat beide opzoektabellen samen. Buitenste totale tijd bevat ook source_index vóór eerste interne grens en de meet/logoverhead. Geen versnelling tussen profiel- en controlecijfers geclaimd.",
+    "Native seed_from_docx activeert de uitsluitend voor Wasm gecompileerde mark_seeded-route niet. Het native geval zonder invoer is dus geen bewijs over de ongewijzigde-Wasm-fastpath. De eerdere daadwerkelijke WebKit/Wasm-metingen blijven afzonderlijk bewijs. Geen native tijden omrekenen naar Wasm-milliseconden of gelijkstellen aan desktoplatentie.",
+    "Deze resultaten rechtvaardigen eerst het precies splitsen van source_metadata en seed_states/reseeded. Daarna een bewaakte basistoestand vóór de eerste wijziging onderzoeken, met totale opening-plus-opslagkosten. Een bronvector-/pakket-/sessiecontrole niet versoepelen en de piek niet uitsluitend naar openen verplaatsen."
+  ],
+  "fouten_en_hertests": "Eerste eigen bouw bereikte de grens van 300 s tijdens afhankelijkheidscompilatie; geen compilerprocessen achtergebleven. Hervatte bouw vond een proefcodefout: ParagraphSavePlan heeft geen Serialize. Gecorrigeerd naar volledige Debug-uitvoer plus rechtstreekse Eq; mislukte proefbron/logs behouden. Definitieve profiel- en controlebuild en beide volledige benchmarkruns procescode 0.",
+  "functionele_grens": "Geen productbron, actieve Wasm, renderer, wachtrij, herstelfrequentie of gebruikersdocument gewijzigd. Geen nieuwe GUI-/visuele acceptatie, eigen desktopbuild, volledige frontend/Rust-/SDK-suite, CI, andere platforms/edities/installers/releases. Vorige visuele/opslaapproeven hierdoor niet uitgebreid. Ernstige Writer-invoer-/selectievertraging blijft open.",
+  "behoud": {
+    "bestaande_desktop_ELFs_SHA_exact": 61,
+    "nieuwe_desktop_ELFs": 0,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "identity_bron_SHA_exact": "5a865f061259d42d852e7ea9c7b8e72034d909486d554a965899c51f36a5235b",
+    "proefbron_sha256": "f69528bf0ee7b1e2d89aff2e893a131696e0485dd494b2a7c15b16f55d95b7a5",
+    "proefbron_tabellen": 128,
+    "eigen_onderzoeksbinaries": {
+      "planner-profiel": "15e329ee87dc358d12030a82a9c9cba88a062b4e3532ca0935499fc17002638a",
+      "planner-controle": "99dad2c6525f19f67bc90631cebdfdb4e3e18eb2c362b2c734bdeb6ba9ad870d"
+    }
+  },
+  "archief": {
+    "bestand": "2026-11-28-writer-native-plannerbron.tar.gz",
+    "sha256": "43714f81073f052a9996df1be1763a8d9526beb36c8f28552a25f4e8e4d01066",
+    "bestanden": 29,
+    "bytes": 603882
+  },
+  "vervolg": "Splits de dominante voorbereidingsfase op eigen bronkopie verder in metadata en oorspronkelijke basistoestand. Toets een guarded eenmalige basistoestand alleen wanneer oorspronkelijke seeding, bronvector, pakketidentiteit en sessie aantoonbaar overeenkomen. Vergelijk totale opening plus eerste gewijzigde opslag, volledige plannen en oorspronkelijke pakketdelen; daarna pas actuele Wasm/native desktop en rijke GUI-/bewaarproeven. Database laatst."
+}
