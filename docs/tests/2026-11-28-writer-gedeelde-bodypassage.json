@@ -1,0 +1,2526 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "baf19c5f",
+  "basis_hoofdbranch": "89613122",
+  "besluit": "Veilige alinealezer en gedeelde bodypassage als standaardkern op integratiebranch. Geen aantoonbare verbetering van de totale native invoertijd en geen voltooiing van Writer, issue of migratiegebied. Hoofdontwikkelbranch alleen bewijsdocumentatie; kernbouwprerequisieten ontbreken daar.",
+  "wijziging": "Warme, geldig bevonden unitgrenzen leveren ook body-alinealengtes. Bij een bewezen tekstinvoeging materialiseert de digestcache de units eenmaal en valideert alle grenzen; paragraphSpans gebruikt die grenzen en de volgende digestlezing de reeds berekende digests. Koude/onzekere cache, trailing unit of ontbrekende/te lange para-id blijft volledig terugvallen. Geen units of Arc-pointers over epochs bewaren en geen bestaande promotieguard versoepelen. De alinealezer voor elke story probeert vooraf een Yrs-leestransactie en weigert een actieve schrijver met een gewone JS-fout.",
+  "metadata": {
+    "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+    "nootpatchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "basisWasmSha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "patch": "tekstengine-digestcache.patch",
+    "patchSha256": "ef90f8e7de9f16085d7a74b26ede55e1f7caa5759bdbac44880b9531c2d86a93",
+    "wasmSha256": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+    "wasmBytes": 24601495,
+    "actiefInProduct": true,
+    "bewijs": "docs/tests/2026-11-28-writer-gedeelde-bodypassage.json",
+    "productBewijs": "docs/tests/2026-11-28-writer-gedeelde-bodypassage.json",
+    "vorigeWasmSha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+    "vorigePatchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49",
+    "vorigProductBewijs": "docs/tests/2026-11-28-writer-digestcache-actueel.json"
+  },
+  "bron": {
+    "voorbereiding_bestanden": 4418,
+    "gewijzigd_ten_opzichte_van_actieve_6fec": [
+      "crates/docx-edit/src/digest_cache.rs",
+      "crates/docx-edit/src/wasm.rs"
+    ],
+    "gedeelde_passage_patch_sha256": "6afbc15bfe0149b21ff4ec0edbb4279ba441a34e61fe99668f8324165b7784d1",
+    "volledige_patch_reproductie": {
+      "geslaagd": true,
+      "fuzz": 0,
+      "basis_nootbron_exact": true,
+      "gecombineerde_cachepatch_sha256": "ef90f8e7de9f16085d7a74b26ede55e1f7caa5759bdbac44880b9531c2d86a93",
+      "wijziging_ten_opzichte_van_actieve_cache": "6afbc15bfe0149b21ff4ec0edbb4279ba441a34e61fe99668f8324165b7784d1",
+      "bestanden": {
+        "crates/docx-edit/src/engine.rs": "3d12a8ac26f5f145ab8a956a0ea8f6078a4e2862c99600e43893bb0e8bcd9f6d",
+        "crates/docx-edit/src/lib.rs": "f366c6fa1897d14f44ad5f2904e7ed318e95ffad114a3fefc1d9a27963ad7e68",
+        "crates/docx-edit/src/wasm.rs": "bf23900604b34e3653b5c88f51ec2951fe9b87448f97dd4d3451aa92e9625a65",
+        "crates/docx-edit/src/digest_cache.rs": "a13c8352ba56eb4a078d6f56fc18a0b24ece6ba499d1029a51a9ae48aea9a972"
+      }
+    },
+    "extra_kerninstrumentatie_in_product": false,
+    "bouw": [
+      {
+        "fase": "cargo",
+        "code": 0,
+        "seconden": 166.04405548190698,
+        "opdracht": [
+          "cargo",
+          "build",
+          "-p",
+          "betteroffice-docx-edit",
+          "--lib",
+          "--features",
+          "wasm,tiff,metafile,heap-stats",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--release",
+          "--locked"
+        ]
+      },
+      {
+        "fase": "bindgen",
+        "code": 0,
+        "seconden": 8.00469296821393,
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/bindgen/wasm-bindgen",
+          "--target",
+          "web",
+          "--out-name",
+          "docx_edit",
+          "--out-dir",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/kandidaat",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/wasm-target/wasm32-unknown-unknown/release/docx_edit.wasm"
+        ]
+      },
+      {
+        "fase": "opt",
+        "code": 0,
+        "seconden": 80.02413512091152,
+        "opdracht": [
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/gereedschap/binaryen/bin/wasm-opt",
+          "-O3",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/kandidaat/docx_edit_bg.wasm",
+          "-o",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/kandidaat/docx_edit_bg-opt.wasm"
+        ]
+      }
+    ],
+    "grens": "Eerste variant zonder leesguard eveneens gebouwd en als bewijs behouden; alleen definitieve 03ff0e87 geactiveerd. Geen extra volledige CLI-compilatie na bronvoorbereiding; voorbereide bron exact aan gecompileerde bron."
+  },
+  "stabiliteit": {
+    "gevonden": {
+      "eerste_wasm": "29021d42737e79a52ebe9ed23d074bdb3899ca369fe5b1e3e8809e744366d950",
+      "eerste_native": "5a82fdeb041d18a94e1c47446bf381ef7affddd27da80e2eba6361c8bbe98744",
+      "bevinding": "Directe paragraphSpans vanuit updatecallback geeft bij basis en eerste variant RuntimeError/unreachable, ook met gedeelde leesscope. Daarna is dezelfde sessie onbruikbaar.",
+      "wijziging": "Probeer vóór elke paragraphSpans-lezing een Yrs-leestransactie; geef lockfout als gewone JS-fout terug. Geen Rustpanic en geen extra update of mutatie bij weigering.",
+      "grens": "Alleen deze lezer krijgt de guard; geen algemene reentrantie- of overige readeracceptatie."
+    },
+    "definitieve_proef": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "origin": "local",
+          "shared": false,
+          "calls": [
+            {
+              "isRemote": 0,
+              "errors": [
+                {
+                  "story": "body",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                },
+                {
+                  "story": "body:t0:r0c0",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                }
+              ]
+            }
+          ],
+          "bron_en_vector_na_callback_exact": true,
+          "lezingen_na_callback_bruikbaar": true,
+          "undo_redo_na_callback_bruikbaar": true
+        },
+        {
+          "origin": "local",
+          "shared": true,
+          "calls": [
+            {
+              "isRemote": 0,
+              "errors": [
+                {
+                  "story": "body",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                },
+                {
+                  "story": "body:t0:r0c0",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                }
+              ]
+            }
+          ],
+          "bron_en_vector_na_callback_exact": true,
+          "lezingen_na_callback_bruikbaar": true,
+          "undo_redo_na_callback_bruikbaar": true
+        },
+        {
+          "origin": "remote",
+          "shared": false,
+          "calls": [
+            {
+              "isRemote": 1,
+              "errors": [
+                {
+                  "story": "body",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                },
+                {
+                  "story": "body:t0:r0c0",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                }
+              ]
+            }
+          ],
+          "bron_en_vector_na_callback_exact": true,
+          "lezingen_na_callback_bruikbaar": true,
+          "undo_redo_na_callback_bruikbaar": null
+        },
+        {
+          "origin": "remote",
+          "shared": true,
+          "calls": [
+            {
+              "isRemote": 1,
+              "errors": [
+                {
+                  "story": "body",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                },
+                {
+                  "story": "body:t0:r0c0",
+                  "error": "Failed to acquire read-only transaction. Drop read-write transaction and retry."
+                }
+              ]
+            }
+          ],
+          "bron_en_vector_na_callback_exact": true,
+          "lezingen_na_callback_bruikbaar": true,
+          "undo_redo_na_callback_bruikbaar": null
+        }
+      ],
+      "grens": "Alinealezer geeft tijdens actieve Yrs-schrijftransactie gewone fout terug; lokale/remote update, body/andere story, met/zonder gedeelde leesscope. Andere documentlezers zijn hiermee niet algemeen reentrant gemaakt."
+    },
+    "regressie_tegenproef": {
+      "oud_procescode": 1,
+      "nieuw_procescode": 0,
+      "nieuw_gevallen": 4,
+      "grens": "Nieuwe echte Wasm-regressie faalt op eerdere productkern en slaagt op proefkern; geen kunstmatige foutinjectie."
+    },
+    "vastgelegde_regressie": [
+      "src/tekst/alinea-updatecallback.test.ts",
+      "tests/fixtures/alinea-updatecallback.mjs"
+    ],
+    "grens": "Directe callbackproeven op echte Wasm in Node. Body en andere story, local/remote en met/zonder gedeelde leesscope. Gewone native flows apart getoetst; geen directe callbackhook in WebKit geplaatst. Andere documentlezers niet algemeen reentrant gemaakt."
+  },
+  "wasm_pariteit": {
+    "geslaagd": true,
+    "toestanden": 166,
+    "storyvergelijkingen": 127660,
+    "digestvergelijkingen": 276398,
+    "spans": "Exacte paragraphSpans-strings vóór en na digests voor alle stories, plus bestaande segments en document-/partmetadata, margins en comments. Bron/vector per leesstap exact.",
+    "randen": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "ongeldige_update": true,
+          "onbekende_story": true,
+          "echte_pending": true,
+          "bron_exact": true,
+          "load_merge_na_warme_cache": true,
+          "echte_remote_update_na_warme_cache": true,
+          "seeden_na_ontbrekende_body": true
+        },
+        {
+          "variant": "kandidaat",
+          "ongeldige_update": true,
+          "onbekende_story": true,
+          "echte_pending": true,
+          "bron_exact": true,
+          "load_merge_na_warme_cache": true,
+          "echte_remote_update_na_warme_cache": true,
+          "seeden_na_ontbrekende_body": true
+        }
+      ]
+    },
+    "extra_spansranden": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "naam": "leeg",
+          "units": 0,
+          "paragraphs": 0,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "lege-alinea",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "tekst-zonder-sluiting",
+          "units": 1,
+          "paragraphs": 0,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "trailing-tekst",
+          "units": 2,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "opeenvolgend",
+          "units": 2,
+          "paragraphs": 2,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "unicode",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "embed",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "dubbele-id",
+          "units": 2,
+          "paragraphs": 2,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "lege-id",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-128-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-129-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-unicode-128-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-unicode-130-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "4096-units",
+          "units": 4096,
+          "paragraphs": 4096,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "4097-units",
+          "units": 4097,
+          "paragraphs": 4097,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "grote-invoeging",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 4097,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "basis/geweigerde-heropening-na-warme-cache",
+          "geslaagd": true
+        },
+        {
+          "naam": "kandidaat/geweigerde-heropening-na-warme-cache",
+          "geslaagd": true
+        }
+      ],
+      "spans_en_digestlezingen": 492,
+      "grens": "Echte Wasm, koude/warme lokale invoeging, Undo/Redo, grenzen en foutafhandeling en geweigerde heropening; geen geforceerde Doc-pointerwisseling; geen instrumentatie van werkelijk gekozen cachetak of totale productdekking."
+    },
+    "veilige_callbackclient": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "calls": 1,
+          "werpende_callback_genegeerd": true,
+          "veilige_clientid_lezer_in_callback": true,
+          "bron_voor_na_exact": true,
+          "undo_redo_na_callback": true
+        },
+        {
+          "variant": "kandidaat",
+          "calls": 1,
+          "werpende_callback_genegeerd": true,
+          "veilige_clientid_lezer_in_callback": true,
+          "bron_voor_na_exact": true,
+          "undo_redo_na_callback": true
+        }
+      ],
+      "grens": "Bestaand callbackcontract: kopie van update, origin, client-id lezen en callbackfout negeren. Geen algemene synchrone documentlezing of mutatie vanuit een lopende Yrs-transactie getest."
+    },
+    "grens": "Historische orakelbron zonder lokale Undo kan afwijken van lokale Undo-historie; geen nieuwe bytepariteit tussen verschillende geschiedenissen geclaimd. Modulebasis en kandidaat per gelijk werkpad gelijk. Geen geforceerde wissel van dezelfde Cache naar andere Doc-pointer."
+  },
+  "component": {
+    "samples": 96,
+    "ABBA_groepen": 4,
+    "volgorde": "applyLocalUpdate, paragraphSpans + JSON.parse, bodydigests + JSON.parse",
+    "frames": [
+      {
+        "frame": 1,
+        "A_mediaan_ms": 15.328279500000008,
+        "B_mediaan_ms": 8.937215500000548,
+        "verschil_procent": -41.69459462165638
+      },
+      {
+        "frame": 2,
+        "A_mediaan_ms": 14.342796500000077,
+        "B_mediaan_ms": 9.123427500000162,
+        "verschil_procent": -36.390176769222705
+      },
+      {
+        "frame": 3,
+        "A_mediaan_ms": 14.645379000000048,
+        "B_mediaan_ms": 9.24017300000014,
+        "verschil_procent": -36.907245623345695
+      },
+      {
+        "frame": 4,
+        "A_mediaan_ms": 14.257225500000459,
+        "B_mediaan_ms": 8.800839499999483,
+        "verschil_procent": -38.27102264743445
+      },
+      {
+        "frame": 5,
+        "A_mediaan_ms": 14.281825999999455,
+        "B_mediaan_ms": 8.698463999999603,
+        "verschil_procent": -39.09417465245736
+      },
+      {
+        "frame": 6,
+        "A_mediaan_ms": 29.0138350000002,
+        "B_mediaan_ms": 29.674040500000046,
+        "verschil_procent": 2.2754851263193654
+      }
+    ],
+    "besluit": "Vijf van zes stappen circa 36–42 procent sneller; zesde circa 2,3 procent trager. Geen universele winst of desktop-FPS-claim."
+  },
+  "native": {
+    "bouw": [
+      {
+        "variant": "basis",
+        "code": 0,
+        "overgenomen_uit": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/open-office-studio-actueel-kandidaat",
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/open-office-studio-spans-basis",
+        "sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+        "grens": "Bestaande actuele native referentie ongewijzigd; geen nieuwe basiscompilatie."
+      },
+      {
+        "variant": "kandidaat",
+        "code": 0,
+        "seconden": 166.61145375692286,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "TAURI_CONFIG": {
+          "build": {
+            "frontendDist": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/dist-kandidaat"
+          }
+        },
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/open-office-studio-spans-veilig",
+        "sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849"
+      }
+    ],
+    "bundels": {
+      "geslaagd": true,
+      "bestanden_per_variant": 529,
+      "gewijzigde_paden": {
+        "basis": [
+          {
+            "pad": "index.html",
+            "sha256": "8b78cc14035604ebb9f8aeb5855ebc352058320232fdcfd537b64c16ebdfdda8"
+          },
+          {
+            "pad": "assets/markdown-ClydGGE9.js",
+            "sha256": "994092946753e57934fb80869e49215bb80fa06ac4123c6d7f3495b90a0b927c"
+          },
+          {
+            "pad": "assets/chunk-2S2QUCJE-CBns2M3N.js",
+            "sha256": "5d8a94c1a9f4b1611479290aa1c719ef89a0b7eee84a43e4b88155900b913069"
+          },
+          {
+            "pad": "assets/panel-left-YqZQD6pP.js",
+            "sha256": "c1c59d5d9b41fdab973b96f0c7fac2b17f34b18cb087c21a8f0cb53636a3d7d6"
+          },
+          {
+            "pad": "assets/docx_edit_bg-CATKjI96.wasm",
+            "sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-4HGkeIfx.js",
+            "sha256": "bb01be74ac4ba3c45eb1b3b93bdd806ba8a6446161e0a6b604604eed0833f521"
+          },
+          {
+            "pad": "assets/rekenbladInstellingen-Cb87bDUq.js",
+            "sha256": "a8614eac36e52f260412c549e0760818472e5041feed6521cdaae7053643a392"
+          },
+          {
+            "pad": "assets/email-tSJ7wBfj.js",
+            "sha256": "3085443fec35002dff337e7c151928829d122a4cd04a255fcfd74ba5ef32112c"
+          },
+          {
+            "pad": "assets/tauriVensters-DWdTZ64s.js",
+            "sha256": "0d6b3698cb59e7f94df97d26ef3c3cfb42b1fbc6745b5f43974aeb349cfe8de7"
+          },
+          {
+            "pad": "assets/chunk-GZ5VPNVM-IT1w2J_D.js",
+            "sha256": "102cd474cae6012f58be2ef7c460b5ae6a7149663a84eb9a5d2bfa4dc2c60e6d"
+          },
+          {
+            "pad": "assets/chunk-SBPJ3YLZ-m5O924Sq.js",
+            "sha256": "d817e52549ab50ce748f26ded519096f2d99b362f77dff25a2a63cc4663e7e1a"
+          },
+          {
+            "pad": "assets/bronTekst-Dz9Ewuxc.js",
+            "sha256": "182c0123261d5d324ed49bcc37dbedd3a433a578f2cf012a0ab83df92826eee0"
+          },
+          {
+            "pad": "assets/bronRapport-CrF0OQRc.js",
+            "sha256": "49ab477126105e42feda16a21f9edc4948ba639f07f44cfd8fca94939d8a6cbb"
+          },
+          {
+            "pad": "assets/backend-Bujx1bLY.js",
+            "sha256": "7938de863be45cb3e76323c79eda857675f8bc5850411322c430f564fa79e8fd"
+          },
+          {
+            "pad": "assets/chunk-CKSVLZJJ-DJgP0K59.js",
+            "sha256": "34fb27967867a5b5824b11512115daf8de9615883feeaaa862dded7a7381abb3"
+          },
+          {
+            "pad": "assets/chunk-YTGFUEEE-DQpxmT40.js",
+            "sha256": "07b9a26a7872a159c7d59f85d253474cd34e41113d16a16992545f02c6c7c0bf"
+          },
+          {
+            "pad": "assets/tekenhulp-hzcjMb-v.js",
+            "sha256": "d82b8d7007dfd29a8cc64a5a6dcd92fca92cafacd073b97104cfaeb7660cc6a8"
+          },
+          {
+            "pad": "assets/document-D7y0xzPF.js",
+            "sha256": "c7be073c3ee1902240d77cdee2899cd2c703005a90fa449e7d4b5583a79ffacc"
+          },
+          {
+            "pad": "assets/Voorstelling-D5RfSb7S.js",
+            "sha256": "5658ae9c366ea1a7e75d6dc347cc0dd24213be35b025d4686075242e4c40be19"
+          },
+          {
+            "pad": "assets/voorstelling-DhyKdCih.js",
+            "sha256": "041ecdea3ae855b6a7f1974c0b2510d12b3ad7b1127ac9f7e38453811123e766"
+          },
+          {
+            "pad": "assets/chunk-Q7OC7M5Q-CKDlrvqz.js",
+            "sha256": "ff1e630171ed59d7725038f955e011e1f6cff3debf184bb6ac6a5e984b517f13"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-CAFuSPxE.js",
+            "sha256": "d5b3a11918acf964a1b071668810dc2260af05b3ee4fcd174c62774fb944abc5"
+          },
+          {
+            "pad": "assets/ovba-DOtWcotO.js",
+            "sha256": "717c299d3172eda8d7c351459da71195f11b6c851e55ef66b160d042f4745bbd"
+          },
+          {
+            "pad": "assets/rotate-cw-DBGrCJaE.js",
+            "sha256": "203f13b919ec1ab440da5f91cacfcdc231312f88424418b0e8a03b34b334e0f7"
+          },
+          {
+            "pad": "assets/rekenblad-logica-Cmz0rWfk.js",
+            "sha256": "b91048bcf9c7490799bd51273daeb89abdd28b6c1662c05ec1f7f3696c992746"
+          },
+          {
+            "pad": "assets/Afdrukvoorbeeld-CbaeT8Dy.js",
+            "sha256": "cbb8ba90b2daf7b6de5e851926746b42f13628a8804c553ceeb42cfc6b48e7d6"
+          },
+          {
+            "pad": "assets/bronPresentatie-QogAikab.js",
+            "sha256": "01a724786825129f92f8dd512ab83ddd68c5d68f5a98240f525d6c8b69f8eda0"
+          },
+          {
+            "pad": "assets/chunk-37HBONPF-CN_o5njZ.js",
+            "sha256": "363db56c3d4013f5bb746c8dd17e759251610395a0aae1013c1d0622f68205ff"
+          },
+          {
+            "pad": "assets/chunk-P4QPIGM3-DGCqV9LL.js",
+            "sha256": "7316f9e4197b26f9e377abbc46cf6a8a025dfae24bb715b162bc4a6471a24c42"
+          },
+          {
+            "pad": "assets/underline-BJ_p7XV4.js",
+            "sha256": "31517d9a440a98ab33245733f9e16d95f490be94bde7831d555912989aee667d"
+          },
+          {
+            "pad": "assets/chunk-4ZGDANBA-BhJdUG2Q.js",
+            "sha256": "2fb1fa6bc4fe5a21b3f1336e9f59cfa8ce7631adaab0d2c654b875984443f2ca"
+          },
+          {
+            "pad": "assets/folder-plus-BIHQh3XO.js",
+            "sha256": "bca950850e3d484b021c4faa1052610ede2b5e46e94010400dcbe05aef8590c8"
+          },
+          {
+            "pad": "assets/text-cursor-input-CdgxpoFy.js",
+            "sha256": "4be842e994cce276e93de65d67085d543f95575f5976cbde0099c2c7d7a2fafc"
+          },
+          {
+            "pad": "assets/diabeeld-y1u9khAk.js",
+            "sha256": "cba280af1a1464d52a9793c802347ff9870e7d4f86e204bd303392ab7d70b7dc"
+          },
+          {
+            "pad": "assets/rekenbladcontrole-CxsTeX2C.js",
+            "sha256": "aee8a9d7d079d2f62493c0a6803e937f3b8a40aabccfbcf628bf7b0364ef12f1"
+          },
+          {
+            "pad": "assets/zoom-out-B1G5sRlf.js",
+            "sha256": "49c0e38839edce885b1928cbdbb381f91a6704044224e2dc4d944149abcbc08d"
+          },
+          {
+            "pad": "assets/ToeschouwerVenster-D2Ss40dX.js",
+            "sha256": "0e312042d85a8ff4b36c160ddee1cd0aa50a4babe32555933d6ad03cc86ec763"
+          },
+          {
+            "pad": "assets/afdrukframe-DnS5Mpv9.js",
+            "sha256": "55a8f601fd347837b08f50d3af9b26b75ae4b470f27af32b293d571fb171172a"
+          },
+          {
+            "pad": "assets/editors-BqYqZH6J.js",
+            "sha256": "3a40e45ed3b3eeaf53b4a3f43ae79df1ccfdf5cd228527c008a2f2105a83c76c"
+          },
+          {
+            "pad": "assets/chunk-YEDZERHF-D5IXKO5_.js",
+            "sha256": "4b3fd537bc9b7dc9485f57d746e53bc3f15a199396b6dec71b5810e96eca7c35"
+          },
+          {
+            "pad": "assets/NotitiesStudio-1v7IAuA9.js",
+            "sha256": "68cb7682df33b031bfe95491e537b04735d5a9f7e08e9642cc9c7188de1926a9"
+          },
+          {
+            "pad": "assets/docxWorker-CJado05a.js",
+            "sha256": "cd0f3a602cb6cbfb4262f1957eafb93ac100e3231e6c537d3748e39f5047de97"
+          },
+          {
+            "pad": "assets/bronRekenblad-DWedZWdh.js",
+            "sha256": "b93495d4bf9c640f77e25e2790c42eeaca9083de39a96d5f70ffe3cca489f106"
+          },
+          {
+            "pad": "assets/VerzendAlsBijlage-CfcWHUMG.js",
+            "sha256": "f8ae976c9aa2535ba206832e8e4a9582631224bc4e1b38b309eb9564a0ddbd36"
+          },
+          {
+            "pad": "assets/chunk-5FFUQOQU-DXfb-nVk.js",
+            "sha256": "ed068e36999c0a1dd6b7ab527ef4ed19dec187d45493ac2d0bc3bccf1591825c"
+          },
+          {
+            "pad": "assets/index-D1GVCZis.js",
+            "sha256": "aaf92db80a9b454fb738e0e725655b74c5ebeca6d059e663d34b9ce764f5b863"
+          },
+          {
+            "pad": "assets/list-C95YVugr.js",
+            "sha256": "1354e6faca4bb691ae15c4ac6c5aff8f38237086e65bda134e297ddcd642fad8"
+          },
+          {
+            "pad": "assets/EmailStudio-END8UgrK.js",
+            "sha256": "a23d45c916cf06970fa63b4850c035a6207a20764ec053553695475a255e74bf"
+          },
+          {
+            "pad": "assets/index-Craf00Eo.js",
+            "sha256": "428ad592124c224b8c80f9e478445b493769dd3a6076d5fb05b6f27b7d937e67"
+          },
+          {
+            "pad": "assets/bewaren-uKcSmxfa.js",
+            "sha256": "0fa471ecc3e45240f20e0c2a4d4c8f9c220536361ae4fbce4712de806c1dc15c"
+          },
+          {
+            "pad": "assets/zoom-in-1R4-LxD5.js",
+            "sha256": "5088f2f9da7d8b3ff2ea1af21fa5d552f40df1a3d5bae6c3460da1aa18b214f1"
+          },
+          {
+            "pad": "assets/index-BtlLPnEq.js",
+            "sha256": "2ac8683ce2d7c51321f818a817c548d73d3ac81c53be42a8aa0a9bde1d707612"
+          },
+          {
+            "pad": "assets/chunk-HEKHBVSH-B6H6SvJZ.js",
+            "sha256": "5341387fd4d8c4f492d0b994b5c59d4f73402b83b914e948cdbd0c7bafb65db9"
+          },
+          {
+            "pad": "assets/index-BRjCTIsy.js",
+            "sha256": "8be1da4e5f006b95a2aa26646b367289bea02480121cc32c0d65387a3e0b3274"
+          },
+          {
+            "pad": "assets/chunk-O76C72EQ-YOPDSlzK.js",
+            "sha256": "2e37fc9b82d6ad05f442f3200645721461510db6b75dfa04c72733ad7edeb2ea"
+          },
+          {
+            "pad": "assets/chunk-H7EYGRJO-Bde1FJ10.js",
+            "sha256": "047a546031aaccc5d89cc4b735bf0e88722a78199a6baf6595e430384426d7ca"
+          },
+          {
+            "pad": "assets/DiaSorteerder-BJc0NfZX.js",
+            "sha256": "9f21e1103d16af294893dac3e188c07b3b0705fe105be592ae3d32bfa3d9276b"
+          }
+        ],
+        "kandidaat": [
+          {
+            "pad": "index.html",
+            "sha256": "8bbb286be2c1d24ed0e1fc425de3018083db75d20f301a6ec33d369d22a3196a"
+          },
+          {
+            "pad": "assets/Afdrukvoorbeeld-mYEucQtH.js",
+            "sha256": "63db614d9d0a8df00503a99fc56a9ad669714f789c2108cf33dcd9795a4db76b"
+          },
+          {
+            "pad": "assets/chunk-O76C72EQ-DqP-R7Zw.js",
+            "sha256": "966b1b9cd353642fe305dd40b5adfcbbc969c2c62f77a76b926cf34bb415f170"
+          },
+          {
+            "pad": "assets/folder-plus-C8meLVGJ.js",
+            "sha256": "e942cbac23d971ee97b3f83ff825ff1bd0179b9e945cd8c6f6aafd8194479b38"
+          },
+          {
+            "pad": "assets/chunk-4ZGDANBA-DqiUFOu5.js",
+            "sha256": "a40dd1ae85079df10205865c7d77490686cbd38d5bb43cfc48fca6ebee00d183"
+          },
+          {
+            "pad": "assets/chunk-HEKHBVSH-BMtmApRM.js",
+            "sha256": "8c48678cd30407b79fff0d629920e385394f57e4403c6f0e4bb3069fb97135ba"
+          },
+          {
+            "pad": "assets/index-C3PsRrPT.js",
+            "sha256": "1df1be2f21c2a0eeb17978ac920d8e4d040b77e3395394ce4148b1bfde7abcd2"
+          },
+          {
+            "pad": "assets/underline-CR8YZfVa.js",
+            "sha256": "7ab53a76619808010075feb01dc02660d2acd6bd8c5e6cad9bceeb7e5182ab49"
+          },
+          {
+            "pad": "assets/chunk-GZ5VPNVM-Cd52tp4i.js",
+            "sha256": "b37ac92882d80dd69da632e4e3cab0e52b998a3b71b5680302d469c165bdbae5"
+          },
+          {
+            "pad": "assets/VerzendAlsBijlage-B9gyxcvT.js",
+            "sha256": "863155c91099418016c629437a3da63ffae75d9348876bef128fbf33d30dd8a3"
+          },
+          {
+            "pad": "assets/DiaSorteerder-BOSNNJOE.js",
+            "sha256": "a441540206ab670e62c6de60da86c170e4c1e1e6b4f18d8288c173afcf23ca61"
+          },
+          {
+            "pad": "assets/bewaren-i_l3YAEH.js",
+            "sha256": "a7448aad68e3225d6c8306a4d34e0d873e3c48df0c68c0c2db248bb20035ba04"
+          },
+          {
+            "pad": "assets/rekenbladcontrole-rSS7of3_.js",
+            "sha256": "51110d0b874002bd80b8c15ca63269c1d3fb22cfe480692020536b1095764788"
+          },
+          {
+            "pad": "assets/chunk-H7EYGRJO-CQuup-0N.js",
+            "sha256": "581671c91a3ce6e3fb8857c0774dc84f2ec01f660f7997798e914e5d7a661476"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-CUG4UC9C.js",
+            "sha256": "2c822b393c13b851ffeeae520a3d2a4077d281268016a5bc3f4064ec690daf3f"
+          },
+          {
+            "pad": "assets/afdrukframe-COVKUoZ0.js",
+            "sha256": "3b4ee03f5613f63504ec4d6c2fd5a5e35278e7babf4f452afc797f0374cfae56"
+          },
+          {
+            "pad": "assets/index-CnR33BsP.js",
+            "sha256": "3b7b0d53e31e9f482d443723dcf941e16e718c94e48a151a22e800719cfc5895"
+          },
+          {
+            "pad": "assets/chunk-CKSVLZJJ-BKCPe7QE.js",
+            "sha256": "6eb61ed71aa099ac06496b6865d29701c24c7e3ec0ab8b03d21c26fe6d744efe"
+          },
+          {
+            "pad": "assets/chunk-SBPJ3YLZ-4GVZfRsA.js",
+            "sha256": "c8f8d4e95606fb40c45dcf589e1f640b2eec1401934457d2decec5709734c9d9"
+          },
+          {
+            "pad": "assets/EmailStudio-CWvuPlcs.js",
+            "sha256": "704a5921b536f433d5e93fb28efe30870d1bbdede73b14255b04b6d7fc7d7e2e"
+          },
+          {
+            "pad": "assets/chunk-5FFUQOQU-D81y4llo.js",
+            "sha256": "232008dee18a9d8ec96ee0e1a2ca0e86886f38bb8f300114a5832d137d2693c8"
+          },
+          {
+            "pad": "assets/tauriVensters-BYI5gvcW.js",
+            "sha256": "b2fb148ff6b1c6f45819beb189d30c35560358db158e030323aeecdba4efde6b"
+          },
+          {
+            "pad": "assets/panel-left-rXcPcEG2.js",
+            "sha256": "385a2a5da135a92c7a03dfa784969b92e9ed8d77dc004b94fc4f758d9590d616"
+          },
+          {
+            "pad": "assets/rekenblad-logica-DCGY7z3m.js",
+            "sha256": "ca208123d87a1658a4242d684c2946b815bd61ab384a27fbb8326c578aefdb73"
+          },
+          {
+            "pad": "assets/bronPresentatie-t48Ji-83.js",
+            "sha256": "52e0f8b7333b51f27734b655ad41a7108989a508f5afdf454cb062e33e639042"
+          },
+          {
+            "pad": "assets/index-BtjjFW78.js",
+            "sha256": "f8810ce05f6e4979593671460f97a2db888e48c969b0b654257b1872f3a1cabf"
+          },
+          {
+            "pad": "assets/docxWorker-C-hKL5tx.js",
+            "sha256": "c182c43629b0be520d4a2b09f11ae4d29b90c82b2f340177a4d0309ec9edce44"
+          },
+          {
+            "pad": "assets/bronRapport-DCX12Twy.js",
+            "sha256": "c911f887ccb1dfb061f1af8f4ad99539f47f961e74dc07c9628bd494cbf1b2db"
+          },
+          {
+            "pad": "assets/index-CLEVC6Gw.js",
+            "sha256": "5a1328322556e6c6854089817830da972770248a5c9e257dd6575154ac554f42"
+          },
+          {
+            "pad": "assets/tekenhulp-CSbA7_GT.js",
+            "sha256": "f0714859e3cfbab862408115cab645d603fcc23122f88114a84888a70c795321"
+          },
+          {
+            "pad": "assets/docx_edit_bg-Cu7hnSEw.wasm",
+            "sha256": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf"
+          },
+          {
+            "pad": "assets/backend-2dZgS7B9.js",
+            "sha256": "d0bd1531d94a7d8eb69df672e4275e17d20fe82185f1e2992b52a32b56a9db63"
+          },
+          {
+            "pad": "assets/ovba-Co8RzuyN.js",
+            "sha256": "736e456ffaaca4fd53508285e7cae200a6f2597f985102dee4a19c18e793f3a5"
+          },
+          {
+            "pad": "assets/bronRekenblad-CdaTwYSk.js",
+            "sha256": "d58f80e4744b8b2b2849f705ce45ad383d9741ab29a0a4fce43f88bc59ce6dc6"
+          },
+          {
+            "pad": "assets/chunk-YTGFUEEE-BLIV4ArY.js",
+            "sha256": "73fbbc226b109d25e061119571aba12729344145f49573b06374a48ef381423a"
+          },
+          {
+            "pad": "assets/diabeeld-Bw7rpJ9Q.js",
+            "sha256": "e101ddced6e7e62831645a09e35403b7213436f1292510ab87a943f64014d31b"
+          },
+          {
+            "pad": "assets/chunk-2S2QUCJE-BIbNHkhI.js",
+            "sha256": "61c684329ac156a1efd8d9a23123394eccf5989183e2669d296532989e0961af"
+          },
+          {
+            "pad": "assets/Voorstelling-CUif1rK6.js",
+            "sha256": "96ce0d48ece3df42b1d4a7e19bcae927b276ce2b65231ce5a131bf761603f410"
+          },
+          {
+            "pad": "assets/text-cursor-input-pBcbogqk.js",
+            "sha256": "0635156ba8630945432250c78e3ffddc18cf490099268f312aed27422848705e"
+          },
+          {
+            "pad": "assets/chunk-37HBONPF-B2J258By.js",
+            "sha256": "d4c413b1d7f984fddfcaa4972af3aebab4b2133c8ec508d710765917adf11c5e"
+          },
+          {
+            "pad": "assets/chunk-YEDZERHF-BL_1eJAb.js",
+            "sha256": "cfadf05e099d073a310f47971b1c42994d4dbd44fb3f976e0b5ba0cfefa0f265"
+          },
+          {
+            "pad": "assets/rotate-cw-CkBi6ssn.js",
+            "sha256": "d1fa4f83eafe15610944bc00ca8e4f4d4643cf65a22ed120f85409440758ec89"
+          },
+          {
+            "pad": "assets/chunk-P4QPIGM3-BFz6bczU.js",
+            "sha256": "158150a98fca63b9f95f7844d5aef6d7e6131244278b0c15b1f361c2a3fbfe87"
+          },
+          {
+            "pad": "assets/zoom-out-edVrSeYi.js",
+            "sha256": "cb9129445d967a1b754fffe5591cace4ee499f5044e49bc343969a773174b822"
+          },
+          {
+            "pad": "assets/zoom-in-CRA7rCVZ.js",
+            "sha256": "32b22a1248af9e772ddd8cf491c772f42922e9f14bf046661f26ea30e03a6380"
+          },
+          {
+            "pad": "assets/chunk-Q7OC7M5Q-DdZmMhcJ.js",
+            "sha256": "7135431ad38a7e7c9a6049d7b0d5140b7b356ad7e5b8af71830c189c6923aad1"
+          },
+          {
+            "pad": "assets/editors-hz_Qg-1B.js",
+            "sha256": "92f0f7b5fa06f5707a8723863c469df38a52ff9adbe8b6bb407d6102860885d0"
+          },
+          {
+            "pad": "assets/list-DkMHrZsJ.js",
+            "sha256": "fb809d7a78b7747c98d1cba29e49a83801aa767140c625dc79cc87e22605f10a"
+          },
+          {
+            "pad": "assets/document-DizvPZhj.js",
+            "sha256": "b68ddfb6ad21a23a25098a738dd9e88a8738419d546a781a61068cc3448e4a45"
+          },
+          {
+            "pad": "assets/markdown-C9fp6P67.js",
+            "sha256": "30398c068309087d198712f79267a60f051bc66ad327e5966c12e96a78552651"
+          },
+          {
+            "pad": "assets/NotitiesStudio-BNF2Q34v.js",
+            "sha256": "e8e14dd94a77b561ad3e7b8c35c9b88f30aeae9d6ac7e0b8e966259e02a0510e"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-CWeUMN-T.js",
+            "sha256": "f911a6998d5dd10809b1112e01c6d939d357b10f4a2381c2c89ef3bac5a646fc"
+          },
+          {
+            "pad": "assets/voorstelling-a0HB1q0K.js",
+            "sha256": "ed28a0e9fd6f0dd3c242427c7eae6c34c5b1ad8d2ad3107cf58f0bc8a67611b8"
+          },
+          {
+            "pad": "assets/ToeschouwerVenster-CuZTHahW.js",
+            "sha256": "9120dcbfee49a2b0f3ba264c5c00103cd8b78ce85704a7044468ab4603ca725a"
+          },
+          {
+            "pad": "assets/bronTekst-XHMB92kU.js",
+            "sha256": "745e7b7ef3a7883ffeda974a22f890e1e6785d868198366cc3e4e93afcac0e5d"
+          },
+          {
+            "pad": "assets/rekenbladInstellingen-BdP3U7kB.js",
+            "sha256": "f70420a2686feb4af10d02648dea464edf4ca786e3933f9e1526af40bbc54d16"
+          },
+          {
+            "pad": "assets/email-K4Lp8N0e.js",
+            "sha256": "ce79ea710fb0be5f82b6f6c8d7eef8d4428ad23a3f43aa6c365fd4a1df5e6986"
+          }
+        ]
+      },
+      "standaarddist_verschillende_paden": [
+        "index.html",
+        "assets/rotate-cw-BPOfQ4lA.js",
+        "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+        "assets/backend-D5QkHSkq.js",
+        "assets/bronRekenblad-D80KkjGB.js",
+        "assets/ovba-DF5qU29K.js",
+        "assets/chunk-XUXC3ZKS-DxHx28i6.js",
+        "assets/underline-DABO3TMs.js",
+        "assets/bronTekst-C7IQ2U8n.js",
+        "assets/docx_edit_bg-ONvZFP_n.wasm",
+        "assets/bewaren-CE-WSmX_.js",
+        "assets/docxWorker-B7b8GgQ-.js",
+        "assets/chunk-4ZGDANBA-BOEeem6X.js",
+        "assets/chunk-YEDZERHF-CwGK9jcY.js",
+        "assets/DiaSorteerder-Dgn10Ira.js",
+        "assets/zoom-out-CzBTiLe_.js",
+        "assets/tauriVensters-4uF2Nm6d.js",
+        "assets/list-BlQz7R1H.js",
+        "assets/EmailStudio-Dk9BTx89.js",
+        "assets/email-D36OWOra.js",
+        "assets/rekenbladInstellingen-CVnNkv3a.js",
+        "assets/diabeeld-BckX2VwE.js",
+        "assets/index-DX35Amhc.js",
+        "assets/text-cursor-input-BR9Yjo1q.js",
+        "assets/bronRapport-DkbScuFb.js",
+        "assets/index-DSY8H33x.js",
+        "assets/chunk-37HBONPF-BqqD54DU.js",
+        "assets/rekenblad-logica-BDdE84w-.js",
+        "assets/index-B878Xijo.js",
+        "assets/chunk-HEKHBVSH-eIko8GTS.js",
+        "assets/chunk-CKSVLZJJ-DWRh2RJ9.js",
+        "assets/chunk-YTGFUEEE-BR8wyl1E.js",
+        "assets/afdrukframe-YtGm97YV.js",
+        "assets/chunk-SBPJ3YLZ-CWA7DkKW.js",
+        "assets/chunk-H7EYGRJO-WK9rW071.js",
+        "assets/chunk-5FFUQOQU-CWKnPi3j.js",
+        "assets/folder-plus-DB0Uz8ff.js",
+        "assets/chunk-XUXC3ZKS-CDkIQkWt.js",
+        "assets/bronPresentatie-Bin3J_UZ.js",
+        "assets/Afdrukvoorbeeld-BUlb7JRC.js",
+        "assets/chunk-P4QPIGM3-Ds1T6iWM.js",
+        "assets/zoom-in-B_2EnEPG.js",
+        "assets/tekenhulp-B3O242Ui.js",
+        "assets/chunk-O76C72EQ-fZqVGNoY.js",
+        "assets/VerzendAlsBijlage-CjMK3fvA.js",
+        "assets/panel-left-fJIdo47T.js",
+        "assets/NotitiesStudio-Cjhg1n9a.js",
+        "assets/chunk-GZ5VPNVM-DAuFXyeR.js",
+        "assets/rekenbladcontrole-BcNhGQM2.js",
+        "assets/markdown-BzmolylE.js",
+        "assets/editors-2CdTQbCm.js",
+        "assets/chunk-2S2QUCJE-DEVNbv8q.js",
+        "assets/document-Boj15mjL.js",
+        "assets/index-Dq-k0YQw.js",
+        "assets/ToeschouwerVenster-Dyr1BDHp.js",
+        "assets/voorstelling-DYhDYz-7.js",
+        "assets/Voorstelling-L-7hQ6V_.js"
+      ],
+      "grens": "Actuele Vite-bronnen zonder private projectie-contextpatch; basis overgenomen uit voorafgaande actuele frontendproef. Multisets van pad plus bytes exact na normalisatie van achttekens inhoudshash in js/wasm/css-assetverwijzingen. Alleen editkern afzonderlijk vergeleken. Bestaande standaarddist niet vervangen."
+    },
+    "embedding": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "elf_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "ingebedde_actuele_assets": [
+            {
+              "pad": "assets/docx_edit_bg-CATKjI96.wasm",
+              "sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4"
+            },
+            {
+              "pad": "assets/index-TN_PiYsC.js",
+              "sha256": "c7ba9f6b75d7763a9801417498c0dcb685454e11e906b93b3383df9b6c7664e7"
+            },
+            {
+              "pad": "assets/index-XWh6H1lV.js",
+              "sha256": "0c2fbb83c461fbe8edb271679ff59bc0f031bd7d52115578b0604453d4ef1878"
+            },
+            {
+              "pad": "assets/index-D866W0pd.js",
+              "sha256": "3c6a51768aa515b0dd3654d3fa33f0dd2f88899cc76e0672b5c4d446643e622f"
+            },
+            {
+              "pad": "assets/index-C2w25pdW.js",
+              "sha256": "774fd78e1ea35b016309446aeb4fecbb2753cba78e18181df1a1b85c51e92ea3"
+            },
+            {
+              "pad": "assets/editors-BqYqZH6J.js",
+              "sha256": "3a40e45ed3b3eeaf53b4a3f43ae79df1ccfdf5cd228527c008a2f2105a83c76c"
+            },
+            {
+              "pad": "assets/docxWorker-CJado05a.js",
+              "sha256": "cd0f3a602cb6cbfb4262f1957eafb93ac100e3231e6c537d3748e39f5047de97"
+            },
+            {
+              "pad": "assets/index-D1GVCZis.js",
+              "sha256": "aaf92db80a9b454fb738e0e725655b74c5ebeca6d059e663d34b9ce764f5b863"
+            },
+            {
+              "pad": "assets/index-Craf00Eo.js",
+              "sha256": "428ad592124c224b8c80f9e478445b493769dd3a6076d5fb05b6f27b7d937e67"
+            },
+            {
+              "pad": "assets/index-BMTbKqLO.js",
+              "sha256": "1924bb7e171da5ba527c25c7c3608e05b442d6a4cc336962d69c5bbb344a96ee"
+            },
+            {
+              "pad": "assets/index-BtlLPnEq.js",
+              "sha256": "2ac8683ce2d7c51321f818a817c548d73d3ac81c53be42a8aa0a9bde1d707612"
+            },
+            {
+              "pad": "assets/index-BRjCTIsy.js",
+              "sha256": "8be1da4e5f006b95a2aa26646b367289bea02480121cc32c0d65387a3e0b3274"
+            }
+          ],
+          "andere_kern_afwezig": true
+        },
+        {
+          "variant": "kandidaat",
+          "elf_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+          "ingebedde_actuele_assets": [
+            {
+              "pad": "assets/index-C3PsRrPT.js",
+              "sha256": "1df1be2f21c2a0eeb17978ac920d8e4d040b77e3395394ce4148b1bfde7abcd2"
+            },
+            {
+              "pad": "assets/index-TN_PiYsC.js",
+              "sha256": "c7ba9f6b75d7763a9801417498c0dcb685454e11e906b93b3383df9b6c7664e7"
+            },
+            {
+              "pad": "assets/index-XWh6H1lV.js",
+              "sha256": "0c2fbb83c461fbe8edb271679ff59bc0f031bd7d52115578b0604453d4ef1878"
+            },
+            {
+              "pad": "assets/index-CnR33BsP.js",
+              "sha256": "3b7b0d53e31e9f482d443723dcf941e16e718c94e48a151a22e800719cfc5895"
+            },
+            {
+              "pad": "assets/index-D866W0pd.js",
+              "sha256": "3c6a51768aa515b0dd3654d3fa33f0dd2f88899cc76e0672b5c4d446643e622f"
+            },
+            {
+              "pad": "assets/index-C2w25pdW.js",
+              "sha256": "774fd78e1ea35b016309446aeb4fecbb2753cba78e18181df1a1b85c51e92ea3"
+            },
+            {
+              "pad": "assets/index-BtjjFW78.js",
+              "sha256": "f8810ce05f6e4979593671460f97a2db888e48c969b0b654257b1872f3a1cabf"
+            },
+            {
+              "pad": "assets/docxWorker-C-hKL5tx.js",
+              "sha256": "c182c43629b0be520d4a2b09f11ae4d29b90c82b2f340177a4d0309ec9edce44"
+            },
+            {
+              "pad": "assets/index-CLEVC6Gw.js",
+              "sha256": "5a1328322556e6c6854089817830da972770248a5c9e257dd6575154ac554f42"
+            },
+            {
+              "pad": "assets/docx_edit_bg-Cu7hnSEw.wasm",
+              "sha256": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf"
+            },
+            {
+              "pad": "assets/index-BMTbKqLO.js",
+              "sha256": "1924bb7e171da5ba527c25c7c3608e05b442d6a4cc336962d69c5bbb344a96ee"
+            },
+            {
+              "pad": "assets/editors-hz_Qg-1B.js",
+              "sha256": "92f0f7b5fa06f5707a8723863c469df38a52ff9adbe8b6bb407d6102860885d0"
+            }
+          ],
+          "andere_kern_afwezig": true
+        }
+      ],
+      "grens": "Geselecteerde actuele index/editor/worker-JS en editkern als exacte Brotli/raw blobs in ELF; geen cachepromotietelling."
+    },
+    "productbundel": {
+      "geslaagd": true,
+      "seconden": 44.855082422,
+      "bestanden": 529,
+      "kandidaat_exact_behalve": [
+        "licenses/tekstengine-NOTICE.txt"
+      ],
+      "actieve_guard": true,
+      "grens": "Standaard vite.config.ts, nieuwe vendor-kern, gewone publicDir, NOTICE daarna uitsluitend in eigen uitvoer bijgewerkt; originele public/dist niet gewijzigd. Alle JS/Wasm en overige assets bytegelijk aan native getoetste actuele kandidaat. Geen nieuwe native bouw met gewijzigde NOTICE."
+    },
+    "gewone_functieproeven": 6,
+    "schema2": {
+      "volgorde": "ABBA",
+      "A_ms": [
+        8476,
+        8788
+      ],
+      "B_ms": [
+        8460,
+        8624
+      ],
+      "A_mediaan_ms": 8632.0,
+      "B_mediaan_ms": 8542.0,
+      "verschil_ms": -90.0,
+      "verschil_procent": -1.042632066728455,
+      "besluit": "Circa één procent verschil binnen spreiding; geen aantoonbare totale native snelheidswinst. XTest tot renderlijst plus twee rAFs, geen fysieke schermpaint."
+    },
+    "schema3": {
+      "functieproeven": [
+        {
+          "label": "schema3-a",
+          "variant": "basis",
+          "schema": 3,
+          "code": 0,
+          "geslaagd": true,
+          "fout": null,
+          "seconden": 79.311303058872,
+          "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+          "invoer": {
+            "tekens": 1052,
+            "interval_ms": 2,
+            "laatste_keyup_ms": 40124,
+            "begin_tot_bron_ms": 18150.000000000007,
+            "laatste_keyup_tot_bron_ms": 167.00000000000728,
+            "laatste_keyup_tot_frame_ms": 5768,
+            "begin_tot_frame_ms": 23751,
+            "paginas": 65,
+            "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+            "wall_begin_tot_frame_ms": 23826,
+            "wall_verzonden_tot_frame_ms": 22091,
+            "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+          },
+          "opdracht": [
+            "/usr/bin/python3",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/proef-rijk.py",
+            "--programma",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/open-office-studio-spans-basis",
+            "--versie",
+            "2026.45.52",
+            "--uitvoer",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/native-schema3-a"
+          ]
+        },
+        {
+          "label": "schema3-b",
+          "variant": "kandidaat",
+          "schema": 3,
+          "code": 0,
+          "geslaagd": true,
+          "fout": null,
+          "seconden": 78.81745407008566,
+          "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+          "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+          "invoer": {
+            "tekens": 1052,
+            "interval_ms": 2,
+            "laatste_keyup_ms": 38122,
+            "begin_tot_bron_ms": 16001.000000000007,
+            "laatste_keyup_tot_bron_ms": 166.00000000000728,
+            "laatste_keyup_tot_frame_ms": 6977.000000000007,
+            "begin_tot_frame_ms": 22812.000000000007,
+            "paginas": 65,
+            "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+            "wall_begin_tot_frame_ms": 22824,
+            "wall_verzonden_tot_frame_ms": 21088,
+            "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+          },
+          "opdracht": [
+            "/usr/bin/python3",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/proef-rijk.py",
+            "--programma",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/open-office-studio-spans-veilig",
+            "--versie",
+            "2026.45.52",
+            "--uitvoer",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/native-schema3-b"
+          ]
+        }
+      ],
+      "grens": "Afzonderlijk één per variant, geen ABBA of prestatieacceptatie; 23,8/22,8 seconden blijft ernstig traag."
+    },
+    "platform": "Linux x86_64 release; tauri/custom-protocol,writer-bronjournaal, schema2 en schema3 apart gekozen."
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "a-een": {
+        "sha256": "fbec6303aaf757ad70b43d7bb5f216334ee129a6a3b7f5eacf3185cc483406f1",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "9708a072ef7b2d2851d4f192a39c2afaca936dcb8c03c4894fb155228f83da6e",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-een": {
+        "sha256": "96fb4e39858a84b3725a15988f11adf85910cf1f97f255f907d6d9a421920e1f",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "e6f27b8b25ade88a927646385624c9543e6b8b7ae2d5ace3d1a3e498002187e7",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-twee": {
+        "sha256": "376aa74aafc983713101c579ba5472294c7aaad97b56ae6bcf39224d253ca192",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "27c731fffc25d467e61b3a4b28f4dca24da5a6dcfb2a8ece7139b24a2432dd55",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "a-twee": {
+        "sha256": "490812ca7e9d6b9766218da835e8c736039aeb092fb52a190c7dff193cc06929",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "4a83c50c2cbb3e0cec2b4e5a5801fdf31b4d2ee23541510b0b1ec0adfd071eb3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "schema3-a": {
+        "sha256": "a8fb64d70f13fdb72da8de5450487a74ed3c617e29dcd3e7b3da01acea6562cd",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "87a7465c83152979dde8ffc83562fc44d31cac4a0e8b305460b560b3a4ca173e",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "schema3-b": {
+        "sha256": "440503fa84e51ad3247dd9eb036e2aca43664e7889c7fdf799f7f98f5c0da7e3",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "f0b0948dbe3dda12710b18350e3082b0a3d803c00bf629baf5291868827a92f3",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_onderdelen": {
+      "a-een": [],
+      "b-een": [
+        "docProps/core.xml"
+      ],
+      "b-twee": [
+        "docProps/core.xml"
+      ],
+      "a-twee": [
+        "docProps/core.xml"
+      ],
+      "schema3-a": [
+        "docProps/core.xml"
+      ],
+      "schema3-b": [
+        "docProps/core.xml"
+      ]
+    },
+    "beelden": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ]
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ]
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ]
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      }
+    ],
+    "exacte_beeldparen": 4,
+    "grens": "Drie vaste screenshots per functieronde, hele pixels zonder masker; geen volledige document-/glyph-/platformvisualisatie.",
+    "core_verschillen": {
+      "b-een": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "b-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "a-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "schema3-a": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "schema3-b": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "historische_voorraad_export": {
+      "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/native-rijk-a-een/Ontwerpnotitie.docx",
+      "sha256": "b47bb6462f00ef7f25bf397f9015dabfdf4dc548f266b35752487550f071d2d5",
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "verschillende_onderdelen": [
+        "docProps/core.xml"
+      ],
+      "grens": "Bestaande voorraadexport met dezelfde rijke helper; geen nieuwe voorraadprestatiemeting."
+    }
+  },
+  "beeldinspectie": {
+    "beeldparen": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1038,
+          940,
+          1040,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 58,
+        "bbox": [
+          11,
+          4,
+          1120,
+          997
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 30,
+        "bbox": [
+          1050,
+          940,
+          1052,
+          955
+        ],
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vijf_onderzochte_UI_regios": 0
+      }
+    ],
+    "regios": [
+      [
+        "venstericoon",
+        [
+          0,
+          0,
+          40,
+          36
+        ]
+      ],
+      [
+        "zoomschuif",
+        [
+          1100,
+          980,
+          1150,
+          1000
+        ]
+      ],
+      [
+        "cursor",
+        [
+          540,
+          315,
+          570,
+          355
+        ]
+      ],
+      [
+        "invoercursor",
+        [
+          1030,
+          935,
+          1045,
+          960
+        ]
+      ],
+      [
+        "bewaarcursor",
+        [
+          1045,
+          935,
+          1060,
+          960
+        ]
+      ]
+    ],
+    "grens": "Volledige onbewerkte beelden eerder pixelgewijs vergeleken. Uitsneden alleen voor inspectie; nulmaskers of gewijzigde acceptatiebeelden."
+  },
+  "visueel": {
+    "bekeken": [
+      "beeldinspectie.png",
+      "native-b-een/snel-getypt-bewaard.png",
+      "native-schema3-b/snel-getypt-bewaard.png"
+    ],
+    "bevinding": "Beide bewaarbeelden en inspectie-uitsneden bekeken. Overige verschillen beperkt tot knipperende cursors, venstericoon en zoomschuif. Alle ruwe beeldparen ongewijzigd bewaard; geen andere pixels verschillend buiten de vijf onderzochte kleine regios.",
+    "grens": "Drie vaste schermbeelden per functieronde; geen controle van alle 65 paginas, glyphs of platforms."
+  },
+  "echte_desktopupdates": {
+    "capture": {
+      "geslaagd": true,
+      "proces_code": 0,
+      "seconden": 62.91099309083074,
+      "helper_sha256": "ae9ed443245a35c423b9144cf8c499fea7bd5b9a313b2704008a9ea7b7958b98",
+      "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+      "venster_afgeleid": {
+        "begin": 22742.0,
+        "eind": 30868.000000000004
+      },
+      "in_invoervenster": {
+        "applyLocalUpdate": {
+          "aantal": 58,
+          "som_ms": 137.9999999999818,
+          "synchrone_fouten": 0
+        },
+        "paragraphSpans:body": {
+          "aantal": 59,
+          "som_ms": 473.9999999999927,
+          "synchrone_fouten": 0
+        },
+        "storySegmentUnitDigests:body": {
+          "aantal": 58,
+          "som_ms": 16.000000000003638,
+          "synchrone_fouten": 0
+        },
+        "storySegmentUnits:body": {
+          "aantal": 59,
+          "som_ms": 33.999999999989086,
+          "synchrone_fouten": 0
+        },
+        "paragraphSpans": {
+          "aantal": 1508,
+          "som_ms": 39.000000000025466,
+          "synchrone_fouten": 0
+        },
+        "storySegments:body": {
+          "aantal": 2,
+          "som_ms": 70,
+          "synchrone_fouten": 0
+        },
+        "storySegments": {
+          "aantal": 768,
+          "som_ms": 41.000000000010914,
+          "synchrone_fouten": 0
+        }
+      },
+      "hersteld": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "overflow": 0,
+      "grens": "Afgeleid invoervenster, facade-wrappers en functieproef op eigen X11. Begrensde ruwe updates van het eigen vaste testdocument vastgelegd; geen gewone ABBA, exclusieve Rust-CPU of cachepromotietelling."
+    },
+    "herhaling": {
+      "geslaagd": true,
+      "clientId": 3525307561,
+      "begin_sha256": "3aab3dfbc46a7278b1c0421a040323414954c31930131a9b5a29818472840634",
+      "deltas": [
+        {
+          "file": "route-capture/raw/updates/000.bin",
+          "sha256": "5ff49a5844ed8e4b6f0499d91ab2a5ff3277d3c9537f7670e26822ab35d52a19"
+        },
+        {
+          "file": "route-capture/raw/updates/001.bin",
+          "sha256": "f9146d6d53871c70321a6701ffd87487d6518242c1439c2921f0613448e984f8"
+        },
+        {
+          "file": "route-capture/raw/updates/002.bin",
+          "sha256": "e3fa5c0815d7b79d2607c1ba1a40cca1df9ab32c7cffe38fd2bdc8dff22dbe64"
+        },
+        {
+          "file": "route-capture/raw/updates/003.bin",
+          "sha256": "7c7703caca52a3ec4f413bf138c1b06406bfa5ded2b4d9c1c368782b27d2ae05"
+        },
+        {
+          "file": "route-capture/raw/updates/004.bin",
+          "sha256": "fce08c3099fb95c308c5d2c218ab11557e275f960e911ba31cbcaca082c7314f"
+        },
+        {
+          "file": "route-capture/raw/updates/005.bin",
+          "sha256": "b895aed6d2a74aa06c0b4b877cc818f957b6dc85d47ab5aaa4b17ced1e3a734f"
+        },
+        {
+          "file": "route-capture/raw/updates/006.bin",
+          "sha256": "6598df84ebfdcb7b31011241e2101524a74201f4d455f9e6ecd7d23b8d56cccf"
+        },
+        {
+          "file": "route-capture/raw/updates/007.bin",
+          "sha256": "d95379f2692f414b0633e0a38749f5d05b0946e63c5c93c965347e798ec62041"
+        },
+        {
+          "file": "route-capture/raw/updates/008.bin",
+          "sha256": "9d6a01adb42c25a8fbc239d4faaed9b1a6eb9950cc00e083f6fba9693eb9117c"
+        },
+        {
+          "file": "route-capture/raw/updates/009.bin",
+          "sha256": "166fcd34ebbb703faa29356fcb96546f5d1d86763c6f47b60741498c0183545a"
+        },
+        {
+          "file": "route-capture/raw/updates/010.bin",
+          "sha256": "639640fbe002a1689a229b9e2afbac2ec9e5edd873f6c551a6e9f557be2c2be1"
+        },
+        {
+          "file": "route-capture/raw/updates/011.bin",
+          "sha256": "a5b1442c3fef92b974801ab7e88128645edd6ab0900e8dbe67683fb1a6177e1a"
+        },
+        {
+          "file": "route-capture/raw/updates/012.bin",
+          "sha256": "52f726036dfa6fc9f09f14bae46d7ddc50b7fbe4af26d65c1f34cf3dd79c24ea"
+        },
+        {
+          "file": "route-capture/raw/updates/013.bin",
+          "sha256": "78d37e00040b548a659a4d9f81993ce6e28f0e47dd66d55ed2770af2456d8050"
+        },
+        {
+          "file": "route-capture/raw/updates/014.bin",
+          "sha256": "a05c053d100106275af3362e6d522e402e4e1dec540ab0a9a0581239aab5e294"
+        },
+        {
+          "file": "route-capture/raw/updates/015.bin",
+          "sha256": "f4a2deb70f1bcb9a699e57c204286eb5829c92ba006cc292bc324804e73db7b4"
+        },
+        {
+          "file": "route-capture/raw/updates/016.bin",
+          "sha256": "f77aeb88beebf168e278c23936bd13b7201579de56bd5ab0921a21539e9fd36b"
+        },
+        {
+          "file": "route-capture/raw/updates/017.bin",
+          "sha256": "7085bb630d8a4535f8e677cec67a9f3da7230cee270c7fa1a2214e64521dde41"
+        },
+        {
+          "file": "route-capture/raw/updates/018.bin",
+          "sha256": "bac3a0958e35826ea2a627b3a06191b669dadf2e72aa3d58316a6091fae92265"
+        },
+        {
+          "file": "route-capture/raw/updates/019.bin",
+          "sha256": "29bda5259ec5ec72f149cfd541cb9465927b42b5afca12fd7de59743d75780b3"
+        },
+        {
+          "file": "route-capture/raw/updates/020.bin",
+          "sha256": "ec7778dd26baa1df090f65b0f6df37229a94272d8f896297ae2584612bc92b1a"
+        },
+        {
+          "file": "route-capture/raw/updates/021.bin",
+          "sha256": "73aae8f3ee4d550f9188c2d6260867b134a2bb41ba2f0b61575b5cde849d9a61"
+        },
+        {
+          "file": "route-capture/raw/updates/022.bin",
+          "sha256": "24bfe3ed5ea2f849e07ba5ceb7bd156ef00fcbbc09973ed342c5adc5ba97ade0"
+        },
+        {
+          "file": "route-capture/raw/updates/023.bin",
+          "sha256": "0a3cc09891b92198f617483f2126b3a823d0ade61a4000ecc6fb01f38c04b2f5"
+        },
+        {
+          "file": "route-capture/raw/updates/024.bin",
+          "sha256": "4516514b85ad6e5a20ff3274857c75a059ab57367fa8afcf4fc14fac8121125a"
+        },
+        {
+          "file": "route-capture/raw/updates/025.bin",
+          "sha256": "d9e3c8f9bc366e651af307477540bed91afcc06b7eb68f0973ce676aea8702a3"
+        },
+        {
+          "file": "route-capture/raw/updates/026.bin",
+          "sha256": "62e0e1ff40e265190b4959872d187409c27623c1650fe9eea52c5b7a26b725ec"
+        },
+        {
+          "file": "route-capture/raw/updates/027.bin",
+          "sha256": "8adcc3a42fd233594ad69204e1290bd409c36547265d1ff8daa5ee010f71a490"
+        },
+        {
+          "file": "route-capture/raw/updates/028.bin",
+          "sha256": "23a712cdc45413395001f530a582d15019e9cb31f0febd083d420be584fb6aed"
+        },
+        {
+          "file": "route-capture/raw/updates/029.bin",
+          "sha256": "e3a839a9d6deab3d8aa39e7302b1646bded2737bfdf6eb2d429993ded6919100"
+        },
+        {
+          "file": "route-capture/raw/updates/030.bin",
+          "sha256": "36955f4230fab7249f04b6454d96482f944f55808b2cbf5f3d930f4aff7e4383"
+        },
+        {
+          "file": "route-capture/raw/updates/031.bin",
+          "sha256": "5efd4c26ec58361984f6d6f459fe6717a86f51306206bd65627091420b9206b7"
+        },
+        {
+          "file": "route-capture/raw/updates/032.bin",
+          "sha256": "fe7c2625e84c1a342bdc0917fbc8f266d5bc483270f0196f6b831e1aa8ea59ac"
+        },
+        {
+          "file": "route-capture/raw/updates/033.bin",
+          "sha256": "cb17def5e9e2b7be0bd73e43f0168d151d5975a6b87097652af71a18533c7dd0"
+        },
+        {
+          "file": "route-capture/raw/updates/034.bin",
+          "sha256": "6c0538d61de0f20d6758a2743538419afeea45ed00c3d1792dcf582f3784a3cd"
+        },
+        {
+          "file": "route-capture/raw/updates/035.bin",
+          "sha256": "799ad5cdb83de2e4fa3dba2f1a0b9470ca72f59935ea0c303ec13db49492a04d"
+        },
+        {
+          "file": "route-capture/raw/updates/036.bin",
+          "sha256": "5734eca4960657975fd3000abc1ce757ed29d565a929284226d57157354647b0"
+        },
+        {
+          "file": "route-capture/raw/updates/037.bin",
+          "sha256": "69ee7beae6b27afa48acf271a92ac7f5452829582507abfc6af9b2d29e4a5cba"
+        },
+        {
+          "file": "route-capture/raw/updates/038.bin",
+          "sha256": "0ca3b0774cedb2b91146eefe628deb2536f34fb78dfdb7ac9bd3d81901b3696a"
+        },
+        {
+          "file": "route-capture/raw/updates/039.bin",
+          "sha256": "feae87ebeef40f2e2e7a6c2a8cc08b74045eb55d61b513b094b65711d122f9c9"
+        },
+        {
+          "file": "route-capture/raw/updates/040.bin",
+          "sha256": "c473d40a8ffb29efb418c3c78af407ce26cd3a60c81e4b73475c0d438c4c6690"
+        },
+        {
+          "file": "route-capture/raw/updates/041.bin",
+          "sha256": "e98ac5337199836b2651f61dde8666c843307b323a9588f8629722a23c9419fd"
+        },
+        {
+          "file": "route-capture/raw/updates/042.bin",
+          "sha256": "b550cec33c1404f15b6125487d14be6cfc1827b8096925a12405fd63d6098121"
+        },
+        {
+          "file": "route-capture/raw/updates/043.bin",
+          "sha256": "995fe35784fb7f6f51f9e490f3e7e54364f688ba11bac5ba063030caedcdd062"
+        },
+        {
+          "file": "route-capture/raw/updates/044.bin",
+          "sha256": "bb5b107823ee5d6263ff02fea38ddfa3c38d04b947e5d55de7d4cf629d8fca2a"
+        },
+        {
+          "file": "route-capture/raw/updates/045.bin",
+          "sha256": "286b82c074ed708ac613c166cf7528caf46ce2e8b06d2f7cd84d5db1a0fcf7a3"
+        },
+        {
+          "file": "route-capture/raw/updates/046.bin",
+          "sha256": "3b26eb9e1f6d526034a00cfdbad0868b82b38b14c8fb9812bcfcd8ba8ede848a"
+        },
+        {
+          "file": "route-capture/raw/updates/047.bin",
+          "sha256": "b7034795ee68e269802f175b13e7f636ead1be54ccc2b7c25bd6021e07510a24"
+        },
+        {
+          "file": "route-capture/raw/updates/048.bin",
+          "sha256": "f780ecf4a81f97be0d77fa5758f896a8224669285bd00989e589414bafdc7cf6"
+        },
+        {
+          "file": "route-capture/raw/updates/049.bin",
+          "sha256": "05db5c65f3e71ca21e22c53969d9450020d30bf5eb5626ac2248c8c37bd25fa4"
+        },
+        {
+          "file": "route-capture/raw/updates/050.bin",
+          "sha256": "d52f6730eccd962d198dee91b7a357bc857cfa2971881bbfe962129ae31ad785"
+        },
+        {
+          "file": "route-capture/raw/updates/051.bin",
+          "sha256": "e8dcff1643ca962dd13a3b7402860149ba21e6d93d4f4e7d2b21a76a589ff418"
+        },
+        {
+          "file": "route-capture/raw/updates/052.bin",
+          "sha256": "5cc306a0f4af98c31746e7b4a5c306eec65e348bfef69cf75ba1ec06f7a852bf"
+        },
+        {
+          "file": "route-capture/raw/updates/053.bin",
+          "sha256": "3c4c0395321b244819a946b1ebe1a8423da3d3a2bb249adb5b297f770bd99bb3"
+        },
+        {
+          "file": "route-capture/raw/updates/054.bin",
+          "sha256": "0956aaa324985f5de6d54e637e857c675b6549e7f9dd53fc6925c0c4c341c208"
+        },
+        {
+          "file": "route-capture/raw/updates/055.bin",
+          "sha256": "e274c108d1897b9796f8db934f5b37e0d7fb6ff4f2aa3a2a931eb74fa20cc6fa"
+        },
+        {
+          "file": "route-capture/raw/updates/056.bin",
+          "sha256": "93af23fab52b625e1256b373945913415be4e481d868d3cbc480eaf29277f413"
+        },
+        {
+          "file": "route-capture/raw/updates/057.bin",
+          "sha256": "d427b9812df568ab5dde724e38a1468ec22488db38af9bb5de8a9481b03ddb0c"
+        }
+      ],
+      "rows": [
+        {
+          "variant": "basis",
+          "undo": false,
+          "updates": 58,
+          "bron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "vastgelegde_eindbron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "eindbron_bytegelijk": true,
+          "eindvector_exact": true,
+          "bodyspans_en_digests_na_iedere_native_update_gelijk": true
+        },
+        {
+          "variant": "kandidaat",
+          "undo": false,
+          "updates": 58,
+          "bron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "vastgelegde_eindbron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "eindbron_bytegelijk": true,
+          "eindvector_exact": true,
+          "bodyspans_en_digests_na_iedere_native_update_gelijk": true
+        },
+        {
+          "variant": "basis",
+          "undo": true,
+          "updates": 58,
+          "bron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "vastgelegde_eindbron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "eindbron_bytegelijk": true,
+          "eindvector_exact": true,
+          "bodyspans_en_digests_na_iedere_native_update_gelijk": true
+        },
+        {
+          "variant": "kandidaat",
+          "undo": true,
+          "updates": 58,
+          "bron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "vastgelegde_eindbron_sha256": "406b3c84591c6e994b08f3c29cda7555727dcb448f2d40ce9ac6a05dd2d7cd36",
+          "eindbron_bytegelijk": true,
+          "eindvector_exact": true,
+          "bodyspans_en_digests_na_iedere_native_update_gelijk": true
+        }
+      ],
+      "grens": "Exacte eigen desktopdeltas offline door echte Wasm afgespeeld; bron/vector per leesstap behouden. Met/zonder Undo afzonderlijk: historie kan verschillen. Geen exclusieve CPU- of werkelijke cachepromotietelling."
+    },
+    "invoergroepen": {
+      "rows": [
+        {
+          "label": "a-een",
+          "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "rpc_groepen": 58,
+          "utf16": 1052,
+          "antwoordvensters_ms": [
+            189,
+            75.00000000000364,
+            113,
+            117.99999999999636,
+            53,
+            58,
+            55,
+            54,
+            64,
+            46,
+            49,
+            47,
+            49,
+            48,
+            50,
+            46,
+            46,
+            47.00000000000364,
+            45,
+            46,
+            46.00000000000364,
+            45.99999999999636,
+            46.00000000000364,
+            51,
+            48,
+            55,
+            48,
+            47,
+            47,
+            50,
+            49,
+            56,
+            48,
+            48.00000000000364,
+            45.99999999999636,
+            49,
+            52,
+            45,
+            48,
+            47,
+            48,
+            46,
+            45.99999999999636,
+            46.00000000000364,
+            48,
+            45.99999999999636,
+            48,
+            64,
+            67.99999999999636,
+            48,
+            46.99999999999636,
+            48,
+            58,
+            52.00000000000364,
+            49.99999999999636,
+            50,
+            50.99999999999636,
+            39
+          ]
+        },
+        {
+          "label": "b-een",
+          "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+          "rpc_groepen": 62,
+          "utf16": 1052,
+          "antwoordvensters_ms": [
+            208,
+            59.99999999999636,
+            122.00000000000364,
+            112,
+            66,
+            53.99999999999636,
+            51,
+            51,
+            55,
+            50,
+            50,
+            43,
+            49,
+            48,
+            49,
+            47,
+            47,
+            46,
+            50,
+            45.99999999999636,
+            48,
+            48,
+            47,
+            47,
+            47,
+            48,
+            47.00000000000364,
+            45.99999999999636,
+            48,
+            49,
+            47.99999999999636,
+            48.00000000000364,
+            53,
+            47,
+            46,
+            51,
+            47,
+            62.00000000000364,
+            50.99999999999636,
+            47,
+            47,
+            47.00000000000364,
+            46.99999999999636,
+            48,
+            47,
+            46,
+            45.00000000000364,
+            54,
+            54,
+            52.0,
+            51,
+            58,
+            46,
+            47,
+            52,
+            48.00000000000364,
+            44,
+            43,
+            47.99999999999636,
+            46,
+            41,
+            40
+          ]
+        },
+        {
+          "label": "b-twee",
+          "programma_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+          "rpc_groepen": 60,
+          "utf16": 1052,
+          "antwoordvensters_ms": [
+            193,
+            57.99999999999636,
+            188.00000000000364,
+            77.99999999999636,
+            57,
+            57,
+            54,
+            68.99999999999636,
+            58.0,
+            53.00000000000364,
+            53,
+            46,
+            52,
+            50,
+            49.99999999999636,
+            46,
+            47,
+            44,
+            54,
+            49,
+            52,
+            48,
+            45.99999999999636,
+            50,
+            47,
+            50,
+            51,
+            50,
+            49,
+            49,
+            49,
+            51,
+            47,
+            48.00000000000364,
+            48,
+            51,
+            50.00000000000364,
+            48,
+            46,
+            50,
+            48.99999999999636,
+            47,
+            49.00000000000364,
+            50,
+            48,
+            47,
+            49.00000000000364,
+            61,
+            43,
+            64,
+            53,
+            46,
+            49,
+            53,
+            47.00000000000364,
+            49.00000000000364,
+            44.99999999999636,
+            51,
+            42,
+            39
+          ]
+        },
+        {
+          "label": "a-twee",
+          "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "rpc_groepen": 58,
+          "utf16": 1052,
+          "antwoordvensters_ms": [
+            192,
+            148,
+            56.99999999999636,
+            51,
+            63,
+            69,
+            70,
+            53,
+            46,
+            46,
+            49,
+            45,
+            44.99999999999636,
+            55,
+            59.99999999999636,
+            46,
+            57,
+            45.99999999999636,
+            45.00000000000364,
+            47,
+            48,
+            47.00000000000364,
+            47,
+            49,
+            49.99999999999636,
+            50,
+            48,
+            48,
+            49.00000000000364,
+            47,
+            47.00000000000364,
+            48,
+            47,
+            44,
+            49,
+            61,
+            48,
+            46,
+            48.00000000000364,
+            49.99999999999636,
+            47,
+            47,
+            47.99999999999636,
+            47,
+            52,
+            46,
+            52.00000000000364,
+            48,
+            56,
+            52,
+            51.99999999999636,
+            48,
+            45.99999999999636,
+            48.99999999999636,
+            48,
+            50,
+            43,
+            38
+          ]
+        }
+      ],
+      "bevinding": "Basis 58/58 verzoekgroepen, kandidaat 62/60 voor dezelfde 1052 tekens. Extra vaste kosten per groep kunnen de componentwinst compenseren; dit is een te toetsen verklaring, geen bewezen exclusieve oorzaak.",
+      "vervolg": "Profileer groepering en vaste frontend-/native kosten per verzoek samen, met begrensde invoerlatentie en behoud van selectie/Undo/opslaan/levensduur. Geen cacheguard op basis van deze telling versoepelen.",
+      "grens": "Afgeleid tijdvenster uit bestaande gewone native ABBA; antwoordvensters omvatten wachten/IPC en zijn geen exclusieve Rust-CPU."
+    },
+    "bevinding": "58 echte applyLocalUpdate-oproepen; paragraphSpans-body circa 474 ms en bodydigests circa 16 ms samen. De digestlezing is op deze native route goedkoop geworden, maar totaalresultaat blijft traag. Vergelijking met eerdere profiler is illustratief: andere aantallen/probe, geen gecontroleerde prestatie-ABBA of exclusieve Rust-CPU.",
+    "grens": "Eigen vaste testdocument, maximaal 256 updates/8 MiB updates en 8 MiB beginstaat, nul overflow, alle negen descriptors hersteld. Capture uitsluitend diagnostisch, niet poolen met gewone ABBA."
+  },
+  "controles": {
+    "office": {
+      "procescode": 0,
+      "seconden": 180.26785827521235,
+      "opdracht": [
+        "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--maxWorkers=2"
+      ],
+      "standaard_vendor_kern": true
+    },
+    "office_bestanden_geslaagd": 232,
+    "office_bestanden_overgeslagen": 1,
+    "office_tests_geslaagd": 2392,
+    "office_tests_overgeslagen": 4,
+    "typescript": {
+      "procescode": 0,
+      "opdracht": "node node_modules/typescript/bin/tsc --noEmit"
+    },
+    "guard": {
+      "geslaagd": true,
+      "groepen": [
+        "actieve kern en interface geldig",
+        "bronCommit afgewezen",
+        "bronarchiefSha256 afgewezen",
+        "nootpatchSha256 afgewezen",
+        "basisWasmSha256 afgewezen",
+        "afwijkende bronpatch afgewezen",
+        "afwijkende kandidaatchecksum afgewezen",
+        "inactieve cache met kandidaatkern afgewezen",
+        "eerdere kern bij inactieve cache geldig",
+        "eerdere kern bij actieve cache afgewezen"
+      ],
+      "grens": "Werkelijke bouwguard uit getranspileerde bron op eigen fixture; npm en vendor alleen via leeslinks, geen canonieke bestanden gemuteerd."
+    },
+    "bronrecept": {
+      "geslaagd": true,
+      "bronvoorbereiding": [
+        {
+          "variant": "standaard",
+          "flags": [],
+          "procescode": 0,
+          "bronbestanden_exact": 4418,
+          "bronhergebruik_geweigerd": true,
+          "voorbereid": {
+            "alleenVoorbereid": true,
+            "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+            "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+            "digestcachePatchSha256": "ef90f8e7de9f16085d7a74b26ede55e1f7caa5759bdbac44880b9531c2d86a93"
+          }
+        },
+        {
+          "variant": "expliciet",
+          "flags": [
+            "--digestcache"
+          ],
+          "procescode": 0,
+          "bronbestanden_exact": 4418,
+          "bronhergebruik_geweigerd": true,
+          "voorbereid": {
+            "alleenVoorbereid": true,
+            "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+            "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+            "digestcachePatchSha256": "ef90f8e7de9f16085d7a74b26ede55e1f7caa5759bdbac44880b9531c2d86a93"
+          }
+        },
+        {
+          "variant": "zonder",
+          "flags": [
+            "--zonder-digestcache"
+          ],
+          "procescode": 0,
+          "bronbestanden_exact": 4417,
+          "bronhergebruik_geweigerd": true,
+          "voorbereid": {
+            "alleenVoorbereid": true,
+            "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+            "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+            "digestcachePatchSha256": null
+          }
+        }
+      ],
+      "conflicterende_vlaggen_geweigerd": true,
+      "verkeerde_actieve_basis_geweigerd": true,
+      "grens": "Default/expliciete voorbereiding bytegelijk aan de gecompileerde nieuwe cachekernbron. Geen extra volledige CLI-herbouw; Cargo/bindgen/opt wel afzonderlijk uitgevoerd. Bouwscript en variantkeuze zijn deze stap ongewijzigd."
+    },
+    "grens": "Volledige Office-suite, inclusief vier nieuwe echte callbackregressies. Sommige bestaande subprocessfixtures toetsen bewust de oorspronkelijke npm-kern voor facadecompatibiliteit; nieuwe regressie laadt expliciet vendor-kern. Geen volledige SDK-suite of CI."
+  },
+  "behoud": {
+    "referentiepaden48_sha256_exact": true,
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "canonieke_bronpinnen14_exact": true,
+    "eerdere_schone_kernbron4418_exact": true,
+    "nieuwe_kernbron_alleen_twee_bestanden_gewijzigd": [
+      "crates/docx-edit/src/wasm.rs",
+      "crates/docx-edit/src/digest_cache.rs"
+    ],
+    "vendor_overgang": {
+      "oud": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+      "nieuw": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+      "eerdere_actieve_kern_exact_bewaard": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-spans/basis/docx_edit_bg.wasm",
+      "oudere_voorraadkern_exact_bewaard": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/basis/docx_edit_bg.wasm"
+    },
+    "grens": "48 paden omvatten bytegelijke kopie van de basis en bewaarde eerste proefvariant; geen 48 unieke of functioneel geaccepteerde uitgaven. Vendor bewust gewijzigd; niet alle 15 oorspronkelijke bronpinnen onveranderd. Standaarddist en eerdere referenties niet vervangen."
+  },
+  "correcties": [
+    "Eerste vormprobe gebruikte ongezaaide open_docx(false); body ontbrak. Vorm opnieuw bepaald met vaste orakelbasis.",
+    "Eerste extra randtest verwachtte dat open_docx(true) een reeds aanwezige body vervangt. Basis weigert dit; test aangepast aan bestaande foutsemantiek en latere bruikbare lezingen.",
+    "Eerste callbackvariant bevestigde bestaande Rustpanic en onbruikbare sessie; daarna aparte definitieve variant met try_transact-guard gebouwd. Eerste variant niet gepromoveerd.",
+    "Warmbouwpreflight weigerde bestaande lognamen en een lege uitvoermap van de eerdere poging; uitsluitend eigen bouworchestrator gecorrigeerd. Voltooide builds hebben afzonderlijke receipts.",
+    "Eerste beeldregiocontrole miste knipperende bewaarcursor naast de invoercursor. Extra kleine regio na ruwe pixelinspectie opgenomen; ruwe 15 vergelijkingen ongewijzigd behouden.",
+    "Eerste native-herhaling vergeleek Uint8Array strikt met Buffer en faalde op type, niet bytes. Typen genormaliseerd; alle vier uiteindelijke eindbronnen en vectors exact."
+  ],
+  "niet_gecontroleerd": [
+    "Geen Windows/macOS, installers, hosted-variant, andere edities, volledige SDK-suite of CI.",
+    "Geen reguliere prebuild-netwerkverversing of installerbouw; eigen standaard-Vite-bundel en Linux-ELF getest.",
+    "Geen volledige Writer-functie-/glyph-/alle-65-paginasdekking en geen fysieke scherm-FPS.",
+    "Geen algemene callback-reentrantie van andere lezers, geen cachepromotieteller in de draaiende app en geen exclusieve CPU-claims."
+  ],
+  "vervolg": "Ernstige invoer-/selectievertraging blijft prioriteit. Profileer groepering en vaste frontend-/native kosten per verzoek samen; basis had 58/58, kandidaat 62/60 groepen voor 1052 tekens. Compensatie door meer kleine groepen is een hypothese. Behoud begrensde invoerlatentie, selectie, Undo/Redo, opslaan en levensduur. Geen cacheguard versoepelen om een snelheidscijfer te halen. Database laatst.",
+  "archief": {
+    "pad": "2026-11-28-writer-gedeelde-bodypassage.tar.gz",
+    "sha256": "9842ba7f762838fb01c30be95301d7fccf75da4ce54066544e1e55ceac75aed6",
+    "bytes": 5903847,
+    "bestanden": 268,
+    "inhoud": "Scripts, bronpatches, bron-/bundel-/referentiemanifests, logs, callbacktegenproeven, zes gewone native rapporten/DOCX/beelden en een diagnostische opname met eigen initiële/eindstaat plus 58 echte updates. Geen ELF-/Wasm-/targetkopieën. Bron/Wasm/ELF op SHA vastgelegd; kern via vaste bron en recept reproduceerbaar.",
+    "provenance": "Absolute lokale paden in scripts/receipts beschrijven de proeflocatie; geen garantie dat die zonder aanpassing op een andere computer uitvoerbaar zijn."
+  }
+}

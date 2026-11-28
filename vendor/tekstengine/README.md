@@ -35,9 +35,12 @@ beschrijven de wijzigingen. De gewone licentiebundeling neemt beide mee.
 
 De standaardopdracht past ook de gecontroleerde
 [bodydigestcache](../../patches/tekstengine-digestcache.json) toe. Deze hergebruikt
-onveranderde bodydigests na een bewezen enkele tekstinvoeging. Onzekere
+onveranderde bodydigests na een bewezen enkele tekstinvoeging. De alinealezer
+deelt de daarbij gecontroleerde unitgrenzen met de digestlezer. Onzekere
 wijzigingen worden volledig herberekend. De ernstige invoervertraging is hiermee
-nog niet opgelost. Met `--zonder-digestcache` wordt de eerdere kern gebouwd;
+nog niet opgelost. Tijdens een lopende schrijftransactie geeft de alinealezer
+een gewone fout terug; na de update blijven de sessie en lezingen bruikbaar.
+Met `--zonder-digestcache` wordt de eerdere kern gebouwd;
 `--digestcache` kiest de cache expliciet. Met
 `--alleen-voorbereiden` verifieert en patcht het script de bron zonder
 compilatie; de uitvoermap krijgt dan `voorbereid.json`.

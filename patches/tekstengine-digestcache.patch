@@ -38,7 +38,24 @@
              .map_err(js_err)
      }
  
-@@ -5313,15 +5315,13 @@
+@@ -5272,6 +5274,16 @@
+     /// exactly the `offset` domain of a Loc in it. One call replaces crossing
+     /// the boundary once per paragraph. Errors on an unknown story.
+     pub fn paragraph_spans(&self, story: &str) -> Result<String, JsValue> {
++        let _pin = self.engine.doc().yrs_doc().try_transact().map_err(js_err)?;
++        if story == "body" {
++            if let Some(spans) = self.unit_digest_cache.borrow_mut()
++                .paragraph_spans(self.engine.doc()).map_err(js_err)? {
++                let items: Vec<Value> = spans.into_iter()
++                    .map(|(para_id, length)| json!({"paraId": para_id, "length": length}))
++                    .collect();
++                return serde_json::to_string(&items).map_err(js_err);
++            }
++        }
+         let mut items = Vec::new();
+         let mut cursor = 0_u32;
+         let mut paragraph_start = 0_u32;
+@@ -5313,15 +5325,13 @@
      /// `story_segments` split after each pilcrow into units, as one hex digest
      /// per unit: `["digest", …]`. Equal digests mean equal segments.
      pub fn story_segment_unit_digests(&self, story: &str) -> Result<String, JsValue> {
@@ -63,7 +80,7 @@
  
 --- /dev/null
 +++ b/crates/docx-edit/src/digest_cache.rs
-@@ -0,0 +1,255 @@
+@@ -0,0 +1,277 @@
 +use crate::{EditingDoc, SegmentContent, StorySegment};
 +use std::{
 +    collections::BTreeSet,
@@ -197,6 +214,28 @@
 +            })
 +        }
 +        Ok(digests)
++    }
++    pub fn paragraph_spans(
++        &mut self,
++        doc: &EditingDoc,
++    ) -> Result<Option<Vec<(String, u32)>>, String> {
++        self.bind(doc);
++        let _pin = doc.yrs_doc().transact();
++        let epoch = doc.committed_epoch();
++        let Some(entry) = self.entry.as_ref().filter(|e| e.epoch == epoch) else {
++            return Ok(None);
++        };
++        if entry.bounds.iter().any(|b| b.para.is_none()) {
++            return Ok(None);
++        }
++        if entry.dirty.is_some() {
++            self.get(doc)?;
++        }
++        Ok(self.entry.as_ref().filter(|e| e.epoch == epoch && e.dirty.is_none()).and_then(|e| {
++            e.bounds.iter().map(|b| {
++                Some((b.para.clone()?, b.end.checked_sub(b.start)?.checked_sub(1)?))
++            }).collect()
++        }))
 +    }
 +    pub fn apply(&mut self, doc: &EditingDoc, bytes: &[u8]) -> Result<(), String> {
 +        self.bind(doc);
