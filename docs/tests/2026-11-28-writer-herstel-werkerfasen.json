@@ -1,0 +1,215 @@
+{
+  "datum": "2026-11-28",
+  "status": "Diagnostische afbakening afgerond; ernstige invoer-/selectievertraging niet opgelost. Geen productwijziging.",
+  "basis": {
+    "integratiecommit": "39c7e312527e7f5a4d3b8fe2d92372722f5159be",
+    "elf_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+    "platform": "Eigen Linux Tauri/WebKitGTK/Xvfb; versie 2026.45.52, schema 2."
+  },
+  "methode": [
+    "Zes afzonderlijke eigen native processen met dezelfde rijke DOCX, acht rustige fysieke toetsen m tot en met t (mnopqrst), gewone actieve herstelronde. Elke toets bronexact na canonieke displaylist plus twee rAF; geen fysieke paintmeting.",
+    "Eerste twee probes hielden de bij aanvang gevonden API-objecten vast. React verving die tijdens renders; acht spellingmetingen maar geen daadwerkelijke ref.save gevangen. Beide functionele proeven groen; ongeschikt als fasemeting. Expliciet geen conclusie over ontbrekende kosten.",
+    "Vier definitieve probes volgen twee echte React-refcellen via tijdelijke descriptoren en instrumenteren ieder nieuw API-object. Bij einde actuele refwaarden behouden en alle methoden/descriptors hersteld; De geregistreerde refwissels worden niet als documentwissels geteld.",
+    "Twee laatste probes observeren daarnaast bestaande echte Worker.postMessage en message-events: alleen typen/ids/sleutels/groottes en beperkte stacks, geen eigen saveverzoek of gewijzigde workerwachtrij. Alle descriptors/listeners/rAFs opgeruimd.",
+    "De tijden zijn wandklokintervallen inclusief wachten/transport; geneste editor.getDocument en ref.getDocument niet optellen. Geen exclusieve CPUtijd, opslagformaatbottleneck of interne workerpakfase uit afgeleid."
+  ],
+  "resultaten": [
+    {
+      "label": "levend-1",
+      "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+      "herstel_start_ms": 30927,
+      "bestand_ms": 34179.736572265625,
+      "save_start_ms": 31060.000000000004,
+      "save_eind_ms": 34177,
+      "save_duur_ms": 3116.9999999999964,
+      "save_sync_deel_ms": 0.999999999996362,
+      "gereedheidscontrole_ms": [
+        133.00000000000364
+      ],
+      "flush_voor_save_ms": [
+        0.0
+      ],
+      "native_behoud": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "5351b044b0cbb36624c862796791aec916f6849c39e552568242f71af4d72c46"
+      },
+      "levende_refwissels": 328,
+      "bronexacte_toetsen": 8
+    },
+    {
+      "label": "levend-2",
+      "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+      "herstel_start_ms": 30887,
+      "bestand_ms": 33958.060546875,
+      "save_start_ms": 31079,
+      "save_eind_ms": 33955,
+      "save_duur_ms": 2876,
+      "save_sync_deel_ms": 1.000000000003638,
+      "gereedheidscontrole_ms": [
+        138.00000000000364
+      ],
+      "flush_voor_save_ms": [
+        53
+      ],
+      "native_behoud": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "b15e07d42349a6102d3743ef53bc2d44a761761ce974b90c1ebbff2b34e11362"
+      },
+      "levende_refwissels": 344,
+      "bronexacte_toetsen": 8
+    },
+    {
+      "label": "werker-1",
+      "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+      "herstel_start_ms": 30865,
+      "bestand_ms": 34095.63818359375,
+      "save_start_ms": 31018,
+      "save_eind_ms": 34091,
+      "save_duur_ms": 3073,
+      "save_sync_deel_ms": 1.000000000003638,
+      "gereedheidscontrole_ms": [
+        154
+      ],
+      "flush_voor_save_ms": [
+        0
+      ],
+      "native_behoud": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "a3b9c825691cdfd528f3b285449bacdf65c3e1f985ed0f502e87e3ab6442b4ac"
+      },
+      "levende_refwissels": 344,
+      "bronexacte_toetsen": 8,
+      "werker_save": {
+        "werker": 1,
+        "id": 32,
+        "verzoek_ms": 31020,
+        "antwoord_ms": 34094,
+        "duur_ms": 3074,
+        "opgeslagen_bytes": 54965
+      },
+      "aanvragen_tijdens_save": [
+        {
+          "type": "applyUpdate",
+          "id": 33,
+          "verzoek_ms": 31796,
+          "antwoord_ms": null,
+          "antwoord_na_save": null
+        },
+        {
+          "type": "fontRequirements",
+          "id": 34,
+          "verzoek_ms": 31867,
+          "antwoord_ms": 34204,
+          "antwoord_na_save": true
+        }
+      ],
+      "rAF_terwijl_save_in_behandeling": {
+        "intervallen": 135,
+        "max_interval_ms": 180,
+        "mediaan_interval_ms": 16,
+        "betekenis": "Ontvangen hoofdthreadcallbacks, geen fysieke paint/FPS en geen afleiding van exclusieve worker-CPUtijd."
+      },
+      "mutaties_tijdens_save": [
+        {
+          "eerste": 31662,
+          "laatste": 31662,
+          "voorMutatie": 31793,
+          "naMutatie": 31796
+        }
+      ]
+    },
+    {
+      "label": "werker-2",
+      "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+      "herstel_start_ms": 30882,
+      "bestand_ms": 33987.975341796875,
+      "save_start_ms": 31077,
+      "save_eind_ms": 33984,
+      "save_duur_ms": 2907,
+      "save_sync_deel_ms": 2,
+      "gereedheidscontrole_ms": [
+        142
+      ],
+      "flush_voor_save_ms": [
+        51.99999999999636
+      ],
+      "native_behoud": {
+        "prefix_exact": true,
+        "actueel": false,
+        "tabellen": 128,
+        "sha256": "8d163452f97e5e617cb7be694409143253e2ad7d01ae41296dc5611a6c27023f"
+      },
+      "levende_refwissels": 346,
+      "bronexacte_toetsen": 8,
+      "werker_save": {
+        "werker": 1,
+        "id": 38,
+        "verzoek_ms": 31081,
+        "antwoord_ms": 33986.00000000001,
+        "duur_ms": 2905.0000000000073,
+        "opgeslagen_bytes": 54968
+      },
+      "aanvragen_tijdens_save": [
+        {
+          "type": "fontRequirements",
+          "id": 39,
+          "verzoek_ms": 31091,
+          "antwoord_ms": 34087,
+          "antwoord_na_save": true
+        }
+      ],
+      "rAF_terwijl_save_in_behandeling": {
+        "intervallen": 165,
+        "max_interval_ms": 138,
+        "mediaan_interval_ms": 16,
+        "betekenis": "Ontvangen hoofdthreadcallbacks, geen fysieke paint/FPS en geen afleiding van exclusieve worker-CPUtijd."
+      },
+      "mutaties_tijdens_save": []
+    }
+  ],
+  "conclusie": [
+    "Vier actuele ref.save-intervallen circa 3117, 2876, 3073 en 2907 ms. Gereedheidscontrole getDocument circa 133,138,154,142 ms; expliciete flush vooraf 0,53,0,52 ms. Opslag is de dominante gemeten fase.",
+    "Gekoppelde echte worker-saveverzoeken: id 32 in 3074 ms, id 38 in 2905 ms. De fontRequirements-aanvragen aan dezelfde werker wachten circa 2337 en 2996 ms en antwoorden pas na save. Daarna worden sync en buildPages verwerkt. Het gehele interval is geen bewijs dat die werker onafgebroken CPU gebruikt.",
+    "In worker-1 verwerkt de bron tijdens save een nieuwe fysieke toets na circa 134 ms; de canonieke volgende render wacht wel. In worker-2 valt de bronmutatie vlak vóór save; geen nieuwe mutatie tijdens dat venster geclaimd.",
+    "Tijdens de twee worker-savevensters blijven hoofdthread-rAF-callbacks lopen: 135/165 volledig interne intervallen, mediane afstand 16 ms, maximale afstand 180/138 ms. Dit weerlegt een ononderbroken hoofdthreadblokkade van drie seconden in deze vensters; geen fysieke paint/FPS of volledige responsiviteitsgarantie.",
+    "Statische ingebedde workerbron plaatst save en fontRequirements op dezelfde interactive-lane en wacht in de save-handler op N.saveDocument/N.save. Dat ondersteunt het gericht onderzoeken van opslagduur en werkerwachtrij; geen onbewezen wijziging van prioriteit of sessieguards."
+  ],
+  "behoud_en_functie": "Alle zes native runs bronexact voor acht toetsen, echte DOCX-herstelkopie teruggelezen, 128 tabellen exact, bevestigde tekstprefix exact. Kopie is een snapshot van vóór latere toets(en), geen claim van laatste-toetsdekking. Foutlijsten leeg. Geen handmatige Save-/Undo-/verwerp-/heropenroutes opnieuw getest.",
+  "visueel": "Hele werker-2/rustige-invoer.png bekeken: rijke pagina met tabellen en eindtekst mnopqrst, gewijzigde-status zichtbaar. Geen gehele pixel-/glyph-/greepacceptatie of issuevoltooiing.",
+  "meetbeperkingen": [
+    "Eerste workerprobe liep gedeeltelijk samen met read-only hashing van 59 bestaande ELF-referenties; geen snelheidspromotie/vergelijkingsclaim. Tweede workerprobe pas daarna gestart. Geen gelijktijdige compilatie of schrijver.",
+    "Eerste analysescript eiste ten onrechte een nieuwe mutatie tijdens save in elke run. Tweede run had die vlak vóór save. Alleen analysevoorwaarde gecorrigeerd: fontwachtrij per run, mutatie tijdens save alleen waar daadwerkelijk aanwezig. Originele analysebron behouden.",
+    "Waarneming/stackvorming/refdescriptoren kunnen overhead geven; geen ongeïnstrumenteerde prestatieacceptatie.",
+    "Geen productcode/bouw/volledige frontendsuite/Rust-/SDK-suite/CI/andere platformen/edities/installers/releases deze stap. Vorige 2396 groene tests niet opnieuw uitgevoerd."
+  ],
+  "behoud": {
+    "ELF_referenties_SHA_exact": 59,
+    "nieuwe_ELFs": 0,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "basisdist_SHA_exact": 529,
+    "productbron_ongewijzigd": true,
+    "gebruikerwerk": "Eigen Xvfb/XDG/dbus; gebruikersvensters en bestaande .claude/ niet gewijzigd."
+  },
+  "workerbron": {
+    "bestand": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/herstel-serialisatie/dist/assets/chunk-Q7OC7M5Q-CYo4lz-m.js",
+    "sha256": "0ccb35446a02d6d406a8770b28c0c4bd497985f9de87b03409e5f8b578f60f4e",
+    "fragmenten": [
+      "if(e.type===\"save\"){if(Vt)throw new hl(\"Document worker is still opening\");if(!N||!Qt&&!no)throw new hl(\"Document worker has no opened document to save\");let r=We;We=[];let n=N.proposalEngine.version();try{let i=qe?N.commentProjection(e.commentsSource!==\"host\"):null;Tn.commentIds=i?.sessionIds;let a=e.commentsSource===\"host\"?e.comments:i?.comments??e.comments,o=(no?await N.saveDocument(e.host,a,Tn):await N.save(new Uint8Array(Qt.bytes),Qt.hostJson,e.host,a,Tn,e.stories)).slice(0),s=e.stateVector?[Ft(N.encodeStateAsUpdate(e.stateVector))]:[],l=Ft(N.encodeStateVector()),d={saved:o,updates:s,stateVector:l,version:N.proposalEngine.version()};qe&&d.version!==n?(Pn(),rt=null,nr=null,Xe.layoutStale=!0,$r(e.id,d,[o,...s,l])):Ae({id:e.id,ok:!0,...d},[o,...s,l])}finally{We=r}return}if(e.type===\"revisionCount\"){if(!N)throw new Error(\"Document worker is not initialized\");let r=new Set(Mt?.snapshot().proposals.flatMap(n=>n.revisionIds));Ae({id:e.id,ok:!0,revisionCount:N.revisionCount(r)});return}if(e.type===\"eraseCaret\"){un=null,rr!==null&&await uo(!1),Ae({id:e.id,ok:!0});return}if(!N)throw new Error(\"Document worker is not initialized\");if(e.type===\"proposal\"){if(!(qe?Yi:fr))throw new Error(\"Document worker has not laid out its document\");We=[];let r=!1;try{let n=Mt??(Mt=Gn(N.proposalEngine)",
+      "case\"fontRequirements\":case\"encodeState\":case\"revisionCount\":case\"layoutJson\":case\"save\":return{lane:\"interactive\",run:t};case\"buildPages\":return{lane:\"interactive\",reframes:!0,key:\"pages\",run:t,...e.background?{replaceableBy:\"pages\",supersede:()=>wd({id:e.id,ok:!0,pageBuildSuperseded:!0})}:{}};case\"buildFrame\":case\"commandViewport\":case\"releasePages\":case\"completeLayout\":case\"attachCanvases\":case\"eraseCaret\":return{lane:\"interactive\",reframes:!0,run:t}}}function VS(e){return e===\"moveEmbed\"||e===\"resizeObject\"||e===\"moveObject\"||e===\"setSectionMargins\"||e===\"setTabStops\"||e===\"removeTabStop\"||e===\"setHyperlink\"||e===\"setObjectProperties\"||e===\"setSectionProperties\"||e===\"setNoteProperties\"||e===\"setWatermark\"||e===\"setContentControlValue\"||e===\"addRepeatingItem\"||e===\"removeRepeatingItem\"||e===\"openPart\"||e===\"ensurePart\"||e===\"removePart\"||e===\"replaceMatches\"||e===\"undo\"||e===\"redo\"||e===\"select\"||e===\"insertText\"||e===\"replaceSelection\"||e===\"deleteBackward\"||e===\"deleteForward\"||e===\"paragraphBreak\"||e===\"lineBreak\"||e===\"toggleMark\"||e===\"formatRange\"||e===\"clearFormatting\"||e===\"setParagraphAttrs\"||e===\"applyParagraphStyle\"||e===\"formatSelection\"||e===\"toggleStrike\"||e===\"toggleList\"||e===\"changeIndent\"||e===\"insertImage\"||e===\"insertTable\"||e===\"pasteFragment\"||e===\"inser"
+    ],
+    "duiding": "Opslag en fontRequirements delen lane interactive. De save-handler wacht op N.saveDocument of N.save. Statische code bewijst op zichzelf geen exclusieve CPUduur of interne faseverdeling."
+  },
+  "archief": {
+    "bestand": "2026-11-28-writer-herstel-werkerfasen.tar.gz",
+    "sha256": "0387adf4a49ec2f8e3ecee79ba512a21a41b24f390fb299713a4374d995a1b01",
+    "bestanden": 57,
+    "bytes": 1854937
+  },
+  "vervolg": "Maak uitsluitend eigen diagnostische kopie van deze worker-save-handler. Meet N.saveDocument/N.save, snapshot/bron- en hostmetadata, ZIP/pakketopbouw en updateadoptie afzonderlijk; koppel exacte bronvector en revisie aan het snapshot. Onderzoek daarna bronexacte snapshots voor aparte opslagwerker of kortere opslagtaken. Geen interleaving van mutaties in live save zonder snapshot-/levensduurbewijs. Herstelfrequentie, inputflush, wachtende metadata, activiteit en oorspronkelijke pakketdelen behouden. Database laatst."
+}
