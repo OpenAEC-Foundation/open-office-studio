@@ -1,0 +1,112 @@
+{
+  "datum": "2026-11-28",
+  "doel": "Vaste kosten per Writer-invoerverzoek bepalen vóór wijziging van verzoekgroepering.",
+  "productwijziging": false,
+  "broncommit": "6c165eee",
+  "native_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+  "desktop": [
+    {
+      "ronde": "een",
+      "verzoeken": 61,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 29129,
+        "begin_tot_bron_ms": 7207,
+        "laatste_keyup_tot_bron_ms": 205,
+        "laatste_keyup_tot_frame_ms": 1433,
+        "begin_tot_frame_ms": 8435,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8499,
+        "wall_verzonden_tot_frame_ms": 6756,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "provider_ms": 4079.0,
+      "rust_voorbereiding_ms": 2907,
+      "stappen_ms": {
+        "cursor": 34.0,
+        "bron": 83.0,
+        "hash": 243.0,
+        "aanvraag": 4.0,
+        "transport": 3337.0,
+        "binding": 26.0,
+        "mutatie": 129.0,
+        "selectie": 220.0
+      },
+      "functioneel_geslaagd": true,
+      "bewaring_sha256": "f934d2d65b5456d11e6a97c7baddd686d05b29d052ddffd95356c6248fc155df"
+    },
+    {
+      "ronde": "twee",
+      "verzoeken": 59,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 29215,
+        "begin_tot_bron_ms": 7101,
+        "laatste_keyup_tot_bron_ms": 202,
+        "laatste_keyup_tot_frame_ms": 1529,
+        "begin_tot_frame_ms": 8428,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8612,
+        "wall_verzonden_tot_frame_ms": 6851,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      },
+      "provider_ms": 3995.0,
+      "rust_voorbereiding_ms": 2886,
+      "stappen_ms": {
+        "cursor": 36.0,
+        "bron": 82.0,
+        "hash": 226.0,
+        "aanvraag": 1,
+        "transport": 3285.0,
+        "binding": 22.0,
+        "mutatie": 133.0,
+        "selectie": 209.0
+      },
+      "functioneel_geslaagd": true,
+      "bewaring_sha256": "c8a12e43723d3d3247d476e06dcdb53f963c6be5e6f602de15200c6eb0746f88"
+    }
+  ],
+  "meting_grenzen": [
+    "Bestaande begrensde providerinstrumentatie, geen extra productinstrumentatie of nieuw gebouwde desktop.",
+    "Providerklokken bevatten wachttijd. Rusttijd begint na requestvalidatie, base64/hash en contextkeuze; eindigt na voorbereiding, bronhash en antwoordaanmaak.",
+    "Niet gemeten: SDK-werk vóór provider, publicatie ná provider en fysieke schermpaint. Verschil met totale tijd is geen exclusieve CPUtijd.",
+    "Twee metingen van dezelfde binary, geen A/B-snelheidsclaim."
+  ],
+  "component": {
+    "bronbytes": 3017829,
+    "bron_sha256": "3aab3dfbc46a7278b1c0421a040323414954c31930131a9b5a29818472840634",
+    "lezingen": 24,
+    "voorbereidingen": 24,
+    "warme_hergebruiken": 23,
+    "volle_reconstructies_als_orakel": 24,
+    "bron_vector_delta_caret_exact": true,
+    "mediaan_bronserialisatie_ms": 18.4792325,
+    "mediaan_locatie_ms": 1.0663265,
+    "mediaan_warme_voorbereiding_ms": 25.730617,
+    "mediaan_volledig_inclusief_bronencode_ms": 75.34673,
+    "grens": "Losse geoptimaliseerde driver met bestaande gehashte native libraries, eigen rijke bron, tekstinsert op bodypositie 0. Geen getimede interne fase in desktop; onafhankelijke serialisatiemeting niet van volledige tijd aftrekken. Volledige referentieroute omvat ook encode van clientbron.",
+    "bouw": "rustc -C opt-level=3 -D warnings, procescode 0; twee aanvankelijke compileerfouten in proefdriver hersteld en logs bewaard."
+  },
+  "visueel": "Beide volledige snel-getypt-bewaard-beelden bekeken: lint, opmaak, tabelrijen en ingevoegde tekst zichtbaar; cursorverschil, geen volledige pixel-/glyphacceptatie.",
+  "behoud": {
+    "elf_referentiepaden_exact": 48,
+    "native_bibliotheken_exact": 3,
+    "productbron_gewijzigd": false
+  },
+  "niet_uitgevoerd": [
+    "Nieuwe product-/Wasm-/desktopbuild",
+    "Volledige frontend-/Rust-suite en CI",
+    "Windows, macOS, installers, andere edities en releases",
+    "Issue- of migratieacceptatie"
+  ],
+  "vervolg": "Profileer bronserialisatie binnen echte native voorbereiding en bepaal een bronexact, begrensd alternatief voor het volledige snapshot per bevestigde tekstgroep. Behoud afzonderlijke bevestigde bron en voorstel, inclusief delete sets en historie; schema3-journaal niet zonder apart functioneel/visueel/prestatiebewijs activeren. Daarna SDK-publicatie en verzoekgroepering samen beoordelen.",
+  "archief": {
+    "bestand": "2026-11-28-writer-invoervoorbereiding.tar.gz",
+    "sha256": "a485467fe7174cf1df4d49d3ffb0376fc080595a4eb2c95179fa5ab9c138c398",
+    "manifest_bestanden": 26
+  }
+}
