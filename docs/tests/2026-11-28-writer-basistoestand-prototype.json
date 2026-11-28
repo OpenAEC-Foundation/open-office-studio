@@ -1,0 +1,280 @@
+{
+  "datum": "2026-11-28",
+  "status": "Getoetst native prototype op eigen bronkopie; niet in productbron, actieve Wasm of desktop opgenomen. Ernstige Writer-vertraging blijft open.",
+  "basis": "Integratie 2bb43e50; actuele vendor-identitybron SHA 5a865f061259d42d852e7ea9c7b8e72034d909486d554a965899c51f36a5235b, gelijk aan bron van actieve spans-Wasm. Native referentie en prototype afzonderlijk; geen native tijden gelijkgesteld aan WebKit/Wasm-latentie.",
+  "profiel": "Planvoorbereiding/source_metadata en seed_states nu afzonderlijk begrensd. Alleen definitieve gescheiden-profielrun geaccepteerd; exacte medianen en afbakening hieronder. Native mark_seeded-route wijkt zonder prototype af van Wasm: ongewijzigde native controle is geen bewijs over bestaande ongewijzigde-Wasm-fastpath.",
+  "prototype": [
+    "Na volledige native seed_from_docx/with_generation wordt de oorspronkelijke seedinggrens vastgelegd en één bestaande SeedStates-cache gevuld. Het opbouwen daarvan gebeurt met dezelfde live-story-/stijlgegevens als de reeds bestaande guarded fastpath; geen opgeschoven tolerantie in de planner.",
+    "Weigert zonder ongewijzigde seedinggrens, zonder bron of bij reeds bestaande cache, en bij een bron die niet onder eigen pakketdigest is geopend. Onder een readtransactie worden broninhoud en stijlgegevens gelezen. Bij vullen moeten epoch, Arc-pakketidentiteit, media en metadata nog dezelfde zijn; locks houden die grens vast. Geen cache per toekomstige versie en geen onbegrensde verzameling.",
+    "Native publieke mark_seeded-cfg en seed-wrappers zijn uitsluitend in de eigen kandidaat aangepast. Diagnostische oos_probe-methoden bestaan uitsluitend daar. De echte Wasm-openroute krijgt hiermee nog geen hook. Timing gebruikt native Instant: deze meetregels mogen niet naar Wasm worden overgezet.",
+    "Vervanging van het bronpakket en een replica uit alleen CRDT-bytes mogen de cache niet stilzwijgend als verse seeding aanvullen. Tests weigeren daar voorbereiding en behouden bron/vector. Vuile sessies worden eveneens geweigerd; reeds gevulde ongewijzigde sessie wordt niet opnieuw gevuld."
+  ],
+  "definitieve_resultaten": {
+    "editorplannen_per_variant_gelijk_aan_controle": 18,
+    "replicaplannen_per_variant_gelijk_aan_controle": 18,
+    "bron_vector_SHA_gelijk_in_alle_varianten": 18,
+    "tijdgemeten_planlezingen_met_directe_bron_vector_controle": 162,
+    "aanvullende_guard_planlezingen": 162,
+    "replica_editor_verschillen_ook_in_ongewijzigde_controle": 12,
+    "gevallen": [
+      {
+        "geval": "ongewijzigd",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.00189,
+          "committed_scan": 8.590415,
+          "story_states": 71.128338,
+          "voor_seed": 0.066481,
+          "seed_states": 436.818266,
+          "units": 5.646702,
+          "parts": 3.668368
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 306.668943,
+            "eerste_plan_mediaan_ms": 528.398919,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 834.630687
+          },
+          "profiel": {
+            "openen_mediaan_ms": 307.066624,
+            "eerste_plan_mediaan_ms": 537.629779,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 844.696403
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 386.095817,
+            "eerste_plan_mediaan_ms": 83.421417,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 539.714589
+          }
+        },
+        "daling_totaal_procent": 35.33492149204909
+      },
+      {
+        "geval": "eerste-invoer",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.0017,
+          "committed_scan": 8.514865,
+          "story_states": 71.749923,
+          "voor_seed": 0.067831,
+          "seed_states": 429.762127,
+          "units": 5.731533,
+          "parts": 3.644248
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 308.20903,
+            "eerste_plan_mediaan_ms": 537.317118,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 844.598968
+          },
+          "profiel": {
+            "openen_mediaan_ms": 310.05929,
+            "eerste_plan_mediaan_ms": 529.801415,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 839.860705
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 388.787591,
+            "eerste_plan_mediaan_ms": 87.62566,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 477.857182
+          }
+        },
+        "daling_totaal_procent": 43.42200261840718
+      },
+      {
+        "geval": "twee-invoeren",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.00186,
+          "committed_scan": 8.594035,
+          "story_states": 71.458013,
+          "voor_seed": 0.065711,
+          "seed_states": 431.985225,
+          "units": 5.798064,
+          "parts": 3.577367
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 307.904559,
+            "eerste_plan_mediaan_ms": 531.603944,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 839.508503
+          },
+          "profiel": {
+            "openen_mediaan_ms": 309.453326,
+            "eerste_plan_mediaan_ms": 531.050196,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 837.941592
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 386.146862,
+            "eerste_plan_mediaan_ms": 88.349985,
+            "identiteiten_mediaan_ms": 0.0,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 474.85552
+          }
+        },
+        "daling_totaal_procent": 43.436484764228766
+      },
+      {
+        "geval": "identiteiten-ongewijzigd",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.0017,
+          "committed_scan": 0.00079,
+          "story_states": 73.80273,
+          "voor_seed": 0.068411,
+          "seed_states": 430.67479,
+          "units": 5.759384,
+          "parts": 3.684758
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 308.292358,
+            "eerste_plan_mediaan_ms": 520.024407,
+            "identiteiten_mediaan_ms": 10.90594,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 840.144324
+          },
+          "profiel": {
+            "openen_mediaan_ms": 306.89931,
+            "eerste_plan_mediaan_ms": 524.702853,
+            "identiteiten_mediaan_ms": 11.086584,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 842.688747
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 389.945685,
+            "eerste_plan_mediaan_ms": 81.564074,
+            "identiteiten_mediaan_ms": 1.763514,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 472.316194
+          }
+        },
+        "daling_totaal_procent": 43.78154080107789
+      },
+      {
+        "geval": "identiteiten-eerste-invoer",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.00155,
+          "committed_scan": 0.00078,
+          "story_states": 71.577215,
+          "voor_seed": 0.06832,
+          "seed_states": 428.846221,
+          "units": 5.669063,
+          "parts": 3.557148
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 313.460079,
+            "eerste_plan_mediaan_ms": 522.833405,
+            "identiteiten_mediaan_ms": 10.575418,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 844.622229
+          },
+          "profiel": {
+            "openen_mediaan_ms": 306.909934,
+            "eerste_plan_mediaan_ms": 518.969744,
+            "identiteiten_mediaan_ms": 10.729341,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 837.816142
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 385.864516,
+            "eerste_plan_mediaan_ms": 80.058874,
+            "identiteiten_mediaan_ms": 9.979887,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 475.916046
+          }
+        },
+        "daling_totaal_procent": 43.653383766199696
+      },
+      {
+        "geval": "identiteiten-twee-invoeren",
+        "fasen_profiel_eerste_mediaan_ms": {
+          "assignments": 0.00171,
+          "committed_scan": 0.00072,
+          "story_states": 71.705216,
+          "voor_seed": 0.066251,
+          "seed_states": 428.304798,
+          "units": 5.905025,
+          "parts": 3.589688
+        },
+        "varianten": {
+          "controle": {
+            "openen_mediaan_ms": 312.634788,
+            "eerste_plan_mediaan_ms": 522.147267,
+            "identiteiten_mediaan_ms": 10.732169,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 845.469663
+          },
+          "profiel": {
+            "openen_mediaan_ms": 309.301225,
+            "eerste_plan_mediaan_ms": 518.808737,
+            "identiteiten_mediaan_ms": 10.746692,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 840.356523
+          },
+          "kandidaat": {
+            "openen_mediaan_ms": 385.815657,
+            "eerste_plan_mediaan_ms": 78.861215,
+            "identiteiten_mediaan_ms": 9.825535,
+            "openen_identiteiten_eerste_plan_mediaan_ms": 475.453105
+          }
+        },
+        "daling_totaal_procent": 43.76461677963246
+      }
+    ]
+  },
+  "vergelijking": "Drie binaries met definitief gescheiden Cargo-targets: ongewijzigde controle, alleen fijnere timing, kandidaat. Zes gevallen x drie verse sessies: geen/één/twee x-invoeren, ieder ook met identiteiten vooraf. Vaste client-id, bewerkingsdatum en openingsgeneratie. Volledige editor- en replicaplannen, bronhash en vectorhash per geval gelijk aan controle. Tijdmeting bevat openen én eventuele identiteiten én eerste plan; geen claim over echte SDK-save, ZIP of fysieke desktop-paint.",
+  "guards": "Kandidaat bevestigt cache na 18 verse seedings. Voorbereiding wordt geweigerd bij 12 vuile sessies, zes reeds gevulde ongewijzigde sessies, 18 geïmporteerde replica’s, 18 herbindingen aan dezelfde oorspronkelijke pakketbytes en één leeg document. Bestaande plannen na bronvervanging gelijk; geïmporteerde replica wordt met dezelfde controle-replica vergeleken. Geen thread-race-, andere DOCX-functie- of volledige pakketacceptatie.",
+  "eerste_proeven_en_correcties": [
+    "Eerste extra Eq-controle vergeleek ten onrechte een editor met volledige stijlmetadata met een replica die alleen CRDT/pakketbytes had. Die plannen verschillen ook in de ongewijzigde controle bij 12 gewijzigde gevallen. Definitieve proef vergelijkt editor met controle-editor en replica met controle-replica; de eerste afkeuring en proefbron blijven bewaard.",
+    "Herhaalde varianten in één Cargo-targetmap bleken een ongeldige meetopzet: de rlib-bestandsnaam is gedeeld, terwijl fingerprints per bronpad bewaard blijven. Daardoor kon de verkeerde bibliotheek worden gekoppeld. Die herhalingen zijn uitgesloten. Definitieve variant heeft elk eigen target; controle-rlib SHA vastgelegd en profiel-lib opnieuw geforceerd gebouwd, kandidaat heeft eigen guard-API. Alleen gescheiden outputs vormen het resultaat.",
+    "Mislukte en uitgesloten ruwe rapporten/logs zijn niet verwijderd. Eerste correctie verandert alleen het harnas; de kernelkandidaat werd niet versoepeld om de peervergelijking groen te maken."
+  ],
+  "niet_gecontroleerd": [
+    "Actuele Wasm-kandidaat/echte desktop-/GUI-latentie",
+    "Nieuwe onafhankelijke DOCX-serialisatie en oorspronkelijk pakketbehoud onder dit prototype",
+    "Volledige native/frontend/SDK-regressies of CI",
+    "Andere documenten, comments, voetnoten, bronherbindingen onder gelijktijdige threads, geheugengrens",
+    "Windows/macOS/andere edities/installers/releases/hosted"
+  ],
+  "behoud": {
+    "desktopreferenties_SHA_exact": 61,
+    "oudere_native_onderzoeksbinaries_SHA_exact": 2,
+    "nieuwe_desktopbinaries": 0,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "sourcepins": {
+      "profiel/identity.rs": {
+        "origineel_sha256": "5a865f061259d42d852e7ea9c7b8e72034d909486d554a965899c51f36a5235b",
+        "proef_sha256": "2a0695f82bafec601775032ae87e31aaf736e58a1dcd7e973822ce2506b047d3"
+      },
+      "profiel/lib.rs": {
+        "origineel_sha256": "6f68ce792f0605e50e77754152709b846dca76d34efb23a27bd12b97c510ebc2",
+        "proef_sha256": "6f68ce792f0605e50e77754152709b846dca76d34efb23a27bd12b97c510ebc2"
+      },
+      "profiel/seed.rs": {
+        "origineel_sha256": "df396aa53c0d7c9f8bb01fb6afbbddebad401302773141f96414fa0caf97743a",
+        "proef_sha256": "df396aa53c0d7c9f8bb01fb6afbbddebad401302773141f96414fa0caf97743a"
+      },
+      "kandidaat/identity.rs": {
+        "origineel_sha256": "5a865f061259d42d852e7ea9c7b8e72034d909486d554a965899c51f36a5235b",
+        "proef_sha256": "20d6bfa5d80fcd2db9c2280a4e3bc5b7f94f0f2acb7f884beccecc3aa63dce2b"
+      },
+      "kandidaat/lib.rs": {
+        "origineel_sha256": "6f68ce792f0605e50e77754152709b846dca76d34efb23a27bd12b97c510ebc2",
+        "proef_sha256": "ef0db92be3a65dfb31f2ad82d38466924671998c8d45c76528ca36f3155fb2d3"
+      },
+      "kandidaat/seed.rs": {
+        "origineel_sha256": "df396aa53c0d7c9f8bb01fb6afbbddebad401302773141f96414fa0caf97743a",
+        "proef_sha256": "a4626d59545768c0184447f992eb2c3936e8a4764d07da658ac491cca61aa78d"
+      }
+    },
+    "definitieve_onderzoeksbinaries": {
+      "controle": "137c752e16bae58ed9c2bd13d14ef28c2dff943d3d52f69e1510ce04225b532c",
+      "profiel": "545cb483dc26fef07b832fdac35e51a193a8d9050a87c69cefc26b6818fffcb6",
+      "kandidaat": "9e9927313202f3b2c10cad888a0554f600eb8942f2f84c8a7137043d25bc4d57"
+    },
+    "code_en_Wasm": "Productbron en alle actieve Wasm ongewijzigd; geen nieuwe GUI-/releasebuild."
+  },
+  "archief": {
+    "bestand": "2026-11-28-writer-basistoestand-prototype.tar.gz",
+    "sha256": "f9bb291db1e27e76bcc4b68ed702bbfbb97e465e2880286d826adc5862bee77a",
+    "bestanden": 58,
+    "bytes": 3507451
+  },
+  "vervolg": "Port uitsluitend de bewaakte helper naar eigen exacte Wasm-bronkopie en roep hem aan na de bestaande fresh_seed/mark_seeded-grens. Verwijder native Instant-meters en diagnostische API. Bouw met aanwezige wasm32/bindgen/wasm-opt-gereedschap in eigen caches, test bestaande seeding-/identiteits-/pakketgevallen en meet daarna echte Linux-desktop A/B/B/A inclusief opentijd, invoer/selectie, herstel, handmatig opslaan, Undo/Redo, verwerpen, heropenen en beelden. Pas daarna productintegratie overwegen; geen issuevoltooiing uit deze native proef. Database laatst. Controleer de extra opentijd afzonderlijk bij read-only/documenten zonder bewerking en de eerste rustige toets.",
+  "meetinterpretatie": "Alleen som openen + eventuele identiteiten + eerste planner: gewijzigde native gevallen circa 840–845 naar 475–478 ms, circa 43,4–43,8% lager. Invoerbewerking, volledige SDK-save/ZIP en fysieke paint zitten niet in die som. Extra opentijd circa 78 ms is een reële afweging; geen algemene acceptatie bij read-only of documenten zonder bewerking."
+}
