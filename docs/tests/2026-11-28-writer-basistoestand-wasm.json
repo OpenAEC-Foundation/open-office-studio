@@ -1,0 +1,543 @@
+{
+  "datum": "2026-11-28",
+  "status": "Eigen Wasm- en Linux-desktopkandidaat functioneel en beperkt visueel getoetst; nog niet in productbron/actieve vendor-Wasm geïntegreerd. Ernstige Writer-vertraging blijft open.",
+  "basis": {
+    "integratiecommit": "c502ba80",
+    "desktop_basis_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+    "desktop_kandidaat_sha256": "969cb229a4071b8038a14efd92c7d29fdf86e4241e266b293650008330943776",
+    "wasm_basis_sha256": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+    "wasm_kandidaat_sha256": "269db5458fe4489d95716079585a29f9861d9bacaba8e16f0c8515786dbe0d81",
+    "versie": "2026.45.52",
+    "platform": "Linux Tauri/WebKitGTK, eigen Xvfb/XDG/dbus; schema 2"
+  },
+  "wijziging": "Alleen bewaakte prepare_seeded_save_baseline en aanroep na bestaande fresh_seed/mark_seeded-grens in de exacte actieve Wasm-bron. Geen native Instant-meters, proef-API, timer, extra yield, ruimere bron-/vector-/sessieguard of aangepaste hersteltermijn. Readtransactie en bron/media/metadata/epoch bewaken de eenmalige oorspronkelijke SeedStates-cache. Identieke JS-bindingen en JS/Wasm-imports/exports. Eigen desktopdist heeft exact één andere Wasm-asset; bestaande assetnaam alleen voor deze private proef behouden.",
+  "broncontrole": "Eerste hele-bestandsvergelijking native/Wasm weigerde bestaande verschillen in wasm.rs/lib.rs (digestcache/native revisies). Exacte actieve Wasm-basis behouden; identiteitbron gelijk en alleen helper/hook overgenomen. Compleet bronmanifest bevestigt uitsluitend twee gewijzigde Rust-bestanden; bestaande bodydigest/spans-optimalisaties intact.",
+  "wasm_tests": {
+    "verse_docs": "14 gevallen over zes bestaande DOCX-fixtures: nieuw, 128 tabellen, voet-/eind-/gemengde noten; ongewijzigd, body-/celinvoer en andere aangeleverde digest. Vaste generatie/client: volledige plannen, herhaald plan, bron/vector vóór-na en onderling exact, alle storysegmenten en vijf metadata-APIs gelijk.",
+    "grenzen": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "naam": "leeg",
+          "units": 0,
+          "paragraphs": 0,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "lege-alinea",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "tekst-zonder-sluiting",
+          "units": 1,
+          "paragraphs": 0,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "trailing-tekst",
+          "units": 2,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "opeenvolgend",
+          "units": 2,
+          "paragraphs": 2,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "unicode",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "embed",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "dubbele-id",
+          "units": 2,
+          "paragraphs": 2,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "lege-id",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-128-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-129-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-unicode-128-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "id-unicode-130-bytes",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "4096-units",
+          "units": 4096,
+          "paragraphs": 4096,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "4097-units",
+          "units": 4097,
+          "paragraphs": 4097,
+          "invoeging_utf16": 1,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "grote-invoeging",
+          "units": 1,
+          "paragraphs": 1,
+          "invoeging_utf16": 4097,
+          "varianten": 2,
+          "fasen": 5
+        },
+        {
+          "naam": "basis/geweigerde-heropening-na-warme-cache",
+          "geslaagd": true
+        },
+        {
+          "naam": "kandidaat/geweigerde-heropening-na-warme-cache",
+          "geslaagd": true
+        }
+      ],
+      "spans_en_digestlezingen": 492,
+      "grens": "Echte Wasm, koude/warme lokale invoeging, Undo/Redo, grenzen en foutafhandeling en geweigerde heropening; geen geforceerde Doc-pointerwisseling; geen instrumentatie van werkelijk gekozen cachetak of totale productdekking."
+    },
+    "updates_en_undo_redo": {
+      "fases": 166,
+      "storyvergelijkingen": 127660,
+      "digestvergelijkingen": 276398,
+      "grens": "Bestaand opgeslagen orakel met lokale updates en Undo/Redo; twee verschillende kernbinaries, drie sessies per fase waaronder dubbele basiscontrole. Geen DOCX-export."
+    },
+    "levensduur": "Zes fasen: load van andere generatie na verse/gevulde cache en import zonder seeding, daarna nieuwe invoer. Volledige plannen, alle stories en bron/vector gelijk. Geen thread-race of alle mogelijke pakketherbindingen."
+  },
+  "native_ABBA": {
+    "runs": [
+      {
+        "label": "a-herzien",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+        "frame_ms": [
+          1454,
+          872,
+          836,
+          873,
+          3541,
+          708,
+          715,
+          791
+        ],
+        "herstel_begin_ms": 30845.999755859375,
+        "herstel_bestand_ms": 34033.411865234375,
+        "herstel_tekst": {
+          "prefix_exact": true,
+          "actueel": false,
+          "tabellen": 128,
+          "sha256": "3d173f04f7112bdca32049fb5d3324d3dd5a9dc85861aa325de64ceff543f549"
+        },
+        "openen": {
+          "eerste_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 10168.000000000002,
+            "tweeRafMs": 10291
+          },
+          "proces_tot_eerste_lijst_en_twee_raf_ms": 11466.902363114059,
+          "heropen_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 18029,
+            "tweeRafMs": 18035
+          },
+          "heropen_tot_eerste_lijst_en_twee_raf_ms": 7120.715473080054
+        },
+        "uitlijning": {
+          "begin": 18383,
+          "einde": 23019.000000000004,
+          "doel": 23000
+        },
+        "seconden": 45.92766701313667
+      },
+      {
+        "label": "b-herzien",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "programma_sha256": "969cb229a4071b8038a14efd92c7d29fdf86e4241e266b293650008330943776",
+        "frame_ms": [
+          1285,
+          932,
+          859,
+          778,
+          3046,
+          749,
+          798,
+          752
+        ],
+        "herstel_begin_ms": 30885,
+        "herstel_bestand_ms": 33258.77294921875,
+        "herstel_tekst": {
+          "prefix_exact": true,
+          "actueel": false,
+          "tabellen": 128,
+          "sha256": "81fb8984414135d4a19855182b4998ea36922450e7969960d900ba0c26e5acf9"
+        },
+        "openen": {
+          "eerste_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 10273,
+            "tweeRafMs": 10396
+          },
+          "proces_tot_eerste_lijst_en_twee_raf_ms": 11603.492974070832,
+          "heropen_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 18049,
+            "tweeRafMs": 18079
+          },
+          "heropen_tot_eerste_lijst_en_twee_raf_ms": 7086.501801852137
+        },
+        "uitlijning": {
+          "begin": 18409,
+          "einde": 23018,
+          "doel": 23000
+        },
+        "seconden": 45.38778683892451
+      },
+      {
+        "label": "b2-herzien",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "programma_sha256": "969cb229a4071b8038a14efd92c7d29fdf86e4241e266b293650008330943776",
+        "frame_ms": [
+          1298,
+          873,
+          866,
+          826,
+          3096,
+          768,
+          758,
+          726
+        ],
+        "herstel_begin_ms": 30893,
+        "herstel_bestand_ms": 33218.130859375,
+        "herstel_tekst": {
+          "prefix_exact": true,
+          "actueel": false,
+          "tabellen": 128,
+          "sha256": "4685daf28e78993590f6837614e1ccdbaa005dd07c1c3608b4f35fe8168dd285"
+        },
+        "openen": {
+          "eerste_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 10344,
+            "tweeRafMs": 10464
+          },
+          "proces_tot_eerste_lijst_en_twee_raf_ms": 11661.811706144363,
+          "heropen_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 18165,
+            "tweeRafMs": 18175
+          },
+          "heropen_tot_eerste_lijst_en_twee_raf_ms": 7105.687361909077
+        },
+        "uitlijning": {
+          "begin": 18535,
+          "einde": 23003,
+          "doel": 23000
+        },
+        "seconden": 45.27580074290745
+      },
+      {
+        "label": "a2-herzien",
+        "code": 0,
+        "geslaagd": true,
+        "fout": null,
+        "programma_sha256": "1a6234ff5632e622c135bdfb7b6a3798d305df3a4b07770cffbb7e03636587e1",
+        "frame_ms": [
+          1274,
+          1044,
+          831,
+          839,
+          3697,
+          763,
+          818,
+          838
+        ],
+        "herstel_begin_ms": 30961.999755859375,
+        "herstel_bestand_ms": 33954.492431640625,
+        "herstel_tekst": {
+          "prefix_exact": true,
+          "actueel": false,
+          "tabellen": 128,
+          "sha256": "81a2aef69a725627d31d96a9fcf98941fbc7a04ae2555914bf66322305e7157d"
+        },
+        "openen": {
+          "eerste_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 10179,
+            "tweeRafMs": 10306.000000000002
+          },
+          "proces_tot_eerste_lijst_en_twee_raf_ms": 11497.734925011173,
+          "heropen_frame": {
+            "paginaHint": 65,
+            "eersteTekst": "OPENAEC   /   ONTWERPNOTITIE 01Ruimte voor ideeën.Een heldere basis voor een open werkplek.Van eerste schets naar samenhangGoed werk begint met ruimte om te denken. Een rustige ind",
+            "renderlijstMs": 17927,
+            "tweeRafMs": 17933
+          },
+          "heropen_tot_eerste_lijst_en_twee_raf_ms": 6998.057662975043
+        },
+        "uitlijning": {
+          "begin": 18297,
+          "einde": 23017,
+          "doel": 23000
+        },
+        "seconden": 46.04289469309151
+      }
+    ],
+    "groepen": {
+      "basis": {
+        "cold_ms": [
+          11466.902363114059,
+          11497.734925011173
+        ],
+        "cold_mediaan_ms": 11482.318644062616,
+        "heropen_ms": [
+          7120.715473080054,
+          6998.057662975043
+        ],
+        "heropen_mediaan_ms": 7059.3865680275485,
+        "herstel_ms": [
+          3187.412109375,
+          2992.49267578125
+        ],
+        "herstel_mediaan_ms": 3089.952392578125,
+        "som_cold_en_herstel_mediaan_ms": 14572.271036640741,
+        "piek_invoer_frame_ms": [
+          3541,
+          3697
+        ],
+        "eerste_toets_frame_ms": [
+          1454,
+          1274
+        ]
+      },
+      "kandidaat": {
+        "cold_ms": [
+          11603.492974070832,
+          11661.811706144363
+        ],
+        "cold_mediaan_ms": 11632.652340107597,
+        "heropen_ms": [
+          7086.501801852137,
+          7105.687361909077
+        ],
+        "heropen_mediaan_ms": 7096.094581880607,
+        "herstel_ms": [
+          2373.77294921875,
+          2325.130859375
+        ],
+        "herstel_mediaan_ms": 2349.451904296875,
+        "som_cold_en_herstel_mediaan_ms": 13982.104244404472,
+        "piek_invoer_frame_ms": [
+          3046,
+          3096
+        ],
+        "eerste_toets_frame_ms": [
+          1285,
+          1298
+        ]
+      }
+    },
+    "verschil": {
+      "cold_mediaan_ms": 150.33369604498148,
+      "herstel_daling_mediaan_ms": 740.50048828125,
+      "herstel_daling_procent": 23.96478632032929,
+      "som_daling_mediaan_ms": 590.1667922362685,
+      "som_daling_procent": 4.049930108713628
+    },
+    "definitie": "Eigen Xvfb, API/sessie/65-paginahint/eerste tekstlijst/font-ready + twee rAFs, geen fysieke paint. Openpoll/Inspector-kosten inbegrepen. Vóór invoer alleen testmatig tot performance.now 23 s uitgelijnd, zodat gewone herstelronde tijdens toetsen valt. Som is gemeten cold-open + herstelduur, geen totale tijd inclusief uitlijning/invoer of algemene reactietijd."
+  },
+  "functioneel": {
+    "vier_gewone_runs": "Alle herziene runs groen, acht fysieke toetsen bronexact. Echte herstelkopieën bevatten bevestigde bronprefix en 128 tabellen exact. De snapshot bevat niet noodzakelijk de laatste toets. Geen verloren oorspronkelijke bron geclaimd.",
+    "rijk": "Ongewijzigd oorspronkelijke rijke harnas: 1052 fysieke tekens, selectie/vervangen, bronexact Undo/Redo, fysieke Save vóór laat antwoord, onafhankelijke DOCX-teruglezing, verwerpen/nieuw document en laat antwoord; 128 tabellen. Eén gemeten 7996 ms is geen gepaarde snelheidsclaim.",
+    "eigenschappen": {
+      "titel": "Eigen herstelproef",
+      "revisie": 1,
+      "body_exact": true,
+      "tabellen": 128,
+      "origineel_ongewijzigd": true,
+      "voorlopige_minuten": 0,
+      "sha256": "594f26107eec775cab11d2dcc2956b3f4ff10922cb2cde97b0396f7324c61a9a"
+    },
+    "normale_opslag": {
+      "titel": "Eigen herstelproef",
+      "revisie": 2,
+      "minuten": 0,
+      "woorden": 13826,
+      "tekens": 90381,
+      "body_exact": true,
+      "tabellen": 128
+    },
+    "opruimen": "Herstelkopie na normale opslag verwijderd. Bewerkingstijd native 0 minuten; oude unitbewijzen voor niet-nultijd niet opnieuw uitgevoerd.",
+    "nieuw_proces": "Daadwerkelijk nieuw opgeslagen kandidaatbestand SHA-exact gekopieerd en heropend: body, 128 tabellen en 768 celstories tegenover onafhankelijke XML exact; titel Eigen herstelproef behouden. Geen fouten in geobserveerde GUI/engine/console-intervallen."
+  },
+  "visueel": "Vier hele beelden bekeken: rustige invoer, document na opslag, Info na heropenen, nieuw document na laat antwoord. Twee basis/kandidaatparen van rustige-eindbeelden op 1440x1000 zijn RGB-pixelexact (nul verschillen). Geen fysieke paint/FPS, algemene glyph-/greep-/paginadekking of volledige functieacceptatie.",
+  "geheugen": {
+    "data": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "mode": "basis",
+          "begin_bytes": 0,
+          "cycles": [
+            {
+              "ronde": 0,
+              "na_openen_bytes": 22103952,
+              "na_plan_bytes": 36436334,
+              "piek_bytes": 76260845,
+              "na_free_bytes": 576
+            },
+            {
+              "ronde": 1,
+              "na_openen_bytes": 22103952,
+              "na_plan_bytes": 36436334,
+              "piek_bytes": 76260845,
+              "na_free_bytes": 576
+            },
+            {
+              "ronde": 2,
+              "na_openen_bytes": 22103952,
+              "na_plan_bytes": 36436334,
+              "piek_bytes": 76260845,
+              "na_free_bytes": 576
+            }
+          ],
+          "groei_na_eerste_free_bytes": 0
+        },
+        {
+          "mode": "kandidaat",
+          "begin_bytes": 0,
+          "cycles": [
+            {
+              "ronde": 0,
+              "na_openen_bytes": 29986683,
+              "na_plan_bytes": 29986811,
+              "piek_bytes": 51151431,
+              "na_free_bytes": 576
+            },
+            {
+              "ronde": 1,
+              "na_openen_bytes": 29986683,
+              "na_plan_bytes": 29986811,
+              "piek_bytes": 51151495,
+              "na_free_bytes": 576
+            },
+            {
+              "ronde": 2,
+              "na_openen_bytes": 29986683,
+              "na_plan_bytes": 29986811,
+              "piek_bytes": 51151495,
+              "na_free_bytes": 576
+            }
+          ],
+          "groei_na_eerste_free_bytes": 0
+        }
+      ],
+      "grens": "Tellers van Rust-heap in echte Wasm voor één rijke bron en drie open/bewerk/plan/free-ronden. Geen JS-heap/RSS, layout- of multi-documentlimiet."
+    },
+    "duiding": "Rust-heap van deze Wasm: na openen circa 21,1→28,6 MiB; na eerste gewijzigde plan 34,7→28,6 MiB; piek 72,7→48,8 MiB. Na free circa 0,001 MiB, geen groei in drie ronden; geen mislukte allocatie. Geen JS-heap/RSS, layout, gelijktijdige documenten of algemene geheugengrens."
+  },
+  "eerste_native_meetfout": "Vier eerste opstartproeven afgekeurd vóór invoer: Inspector hing aan tijdelijke lege pagina, waarna de appcontext vervangen werd. Geen prestatieresultaat. Eigen OpstartInspector wacht nu begrensd op gemonteerde echte editor via synchrone navraag; geen vaste 12 s-wachttijd. Definitieve A/B/B/A opnieuw volledig uitgevoerd. Alle mislukte rapporten/logs bewaard.",
+  "niet_gecontroleerd": [
+    "Normale product-Vite-bouw met nieuwe assetnaam, bronrecept/guard/NOTICE-integratie",
+    "Nieuwe volledige TypeScript/frontend/Rust/SDK-suites of CI",
+    "Persistente read-only-/achtergrondtabvarianten, andere documenten en multithreading volledig",
+    "Windows/macOS/andere edities/installers/hosted/releases",
+    "Schema-3-/bronjournaaldesktoproute met deze kandidaat"
+  ],
+  "behoud": {
+    "oude_desktop_ELFs_SHA_exact": 61,
+    "oude_native_onderzoeksbinaries_SHA_exact": 5,
+    "nieuwe_aparte_desktopreferentie": 62,
+    "standaarddist_byte_mode_mtime_exact": 529,
+    "basisdist_SHA_exact": 529,
+    "actieve_vendor_Wasm_ongewijzigd": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf",
+    "inbedding": {
+      "asset": "assets/docx_edit_bg-Cu7hnSEw.wasm",
+      "wasm_sha256": "269db5458fe4489d95716079585a29f9861d9bacaba8e16f0c8515786dbe0d81",
+      "cache_bytes": 6275773,
+      "brotli": true,
+      "in_ELF_exact": true
+    },
+    "heropende_kandidaat_bestand_SHA_exact": "18a886796aeabb6090d47ef56744c4d76b3eb185dd693042c7d07a21561345e0"
+  },
+  "archief": {
+    "bestand": "2026-11-28-writer-basistoestand-wasm.tar.gz",
+    "sha256": "a3eedf258b900063b578bdf68d201f1724f4b9daecdb46f93a12c4ebdc2ef6ff",
+    "bestanden": 132,
+    "bytes": 3584854
+  },
+  "vervolg": "Integreer dit getoetste cachedeel uitsluitend via een afzonderlijke controleerbare bronpatch en checksumketen op de bestaande actieve basis. Werk bronrecept, compatibiliteitsguard, vendorverantwoording en regressies samen bij. Bouw gewone frontend naar eigen outDir en controleer equivalentie met deze kandidaat, draai passende suites en bevestig de uiteindelijke native bundel. Beoordeel read-only/open-zonder-bewerking en extra geheugenkosten afzonderlijk; geen brede platformacceptatie. Daarna resterende circa 3 s invoerpiek en materialisatie/projectie/werkwachtrij onderzoeken. Database laatst."
+}
