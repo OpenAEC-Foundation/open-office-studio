@@ -1,0 +1,1587 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "13475877",
+  "basis_hoofdbranch": "32f02f98",
+  "besluit": "Bodydigestcache actief gemaakt als standaard vendor-kern op integratiebranch. Volledige Writer/migratie niet voltooid; ernstige invoervertraging blijft. Hoofdontwikkelbranch krijgt alleen bewijs, omdat kernbouwprerequisieten daar ontbreken.",
+  "wijziging": "Vendor-editkern 737ee8c → 6fec97d3; layout ongewijzigd. Bouwguard controleert actieve cachebron, patch, basiskern en JS/Wasm-interface. Bouwscript kiest actieve cache standaard; --zonder-digestcache reproduceert eerdere bron, --digestcache blijft expliciete keuze. NOTICE en bouwdocumentatie bijgewerkt. Geen nieuwe Rust-cachelogica sinds de schone productieproef.",
+  "metadata": {
+    "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+    "bronarchiefSha256": "a773c08b10e0a09e1f4f349cae7889b9f79f2e560ac3f16a0e5b94e25316ade7",
+    "nootpatchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+    "basisWasmSha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+    "patch": "tekstengine-digestcache.patch",
+    "patchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49",
+    "wasmSha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+    "wasmBytes": 24608798,
+    "actiefInProduct": true,
+    "bewijs": "docs/tests/2026-11-28-writer-digestcache-productie.json",
+    "productBewijs": "docs/tests/2026-11-28-writer-digestcache-actueel.json"
+  },
+  "frontend": {
+    "bouw": [
+      {
+        "variant": "basis",
+        "procescode": 0,
+        "seconden": 28.24553776020184,
+        "opdracht": [
+          "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "node_modules/vite/bin/vite.js",
+          "build",
+          "--config",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/vite.config.ts",
+          "--outDir",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/dist-basis"
+        ]
+      },
+      {
+        "variant": "kandidaat",
+        "procescode": 0,
+        "seconden": 26.10116732097231,
+        "opdracht": [
+          "/home/aia01/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "node_modules/vite/bin/vite.js",
+          "build",
+          "--config",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/vite.config.ts",
+          "--outDir",
+          "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/dist-kandidaat"
+        ]
+      }
+    ],
+    "paar": {
+      "geslaagd": true,
+      "bestanden_per_variant": 529,
+      "gewijzigde_paden": {
+        "basis": [
+          {
+            "pad": "index.html",
+            "sha256": "1e0dc2ad106348df62c5a5930d71cef3cb5e000ee143f7a2927f2bbcaa226a66"
+          },
+          {
+            "pad": "assets/ovba-CeBowCAd.js",
+            "sha256": "90d9abcbca2adedb990f98a245f2ea6a09f12448fb7ed91cb0311d5f9baf8006"
+          },
+          {
+            "pad": "assets/index-Be3g6_5A.js",
+            "sha256": "31e22986f331fbc02510b1c131f67a45bd7ff2c845dfda338bcafe8a82ff23b5"
+          },
+          {
+            "pad": "assets/list-DxuQiA6P.js",
+            "sha256": "627ea63c007b018eaaebc663d679e2c287790aeefa535e6a355b5281ae257d67"
+          },
+          {
+            "pad": "assets/chunk-Q7OC7M5Q-BzppsI5m.js",
+            "sha256": "900d652842189028b701e3ba7f5b2c433931c56085c76b7a489e84de3f605834"
+          },
+          {
+            "pad": "assets/rekenbladcontrole-CivwKSJN.js",
+            "sha256": "65a236c81c299d1e0da52683a00b9f3f639836ba4cf95984fd3613563fe4ea5e"
+          },
+          {
+            "pad": "assets/chunk-4ZGDANBA-B1mFIT22.js",
+            "sha256": "68072e1a5c4d7514222082e8f86e4e92f04a606e2b5251658e905e0547f5204c"
+          },
+          {
+            "pad": "assets/bronPresentatie-DtUOn_9W.js",
+            "sha256": "9c0f65e856ddf75180b04c195e1937ddb5c2906e2d2ea8b0be428b9afb8d85b0"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-DxHx28i6.js",
+            "sha256": "213762ec3699443133b42bd8a2341c2d705ff16b707b98af4c8c6d5e8823eec1"
+          },
+          {
+            "pad": "assets/zoom-out-BZ0Nf1w8.js",
+            "sha256": "c157bd6f5866a681d4a93eee09a96a468e9a405835082c21e0dd488e2915898f"
+          },
+          {
+            "pad": "assets/chunk-CKSVLZJJ-DYVZ5_pJ.js",
+            "sha256": "b8f64314bec6b42f3fda26b0c16fa04bf08c0c5332cf2276ed8c7bb9ea9c60c4"
+          },
+          {
+            "pad": "assets/NotitiesStudio-g6qTJjib.js",
+            "sha256": "78bfe1b3d33789d9e02313fb54f0ce31b2f455f0bdfb484cb399e6bc01292eb1"
+          },
+          {
+            "pad": "assets/chunk-SBPJ3YLZ-BcKy4ikv.js",
+            "sha256": "009b0a8a268e3e21948f3bddba1de57408f79de687e5e56e948bc0042f224f43"
+          },
+          {
+            "pad": "assets/email-BSORV3vG.js",
+            "sha256": "d652b95e38fb74ab633d8fa46a0588cafbdff02615ae1f52dba0b81e84c59349"
+          },
+          {
+            "pad": "assets/chunk-O76C72EQ-9Kq1UNu7.js",
+            "sha256": "f7e9f3030d1eabcada6e6d16133125b9500fd4f2806033326e797b57d802ca7c"
+          },
+          {
+            "pad": "assets/docx_edit_bg-ONvZFP_n.wasm",
+            "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+          },
+          {
+            "pad": "assets/EmailStudio-LoI8f4tP.js",
+            "sha256": "287e4bca6061835a23b6cc783182de3edace0b00bad2dbb7e5c6e2effcfc0e2c"
+          },
+          {
+            "pad": "assets/docxWorker-B7b8GgQ-.js",
+            "sha256": "375178eb0b195f26480a8b2952796cf07a08268ed6cd33e2c700def4b4ef22f8"
+          },
+          {
+            "pad": "assets/chunk-YEDZERHF-CwGK9jcY.js",
+            "sha256": "8a23200eac93d9c57431690c0aa49e6c86566517d1069ac2437ae055b6d534c5"
+          },
+          {
+            "pad": "assets/rekenblad-logica-DqNq6ePg.js",
+            "sha256": "82f4c7e2ae2a4120f93a5b995ce6b479fd4760b4bd901eaa4ec115f064cd4789"
+          },
+          {
+            "pad": "assets/bronRapport-CO18FyZt.js",
+            "sha256": "c20ba1dbe64b810ac3c8c659b9565e72bfc5a5a7759591720f48af344c7cdc06"
+          },
+          {
+            "pad": "assets/Voorstelling-_P8ZP7_E.js",
+            "sha256": "47646bc69353e4e458b5520d64f9d15bc66fb95bd5056601e5874ea29786a400"
+          },
+          {
+            "pad": "assets/chunk-5FFUQOQU-zVN3bW-R.js",
+            "sha256": "98c74d4c91e65b3ffaab68caf31749b2e49c82494adf977d921528e8142e7ca6"
+          },
+          {
+            "pad": "assets/bewaren-BF1XaUYU.js",
+            "sha256": "efec0429bcb3ba0a72a4c4535fde700e397ec7a5da6a9768ea9b35f51066fd4d"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-C6zDoCbY.js",
+            "sha256": "d851432ee14afd8816c31623b0bab68b0127b404a9b225ae788f89fe8a0c1939"
+          },
+          {
+            "pad": "assets/tekenhulp-BwHfzfoD.js",
+            "sha256": "34610a64b24cbedeb878705f12cf8e2c3955a5a58d7e1d499f7560343b0d5652"
+          },
+          {
+            "pad": "assets/bronRekenblad-ukWY7ltO.js",
+            "sha256": "12a1733c8824ef66e513c1aa3607cf05a2d44c577f2a5da0470b34e1f129a589"
+          },
+          {
+            "pad": "assets/chunk-HEKHBVSH-DU7f9Rtv.js",
+            "sha256": "dbd1729942336edb0dd9071fae2fa437dfc26a181a4326201c86a534369aea63"
+          },
+          {
+            "pad": "assets/index-BN9b8dDc.js",
+            "sha256": "1d5d08bd009fa104f6c0356ae7154b592306a5ca800bc18c320fd98513fd8eb3"
+          },
+          {
+            "pad": "assets/chunk-2S2QUCJE-y2ZPh3bo.js",
+            "sha256": "fae23e68f81c274df10deb53afbb04e9ee00564f08a396e42349ae46d00584eb"
+          },
+          {
+            "pad": "assets/underline-DlkHUlrB.js",
+            "sha256": "9cfaa6bd88d9d8bf62c74aa63d47d5518f74970f5b80a758cc9d17c64d52502c"
+          },
+          {
+            "pad": "assets/VerzendAlsBijlage-BzCbMR-x.js",
+            "sha256": "8031b3df03f1c54b748ced5d93271d9a7b76bdde0bca3d526f9d5317cfd6cd30"
+          },
+          {
+            "pad": "assets/tauriVensters-vtJWnJ_Y.js",
+            "sha256": "382dcc376c3800d4442d7bea1166c9b9c2cb4607d93c3e1a7fae217e355fc490"
+          },
+          {
+            "pad": "assets/ToeschouwerVenster-DnEaMUuD.js",
+            "sha256": "3413d7ec860991b26208c27dcc142a8e937beeed8f91be5e4d32f2d09c0f4570"
+          },
+          {
+            "pad": "assets/Afdrukvoorbeeld-CMP2TonX.js",
+            "sha256": "d5c6d2cafd77f7bcbb5baea439b1a274b3352045d9904e612bc6ce0d28d8dc21"
+          },
+          {
+            "pad": "assets/folder-plus-9_nDQiSm.js",
+            "sha256": "3a6d69a6291e1585971999c9a59216fbd1936895ee5f2754076b08c42c28690c"
+          },
+          {
+            "pad": "assets/chunk-YTGFUEEE-BR8wyl1E.js",
+            "sha256": "1fe089a1f9a34edb7f707f95711c0071439608946b60af93e56e548051651c71"
+          },
+          {
+            "pad": "assets/DiaSorteerder-CbPn_Gz1.js",
+            "sha256": "dd189e46f3dff62f83d71ab09fe29f42ef16978b7ce6fa37a13b4d9f823f4dfc"
+          },
+          {
+            "pad": "assets/chunk-GZ5VPNVM-CKpTKlVC.js",
+            "sha256": "3566a062e25d5d664e261d148c474acd645d72597b08051f935e47143141997a"
+          },
+          {
+            "pad": "assets/markdown-BiugK28P.js",
+            "sha256": "acbe7fd4bacad0ebffbf9b863b74f83796afa876247979c6e58a02e9c96dc69f"
+          },
+          {
+            "pad": "assets/diabeeld-BPgn5W9Q.js",
+            "sha256": "380ca6ba1b0e46fb787eaa4823a635103c9963c0f9ac02e57bbb40399efbac1a"
+          },
+          {
+            "pad": "assets/chunk-37HBONPF-DRlUu0Ng.js",
+            "sha256": "ff4192d36ce6734cb572c4cb3f566c89ba862594ad43a2a5345a73867fd6bb27"
+          },
+          {
+            "pad": "assets/bronTekst-EyFRpxio.js",
+            "sha256": "2960f76d05df4acef18836dccc340608915465f691bf2672181b4d6ac383e044"
+          },
+          {
+            "pad": "assets/rotate-cw-Cnn-r8jG.js",
+            "sha256": "209447bd90f8ea20c31e6c89f43d372c715d73c646488c4a2c4fdaf73f1d1431"
+          },
+          {
+            "pad": "assets/index-DtZ2IWH9.js",
+            "sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c"
+          },
+          {
+            "pad": "assets/document-Ds97PxNL.js",
+            "sha256": "335d02c503d8b5d0c12a870f7b807878c7547cf55086c7bfc4566a982ad1eae4"
+          },
+          {
+            "pad": "assets/chunk-H7EYGRJO-CX5SJYoG.js",
+            "sha256": "2aca1c06351ef1a906beeb3c6129801c359f0d7a3f666c073f6d03af1d755569"
+          },
+          {
+            "pad": "assets/chunk-P4QPIGM3-DRu5jllM.js",
+            "sha256": "eb3d9075d767db2cf8b2529140292d0d4358e09bee8eac688bdba68e13674f73"
+          },
+          {
+            "pad": "assets/text-cursor-input-DIFay7CP.js",
+            "sha256": "6d5f34afa82468dc07ffa601f5a260cdce6514b16ba132dba521dd9a7fb7ccef"
+          },
+          {
+            "pad": "assets/afdrukframe-C-GwHaYC.js",
+            "sha256": "3e2b6392d919ddceccc3a3fa4b6560a7822af75742a036b9242d7310b5fab82d"
+          },
+          {
+            "pad": "assets/zoom-in-C1hxDLmA.js",
+            "sha256": "d2cb24f3e6e817472bfdc44fa7112588ddc4ce51ab2b18eb788f2573afa5cb5e"
+          },
+          {
+            "pad": "assets/index-CbK2Ycpu.js",
+            "sha256": "92ba9cb233ae8ef5871e934793e4193f9691835c50f42fa3c7811e6a6868ffc3"
+          },
+          {
+            "pad": "assets/rekenbladInstellingen-CiPG5JTY.js",
+            "sha256": "7c3bc0c39c536aaf954d7fece9119b3c7e4c6f5606472ed6b1b28a1fd49b8684"
+          },
+          {
+            "pad": "assets/editors-bODdYQ4o.js",
+            "sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b"
+          },
+          {
+            "pad": "assets/panel-left-B9L5Z8B4.js",
+            "sha256": "22985f847d6a26ab23ab4034e0a0ab41ef7a2abd4b52d27745567c9e86663a32"
+          },
+          {
+            "pad": "assets/voorstelling-DI8ky4hE.js",
+            "sha256": "05d33aba996c7ce19519b2d56aa7d43cb2f4c4fb5d2c939a275445004ea426b5"
+          },
+          {
+            "pad": "assets/backend-DWDLq-Lv.js",
+            "sha256": "e6fb659c58150d2e78e814febdbc3b82be70f4cfe856f2c4daffddf60573f3a3"
+          }
+        ],
+        "kandidaat": [
+          {
+            "pad": "index.html",
+            "sha256": "8b78cc14035604ebb9f8aeb5855ebc352058320232fdcfd537b64c16ebdfdda8"
+          },
+          {
+            "pad": "assets/markdown-ClydGGE9.js",
+            "sha256": "994092946753e57934fb80869e49215bb80fa06ac4123c6d7f3495b90a0b927c"
+          },
+          {
+            "pad": "assets/chunk-2S2QUCJE-CBns2M3N.js",
+            "sha256": "5d8a94c1a9f4b1611479290aa1c719ef89a0b7eee84a43e4b88155900b913069"
+          },
+          {
+            "pad": "assets/panel-left-YqZQD6pP.js",
+            "sha256": "c1c59d5d9b41fdab973b96f0c7fac2b17f34b18cb087c21a8f0cb53636a3d7d6"
+          },
+          {
+            "pad": "assets/docx_edit_bg-CATKjI96.wasm",
+            "sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-4HGkeIfx.js",
+            "sha256": "bb01be74ac4ba3c45eb1b3b93bdd806ba8a6446161e0a6b604604eed0833f521"
+          },
+          {
+            "pad": "assets/rekenbladInstellingen-Cb87bDUq.js",
+            "sha256": "a8614eac36e52f260412c549e0760818472e5041feed6521cdaae7053643a392"
+          },
+          {
+            "pad": "assets/email-tSJ7wBfj.js",
+            "sha256": "3085443fec35002dff337e7c151928829d122a4cd04a255fcfd74ba5ef32112c"
+          },
+          {
+            "pad": "assets/tauriVensters-DWdTZ64s.js",
+            "sha256": "0d6b3698cb59e7f94df97d26ef3c3cfb42b1fbc6745b5f43974aeb349cfe8de7"
+          },
+          {
+            "pad": "assets/chunk-GZ5VPNVM-IT1w2J_D.js",
+            "sha256": "102cd474cae6012f58be2ef7c460b5ae6a7149663a84eb9a5d2bfa4dc2c60e6d"
+          },
+          {
+            "pad": "assets/chunk-SBPJ3YLZ-m5O924Sq.js",
+            "sha256": "d817e52549ab50ce748f26ded519096f2d99b362f77dff25a2a63cc4663e7e1a"
+          },
+          {
+            "pad": "assets/bronTekst-Dz9Ewuxc.js",
+            "sha256": "182c0123261d5d324ed49bcc37dbedd3a433a578f2cf012a0ab83df92826eee0"
+          },
+          {
+            "pad": "assets/bronRapport-CrF0OQRc.js",
+            "sha256": "49ab477126105e42feda16a21f9edc4948ba639f07f44cfd8fca94939d8a6cbb"
+          },
+          {
+            "pad": "assets/backend-Bujx1bLY.js",
+            "sha256": "7938de863be45cb3e76323c79eda857675f8bc5850411322c430f564fa79e8fd"
+          },
+          {
+            "pad": "assets/chunk-CKSVLZJJ-DJgP0K59.js",
+            "sha256": "34fb27967867a5b5824b11512115daf8de9615883feeaaa862dded7a7381abb3"
+          },
+          {
+            "pad": "assets/chunk-YTGFUEEE-DQpxmT40.js",
+            "sha256": "07b9a26a7872a159c7d59f85d253474cd34e41113d16a16992545f02c6c7c0bf"
+          },
+          {
+            "pad": "assets/tekenhulp-hzcjMb-v.js",
+            "sha256": "d82b8d7007dfd29a8cc64a5a6dcd92fca92cafacd073b97104cfaeb7660cc6a8"
+          },
+          {
+            "pad": "assets/document-D7y0xzPF.js",
+            "sha256": "c7be073c3ee1902240d77cdee2899cd2c703005a90fa449e7d4b5583a79ffacc"
+          },
+          {
+            "pad": "assets/Voorstelling-D5RfSb7S.js",
+            "sha256": "5658ae9c366ea1a7e75d6dc347cc0dd24213be35b025d4686075242e4c40be19"
+          },
+          {
+            "pad": "assets/voorstelling-DhyKdCih.js",
+            "sha256": "041ecdea3ae855b6a7f1974c0b2510d12b3ad7b1127ac9f7e38453811123e766"
+          },
+          {
+            "pad": "assets/chunk-Q7OC7M5Q-CKDlrvqz.js",
+            "sha256": "ff1e630171ed59d7725038f955e011e1f6cff3debf184bb6ac6a5e984b517f13"
+          },
+          {
+            "pad": "assets/chunk-XUXC3ZKS-CAFuSPxE.js",
+            "sha256": "d5b3a11918acf964a1b071668810dc2260af05b3ee4fcd174c62774fb944abc5"
+          },
+          {
+            "pad": "assets/ovba-DOtWcotO.js",
+            "sha256": "717c299d3172eda8d7c351459da71195f11b6c851e55ef66b160d042f4745bbd"
+          },
+          {
+            "pad": "assets/rotate-cw-DBGrCJaE.js",
+            "sha256": "203f13b919ec1ab440da5f91cacfcdc231312f88424418b0e8a03b34b334e0f7"
+          },
+          {
+            "pad": "assets/rekenblad-logica-Cmz0rWfk.js",
+            "sha256": "b91048bcf9c7490799bd51273daeb89abdd28b6c1662c05ec1f7f3696c992746"
+          },
+          {
+            "pad": "assets/Afdrukvoorbeeld-CbaeT8Dy.js",
+            "sha256": "cbb8ba90b2daf7b6de5e851926746b42f13628a8804c553ceeb42cfc6b48e7d6"
+          },
+          {
+            "pad": "assets/bronPresentatie-QogAikab.js",
+            "sha256": "01a724786825129f92f8dd512ab83ddd68c5d68f5a98240f525d6c8b69f8eda0"
+          },
+          {
+            "pad": "assets/chunk-37HBONPF-CN_o5njZ.js",
+            "sha256": "363db56c3d4013f5bb746c8dd17e759251610395a0aae1013c1d0622f68205ff"
+          },
+          {
+            "pad": "assets/chunk-P4QPIGM3-DGCqV9LL.js",
+            "sha256": "7316f9e4197b26f9e377abbc46cf6a8a025dfae24bb715b162bc4a6471a24c42"
+          },
+          {
+            "pad": "assets/underline-BJ_p7XV4.js",
+            "sha256": "31517d9a440a98ab33245733f9e16d95f490be94bde7831d555912989aee667d"
+          },
+          {
+            "pad": "assets/chunk-4ZGDANBA-BhJdUG2Q.js",
+            "sha256": "2fb1fa6bc4fe5a21b3f1336e9f59cfa8ce7631adaab0d2c654b875984443f2ca"
+          },
+          {
+            "pad": "assets/folder-plus-BIHQh3XO.js",
+            "sha256": "bca950850e3d484b021c4faa1052610ede2b5e46e94010400dcbe05aef8590c8"
+          },
+          {
+            "pad": "assets/text-cursor-input-CdgxpoFy.js",
+            "sha256": "4be842e994cce276e93de65d67085d543f95575f5976cbde0099c2c7d7a2fafc"
+          },
+          {
+            "pad": "assets/diabeeld-y1u9khAk.js",
+            "sha256": "cba280af1a1464d52a9793c802347ff9870e7d4f86e204bd303392ab7d70b7dc"
+          },
+          {
+            "pad": "assets/rekenbladcontrole-CxsTeX2C.js",
+            "sha256": "aee8a9d7d079d2f62493c0a6803e937f3b8a40aabccfbcf628bf7b0364ef12f1"
+          },
+          {
+            "pad": "assets/zoom-out-B1G5sRlf.js",
+            "sha256": "49c0e38839edce885b1928cbdbb381f91a6704044224e2dc4d944149abcbc08d"
+          },
+          {
+            "pad": "assets/ToeschouwerVenster-D2Ss40dX.js",
+            "sha256": "0e312042d85a8ff4b36c160ddee1cd0aa50a4babe32555933d6ad03cc86ec763"
+          },
+          {
+            "pad": "assets/afdrukframe-DnS5Mpv9.js",
+            "sha256": "55a8f601fd347837b08f50d3af9b26b75ae4b470f27af32b293d571fb171172a"
+          },
+          {
+            "pad": "assets/editors-BqYqZH6J.js",
+            "sha256": "3a40e45ed3b3eeaf53b4a3f43ae79df1ccfdf5cd228527c008a2f2105a83c76c"
+          },
+          {
+            "pad": "assets/chunk-YEDZERHF-D5IXKO5_.js",
+            "sha256": "4b3fd537bc9b7dc9485f57d746e53bc3f15a199396b6dec71b5810e96eca7c35"
+          },
+          {
+            "pad": "assets/NotitiesStudio-1v7IAuA9.js",
+            "sha256": "68cb7682df33b031bfe95491e537b04735d5a9f7e08e9642cc9c7188de1926a9"
+          },
+          {
+            "pad": "assets/docxWorker-CJado05a.js",
+            "sha256": "cd0f3a602cb6cbfb4262f1957eafb93ac100e3231e6c537d3748e39f5047de97"
+          },
+          {
+            "pad": "assets/bronRekenblad-DWedZWdh.js",
+            "sha256": "b93495d4bf9c640f77e25e2790c42eeaca9083de39a96d5f70ffe3cca489f106"
+          },
+          {
+            "pad": "assets/VerzendAlsBijlage-CfcWHUMG.js",
+            "sha256": "f8ae976c9aa2535ba206832e8e4a9582631224bc4e1b38b309eb9564a0ddbd36"
+          },
+          {
+            "pad": "assets/chunk-5FFUQOQU-DXfb-nVk.js",
+            "sha256": "ed068e36999c0a1dd6b7ab527ef4ed19dec187d45493ac2d0bc3bccf1591825c"
+          },
+          {
+            "pad": "assets/index-D1GVCZis.js",
+            "sha256": "aaf92db80a9b454fb738e0e725655b74c5ebeca6d059e663d34b9ce764f5b863"
+          },
+          {
+            "pad": "assets/list-C95YVugr.js",
+            "sha256": "1354e6faca4bb691ae15c4ac6c5aff8f38237086e65bda134e297ddcd642fad8"
+          },
+          {
+            "pad": "assets/EmailStudio-END8UgrK.js",
+            "sha256": "a23d45c916cf06970fa63b4850c035a6207a20764ec053553695475a255e74bf"
+          },
+          {
+            "pad": "assets/index-Craf00Eo.js",
+            "sha256": "428ad592124c224b8c80f9e478445b493769dd3a6076d5fb05b6f27b7d937e67"
+          },
+          {
+            "pad": "assets/bewaren-uKcSmxfa.js",
+            "sha256": "0fa471ecc3e45240f20e0c2a4d4c8f9c220536361ae4fbce4712de806c1dc15c"
+          },
+          {
+            "pad": "assets/zoom-in-1R4-LxD5.js",
+            "sha256": "5088f2f9da7d8b3ff2ea1af21fa5d552f40df1a3d5bae6c3460da1aa18b214f1"
+          },
+          {
+            "pad": "assets/index-BtlLPnEq.js",
+            "sha256": "2ac8683ce2d7c51321f818a817c548d73d3ac81c53be42a8aa0a9bde1d707612"
+          },
+          {
+            "pad": "assets/chunk-HEKHBVSH-B6H6SvJZ.js",
+            "sha256": "5341387fd4d8c4f492d0b994b5c59d4f73402b83b914e948cdbd0c7bafb65db9"
+          },
+          {
+            "pad": "assets/index-BRjCTIsy.js",
+            "sha256": "8be1da4e5f006b95a2aa26646b367289bea02480121cc32c0d65387a3e0b3274"
+          },
+          {
+            "pad": "assets/chunk-O76C72EQ-YOPDSlzK.js",
+            "sha256": "2e37fc9b82d6ad05f442f3200645721461510db6b75dfa04c72733ad7edeb2ea"
+          },
+          {
+            "pad": "assets/chunk-H7EYGRJO-Bde1FJ10.js",
+            "sha256": "047a546031aaccc5d89cc4b735bf0e88722a78199a6baf6595e430384426d7ca"
+          },
+          {
+            "pad": "assets/DiaSorteerder-BJc0NfZX.js",
+            "sha256": "9f21e1103d16af294893dac3e188c07b3b0705fe105be592ae3d32bfa3d9276b"
+          }
+        ]
+      },
+      "standaarddist_verschillende_paden": [
+        "index.html",
+        "assets/rotate-cw-BPOfQ4lA.js",
+        "assets/backend-D5QkHSkq.js",
+        "assets/bronRekenblad-D80KkjGB.js",
+        "assets/ovba-DF5qU29K.js",
+        "assets/underline-DABO3TMs.js",
+        "assets/bronTekst-C7IQ2U8n.js",
+        "assets/bewaren-CE-WSmX_.js",
+        "assets/chunk-4ZGDANBA-BOEeem6X.js",
+        "assets/DiaSorteerder-Dgn10Ira.js",
+        "assets/zoom-out-CzBTiLe_.js",
+        "assets/tauriVensters-4uF2Nm6d.js",
+        "assets/list-BlQz7R1H.js",
+        "assets/EmailStudio-Dk9BTx89.js",
+        "assets/email-D36OWOra.js",
+        "assets/rekenbladInstellingen-CVnNkv3a.js",
+        "assets/diabeeld-BckX2VwE.js",
+        "assets/index-DX35Amhc.js",
+        "assets/text-cursor-input-BR9Yjo1q.js",
+        "assets/bronRapport-DkbScuFb.js",
+        "assets/index-DSY8H33x.js",
+        "assets/chunk-37HBONPF-BqqD54DU.js",
+        "assets/rekenblad-logica-BDdE84w-.js",
+        "assets/index-B878Xijo.js",
+        "assets/chunk-HEKHBVSH-eIko8GTS.js",
+        "assets/chunk-CKSVLZJJ-DWRh2RJ9.js",
+        "assets/afdrukframe-YtGm97YV.js",
+        "assets/chunk-SBPJ3YLZ-CWA7DkKW.js",
+        "assets/chunk-H7EYGRJO-WK9rW071.js",
+        "assets/chunk-5FFUQOQU-CWKnPi3j.js",
+        "assets/folder-plus-DB0Uz8ff.js",
+        "assets/chunk-XUXC3ZKS-CDkIQkWt.js",
+        "assets/bronPresentatie-Bin3J_UZ.js",
+        "assets/Afdrukvoorbeeld-BUlb7JRC.js",
+        "assets/chunk-P4QPIGM3-Ds1T6iWM.js",
+        "assets/zoom-in-B_2EnEPG.js",
+        "assets/tekenhulp-B3O242Ui.js",
+        "assets/chunk-O76C72EQ-fZqVGNoY.js",
+        "assets/VerzendAlsBijlage-CjMK3fvA.js",
+        "assets/panel-left-fJIdo47T.js",
+        "assets/NotitiesStudio-Cjhg1n9a.js",
+        "assets/chunk-GZ5VPNVM-DAuFXyeR.js",
+        "assets/rekenbladcontrole-BcNhGQM2.js",
+        "assets/markdown-BzmolylE.js",
+        "assets/editors-2CdTQbCm.js",
+        "assets/chunk-2S2QUCJE-DEVNbv8q.js",
+        "assets/document-Boj15mjL.js",
+        "assets/index-Dq-k0YQw.js",
+        "assets/ToeschouwerVenster-Dyr1BDHp.js",
+        "assets/voorstelling-DYhDYz-7.js",
+        "assets/Voorstelling-L-7hQ6V_.js"
+      ],
+      "grens": "Actuele Vite-bronnen zonder private projectie-contextpatch. Multisets van pad plus bytes exact na normalisatie van achttekens inhoudshash in js/wasm/css-assetverwijzingen. Alleen editkern afzonderlijk vergeleken. Bestaande standaarddist niet vervangen."
+    },
+    "product": {
+      "geslaagd": true,
+      "seconden": 29.634642157000002,
+      "bestanden": 529,
+      "kandidaat_exact_behalve": [
+        "licenses/tekstengine-NOTICE.txt"
+      ],
+      "actieve_guard": true,
+      "grens": "Standaard vite.config.ts, nieuwe vendor-kern, gewone publicDir, NOTICE daarna uitsluitend in eigen uitvoer bijgewerkt; originele public/dist niet gewijzigd. Alle JS/Wasm en overige assets bytegelijk aan native getoetste actuele kandidaat. Geen nieuwe native bouw met gewijzigde NOTICE."
+    },
+    "grens": "Paar vóór activatie met actuele standaardfrontend, zonder private projectie-contextpatch; kandidaat uitsluitend via eigen configuratie met vastgepinde kern. Na activatie standaardconfig herbouwd: 529 bestanden, alle runtimeassets bytegelijk aan native kandidaat, alleen nieuwe NOTICE verschillend. Geen nieuwe native bouw met deze gewijzigde licentietekst."
+  },
+  "native": {
+    "bouw": [
+      {
+        "variant": "basis",
+        "code": 0,
+        "seconden": 118.0346041941084,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "TAURI_CONFIG": {
+          "build": {
+            "frontendDist": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/dist-basis"
+          }
+        },
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/open-office-studio-actueel-basis",
+        "sha256": "4c39efb7ca2b851639fc5afe321161da39f357ce5ee71e2dd3253b7d014e49aa"
+      },
+      {
+        "variant": "kandidaat",
+        "code": 0,
+        "seconden": 120.02604435011744,
+        "opdracht": [
+          "/home/aia01/.cargo/bin/cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "TAURI_CONFIG": {
+          "build": {
+            "frontendDist": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/dist-kandidaat"
+          }
+        },
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/open-office-studio-actueel-kandidaat",
+        "sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76"
+      }
+    ],
+    "embedding": {
+      "geslaagd": true,
+      "rows": [
+        {
+          "variant": "basis",
+          "elf_sha256": "4c39efb7ca2b851639fc5afe321161da39f357ce5ee71e2dd3253b7d014e49aa",
+          "ingebedde_actuele_assets": [
+            {
+              "pad": "assets/index-Be3g6_5A.js",
+              "sha256": "31e22986f331fbc02510b1c131f67a45bd7ff2c845dfda338bcafe8a82ff23b5"
+            },
+            {
+              "pad": "assets/docx_edit_bg-ONvZFP_n.wasm",
+              "sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9"
+            },
+            {
+              "pad": "assets/docxWorker-B7b8GgQ-.js",
+              "sha256": "375178eb0b195f26480a8b2952796cf07a08268ed6cd33e2c700def4b4ef22f8"
+            },
+            {
+              "pad": "assets/index-TN_PiYsC.js",
+              "sha256": "c7ba9f6b75d7763a9801417498c0dcb685454e11e906b93b3383df9b6c7664e7"
+            },
+            {
+              "pad": "assets/index-XWh6H1lV.js",
+              "sha256": "0c2fbb83c461fbe8edb271679ff59bc0f031bd7d52115578b0604453d4ef1878"
+            },
+            {
+              "pad": "assets/index-D866W0pd.js",
+              "sha256": "3c6a51768aa515b0dd3654d3fa33f0dd2f88899cc76e0672b5c4d446643e622f"
+            },
+            {
+              "pad": "assets/index-C2w25pdW.js",
+              "sha256": "774fd78e1ea35b016309446aeb4fecbb2753cba78e18181df1a1b85c51e92ea3"
+            },
+            {
+              "pad": "assets/index-BN9b8dDc.js",
+              "sha256": "1d5d08bd009fa104f6c0356ae7154b592306a5ca800bc18c320fd98513fd8eb3"
+            },
+            {
+              "pad": "assets/index-DtZ2IWH9.js",
+              "sha256": "0467fd0d1cef8ba92c50247885307d442242cbd72c81db454691eff5ba1a401c"
+            },
+            {
+              "pad": "assets/index-BMTbKqLO.js",
+              "sha256": "1924bb7e171da5ba527c25c7c3608e05b442d6a4cc336962d69c5bbb344a96ee"
+            },
+            {
+              "pad": "assets/index-CbK2Ycpu.js",
+              "sha256": "92ba9cb233ae8ef5871e934793e4193f9691835c50f42fa3c7811e6a6868ffc3"
+            },
+            {
+              "pad": "assets/editors-bODdYQ4o.js",
+              "sha256": "4ec7dcee2304c018f60ff49f1f76d272aef13495b523d60da00c995f9656f04b"
+            }
+          ],
+          "andere_kern_afwezig": true
+        },
+        {
+          "variant": "kandidaat",
+          "elf_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "ingebedde_actuele_assets": [
+            {
+              "pad": "assets/docx_edit_bg-CATKjI96.wasm",
+              "sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4"
+            },
+            {
+              "pad": "assets/index-TN_PiYsC.js",
+              "sha256": "c7ba9f6b75d7763a9801417498c0dcb685454e11e906b93b3383df9b6c7664e7"
+            },
+            {
+              "pad": "assets/index-XWh6H1lV.js",
+              "sha256": "0c2fbb83c461fbe8edb271679ff59bc0f031bd7d52115578b0604453d4ef1878"
+            },
+            {
+              "pad": "assets/index-D866W0pd.js",
+              "sha256": "3c6a51768aa515b0dd3654d3fa33f0dd2f88899cc76e0672b5c4d446643e622f"
+            },
+            {
+              "pad": "assets/index-C2w25pdW.js",
+              "sha256": "774fd78e1ea35b016309446aeb4fecbb2753cba78e18181df1a1b85c51e92ea3"
+            },
+            {
+              "pad": "assets/editors-BqYqZH6J.js",
+              "sha256": "3a40e45ed3b3eeaf53b4a3f43ae79df1ccfdf5cd228527c008a2f2105a83c76c"
+            },
+            {
+              "pad": "assets/docxWorker-CJado05a.js",
+              "sha256": "cd0f3a602cb6cbfb4262f1957eafb93ac100e3231e6c537d3748e39f5047de97"
+            },
+            {
+              "pad": "assets/index-D1GVCZis.js",
+              "sha256": "aaf92db80a9b454fb738e0e725655b74c5ebeca6d059e663d34b9ce764f5b863"
+            },
+            {
+              "pad": "assets/index-Craf00Eo.js",
+              "sha256": "428ad592124c224b8c80f9e478445b493769dd3a6076d5fb05b6f27b7d937e67"
+            },
+            {
+              "pad": "assets/index-BMTbKqLO.js",
+              "sha256": "1924bb7e171da5ba527c25c7c3608e05b442d6a4cc336962d69c5bbb344a96ee"
+            },
+            {
+              "pad": "assets/index-BtlLPnEq.js",
+              "sha256": "2ac8683ce2d7c51321f818a817c548d73d3ac81c53be42a8aa0a9bde1d707612"
+            },
+            {
+              "pad": "assets/index-BRjCTIsy.js",
+              "sha256": "8be1da4e5f006b95a2aa26646b367289bea02480121cc32c0d65387a3e0b3274"
+            }
+          ],
+          "andere_kern_afwezig": true
+        }
+      ],
+      "grens": "Geselecteerde actuele index/editor/worker-JS en editkern als exacte Brotli/raw blobs in ELF; geen cachepromotietelling."
+    },
+    "schema2": {
+      "volgorde": "ABBA",
+      "A_ms": [
+        9985,
+        8946
+      ],
+      "B_ms": [
+        8931,
+        8745
+      ],
+      "A_mediaan_ms": 9465.5,
+      "B_mediaan_ms": 8838.0,
+      "verschil_procent": -6.629338122655959,
+      "grens": "Eén groep, twee per variant; grote spreiding, A2 en B1 slechts 15 ms uit elkaar. Geen algemene winstclaim. XTest tot renderlijst plus twee rAFs, geen fysieke schermpaint."
+    },
+    "schema3": {
+      "proeven": [
+        {
+          "label": "schema3-a",
+          "variant": "basis",
+          "schema": 3,
+          "code": 0,
+          "geslaagd": true,
+          "fout": null,
+          "seconden": 79.66237117093988,
+          "programma_sha256": "4c39efb7ca2b851639fc5afe321161da39f357ce5ee71e2dd3253b7d014e49aa",
+          "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+          "invoer": {
+            "tekens": 1052,
+            "interval_ms": 2,
+            "laatste_keyup_ms": 41324,
+            "begin_tot_bron_ms": 17932,
+            "laatste_keyup_tot_bron_ms": 193,
+            "laatste_keyup_tot_frame_ms": 5050,
+            "begin_tot_frame_ms": 22789,
+            "paginas": 65,
+            "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+            "wall_begin_tot_frame_ms": 23002,
+            "wall_verzonden_tot_frame_ms": 21264,
+            "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+          },
+          "opdracht": [
+            "/usr/bin/python3",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/proef-rijk.py",
+            "--programma",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/open-office-studio-actueel-basis",
+            "--versie",
+            "2026.45.52",
+            "--uitvoer",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/native-schema3-a"
+          ]
+        },
+        {
+          "label": "schema3-b",
+          "variant": "kandidaat",
+          "schema": 3,
+          "code": 0,
+          "geslaagd": true,
+          "fout": null,
+          "seconden": 77.65517786587588,
+          "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+          "helper_sha256": "a60ad62b52278d79e18894ee18175f59bac570a8bb7b42f80d582416d98690d9",
+          "invoer": {
+            "tekens": 1052,
+            "interval_ms": 2,
+            "laatste_keyup_ms": 38904,
+            "begin_tot_bron_ms": 16649,
+            "laatste_keyup_tot_bron_ms": 175,
+            "laatste_keyup_tot_frame_ms": 5404,
+            "begin_tot_frame_ms": 21878,
+            "paginas": 65,
+            "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+            "wall_begin_tot_frame_ms": 22089,
+            "wall_verzonden_tot_frame_ms": 20327,
+            "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+          },
+          "opdracht": [
+            "/usr/bin/python3",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/proef-rijk.py",
+            "--programma",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/open-office-studio-actueel-kandidaat",
+            "--versie",
+            "2026.45.52",
+            "--uitvoer",
+            "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-actueel/native-schema3-b"
+          ]
+        }
+      ],
+      "grens": "Afzonderlijke functieproeven, elk één per variant; circa 22–23 seconden blijft ernstig traag. Geen schema-3-snelheids-ABBA of brede acceptatie."
+    },
+    "functieproeven_geslaagd": 6,
+    "platform": "Linux x86_64 release met tauri/custom-protocol,writer-bronjournaal; schema2 en schema3 afzonderlijk gekozen."
+  },
+  "documenten_en_beelden": {
+    "documenten": {
+      "a-een": {
+        "sha256": "855f05f783d8e2e63550b94bfe0a93cfba10e968fe4ebe43a1f42705c4c78d1b",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "efecde635b7c2c9bba09f7cb8899098245dda6112428b49ba3cb84258232258d",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-een": {
+        "sha256": "313ab89cb0a02b10a0f3583c41d690aba6a20cad0aadb9f21625f5e52d15d278",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "c20b52aba0c193b68de6800334f42613573244a7375b2967dcb7e04e0962b2f9",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "b-twee": {
+        "sha256": "7972a1d0a9d176ec814aa0bac0770ede4eb20fd860c2eac396855d4800224ba8",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "8520ffedca3202b81ccc7dde3a7e7aee33011c904a7870711158b8bb2f5f4eb7",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "a-twee": {
+        "sha256": "613df88b6138a1a641b71ec217cd6919e9bc4c8b98a87acea403bc28ad77f006",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "72a3d7e15a8fee6bede09ca514a4780e8bc97f8e3093201c53ce2e5f9d03e2a6",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "schema3-a": {
+        "sha256": "2ba1b87a30878c82837e9712b6b0aac076617a8b589f406b8e42e98cf92000d9",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "03ecd47a11e27bd26fab863598961de4f6dfe0d821b4b62d04e8f8288e1122ed",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      },
+      "schema3-b": {
+        "sha256": "3ce6cada1515c85312260a8e9525eee87237a914baf8ffe74809be6bd08cbc57",
+        "tabellen": 128,
+        "utf16": 91423,
+        "part_hashes": {
+          "[Content_Types].xml": "7630b5b8590824d91cbfe37fec3ba38bc2923e1e0b813a4b21ed0a362e99e0dd",
+          "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+          "docProps/core.xml": "3759c4f7ba3421f0aec84eb1ca7de4957768c64c80172ca99a2f82eec9943acd",
+          "docProps/app.xml": "14c28821a1b017e4453c8cb8c7b45641a8abfb1dab30ab3222427da482f301ce",
+          "word/document.xml": "b777cacbab199916effe991b22a2de0ba48f1b95ab784abf95a48c77f51d863c",
+          "word/_rels/document.xml.rels": "70ef9c3bbfc48354644004ace7666ae3b97e3afe6704f1584c160cb105827769",
+          "word/styles.xml": "26928a22a025cbf15abfa5f3a29b8710c633e9efdc5be8816bd23ef12d235f65",
+          "word/stylesWithEffects.xml": "c869a45906dc0d11b97add9df8e09e883da69c1d506512bfed1973ce6c828c8e",
+          "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+          "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+          "word/fontTable.xml": "c3f292e0ca07f2afd6c9964e92ed9819f0f1a080d897288ee9b09f76d291b58b",
+          "word/theme/theme1.xml": "beb1b48cfb39d38f08c74f926eb4a002bca373e97b88db3e01d7348725e131b6",
+          "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+          "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+        }
+      }
+    },
+    "verschillende_onderdelen": {
+      "a-een": [],
+      "b-een": [
+        "docProps/core.xml"
+      ],
+      "b-twee": [
+        "docProps/core.xml"
+      ],
+      "a-twee": [
+        "docProps/core.xml"
+      ],
+      "schema3-a": [
+        "docProps/core.xml"
+      ],
+      "schema3-b": [
+        "docProps/core.xml"
+      ]
+    },
+    "beelden": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ]
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          11,
+          4,
+          1132,
+          999
+        ]
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ]
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 66,
+        "bbox": [
+          11,
+          4,
+          1132,
+          999
+        ]
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ]
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ]
+      }
+    ],
+    "exacte_beeldparen": 7,
+    "grens": "Drie vaste screenshots per functieronde, hele pixels zonder masker; geen volledige document-/glyph-/platformvisualisatie.",
+    "core_verschillen": {
+      "b-een": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "b-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "a-twee": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "schema3-a": [
+        "{http://purl.org/dc/terms/}modified"
+      ],
+      "schema3-b": [
+        "{http://purl.org/dc/terms/}modified"
+      ]
+    },
+    "historische_voorraad_export": {
+      "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/native-rijk-a-een/Ontwerpnotitie.docx",
+      "sha256": "b47bb6462f00ef7f25bf397f9015dabfdf4dc548f266b35752487550f071d2d5",
+      "programma_sha256": "ee89c80e91be3a96fe47430b0e85d4093dde2bc160c0b10c872aa9733ce153bd",
+      "verschillende_onderdelen": [
+        "docProps/core.xml"
+      ],
+      "grens": "Bestaande voorraadexport met dezelfde rijke helper; geen nieuwe voorraadprestatiemeting."
+    }
+  },
+  "beeldinspectie": {
+    "beeldparen": [
+      {
+        "label": "b-een",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-een",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-een",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          11,
+          4,
+          1132,
+          999
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "b-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "a-twee",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 66,
+        "bbox": [
+          11,
+          4,
+          1132,
+          999
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-a",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "invoer-redo.png",
+        "verschillende_pixels": 8,
+        "bbox": [
+          1118,
+          997,
+          1132,
+          999
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "snel-getypt-bewaard.png",
+        "verschillende_pixels": 0,
+        "bbox": null,
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      },
+      {
+        "label": "schema3-b",
+        "beeld": "nieuw-na-laat-antwoord.png",
+        "verschillende_pixels": 36,
+        "bbox": [
+          555,
+          327,
+          557,
+          345
+        ],
+        "verschillen_buiten_vier_onderzochte_UI_regios": 0
+      }
+    ],
+    "regios": [
+      [
+        "venstericoon",
+        [
+          0,
+          0,
+          40,
+          36
+        ]
+      ],
+      [
+        "zoomschuif",
+        [
+          1100,
+          980,
+          1150,
+          1000
+        ]
+      ],
+      [
+        "cursor",
+        [
+          540,
+          315,
+          570,
+          355
+        ]
+      ],
+      [
+        "invoercursor",
+        [
+          1030,
+          935,
+          1045,
+          960
+        ]
+      ]
+    ],
+    "grens": "Volledige onbewerkte beelden eerder pixelgewijs vergeleken. Uitsneden alleen voor inspectie; nulmaskers of gewijzigde acceptatiebeelden."
+  },
+  "visueel": {
+    "bekeken": [
+      "beeldinspectie.png",
+      "native-b-een/snel-getypt-bewaard.png",
+      "native-schema3-b/snel-getypt-bewaard.png"
+    ],
+    "bevinding": "Beide bewaarbeelden tonen dezelfde rijke documentpagina, tabellen en ingevoerde tekst. De kleine overige pixelverschillen liggen in het venstericoon, de zoomschuif en knipperende cursors op de nieuw-document- en invoerbeelden; geen andere pixels verschillen in de 15 onderzochte beeldparen.",
+    "grens": "Vaste zichtbare uitsneden van drie functiestappen; geen visuele controle van alle 65 pagina's, glyphs of overige platforms. Originele beelden niet aangepast; uitsneden alleen voor inspectie."
+  },
+  "guard": {
+    "geslaagd": true,
+    "groepen": [
+      "actieve kern en interface geldig",
+      "bronCommit afgewezen",
+      "bronarchiefSha256 afgewezen",
+      "nootpatchSha256 afgewezen",
+      "basisWasmSha256 afgewezen",
+      "afwijkende bronpatch afgewezen",
+      "afwijkende kandidaatchecksum afgewezen",
+      "inactieve cache met kandidaatkern afgewezen",
+      "eerdere kern bij inactieve cache geldig",
+      "eerdere kern bij actieve cache afgewezen"
+    ],
+    "grens": "Werkelijke bouwguard uit getranspileerde bron op eigen fixture; npm en vendor alleen via leeslinks, geen canonieke bestanden gemuteerd."
+  },
+  "bouwkeuze": {
+    "geslaagd": true,
+    "bronvoorbereiding": [
+      {
+        "variant": "standaard",
+        "flags": [],
+        "procescode": 0,
+        "bronbestanden_exact": 4418,
+        "bronhergebruik_geweigerd": true,
+        "voorbereid": {
+          "alleenVoorbereid": true,
+          "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+          "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+          "digestcachePatchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49"
+        }
+      },
+      {
+        "variant": "expliciet",
+        "flags": [
+          "--digestcache"
+        ],
+        "procescode": 0,
+        "bronbestanden_exact": 4418,
+        "bronhergebruik_geweigerd": true,
+        "voorbereid": {
+          "alleenVoorbereid": true,
+          "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+          "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+          "digestcachePatchSha256": "63cb180b4a8b52a05670ea974ed879280b3a9b963180428ee69b34f6c0779b49"
+        }
+      },
+      {
+        "variant": "zonder",
+        "flags": [
+          "--zonder-digestcache"
+        ],
+        "procescode": 0,
+        "bronbestanden_exact": 4417,
+        "bronhergebruik_geweigerd": true,
+        "voorbereid": {
+          "alleenVoorbereid": true,
+          "bronCommit": "4e982c3aea0065578604c3fe7727938533888f66",
+          "patchSha256": "0f9d3f73ff4e6a5405e8773e26191800bfe74a3cf7580d92d65933e083826356",
+          "digestcachePatchSha256": null
+        }
+      }
+    ],
+    "conflicterende_vlaggen_geweigerd": true,
+    "verkeerde_actieve_basis_geweigerd": true,
+    "grens": "Default/expliciete bron bytegelijk aan reeds volledig tweemaal gebouwde cachekernbron. Deze beurt geen derde volledige Cargo/bindgen/opt-herbouw; variantkeuze en validatie gewijzigd, compilatiepad ongewijzigd."
+  },
+  "suites": {
+    "procescode": null,
+    "eindrapport_volledig_gecontroleerd": true,
+    "bestanden_geslaagd": 231,
+    "bestanden_overgeslagen": 1,
+    "tests_geslaagd": 2388,
+    "tests_overgeslagen": 4,
+    "default_vendor_kern": true,
+    "bewakingsproces_code": 143,
+    "eerste_run": {
+      "procescode": 143,
+      "volledig_eindrapport": false
+    },
+    "grens": "Tweede testloper bleef in eigen procesgroep doorlopen na verlies van bewakingsproces. Alle finale totalen en Duration-marker gecontroleerd; daadwerkelijke exitcode niet beschikbaar. Geen derde testloop of fictieve exitcode nul. TypeScript apart met procescode nul."
+  },
+  "behoud": {
+    "standaarddist529_byte_mode_mtime_exact": true,
+    "canonieke_pinnen14_exact": true,
+    "bewuste_productovergang": {
+      "bestand": "vendor/tekstengine/docx_edit_bg.wasm",
+      "oud_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "nieuw_sha256": "6fec97d3c650a625c085e0a0bf52e59ecd0802bc0070c42f706b4e03b4ff91c4",
+      "oude_kern_exact_bewaard": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-productie/basis/docx_edit_bg.wasm"
+    },
+    "grens": "Vendor-editkern is bewust vervangen; niet beweren dat alle 15 eerdere bronpinnen onveranderd zijn. Referentie-ELFs en oude voorraadkern behouden; eigen nieuwe bundels/ELFs toegevoegd. Rootcheckout alleen bewijsdocumentatie, bestaande .claude/ ongemoeid.",
+    "referentiepaden44_sha256_exact": true
+  },
+  "route": {
+    "geslaagd": true,
+    "proces_code": 0,
+    "seconden": 62.248712580883875,
+    "helper_sha256": "5db47036689cca041e575f5542f196b59628ee4d25a3f33c171865c515e68bce",
+    "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+    "venster_afgeleid": {
+      "begin": 22022.000000000004,
+      "eind": 30765.0
+    },
+    "in_invoervenster": {
+      "applyLocalUpdate": {
+        "aantal": 62,
+        "som_ms": 132.0,
+        "synchrone_fouten": 0
+      },
+      "paragraphSpans:body": {
+        "aantal": 63,
+        "som_ms": 499.9999999999927,
+        "synchrone_fouten": 0
+      },
+      "storySegmentUnitDigests:body": {
+        "aantal": 62,
+        "som_ms": 454.99999999999636,
+        "synchrone_fouten": 0
+      },
+      "storySegmentUnits:body": {
+        "aantal": 63,
+        "som_ms": 28.000000000010914,
+        "synchrone_fouten": 0
+      },
+      "paragraphSpans": {
+        "aantal": 1612,
+        "som_ms": 43.99999999999636,
+        "synchrone_fouten": 0
+      },
+      "storySegments:body": {
+        "aantal": 2,
+        "som_ms": 81,
+        "synchrone_fouten": 0
+      },
+      "storySegments": {
+        "aantal": 768,
+        "som_ms": 38.99999999999636,
+        "synchrone_fouten": 0
+      }
+    },
+    "hersteld": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "overflow": 0,
+    "grens": "Afgeleid invoervenster, facade-wrappers en functieproef op eigen X11; geen gewone ABBA, exclusieve Rust-CPU, raw delta-inhoud of cachepromotietelling."
+  },
+  "vervolg_analyse": {
+    "bron": ".local/integratiecontrole/digest-productie/bron/crates/docx-edit/src/wasm.rs:5276",
+    "bevinding": "paragraph_spans materialiseert alle story_segments en gebruikt alleen pilcrow-id en UTF16-lengtes. De schone digestcache bezit reeds unitgrenzen en para-id, maar geen gedeelde API voor spans.",
+    "vervolg": "Actuele volgorde bevestigt paragraphSpans vóór digests. Toets gedeelde unitmaterialisatie vóór de digestlezing alleen met bewezen warme promotie, exact hetzelfde Doc/epoch en volledige grenzencontrole. Koude of onzekere cache en ontbrekende/te lange para-id/trailing unit moeten volledig terugvallen. Corpus en echte pending-/Undo-/metadata-/foutproeven herhalen vóór Wasm/native proef; geen onveilige unitpointercache.",
+    "status": "Bronanalyse, nog geen patch of prestatiebewijs.",
+    "volgorde_bestaande_native_proef": "59 groepen: applyLocalUpdate → paragraphSpans → storySegmentUnitDigests → storySegmentUnits; één extra eindgroep. Alleen bestaande private projectie-contextfrontend.",
+    "volgorde_actuele_native_proef": [
+      {
+        "volgorde": [
+          "applyLocalUpdate",
+          "paragraphSpans",
+          "storySegmentUnitDigests",
+          "storySegmentUnits"
+        ],
+        "aantal": 61
+      },
+      {
+        "volgorde": [
+          "applyLocalUpdate",
+          "paragraphSpans",
+          "storySegmentUnitDigests",
+          "storySegmentUnits",
+          "paragraphSpans",
+          "storySegments",
+          "storySegmentUnits",
+          "storySegments"
+        ],
+        "aantal": 1
+      }
+    ]
+  },
+  "actuele_routevolgorde": {
+    "bronrapport": "route-een/rapport.json",
+    "programma_sha256": "ff3c93e8b40c8f7c554451120ad6237dc9ca33a43861981c3c1b3cf05b1c8e76",
+    "venster_afgeleid": {
+      "begin": 22022.000000000004,
+      "eind": 30765.0
+    },
+    "groepen": [
+      {
+        "volgorde": [
+          "applyLocalUpdate",
+          "paragraphSpans",
+          "storySegmentUnitDigests",
+          "storySegmentUnits"
+        ],
+        "aantal": 61
+      },
+      {
+        "volgorde": [
+          "applyLocalUpdate",
+          "paragraphSpans",
+          "storySegmentUnitDigests",
+          "storySegmentUnits",
+          "paragraphSpans",
+          "storySegments",
+          "storySegmentUnits",
+          "storySegments"
+        ],
+        "aantal": 1
+      }
+    ],
+    "grens": "Actuele kandidaatfrontend, extra diagnostische opname; geen gewone ABBA, exclusieve Rust-CPU of bewijs van cachepromoties."
+  },
+  "correcties": [
+    "Eerste volledige suite met SIGTERM beëindigd zonder eindrapport, niet groen verklaard. Tweede bewakingsproces ook beëindigd; zelfstandig doorlopende testloper daarna volledig eindrapport laten schrijven, exitcode onbekend.",
+    "Eerste productbundelcontrole gebruikte een verplaatste publicmap: daardoor werd een bestaand rekenbladsjabloon als extra asset opgenomen. Eigen foutieve proefbundel/log behouden; gecorrigeerde bouw gebruikt gewone publicDir en is exact aan getoetste kandidaat, afgezien van NOTICE.",
+    "Eerste beeldregiocontrole miste knipperende invoercaret onderaan pagina. Vierde regio na pixelinspectie toegevoegd; volledige ruwe pixelverschillen blijven ongewijzigd gerapporteerd.",
+    "Eerste bundelpaarcontrole botste op meerdere gelijknamige chunks; vervangen door multisetcontrole van volledig genormaliseerde pad/inhoud-signaturen.",
+    "Een te zware algemene tekstvergelijker voor minified JS gecontroleerd gestopt; lineaire prefix/suffix-analyse verklaarde het ene afwijkende sjabloonpad. Geen productproces geraakt."
+  ],
+  "niet_gecontroleerd": [
+    "Geen Windows/macOS, installers, andere edities, hosted-uitgave of CI.",
+    "Geen volledige SDK-suite, alle Writer-functies of alle pagina-/glyphweergaven.",
+    "Geen derde volledige Cargo/bindgen/opt-herbouw na wijziging van default-keuze; voorbereide standaardbron is exact aan de tweemaal volledig gebouwde kandidaatbron. Compilatiepad ongewijzigd.",
+    "Geen fysieke input-FPS, exclusieve Rust-CPU of gemeten cachepromotietelling."
+  ],
+  "vervolg": "Ernstige invoer- en selectievertraging verder verhelpen. ParagraphSpans vóór digests materialiseert opnieuw; actuele routevolgorde bevestigd; gedeelde materialisatie met volledige verliesloosheids-/identiteits-/epoch-/grenscontracten toetsen. Een simpele schone-cachelezer na digests mist de dominante eerdere volgorde. Schema3 blijft afzonderlijk traag; Database laatst.",
+  "archief": {
+    "pad": "2026-11-28-writer-digestcache-actueel.tar.gz",
+    "sha256": "fa5e3a84570e13f4c8701fed38fc767ce82756be7d9ae523c7487301b0e22b0d",
+    "bytes": 4729020,
+    "bestanden": 116,
+    "inhoud": "Scripts, daadwerkelijke gewijzigde bron/metadata/NOTICE, manifests, bouw-/suitelogs, native rapporten/DOCX/beelden, bundel- en embeddingcontrole. Geen grote ELF/Wasm/targets; immutable lokale referentiepaden en SHA vastgelegd. Reproduceerbare cachebron via eerdere productiebronpatch en vastgezette gereedschappen.",
+    "voorgaand_bewijs": "2026-11-28-writer-digestcache-productie.json bevat de volledige schone Wasm-bouw/pariteit en kernrandproeven; deze zijn niet opnieuw als nieuwe proeven geteld."
+  }
+}

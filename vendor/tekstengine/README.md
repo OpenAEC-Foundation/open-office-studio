@@ -33,9 +33,12 @@ beschrijven de wijzigingen. De gewone licentiebundeling neemt beide mee.
 
 ## Opnieuw bouwen
 
-Met `--digestcache` wordt ook de afzonderlijk gecontroleerde
-[bodydigestcache](../../patches/tekstengine-digestcache.json) toegepast. De
-standaardopdracht blijft de meegeleverde kern bouwen. Met
+De standaardopdracht past ook de gecontroleerde
+[bodydigestcache](../../patches/tekstengine-digestcache.json) toe. Deze hergebruikt
+onveranderde bodydigests na een bewezen enkele tekstinvoeging. Onzekere
+wijzigingen worden volledig herberekend. De ernstige invoervertraging is hiermee
+nog niet opgelost. Met `--zonder-digestcache` wordt de eerdere kern gebouwd;
+`--digestcache` kiest de cache expliciet. Met
 `--alleen-voorbereiden` verifieert en patcht het script de bron zonder
 compilatie; de uitvoermap krijgt dan `voorbereid.json`.
 

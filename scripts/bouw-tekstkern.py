@@ -27,7 +27,9 @@ def main():
     parser.add_argument('--wasm-bindgen', default='wasm-bindgen')
     parser.add_argument('--wasm-opt', default='wasm-opt')
     parser.add_argument('--controle', action='store_true', help='Draai ook de gerichte native kernproeven.')
-    parser.add_argument('--digestcache', action='store_true', help='Pas ook de gecontroleerde bodydigestcache toe.')
+    cachekeuze = parser.add_mutually_exclusive_group()
+    cachekeuze.add_argument('--digestcache', action='store_true', help='Pas ook de gecontroleerde bodydigestcache toe.')
+    cachekeuze.add_argument('--zonder-digestcache', action='store_true', help='Bouw de eerdere kern zonder bodydigestcache.')
     parser.add_argument('--alleen-voorbereiden', action='store_true', help='Verifieer en patch de bron zonder te compileren.')
     args = parser.parse_args()
     if args.controle and args.alleen_voorbereiden:
@@ -39,11 +41,13 @@ def main():
         raise SystemExit('De nootpatch wijkt af van de vastgelegde checksum.')
     cache = None
     cachepatch = None
-    if args.digestcache:
-        cache = json.loads((repo / 'patches/tekstengine-digestcache.json').read_text())
+    cachegegevens = json.loads((repo / 'patches/tekstengine-digestcache.json').read_text())
+    if args.digestcache or (cachegegevens.get('actiefInProduct') is True and not args.zonder_digestcache):
+        cache = cachegegevens
         if (cache['bronCommit'] != metadata['commit']
                 or cache['bronarchiefSha256'] != metadata['bronarchiefSha256']
-                or cache['nootpatchSha256'] != metadata['patchSha256']):
+                or cache['nootpatchSha256'] != metadata['patchSha256']
+                or cache['basisWasmSha256'] != metadata['wasmSha256']):
             raise SystemExit('De digestcache hoort bij een andere basisbron of nootpatch.')
         cachepatch = repo / 'patches' / cache['patch']
         if sha256(cachepatch) != cache['patchSha256']:

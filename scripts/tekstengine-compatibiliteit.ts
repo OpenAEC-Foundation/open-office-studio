@@ -24,6 +24,14 @@ export function controleerNootKern(): void {
   const meta = JSON.parse(lees("../patches/tekstengine-nootnummering.json").toString());
   if (som(lees("../patches/tekstengine-nootnummering.patch")) !== meta.patchSha256)
     throw new Error("De bronpatch wijkt af van de gecontroleerde versie.");
+  const cache = JSON.parse(lees("../patches/tekstengine-digestcache.json").toString());
+  const cacheActief = cache.actiefInProduct === true;
+  if (cacheActief && (cache.bronCommit !== meta.commit
+      || cache.bronarchiefSha256 !== meta.bronarchiefSha256
+      || cache.nootpatchSha256 !== meta.patchSha256
+      || cache.basisWasmSha256 !== meta.wasmSha256
+      || som(lees("../patches/tekstengine-digestcache.patch")) !== cache.patchSha256))
+    throw new Error("De digestcache wijkt af van de gecontroleerde bron en patch.");
   const contract = (bytes: Uint8Array) => {
     const module = new WebAssembly.Module(Uint8Array.from(bytes));
     return JSON.stringify({
@@ -32,7 +40,7 @@ export function controleerNootKern(): void {
     });
   };
   for (const [soort, naam, nieuw, oud] of [
-    ["edit", "docx_edit", meta.wasmSha256, meta.oorspronkelijkWasmSha256],
+    ["edit", "docx_edit", cacheActief ? cache.wasmSha256 : meta.wasmSha256, meta.oorspronkelijkWasmSha256],
     ["layout", "docx_layout", meta.layoutWasmSha256, meta.oorspronkelijkLayoutWasmSha256],
   ]) {
     const kern = lees(`../vendor/tekstengine/${naam}_bg.wasm`);
