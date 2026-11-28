@@ -1,0 +1,1326 @@
+{
+  "datum": "2026-11-28",
+  "basis_integratie": "2085afa6",
+  "basis_hoofdbranch": "02c91e42",
+  "besluit": "Rust-digestfasen onderscheiden. Twee kleine varianten niet geselecteerd voor Wasm/appbouw: vlakke eenheidsslices vrijwel gelijk aan referentie, begrensd per-call Any::Map-memo circa tien procent trager bij hashing. Geen productfix of desktopwinst bewezen.",
+  "aanpak": "Eigen Rust-bronkopie van de exacte digestfunctie, vergeleken met de ongewijzigde functie uit vastgepinde native bibliotheek. Handmatige opt-level3-driver op bestaande libraries, eindbouw met -D warnings; geen SDK-, native-vendor-, Wasm- of desktopproductbestand gewijzigd. Voorraadorakel uit echte 737ee8c-Wasm: 31 reeksen, 80 toestanden, inclusief 30 bestaande corpusgevallen/43 updates en zeven rijke invoertoestanden. Alleen geaccepteerde bronstaten/diffs geëxporteerd; bestaande inference/fout/staatasserties in orakelgenerator behouden.",
+  "analyse": {
+    "frames": 80,
+    "digests_tegen_voorraad_wasm32": 133204,
+    "native64_afwijkend_van_wasm32": 133204,
+    "synthetische_splits": 121,
+    "metingen": [
+      {
+        "frame": "basis",
+        "materialisatie_ms": 4.697073,
+        "hash_ms": 6.0073235,
+        "hex_ms": 0.138741,
+        "json_ms": 0.02569,
+        "units_vrijgave_ms": 0.8833975,
+        "A_ms": 11.9976765,
+        "B_ms": 11.9104,
+        "B_A": 0.9927255498179167,
+        "memo_hash_ms": 6.6285725,
+        "memo_referentie_hash_ms": 5.960458,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-1",
+        "materialisatie_ms": 4.94404,
+        "hash_ms": 5.995893,
+        "hex_ms": 0.145731,
+        "json_ms": 0.026365,
+        "units_vrijgave_ms": 0.6842955,
+        "A_ms": 12.028501,
+        "B_ms": 12.1248575,
+        "B_A": 1.008010682295325,
+        "memo_hash_ms": 6.622393,
+        "memo_referentie_hash_ms": 5.9468525,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-2",
+        "materialisatie_ms": 5.111661,
+        "hash_ms": 6.1433545,
+        "hex_ms": 0.1526815,
+        "json_ms": 0.02696,
+        "units_vrijgave_ms": 0.800302,
+        "A_ms": 12.2987435,
+        "B_ms": 12.3072885,
+        "B_A": 1.0006947864226943,
+        "memo_hash_ms": 6.6176685,
+        "memo_referentie_hash_ms": 5.967413,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-3",
+        "materialisatie_ms": 5.1673965,
+        "hash_ms": 6.0357935,
+        "hex_ms": 0.152561,
+        "json_ms": 0.0284705,
+        "units_vrijgave_ms": 0.710251,
+        "A_ms": 12.187323,
+        "B_ms": 12.257778,
+        "B_A": 1.0057810070349331,
+        "memo_hash_ms": 6.6274285,
+        "memo_referentie_hash_ms": 5.9467475,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-4",
+        "materialisatie_ms": 5.090896,
+        "hash_ms": 5.996788,
+        "hex_ms": 0.1500815,
+        "json_ms": 0.028125,
+        "units_vrijgave_ms": 0.7084405,
+        "A_ms": 12.1580675,
+        "B_ms": 12.187072,
+        "B_A": 1.0023856176156285,
+        "memo_hash_ms": 6.6409985,
+        "memo_referentie_hash_ms": 5.965878,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-5",
+        "materialisatie_ms": 5.142211,
+        "hash_ms": 5.999718,
+        "hex_ms": 0.1572365,
+        "json_ms": 0.027755,
+        "units_vrijgave_ms": 0.726721,
+        "A_ms": 12.214353,
+        "B_ms": 12.291409,
+        "B_A": 1.0063086436096944,
+        "memo_hash_ms": 6.637163,
+        "memo_referentie_hash_ms": 5.979988,
+        "memo_hits": 4,
+        "memo_misses": 23181
+      },
+      {
+        "frame": "invoer-6",
+        "materialisatie_ms": 5.154786,
+        "hash_ms": 6.023113,
+        "hex_ms": 0.1606815,
+        "json_ms": 0.028495,
+        "units_vrijgave_ms": 0.8067115,
+        "A_ms": 12.201373,
+        "B_ms": 12.312263,
+        "B_A": 1.0090883214536592,
+        "memo_hash_ms": 6.625138,
+        "memo_referentie_hash_ms": 5.968203,
+        "memo_hits": 4,
+        "memo_misses": 23187
+      }
+    ],
+    "besluit": "Beide varianten niet geselecteerd voor Wasm/native-appbouw: vlakke slices wisselend en vrijwel gelijk; begrensd per-call mapmemo maakt hashing trager.",
+    "grenzen": "Native opt-level3 onder Linux; gefaseerde route heeft andere tijdelijke allocaties dan oorspronkelijke één-passagetotaal. Vrijgave apart gemeten. Geen Wasm-kandidaat of desktopprestatieacceptatie; 32-bit hashbreedte-emulatie wel tegen echte voorraad-Wasm getoetst."
+  },
+  "pariteit": {
+    "referentie": {
+      "digests_tegen_wasm32": 133204,
+      "frames": 80,
+      "geslaagd": true,
+      "grens": "Native Rustcomponent op vastgepinde bibliotheek; 32-bit hashbreedte tegen echte Wasm-goldens getoetst. Geen Wasm-kandidaat, desktopmeting of prestatiewinstacceptatie.",
+      "native64_afwijkend_van_wasm32": 133204,
+      "pariteit": [
+        {
+          "case": "rijk",
+          "frame": "basis",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-4",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-5",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-6",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "latin",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "latin",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "unicode",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "unicode",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "leeg-tekst",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "leeg-tekst",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-font",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-font",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-uitlijning",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-uitlijning",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-delete",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-delete",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-split",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-split",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1666
+        },
+        {
+          "case": "marges",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "marges",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "documentmetadata",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "documentmetadata",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "commentaar",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "commentaar",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "nieuwe-story",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "nieuwe-story",
+          "frame": "update-1",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "headertekst",
+          "frame": "initial",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "headertekst",
+          "frame": "update-1",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "twee-posities",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-posities",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "te-groot",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "te-groot",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "zelfde-opmaak",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "zelfde-opmaak",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-delete",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-delete",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-opmaak",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-opmaak",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-auteurs",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-auteurs",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "lege-update",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "lege-update",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "wijzigingsvoorstel",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "wijzigingsvoorstel",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-4",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-5",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-6",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-7",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-8",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-vet",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-vet",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-lettertype",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-lettertype",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-hyperlink",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-hyperlink",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "begin-alinea",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "begin-alinea",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "midden-alinea",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "midden-alinea",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        }
+      ],
+      "synthetische_splits": 121
+    },
+    "memo": {
+      "digests_tegen_wasm32": 133204,
+      "frames": 80,
+      "geslaagd": true,
+      "grens": "Native Rustcomponent op vastgepinde bibliotheek; 32-bit hashbreedte tegen echte Wasm-goldens getoetst. Geen Wasm-kandidaat, desktopmeting of prestatiewinstacceptatie.",
+      "native64_afwijkend_van_wasm32": 133204,
+      "pariteit": [
+        {
+          "case": "rijk",
+          "frame": "basis",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-4",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-5",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "rijk",
+          "frame": "invoer-6",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "latin",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "latin",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "unicode",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "unicode",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "leeg-tekst",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "leeg-tekst",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "herhaling",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-font",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-font",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-uitlijning",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-uitlijning",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-delete",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-delete",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-split",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "andere-split",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1666
+        },
+        {
+          "case": "marges",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "marges",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "documentmetadata",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "documentmetadata",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "commentaar",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "commentaar",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "nieuwe-story",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "nieuwe-story",
+          "frame": "update-1",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "headertekst",
+          "frame": "initial",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "headertekst",
+          "frame": "update-1",
+          "stories": 770,
+          "units": 1666
+        },
+        {
+          "case": "twee-posities",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-posities",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "te-groot",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "te-groot",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "zelfde-opmaak",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "zelfde-opmaak",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "pending",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "fout-na-goed",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-delete",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-delete",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-opmaak",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "alleen-opmaak",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-auteurs",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "twee-auteurs",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "lege-update",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "lege-update",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "wijzigingsvoorstel",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "wijzigingsvoorstel",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-4",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-5",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-6",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-7",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "acht-opeenvolgend",
+          "frame": "update-8",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-vet",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-vet",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-lettertype",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-lettertype",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-hyperlink",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "opmaak-hyperlink",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-2",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "positief-gemengd-positief",
+          "frame": "update-3",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "begin-alinea",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "begin-alinea",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "midden-alinea",
+          "frame": "initial",
+          "stories": 769,
+          "units": 1665
+        },
+        {
+          "case": "midden-alinea",
+          "frame": "update-1",
+          "stories": 769,
+          "units": 1665
+        }
+      ],
+      "synthetische_splits": 121
+    },
+    "orakel": {
+      "cases": 31,
+      "frames": 80,
+      "wasm_sha256": "737ee8c99492796e91a8775c35bb2cf3ef008857219f88f57b64c69a7744f9d9",
+      "sha256": "691cfe7358167b7241e74e6173b93b8e43c2d8681e1ba7732da5734f79b174b8"
+    },
+    "grens": "Vlakke slices vergelijken native digests en fouttekst met native referentie voor alle stories. Gekopieerde hash met expliciete 32-bit usize/isize-schrijfbreedte matcht 133.204 voorraad-Wasm-digests; memo eveneens in native- en 32-bit adaptervorm. Geen werkelijk gebouwde Wasm-variant. 121 synthetische splits dekken lege, opeenvolgende pilcrow- en trailing text/embed-patronen. Native bronbytes en vector vóór/na alle lezingen gelijk; geen volledige native bronbytegelijkheid met alle Wasm-serialisaties geclaimd."
+  },
+  "bouw": {
+    "code": 0,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/rustc",
+      "--edition=2024",
+      "-C",
+      "opt-level=3",
+      "-D",
+      "warnings",
+      "-L",
+      "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-fasen/proef.rs",
+      "-o",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-fasen/proef",
+      "--extern",
+      "docx_edit=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libdocx_edit.rlib",
+      "--extern",
+      "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+      "--extern",
+      "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libserde_json-2b291618093ba6bc.rlib"
+    ],
+    "bibliotheken": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libdocx_edit.rlib": "52157645b1e958664be77ceff53969f3bd0136abc2ceeaabc89738982e0c5b32",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libyrs-07f01d28fbed520f.rlib": "8036c5d9a036ab2eb84d3a5f2fb9b713914974b2ea4d1426146e5675d78765b3",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libserde_json-2b291618093ba6bc.rlib": "25180ec97ec3671c4c477dde6229beb801328946675d355e5b3692eea4b5284e"
+    }
+  },
+  "bouw_memo": {
+    "code": 0,
+    "opdracht": [
+      "/home/aia01/.cargo/bin/rustc",
+      "--edition=2024",
+      "-C",
+      "opt-level=3",
+      "-D",
+      "warnings",
+      "-L",
+      "dependency=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-fasen/proef-memo.rs",
+      "-o",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/digest-fasen/proef-memo",
+      "--extern",
+      "docx_edit=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libdocx_edit.rlib",
+      "--extern",
+      "yrs=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libyrs-07f01d28fbed520f.rlib",
+      "--extern",
+      "serde_json=/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libserde_json-2b291618093ba6bc.rlib"
+    ],
+    "bibliotheken": {
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libdocx_edit.rlib": "52157645b1e958664be77ceff53969f3bd0136abc2ceeaabc89738982e0c5b32",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libyrs-07f01d28fbed520f.rlib": "8036c5d9a036ab2eb84d3a5f2fb9b713914974b2ea4d1426146e5675d78765b3",
+      "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-rij-native/target/release/deps/libserde_json-2b291618093ba6bc.rlib": "25180ec97ec3671c4c477dde6229beb801328946675d355e5b3692eea4b5284e"
+    }
+  },
+  "behoud": {
+    "referenties38_exact": true,
+    "bronpinnen15_exact": true,
+    "standaardbundel529_byte_mode_mtime_exact": true,
+    "native_bibliotheken_exact": true,
+    "orakelframes80_sha_exact": true,
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "drivers": {
+      "proef": "76866d1d8df17925f894ff8286a60a76cb0890789b3feafca4994935a6f3943e",
+      "proef-memo": "c6436715d94536f4a927efaa6f3542d1e695c62452754521e7132295bdfe53c6"
+    },
+    "nieuwe_desktop_of_wasm_bouw": false
+  },
+  "bronpinnen": {
+    "sdk_lib": {
+      "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs",
+      "sha256": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    },
+    "native_lib": {
+      "pad": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/native/vendor/docx-edit/src/lib.rs",
+      "sha256": "6f68ce792f0605e50e77754152709b846dca76d34efb23a27bd12b97c510ebc2"
+    },
+    "digestfunctie_exact_gelijk": true,
+    "wasm32_orakel": "Alleen usize/isize-hashschrijfbreedte in kopie op 32 bits vastgezet; moet tegen echte voorraad-Wasm worden bewezen."
+  },
+  "vervolgbron": {
+    "bestanden": {
+      ".local/integratiecontrole/font-hergebruik/bron/packages/docx/src/yrs/yrsSessionFacade.ts": "4925b2c94be4ae21cedc3e47cf2d285f0d72a29dc5c0bc48bce183ad99dd5166",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/wasm.rs": "ae284682fdb9a3310dc22ec5e014a179e5fd99afea05a5bc5917844c3aa11d35",
+      ".local/integratiecontrole/font-hergebruik/bron/crates/docx-edit/src/lib.rs": "df13aad72a2a8680711273d4eba6855afa41d4e612aaa78030e9fc152c454fe7"
+    },
+    "routes": {
+      "facade_applyLocalUpdate": "    applyLocalUpdate: (update) => {\n      ensureUndo();\n      markDirty('all');\n      mutate(() => session.apply_local_update(update));\n    },\n",
+      "wasm_apply_local_update": "    pub fn apply_local_update(&self, update: &[u8]) -> Result<(), JsValue> {\n        self.engine\n            .doc()\n            .apply_local_update_v1(update)\n            .map_err(js_err)\n    }\n\n",
+      "doc_apply_local_update": "    pub fn apply_local_update_v1(&self, bytes: &[u8]) -> EditResult<()> {\n        let update = Update::decode_v1(bytes)\n            .map_err(|error| EditError::InvalidUpdate(error.to_string()))?;\n        self.integrate_update(update, UpdateOrigin::Local)\n    }\n\n"
+    },
+    "vervolg": "Onderzoek een epoch-gebonden bodydigestcache met uitsluitend bewijsgestuurde promotie na echte apply_local_update. Gebruik geen onbewaakte IndexedUnit/Arc-identiteit: embedded Yrs-metadata kan veranderen. Behoud local origin/Undo, identiteit/commentaarherstel en volledige fallback bij metadata, extra commits of onzekere eenheidsgrenzen. Verifieer eerst dat de werkelijk gebruikte lokale updateroute onveranderde units veilig kan aantonen; eerdere remote-inferenceproeven zijn daarvoor geen automatische dekking."
+  },
+  "interpretatie": "Zeven rijke toestanden met elk tien ABBA-groepen. Native medianen per aanvraag: materialisatie circa 4,7–5,2 ms, hashing circa 6,0 ms, hex 0,14–0,16 ms, JSON circa 0,03 ms en vrijgave circa 0,7–0,9 ms. Gefaseerde route heeft andere tijdelijke allocaties dan oorspronkelijke één-passagetotaal; fasemedianen niet als exacte som interpreteren. Vlakke route A/B vrijwel gelijk en wisselend. Memo heeft maximum 4.096 mapidentiteiten, alleen gedurende één aanroep met geleende ongemuteerde input; vier hits bij 23.181/23.187 misses, hashing circa 6,6 tegenover 6,0 ms. Geen document-/epochoverschrijdend pointermemo toegepast. Normale native64-digests wijken in deze 133.204 gevallen af van Wasm32 door usize-hashing; de adapter is testgereedschap, geen nieuw productprotocol.",
+  "vervolg": "Toets op een eigen kernkopie een epoch-gebonden bodydigestcache met uitsluitend bewijsgestuurde promotie voor onveranderde units na echte apply_local_update. Eerst aantonen welke native updatepaden veilig eligible zijn; de frontend gebruikt applyLocalUpdate→apply_local_update met local origin/Undo, niet alleen remote apply_update_with_inference. Elke onzekere tekst-/metadata-/embed-/identiteits-/commentaarwijziging, extra commit of eenheidsgrenswijziging moet volledige herberekening geven. Gebruik bestaande mutatiebewijzen en corpus, behoud lokale Undo/eigenaarschap, exacte targetbreedte-digests en foutvolgorde. Geen onbewaakte Arc/IndexedUnit-pointercache. Pas na componentbewijs een Wasm-variant en gewone korte/rijke native ABBA met bron/DOCX/beelden. Database laatst.",
+  "niet_getoetst": "Geen Wasm-/desktopkandidaat, nieuwe GUI/visuele proef, volledige suites/CI, andere platforms/edities/releasevarianten/installers of volledige opmaak-/functiedekking. Native Rust timings zijn geen frontend-Wasm-CPU- of app-latencybewijs. Eerdere geheugenfouten niet opgelost, geen issue of migratiegebied voltooid. Tussenliggende meetvelden veroorzaakten ongebruikte-variabelewaarschuwingen; gecorrigeerd, logs behouden en einddrivers met -D warnings groen.",
+  "archief": {
+    "bestand": "2026-11-28-writer-rust-digestfasen.tar.gz",
+    "sha256": "a5375c1deffe55addd5a0aed87c92b1cc7e4fd65159039d79c5d2ade67e3fa60",
+    "leden": {
+      "analyse.json": "675bde083e32f45990dd9537e74812ce015ee51648bfb67042071fee151886fe",
+      "analyse.log": "b465efcff282dad90c075ae75d2db15c58724de042afa3ae7303c7b2f10150e9",
+      "analyse.py": "cea022008b93b86d4b4eed2bb54447a659db164dc681300b8d18c2630c172baf",
+      "behoud.json": "f9344e7c64479eabf7812d789580580176d798c538de10d503fa4c91303c3fcf",
+      "behoud.py": "52168dec0becfd8ac32c9e39e42d5182fac1a6fbe668d8d5ebe52343146f602c",
+      "bouw-memo.json": "f729b8eaa9699bbbbf49deb4468c7e291bd47668720fb710bf95e8aaa6c0b4fe",
+      "bouw.json": "bb81dd8f0c80ffd792838c02bea6dd6e6ec04e5d2b8135f179da5f3c7dfe1d84",
+      "bouwen-breedte-metwaarschuwingen.log": "b9a35ccc9e8dded91f7e38730ba1d16ef9d50d23709755bae35b8f4cb2f1616f",
+      "bouwen-memo-metwaarschuwingen.log": "983babfffabbc82e32427056da8f37e12a14b287fc9fc32f5536722352edae68",
+      "bouwen-memo.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bouwen-memo.py": "8ba2c680193f0b71910d67492d3b6721d621456cd7a87ab51efe91b39ff6872a",
+      "bouwen.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bouwen.py": "ce4686fe0dd019d155f9dbf4e0fc1f6de1b69ef0c36d3e0e06587eeeab3244f1",
+      "bronpinnen.json": "15b237e17cdb0f654ad9156bc4be462a6f9ad4304e3946bfc602a50f6c336d32",
+      "digest-memo.rs": "b83eeb9abd03b2c4143c850343773f524bb328cec148259e9343ac30dca41036",
+      "digest-memo32.rs": "1040f2b956a2c0420a5095a13209b8f1cce9d40c0ba6e5b5eebababf61d333a1",
+      "digest-origineel.rs": "2d37a048c2f896a6e1a3c1c06d5bc85190011db215ed98e2b73c429ca2116647",
+      "digest-wasm32.rs": "1e6db344d788955c7ce5553037bee6115252d04da4a04197864b0554f61fb679",
+      "frames/000.bin": "b27f5679c791aaf473becfb7d39d72046978c0ca2223b50da7d142dc9a42eb33",
+      "frames/001.bin": "4ba08cd07781c251310b516caed5c7802472e0040e3a4f65e7eb617c9128860e",
+      "frames/002.bin": "9364bb2b0acf2707756d25c5137861f1e1c43c6a2fd3bbf3fd5754b938e86bc9",
+      "frames/003.bin": "c1f9d82ce6a7d542309bd854ac02b72faf36ee4dc3f9549ca3c39b2ce04c7d00",
+      "frames/004.bin": "c2af9d3b96fa33a9af708aaedc2ed8d5d802bda9ae3d17d4f5623e6fd0d0e1b1",
+      "frames/005.bin": "dab9c6a29407597cc0d4c080200c5ca3c7a5964e80c31f7d9c36c6c12bc7986d",
+      "frames/006.bin": "f58a00c133f1290a5b76711778ad32d3eb37b59e66224f16e33afee019ddb1e7",
+      "frames/007.bin": "a5e93e44c9307bd58c7cddd7b60be0ac8221f692bd49a18232f54e6e3f6940fe",
+      "frames/008.bin": "24244f7521aef9bfd9f58d54276dc0d1fa3ed42bfa34a941d7a1ba29a834aa11",
+      "frames/009.bin": "f210328d901ea8244fefdbcbdf2d6bd90614f63ef1535bbffc673d29839b4442",
+      "frames/010.bin": "71c1c0baf577409e32071f16584fe18292e2f290abe6fc3d77eab4f0b0e48af0",
+      "frames/011.bin": "8b52a04a70df51369435172e791713f244bbbb38679844bdb61437c40a5d022b",
+      "frames/012.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/013.bin": "30952b06af5b2c86c6a4c85f098587f3088967b017f6178ebae106c6609b3a0c",
+      "frames/014.bin": "24244f7521aef9bfd9f58d54276dc0d1fa3ed42bfa34a941d7a1ba29a834aa11",
+      "frames/015.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/016.bin": "b01615233701a2f596862e1a9165a687e288b1db5c4f1cbf5c74465571c0eb3e",
+      "frames/017.bin": "6c206cf8514d4edd297f2d2debc087f38a93007db52eb659c682cf926cafb7b4",
+      "frames/018.bin": "f93198c484d76ae8e0e723092e26753e0dc08e131b4bb0a63bcc3fd545b7d49a",
+      "frames/019.bin": "2ef4539f0d01eb55d0d1b16f4691a86cd38060d1dc95048ad25b8698faa52da9",
+      "frames/020.bin": "a19b56bd8f4a77cc72a1a1f54394020367a37674ee42efd031a15fdbe8ec31a8",
+      "frames/021.bin": "0d8a718ca80575ffb9144a049dfbceed4f4ece3d94be44073a1594aa9a926a9d",
+      "frames/022.bin": "93237cc5ade7a1291686af5877b7d4f7dc070a6e4d75e127aceeb956c2aab75d",
+      "frames/023.bin": "1a7798775bc10e23a9b657dfaeeb3f336fb359fb0825e2a91cc2d3aba5c97e79",
+      "frames/024.bin": "f7b7c0aa27e7397676a79eb4b8c3f189852c1fc08d2dc8f7525e767f78d9cca3",
+      "frames/025.bin": "93ee742bf377d5909015c73d251962d2231b434e8373239e05a466e1a98bc4b4",
+      "frames/026.bin": "82b7144a6cafb51b738abef5e8e6fbdf22719ceba39073741153e6bca9c2d465",
+      "frames/027.bin": "615bfa35bb135bc55650de5988e7e02741a8967b6a64ccb0a3a5e2b629880a29",
+      "frames/028.bin": "4183609958f86e5bde1a17dcb6399d8b483f5a700e65ce53207f102c4d35446d",
+      "frames/029.bin": "0cde459d0bd42444836cab05fe4fd68903e9962f1002ccf9da215db34c351949",
+      "frames/030.bin": "76c7d1f4a19e56aefd484243737bd480d30a6a692cfb4ba33387323af5dfe97d",
+      "frames/031.bin": "1292e014f8475003849f809fe5010777716f985f11723ad48bf4fe8c9dce98d3",
+      "frames/032.bin": "fb1e7fa86bc3d92824e28beb978b6d512f38fc3a08d9f520021e580720550968",
+      "frames/033.bin": "7d80b4086a0ea8b088010555bdd452c2ba65eeab5ec797c5a2e93ed2e8474d63",
+      "frames/034.bin": "8cf7c3b6972294f3564fe16f2fcccfedca8089ad945bdc135c1a96d264d44330",
+      "frames/035.bin": "403b648cee4bbfe91c86b8ab7b2fb955cfdd482f2bb0a8c8f409fcb433b8d2b7",
+      "frames/036.bin": "ea82d62280897bfdf77fc6a4e0343a3a7e9da142c8a6486727d90d13a860c093",
+      "frames/037.bin": "a9dd22deb5e44894e5fcab381da4f20dcf4dff1aabfe8362577f43f39b5a2594",
+      "frames/038.bin": "a9f60e572434abe750ba496e0b2e595a4b7a6855973d969f0b38767795243563",
+      "frames/039.bin": "28ee7286535383f2017ac83f69a8b11ca690df90f11d7960fdde4bf870c9037a",
+      "frames/040.bin": "8533dda3b316ef9016a1e2cab50bfda9e7314b831899b0e5cb1d94232f78c8b5",
+      "frames/041.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/042.bin": "f30c250e951df6fd4dcec1ad6df662f1ab5b337992c7a694c40da80c43d706e2",
+      "frames/043.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/044.bin": "0457f03dab6e836619bc1f3e221bee5a3d51e8b0308713a0f64168b2b1f2e605",
+      "frames/045.bin": "24244f7521aef9bfd9f58d54276dc0d1fa3ed42bfa34a941d7a1ba29a834aa11",
+      "frames/046.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/047.bin": "fb12dd3dcb22ea5bcf268eb1eadd937061c0393470a1761cef63e71e8286ad8a",
+      "frames/048.bin": "cc5a5555ecffa4379137fc9a5fdcb1410a479141de2b7b862200e31f4e4be788",
+      "frames/049.bin": "4afd29b7095777716c2dac5ff8fb3bd6dffd90e952656ae1bf59fa974fb175e3",
+      "frames/050.bin": "d760356a52dad475715e164b0bb4ca49fb014218c14f6d64e17772dc6644f743",
+      "frames/051.bin": "3619e08c744fee7df1795285040a26accffbab378e15bf3704f3bd1cba7d9096",
+      "frames/052.bin": "fb967d72bacea8a3db63f766b02f85126dc2837f2b6bc1b9e2ce6d783b685fe8",
+      "frames/053.bin": "6a42366745cbff4697f219f14f203604b8c21b05eda356ce84e928f4be541ffc",
+      "frames/054.bin": "4c013ad70bd4731f3eace421212f5930237de0b280a4555bcb2dcc1de6fcd171",
+      "frames/055.bin": "5226146038d1349f32ae8822c076ce1702b7dbbe8de8d7c90812c5e7c64a9e48",
+      "frames/056.bin": "b6b44a6452798f38592f44abe2d414193d19f22c6b1af83992cedc8c7640cf0a",
+      "frames/057.bin": "dbe3399614ec812bf69922d642a63c77ccf62dd2a26fd6cf94e2237360be7211",
+      "frames/058.bin": "3446a5fd230d8493a86ddb13b875549d16f3b76adbebe69d3d9e6a7de5d8aa23",
+      "frames/059.bin": "03899753303d79e7960594d41dfe9cab56e757a668b6b29da6559d21790e3c5c",
+      "frames/060.bin": "0d0a5638dc4374e3aa2c123f84f6e15d7b4e23d4795bc71845ed4b246a18ea3c",
+      "frames/061.bin": "a28698a4882a9c8ce55edd62782406953c2a71308555287338c570baa7db2c2a",
+      "frames/062.bin": "5debd7cd37e64f74c1a99d3911faaa3d13d7420fbb372db7245c6ae204a1716a",
+      "frames/063.bin": "b187abd72d36b3c019be38fc9d3d91f1730bde015f3a54dfe2ca56648a669ea7",
+      "frames/064.bin": "1d583689b262c9c671bb15671b23392f590b93eb7e1743c5b56f34a7611eddfc",
+      "frames/065.bin": "bbfa724176d2e977ee4670a053e780e9b4f09b73f447eae2f835736b23e5e50d",
+      "frames/066.bin": "ef8dc47f80abfcb704b6c9e5423481cfda204d92eb28ba2946eb4c8d4ea6945d",
+      "frames/067.bin": "dc5c874029c79d89379fa929f4034ef4f99c74ac9592d4e87797fdf5b50baf42",
+      "frames/068.bin": "8d348309553f9e028f393bb9988aac7864024972d12cc3c763bb04cc520f22ee",
+      "frames/069.bin": "57e837780456b608026aa4801e45fa28d3378c7df2bc1b0913f1c09d8ed726fd",
+      "frames/070.bin": "bc7b342f929f9922ea222edad630e367821dc2d18a8e9b18ebb5243f10b386ca",
+      "frames/071.bin": "4c10f5dac4f5fe6942fe3be7070a743cc02980180bbef1d4fee6dfef5778e904",
+      "frames/072.bin": "93ca0b2f6fca0a5abde9516dc0e43fcba5702dda223b8709e432774d378031a1",
+      "frames/073.bin": "3446a5fd230d8493a86ddb13b875549d16f3b76adbebe69d3d9e6a7de5d8aa23",
+      "frames/074.bin": "3e654f8d0f99b9040af04fb4dcfdca82ed36633c73a84c670726c136e4978901",
+      "frames/075.bin": "ccf0736dd4e5dc6da2df1138cea48547ba1726c02effcadca1d1d39638219538",
+      "frames/076.bin": "13fe31eec21fc22a8ac6a76ffae059d2179b039000e79106ddd55b4912e17bd4",
+      "frames/077.bin": "4dd7ee57a65d6e92c2e38d856a6fce22072f8af4672ee5a321c27d772ab4e0a3",
+      "frames/078.bin": "66eddfc8bf7a708125958f6ab0cc00a4d5e56e1844db3988ad288c83f0fb1ae7",
+      "frames/079.bin": "a2df81394250f4d20ed69097b3b78ced04b0306a39164b1d1375421769afbe3e",
+      "memo-voorbereiden.py": "2dc2855ab98ee56b50c35f94731442e6c7f575bc77f59b3c66dffc220c8c5c94",
+      "orakel.json": "691cfe7358167b7241e74e6173b93b8e43c2d8681e1ba7732da5734f79b174b8",
+      "orakel.log": "e93b8c9e05ab4c985d3af1e4b40719873d51359c433e33bea596645f064fc058",
+      "orakel.mjs": "e4092a81c288adc4a7a98de0b9a584dcd2990dec927d48f00a0651fcd1ec19df",
+      "proef-eerste.json": "a838d7dab3ba70b3996bef8ef66d9cdc1201ac1b357b8cb08b5dfa6dd356abf1",
+      "proef-memo-eerste.json": "1e283a5e80cf49a85bee5375b6b3aabc3645e73e91d4fa9268259fdcb65682f9",
+      "proef-memo.json": "58b79c31980409b3537b38c3fc95970cb67881b15aae18941e3fe797b50dd61c",
+      "proef-memo.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proef-memo.rs": "364a080542d7a20e60c6bd9cfeccf906394ab38a696f88d601316f8f13133dba",
+      "proef.json": "931ab2f730885c0734446be4ddeee3e86fee00aaa8a4a2ef554c9107abaf662a",
+      "proef.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proef.rs": "4e594592328dbba482b1196ff61a1eb69be20ca4612b03b69f04596d63badb47",
+      "vastleggen.py": "67f1a79e3bd59f1682c2bac728a1cfb36238762ba355a9a05a528af13cf05228",
+      "vervolgbron.json": "9ac7ca8c07bdeb40769e498bd52429c58dd2552d7f0f2c87e7d8b0a2dedec91c",
+      "voorbereiden.py": "31dee7cc65d9bd2579d7363e1aa87ed5864db57dee5a916ed2e7999870a57dba"
+    },
+    "uitsluiting": "Twee eigen Rust-driverbinaries lokaal behouden met SHA in behoud.json; geen bestaande referenties verwijderd."
+  }
+}
