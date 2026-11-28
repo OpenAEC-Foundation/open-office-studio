@@ -1,0 +1,595 @@
+{
+  "datum": "2026-11-28",
+  "status": "Diagnose en afzonderlijke prototypeproef afgerond; geen productwijziging of snelheidsacceptatie.",
+  "basis": {
+    "integratie_commit": "5a752354",
+    "hoofd_commit": "04143b8d",
+    "native_sha256": "061b19f15628f803bf772ece68f3a4bb2d2b09e34012b04524d220500c00e849",
+    "actieve_wasm_sha256": "03ff0e87c3804c89ba89d67d7a796f0ec0b6e71851f63b18caa296b50b16ebbf"
+  },
+  "doel": "Werk vóór de native provider, publicatie en volgende invoergroep afbakenen; tabelgeometrie beperken zonder ankers van vervolgpagina’s te verliezen.",
+  "publicatie": [
+    {
+      "label": "a",
+      "geslaagd": true,
+      "programma_sha256": "c3a2f64e4eed30abfa63ab8f5794ecc272ddab4682b2e04fc21512d9ec65bc4b",
+      "records": 2179,
+      "herstel": [
+        true
+      ],
+      "groepen": 62,
+      "fasen_totaal_ms": {
+        "voor_provider_ms": 4.0,
+        "provider_ms": 4117.999999999982,
+        "na_provider_ms": 787.9999999999854,
+        "voor_groep_in_taak_ms": 2.000000000003638,
+        "na_groep_in_taak_ms": 2054.000000000029
+      },
+      "synchrone_categorieen": {
+        "wachtrij_ingang": {
+          "aantal": 63,
+          "inclusief_ms": 0.0,
+          "exclusief_ms": 0.0,
+          "max_ms": 0
+        },
+        "invoer_callback": {
+          "aantal": 1052,
+          "inclusief_ms": 49.99999999997817,
+          "exclusief_ms": 49.99999999997817,
+          "max_ms": 1.000000000003638
+        },
+        "selectie": {
+          "aantal": 62,
+          "inclusief_ms": 1.0,
+          "exclusief_ms": 1.0,
+          "max_ms": 1
+        },
+        "projectie": {
+          "aantal": 62,
+          "inclusief_ms": 0.0,
+          "exclusief_ms": 0.0,
+          "max_ms": 0
+        },
+        "bereik": {
+          "aantal": 62,
+          "inclusief_ms": 2.0,
+          "exclusief_ms": 2.0,
+          "max_ms": 1
+        },
+        "publicatie_notificatie": {
+          "aantal": 62,
+          "inclusief_ms": 783.9999999999891,
+          "exclusief_ms": 783.9999999999891,
+          "max_ms": 19
+        },
+        "publicatie": {
+          "aantal": 62,
+          "inclusief_ms": 785.9999999999891,
+          "exclusief_ms": 2.0,
+          "max_ms": 19
+        }
+      },
+      "framegap_max_ms": 309.00000000000364,
+      "framegaps_boven_50ms": 70
+    },
+    {
+      "label": "b",
+      "geslaagd": true,
+      "programma_sha256": "a91fad07c6b7fd973a0fd46afab72c1448ea78cf2b492503b01bef0f9829761f",
+      "records": 2234,
+      "herstel": [
+        true
+      ],
+      "groepen": 64,
+      "fasen_totaal_ms": {
+        "voor_provider_ms": 8.000000000014552,
+        "provider_ms": 4184.999999999978,
+        "na_provider_ms": 852.0000000000218,
+        "voor_groep_in_taak_ms": 1.0,
+        "na_groep_in_taak_ms": 2172.999999999989
+      },
+      "synchrone_categorieen": {
+        "wachtrij_ingang": {
+          "aantal": 65,
+          "inclusief_ms": 3.0,
+          "exclusief_ms": 3.0,
+          "max_ms": 1
+        },
+        "invoer_callback": {
+          "aantal": 1052,
+          "inclusief_ms": 40.00000000001819,
+          "exclusief_ms": 37.00000000001819,
+          "max_ms": 1.000000000003638
+        },
+        "selectie": {
+          "aantal": 64,
+          "inclusief_ms": 3.0,
+          "exclusief_ms": 3.0,
+          "max_ms": 1.000000000003638
+        },
+        "projectie": {
+          "aantal": 64,
+          "inclusief_ms": 0.0,
+          "exclusief_ms": 0.0,
+          "max_ms": 0
+        },
+        "bereik": {
+          "aantal": 64,
+          "inclusief_ms": 4.000000000014552,
+          "exclusief_ms": 4.000000000014552,
+          "max_ms": 1.000000000003638
+        },
+        "publicatie_notificatie": {
+          "aantal": 64,
+          "inclusief_ms": 848.0000000000182,
+          "exclusief_ms": 848.0000000000182,
+          "max_ms": 20
+        },
+        "publicatie": {
+          "aantal": 64,
+          "inclusief_ms": 852.0000000000218,
+          "exclusief_ms": 4.000000000003638,
+          "max_ms": 20
+        }
+      },
+      "framegap_max_ms": 337,
+      "framegaps_boven_50ms": 73
+    }
+  ],
+  "duiding_publicatie": [
+    "Inputcallback en projectie zijn klein in deze casus; publicatie en werk na het callbackeinde blijven zichtbaar.",
+    "Callbackeinde tot taakresolutie bevat ook wachttijd/microtaken; geen exclusieve CPUtijd.",
+    "Afzonderlijke root-renderproef sluit kindrenders/effects/commit niet in. DOM-/canvaswrappers zijn methodevensters met timerkwantisatie en eigen overhead."
+  ],
+  "sampler": {
+    "programma": "ongewijzigde 061b-basis",
+    "samples": 5084,
+    "nul_tijdstempels": 5084,
+    "stackvolgorde_geijkt": true,
+    "selectie": [
+      {
+        "naam": "dee",
+        "url": "tauri://localhost/assets/editors-hz_Qg-1B.js",
+        "regel": 48,
+        "kolom": 20281,
+        "functiebron": "turn{hoogte:iE((n.onder-n.boven)*or,e.delta,e.alt?Ul:Qp)}}function dee({context:e,geometry:t}){const{t:n}=Ge(\"writer\"),r=u.useRef(null),[o,a]=u.useState(null),[,s]=u.useReducer(E=>E+1,0),[l,c]=u.useState(null),[d,f]=u.useState(null),p=u.useRef(null);p.current=d,u.useSyncExternalStore(uee,()=>zC(o),()=>null),u.useLayoutEffect(()=>{const E=r.current?.closest(Ek)??null;a($=>$===E?$:E)}),u.useEffect(()=>{if(!o)return;const E=o.querySelector(\".docx-editor__scroll-container\");let $=0;const L=()=>{const B=(E??o).getBoundingClientRect();let N=1/0,W=-1/0;for(const{pagina:V}of yk([...o.querySelectorAll(\".canvas-page[data-page-index]\")],B,200)){const X=Number(V.dataset.pageIndex);N=Math.min(N,X),W=Math.max(W,X)}c(V=>N>W?n",
+        "samples": 1676
+      },
+      {
+        "naam": "iL",
+        "url": "tauri://localhost/assets/editors-hz_Qg-1B.js",
+        "regel": 34,
+        "kolom": 11711,
+        "functiebron": "ives.some(a=>a.table?.tableId&&r.has(a.table.tableId)))}:e}function iL(e,t,n,r,o,a,s){const l=qJ(n),c=[],d=new Map,f=new Map,p=h=>{if(h==null)return null;if(d.has(h))return d.get(h);let m=null;try{const g=e.displayPositionToYrsLoc(h),b=g?wk(t,g.story,s):null;b&&(m=b.sleutel,f.set(m,b))}catch{m=null}return d.set(h,m),m};if(l){let h=[];try{h=GR(l,p,o,a)}catch{h=[]}for(const m of h){const g=f.get(m.tableKey);if(!g)continue;const b=g.payload.rows.flatMap((C,k)=>{let S=Number(C.trPr?.gridBefore??0);return C.cells.map(I=>{const R=Math.max(1,Number(I.tcPr?.colspan??1)),T={tableKey:m.tableKey,row:k,col:S,rowSpan:Math.max(1,Number(I.tcPr?.rowspan??1)),colSpan:R};return S+=R,T})}),v=Dw(VJ(l,m.pageIndex),b,p).filter(C=>C.",
+        "samples": 1522
+      },
+      {
+        "naam": "kE",
+        "url": "tauri://localhost/assets/index-BtjjFW78.js",
+        "regel": 141,
+        "kolom": 147710,
+        "functiebron": "Id!==t.rId?null:{kind:n,rId:r.rId,primitives:r.primitives}}function kE(e,t,n,r){let a=new Map;for(let o of e.pages){let i=wE(o,n);if(i)for(let s of i.primitives){if(!s.cell||!s.table?.tableId||s.docStart==null||r&&!r.has(s.table.tableId))continue;let c=t(s.docStart);if(c==null)continue;let u=a.get(s.table.tableId);(!u||s.docStart<u.docStartSample)&&a.set(s.table.tableId,{tableKey:c,docStartSample:s.docStart})}}return a}function xE(e,t){return`${e}:${t}`}function F0e(e,t,n,r){let a=xE(t.row,t.col),o=e.cells.get(a);o?(o.minX=Math.min(o.minX,n.x),o.minY=Math.min(o.minY,n.y),o.maxX=Math.max(o.maxX,n.x+n.w),o.maxY=Math.max(o.maxY,n.y+n.h),o.rowSpan=Math.max(o.rowSpan,t.rowSpan),o.colSpan=Math.max(o.colSpan,t.colSpan",
+        "samples": 1295
+      },
+      {
+        "naam": "p",
+        "url": "tauri://localhost/assets/editors-hz_Qg-1B.js",
+        "regel": 34,
+        "kolom": 11768,
+        "functiebron": "e}function iL(e,t,n,r,o,a,s){const l=qJ(n),c=[],d=new Map,f=new Map,p=h=>{if(h==null)return null;if(d.has(h))return d.get(h);let m=null;try{const g=e.displayPositionToYrsLoc(h),b=g?wk(t,g.story,s):null;b&&(m=b.sleutel,f.set(m,b))}catch{m=null}return d.set(h,m),m};if(l){let h=[];try{h=GR(l,p,o,a)}catch{h=[]}for(const m of h){const g=f.get(m.tableKey);if(!g)continue;const b=g.payload.rows.flatMap((C,k)=>{let S=Number(C.trPr?.gridBefore??0);return C.cells.map(I=>{const R=Math.max(1,Number(I.tcPr?.colspan??1)),T={tableKey:m.tableKey,row:k,col:S,rowSpan:Math.max(1,Number(I.tcPr?.rowspan??1)),colSpan:R};return S+=R,T})}),v=Dw(VJ(l,m.pageIndex),b,p).filter(C=>C.pageIndex===m.pageIndex),{raster:y,lijnen:w}=NJ(CC(g.payl",
+        "samples": 1176
+      }
+    ],
+    "grens": "Hoofdthreadsamples op ongewijzigde 061b-kern, afzonderlijk leaf-first geijkt. Samples zijn geen aanroepen of CPU-milliseconden; inclusieve lidmaatschappen overlappen. Geen fasetoewijzing vanuit nul-tijdstempels."
+  },
+  "verworpen_state_guard": [
+    {
+      "label": "a",
+      "flag": false,
+      "code": 0,
+      "geslaagd": true,
+      "sha256": "c354e01305ee3e23b8039da887006fc785485dc5d23bad1d2a862b36d0bf6e8d",
+      "render_aantal": 82,
+      "render_ms": 1783.9999999999745,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 28750,
+        "begin_tot_bron_ms": 7181.000000000004,
+        "laatste_keyup_tot_bron_ms": 214.00000000000364,
+        "laatste_keyup_tot_frame_ms": 1637,
+        "begin_tot_frame_ms": 8604,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8713,
+        "wall_verzonden_tot_frame_ms": 6946,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    },
+    {
+      "label": "b",
+      "flag": true,
+      "code": 0,
+      "geslaagd": true,
+      "sha256": "c354e01305ee3e23b8039da887006fc785485dc5d23bad1d2a862b36d0bf6e8d",
+      "render_aantal": 76,
+      "render_ms": 1753.000000000029,
+      "invoer": {
+        "tekens": 1052,
+        "interval_ms": 2,
+        "laatste_keyup_ms": 29620,
+        "begin_tot_bron_ms": 7201,
+        "laatste_keyup_tot_bron_ms": 215,
+        "laatste_keyup_tot_frame_ms": 1542,
+        "begin_tot_frame_ms": 8528,
+        "paginas": 65,
+        "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+        "wall_begin_tot_frame_ms": 8557,
+        "wall_verzonden_tot_frame_ms": 6778,
+        "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+      }
+    }
+  ],
+  "ankerminimum": {
+    "controle": {
+      "geslaagd": true,
+      "synthetische_vergelijkingen": 3600,
+      "ankeraanvragen": {
+        "basis": 129591,
+        "kandidaat": 81813
+      },
+      "echt": {
+        "paginas": 65,
+        "vergelijkingen": [
+          {
+            "van": 0,
+            "tot": 0,
+            "fragmenten": 2,
+            "basis_lezingen": 697,
+            "kandidaat_lezingen": 313
+          },
+          {
+            "van": 32,
+            "tot": 32,
+            "fragmenten": 3,
+            "basis_lezingen": 965,
+            "kandidaat_lezingen": 389
+          },
+          {
+            "van": 63,
+            "tot": 64,
+            "fragmenten": 4,
+            "basis_lezingen": 1040,
+            "kandidaat_lezingen": 464
+          },
+          {
+            "van": 0,
+            "tot": 64,
+            "fragmenten": 192,
+            "basis_lezingen": 49408,
+            "kandidaat_lezingen": 24832
+          }
+        ],
+        "bron_vector_exact": true
+      },
+      "old": "let l=n(s.docStart);if(l==null)continue;let u=r.get(s.table.tableId);(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});",
+      "replacement": "let u=r.get(s.table.tableId);if(u&&s.docStart>=u.docStartSample)continue;let l=n(s.docStart);if(l==null)continue;(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});"
+    },
+    "werkelijke_memo_pipeline": {
+      "geslaagd": true,
+      "synthetische_vergelijkingen": 3600,
+      "ankeraanvragen": {
+        "basis": 129591,
+        "kandidaat": 81813
+      },
+      "echt": {
+        "paginas": 65,
+        "vergelijkingen": [
+          {
+            "van": 0,
+            "tot": 0,
+            "fragmenten": 2,
+            "rectgroepen": 2,
+            "basis_aanvragen": 3485,
+            "kandidaat_aanvragen": 1715,
+            "basis_unieke_bronlezingen": 697,
+            "kandidaat_unieke_bronlezingen": 697
+          },
+          {
+            "van": 32,
+            "tot": 32,
+            "fragmenten": 3,
+            "rectgroepen": 3,
+            "basis_aanvragen": 7913,
+            "kandidaat_aanvragen": 3884,
+            "basis_unieke_bronlezingen": 1158,
+            "kandidaat_unieke_bronlezingen": 1158
+          },
+          {
+            "van": 63,
+            "tot": 64,
+            "fragmenten": 4,
+            "rectgroepen": 4,
+            "basis_aanvragen": 7044,
+            "kandidaat_aanvragen": 3484,
+            "basis_unieke_bronlezingen": 847,
+            "kandidaat_unieke_bronlezingen": 847
+          }
+        ],
+        "bron_vector_exact": true
+      },
+      "old": "let l=n(s.docStart);if(l==null)continue;let u=r.get(s.table.tableId);(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});",
+      "replacement": "let u=r.get(s.table.tableId);if(u&&s.docStart>=u.docStartSample)continue;let l=n(s.docStart);if(l==null)continue;(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});"
+    },
+    "besluit": "Niet integreren: minder callbackaanvragen leveren met de bestaande memo geen minder unieke bronlezingen op."
+  },
+  "paginavakken": {
+    "controle": {
+      "geslaagd": true,
+      "synthetische_vergelijkingen": 3600,
+      "ankeraanvragen": {
+        "basis": 129591,
+        "kandidaat": 129591
+      },
+      "echt": {
+        "paginas": 65,
+        "vergelijkingen": [
+          {
+            "van": 0,
+            "tot": 0,
+            "fragmenten": 2,
+            "rectgroepen": 2,
+            "basis_aanvragen": 3485,
+            "kandidaat_aanvragen": 1327,
+            "basis_unieke_bronlezingen": 697,
+            "kandidaat_unieke_bronlezingen": 388
+          },
+          {
+            "van": 32,
+            "tot": 32,
+            "fragmenten": 3,
+            "rectgroepen": 3,
+            "basis_aanvragen": 7913,
+            "kandidaat_aanvragen": 2144,
+            "basis_unieke_bronlezingen": 1158,
+            "kandidaat_unieke_bronlezingen": 583
+          },
+          {
+            "van": 63,
+            "tot": 64,
+            "fragmenten": 4,
+            "rectgroepen": 4,
+            "basis_aanvragen": 7044,
+            "kandidaat_aanvragen": 2291,
+            "basis_unieke_bronlezingen": 847,
+            "kandidaat_unieke_bronlezingen": 581
+          }
+        ],
+        "bron_vector_exact": true
+      },
+      "old": "let l=n(s.docStart);if(l==null)continue;let u=r.get(s.table.tableId);(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});",
+      "replacement": "let u=r.get(s.table.tableId);if(t.pageIndex!==undefined&&u&&s.docStart>=u.docStartSample)continue;let l=n(s.docStart);if(l==null)continue;(!u||s.docStart<u.docStartSample)&&r.set(s.table.tableId,{tableKey:l,docStartSample:s.docStart});"
+    },
+    "randen": {
+      "geslaagd": true,
+      "gevallen": [
+        {
+          "variant": "gewoon",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 20,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "kolom",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 30,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "samengevoegd",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 15,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "rijspan",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 15,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "marges",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 20,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "gedraaid",
+          "paginas": 1,
+          "vergelijkingen": 20,
+          "rechthoeken": 20,
+          "bron_vector_exact": true
+        },
+        {
+          "variant": "vervolg",
+          "paginas": 9,
+          "vergelijkingen": 60,
+          "rechthoeken": 80,
+          "bron_vector_exact": true
+        }
+      ]
+    },
+    "ankerranden": {
+      "geslaagd": true,
+      "vergelijkingen": 14400,
+      "aanvragen": {
+        "basis": 518364,
+        "kandidaat": 375030
+      },
+      "omschrijving": "Alle drie regio’s, standaard en drie opt-in-paginawaarden, ongesorteerd, ontbrekend/null/NaN/Infinity en niet-monotone pure sleutels."
+    },
+    "bouw": [
+      {
+        "label": "proef",
+        "code": 0,
+        "seconden": 122.07943990989588,
+        "opdracht": [
+          "cargo",
+          "build",
+          "--manifest-path",
+          "src-tauri/Cargo.toml",
+          "--release",
+          "--locked",
+          "--offline",
+          "--features",
+          "tauri/custom-protocol,writer-bronjournaal"
+        ],
+        "programma": "/home/aia01/Documenten/GitHub/Open-Office-Studio-integratie-2026-11-06/.local/integratiecontrole/tabel-paginavakken/open-office-studio-groep-proef",
+        "sha256": "994306b726d923f435a1132a5ae3e31e3c76b763f468f643a5be267f48f6a6c3"
+      }
+    ],
+    "native_A_B": [
+      {
+        "label": "a",
+        "flag": false,
+        "code": 0,
+        "geslaagd": true,
+        "sha256": "994306b726d923f435a1132a5ae3e31e3c76b763f468f643a5be267f48f6a6c3",
+        "render_aantal": 78,
+        "render_ms": 1677.000000000011,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29103,
+          "begin_tot_bron_ms": 6948,
+          "laatste_keyup_tot_bron_ms": 220,
+          "laatste_keyup_tot_frame_ms": 1455,
+          "begin_tot_frame_ms": 8183,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8243,
+          "wall_verzonden_tot_frame_ms": 6470,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "label": "b",
+        "flag": true,
+        "code": 0,
+        "geslaagd": true,
+        "sha256": "994306b726d923f435a1132a5ae3e31e3c76b763f468f643a5be267f48f6a6c3",
+        "render_aantal": 78,
+        "render_ms": 1448.9999999999782,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 28562,
+          "begin_tot_bron_ms": 6864.999999999996,
+          "laatste_keyup_tot_bron_ms": 197,
+          "laatste_keyup_tot_frame_ms": 1311,
+          "begin_tot_frame_ms": 7978.999999999996,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8406,
+          "wall_verzonden_tot_frame_ms": 6629,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "label": "b2",
+        "flag": true,
+        "code": 0,
+        "geslaagd": true,
+        "sha256": "994306b726d923f435a1132a5ae3e31e3c76b763f468f643a5be267f48f6a6c3",
+        "render_aantal": 76,
+        "render_ms": 1438.0000000000146,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29358,
+          "begin_tot_bron_ms": 6765,
+          "laatste_keyup_tot_bron_ms": 209,
+          "laatste_keyup_tot_frame_ms": 1380,
+          "begin_tot_frame_ms": 7936,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 7989,
+          "wall_verzonden_tot_frame_ms": 6217,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      },
+      {
+        "label": "a2",
+        "flag": false,
+        "code": 0,
+        "geslaagd": true,
+        "sha256": "994306b726d923f435a1132a5ae3e31e3c76b763f468f643a5be267f48f6a6c3",
+        "render_aantal": 77,
+        "render_ms": 1659.9999999999927,
+        "invoer": {
+          "tekens": 1052,
+          "interval_ms": 2,
+          "laatste_keyup_ms": 29066,
+          "begin_tot_bron_ms": 6915,
+          "laatste_keyup_tot_bron_ms": 204,
+          "laatste_keyup_tot_frame_ms": 1146,
+          "begin_tot_frame_ms": 7857,
+          "paginas": 65,
+          "laatste_frame_tekst": "zin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. Een langere proefzin met gewone woorden en spaties. EINDEPROEF.",
+          "wall_begin_tot_frame_ms": 8204,
+          "wall_verzonden_tot_frame_ms": 6410,
+          "grens": "Keyup is ontvangst in WebKit; wachttijd vóór ontvangst zit wel in totale wall-tijd. Renderlijst plus twee rAFs is geen fysieke schermpaint."
+        }
+      }
+    ],
+    "werking": [
+      "Vierde regioargument beperkt alleen gevraagde celrechthoeken tot pageIndex. Ankerindex blijft de volledige bestaande tabelpaginaselectie zien.",
+      "Minimumanker slaat alleen in opt-in-modus reeds overtroffen geldige posities over. Standaardroute en bestaande guards behouden.",
+      "Beide native helften draaien dezelfde diagnostische ELF; alleen eigen proefvlag verschilt. Geen no-op-stateguard ingeschakeld."
+    ],
+    "grenzen": [
+      "Prototype in eigen bundelkopie; geen bronplugin/productintegratie en geen ongeïnstrumenteerde ABBA.",
+      "Kop-/voetcontainers in extra geometrieproef zijn synthetisch op echte Wasm-primitieven; geen volledige kop-/voet-GUI-proef.",
+      "Geen tabelgrens slepen gevolgd door bewaren/heropenen met deze kandidaat; dat blijft noodzakelijk vóór integratie."
+    ]
+  },
+  "functie": {
+    "rijke_native_proeven": 12,
+    "omvang": "1.052 fysieke invoertekens, 65 pagina’s/128 tabellen, selectie/vervangen, Undo/Redo, bewaren vóór laat antwoord, niet-opslaan en documentwissel. Eigen X11/XDG/dbus-profielen.",
+    "foutlijsten": "Alle twaalf finale rapporten geslaagd; geen GUI-/engine-/consolefouten.",
+    "beelden_bekeken": [
+      "groep-publicatie/a/snel-getypt-bewaard.png",
+      "tabel-paginavakken/b/snel-getypt-bewaard.png",
+      "tabel-paginavakken/b/invoer-redo.png"
+    ],
+    "visuele_grens": "Beperkte hele vensterbeelden; geen volledige pixel-/glyphvergelijking of tabelgreepacceptatie."
+  },
+  "proefcorrecties": [
+    "Eerste diagnostische state-guard-voorbereiding vroeg ontbrekende @babel/parser; vervangen door aanwezige TypeScript-parser. Eerste bouw met ontbrekende bundel afgekeurd; uiteindelijke build groen.",
+    "Aanvullende randgevaldriver gebruikte verwijderde celverhalen na samenvoegen; definitieve proef gebruikt actuele payload.",
+    "Eerste vervolgvariant zette rijhoogte in verkeerde vorm en bleef één pagina; correcte numerieke rijhoogte levert negen pagina’s en expliciete vervolgassertie."
+  ],
+  "behoud": {
+    "bestaande_ELF_referenties": 50,
+    "alle_ELF_referenties": 54,
+    "exact": true,
+    "standaardbundel_bestanden": 529,
+    "byte_mode_mtime_exact": true
+  },
+  "niet_gecontroleerd": [
+    "Geen volledige frontend-/Rust-suite of nieuwe standaard frontend/Wasm-bouw: productcode niet gewijzigd.",
+    "Geen nieuwe CI, Windows/macOS, andere edities, installers, hosted of releaseacceptatie.",
+    "Geen issue gesloten, geen migratiegebied voltooid, ernstige Writer-invoer-/selectievertraging blijft open."
+  ],
+  "vervolg": "Borg de opt-in-paginafilter met exact bewaakte SDK-compatibiliteitstransformatie en vaste regressies. Bouw daarna een ongeïnstrumenteerde kandidaat op dezelfde kern, toets native ABBA en werkelijke tabelgreep/Undo/bewaar/heropenflows met beelden. Alleen bij functioneel en visueel bewijs integreren; daarna publicatie en groepskosten opnieuw meten. Database laatst.",
+  "archief": {
+    "pad": "docs/tests/2026-11-28-writer-groep-publicatie.tar.gz",
+    "sha256": "1c7e5b497aba94b2954f06b7e1cd4dac01c21ddb551e53a20b0bfe98f5a20842",
+    "inhoud": "Exacte scripts, ruwe rapporten/logs, profilerdata, proefdocumenten, beelden en SHA-manifest; grote SDK/bundel/targets/ELF-kopieën afzonderlijk lokaal behouden."
+  }
+}
